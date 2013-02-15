@@ -4,7 +4,6 @@ import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 
 public abstract class ProcessEngineConfiguration {
 
-	String jiangnanString="111222";
 	protected String processEngineName = ProcessEngineManagement.NAME_DEFAULT;
 	
 
