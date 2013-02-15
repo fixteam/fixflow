@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:oryx="http://www.b3mn.org/oryx"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="200"
+   height="160"
+   version="1.0">
+  <defs></defs>
+  <oryx:magnets>
+  	<oryx:magnet oryx:cx="1" oryx:cy="50" oryx:anchors="left" />
+  	<oryx:magnet oryx:cx="1" oryx:cy="80" oryx:anchors="left" />
+  	<oryx:magnet oryx:cx="1" oryx:cy="110" oryx:anchors="left" />
+  	
+  	<oryx:magnet oryx:cx="70" oryx:cy="159" oryx:anchors="bottom" />
+  	<oryx:magnet oryx:cx="100" oryx:cy="159" oryx:anchors="bottom" />
+  	<oryx:magnet oryx:cx="130" oryx:cy="159" oryx:anchors="bottom" />
+  	
+  	<oryx:magnet oryx:cx="199" oryx:cy="50" oryx:anchors="right" />
+  	<oryx:magnet oryx:cx="199" oryx:cy="80" oryx:anchors="right" />
+  	<oryx:magnet oryx:cx="199" oryx:cy="110" oryx:anchors="right" />
+  	
+  	<oryx:magnet oryx:cx="70" oryx:cy="1" oryx:anchors="top" />
+  	<oryx:magnet oryx:cx="100" oryx:cy="1" oryx:anchors="top" />
+  	<oryx:magnet oryx:cx="130" oryx:cy="1" oryx:anchors="top" />
+  	
+  	<oryx:magnet oryx:cx="100" oryx:cy="80" oryx:default="yes" />
+  </oryx:magnets>
+  <g pointer-events="fill" oryx:minimumSize="120 100" oryx:maximumSize="" >
+  	<defs>
+		<radialGradient id="background" cx="10%" cy="10%" r="100%" fx="10%" fy="10%">
+			<stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+			<stop id="fill_el" offset="100%" stop-color="#ffffff" stop-opacity="1"/>
+		</radialGradient>
+	</defs>
+	
+    <rect id="text_frame" oryx:anchors="bottom top right left" x="0" y="0" width="190" height="160" rx="10" ry="10" stroke="none" stroke-width="0" fill="none" />
+	<rect id="bg_frame" oryx:anchors="bottom top right left" x="0" y="0" width="200" height="160" rx="10" ry="10" stroke="black" stroke-width="1" fill="url(#background) white" />
+	<rect id="callActivity" oryx:anchors="bottom top right left" oryx:resize="vertical horizontal" x="0" y="0" width="200" height="160" rx="10" ry="10" stroke="black" stroke-width="4" fill="none" />
+    <rect id="border" oryx:anchors="top bottom left right" oryx:resize="vertical horizontal" x="2.5" y="2.5" width="195" height="155" rx="8" ry="8" stroke="black" stroke-width="1" fill="none" />
+    	<text 
+			font-size="12" 
+			id="text_name" 
+			x="8" 
+			y="10" 
+			oryx:align="top left"
+			oryx:fittoelem="text_frame"
+			oryx:anchors="left top" 
+			stroke="black"></text>
+    	
+	<g id="none"></g>
+	<g id="loop">
+		<path
+	         oryx:anchors="bottom"
+	       	style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2.0999999;stroke-dasharray:none;stroke-opacity:1"
+	         id="path2396"
+	         d="M 100.5,152 L 100.5,155 L 97.5,155 M 100.5,155 A 4.875,4.875 0 1 1 104.5,155"
+			/>
+	</g>
+	
+	
+	<g id="parallel">
+		<path oryx:anchors="bottom" fill="none" stroke="black" d="M97 145 v10 M101 145 v10 M105 145 v10" stroke-width="2" />
+	</g>
+	<g id="sequential">
+		<path oryx:anchors="bottom" fill="none" stroke="#000000" stroke-width="2" d="M96,154h10 M96,150h10 M96,146h10"/>
+	</g>
+	
+	
+	<g id="adhoc">
+		<text 
+			oryx:anchors="bottom"
+			x="101"
+			y="157"
+			font-size="20"
+			transform="translate(8,0)"
+		>~</text>
+	</g>
+	<g id="compensation">
+		<path oryx:anchors="bottom" fill="none" stroke="black" d="M 101 150 L 106 145 L 106 155z M95.7 150 L 100.7 155 L 100.7 145z" stroke-width="1"
+		transform="translate(-16,0)" />
+	</g>
+  </g>
+</svg>

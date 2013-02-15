@@ -1,0 +1,93 @@
+<g id="{svg_id}">
+	<g class="stencils" transform="translate({x}, {y})">
+		<g class="me">
+			<g pointer-events="fill" id="sid-{svg_id}"
+				title="{text}">
+				<defs
+					id="sid-{svg_id}_sid-{svg_id}_9">
+					<radialGradient
+						id="sid-{svg_id}background" cx="10%"
+						cy="10%" r="100%" fx="10%" fy="10%">
+						<stop offset="0%" stop-color="#ffffff" stop-opacity="1"
+							id="sid-{svg_id}_sid-{svg_id}_10" />
+						<stop id="sid-{svg_id}fill_el"
+							offset="100%" stop-color="#ffffcc" stop-opacity="1" />
+					</radialGradient>
+				</defs>
+				<polyline oryx:resize="vertical horizontal" xmlns:oryx="http://oryx-editor.org"
+					oryx:anchors="left right" id="sid-{svg_id}frame"
+					stroke="black" fill="url(#sid-{svg_id}background) #ffffcc"  stop-opacity="1" stroke-width="1" points="78,50 47,50 47,0 78,0" />
+				<polyline oryx:anchors="right top bottom" xmlns:oryx="http://oryx-editor.org"
+					id="sid-{svg_id}celem2" stroke="black"
+					fill="#ffffcc"  stop-opacity="1" stroke-width="1" points="78,50 88,50 88,10 78,10" />
+				<polyline oryx:anchors="right top" xmlns:oryx="http://oryx-editor.org"
+					id="sid-{svg_id}celem3" stroke="black"
+					fill="url(#sid-{svg_id}background) white"
+					stroke-width="1" points="88,10 78,0 78,10 88,10" />
+				<rect id="sid-{svg_id}unvisibleBorder"
+					x="0" y="0" height="77" width="88" stroke="none" fill="none"
+					oryx:resize="horizontal vertical" xmlns:oryx="http://oryx-editor.org" />
+				<text font-size="12"
+					id="sid-{svg_id}text_name" x="44" y="48"
+					oryx:align="middle center" xmlns:oryx="http://oryx-editor.org"
+					oryx:fittoelem="unvisibleBorder" stroke="black" stroke-width="0pt"
+					letter-spacing="-0.01px" transform="rotate(0, 44, 48)"
+					oryx:fontSize="12" text-anchor="middle" />
+				<text font-size="11"
+					id="sid-{svg_id}text_state" x="69" y="55"
+					oryx:align="middle center" xmlns:oryx="http://oryx-editor.org"
+					stroke="black" oryx:anchors="bottom" stroke-width="0pt"
+					letter-spacing="-0.01px" transform="rotate(0, 69, 55)"
+					oryx:fontSize="11" text-anchor="middle" >
+					<tspan dy="11" x="69" y="55" id="ext-gen349">{text}</tspan>
+				</text>
+				<g id="sid-{svg_id}inoutSetting" transform="translate(47, 0)">
+					<polygon oryx:anchors="left top" xmlns:oryx="http://oryx-editor.org"
+						id="sid-{svg_id}input" stroke="black"
+						fill="white" stroke-width="1.4" points="9,13 19,13 19,10 25,16 19,22 19,19 9,19"
+						stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+						display="{input}" />
+					<polygon oryx:anchors="left top" xmlns:oryx="http://oryx-editor.org"
+						id="sid-{svg_id}output" stroke="black"
+						fill="black" stroke-width="1" points="9,13 19,13 19,10 25,16 19,22 19,19 9,19"
+						stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+						display="{output}" />
+				</g>
+				<g id="sid-{svg_id}collection"
+					transform="translate(0, -2)" display="none">
+					<path oryx:anchors="bottom" xmlns:oryx="http://oryx-editor.org"
+						fill="none" stroke="#000000" stroke-width="2"
+						d="M41.833,86.5v10 M45.833,86.5v10 M49.833,86.5v10"
+						id="sid-{svg_id}_sid-{svg_id}_11" />
+				</g>
+			</g>
+		</g>
+		<g class="children" style="overflow:hidden" />
+		<g class="edge" />
+	</g>
+	<g class="controls">
+		<g class="dockers" />
+		<g class="magnets" transform="translate(345, 105)">
+			<g pointer-events="all" display="none" transform="translate(-8, 40.5)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(36, 89)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(80, 40.5)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(36, -8)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(36, 40.5)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+		</g>
+	</g>
+</g>

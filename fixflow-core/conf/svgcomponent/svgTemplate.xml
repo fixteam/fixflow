@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" id="sid-1A88C971-D017-4C8C-B7B0-C053E39DA6A4" width="{width}" height="{height}" minwidth="{minwidth}" minhight="{minhight}" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg">
+	<defs/>
+	<g stroke="black" font-family="Verdana, sans-serif" font-size-adjust="none" font-style="normal" font-variant="normal" font-weight="normal" line-heigth="normal" font-size="12">
+		<g class="stencils">
+			<g class="me"/>
+			<g class="children">
+				{children}
+			</g>
+			<g class="edge">
+				{edge}
+			</g>
+		</g>
+		<g class="svgcontainer">
+			<g display="none" transform="translate(281, 182)">
+				<rect x="0" y="0" stroke-width="1" stroke="#777777" fill="none" stroke-dasharray="2,2" pointer-events="none" width="108" height="88"/>
+			</g>
+			<g/>
+		</g>
+	</g>
+</svg>

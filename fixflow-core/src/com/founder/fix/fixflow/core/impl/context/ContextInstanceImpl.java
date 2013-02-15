@@ -1,0 +1,155 @@
+package com.founder.fix.fixflow.core.impl.context;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.founder.fix.fixflow.core.context.ContextInstance;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
+import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
+import com.founder.fix.fixflow.core.impl.variable.VariableTransferEntity;
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.variable.VariableFlowType;
+
+public class ContextInstanceImpl implements ContextInstance {
+
+	ProcessInstance processInstance;
+
+	public ContextInstanceImpl(ProcessInstance processInstance) {
+		this.processInstance = processInstance;
+	}
+
+	/**
+	 * 持久化流程实例变量Map
+	 */
+	protected Map<String, Object> variableMap = null;
+
+	public void addTransientVariable(String variableKey, Object variableObj) {
+		ExpressionMgmt.setVariable(variableKey, variableObj);
+
+	}
+
+	public Object getTransientVariable(String variableKey, ExecutionContext executionContext) {
+
+		if (variableKey == null) {
+			return null;
+		}
+		return ExpressionMgmt.execute(variableKey, executionContext);
+	}
+	
+	protected Map<String, Object> transientVariableMap=new HashMap<String, Object>();
+
+	public Map<String, Object> getTransientVariableMap() {
+		return transientVariableMap;
+	}
+
+	public void setTransientVariableMap(Map<String, Object> transientVariableMap) {
+		if (transientVariableMap == null) {
+			return;
+		}
+		//ExecutionContext executionContextTemp = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+		this.transientVariableMap=transientVariableMap;
+			for (String mapKey : transientVariableMap.keySet()) {
+				ExpressionMgmt.setVariable(mapKey, transientVariableMap.get(mapKey));
+			}
+
+		
+		
+		/*
+		ProcessInstanceImpl processInstanceImpl = (ProcessInstanceImpl) this.processInstance;
+		if (transientVariableMap.get("formInfo") != null) {
+			for (DataVariableBehavior dataVariableBehavior : processInstanceImpl.getProcessDefinition().getDataVariableMgmtDefinition().getDataVariableBehaviorsByProcess()) {
+				DataVariableInstance dataVariableInstance = processInstanceImpl.getDataVariableMgmtInstance().createDataVariableInstance(dataVariableBehavior);
+				dataVariableInstance.executeExpression(executionContextTemp);
+			}
+		}
+		*/
+
+	}
+
+	public Object getVariable(String variableKey) {
+		if (variableMap == null) {
+			return null;
+		}
+		return variableMap.get(variableKey);
+	}
+
+	public Map<String, Object> getVariableMap() {
+
+		if (variableMap == null) {
+			variableMap = new HashMap<String, Object>();
+		}
+		return variableMap;
+	}
+
+	public void addVariable(String variableKey, Object variableObj) {
+		if (variableMap == null) {
+			variableMap = new HashMap<String, Object>();
+		}
+		variableMap.put(variableKey, variableObj);
+
+	}
+
+	public void setVariableMap(Map<String, Object> variableMap) {
+		
+		if (variableMap == null||variableMap.size()<=0) {
+			return;
+		}
+		//ExecutionContext executionContextTemp = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+		if (variableMap != null) {
+			for (String mapKey : variableMap.keySet()) {
+				ExpressionMgmt.setVariable(mapKey, variableMap.get(mapKey));
+			}
+
+		}
+		String processInstanceId=processInstance.getId();
+		VariableTransferEntity variableTransferEntity = new VariableTransferEntity();
+		variableTransferEntity.setVariableMap(variableMap);
+
+		if (processInstanceId != null && !processInstanceId.equals("")) {
+			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, processInstanceId);
+			variableTransferEntity.addVariableFlowType(variableFlowTypeEntity);
+		}
+	
+		Context.getCommandContext().getVariableManager().saveVariable(variableTransferEntity);
+
+
+	
+		this.variableMap = variableMap;
+
+	}
+
+	public void addDataVariable(String variableKey, Object variableObj) {
+		// TODO 自动生成的方法存根
+		ExpressionMgmt.setVariable("fixflowdatavariable_"+variableKey, variableObj);
+		ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity)this.processInstance;
+		ExecutionContext executionContext=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(processInstanceEntity.getRootToken());
+		//ExpressionMgmt.execute("fixflowdatavariable_"+variableKey, executionContext);
+		ExpressionMgmt.execute("${"+variableKey+"}=fixflowdatavariable_"+variableKey+";",executionContext);
+		
+		ExpressionMgmt.execute("${"+variableKey+"}", executionContext);
+	}
+	
+	public void setDataVariable(Map<String, Object> dataVariableMap) {
+		// TODO 自动生成的方法存根
+		
+		
+		if (dataVariableMap == null||dataVariableMap.size()<=0) {
+			return;
+		}
+		//ExecutionContext executionContextTemp = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+		if (dataVariableMap != null) {
+			for (String mapKey : dataVariableMap.keySet()) {
+				addDataVariable(mapKey,dataVariableMap.get(mapKey));
+			}
+
+		}
+		
+		
+		
+	}
+
+}

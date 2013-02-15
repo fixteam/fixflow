@@ -1,0 +1,65 @@
+	<g id="{svg_id}">
+		<defs>
+			<marker id="{svg_id}start" refX="1" refY="5" markerUnits="userSpaceOnUse" markerWidth="17" markerHeight="11" orient="auto">
+				<path id="{svg_id}condition" d="M 0 5 L 8 0 L 16 5 L 8 10 L 0 5" fill="white" stroke="black" stroke-width="1" display="{start_con}"/>
+				<path id="{svg_id}default" d="M 5 0 L 11 10" fill="white" stroke="black" stroke-width="1" display="{start_def}"/>
+			</marker>
+			<marker id="{svg_id}end" refX="11" refY="6" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="12" orient="auto">
+				<path d="M 0 3 L 10 6 L 0 9z" fill="black" stroke="black" stroke-linejoin="round" stroke-width="1" id="{svg_id}beend"/>
+			</marker>
+		</defs>
+		<g class="stencils">
+			<g class="me">
+				<g pointer-events="painted">
+					<path d="{path}" stroke="black" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#{svg_id}start)" marker-end="url(#{svg_id}end)" id="{svg_id}_1"/>
+					<path d="{path}" stroke="black" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#{svg_id}start)" marker-end="url(#{svg_id}end)" id="undefined" visibility="hidden" stroke-dasharray="null" title="{text}"/>
+				</g>
+				<text id="{svg_id}name" x="{text_x}" y="{text_y}" oryx:align="middle center" oryx:edgePosition="startTop" xmlns:oryx="http://www.b3mn.org/oryx" stroke-width="0pt" letter-spacing="-0.01px" oryx:fontSize="12" text-anchor="start">
+					<tspan dy="11" x="{text_x}" y="{text_y}" id="ext-gen343">{text}</tspan>
+				</text>
+			</g>
+			<g class="children" style="overflow:hidden"/>
+			<g class="edge"/>
+		</g>
+		<g class="controls">
+			<g class="dockers">
+				<g visibility="hidden">
+					<g pointer-events="all" transform="translate(142.1796875, 141)">
+						<circle cx="8" cy="8" r="8" stroke="none" fill="none"/>
+						<circle cx="8" cy="8" r="3" stroke="black" fill="#00FF00" stroke-width="1"/>
+					</g>
+					<g pointer-events="none" visibility="hidden" transform="translate(135, 149)">
+						<circle cx="0" cy="0" r="3" fill="red" fill-opacity="0.4"/>
+					</g>
+				</g>
+				<g visibility="hidden">
+					<g pointer-events="all" transform="translate(276.4296875, 218)">
+						<circle cx="8" cy="8" r="8" stroke="none" fill="none"/>
+						<circle cx="8" cy="8" r="3" stroke="black" fill="#00FF00" stroke-width="1"/>
+					</g>
+					<g pointer-events="none" visibility="hidden" transform="translate(335, 226)">
+						<circle cx="0" cy="0" r="3" fill="red" fill-opacity="0.4"/>
+					</g>
+				</g>
+				<g visibility="hidden">
+					<g pointer-events="all" transform="translate(209.5, 141)">
+						<circle cx="8" cy="8" r="8" stroke="none" fill="none"/>
+						<circle cx="8" cy="8" r="3" stroke="black" fill="red" stroke-width="1"/>
+					</g>
+					<g pointer-events="none" visibility="hidden" transform="translate(217.5, 149)">
+						<circle cx="0" cy="0" r="3" fill="red" fill-opacity="0.4"/>
+					</g>
+				</g>
+				<g visibility="hidden">
+					<g pointer-events="all" transform="translate(209.5, 218)">
+						<circle cx="8" cy="8" r="8" stroke="none" fill="none"/>
+						<circle cx="8" cy="8" r="3" stroke="black" fill="red" stroke-width="1"/>
+					</g>
+					<g pointer-events="none" visibility="hidden" transform="translate(217.5, 226)">
+						<circle cx="0" cy="0" r="3" fill="red" fill-opacity="0.4"/>
+					</g>
+				</g>
+			</g>
+			<g class="magnets"/>
+		</g>
+	</g>

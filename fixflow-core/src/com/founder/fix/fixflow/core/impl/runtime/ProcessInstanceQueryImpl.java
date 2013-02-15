@@ -1,0 +1,370 @@
+package com.founder.fix.fixflow.core.impl.runtime;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.impl.AbstractQuery;
+import com.founder.fix.fixflow.core.impl.Page;
+import com.founder.fix.fixflow.core.impl.ProcessInstanceQueryProperty;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+
+
+public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery {
+
+	protected String executionId;
+	protected String businessKey;
+	protected String processDefinitionId;
+	protected String processDefinitionKey;
+	protected String superProcessInstanceId;
+	protected String subProcessInstanceId;
+	protected String initiator;
+	protected String taskParticipants;
+
+	protected String isSuspended;
+	protected List<String> processDefinitionKeyList=new ArrayList<String>();
+
+	
+	
+
+
+	// Unused, see dynamic query
+	protected String activityId;
+
+	protected CommandExecutor commandExecutor;
+
+	public ProcessInstanceQueryImpl() {
+	}
+
+	public ProcessInstanceQueryImpl(CommandContext commandContext) {
+		super(commandContext);
+	}
+
+	public ProcessInstanceQueryImpl(CommandExecutor commandExecutor) {
+		super(commandExecutor);
+	}
+
+	public ProcessInstanceQueryImpl processInstanceId(String processInstanceId) {
+		if (processInstanceId == null) {
+			throw new FixFlowException("Process instance id is null");
+		}
+		this.executionId = processInstanceId;
+		return this;
+	}
+
+	public ProcessInstanceQuery processInstanceBusinessKey(String businessKey) {
+		if (businessKey == null) {
+			throw new FixFlowException("Business key is null");
+		}
+		this.businessKey = businessKey;
+		return this;
+	}
+	
+	public ProcessInstanceQuery isSuspended(boolean isSuspended) {
+		this.isSuspended=String.valueOf(isSuspended);
+		return this;
+	}
+
+	public ProcessInstanceQuery processInstanceBusinessKey(String businessKey, String processDefinitionKey) {
+		if (businessKey == null) {
+			throw new FixFlowException("Business key is null");
+		}
+		this.businessKey = businessKey;
+		this.processDefinitionKey = processDefinitionKey;
+		return this;
+	}
+
+	public ProcessInstanceQueryImpl processDefinitionId(String processDefinitionId) {
+		if (processDefinitionId == null) {
+			throw new FixFlowException("Process definition id is null");
+		}
+		this.processDefinitionId = processDefinitionId;
+		return this;
+	}
+	
+	public ProcessInstanceQueryImpl taskParticipants(String taskParticipants) {
+		this.taskParticipants=taskParticipants;
+		
+		return this;
+	}
+	
+	
+	public ProcessInstanceQueryImpl initiator(String initiator) {
+		this.initiator=initiator;
+		
+		return this;
+	}
+	
+	
+	protected String isPigeonhole;
+	
+
+	public ProcessInstanceQuery isPigeonhole() {
+		// TODO 自动生成的方法存根
+		isPigeonhole="1";
+		return this;
+	}
+
+	public ProcessInstanceQuery notPigeonhole() {
+		isPigeonhole="0";
+		return this;
+	}
+	
+	protected String isEnd;
+	
+	public ProcessInstanceQuery isEnd() {
+		// TODO 自动生成的方法存根
+		isEnd="true";
+		return this;
+	}
+
+	public ProcessInstanceQuery notEnd() {
+		isEnd="false";
+		return this;
+	}
+
+
+	public ProcessInstanceQueryImpl processDefinitionKey(String processDefinitionKey) {
+		if (processDefinitionKey == null) {
+			throw new FixFlowException("Process definition key is null");
+		}
+		this.processDefinitionKey = processDefinitionKey;
+		return this;
+	}
+	
+	public ProcessInstanceQuery processDefinitionKey(List<String> processDefinitionKeyList) {
+		if(processDefinitionKeyList!=null&&processDefinitionKeyList.size()>0){
+			this.processDefinitionKeyList=processDefinitionKeyList;
+		}
+		else{
+			throw new FixFlowException("processDefinitionKeyList 不能为空!");
+		}
+		return this;
+	}
+
+	public ProcessInstanceQuery superProcessInstanceId(String superProcessInstanceId) {
+		this.superProcessInstanceId = superProcessInstanceId;
+		return this;
+	}
+
+	public ProcessInstanceQuery subProcessInstanceId(String subProcessInstanceId) {
+		this.subProcessInstanceId = subProcessInstanceId;
+		return this;
+	}
+
+	public ProcessInstanceQuery orderByProcessInstanceId() {
+		this.orderProperty = ProcessInstanceQueryProperty.PROCESS_INSTANCE_ID;
+		return this;
+	}
+	
+	public ProcessInstanceQuery orderByStartTime() {
+		this.orderProperty = ProcessInstanceQueryProperty.START_TIME;
+		return this;
+	}
+	
+
+	public ProcessInstanceQuery orderByProcessDefinitionId() {
+		this.orderProperty = ProcessInstanceQueryProperty.PROCESS_DEFINITION_ID;
+		return this;
+	}
+
+	public ProcessInstanceQuery orderByProcessDefinitionKey() {
+		this.orderProperty = ProcessInstanceQueryProperty.PROCESS_DEFINITION_KEY;
+		return this;
+	}
+
+	// results /////////////////////////////////////////////////////////////////
+
+	public long executeCount(CommandContext commandContext) {
+		checkQueryOk();
+		// ensureVariablesInitialized();
+		return commandContext.getProcessInstanceManager().findProcessInstanceCountByQueryCriteria(this);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<ProcessInstance> executeList(CommandContext commandContext, Page page) {
+		checkQueryOk();
+		// ensureVariablesInitialized();
+		return (List)commandContext.getProcessInstanceManager().findProcessInstanceByQueryCriteria(this, page);
+	}
+
+	// getters /////////////////////////////////////////////////////////////////
+
+	public boolean getOnlyProcessInstances() {
+		return true; // See dynamic query in runtime.mapping.xml
+	}
+
+	public String getProcessInstanceId() {
+		return executionId;
+	}
+
+	public String getBusinessKey() {
+		return businessKey;
+	}
+
+	public String getProcessDefinitionId() {
+		return processDefinitionId;
+	}
+
+	public String getProcessDefinitionKey() {
+		return processDefinitionKey;
+	}
+
+	public String getActivityId() {
+		return null; // Unused, see dynamic query
+	}
+
+	public String getSuperProcessInstanceId() {
+		return superProcessInstanceId;
+	}
+
+	public String getSubProcessInstanceId() {
+		return subProcessInstanceId;
+	}
+	
+	public String getInitiator() {
+		return initiator;
+	}
+	
+	public String getTaskParticipants() {
+		return taskParticipants;
+	}
+
+
+	public ProcessInstanceQuery variableValueEquals(String name, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableValueNotEquals(String name, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableValueGreaterThan(String name, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableValueGreaterThanOrEqual(String name, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableValueLessThan(String name, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableValueLessThanOrEqual(String name, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableValueLike(String name, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	protected String initiatorLike;
+
+	
+
+
+
+	protected String subject;
+	
+	protected String subjectLike;
+	
+	protected Date startTime;
+	
+	protected Date startTimeBefore;
+	
+	protected Date startTimeAfter;
+	
+
+	public ProcessInstanceQuery initiatorLike(String initiatorLike) {
+		this.initiatorLike=initiatorLike;
+		return this;
+	}
+
+	public ProcessInstanceQuery subject(String subject) {
+		this.subject=subject;
+		return this;
+	}
+
+	public ProcessInstanceQuery subjectLike(String subjectLike) {
+		this.subjectLike=subjectLike;
+		return this;
+	}
+
+	public ProcessInstanceQuery startTimeOn(Date startTime) {
+		this.startTime=startTime;
+		return this;
+	}
+
+	public ProcessInstanceQuery startTimeBefore(Date startTimeBefore) {
+		this.startTimeBefore=startTimeBefore;
+		return this;
+	}
+
+	public ProcessInstanceQuery startTimeAfter(Date startTimeAfter) {
+		this.startTimeAfter=startTimeAfter;
+		return this;
+	}
+
+	
+	public String getInitiatorLike() {
+		return initiatorLike;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public String getSubjectLike() {
+		return subjectLike;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public Date getStartTimeBefore() {
+		return startTimeBefore;
+	}
+
+	public Date getStartTimeAfter() {
+		return startTimeAfter;
+	}
+
+	
+
+
+
+	public String getIsPigeonhole() {
+		return isPigeonhole;
+	}
+
+
+	public String getIsEnd() {
+		return isEnd;
+	}
+	
+	public String getIsSuspended() {
+		return isSuspended;
+	}
+
+	
+	public List<String> getProcessDefinitionKeyList() {
+		return processDefinitionKeyList;
+	}
+
+	
+}

@@ -1,0 +1,40 @@
+<g id="{svg_id}">
+	<g class="stencils" xmlns:oryx="http://www.b3mn.org/oryx" transform="translate({x}, {y})">
+		<g class="me">
+			<g pointer-events="fill" title="{text}"
+				id="sid-{svg_id}">
+				<defs
+					id="sid-{svg_id}_sid-{svg_id}_5">
+					<radialGradient
+						id="sid-{svg_id}background" cx="10%"
+						cy="10%" r="100%" fx="10%" fy="10%">
+						<stop offset="0%" stop-color="#ffffff" stop-opacity="1"
+							id="sid-{svg_id}_sid-{svg_id}_6" />
+						<stop id="sid-{svg_id}fill_el"
+							offset="100%" stop-color="#ffffff" stop-opacity="1" />
+					</radialGradient>
+				</defs>
+				<circle id="sid-{svg_id}bg_frame"
+					cx="15" cy="15" r="15" stroke="black"
+					fill="url(#sid-{svg_id}background) white"
+					stroke-width="1" style="stroke-dasharray: 5.5, 3" />
+				<circle id="sid-{svg_id}frame"
+					cx="15" cy="15" r="15" stroke="black" fill="none" stroke-width="1"
+					display="inherit" />
+				<circle cx="15" cy="15" r="10" stroke="black" fill="none"
+					stroke-width="1"
+					id="sid-{svg_id}_sid-{svg_id}_7" />
+				<path
+					d=" M15 5  L15 8  M20 6  L18.5 9  M24 10  L21 11.5  M25 15  L22 15  M24 20  L21 18.5  M20 24  L18.5 21  M15 25  L15 22  M10 24  L11.5 21  M6 20  L9 18.5  M5 15  L8 15  M6 10  L9 11.5  M10 6  L11.5 9  M17 8  L15 15  L19 15 "
+					fill="none" stroke="black"
+					id="sid-{svg_id}_sid-{svg_id}_8" />
+					<text font-size="12" id="sid-{svg_id}text_name" x="15" y="36" oryx:align="top center" xmlns:oryx="http://www.b3mn.org/oryx" stroke="black" stroke-width="0pt" letter-spacing="-0.01px" oryx:fontSize="11" text-anchor="middle">
+						<tspan dy="11" x="15" y="36" id="ext-gen349">{text}</tspan>
+					</text>					
+					
+			</g>
+		</g>
+		<g class="children" style="overflow:hidden" />
+		<g class="edge" />
+	</g>
+</g>

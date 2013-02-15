@@ -1,0 +1,32 @@
+<g id="{svg_id}">
+	<g class="stencils" xmlns:oryx="http://www.b3mn.org/oryx" transform="translate({x}, {y})">
+		<g class="me">
+			<g pointer-events="fill" title="{text}"
+				id="sid-{svg_id}">
+				<defs
+					id="sid-{svg_id}_sid-{svg_id}_5">
+					<radialGradient
+						id="sid-{svg_id}background" cx="10%"
+						cy="10%" r="100%" fx="10%" fy="10%">
+						<stop offset="0%" stop-color="#ffffff" stop-opacity="1"
+							id="sid-{svg_id}_sid-{svg_id}_6" />
+						<stop id="sid-{svg_id}fill_el"
+							offset="100%" stop-color="#ffffff" stop-opacity="1" />
+					</radialGradient>
+				</defs>
+				<circle id="sid-{svg_id}bg_frame"
+					cx="14" cy="14" r="14" stroke="black"
+					fill="url(#sid-{svg_id}background) white"
+					stroke-width="3" />
+				<circle cx="14" cy="14" r="9" stroke="black" fill="black"
+					stroke-width="1"
+					id="sid-{svg_id}_sid-{svg_id}_7" />
+					<text font-size="11" id="sid-3D478AD0-256F-48C0-8FBD-AF8BD68B5C03text_name" x="14" y="36" oryx:align="top center" xmlns:oryx="http://www.b3mn.org/oryx" stroke="black" stroke-width="0pt" letter-spacing="-0.01px" oryx:fontSize="11" text-anchor="middle">
+						<tspan dy="11" x="14" y="36" id="ext-gen343">{text}</tspan>
+					</text>
+			</g>
+		</g>
+		<g class="children" style="overflow:hidden" />
+		<g class="edge" />
+	</g>
+</g>

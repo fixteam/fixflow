@@ -1,0 +1,156 @@
+<definitions id="definitions" 
+  targetNamespace="http://activiti.org/bpmn20"  
+  xmlns:activiti="http://activiti.org/bpmn" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"> 
+         
+        <process id="financialReport" name="Monthly financial report reminder process"> 
+           
+          <startEvent id="theStart" /> 
+             
+          <sequenceFlow id='flow1' sourceRef='theStart' targetRef='writeReportTask' /> 
+             
+          <userTask id="writeReportTask" name="Write monthly financial report" > 
+            <documentation> 
+              Write monthly financial report for publication to shareholders. 
+            </documentation> 
+            <potentialOwner> 
+              <resourceAssignmentExpression> 
+              <!-- If no specifics are given whether the given text string is a user or group, the engine defaults to group. So the following would be the same as when group(accountancy) was declared. -->
+                <formalExpression>accountancy</formalExpression> 
+              </resourceAssignmentExpression> 
+            </potentialOwner> 
+          </userTask> 
+             
+          <sequenceFlow id='flow2' sourceRef='writeReportTask' targetRef='verifyReportTask' /> 
+               
+          <userTask id="verifyReportTask" name="Verify monthly financial report" > 
+            <documentation> 
+              Verify monthly financial report composed by the accountancy department. 
+              This financial report is going to be sent to all the company shareholders.   
+            </documentation> 
+            <potentialOwner> 
+              <resourceAssignmentExpression> 
+                <formalExpression>management</formalExpression> 
+              </resourceAssignmentExpression> 
+            </potentialOwner> 
+          </userTask> 
+             
+          <sequenceFlow id='flow3' sourceRef='verifyReportTask' targetRef='theEnd' /> 
+               
+          <endEvent id="theEnd" /> 
+               
+        </process> 
+         
+</definitions>
+
+
+
+@Deployment(resources = {"org/activiti/examples/bpmn/executionListener/ExecutionListenersFieldInjectionProcess.bpmn20.xml"}) 
+public void testExecutionListenerFieldInjection() { 
+  Map<String, Object> variables = new HashMap<String, Object>(); 
+  variables.put("myVar", "listening!"); 
+     
+  ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess", variables); 
+     
+  Object varSetByListener = runtimeService.getVariable(processInstance.getId(), "var"); 
+  assertNotNull(varSetByListener); 
+  assertTrue(varSetByListener instanceof String); 
+     
+  // Result is a concatenation of fixed injected field and injected expression 
+  assertEquals("Yes, I am listening!", varSetByListener); 
+} 
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<callableElement id="">
+	<supportedInterfaceRef>ddd</supportedInterfaceRef>
+	<ioSpecification>
+		<dataInput>a</dataInput>
+		<dataOutput>a</dataOutput>
+	</ioSpecification>
+</callableElement>
+
+<documentation id="mydoc" textFormat="text/plain">
+	<name>wzf</name>
+</documentation>
+
+<extensionElements>
+	<fix:aa a1="" a2=""/>
+	<fix:bb b1="" b2=""/>	
+</extensionElements>
+
+<baseElement id="101" name="base">
+	<documentation id="mydoc" textFormat="text/plain">
+		my name is <name>wzf</name>
+	</documentation>
+</baseElement>
+
+<auditing id=""></auditing>
+
+<xsd:element name="ioSpecification" type="tInputOutputSpecification" />
+	<xsd:complexType name="tInputOutputSpecification">
+		<xsd:complexContent>
+			<xsd:extension base="tBaseElement">
+				<xsd:sequence>
+					<xsd:element ref="dataInput" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="dataOutput" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="inputSet" minOccurs="1" maxOccurs="unbounded"/>
+					<xsd:element ref="outputSet" minOccurs="1" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	
+<itemDefinition id="myItemDefinition1" >  
+    <jbpm:arg>  
+      <jbpm:object expr="#{var1}" />  
+    </jbpm:arg>  
+</itemDefinition>  
+		
+<bpmn:definitions id=”ID_1” …>
+…
+<bpmn:extension mustUnderstand="true" definition="bpmn:dataRequirements"/>
+…
+<bpmn:task name="Retrieve Customer Record" id="ID_2">
+<bpmn:dataInput name="Order Input" id="ID_3">
+<bpmn:typeDefinition typeRef="bo:Order" id="ID_4"/>
+</bpmn:dataInput>
+<bpmn:dataOutput name="Customer Record Output" id="ID_5">
+<bpmn:typeDefinition typeRef="bo:CustomerRecord" id="ID_6"/>
+</bpmn:dataOutput>
+<bpmn:inputSet name="Inputs" id="ID_7" dataInputRefs="ID_3"/>
+<bpmn:outputSet name="Outputs" id="ID_8" dataOutputRefs="ID_5"/>
+</bpmn:task>
+…
+</bpmn:definitions>

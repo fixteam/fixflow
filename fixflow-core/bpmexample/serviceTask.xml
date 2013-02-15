@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceTask xmlns:fix="c:/fix-bpmn-extens.xsd">
+	<extensionElements>
+		<Expression fix:actuator="fixServiceProxy" fix:interface="customer.str2Array" >
+			<extensionElements>
+				  <fix:parameterBinding parameterId="strname" parameterName="strname">
+						<expression fix:actuator="simpleScriptActuator">"1,2,3"+"5,6,7"</expression>
+				  </fix:parameterBinding>
+				  <fix:parameterBinding parameterId="split" parameterName="split">
+						<expression fix:actuator="fixedValueActuator">,</expression>
+				  </fix:parameterBinding>
+			 </extensionElements>
+		</Expression> 
+	</extensionElements>
+</serviceTask>

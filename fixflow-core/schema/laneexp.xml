@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_-_Lk8J_IEeCYrpruqR4iGw">
+  <bpmn2:collaboration id="_-_Lk8Z_IEeCYrpruqR4iGw">
+    <bpmn2:participant id="_-_Lk8p_IEeCYrpruqR4iGw" name="Internal" processRef="_-_REgJ_IEeCYrpruqR4iGw"/>
+    <bpmn2:participant id="__1OcIJ_IEeCYrpruqR4iGw" name="Pool nr 3" processRef="_AaFcsZ_JEeCYrpruqR4iGw"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="_-_REgJ_IEeCYrpruqR4iGw" name="Process for Internal">
+    <bpmn2:userTask id="_LL8nQKCOEeCrlqzNYpqdlQ" name="User Task"/>
+  </bpmn2:process>
+  
+  <bpmn2:process id="_AaFcsZ_JEeCYrpruqR4iGw" name="Process for Pool nr 3">
+    <bpmn2:laneSet id="_AaFcsp_JEeCYrpruqR4iGw">
+      <bpmn2:lane id="_AaFcsJ_JEeCYrpruqR4iGw" name="Lane nr 5">
+        <bpmn2:flowNodeRef>_BAqUgJ_JEeCYrpruqR4iGw</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>_FdJ4caCOEeCrlqzNYpqdlQ</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>_F5kusKCOEeCrlqzNYpqdlQ</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>_IxunkKCOEeCrlqzNYpqdlQ</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>_LL8nQKCOEeCrlqzNYpqdlQ</bpmn2:flowNodeRef>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
+    <bpmn2:intermediateThrowEvent id="_BAqUgJ_JEeCYrpruqR4iGw" name="Throw"/>
+    <bpmn2:startEvent id="_FdJ4caCOEeCrlqzNYpqdlQ" name="Start"/>
+    <bpmn2:endEvent id="_F5kusKCOEeCrlqzNYpqdlQ" name="End"/>
+    <bpmn2:userTask id="_IxunkKCOEeCrlqzNYpqdlQ" name="User Task"/>
+  </bpmn2:process>
+  
+  <bpmndi:BPMNDiagram id="_CcfZUJ_JEeCYrpruqR4iGw">
+    <bpmndi:BPMNPlane id="_CcfZUZ_JEeCYrpruqR4iGw" bpmnElement="_-_REgJ_IEeCYrpruqR4iGw">
+      <bpmndi:BPMNShape id="__1PqQJ_IEeCYrpruqR4iGw" bpmnElement="__1OcIJ_IEeCYrpruqR4iGw">
+        <dc:Bounds height="100.0" width="600.0" x="312.0" y="352.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_AaGq0J_JEeCYrpruqR4iGw" bpmnElement="_AaFcsJ_JEeCYrpruqR4iGw">
+        <dc:Bounds height="100.0" width="585.0" x="327.0" y="352.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BAswwJ_JEeCYrpruqR4iGw" bpmnElement="_BAqUgJ_JEeCYrpruqR4iGw">
+        <dc:Bounds height="51.0" width="36.0" x="562.0" y="384.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_FdX64KCOEeCrlqzNYpqdlQ" bpmnElement="_FdJ4caCOEeCrlqzNYpqdlQ">
+        <dc:Bounds height="51.0" width="36.0" x="456.0" y="398.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_F5nK8KCOEeCrlqzNYpqdlQ" bpmnElement="_F5kusKCOEeCrlqzNYpqdlQ">
+        <dc:Bounds height="51.0" width="36.0" x="747.0" y="396.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_Ix3xgKCOEeCrlqzNYpqdlQ" bpmnElement="_IxunkKCOEeCrlqzNYpqdlQ">
+        <dc:Bounds height="50.0" width="110.0" x="630.0" y="377.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_LL_DgKCOEeCrlqzNYpqdlQ" bpmnElement="_LL8nQKCOEeCrlqzNYpqdlQ">
+        <dc:Bounds height="50.0" width="110.0" x="600.0" y="200.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

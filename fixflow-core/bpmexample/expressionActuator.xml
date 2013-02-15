@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actuators>
+
+	<actuator id="fixedValueActuator" expressionType="fixedValue" expressionAnnotation="常量值" class="com.founder.fix.fixflow.core.impl.expression.FixedActuatorImpl" >
+		<scope name="sequenceFlow"/>
+		<scope name="resourceRole"/>
+		<scope name="parameterBinding"/>
+		<scope name="subject"/>
+		<scope name="dataIO"/>
+		<scope name="gateWay"/>
+	</actuator>
+	
+	<actuator id="simpleScriptActuator" expressionType="simpleScript" expressionAnnotation="脚本表达式" class="com.founder.fix.fixflow.core.impl.expression.BshActuatorImpl">
+		<scope name="sequenceFlow"/>
+		<scope name="resourceRole"/>
+		<scope name="parameterBinding"/>
+		<scope name="subject"/>
+		<scope name="dataIO"/>
+		<scope name="gateWay"/>
+	</actuator>
+	
+	<actuator id="mixTextActuator" expressionType="mixText" expressionAnnotation="混合文本" class="com.founder.fix.fixflow.expand.expression.MixTextActuator">
+		<scope name="subject"/>
+		<scope name="parameterBinding"/>
+		<scope name="dataIO"/>
+		<scope name="gateWay"/>
+	</actuator>
+	
+	<actuator id="fixServiceProxy" expressionType="fixService" expressionAnnotation="平台服务调用" class="com.founder.fix.fixflow.expand.expression.FixServiceActuator" >
+		<scope name="servicetask"/>
+		<scope name="sequenceFlow"/>
+		<scope name="resourceRole"/>
+		<scope name="parameterBinding"/>
+		<scope name="subject"/>
+		<scope name="dataIO"/>
+		<scope name="gateWay"/>
+	</actuator>
+
+	<actuator id="businessRuleEngine" expressionType="businessRule" expressionAnnotation="业务规则脚本" class="com.founder.fix.fixflow.expand.expression.DroolsRuleActuator">
+		<scope name="businessRuleTask"/>
+	</actuator>
+</actuators>

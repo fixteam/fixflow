@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:fix="c:/fix-bpmn-extens.xsd">
+
+	<process id="purchaseOrders" name="采购订单流程">
+		<startEvent id="theStart" name="开始事件" fix:formUri="forms/customer.htm" />
+
+		<sequenceFlow id="flow1" sourceRef="theStart" targetRef="subOrders" />
+
+		<userTask id="subOrders" name="填写采购单">
+			<humanPerformer fix:resouceRoleType="User">
+				<resourceAssignmentExpression>
+					<formalExpression>2130120125</formalExpression>
+				</resourceAssignmentExpression>
+			</humanPerformer>
+			<extensionElements>
+
+				<fix:userCommand id="sub" name="提交"/>
+
+				<fix:taskSubject>
+					<formalExpression>填写采购单</formalExpression>
+				</fix:taskSubject>
+			</extensionElements>
+
+		</userTask>
+
+		<sequenceFlow id="flow2" sourceRef="subOrders" targetRef="managerApproval" />
+
+		<userTask id="managerApproval" name="经理审批">
+			<humanPerformer fix:resouceRoleType="User">
+				<resourceAssignmentExpression>
+					<formalExpression>admin</formalExpression>
+				</resourceAssignmentExpression>
+			</humanPerformer>
+		</userTask>
+
+		<sequenceFlow id="flow3" sourceRef="managerApproval"
+			targetRef="theEnd" />
+
+		<endEvent id="theEnd" name="结束事件" />
+	</process>
+</definitions>

@@ -1,0 +1,198 @@
+<!DOCTYPE module PUBLIC  
+    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"  
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">  
+<module name="Checker">  
+  
+    <!--  
+        重复代码的检查，超过8行就认为重复，UTF-8格式 本检查一定要放在"TreeWalker"节点前，否则在  
+        Checkclipse中会无法使用。(在ant下可以)  
+    -->  
+    <module name="StrictDuplicateCode">  
+        <property name="min" value="8" />  
+        <property name="charset" value="UTF-8" />  
+    </module>  
+  
+    <module name="TreeWalker">  
+  
+        <!-- javadoc的检查 -->  
+        <!-- 检查所有的interface和class -->  
+        <module name="JavadocType" />  
+  
+        <!-- 命名方面的检查，它们都使用了Sun官方定的规则。 -->  
+        <!-- 局部的final变量，包括catch中的参数的检查 -->  
+        <module name="LocalFinalVariableName" />  
+        <!-- 局部的非final型的变量，包括catch中的参数的检查 -->  
+        <module name="LocalVariableName" />  
+        <!-- 包名的检查（只允许小写字母） -->  
+        <module name="PackageName">  
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$" />  
+        </module>  
+        <!-- 仅仅是static型的变量（不包括static final型）的检查 -->  
+        <module name="StaticVariableName" />  
+        <!-- 类型(Class或Interface)名的检查 -->  
+        <module name="TypeName" />  
+        <!-- 非static型变量的检查 -->  
+        <module name="MemberName" />  
+        <!-- 方法名的检查 -->  
+        <module name="MethodName" />  
+        <!-- 方法的参数名 -->  
+        <module name="ParameterName " />  
+        <!-- 常量名的检查 -->  
+        <module name="ConstantName" />  
+  
+        <!-- import方面的检查 -->  
+        <!-- import中避免星号"*" -->  
+        <module name="AvoidStarImport" />  
+        <!--  
+            没用的import检查，比如：1.没有被用到2.重复的3.import java.lang的4.import  
+            与该类在同一个package的  
+        -->  
+        <module name="UnusedImports" />  
+  
+  
+        <!-- 长度方面的检查 -->  
+        <!-- 文件长度不超过1500行 -->  
+        <module name="FileLength">  
+            <property name="max" value="1500" />  
+        </module>  
+        <!-- 每行不超过120个字-->  
+        <module name="LineLength">  
+            <property name="max" value="120" />  
+        </module>  
+        <!-- 方法不超过30行 -->  
+        <module name="MethodLength">  
+            <property name="tokens" value="METHOD_DEF" />  
+            <property name="max" value="30" />  
+        </module>  
+        <!-- 方法的参数个数不超过3个。 并且不对构造方法进行检查-->  
+        <module name="ParameterNumber">  
+            <property name="max" value="3" />  
+            <property name="tokens" value="METHOD_DEF" />  
+        </module>  
+  
+        <!-- 空格检查  -->  
+        <!-- 允许方法名后紧跟左边圆括号"(" -->  
+        <module name="MethodParamPad" />  
+        <!-- 在类型转换时，不允许左圆括号右边有空格，也不允许与右圆括号左边有空格 -->  
+        <module name="TypecastParenPad" />  
+        <!-- 不允许使用"tab"键  -->  
+        <module name="TabCharacter" />  
+  
+        <!-- 关键字 -->  
+        <!--  
+            每个关键字都有正确的出现顺序。比如 public static final XXX 是对一个常量的声明。如果使用 static  
+            public final 就是错误的  
+        -->  
+        <module name="ModifierOrder" />  
+        <!-- 多余的关键字 -->  
+        <module name="RedundantModifier" />  
+  
+        <!-- 对区域的检查 -->  
+        <!-- 不能出现空白区域 -->  
+        <module name="EmptyBlock" />  
+        <!-- 所有区域都要使用大括号。 -->  
+        <module name="NeedBraces" />  
+        <!-- 多余的括号 -->  
+        <module name="AvoidNestedBlocks">  
+            <property name="allowInSwitchCase" value="true" />  
+        </module>  
+  
+        <!-- 编码方面的检查 -->  
+        <!-- 不许出现空语句 -->  
+        <module name="EmptyStatement" />  
+        <!-- 每个类都实现了equals()和hashCode() -->  
+        <module name="EqualsHashCode" />  
+        <!-- 不许使用switch,"a++"这样可读性很差的代码 -->  
+        <module name="IllegalToken" />  
+        <!-- 不许内部赋值 -->  
+        <module name="InnerAssignment" />  
+        <!-- 绝对不能容忍魔法数 -->  
+        <module name="MagicNumber">  
+            <property name="tokens" value="NUM_DOUBLE, NUM_INT" />  
+        </module>  
+        <!-- 循环控制变量不能被修改 -->  
+        <module name="ModifiedControlVariable" />  
+        <!-- 多余的throw -->  
+        <module name="RedundantThrows" />  
+        <!-- 不许使用未被简化的条件表达式 -->  
+        <module name="SimplifyBooleanExpression" />  
+        <!-- 不许使用未被简化的布尔返回值 -->  
+        <module name="SimplifyBooleanReturn" />  
+        <!-- String的比较不能用!= 和 == -->  
+        <module name="StringLiteralEquality" />  
+        <!-- if最多嵌套3层 -->  
+        <module name="NestedIfDepth">  
+            <property name="max" value="3" />  
+        </module>  
+        <!-- try最多被嵌套2层 -->  
+        <module name="NestedTryDepth">  
+            <property name="max" value="2" />  
+        </module>  
+        <!-- clone方法必须调用了super.clone() -->  
+        <module name="SuperClone" />  
+        <!-- finalize 必须调用了super.finalize() -->  
+        <module name="SuperFinalize" />  
+        <!-- 不能catch java.lang.Exception -->  
+        <module name="IllegalCatch">  
+            <property name="illegalClassNames" value="java.lang.Exception" />  
+        </module>  
+        <!-- 确保一个类有package声明 -->  
+        <module name="PackageDeclaration" />  
+        <!-- 一个方法中最多有3个return -->  
+        <module name="ReturnCount">  
+            <property name="max" value="3" />  
+            <property name="format" value="^$" />  
+        </module>  
+        <!--  
+            根据 Sun 编码规范， class 或 interface 中的顺序如下： 1.class 声明。首先是 public,  
+            然后是protected , 然后是 package level （不包括access modifier ） 最后是private .  
+            (多个class放在一个java文件中的情况） 2.变量声明。 首先是 public, 然后是protected然后是 package  
+            level （不包括access modifier ） 最后是private . (多个class放在一个java文件中的情况）  
+            3.构造函数 4.方法  
+        -->  
+        <module name="DeclarationOrder" />  
+        <!-- 不许对方法的参数赋值 -->  
+        <module name="ParameterAssignment" />  
+        <!-- 确保某个class 在被使用时都已经被初始化成默认值(对象是null,数字和字符是0,boolean 变量是false.) -->  
+        <module name="ExplicitInitialization" />  
+        <!-- 不许有同样内容的String -->  
+        <module name="MultipleStringLiterals" />  
+        <!-- 同一行不能有多个声明 -->  
+        <module name="MultipleVariableDeclarations" />  
+        <!-- 不必要的圆括号 -->  
+        <module name="UnnecessaryParentheses" />  
+  
+        <!-- 各种量度 -->  
+        <!-- 布尔表达式的复杂度，不超过3 -->  
+        <module name="BooleanExpressionComplexity" />  
+        <!-- 类数据的抽象耦合，不超过7 -->  
+        <module name="ClassDataAbstractionCoupling" />  
+        <!-- 类的分散复杂度，不超过20 -->  
+        <module name="ClassFanOutComplexity" />  
+        <!-- 函数的分支复杂度，不超过10 -->  
+        <module name="CyclomaticComplexity" />  
+        <!-- NPath复杂度，不超过200 -->  
+        <module name="NPathComplexity" />  
+  
+        <!-- 杂项 -->  
+        <!-- 禁止使用System.out.println -->  
+        <module name="GenericIllegalRegexp">  
+            <property name="format" value="System\.out\.println" />  
+            <property name="ignoreComments" value="true" />  
+        </module>  
+          
+        <!-- 不许使用main方法 -->  
+        <module name="UncommentedMain" />  
+        <!-- 检查并确保所有的常量中的L都是大写的。因为小写的字母l跟数字1太象了 -->  
+        <module name="UpperEll" />  
+        <!-- 检查数组类型的定义是String[] args，而不是String args[] -->  
+        <module name="ArrayTypeStyle" />  
+        <!--  
+            检查java代码的缩进 默认配置：基本缩进 4个空格，新行的大括号：0。新行的case 4个空格。  
+        -->  
+        <module name="Indentation" />  
+    </module>  
+  
+    <!-- 检查翻译文件     -->  
+    <module name="Translation" />  
+</module>  

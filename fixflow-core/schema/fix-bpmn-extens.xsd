@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://activiti.org/bpmn"
+  xmlns:tns="http://activiti.org/bpmn"
+  elementFormDefault="qualified">
+  
+  <attribute name="actuator" type="string">
+	  <annotation>
+		    <documentation>
+		        expression元素的扩展属性, 映射到执行expression的类
+		    </documentation>
+	  </annotation>
+  </attribute>
+  
+  <attribute name="interface" type="string">
+	  <annotation>
+		    <documentation>
+		        expression元素的扩展属性, 指明要调用的平台服务
+		    </documentation>
+	  </annotation>
+  </attribute>
+  
+  <element name="inputExpression" type="tExpression" >
+		<!-- 输入项 expression，继承于expression的扩展元素,用于定义业务规则调用需要输入对象 -->
+  </element>
+   
+  <attribute name="ruleNames" type="string">
+	  <annotation>
+		    <documentation>
+		        businessRuleTask元素的扩展属性, 指明要调用的或需要排除的规则名称，多个名称用逗号分割，未指明时调用流程定义对应所有规则
+		    </documentation>
+	  </annotation>
+  </attribute>
+  
+  <attribute name="exclude" type="boolean">
+	  <annotation>
+		    <documentation>
+		        businessRuleTask元素的扩展属性, 用于指明是ruleNames是要执行的还是要排除的
+		    </documentation>
+	  </annotation>
+  </attribute>
+  
+  
+  <element name="ruleScript" type="string" >
+		<!-- 业务规则脚本 -->
+  </element>
+  
+  <element name="parameterBinding" >
+	   	<annotation>
+	      <documentation>
+	      	<!-- expression的扩展元素,用于定义调用服务需要的参数 -->
+	      </documentation>
+	    </annotation>
+    	<complexType>
+			<attribute name="parameterId" type="string" use="required"/>
+			<attribute name="parameterName" type="string"/>
+			<sequence>
+					<xsd:element name="expression" type="tExpression"/>
+			</sequence>		
+		</complexType>
+   </element>
+   
+  
+   <attribute name="resouceRoleType" type="string">
+	  <annotation>
+		    <documentation>
+		        resouceRole元素的扩展属性,指名该元素是人员User、角色Role还是部门Dept,
+		    </documentation>
+	  </annotation>
+  </attribute>
+  
+  <attribute name="collection" type="string">
+    <annotation>
+      <documentation>
+      	在多实例循环元素中，该扩展属性指向一个集合数据，集合的每个子元素生成一个流程实例。可以是表达式或过程变量。
+        To be used on the multiInstanceLoopCharacteristics element, referencing a collection.
+        For each element in the collection, an instance will be created. Can be an expression 
+        or reference to a process variable.
+      </documentation>
+    </annotation>
+  </attribute>
+  
+  <attribute name="elementVariable" type="string">
+    <annotation>
+      <documentation>
+      	指定了多实例循环时，每个流程实例所得的实例数据存放的变量名称
+        To be used on the multiInstanceLoopCharacteristics element, used in conjunction with
+        the activiti:collection attribute. Denotes the name of the process variable that
+        will be set on each created instance, containing an element of the specified collection.
+      </documentation>
+    </annotation>
+  </attribute>
+  
+  <attribute name="formUri" type="string">
+    <annotation>
+      <documentation>
+      	指定开始事件，用户任务的任务处理表单。
+        Attribute used on a startEvent or a userTask. 
+        The value can be anything. The default form support in Activiti
+        assumes that this is a reference to a form html file insed the deployment
+        of the process definition. But this key can also be something completely different,
+        in case of external form resolving.
+      </documentation>
+    </annotation>
+  </attribute>
+  
+   <element name="processSubject" >
+   	<annotation>
+      <documentation>
+      	<!-- process的扩展元素，包含expression，用于定义流程实例的主题 -->
+      </documentation>
+    </annotation>
+     <complexType>
+			<sequence>
+					<xsd:element name="expression" type="tExpression"/>
+			</sequence>		
+	 </complexType>
+   </element>
+
+   <element name="taskSubject" >
+   	<annotation>
+      <documentation>
+      	<!-- userTask的扩展元素，包含expression，用于定义任务实例的主题 -->
+      </documentation>
+    </annotation>
+	    <complexType>
+				<sequence>
+						<xsd:element name="expression" type="tExpression"/>
+				</sequence>		
+		</complexType>
+   </element>
+	
+   <element name="userCommand">
+	   	 <annotation>
+	      <documentation>
+	      	<!-- 用户任务的扩展元素，用于定义处理命令 -->
+	      </documentation>
+	    </annotation>
+    
+		<complexType>
+			<attribute name="id" type="string" use="required"/>
+			<attribute name="name" type="string" use="required"/>
+			 <!-- 包含bpmn的Expression元素 -->
+		</complexType>
+   </element>
+  
+
+  <element name="taskListener">
+    <annotation>
+      <documentation>
+      	<!-- 用户任务的扩展元素，用于定义事件出现时执行的表达式 -->
+        Extension element for User Tasks used to execute custom Java logic or an 
+        expression upon the occurrence of a certain event. 
+      </documentation>
+    </annotation>
+    <complexType>
+      <attribute name="event" use="required">
+	      <annotation>
+		        <documentation>
+		          The event on which the delegation class or expression will be executed.
+		        </documentation>
+	      </annotation>
+	      <simpleType>
+		       <restriction base="string">
+			         <enumeration value="node-enter" />
+			         <enumeration value="task-create" />
+			         <enumeration value="task-assign" />
+			         <enumeration value="task-start" />
+			         <enumeration value="task-end" />
+			         <enumeration value="node-leave" />
+		       </restriction>
+	     </simpleType>
+     </attribute>
+     <!-- 包含bpmn的Expression -->
+    </complexType>
+  </element>
+     
+
+  <!-- 结果变量 -->
+  <attribute name="resultVariableName" type="string">
+    <annotation>
+      <documentation>
+      	<!-- 用于存放Servicetask 或 ScriptTask 的执行结果的变量名 -->
+        Attribute on Service and Script Task corresponding with a process variable name.
+        The result of executing the service task logic or the script will be stored 
+        in this process variable.
+      </documentation>
+    </annotation>
+  </attribute>
+  
+  <element name="serviceExpression" type="tExpression" >
+		<!-- 输入项 expression，继承于expression的扩展元素,用于定义业务规则调用需要输入对象 -->
+  </element>
+  
+
+ </schema>
