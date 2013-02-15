@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="FixService" icon="founderico.jpg" className="FixService" packageName="com.founder.fix.fixflow.expand.connector.FixService" connectorName="Fix服务" connectorNote="调用Fix服务" category="FixFlow">
+  <outputs>
+    <outputParameter id="out" name="返回值" dataType="java.lang.Object"/>
+  </outputs>
+  <Pages>
+    <page pageId="FixService" pageTitle="Fix服务调用" pageNote="Fix服务调用">
+      <inputParameter id="serviceID" name="服务名" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="params" name="参数" dataType="java.lang.Object" controlType="text" isRequired="true"/>
+      <inputParameter id="context" name="环境变量" dataType="java.util.HashMap" controlType="text"/>
+    </page>
+  </Pages>
+</connector:Connector>

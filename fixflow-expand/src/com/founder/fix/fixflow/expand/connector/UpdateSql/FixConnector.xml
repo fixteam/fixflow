@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="UpdateSql" icon="founderico.jpg" className="UpdateSql" packageName="com.founder.fix.fixflow.expand.connector.UpdateSql" connectorName="执行Sql更新语句" connectorNote="执行Sql更新语句" category="FixFlow">
+  <outputs/>
+  <Pages>
+    <page pageId="page1" pageTitle="更新参数" pageNote="更新参数">
+      <inputParameter id="tableName" name="表名" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="objectParam" name="更改值Map" dataType="java.util.HashMap" controlType="text"/>
+      <inputParameter id="whereSql" name="条件语句" dataType="java.lang.String" controlType="text"/>
+      <inputParameter id="objectParamWhere" name="条件参数" dataType="java.util.List" controlType="text"/>
+    </page>
+  </Pages>
+</connector:Connector>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="Cancelfilecheckout" icon="sharepoint.jpg" className="Cancelfilecheckout" packageName="com.founder.fix.fixflow.expand.connector.Cancelfilecheckout" connectorName="Cancel file checkout" connectorNote="取消文件签出" category="Sharepoint">
+  <outputs/>
+  <Pages/>
+</connector:Connector>

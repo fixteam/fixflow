@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="RunExpression" icon="founderico.jpg" className="RunExpression" packageName="com.founder.fix.fixflow.expand.connector.RunExpression" connectorName="执行表达式" connectorNote="执行BeanShell格式的表达式" category="FixFlow">
+  <outputs>
+    <outputParameter id="outputObj" name="脚本返回值" dataType="java.lang.Object"/>
+  </outputs>
+  <Pages>
+    <page pageId="page1" pageTitle="脚本表达式" pageNote="脚本表达式">
+      <inputParameter id="expressionText" name="表达式" dataType="java.lang.String" controlType="text"/>
+    </page>
+  </Pages>
+</connector:Connector>

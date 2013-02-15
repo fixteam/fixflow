@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="JavaExecutor" icon="java.png" className="JavaExecutor" packageName="com.founder.fix.fixflow.expand.connector.JavaExecutor" connectorName="Java执行器" connectorNote="执行一个Java类" category="Java">
+  <outputs>
+    <outputParameter id="out" name="输出" dataType="java.util.HashMap"/>
+  </outputs>
+  <Pages>
+    <page pageId="JavaInfo" pageTitle="Java类方法信息" pageNote="输入Java相关类名和方法">
+		<inputParameter id="targetClass" name="目标类" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="targetMethod" name="目标方法" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="isStatic" name="是否静态" dataType="boolean" controlType="text" isRequired="true"/>
+      <inputParameter id="Params" name="入参" dataType="Object[]" controlType="text"/>
+    </page>
+  </Pages>
+</connector:Connector>

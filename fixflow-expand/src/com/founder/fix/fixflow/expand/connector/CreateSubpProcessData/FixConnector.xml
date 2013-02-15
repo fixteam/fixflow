@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="CreateSubpProcessData" icon="founderico.jpg" className="CreateSubpProcessData" packageName="com.founder.fix.fixflow.expand.connector.CreateSubpProcessData" connectorName="创建子流程数据" connectorNote="启动子流程后需要插入一个默认的数据" category="FixFlow">
+  <outputs/>
+  <Pages>
+    <page pageId="page1" pageTitle="创建子流程参数" pageNote="创建子流程参数">
+      <inputParameter id="table" name="表名" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="param" name="参数" dataType="java.util.HashMap" controlType="text" isRequired="true"/>
+    </page>
+  </Pages>
+</connector:Connector>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="CalendarCreateEventwithWebcontent" icon="google.png" className="CalendarCreateEventwithWebcontent" packageName="com.founder.fix.fixflow.expand.connector.CalendarCreateEventwithWebcontent" connectorName="日历 - 创建带有Web内容的事件" connectorNote="创建一个带有XML页面或者图片的事件" category="Google">
+  <outputs/>
+  <Pages/>
+</connector:Connector>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="SecureWSConnector" icon="ws.png" className="SecureWSConnector" packageName="com.founder.fix.fixflow.expand.connector.SecureWSConnector" connectorName="Secure WS Connector" connectorNote="执行一个Web服务" category="WebServices">
+  <outputs>
+    <outputParameter id="response" name="返回结果" dataType="javax.xml.transform.Source"/>
+  </outputs>
+  <Pages>
+    <page pageId="connectionParam" pageTitle="连接参数" pageNote="连接参数">
+      <inputParameter id="serviceNS" name="服务NS" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="serviceName" name="服务名" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="portName" name="端口" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="request" name="请求内容" dataType="java.lang.String" controlType="textarea" isRequired="true"/>
+      <inputParameter id="endPointAddress" name="终端地址" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="binding" name="绑定" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="SOAPAction" name="SOAP Action" dataType="java.lang.String" controlType="text"/>
+    </page>
+  </Pages>
+</connector:Connector>

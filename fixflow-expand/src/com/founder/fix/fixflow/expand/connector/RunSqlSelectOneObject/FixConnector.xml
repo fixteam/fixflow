@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="RunSqlSelectOneObject" icon="founderico.jpg" className="RunSqlSelectOneObject" packageName="com.founder.fix.fixflow.expand.connector.RunSqlSelectOneObject" connectorName="执行SQL语句返回结果集" connectorNote="执行SQL语句返回结果集" category="FixFlow">
+  <outputs>
+    <outputParameter id="outputfield" name="结果集" dataType="java.util.List&lt;java.util.Map&lt;String, Object>>"/>
+  </outputs>
+  <Pages>
+    <page pageId="page1" pageTitle="配置数据库语句" pageNote="配置数据库语句">
+      <inputParameter id="sqlText" name="Sql语句" dataType="java.lang.String" controlType="text" isRequired="true"/>
+    </page>
+  </Pages>
+</connector:Connector>

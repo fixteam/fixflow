@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="CreateCalendarItem" icon="exchange.png" className="CreateCalendarItem" packageName="com.founder.fix.fixflow.expand.connector.CreateCalendarItem" connectorName="CreateCalendarItem" connectorNote="创建一个新的日历项目" category="Exchange">
+  <outputs/>
+  <Pages/>
+</connector:Connector>
