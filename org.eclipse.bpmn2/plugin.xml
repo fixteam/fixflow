@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ 
+ Copyright (c) 2010 SAP AG.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ 
+ Contributors:
+    Reiner Hille-Doering (SAP AG) - initial API and implementation and/or initial documentation
+ 
+ </copyright>
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.bpmn2.Bpmn2Package"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI"/>
+      <package
+            class="org.eclipse.bpmn2.Bpmn2Package"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/BPMN/20100524/MODEL">
+      </package>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="bpmn2"
+            class="org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl"/>
+      <parser
+            class="org.eclipse.bpmn2.util.Bpmn2XMIResourceFactoryImpl"
+            type="bpmn2xmi">
+      </parser>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.bpmn2.di.BpmnDiPackage"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/BPMN/20100524/DI-XMI"/>
+      <package
+            class="org.eclipse.bpmn2.di.BpmnDiPackage"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/BPMN/20100524/DI">
+      </package>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="bpmn2di"
+            class="org.eclipse.bpmn2.di.util.BpmnDiResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.dd.di.DiPackage"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/DD/20100524/DI-XMI"/>
+      <package
+            class="org.eclipse.dd.di.DiPackage"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/DD/20100524/DI">
+      </package>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="di"
+            class="org.eclipse.dd.di.util.DiResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.dd.dc.DcPackage"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/DD/20100524/DC-XMI"/>
+      <package
+            class="org.eclipse.dd.dc.DcPackage"
+            genModel="model/BPMN20.genmodel"
+            uri="http://www.omg.org/spec/DD/20100524/DC">
+      </package>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="dc"
+            class="org.eclipse.dd.dc.util.DcResourceFactoryImpl"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            id="org.eclipse.bpmn2.content-type.xml"
+            name="%content-type.xml.name"
+            priority="normal">
+         <describer
+               class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber2"
+               plugin="org.eclipse.emf.ecore.xmi">
+            <parameter
+                  name="element"
+                  value="{http://www.omg.org/spec/BPMN/20100524/MODEL}*">
+            </parameter>
+         </describer>
+      </content-type>
+      <content-type
+            base-type="org.eclipse.emf.ecore.xmi"
+            id="org.eclipse.bpmn2.content-type.xmi"
+            name="%content-type.xmi.name"
+            priority="normal">
+         <describer
+               class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber2"
+               plugin="org.eclipse.emf.ecore.xmi">
+            <parameter
+                  name="element"
+                  value="{http://www.omg.org/spec/BPMN/20100524/MODEL-XMI}*">
+            </parameter>
+         </describer>
+      </content-type>
+      <file-association
+            content-type="org.eclipse.bpmn2.content-type.xml"
+            file-extensions="bpmn2">
+      </file-association>
+      <file-association
+            content-type="org.eclipse.bpmn2.content-type.xmi"
+            file-extensions="bpmn2xmi">
+      </file-association>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.content_parser">
+      <parser
+            class="org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl"
+            contentTypeIdentifier="org.eclipse.bpmn2.content-type.xml">
+      </parser>
+      <parser
+            class="org.eclipse.bpmn2.util.Bpmn2XMIResourceFactoryImpl"
+            contentTypeIdentifier="org.eclipse.bpmn2.content-type.xmi">
+      </parser>
+   </extension>
+
+</plugin>

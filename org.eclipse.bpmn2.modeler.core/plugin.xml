@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="org.eclipse.bpmn2.modeler.runtime" name="BPMN2 Modeler Runtime Specialization" schema="schema/org.eclipse.bpmn2.modeler.runtime.exsd"/>
+   
+	<!-- EMF Extensions -->
+   
+	<extension
+		point="org.eclipse.emf.ecore.factory_override">
+		<factory
+			class="org.eclipse.bpmn2.modeler.core.model.Bpmn2ModelerFactory"
+			uri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+		</factory>
+	</extension>
+   
+   <extension
+         point="org.eclipse.emf.validation.constraintProviders">
+      <category
+            name="Core BPMN 2.0 Constraints"
+            id="org.eclipse.bpmn2.modeler.core.validation"/>
+      <constraintProvider cache="true">
+         <package namespaceUri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI"/>
+         <constraints categories="org.eclipse.bpmn2.modeler.core.validation">
+            <constraint
+                  lang="Java"
+                  class="org.eclipse.bpmn2.modeler.core.validation.ValidIdConstraint"
+                  severity="ERROR"
+                  mode="Live"
+                  name="Valid IDs"
+                  id="org.eclipse.bpmn2.modeler.core.validation.ValidId"
+                  statusCode="1">
+               <description>
+                  IDs should not contain spaces.
+               </description>
+               <message>
+                  The {0} 'id' may not contain spaces.
+               </message>
+               <target class="BaseElement">
+                  <event name="Set">
+                     <feature name="id"/>
+                  </event>
+                  <event name="Unset">
+                     <feature name="id"/>
+                  </event>
+               </target>
+            </constraint>
+         </constraints>
+      </constraintProvider>
+   </extension>
+
+   <extension
+         point="org.eclipse.emf.validation.constraintBindings">
+      <clientContext
+            default="false"
+            id="org.eclipse.bpmn2.modeler.core.validationContext">
+         <selector class="org.eclipse.bpmn2.modeler.core.validation.ValidationDelegateClientSelector"/>
+      </clientContext>
+      <binding
+            context="org.eclipse.bpmn2.modeler.core.validationContext"
+            category="org.eclipse.bpmn2.modeler.core.validation"/>
+   </extension>
+
+</plugin>

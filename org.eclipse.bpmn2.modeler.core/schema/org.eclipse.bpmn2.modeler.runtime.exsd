@@ -1,0 +1,641 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.bpmn2.modeler.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.eclipse.bpmn2.modeler.core" id="org.eclipse.bpmn2.modeler.runtime" name="Runtime Specialization"/>
+      </appinfo>
+      <documentation>
+         Provides customization of the BPMN2 Modeler for third-party runtimes.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <choice minOccurs="1" maxOccurs="unbounded">
+            <element ref="runtime"/>
+            <element ref="model"/>
+            <element ref="propertyTab"/>
+            <element ref="customTask"/>
+            <element ref="modelExtension"/>
+            <element ref="modelEnablement"/>
+            <element ref="propertyExtension"/>
+            <element ref="featureContainer"/>
+            <element ref="style" minOccurs="0" maxOccurs="unbounded"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="runtime">
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Descriptive name for this Runtime implementation. This will be displayed in the BPMN2 Modeler Preference Page under &quot;Runtimes&quot;.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="versions" type="string">
+            <annotation>
+               <documentation>
+                  Versions of the runtime that are supported by this extension point&apos;s contributions.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique ID for the Runtime.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Tooltip text displayed for this runtime name.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.bpmn2.modeler.core.IBpmn2RuntimeExtension"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="model">
+      <annotation>
+         <documentation>
+            Custom EMF Resource Factory based on the org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl class. This provides runtime-specific hooks for model serialization, proxy resolution, object customization, etc.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="runtimeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements for which this ResourceFactory will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="uri" type="string">
+            <annotation>
+               <documentation>
+                  The namespace URI of the registered model EPackage.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="resourceFactory" type="string" use="required">
+            <annotation>
+               <documentation>
+                  ResourceFactory class for this model.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="propertyTab">
+      <annotation>
+         <documentation>
+            Describes a list of tabs that will be contributed to the tabbed property sheet page.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique ID for the tab.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="runtimeId" type="string">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements for which this propertyTab will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="label" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A label to be displayed on the tab.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="category" type="string">
+            <annotation>
+               <documentation>
+                  The category used to group tabs.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="afterTab" type="string">
+            <annotation>
+               <documentation>
+                  When there is more than one tab in a category, tabs are sorted by the afterTab attribute.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="indented" type="boolean">
+            <annotation>
+               <documentation>
+                  If true, then this tab is indented. This is meant to indicate subtabs or categories of the parent tab.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="image" type="string">
+            <annotation>
+               <documentation>
+                  If an image is provided, the icon image is displayed on the tab when the tab is active.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="replaceTab" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that implements the section, i.e. extends org.eclipse.graphiti.ui.platform.GFPropertySection
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.graphiti.ui.platform.GFPropertySection:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string">
+            <annotation>
+               <documentation>
+                  The selected class or interface that will enable the display of the section in the tab. This must be a fully qualified class name, e.g. &quot;org.eclipse.bpmn2.SequenceFlow&quot;.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="customTask">
+      <annotation>
+         <documentation>
+            Defines a Custom Task contributed by a third party runtime vendor. A Custom Task is typically backed by a business object model (e.g. EMF), identified by &quot;type&quot;.
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="property"/>
+         </choice>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique ID used to identify the Custom Task.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="runtimeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements in which this Custom Task is defined.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Descriptive name for this Custom Task. This will be displayed in the Tool Palette.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description used in dialogs and tooltips.
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string">
+            <annotation>
+               <documentation>
+                  Identifies the business object model type. If the business object model is persisted as an EMF resource, this corresponds to the EMF EClass of the object representing this Custom Task.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="featureContainer" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The Graphiti Feature Container that provides create, add and update functionality in the editor for this Custom Task.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.bpmn2.modeler.ui.features.activity.task.CustomTaskFeatureContainer:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="property">
+      <annotation>
+         <documentation>
+            Describes some property of the Custom Task. This may be either
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="value"/>
+         </choice>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The property name. If the property is mapped to an EMF model, this should correspond to an attribute name of the Custom Task type.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="value" type="string">
+            <annotation>
+               <documentation>
+                  Default value for the property.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description used in dialogs and tooltips.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="ref" type="string">
+            <annotation>
+               <documentation>
+                  Identifies a reference to a previously created property (no forward references supported at this time). The reference string is a slash-separated name of a property followed by an optional #&lt;number&gt; used to index list objects; for example:
+
+rootFeature/childFeature_1/childFeature_2#0
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string">
+            <annotation>
+               <documentation>
+                  If the EMF attribute is created dynamically (i.e. not defined in a model) then this is used as the attribute&apos;s data type.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="value">
+      <annotation>
+         <documentation>
+            If a property type is complex then this will contain a list of the complex type&apos;s values. If multiple values are given the property is assumed to be a list of complex types.
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="property"/>
+         </choice>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="modelExtension">
+      <complexType>
+         <choice minOccurs="1" maxOccurs="unbounded">
+            <element ref="property"/>
+         </choice>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="runtimeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements in which this Model Extension is defined.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  Descriptive name for this Custom Task. This will be displayed in the Tool Palette.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description used in dialogs and tooltips.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies the business object model type. If the business object model is persisted as an EMF resource, this corresponds to the EMF EClass of the object representing this extensible element.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="modelEnablement">
+      <complexType>
+         <choice>
+            <element ref="enable" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="disable" minOccurs="0" maxOccurs="unbounded"/>
+         </choice>
+         <attribute name="runtimeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements in which this Model Enablement is defined.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type">
+            <annotation>
+               <documentation>
+                  Optional diagram type name: either Process, Collaboration or Choreography.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="Process">
+                  </enumeration>
+                  <enumeration value="Collaboration">
+                  </enumeration>
+                  <enumeration value="Choreography">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="enable">
+      <complexType>
+         <attribute name="object" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the BPMN2 element to enable. All references made by this element to other BPMN2 elements are enabled also (note: if needed, the referenced element types can subsequently be disabled).
+
+This may also be a Custom Task ID to show it on the tool palette.
+
+The special object name &quot;all&quot; is used to refer to all BPMN2 elements.
+
+The value &quot;default&quot; is used by contributing plugins to refer to enablements in the Default Target Runtime defined in the editor core plugins.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="feature" type="string">
+            <annotation>
+               <documentation>
+                  The name of a structural feature defined by the BPMN2 element named in &quot;object&quot;.
+
+If &quot;object&quot; has the value &quot;default&quot;, then this refers to a diagram type in the modelEnablement section.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="disable">
+      <complexType>
+         <attribute name="object" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the BPMN2 element to disable. All references made by this element to other BPMN2 elements are also disabled (note: if needed, the referenced element types can subsequently be re-enabled).
+
+This may also be a Custom Task ID to hide it on the tool palette.
+
+The special object name &quot;all&quot; is used to refer to all BPMN2 elements.
+
+The value &quot;default&quot; is used by contributing plugins to refer to enablements in the Default Target Runtime defined in the editor core plugins.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="feature" type="string">
+            <annotation>
+               <documentation>
+                  The name of a structural feature defined by the BPMN2 element named in &quot;object&quot;.
+
+If &quot;object&quot; has the value &quot;default&quot;, then this refers to a diagram type in the modelEnablement section.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="propertyExtension">
+      <annotation>
+         <documentation>
+            Provider classes for model objects and features.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique ID for the propertyExtension extension.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="runtimeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements for which this propertyExtension will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that implements the property extension adapter, i.e. extends the org.eclipse.bpmn2.modeler.core.adapters.ExtendedPropertiesAdapter class.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.graphiti.ui.platform.GFPropertySection:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The BPMN2 element EClass to which this propertyExtension applies. This must be a fully qualified class name, e.g. &quot;org.eclipse.bpmn2.SequenceFlow&quot;.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureContainer">
+      <complexType>
+         <attribute name="runtimeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Identifies one of the previously defined runtime elements for which this featureContainer will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that implements the Graphiti Feature Container class. The class must implement the BPMN2 Code Feature Container interface.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.bpmn2.modeler.core.features.FeatureContainer"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The BPMN2 element EClass to which this featureContainer applies. This must be a fully qualified class name, e.g. &quot;org.eclipse.bpmn2.SequenceFlow&quot;.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="style">
+      <complexType>
+         <attribute name="object" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the BPMN2 element to enable. All references made by this element to other BPMN2 elements are enabled also (note: if needed, the referenced element types can subsequently be disabled).
+
+This may also be a Custom Task ID to show it on the tool palette.
+
+The special object name &quot;all&quot; is used to refer to all BPMN2 elements.
+
+The value &quot;default&quot; is used by contributing plugins to refer to enablements in the Default Target Runtime defined in the editor core plugins.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="foreground" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="background" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="font" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="textColor" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>
