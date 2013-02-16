@@ -1,10 +1,12 @@
 package com.founder.fix.fixflow.core.impl.cmd;
 
+import java.util.Date;
 import java.util.Map;
 
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
@@ -105,10 +107,21 @@ public class TimeStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 			processInstanceEntity.getContextInstance().setVariableMap(variables);
 	
 
+			
+			StartEventBehavior startEvent=(StartEventBehavior)processDefinition.getTimeStartEvent();
+			
 			processInstanceEntity.timeStart();
 			
+			//
+			if(startEvent.isPersistence()){
+				commandContext.getProcessInstanceManager().saveProcessInstance(processInstanceEntity);
+			}
+			else{
+				System.out.println("=====流程 "+processInstanceEntity.getId()+" 未持久化启动 " + new Date() + " =====");
+			}
 			
-			commandContext.getProcessInstanceManager().saveProcessInstance(processInstanceEntity);
+			
+			
 
 		} catch (Exception e) {
 			throw new FixFlowException("流程实例启动异常! "+ e.getMessage(), e);

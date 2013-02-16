@@ -28,9 +28,11 @@ public class ProcessInstanceAutoStart implements Job {
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
-		System.out.println("=====定时任务启动 " + new Date() + " =====");
+		
+		String processUniqueKey=context.getJobDetail().getJobDataMap().getString("processUniqueKey").toString();
+		System.out.println("=====定时流程 "+processUniqueKey+" 启动 " + new Date() + " =====");
 		StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
-		startProcessInstanceCommand.setProcessDefinitionId(context.getJobDetail().getJobDataMap().getString("processUniqueKey").toString());
+		startProcessInstanceCommand.setProcessDefinitionId(processUniqueKey);
 		startProcessInstanceCommand.setStartAuthor(Authentication.getAdminId());
 
 		Map<String, Object> transientVariableMap = new HashMap<String, Object>();
@@ -78,9 +80,9 @@ public class ProcessInstanceAutoStart implements Job {
 			
 			//processEngine.contextClose();
 			
-			System.out.println("定时任务启动成功");
+			System.out.println("定时流程启动成功");
 
-			System.out.println("=====finish at" + new Date() + "=====");
+			System.out.println("=====完成 at" + new Date() + "=====");
 			
 			connection.commit();
 			

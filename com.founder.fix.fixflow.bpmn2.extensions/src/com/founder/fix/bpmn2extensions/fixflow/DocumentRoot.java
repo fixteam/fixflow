@@ -63,6 +63,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getOrderId <em>Order Id</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskPriority <em>Task Priority</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getAssignPolicyType <em>Assign Policy Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#isIsPersistence <em>Is Persistence</em>}</li>
  * </ul>
  * </p>
  *
@@ -1126,5 +1127,32 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setAssignPolicyType(AssignPolicyType value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Persistence</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 是否在启动流程的时候持久化
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Persistence</em>' attribute.
+	 * @see #setIsPersistence(boolean)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDocumentRoot_IsPersistence()
+	 * @model default="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="namespace='##targetNamespace' kind='attribute'"
+	 * @generated
+	 */
+	boolean isIsPersistence();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#isIsPersistence <em>Is Persistence</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Persistence</em>' attribute.
+	 * @see #isIsPersistence()
+	 * @generated
+	 */
+	void setIsPersistence(boolean value);
 
 } // DocumentRoot

@@ -1,10 +1,17 @@
 package com.founder.fix.fixflow.designer.modeler.ui.property.startevent;
 
 import org.eclipse.bpmn2.modeler.ui.property.AbstractBpmn2PropertySection;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.IValueChangeListener;
+import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -14,13 +21,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.designer.modeler.ui.property.AbstractFixFlowBpmn2PropertiesComposite;
+import com.founder.fix.fixflow.designer.util.StringUtil;
+
+import org.eclipse.swt.widgets.Button;
 
 public class StartEventCommonPropertiesComposite extends
 		AbstractFixFlowBpmn2PropertiesComposite {
 	private Text idtext;
 	private Text nametext;
 	private Text desctext;
+	private Label lblNewLabel;
+	private Button btnCheckButton;
 
 	// private ExpressionComboViewer expressionComboViewer;
 
@@ -71,6 +84,15 @@ public class StartEventCommonPropertiesComposite extends
 				1, 1));
 
 		toolkit.adapt(nametext, true, true);
+		
+		lblNewLabel = new Label(this, SWT.NONE);
+		lblNewLabel.setText("持久化");
+		
+		toolkit.adapt(lblNewLabel, true, true);
+		
+		btnCheckButton = new Button(this, SWT.CHECK);
+		btnCheckButton.setSelection(true);
+		toolkit.adapt(btnCheckButton, true, true);
 
 		Label descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
@@ -118,7 +140,46 @@ public class StartEventCommonPropertiesComposite extends
 				bindDocumentation(e, desctext);
 			}
 		}
+		
+		
+
+		bindAttributeCheckButton(btnCheckButton, FixFlowPackage.Literals.DOCUMENT_ROOT__IS_PERSISTENCE);
+
 
 	}
+	
+	public void bindAttributeCheckButton(final Button button,final EStructuralFeature eStructuralFeature) {
+
+		Object eGet = be.eGet(eStructuralFeature);
+
+
+			if (eGet != null && !eGet.toString().equals("")) {
+
+				boolean isAsynsObj=StringUtil.getBoolean(eGet);
+			
+				button.setSelection(isAsynsObj);
+			}
+	
+
+		IObservableValue textObserver = SWTObservables.observeSelection(button);// (text,
+		// SWT.Modify);
+		textObserver.addValueChangeListener(new IValueChangeListener() {
+
+			@SuppressWarnings("restriction")
+			@Override
+			public void handleValueChange(final ValueChangeEvent e) {
+
+					TransactionalEditingDomain editingDomain = getDiagramEditor().getEditingDomain();
+					editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+						@Override
+						protected void doExecute() {
+							be.eSet(eStructuralFeature, e.diff.getNewValue());
+						}
+					});
+				}
+			
+		});
+	}
+
 
 }

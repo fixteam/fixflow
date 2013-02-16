@@ -99,6 +99,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getOrderId <em>Order Id</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getTaskPriority <em>Task Priority</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getAssignPolicyType <em>Assign Policy Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#isIsPersistence <em>Is Persistence</em>}</li>
  * </ul>
  * </p>
  *
@@ -684,6 +685,26 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @ordered
 	 */
 	protected AssignPolicyType assignPolicyType;
+
+	/**
+	 * The default value of the '{@link #isIsPersistence() <em>Is Persistence</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsPersistence()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_PERSISTENCE_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isIsPersistence() <em>Is Persistence</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsPersistence()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isPersistence = IS_PERSISTENCE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1777,6 +1798,27 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsPersistence() {
+		return isPersistence;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsPersistence(boolean newIsPersistence) {
+		boolean oldIsPersistence = isPersistence;
+		isPersistence = newIsPersistence;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE, oldIsPersistence, isPersistence));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1921,6 +1963,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getTaskPriority();
 			case FixFlowPackage.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE:
 				return getAssignPolicyType();
+			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
+				return isIsPersistence();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2065,6 +2109,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE:
 				setAssignPolicyType((AssignPolicyType)newValue);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
+				setIsPersistence((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2203,6 +2250,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE:
 				setAssignPolicyType((AssignPolicyType)null);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
+				setIsPersistence(IS_PERSISTENCE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2299,6 +2349,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return taskPriority != null;
 			case FixFlowPackage.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE:
 				return assignPolicyType != null;
+			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
+				return isPersistence != IS_PERSISTENCE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2357,6 +2409,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 		result.append(isAsync);
 		result.append(", orderId: ");
 		result.append(orderId);
+		result.append(", isPersistence: ");
+		result.append(isPersistence);
 		result.append(')');
 		return result.toString();
 	}

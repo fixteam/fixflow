@@ -10,13 +10,31 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
+import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
 
 public class StartEventBehavior extends StartEventImpl {
+	
+	
+	public boolean isPersistence() {
+		
+		Object isPersistenceObj=EMFExtensionUtil.getAnyAttributeValue(this, "isPersistence");
+		if(isPersistenceObj==null||isPersistenceObj.equals("")){
+			return true;
+		}else{
+			return StringUtil.getBoolean(isPersistenceObj);
+		}
+		
+		
+		//return isAsync;
+	}
+	
+	
 
 	public void enter(ExecutionContext executionContext) {
 
