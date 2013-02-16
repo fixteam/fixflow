@@ -4,6 +4,8 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
 
+import org.apache.log4j.Logger;
+
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 
 import java.util.*;
@@ -37,6 +39,9 @@ import java.io.*;
  */
 public class MailUtil {
 
+	
+	
+	final static Logger logger = Logger.getLogger(MailUtil.class);
 	/**
 	 * 普通模式
 	 */
@@ -380,6 +385,27 @@ public class MailUtil {
 			e.printStackTrace();
 			throw new FixFlowException("邮件发送失败!", e);
 		}
+	}
+	
+	
+	/**
+	 * 异步发送邮件
+	 */
+	public void asynSend() {
+		
+		
+		final MailUtil mailUtil=this;
+		
+		 new Thread(new Runnable() {  
+	            public void run() {  
+	                try {  
+	                	mailUtil.send();  
+	                } catch (Exception ex) {  
+	                    logger.error("mail sender error To: " + mailUtil.to + " Mail Title: " + mailUtil.title , ex);  
+	                }  
+	            }  
+	        }).start();  
+		
 	}
 
 	public boolean isValidEmailAddress(String email) {

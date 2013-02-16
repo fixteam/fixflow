@@ -41,9 +41,9 @@ public class SendMail implements ConnectorHandler {
 		mailUtil.setSubject(title);
 		mailUtil.setBody(mailContent);
 		mailUtil.setContentType(mailUtil.MODE_HTML);
-		mailUtil.send();
-		
-		//mailUtil.set
+		//异步发送
+		mailUtil.asynSend();
+
 
 	}
 
