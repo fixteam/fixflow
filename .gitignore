@@ -5,3 +5,4 @@
 *.war
 *.ear
 /fixflow-core
+/fixflow-expand
