@@ -6,7 +6,7 @@ public abstract class ProcessEngineConfiguration {
 
 	protected String processEngineName = ProcessEngineManagement.NAME_DEFAULT;
 	
-
+	String gitTestString="";
 	
 	protected ProcessEngineConfiguration() {
 	}
