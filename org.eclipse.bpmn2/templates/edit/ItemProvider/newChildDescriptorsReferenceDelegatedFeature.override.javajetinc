@@ -1,0 +1,14 @@
+        <%org.eclipse.emf.ecore.EAnnotation metadata = createClass.getEcoreModelElement().getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");%>
+        <%if (metadata == null || metadata.getDetails() == null || !"true".equals(metadata.getDetails().get("abstract"))) {%>
+
+		newChildDescriptors.add
+			(createChildParameter
+				(<%=createFeature.getQualifiedFeatureAccessor()%>,
+				 <%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMapUtil")%>.createEntry
+					(<%=delegatedFeature.getQualifiedFeatureAccessor()%>,
+          <%if (createClass.isMapEntry()) { %>
+				 <%=createClass.getGenPackage().getQualifiedEFactoryInstanceAccessor()%>.create(<%=createClass.getQualifiedClassifierAccessor()%>))));
+          <%} else {%>
+				 <%=createClass.getGenPackage().getQualifiedFactoryInstanceAccessor()%>.create<%=createClass.getName()%>())));
+          <%}%>
+        <%}%>

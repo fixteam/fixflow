@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_WKa38BS2EeGYLsrGwjmePg" type="EcoreTools" name="fixflow-connector-menu" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_Xm1yoBS2EeGYLsrGwjmePg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_Xm2ZsBS2EeGYLsrGwjmePg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_Xm2ZsRS2EeGYLsrGwjmePg" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_Xm2ZshS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_Xm2ZsxS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_Xm2ZtBS2EeGYLsrGwjmePg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_Xm2ZtRS2EeGYLsrGwjmePg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_Xm2ZthS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_Xm2ZtxS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_Xm2ZuBS2EeGYLsrGwjmePg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_Xm1yoRS2EeGYLsrGwjmePg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-connector-menu.ecore#//Menu"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Xm1yohS2EeGYLsrGwjmePg" x="160" y="100"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_YdtJMBS2EeGYLsrGwjmePg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_YdtwQRS2EeGYLsrGwjmePg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_YdtwQhS2EeGYLsrGwjmePg" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_tu5O4BS2EeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//Node/id"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_tu5O4RS2EeGYLsrGwjmePg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_uAA0EBS2EeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//Node/name"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_uAA0ERS2EeGYLsrGwjmePg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_uQpREBS2EeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//Node/ico"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_uQpRERS2EeGYLsrGwjmePg"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_YdtwQxS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_YdtwRBS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_YdtwRRS2EeGYLsrGwjmePg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_YduXUBS2EeGYLsrGwjmePg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_YduXURS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_YduXUhS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_YduXUxS2EeGYLsrGwjmePg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_YdtJMRS2EeGYLsrGwjmePg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-connector-menu.ecore#//Node"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YdtwQBS2EeGYLsrGwjmePg" x="168" y="224"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_aSbPIBS2EeGYLsrGwjmePg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_aSb2MBS2EeGYLsrGwjmePg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_aSb2MRS2EeGYLsrGwjmePg" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_eWUiYBS2EeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//MenuConnector/id"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_eWUiYRS2EeGYLsrGwjmePg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_esql0BS2EeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//MenuConnector/name"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_esql0RS2EeGYLsrGwjmePg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_e9_mYBS2EeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//MenuConnector/note"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_e9_mYRS2EeGYLsrGwjmePg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_x0g1EBTlEeGYLsrGwjmePg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-connector-menu.ecore#//MenuConnector/ico"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_x0g1ERTlEeGYLsrGwjmePg"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_aSb2MhS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_aSb2MxS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_aSb2NBS2EeGYLsrGwjmePg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aSb2NRS2EeGYLsrGwjmePg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_aSb2NhS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_aSb2NxS2EeGYLsrGwjmePg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_aSb2OBS2EeGYLsrGwjmePg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_aSbPIRS2EeGYLsrGwjmePg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-connector-menu.ecore#//MenuConnector"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aSbPIhS2EeGYLsrGwjmePg" x="408" y="164"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_WKa38RS2EeGYLsrGwjmePg"/>
+  <element xmi:type="ecore:EPackage" href="fixflow-connector-menu.ecore#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_0kWDwBS2EeGYLsrGwjmePg" type="3002" source="_Xm1yoBS2EeGYLsrGwjmePg" target="_YdtJMBS2EeGYLsrGwjmePg">
+    <children xmi:type="notation:Node" xmi:id="_0kXR4BS2EeGYLsrGwjmePg" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_0kXR4RS2EeGYLsrGwjmePg" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_0kX48BS2EeGYLsrGwjmePg" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_0kX48RS2EeGYLsrGwjmePg" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_0kWDwRS2EeGYLsrGwjmePg" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_0kWq0BS2EeGYLsrGwjmePg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-connector-menu.ecore#//Menu/node"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0kWq0RS2EeGYLsrGwjmePg" points="[6, 7, 2, -81]$[6, 79, 2, -9]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_0kaVMBS2EeGYLsrGwjmePg" id="(0.7058823529411765,0.8333333333333334)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_0kaVMRS2EeGYLsrGwjmePg" id="(0.5882352941176471,0.12345679012345678)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_1nF6MBS2EeGYLsrGwjmePg" type="3002" source="_YdtJMBS2EeGYLsrGwjmePg" target="_aSbPIBS2EeGYLsrGwjmePg">
+    <children xmi:type="notation:Node" xmi:id="_1nF6NBS2EeGYLsrGwjmePg" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_1nF6NRS2EeGYLsrGwjmePg" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_1nF6NhS2EeGYLsrGwjmePg" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_1nF6NxS2EeGYLsrGwjmePg" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_1nF6MRS2EeGYLsrGwjmePg" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_1nF6MhS2EeGYLsrGwjmePg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-connector-menu.ecore#//Node/menuConnector"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1nF6MxS2EeGYLsrGwjmePg" points="[18, -4, -142, 42]$[161, -22, 1, 24]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1nHvYBS2EeGYLsrGwjmePg" id="(0.8235294117647058,0.5308641975308642)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1nHvYRS2EeGYLsrGwjmePg" id="(0.14705882352941177,0.7037037037037037)"/>
+  </edges>
+</notation:Diagram>
