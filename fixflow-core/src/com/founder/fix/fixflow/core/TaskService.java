@@ -101,8 +101,21 @@ public interface TaskService extends ProcessService {
 	void complete(String taskId, Map<String, Object> variables);
 
 
+	//任务常用处理
+	
+	/**
+	 * 领取任务
+	 * @param taskId 任务编号
+	 * @param claimUserId 领取人(不传的话将会去线程副本中获取)
+	 */
 	void claim(String taskId,String claimUserId);
 
+	/**
+	 * 释放任务
+	 * (和领取对应,领取过了之后可以释放)
+	 * @param taskId 任务编号
+	 */
+	void release(String taskId);
 
 
 	/**
