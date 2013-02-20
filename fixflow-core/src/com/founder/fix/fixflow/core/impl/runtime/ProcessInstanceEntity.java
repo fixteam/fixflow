@@ -218,7 +218,23 @@ public class ProcessInstanceEntity implements ProcessInstance {
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 
 		
-			this.setSubject(processDefinition.getName());
+			processDefinition.getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression=processDefinition.getTaskSubject().getExpressionValue();
+			
+			try {
+				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression,executionContext);
+				if (result != null) {
+					
+					this.setSubject(StringUtil.getString(result));
+					
+				}
+				else{
+					this.setSubject(processDefinition.getName());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.setSubject(processDefinition.getName());
+			}
 
 			// 触发流程启动事件
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
@@ -241,6 +257,26 @@ public class ProcessInstanceEntity implements ProcessInstance {
 			this.startTime = new Date();
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
+			
+			
+			processDefinition.getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression=processDefinition.getTaskSubject().getExpressionValue();
+			
+			try {
+				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression,executionContext);
+				if (result != null) {
+					
+					this.setSubject(StringUtil.getString(result));
+					
+				}
+				else{
+					this.setSubject(processDefinition.getName());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.setSubject(processDefinition.getName());
+			}
+			
 			// 触发流程启动事件
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
 			// executionContext);
@@ -259,9 +295,29 @@ public class ProcessInstanceEntity implements ProcessInstance {
 			this.startTime = new Date();
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
-
+			processDefinition.getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression=processDefinition.getTaskSubject().getExpressionValue();
+			
+			try {
+				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression,executionContext);
+				if (result != null) {
+					
+					this.setSubject(StringUtil.getString(result));
+					
+				}
+				else{
+					this.setSubject(processDefinition.getName());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.setSubject(processDefinition.getName());
+			}
+			
+			
+			
+			
 		
-			this.setSubject(processDefinition.getName());
+			
 
 			// 触发流程启动事件
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
@@ -283,7 +339,23 @@ public class ProcessInstanceEntity implements ProcessInstance {
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 
 		
-			this.setSubject(processDefinition.getName());
+			processDefinition.getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression=processDefinition.getTaskSubject().getExpressionValue();
+			
+			try {
+				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression,executionContext);
+				if (result != null) {
+					
+					this.setSubject(StringUtil.getString(result));
+					
+				}
+				else{
+					this.setSubject(processDefinition.getName());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.setSubject(processDefinition.getName());
+			}
 
 			// 触发流程启动事件
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
