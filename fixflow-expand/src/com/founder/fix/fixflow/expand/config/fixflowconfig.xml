@@ -56,7 +56,7 @@
     </groupInfo>
   </designerOrgConfig>
   <sysMailConfig selected="测试邮箱">
-    <mailInfo mailAddress="username@cname.com" mailName="测试邮箱" smtpHost="xx.com" smtpPort="25" userName="username" passWord="pawwword"/>
+    <mailInfo mailAddress="bfcec.workflow@cummins.com" mailName="测试邮箱" smtpHost="mailrelay.cummins.com" smtpPort="25" userName="" passWord=""/>
   </sysMailConfig>
   <expandClassConfig>
     <expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>

@@ -2,12 +2,13 @@
 <connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="SendMail" icon="images.jpg" className="SendMail" packageName="com.founder.fix.fixflow.expand.connector.SendMail" connectorName="SendMail" connectorNote="根据系统配置的邮箱发送给指定人员邮件" category="Messaging">
   <outputs/>
   <Pages>
+    <page pageId="MailContent" pageTitle="邮件内容" pageNote="在这个页面里填写需要发送的邮件内容">
+      <inputParameter id="mailContent" name="邮件内容" dataType="java.lang.String" controlType="text" isRequired="true"/>
+    </page>
     <page pageId="SendInfo" pageTitle="发件信息配置" pageNote="在这个页面上配置发送邮件所需要的参数">
       <inputParameter id="to" name="设置收件人地址(多人请以“,”隔开)" dataType="java.lang.String" controlType="text" isRequired="true"/>
       <inputParameter id="title" name="设置邮件主题" dataType="java.lang.String" controlType="text" isRequired="true"/>
-    </page>
-    <page pageId="MailContent" pageTitle="邮件内容" pageNote="在这个页面里填写需要发送的邮件内容">
-      <inputParameter id="mailContent" name="邮件内容" dataType="java.lang.String" controlType="text" isRequired="true"/>
+      <inputParameter id="cc" name="抄送" dataType="java.lang.String" controlType="text"/>
     </page>
   </Pages>
 </connector:Connector>

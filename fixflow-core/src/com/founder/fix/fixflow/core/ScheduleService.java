@@ -1,5 +1,7 @@
 package com.founder.fix.fixflow.core;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 import org.quartz.SchedulerFactory;
 
 public interface ScheduleService extends ProcessService{
@@ -12,7 +14,17 @@ public interface ScheduleService extends ProcessService{
 	 */
 	SchedulerFactory getSchedulerFactory();
 	
+	/**
+	 * 获取默认的线程池
+	 * @return
+	 */
+	ThreadPoolExecutor getThreadPoolExecutor();
 	
-	
+	/**
+	 * 获取指定的线程池
+	 * @param threadPoolKey 线程池key
+	 * @return
+	 */
+	ThreadPoolExecutor getThreadPoolExecutor(String threadPoolKey);
 	
 }

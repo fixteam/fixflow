@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow.core.impl;
 
 import java.sql.Connection;
+import java.util.Map;
 
 import org.quartz.SchedulerException;
 
@@ -19,6 +20,7 @@ import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 import com.founder.fix.fl.core.FixResourceCore;
@@ -68,6 +70,12 @@ public class ProcessEngineImpl implements ProcessEngine {
 		try {
 			processEngineConfiguration.getSchedulerFactory().getScheduler()
 					.shutdown();
+			
+			Map<String, FixThreadPoolExecutor> threadPoolMap=processEngineConfiguration.getThreadPoolMap();
+			for (String mapKey : threadPoolMap.keySet()) {
+				threadPoolMap.get(mapKey).shutdown();
+			}
+			
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

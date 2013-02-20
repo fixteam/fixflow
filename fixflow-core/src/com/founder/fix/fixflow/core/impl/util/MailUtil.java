@@ -7,8 +7,10 @@ import javax.activation.*;
 import org.apache.log4j.Logger;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.impl.Context;
 
 import java.util.*;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.net.*;
 import java.io.*;
 
@@ -396,15 +398,15 @@ public class MailUtil {
 		
 		final MailUtil mailUtil=this;
 		
-		 new Thread(new Runnable() {  
-	            public void run() {  
-	                try {  
-	                	mailUtil.send();  
-	                } catch (Exception ex) {  
-	                    logger.error("mail sender error To: " + mailUtil.to + " Mail Title: " + mailUtil.title , ex);  
-	                }  
-	            }  
-	        }).start();  
+		ThreadPoolExecutor executor=Context.getProcessEngineConfiguration().getScheduleService().getThreadPoolExecutor();
+		
+		//异步发送
+		executor.execute(new Runnable() {   
+		    
+            public void run() {   
+                mailUtil.send();   
+            }   
+        });
 		
 	}
 

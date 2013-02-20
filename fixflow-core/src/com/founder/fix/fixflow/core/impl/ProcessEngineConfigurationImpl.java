@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 
@@ -72,6 +75,7 @@ import com.founder.fix.fixflow.core.impl.message.FlowMessageListener;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.BpmnDeployer;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.Deployer;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.DeploymentCache;
+import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -147,7 +151,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	
 	protected AssignPolicyConfig assignPolicyConfig;
+	
+	/**
+	 * 线程池
+	 */
+	protected Map<String, FixThreadPoolExecutor> threadPoolMap;
 
+
+
+	
 
 
 	public ProcessEngine buildProcessEngine() {
@@ -221,9 +233,20 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initBizData();
 		initPriorityConfig();
 		initAssignPolicyConfig();
-		
+		initThreadPool();
 		
 	}
+
+	private void initThreadPool() {
+		
+		//这里以后要从配置文件读取现在是写死的
+		threadPoolMap=new HashMap<String, FixThreadPoolExecutor>();
+		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();   
+		FixThreadPoolExecutor executor = new FixThreadPoolExecutor("default","默认线程池",4, 7, 1, TimeUnit.DAYS, queue);   
+		threadPoolMap.put(executor.getThreadPoolKey(), executor);
+		
+	}
+
 
 	//加载任务分配策略配置
 	private void initAssignPolicyConfig() {
@@ -816,6 +839,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return taskCommandDefMap;
 	}
 
+	
+	public Map<String, FixThreadPoolExecutor> getThreadPoolMap() {
+		return threadPoolMap;
+	}
 	/**
 	 * 拿到数据库配置元素
 	 * 
