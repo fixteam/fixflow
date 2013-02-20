@@ -43,7 +43,11 @@ public class ReleaseTaskCmd extends AbstractExpandTaskCmd<ReleaseTaskCommand, Vo
 				throw new FixFlowException("任务 " + taskId + " 没有被领取,所以不能做还回操作!");
 
 			}
-		} 
+		}else{
+			throw new FixFlowException("流程操作没有设置处理者");
+			
+		}
+		
 
 		return null;
 	}

@@ -21,7 +21,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 
 	protected String id;
 
-	
+	Boolean booleanInternationalization=false;
 
 	protected String name;
 
@@ -67,22 +67,10 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		
 		this.taskCommandType=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "commandType");
 		
-		Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+		booleanInternationalization=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
     	
     	
-    	if(booleanTemp){
-    		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) userTask.eResource().getContents().get(0).eContents().get(0);
-        	String processId=definitionsBehavior.getProcessId();
-        	
-        	String nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, userTask.getId()+"_"+id);
-        	if(nameTemp==null){
-        		
-        	}
-        	else{
-        		this.name= nameTemp;
-        	}
-        	
-    	}
+    	
 
 	}
 	
@@ -99,6 +87,21 @@ public class TaskCommandInst implements UserCommandQueryTo{
 	}
 
 	public String getName() {
+		
+		
+		if(booleanInternationalization){
+    		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) userTask.eResource().getContents().get(0).eContents().get(0);
+        	String processId=definitionsBehavior.getProcessId();
+        	
+        	String nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, userTask.getId()+"_"+id);
+        	if(nameTemp==null){
+        		
+        	}
+        	else{
+        		this.name= nameTemp;
+        	}
+        	
+    	}
 		return name;
 	}
 
@@ -116,7 +119,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 	public Map<String, Object> getPersistentState() {
 		Map<String, Object> persistentState = new HashMap<String, Object>();
 		persistentState.put("id", this.id);
-		persistentState.put("name", this.name);
+		persistentState.put("name", getName());
 		persistentState.put("type", this.taskCommandType);
 		persistentState.put("isAdmin", this.isAdmin);
 		if( this.userTask!=null){

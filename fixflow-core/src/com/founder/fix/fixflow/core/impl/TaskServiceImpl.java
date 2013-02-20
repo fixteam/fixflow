@@ -147,6 +147,12 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	}
 
 
+	public void release(String taskId){
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("releaseTask");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
+	}
 
 	public void transferTask(TransferTaskCommand transferTaskCommand) {
 

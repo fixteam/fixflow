@@ -1271,6 +1271,10 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		
 		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
 		
+		for (String key : extensionFields.keySet()) {
+			objectParam.put(key, extensionFields.get(key));	
+		}
+		
 		return objectParam;
 	}
 
