@@ -27,6 +27,8 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	
 	TaskQuery isSuspended(boolean isSuspended);
 	
+	TaskQuery tokenId(String tokenId);
+	
 	TaskQuery callActivityInstanceId(String callActivityInstanceId);
 	/**
 	 * 提交人

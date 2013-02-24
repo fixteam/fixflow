@@ -22,6 +22,7 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
@@ -34,6 +35,7 @@ import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
 import com.founder.fix.fixflow.core.task.IncludeExclusion;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
+import com.founder.fix.fixflow.core.task.TaskQuery;
 
 import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -424,13 +426,78 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	public void toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin,FlowNode flowNode,String rollBackAssignee) {
 		
 		
-		customEnd(taskCommandInst,taskComment,agent,admin);
+		//分支退回处理
 		
-		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
-		executionContext.setToFlowNode(flowNode);
-		executionContext.setRollBackAssignee(rollBackAssignee);
-		token.signal(executionContext);
 		
+		if(token.getParent()==null){
+			//主令牌非分支的处理
+			
+			customEnd(taskCommandInst,taskComment,agent,admin);
+			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+			executionContext.setToFlowNode(flowNode);
+			executionContext.setRollBackAssignee(rollBackAssignee);
+			token.signal(executionContext);
+			
+		}
+		else{
+			//非主令牌分支令牌的处理
+			CommandExecutor commandExecutor=Context.getProcessEngineConfiguration().getCommandExecutor();
+			TaskQuery taskQuery=new TaskQueryImpl(commandExecutor);
+			Long taskNum=taskQuery.tokenId(token.getId()).nodeId(flowNode.getId()).count();
+			if(taskNum!=0){
+				//分支令牌经过这个节点则允许正常退回
+				customEnd(taskCommandInst,taskComment,agent,admin);
+				ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+				executionContext.setToFlowNode(flowNode);
+				executionContext.setRollBackAssignee(rollBackAssignee);
+				token.signal(executionContext);
+			}else{
+				
+				
+				
+				//分支令牌经过这个节点则允许正常退回
+				customEnd(taskCommandInst,taskComment,agent,admin);
+				
+				
+				boolean isFind=toFlowNodeEnd(taskCommandInst, taskComment, agent, admin, flowNode, rollBackAssignee,token.getParent(),taskQuery);
+				if(!isFind){
+					throw new FixFlowException("该节点从未到达过不能退回");
+				}
+			}
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	private boolean toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin,FlowNode flowNode,String rollBackAssignee,TokenEntity tokenObj,TaskQuery taskQuery){
+		Long taskNum=taskQuery.tokenId(tokenObj.getId()).nodeId(flowNode.getId()).count();
+		if(taskNum!=0){
+			
+			tokenObj.terminationChildToken();
+			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenObj);
+			executionContext.setToFlowNode(flowNode);
+			executionContext.setRollBackAssignee(rollBackAssignee);
+			tokenObj.signal(executionContext);
+			return true;
+		}else{
+			if(tokenObj.getParent()!=null){
+				return toFlowNodeEnd( taskCommandInst, taskComment, agent, admin, flowNode, rollBackAssignee, tokenObj.getParent(), taskQuery);
+				
+			}else{
+				return false;
+			}
+			
+		}
 		
 	}
 

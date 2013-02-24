@@ -144,6 +144,12 @@ public class TaskInstancePersistence {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  T.NODE_ID=? ";
 			objectParamWhere.add(taskQuery.getNodeId());
 		}
+		
+		if (taskQuery.getTokenId() != null) {
+
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  T.TOKEN_ID=? ";
+			objectParamWhere.add(taskQuery.getTokenId());
+		}
 
 		if (taskQuery.getCreateTimeAfter() != null) {
 
@@ -501,6 +507,13 @@ public class TaskInstancePersistence {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  P.INITIATOR  LIKE '%"+taskQuery.getInitiatorLike()+"%' ";
 			
 		}
+		
+		if (taskQuery.getTokenId() != null) {
+
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  T.TOKEN_ID=? ";
+			objectParamWhere.add(taskQuery.getTokenId());
+		}
+
 		
 		if (taskQuery.getNodeId() != null) {
 
@@ -885,7 +898,7 @@ public class TaskInstancePersistence {
 	@SuppressWarnings("rawtypes")
 	public List findTasksByTokenIdList(List<String> tokenIdList) {
 
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE END_TIME is not null and TOKEN_ID IN ( ";
+		String sqlText = "SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
 
 		for (int i = 0; i < tokenIdList.size(); i++) {
 

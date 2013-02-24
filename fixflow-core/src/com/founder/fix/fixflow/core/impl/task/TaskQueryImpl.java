@@ -75,11 +75,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	protected String isSuspended;
 	
-	
+	protected String tokenId;
 
 	
 
 
+
+	
 
 	
 
@@ -149,6 +151,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 	
 	public TaskQuery isSuspended(boolean isSuspended) {
 		this.isSuspended=String.valueOf(isSuspended);
+		return this;
+	}
+	
+	public TaskQuery tokenId(String tokenId) {
+		this.tokenId=tokenId;
 		return this;
 	}
 
@@ -596,7 +603,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return callActivityInstanceId;
 	}
 
-	
+	public String getTokenId() {
+		return tokenId;
+	}
 
 	public String getNodeId() {
 		return nodeId;

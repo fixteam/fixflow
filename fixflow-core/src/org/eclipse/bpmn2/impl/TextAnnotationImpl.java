@@ -20,6 +20,10 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Text Annotation</b></em>'.
@@ -100,7 +104,22 @@ public class TextAnnotationImpl extends ArtifactImpl implements TextAnnotation {
      * @generated
      */
     public String getText() {
-        return text;
+    	Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+    	
+    	
+    	if(booleanTemp){
+    		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) this.eResource().getContents().get(0).eContents().get(0);
+        	String processId=definitionsBehavior.getProcessId();
+        	
+        	String textTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, id);
+        	if(textTemp==null){
+        		return text;
+        	}
+        	return textTemp;
+    	}
+    	else{
+    		return text;
+    	}
     }
 
     /**
