@@ -385,12 +385,6 @@ public interface TaskInstance extends PersistentObject{
 
 	void setProcessDefinitionName(String processDefinitionName);
 	
-	/**
-	 * 获取任务扩展字段值
-	 * @param fieldName 字段名称
-	 * @return 任务扩展字段值
-	 */
-	Object getExtensionField(String fieldName);
 	
 	
 	boolean isDraft();
@@ -412,10 +406,24 @@ public interface TaskInstance extends PersistentObject{
 	
 	
 	/**
-	 * 获取任务扩展字段
+	 * 获取任务扩展字段(大小写区分)
 	 * @return 任务扩展字段
 	 */
 	Map<String, Object> getExtensionFields();
 	
+	/**
+	 * 获取任务扩展字段值
+	 * @param fieldName 字段名称(大小写区分)
+	 * @return 任务扩展字段值
+	 */
+	Object getExtensionField(String fieldName);
+	
+	
+	/**
+	 * 给task添加一个新的字段值用来保存到数据库中
+	 * @param fieldName 数据库字段名(大小写区分)
+	 * @param value 值
+	 */
+	void setPersistenceExtensionField(String fieldName,Object value);
 
 }

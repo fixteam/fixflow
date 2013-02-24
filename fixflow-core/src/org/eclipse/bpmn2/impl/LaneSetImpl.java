@@ -29,6 +29,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Lane Set</b></em>'.
@@ -112,7 +116,22 @@ public class LaneSetImpl extends BaseElementImpl implements LaneSet {
      * @generated
      */
     public String getName() {
-        return name;
+    	Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+    	
+    	
+    	if(booleanTemp){
+    		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) this.eResource().getContents().get(0).eContents().get(0);
+        	String processId=definitionsBehavior.getProcessId();
+        	
+        	String nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, id);
+        	if(nameTemp==null){
+        		return name;
+        	}
+        	return nameTemp;
+    	}
+    	else{
+    		return name;
+    	}
     }
 
     /**

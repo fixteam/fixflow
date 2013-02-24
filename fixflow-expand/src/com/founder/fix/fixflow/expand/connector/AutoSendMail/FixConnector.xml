@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="AutoSendMail" icon="images.jpg" className="AutoSendMail" packageName="com.founder.fix.fixflow.expand.connector.AutoSendMail" connectorName="自动邮件通知" connectorNote="自动发送邮件给当前任务的处理者" category="Messaging">
+  <outputs/>
+  <Pages>
+    <page pageId="page1" pageTitle="邮件参数" pageNote="标题和内容不填写则使用默认标题和内容">
+      <inputParameter id="mailTitle" name="邮件标题" dataType="java.lang.String" controlType="text"/>
+      <inputParameter id="mailContent" name="邮件内容" dataType="java.lang.String" controlType="text"/>
+    </page>
+  </Pages>
+</connector:Connector>

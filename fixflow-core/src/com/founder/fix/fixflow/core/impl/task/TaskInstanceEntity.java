@@ -140,6 +140,18 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	
 
 	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
+	
+	/**
+	 * 持久化扩展字段
+	 */
+	protected Map<String, Object> persistenceExtensionFields = new HashMap<String, Object>();
+	
+	public void setPersistenceExtensionField(String fieldName,Object value){
+		extensionFields.put(fieldName, value);
+		persistenceExtensionFields.put(fieldName, value);
+	}
+	
+
 
 	/**
 	 * 默认为fixflow任务
@@ -1271,8 +1283,9 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		
 		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
 		
-		for (String key : extensionFields.keySet()) {
-			objectParam.put(key, extensionFields.get(key));	
+		
+		for (String key : persistenceExtensionFields.keySet()) {
+			objectParam.put(key, persistenceExtensionFields.get(key));	
 		}
 		
 		return objectParam;

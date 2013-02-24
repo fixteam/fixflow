@@ -12,6 +12,7 @@
   </node>
   <node id="8cd83844-8779-4781-bff2-3f0c5b236117" name="Messaging" ico="images.jpg">
     <menuConnector id="SendMail" name="SendMail" note="根据系统配置的邮箱发送给指定人员邮件"/>
+    <menuConnector id="AutoSendMail" name="自动邮件通知" note="自动发送邮件给当前任务的处理者"/>
   </node>
   <node id="a1903ab0-8a27-4807-86e7-29c1c2b173ba" name="水利系统" ico="eclipse.png">
     <menuConnector id="ReciveTask" name="市级任务接收" note="省厅数据下发到市级系统"/>

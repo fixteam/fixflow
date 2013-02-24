@@ -969,7 +969,7 @@ public class TaskInstancePersistence {
 	
 	public List<Map<String, Object>> findAgentUsers(String userId){
 		
-		String sql=" SELECT z.EID FROM "+
+		String sql=" SELECT distinct(z.EID) EID FROM "+
 				"( "+
 				" select EID,WFNAME,NODEID,AUSER1 as USERID from FIXFLOW_OUTAGENT_AGENTDETAILS "+
 				" WHERE AUSER1 not in (select a.EID from FIXFLOW_OUTAGENT_AGENTDETAILS a,FIXFLOW_OUTAGENT_AGENTINFO b "+

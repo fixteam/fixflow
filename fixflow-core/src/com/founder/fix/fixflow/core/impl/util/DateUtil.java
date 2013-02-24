@@ -33,8 +33,8 @@ public class DateUtil {
 	    long hours = (mss % (60 * 60 * 24)) / ( 60 * 60);  
 	    long minutes = (mss % (60 * 60)) / (60);  
 	    long seconds = (mss % ( 60));  
-	    return days + " 天 " + hours + " 小时 " + minutes + " 分 "  
-	            + seconds + " 秒 ";  
+	    return days + " days " + hours + " hours " + minutes + " minutes "  
+	            + seconds + " seconds ";  
 	}  
 	/** 
 	 *  
