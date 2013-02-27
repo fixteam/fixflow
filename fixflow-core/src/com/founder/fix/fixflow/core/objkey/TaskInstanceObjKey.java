@@ -894,6 +894,29 @@ public class TaskInstanceObjKey {
 		}
 
 	}
+	
+	public class FlowKeyPendingTaskId implements ObjKeyInterface{
+		
+		public String EntityKey() {
+			return "pendingTaskId";
+		}
+		
+	
+		public String DataBaseKey() {
+			return "PENDINGTASKID";
+		}
+		
+		public String FullKey() {
+			return "pendingTaskId";
+		}
+
+		public String KeyName() {
+			return "转办任务编号";
+		}
+
+	}
+	
+	
 	//CALLACTIVITY_INSTANCE_ID
 	public class FlowKeyCallActivityInstanceId implements ObjKeyInterface{
 		
@@ -1282,5 +1305,14 @@ public class TaskInstanceObjKey {
 		return new TaskInstanceObjKey().new FlowKeyCallActivityInstanceId();
 	}
 	
+	
+	/**
+	 * 转办任务编号
+	 * @return
+	 */
+	public static FlowKeyPendingTaskId PendingTaskId(){
+		
+		return new TaskInstanceObjKey().new FlowKeyPendingTaskId();
+	}
 	
 }

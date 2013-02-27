@@ -42,6 +42,7 @@
     <taskCommandDef id="subProcessEnd" name="子流程结束" isEnabled="true" type="system"/>
     <taskCommandDef id="startEvent" name="流程开始" isEnabled="true" type="system"/>
     <taskCommandDef id="endEvent" name="流程结束" isEnabled="true" type="system"/>
+    <taskCommandDef id="pendingDifForm" name="转办不带表单" command="com.founder.fix.fixflow.expand.command.PendingTaskCommand"  filter="com.founder.fix.fixflow.expand.filter.PendingTaskFilter" cmd="com.founder.fix.fixflow.expand.cmd.PendingDifFormTaskCmd" isEnabled="true" type="toDoTasks"/>
   </taskCommandConfig>
   <designerOrgConfig>
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
@@ -55,8 +56,8 @@
       <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="POSITION" sqlText="SELECT * FROM AU_USERINFO"/>
     </groupInfo>
   </designerOrgConfig>
-  <sysMailConfig selected="测试邮箱">
-    <mailInfo mailAddress="name@xx.com" mailName="测试邮箱" smtpHost="mail.xx.com" smtpPort="25" userName="" passWord=""/>
+  <sysMailConfig selected="cummins">
+    <mailInfo mailAddress="bfcec.workflow@cummins.com " mailName="cummins" smtpHost="mailrelay.cummins.com" smtpPort="25" userName="" passWord=""/>
   </sysMailConfig>
   <expandClassConfig>
     <expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>

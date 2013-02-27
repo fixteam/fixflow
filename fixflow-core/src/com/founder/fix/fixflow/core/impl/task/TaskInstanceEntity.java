@@ -124,7 +124,10 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	
 	protected String callActivityInstanceId;
 
+	protected String pendingTaskId;
+
 	
+
 
 	/**
 	 * 代理处理者
@@ -818,6 +821,7 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		persistentState.put(TaskInstanceObjKey.Agent().FullKey(), this.agent);
 		persistentState.put(TaskInstanceObjKey.Admin().FullKey(), this.admin);
 		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
+		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
 		
 		
 		for (String key : extensionFields.keySet()) {
@@ -1069,6 +1073,15 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		this.expectedExecutionTime = expectedExecutionTime;
 	}
 	
+	public String getPendingTaskId() {
+		return pendingTaskId;
+	}
+
+	public void setPendingTaskId(String pendingTaskId) {
+		this.pendingTaskId = pendingTaskId;
+	}
+
+	
 	
 	/**
 	 * 从数据库读取任务
@@ -1251,6 +1264,11 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 				continue;
 			}
 			
+			if (dataKey.equals(TaskInstanceObjKey.PendingTaskId().DataBaseKey())) {
+				this.setPendingTaskId(StringUtil.getString(entityMap.get(dataKey)));
+				continue;
+			}
+			
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
 			/*
 			 * if (dataKey.equals("PI_INITIATOR")) {
@@ -1349,6 +1367,7 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		
 		
 		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
+		objectParam.put(TaskInstanceObjKey.PendingTaskId().DataBaseKey(), this.pendingTaskId);
 		
 		
 		for (String key : persistenceExtensionFields.keySet()) {

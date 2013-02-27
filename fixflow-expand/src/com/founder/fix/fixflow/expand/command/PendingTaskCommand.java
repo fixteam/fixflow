@@ -8,6 +8,11 @@ public class PendingTaskCommand extends AbstractCustomExpandTaskCommand{
 
 	
 	/**
+	 * 转办的任务编号
+	 */
+	protected String pendingTaskId;
+	
+	/**
 	 * 转办的用户编号
 	 */
 	protected String pendingUserId;
@@ -23,9 +28,27 @@ public class PendingTaskCommand extends AbstractCustomExpandTaskCommand{
 	}
 
 
+
+	public String getPendingTaskId() {
+		return pendingTaskId;
+	}
+
+
+
+
+
+	public void setPendingTaskId(String pendingTaskId) {
+		this.pendingTaskId = pendingTaskId;
+	}
+
+
+
+
+
 	public PendingTaskCommand(ExpandTaskCommand expandTaskCommand) {
 		super(expandTaskCommand);
 		// TODO Auto-generated constructor stub
+		this.pendingTaskId=StringUtil.getString(expandTaskCommand.getParamMap().get("pendingTaskId"));
 		this.pendingUserId=StringUtil.getString(expandTaskCommand.getParamMap().get("pendingUserId"));
 	}
 	
