@@ -548,6 +548,10 @@ public class ProcessInstancePersistence {
 				objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableValue());
 			}
 		}
+		if(processInstanceQuery.getStatus() !=null){
+			sqlString += " AND INSTANCE_STATUS = ? ";
+			objectParamWhere.add(processInstanceQuery.getStatus().toString());
+		}
 		return sqlString;
 	}
 	

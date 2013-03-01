@@ -196,7 +196,7 @@ public class ProcessDefinitionPersistence {
 
 	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery, Page page) {
 		List<Object> objectParamWhere = new ArrayList<Object>();
-		String selectProcessDefinitionsByQueryCriteriaSql = " select PD.* ";
+		String selectProcessDefinitionsByQueryCriteriaSql = " select " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " PD.* ";
 		if (processDefinitionQuery.getQueryExpandTo() != null && processDefinitionQuery.getQueryExpandTo().getFieldSql() != null
 				&& !processDefinitionQuery.getQueryExpandTo().getFieldSql().equals("")) {
 			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " , "

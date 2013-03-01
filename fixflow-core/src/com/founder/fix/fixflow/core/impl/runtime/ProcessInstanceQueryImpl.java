@@ -30,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -46,7 +47,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected Date updateTime;
 	protected String isSuspended;
 	protected List<String> processDefinitionKeyList=new ArrayList<String>();
-
+	protected ProcessInstanceType status;
 	protected boolean isContainsSubProcess=false;
 	
 
@@ -207,6 +208,11 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.orderProperty = ProcessInstanceQueryProperty.UPDATE_TIME;
 		return this;
 	}
+	
+	public ProcessInstanceQuery processInstanceStatus(ProcessInstanceType status) {
+		this.status = status;
+		return this;
+	}
 
 	// results /////////////////////////////////////////////////////////////////
 
@@ -265,6 +271,10 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return taskParticipants;
 	}
 	
+	public ProcessInstanceType getStatus() {
+		return status;
+	}
+
 	protected String initiatorLike;
 
 	protected String subject;
