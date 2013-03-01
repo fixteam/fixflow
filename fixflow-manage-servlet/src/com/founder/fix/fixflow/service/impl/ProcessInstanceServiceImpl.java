@@ -31,6 +31,7 @@ import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
@@ -66,7 +67,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String bizKey				= StringUtil.getString(params.get("bizKey"));
 		String initor				= StringUtil.getString(params.get("initor"));
 		String status				= StringUtil.getString(params.get("status"));
-		
+		ProcessInstanceType processInstanceStatus = getInstanceStaus(status);
 		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
 		
 		String pageI = StringUtil.getString(params.get("pageIndex"));
@@ -80,14 +81,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		if(StringUtil.isNotEmpty(rowI)){
 			rowNum = Integer.valueOf(rowI);
 		}
-		
-		
 		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
-		
-		
-		
-		
-		
 		if(StringUtil.isNotEmpty(processDefinitionKey))
 			processInstanceQuery.processDefinitionKey(processDefinitionKey);
 		if(StringUtil.isNotEmpty(processInstanceId))
@@ -98,34 +92,36 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 //			processInstanceQuery.(processDefinitionKey);
 		if(StringUtil.isNotEmpty(initor))
 			processInstanceQuery.initiatorLike(processDefinitionKey);
-		if(StringUtil.isNotEmpty(status)){
-			if(status.equals("0")){
-				processInstanceQuery.notEnd();
-			}else{
-				processInstanceQuery.isEnd();
-			}
+		if(processInstanceStatus !=null){
+			processInstanceQuery.processInstanceStatus(processInstanceStatus);
 		}
+		processInstanceQuery.orderByUpdateTime().desc();
 		//根据流程定义key查询
 		List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
 		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 		for(ProcessInstance tmp: processInstances){
 			instanceMaps.add(tmp.getPersistentState());
 		}
-		
-		
-		
 		Long count = processInstanceQuery.count();
 		Pagination page = new Pagination(pageIndex,rowNum);
 		page.setTotal(count.intValue());
-		
-		
-		
 		resultMap.put("dataList", instanceMaps);
 		resultMap.put("pageInfo", page);
-		
 		return resultMap;
 	}
 	
+	private ProcessInstanceType getInstanceStaus(String status){
+		if("运行中".equals(status)){
+			return ProcessInstanceType.RUNNING;
+		}else if("暂停".equals(status)){
+			return ProcessInstanceType.SUSPEND;
+		}else if("完成".equals(status)){
+			return ProcessInstanceType.COMPLETE;
+		}else if("终止".equals(status)){
+			return ProcessInstanceType.TERMINATION;
+		}
+		return null;
+	}
 	public Map<String,Object> getProcessTokens(Map<String,Object> params) throws SQLException{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
