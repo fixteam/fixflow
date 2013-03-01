@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.eclipse.bpmn2.impl.StartEventImpl;
 
+import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
@@ -100,8 +102,13 @@ public class StartEventBehavior extends StartEventImpl {
 	
 		taskInstance.setAssigneeId(Authentication.getAuthenticatedUserId());
 		//taskInstance.setEndTime(newTaskEndTime);
-		taskInstance.setCommandType("startEvent");
-		taskInstance.setCommandMessage("流程启动");
+		taskInstance.setCommandId(TaskCommandType.STARTEVENT);
+		taskInstance.setCommandType(TaskCommandType.STARTEVENT);
+		//taskInstance.setCommandMessage("流程启动");
+		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.STARTEVENT);
+		if(taskCommandDef!=null){
+			taskInstance.setCommandMessage(taskCommandDef.getName());
+		}
 		
 		
 		taskInstance.setEndTime(ClockUtil.getCurrentTime());

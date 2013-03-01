@@ -10,6 +10,7 @@ import org.eclipse.bpmn2.CallActivity;
 import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
+import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariableMapping;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
 import com.founder.fix.fixflow.core.ProcessEngine;
@@ -24,6 +25,7 @@ import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
+import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
@@ -428,7 +430,7 @@ public class ProcessInstanceEntity implements ProcessInstance {
 	
 	private void createEndEventTask(ExecutionContext executionContext){
 		
-		//构造创建人物所需的数据
+		//构造创建任务所需的数据
 		String newTaskId=GuidUtil.CreateGuid();
 		String newTaskProcessInstanceId=executionContext.getProcessInstance().getId();		
 		String newTaskProcessDefinitionId=executionContext.getProcessDefinition().getProcessDefinitionId();		
@@ -463,10 +465,15 @@ public class ProcessInstanceEntity implements ProcessInstance {
 		taskInstance.setDraft(isDraft);
 		
 	
-		taskInstance.setAssigneeId(Authentication.getAuthenticatedUserId());
+		//taskInstance.setAssigneeId(Authentication.getAuthenticatedUserId());
 		//taskInstance.setEndTime(newTaskEndTime);
-		taskInstance.setCommandType("endEvent");
-		taskInstance.setCommandMessage("流程结束");
+		taskInstance.setCommandId(TaskCommandType.endEvent);
+		taskInstance.setCommandType(TaskCommandType.endEvent);
+		
+		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.endEvent);
+		if(taskCommandDef!=null){
+			taskInstance.setCommandMessage(taskCommandDef.getName());
+		}
 		
 		
 		taskInstance.setEndTime(ClockUtil.getCurrentTime());

@@ -301,10 +301,16 @@ public interface TaskInstance extends PersistentObject{
 	String getCommandType();
 
 	/**
-	 * 获取任务处理命令内容
+	 * 获取任务处理命令内容(国际化)
 	 * @return
 	 */
 	String getCommandMessage();
+	
+	/**
+	 * 获取数据中存储的默认的处理命令名称
+	 * @return
+	 */
+	String getDefaultCommandMessage();
 
 	/**
 	 * 获取任务的意见

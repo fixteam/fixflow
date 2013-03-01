@@ -96,6 +96,7 @@ public class PendingDifFormTaskCmd extends AbstractExpandTaskCmd<PendingTaskComm
 			task.setOwner(assigneeId);
 			task.setDelegationState(DelegationState.RESOLVED);
 			task.setEndTimeWithoutCascade(null);
+			task.setCommandId(null);
 			task.setCommandType(null);
 			task.setCommandMessage(null);
 			task.setTaskComment(null);

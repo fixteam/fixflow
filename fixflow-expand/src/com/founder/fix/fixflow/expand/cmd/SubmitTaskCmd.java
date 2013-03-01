@@ -114,6 +114,7 @@ public class SubmitTaskCmd extends AbstractExpandTaskCmd<SubmitTaskCommand, Void
 		if (taskInstanceImpl != null) {
 
 			taskInstanceImpl.end();
+			taskInstanceImpl.setCommandId(taskCommand.getId());
 			taskInstanceImpl.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
 			taskInstanceImpl.setCommandMessage(taskCommand.getName());
 			taskInstanceImpl.setTaskComment(this.taskComment);

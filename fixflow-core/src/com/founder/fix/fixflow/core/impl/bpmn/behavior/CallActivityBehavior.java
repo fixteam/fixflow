@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.bpmn2.impl.CallActivityImpl;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
+import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariableMapping;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
 import com.founder.fix.fixflow.core.ProcessEngine;
@@ -17,6 +18,7 @@ import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
@@ -103,10 +105,15 @@ public class CallActivityBehavior extends CallActivityImpl {
 		ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
 		TaskInstanceEntity taskInstance=(TaskInstanceEntity)processEngine.getTaskService().createTaskQuery().callActivityInstanceId(supProcessInstanceId).singleResult();
 		Date newTaskEndTime=ClockUtil.getCurrentTime();
-		taskInstance.setAssigneeId("1200119390");
+		//taskInstance.setAssigneeId("1200119390");
 		taskInstance.setEndTime(newTaskEndTime);
-		taskInstance.setCommandType("subProcessEnd");
-		taskInstance.setCommandMessage("子流程结束");
+		taskInstance.setCommandId(TaskCommandType.SUBPROCESSEND);
+		taskInstance.setCommandType(TaskCommandType.SUBPROCESSEND);
+		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.SUBPROCESSEND);
+		if(taskCommandDef!=null){
+			taskInstance.setCommandMessage(taskCommandDef.getName());
+		}
+
 
 		Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(taskInstance);
 		

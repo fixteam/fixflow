@@ -133,6 +133,7 @@ public class CompleteGeneralTaskSimulationRunCmd implements
 				TaskInstanceEntity taskInstanceImpl = taskInstance;
 				taskInstanceImpl.end();
 				if (taskCommand != null) {
+					taskInstanceImpl.setCommandId(taskCommand.getId());
 					taskInstanceImpl.setCommandType(StringUtil
 							.getString(taskCommand.getTaskCommandType()));
 

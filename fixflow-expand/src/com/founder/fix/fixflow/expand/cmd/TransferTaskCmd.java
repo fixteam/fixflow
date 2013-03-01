@@ -83,6 +83,7 @@ public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand,
 				taskInstance.setAssigneeWithoutCascade(transferUserId);
 				taskInstance.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
 				taskInstance.setEndTimeWithoutCascade(null);
+				taskInstance.setCommandId(null);
 				taskInstance.setCommandType(null);
 				taskInstance.setCommandMessage(null);
 				taskInstance.setTaskComment(null);

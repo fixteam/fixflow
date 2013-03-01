@@ -126,6 +126,13 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 
 	protected String pendingTaskId;
 
+	protected String commandType;
+	
+	protected String commandId;
+	
+	
+	
+
 	
 
 
@@ -555,6 +562,7 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 			String taskCommandType=taskCommandInst.getTaskCommandType();
 			String taskCommandName=taskCommandInst.getName();
 			//设置流程自动结束信息 autoEnd
+			this.setCommandId(taskCommandInst.getId());
 			this.setCommandType(taskCommandType);
 			if(taskCommandName==null){
 				TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
@@ -569,8 +577,10 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 			
 		}
 		else{
-			this.setCommandType("autoEnd");
-			TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get("autoEnd");
+			
+			
+			this.setCommandType(TaskCommandType.AUTOEND);
+			TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.AUTOEND);
 			if(taskCommandDef!=null){
 				this.setCommandMessage(taskCommandDef.getName());
 			}
@@ -807,6 +817,7 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		persistentState.put(TaskInstanceObjKey.IsSuspended().FullKey(), this.isSuspended);
 		persistentState.put(TaskInstanceObjKey.HasEnded().FullKey(), this.endTime != null);
 		persistentState.put(TaskInstanceObjKey.BizKey().FullKey(), this.bizKey);
+		persistentState.put(TaskInstanceObjKey.CommandId().FullKey(), this.commandId);
 		persistentState.put(TaskInstanceObjKey.CommandType().FullKey(), this.commandType);
 		persistentState.put(TaskInstanceObjKey.CommandMessage().FullKey(), this.commandMessage);
 		persistentState.put(TaskInstanceObjKey.TaskComment().FullKey(), this.taskComment);
@@ -831,7 +842,7 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		return persistentState;
 	}
 
-	protected String commandType;
+	
 
 	public String getCommandType() {
 		return commandType;
@@ -844,6 +855,43 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	protected String commandMessage;
 
 	public String getCommandMessage() {
+		
+		
+		
+		if(this.getCommandType()==null){
+			
+			return commandMessage;
+			
+		}
+		Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+    	
+    	
+    	if(booleanTemp){
+        	String processId=this.getProcessDefinitionId();
+        	String cType=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
+        	String nameTemp=null;
+        	if(cType.equals("system")){
+        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName("FixFlow_SystemTaskComandResource", "System_"+commandId);
+            	
+        	}
+        	else{
+        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId+"_"+id);
+            	
+        	}
+
+        	if(nameTemp==null){
+        		return commandMessage;
+        	}
+        	return nameTemp;
+        	
+    	}
+    	else{
+    		return commandMessage;
+    	}
+		
+	}
+	
+	public String  getDefaultCommandMessage(){
 		return commandMessage;
 	}
 
@@ -958,6 +1006,15 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	public String getProcessDefinitionKey() {
 		return this.processDefinitionKey;
 	}
+	
+	public String getCommandId() {
+		return commandId;
+	}
+
+	public void setCommandId(String commandId) {
+		this.commandId = commandId;
+	}
+
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<IdentityLink> getIdentityLinkQueryToList() {
@@ -1186,6 +1243,13 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 				this.setBizKey(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
+			
+
+			if (dataKey.equals(TaskInstanceObjKey.CommandId().DataBaseKey())) {
+				this.setCommandId(StringUtil.getString(entityMap.get(dataKey)));
+				continue;
+			}
+
 
 			if (dataKey.equals(TaskInstanceObjKey.CommandType().DataBaseKey())) {
 				this.setCommandType(StringUtil.getString(entityMap.get(dataKey)));
@@ -1333,6 +1397,8 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 
 		objectParam.put(TaskInstanceObjKey.CommandType().DataBaseKey(), this.getCommandType());
 
+		objectParam.put(TaskInstanceObjKey.CommandId().DataBaseKey(), this.getCommandId());
+		
 		objectParam.put(TaskInstanceObjKey.CommandMessage().DataBaseKey(), this.getCommandMessage());
 
 		objectParam.put(TaskInstanceObjKey.TaskComment().DataBaseKey(), this.getTaskComment());

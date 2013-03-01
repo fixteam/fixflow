@@ -48,6 +48,7 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 			String guid=processId.substring(processId.lastIndexOf(":")+1, processId.length());
 			try {
 				FixResourceCore.loadAllLanguage(processKey+"/" + processKey + "_" + version + "_" + guid + ".properties",processId);
+				
 			} catch (IOException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();
@@ -57,7 +58,13 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 			
 
 		}
-		
+		try {
+			FixResourceCore.loadAllLanguage("FixFlowConfigResource/SystemTaskComandResource.properties", "FixFlow_SystemTaskComandResource");
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+			throw new FixFlowException("国际化资源文件加载错误!", e);
+		}
 		//loadAllLanguage
 
 		

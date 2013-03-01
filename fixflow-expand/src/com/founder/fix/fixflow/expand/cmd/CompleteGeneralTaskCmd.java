@@ -111,6 +111,7 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 		if(taskInstanceImpl!=null){
 			taskInstanceImpl.end();
 			taskInstanceImpl.setDraft(false);
+			taskInstanceImpl.setCommandId(taskCommand.getId());
 			taskInstanceImpl.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
 			taskInstanceImpl.setCommandMessage(taskCommand.getName());
 			taskInstanceImpl.setTaskComment(this.taskComment);

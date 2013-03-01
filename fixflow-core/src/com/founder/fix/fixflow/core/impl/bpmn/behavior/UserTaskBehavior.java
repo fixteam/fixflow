@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
@@ -357,7 +358,8 @@ public class UserTaskBehavior extends UserTaskImpl {
 		newTask.setTaskInstanceType(TaskInstanceType.FIXBPMTASK);
 		String bizKey=token.getProcessInstance().getBizKey();
 		newTask.setBizKey(bizKey);
-		newTask.setCommandType("skipNode");
+		newTask.setCommandId(TaskCommandType.SKIPNODE);
+		newTask.setCommandType(TaskCommandType.SKIPNODE);
 		
 		
 		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get("skipNode");

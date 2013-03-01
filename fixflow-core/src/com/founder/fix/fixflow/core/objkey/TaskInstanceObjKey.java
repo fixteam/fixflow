@@ -553,8 +553,7 @@ public class TaskInstanceObjKey {
 		}
 
 	}
-	
-	
+
 	public class FlowKeyCommandType implements ObjKeyInterface{
 
 		public String EntityKey() {
@@ -572,6 +571,27 @@ public class TaskInstanceObjKey {
 
 		public String KeyName() {
 			return "处理命令类型";
+		}
+
+	}
+	
+	public class FlowKeyCommandId implements ObjKeyInterface{
+
+		public String EntityKey() {
+			return "commandId";
+		}
+		
+	
+		public String DataBaseKey() {
+			return "COMMAND_ID";
+		}
+		
+		public String FullKey() {
+			return "commandId";
+		}
+
+		public String KeyName() {
+			return "处理命令编号";
 		}
 
 	}
@@ -1129,6 +1149,14 @@ public class TaskInstanceObjKey {
 		return new TaskInstanceObjKey().new FlowKeyBizKey();
 	}
 	
+	
+	/**
+	 * 处理命令编号
+	 * @return
+	 */
+	public static FlowKeyCommandId CommandId(){
+		return new TaskInstanceObjKey().new FlowKeyCommandId();
+	}
 	/**
 	 * 处理命令类型
 	 * @return

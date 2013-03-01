@@ -69,6 +69,7 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 			task.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
 
 			task.setEndTimeWithoutCascade(null);
+			task.setCommandId(null);
 			task.setCommandType(null);
 			task.setCommandMessage(null);
 			task.setTaskComment(null);

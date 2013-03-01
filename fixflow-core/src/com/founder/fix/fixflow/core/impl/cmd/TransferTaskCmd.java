@@ -98,6 +98,7 @@ public class TransferTaskCmd implements Command<Void> {
 				TaskCommandInst taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 
 				taskInstance.setEndTimeWithoutCascade(ClockUtil.getCurrentTime());
+				taskInstance.setCommandId(taskCommand.getId());
 				taskInstance.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
 				taskInstance.setCommandMessage(taskCommand.getName());
 				taskInstance.setTaskComment(taskComment);
