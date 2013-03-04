@@ -918,13 +918,22 @@ public interface FixFlowPackage extends EPackage {
 	int CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF = 11;
 
 	/**
+	 * The feature id for the '<em><b>Skip Comment</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE__SKIP_COMMENT = 12;
+
+	/**
 	 * The number of structural features of the '<em>Connector Instance</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTOR_INSTANCE_FEATURE_COUNT = 12;
+	int CONNECTOR_INSTANCE_FEATURE_COUNT = 13;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorParameterInputsImpl <em>Connector Parameter Inputs</em>}' class.
@@ -2733,6 +2742,17 @@ public interface FixFlowPackage extends EPackage {
 	EReference getConnectorInstance_ConnectorParameterOutputsDef();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getSkipComment <em>Skip Comment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Skip Comment</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getSkipComment()
+	 * @see #getConnectorInstance()
+	 * @generated
+	 */
+	EReference getConnectorInstance_SkipComment();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs <em>Connector Parameter Inputs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4213,6 +4233,14 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF = eINSTANCE.getConnectorInstance_ConnectorParameterOutputsDef();
+
+		/**
+		 * The meta object literal for the '<em><b>Skip Comment</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONNECTOR_INSTANCE__SKIP_COMMENT = eINSTANCE.getConnectorInstance_SkipComment();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorParameterInputsImpl <em>Connector Parameter Inputs</em>}' class.

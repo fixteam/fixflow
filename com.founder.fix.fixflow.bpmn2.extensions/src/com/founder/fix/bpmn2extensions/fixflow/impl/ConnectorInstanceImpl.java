@@ -13,6 +13,7 @@ import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputsDef;
 import com.founder.fix.bpmn2extensions.fixflow.Documentation;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 
+import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -48,6 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getConnectorParameterInputs <em>Connector Parameter Inputs</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getConnectorParameterOutputs <em>Connector Parameter Outputs</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getConnectorParameterOutputsDef <em>Connector Parameter Outputs Def</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getSkipComment <em>Skip Comment</em>}</li>
  * </ul>
  * </p>
  *
@@ -253,6 +255,16 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 	 * @ordered
 	 */
 	protected EList<ConnectorParameterOutputsDef> connectorParameterOutputsDef;
+
+	/**
+	 * The cached value of the '{@link #getSkipComment() <em>Skip Comment</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSkipComment()
+	 * @generated
+	 * @ordered
+	 */
+	protected SkipComment skipComment;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -525,6 +537,49 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public SkipComment getSkipComment() {
+		return skipComment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetSkipComment(SkipComment newSkipComment, NotificationChain msgs) {
+		SkipComment oldSkipComment = skipComment;
+		skipComment = newSkipComment;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT, oldSkipComment, newSkipComment);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSkipComment(SkipComment newSkipComment) {
+		if (newSkipComment != skipComment) {
+			NotificationChain msgs = null;
+			if (skipComment != null)
+				msgs = ((InternalEObject)skipComment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT, null, msgs);
+			if (newSkipComment != null)
+				msgs = ((InternalEObject)newSkipComment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT, null, msgs);
+			msgs = basicSetSkipComment(newSkipComment, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT, newSkipComment, newSkipComment));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -536,6 +591,8 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				return ((InternalEList<?>)getConnectorParameterOutputs()).basicRemove(otherEnd, msgs);
 			case FixFlowPackage.CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF:
 				return ((InternalEList<?>)getConnectorParameterOutputsDef()).basicRemove(otherEnd, msgs);
+			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
+				return basicSetSkipComment(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -572,6 +629,8 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				return getConnectorParameterOutputs();
 			case FixFlowPackage.CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF:
 				return getConnectorParameterOutputsDef();
+			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
+				return getSkipComment();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -624,6 +683,9 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				getConnectorParameterOutputsDef().clear();
 				getConnectorParameterOutputsDef().addAll((Collection<? extends ConnectorParameterOutputsDef>)newValue);
 				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
+				setSkipComment((SkipComment)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -672,6 +734,9 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 			case FixFlowPackage.CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF:
 				getConnectorParameterOutputsDef().clear();
 				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
+				setSkipComment((SkipComment)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -708,6 +773,8 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				return connectorParameterOutputs != null && !connectorParameterOutputs.isEmpty();
 			case FixFlowPackage.CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF:
 				return connectorParameterOutputsDef != null && !connectorParameterOutputsDef.isEmpty();
+			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
+				return skipComment != null;
 		}
 		return super.eIsSet(featureID);
 	}

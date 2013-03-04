@@ -1117,6 +1117,15 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getConnectorInstance_SkipComment() {
+		return (EReference)connectorInstanceEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getConnectorParameterInputs() {
 		return connectorParameterInputsEClass;
 	}
@@ -1864,6 +1873,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_INPUTS);
 		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS);
 		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF);
+		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__SKIP_COMMENT);
 
 		connectorParameterInputsEClass = createEClass(CONNECTOR_PARAMETER_INPUTS);
 		createEAttribute(connectorParameterInputsEClass, CONNECTOR_PARAMETER_INPUTS__ID);
@@ -2085,6 +2095,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEReference(getConnectorInstance_ConnectorParameterInputs(), this.getConnectorParameterInputs(), null, "connectorParameterInputs", null, 0, -1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConnectorInstance_ConnectorParameterOutputs(), this.getConnectorParameterOutputs(), null, "connectorParameterOutputs", null, 0, -1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConnectorInstance_ConnectorParameterOutputsDef(), this.getConnectorParameterOutputsDef(), null, "connectorParameterOutputsDef", null, 0, -1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnectorInstance_SkipComment(), this.getSkipComment(), null, "skipComment", null, 0, 1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(connectorParameterInputsEClass, ConnectorParameterInputs.class, "ConnectorParameterInputs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getConnectorParameterInputs_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, ConnectorParameterInputs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2717,6 +2728,14 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		   new String[] {
 			 "name", "connectorParameterOutputsDef",
 			 "namespace", "##targetNamespace",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (getConnectorInstance_SkipComment(), 
+		   source, 
+		   new String[] {
+			 "namespace", "##targetNamespace",
+			 "name", "skipComment",
 			 "kind", "element"
 		   });		
 		addAnnotation

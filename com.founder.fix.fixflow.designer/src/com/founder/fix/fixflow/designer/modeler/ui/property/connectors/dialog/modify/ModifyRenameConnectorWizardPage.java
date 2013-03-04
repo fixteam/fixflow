@@ -45,9 +45,11 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 	private ConnectorInstance connectorInstance;
 	
 	private LifeCycleWidget lifeCycle;
+	private Label lblNewLabel;
 
 	/**
 	 * @param pageName
+	 * @wbp.parser.constructor
 	 */
 	public ModifyRenameConnectorWizardPage(String pageName) {
 		super(pageName);
@@ -136,6 +138,10 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 			}
 		});
 		
+		lblNewLabel = new Label(proGroup, SWT.NONE);
+		lblNewLabel.setText("执行条件");
+		new Label(proGroup, SWT.NONE);
+		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("选择事件");
 		
@@ -173,6 +179,8 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("如果连接器失效");
+		new Label(proGroup, SWT.NONE);
+		new Label(proGroup, SWT.NONE);
 		
 		//创建文本框
 		connectExceptionCombo = new Combo(proGroup, SWT.BORDER | SWT.READ_ONLY);
@@ -204,6 +212,7 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 			connectNameErrorText.setEnabled(false);
 		}
 		connectNameErrorText.setText(connectorInstance.getErrorCode() == null ? "" : connectorInstance.getErrorCode());
+		new Label(proGroup, SWT.NONE);
 		connectNameErrorText.addModifyListener(new ModifyListener() {
 			
 			public void modifyText(ModifyEvent e) {

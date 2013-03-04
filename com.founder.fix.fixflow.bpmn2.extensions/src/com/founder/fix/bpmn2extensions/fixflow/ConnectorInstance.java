@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getConnectorParameterInputs <em>Connector Parameter Inputs</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getConnectorParameterOutputs <em>Connector Parameter Outputs</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getConnectorParameterOutputsDef <em>Connector Parameter Outputs Def</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getSkipComment <em>Skip Comment</em>}</li>
  * </ul>
  * </p>
  *
@@ -330,5 +331,32 @@ public interface ConnectorInstance extends EObject {
 	 * @generated
 	 */
 	EList<ConnectorParameterOutputsDef> getConnectorParameterOutputsDef();
+
+	/**
+	 * Returns the value of the '<em><b>Skip Comment</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Skip Comment</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Skip Comment</em>' containment reference.
+	 * @see #setSkipComment(SkipComment)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getConnectorInstance_SkipComment()
+	 * @model containment="true"
+	 *        extendedMetaData="namespace='##targetNamespace' name='skipComment' kind='element'"
+	 * @generated
+	 */
+	SkipComment getSkipComment();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getSkipComment <em>Skip Comment</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Skip Comment</em>' containment reference.
+	 * @see #getSkipComment()
+	 * @generated
+	 */
+	void setSkipComment(SkipComment value);
 
 } // ConnectorInstance

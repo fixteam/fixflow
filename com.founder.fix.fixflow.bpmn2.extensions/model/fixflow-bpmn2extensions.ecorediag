@@ -337,7 +337,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_CIN4kRWgEeGkmMCTk8zCuw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="fixflow-bpmn2extensions.ecore#//ConnectorInstance"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CIN4khWgEeGkmMCTk8zCuw" x="2665" y="305" width="231"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CIN4khWgEeGkmMCTk8zCuw" x="2560" y="320" width="288"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_Hd6RQBWoEeGkmMCTk8zCuw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_Hd64UBWoEeGkmMCTk8zCuw" type="4001"/>
@@ -1532,5 +1532,18 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_ld9I4l5MEeKgedTxR1ksug" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="fixflow-bpmn2extensions.ecore#//SkipComment/expression"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ld9I415MEeKgedTxR1ksug" points="[-19, -20, 106, 116]$[-80, -96, 45, 40]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_kRu4UYSWEeKPP7Lgyki8Kw" type="3002" source="_CIN4kBWgEeGkmMCTk8zCuw" target="_Cg_PsF5MEeKgedTxR1ksug">
+    <children xmi:type="notation:Node" xmi:id="_kRu4VYSWEeKPP7Lgyki8Kw" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_kRu4VoSWEeKPP7Lgyki8Kw" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_kRu4V4SWEeKPP7Lgyki8Kw" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_kRu4WISWEeKPP7Lgyki8Kw" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_kRu4UoSWEeKPP7Lgyki8Kw" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_kRu4U4SWEeKPP7Lgyki8Kw" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-bpmn2extensions.ecore#//ConnectorInstance/skipComment"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kRu4VISWEeKPP7Lgyki8Kw" points="[-24, -9, 567, 195]$[-538, -198, 53, 6]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kRu4WYSWEeKPP7Lgyki8Kw" id="(0.08680555555555555,0.43478260869565216)"/>
   </edges>
 </notation:Diagram>

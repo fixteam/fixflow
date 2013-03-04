@@ -12,6 +12,9 @@ import java.util.Properties;
 import org.eclipse.bpmn2.CallableElement;
 import org.eclipse.bpmn2.ExtensionAttributeValue;
 import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.Lane;
+import org.eclipse.bpmn2.LaneSet;
+import org.eclipse.bpmn2.TextAnnotation;
 import org.eclipse.bpmn2.UserTask;
 import org.eclipse.bpmn2.modeler.core.ModelHandler;
 import org.eclipse.bpmn2.modeler.core.ModelHandlerLocator;
@@ -60,6 +63,33 @@ public class ResourcesUtil {
 			map.put("value", flowElement.getName());
 			listMap.add(map);
 		}
+		
+		
+		List<Lane> laneList = modelHandler.getAll(Lane.class);
+		for (Lane lane : laneList) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("key", lane.getId());
+			map.put("value", lane.getName());
+			listMap.add(map);
+		}
+		
+		List<LaneSet> laneSetList = modelHandler.getAll(LaneSet.class);
+		for (LaneSet laneSet : laneSetList) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("key", laneSet.getId());
+			map.put("value", laneSet.getName());
+			listMap.add(map);
+		}
+		
+		List<TextAnnotation> textAnnotationList = modelHandler.getAll(TextAnnotation.class);
+		for (TextAnnotation textAnnotation : textAnnotationList) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("key", textAnnotation.getId());
+			map.put("value", textAnnotation.getText());
+			listMap.add(map);
+		}
+		
+		
 		
 		List<UserTask> userTasks = modelHandler.getAll(UserTask.class);
 		for (UserTask userTask : userTasks) {
