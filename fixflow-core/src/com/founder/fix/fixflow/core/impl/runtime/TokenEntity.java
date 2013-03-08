@@ -11,6 +11,7 @@ import org.eclipse.bpmn2.FlowNode;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 
+import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
@@ -20,7 +21,7 @@ import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
-public class TokenEntity implements Token {
+public class TokenEntity extends AbstractPersistentObject implements Token {
 
 	private static final long serialVersionUID = 1L;
 
@@ -847,125 +848,129 @@ public class TokenEntity implements Token {
 		this.extensionFields.put(fieldName, fieldValue);
 	}
 
-	public TokenEntity(Map<String, Object> dataMap) {
+	public TokenEntity(Map<String, Object> entityMap){
+		persistentInit(entityMap);
+	}
 
-		for (String dataKey : dataMap.keySet()) {
+
+	@Override
+	public void persistentInit(Map<String, Object> entityMap) {
+		for (String dataKey : entityMap.keySet()) {
 
 			if (dataKey.equals(TokenObjKey.TokenId().DataBaseKey())) {
-				this.id = StringUtil.getString(dataMap.get(dataKey));
+				this.id = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.Name().DataBaseKey())) {
-				this.name = StringUtil.getString(dataMap.get(dataKey));
+				this.name = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.StartTime().DataBaseKey())) {
-				this.startTime = StringUtil.getDate(dataMap.get(dataKey));
+				this.startTime = StringUtil.getDate(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.IsSubProcessRootToken().DataBaseKey())) {
-				this.isSubProcessRootToken = StringUtil.getBoolean(dataMap.get(dataKey));
+				this.isSubProcessRootToken = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.EndTime().DataBaseKey())) {
-				this.endTime = StringUtil.getDate(dataMap.get(dataKey));
+				this.endTime = StringUtil.getDate(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.NodeEnterTime().DataBaseKey())) {
-				this.nodeEnterTime = StringUtil.getDate(dataMap.get(dataKey));
+				this.nodeEnterTime = StringUtil.getDate(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.IsAbleToReactivateParent().DataBaseKey())) {
-				this.isAbleToReactivateParent = StringUtil.getBoolean(dataMap.get(dataKey));
+				this.isAbleToReactivateParent = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.IsSuspended().DataBaseKey())) {
-				this.isSuspended = StringUtil.getBoolean(dataMap.get(dataKey));
+				this.isSuspended = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.IsLocked().DataBaseKey())) {
-				this.isLocked = StringUtil.getBoolean(dataMap.get(dataKey));
+				this.isLocked = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.NodeId().DataBaseKey())) {
-				this.nodeId = StringUtil.getString(dataMap.get(dataKey));
+				this.nodeId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.ProcessInstanceId().DataBaseKey())) {
 
-				this.processInstanceId = StringUtil.getString(dataMap.get(dataKey));
+				this.processInstanceId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 
 			}
 			if (dataKey.equals(TokenObjKey.ParentTokenId().DataBaseKey())) {
-				this.parentTokenId = StringUtil.getString(dataMap.get(dataKey));
+				this.parentTokenId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.FreeToken().DataBaseKey())) {
-				this.freeToken = StringUtil.getBoolean(dataMap.get(dataKey));
+				this.freeToken = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(TokenObjKey.ParentFreeTokenId().DataBaseKey())) {
-				this.parentFreeTokenId = StringUtil.getString(dataMap.get(dataKey));
+				this.parentFreeTokenId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
-			this.addExtensionField(dataKey, dataMap.get(dataKey));
+			this.addExtensionField(dataKey, entityMap.get(dataKey));
 
 		}
 
 	}
 
-	public Map<String, Object> getTokenDbMap() {
-
+	@Override
+	public Map<String, Object> getPersistentDbMap() {
 		// 构建查询参数
-		Map<String, Object> objectParam = new HashMap<String, Object>();
-		// 令牌编号 String
-		objectParam.put("TOKEN_ID", this.getId());
-		// 令牌名称 String
-		objectParam.put("NAME", this.getName());
-		// 令牌开始时间 Date
-		objectParam.put("START_TIME", this.getStartTime());
-		// 令牌结束时间 Date
-		objectParam.put("END_TIME", this.getEndTime());
-		// 令牌进入节点时间 Date
-		objectParam.put("NODEENTER_TIME", this.getNodeEnterTime());
-		// 是否可以激活父令牌标示 String
-		objectParam.put("ISABLETOREACTIVATEPARENT", String.valueOf(this.isAbleToReactivateParent()));
+				Map<String, Object> objectParam = new HashMap<String, Object>();
+				// 令牌编号 String
+				objectParam.put("TOKEN_ID", this.getId());
+				// 令牌名称 String
+				objectParam.put("NAME", this.getName());
+				// 令牌开始时间 Date
+				objectParam.put("START_TIME", this.getStartTime());
+				// 令牌结束时间 Date
+				objectParam.put("END_TIME", this.getEndTime());
+				// 令牌进入节点时间 Date
+				objectParam.put("NODEENTER_TIME", this.getNodeEnterTime());
+				// 是否可以激活父令牌标示 String
+				objectParam.put("ISABLETOREACTIVATEPARENT", String.valueOf(this.isAbleToReactivateParent()));
 
-		// 是否是子流程根令牌
-		objectParam.put("ISSUBPROCESSROOTTOKEN", String.valueOf(this.isSubProcessRootToken()));
+				// 是否是子流程根令牌
+				objectParam.put("ISSUBPROCESSROOTTOKEN", String.valueOf(this.isSubProcessRootToken()));
 
-		// 令牌是否暂停 String
-		objectParam.put("ISSUSPENDED", String.valueOf(this.isSuspended()));
-		// 令牌是否锁定 String
-		objectParam.put("TOKEN_LOCK", String.valueOf(this.getlock()));
-		// 令牌所在节点编号 String
-		objectParam.put("NODE_ID", this.getFlowNode().getId());
-		// 流程实例编号 String
-		objectParam.put("PROCESSINSTANCE_ID", this.getProcessInstance().getId());
-		// 父令牌编号 String
+				// 令牌是否暂停 String
+				objectParam.put("ISSUSPENDED", String.valueOf(this.isSuspended()));
+				// 令牌是否锁定 String
+				objectParam.put("TOKEN_LOCK", String.valueOf(this.getlock()));
+				// 令牌所在节点编号 String
+				objectParam.put("NODE_ID", this.getFlowNode().getId());
+				// 流程实例编号 String
+				objectParam.put("PROCESSINSTANCE_ID", this.getProcessInstance().getId());
+				// 父令牌编号 String
 
-		if (this.getParent() != null) {
-			objectParam.put("PARENT_ID", this.getParent().getId());
-		}
-		// 流程实例编号 String
-		objectParam.put("FREETOKEN", String.valueOf(this.isFreeToken()));
-		objectParam.put("PARENT_FREETOKEN_ID", this.getParentFreeTokenId());
+				if (this.getParent() != null) {
+					objectParam.put("PARENT_ID", this.getParent().getId());
+				}
+				// 流程实例编号 String
+				objectParam.put("FREETOKEN", String.valueOf(this.isFreeToken()));
+				objectParam.put("PARENT_FREETOKEN_ID", this.getParentFreeTokenId());
 
-		return objectParam;
-
+				return objectParam;
 	}
 }

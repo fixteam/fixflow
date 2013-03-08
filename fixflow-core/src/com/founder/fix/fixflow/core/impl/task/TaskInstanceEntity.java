@@ -20,6 +20,7 @@ import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
+import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
@@ -27,6 +28,7 @@ import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.Assignable;
@@ -41,7 +43,7 @@ import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
-public class TaskInstanceEntity implements TaskInstance, Assignable {
+public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable {
 
 	/**
 	 * 
@@ -179,7 +181,6 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	 * 创建任务
 	 */
 	public TaskInstanceEntity() {
-
 	}
 
 	/**
@@ -788,59 +789,6 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		this.nodeId = nodeId;
 	}
 
-	public Map<String, Object> getPersistentState() {
-
-		Map<String, Object> persistentState = new HashMap<String, Object>();
-		
-		persistentState.put(TaskInstanceObjKey.TaskInstanceId().FullKey(), this.id);
-		persistentState.put(TaskInstanceObjKey.Name().FullKey(), this.name);
-		persistentState.put(TaskInstanceObjKey.Description().FullKey(), this.description);
-		persistentState.put(TaskInstanceObjKey.Priority().FullKey(), this.priority);
-		persistentState.put(TaskInstanceObjKey.Owner().FullKey(), this.owner);
-		persistentState.put(TaskInstanceObjKey.Assignee().FullKey(), this.assignee);
-		persistentState.put(TaskInstanceObjKey.NodeId().FullKey(), this.nodeId);
-		persistentState.put(TaskInstanceObjKey.NodeName().FullKey(), this.nodeName);
-		persistentState.put(TaskInstanceObjKey.ProcessInstanceId().FullKey(), this.processInstanceId);
-		persistentState.put(TaskInstanceObjKey.DelegationState().FullKey(), this.delegationState);
-		persistentState.put(TaskInstanceObjKey.TokenId().FullKey(), this.tokenId);
-		persistentState.put(TaskInstanceObjKey.CreateTime().FullKey(), this.createTime);
-		persistentState.put(TaskInstanceObjKey.StartTime().FullKey(), this.startTime);
-		persistentState.put(TaskInstanceObjKey.EndTime().FullKey(), this.endTime);
-		persistentState.put(TaskInstanceObjKey.ClaimTime().FullKey(), this.claimTime);
-		persistentState.put(TaskInstanceObjKey.ProcessDefinitionId().FullKey(), this.processDefinitionId);
-		persistentState.put(TaskInstanceObjKey.ProcessDefinitionKey().FullKey(), this.processDefinitionKey);
-		persistentState.put(TaskInstanceObjKey.DueDate().FullKey(), this.dueDate);
-		persistentState.put(TaskInstanceObjKey.ParentTaskInstanceId().FullKey(), this.parentTaskInstanceId);
-		persistentState.put(TaskInstanceObjKey.IsBlocking().FullKey(), this.isBlocking);
-		persistentState.put(TaskInstanceObjKey.IsOpen().FullKey(), this.isOpen);
-		persistentState.put(TaskInstanceObjKey.IsCancelled().FullKey(), this.isCancelled);
-		persistentState.put(TaskInstanceObjKey.IsSuspended().FullKey(), this.isSuspended);
-		persistentState.put(TaskInstanceObjKey.HasEnded().FullKey(), this.endTime != null);
-		persistentState.put(TaskInstanceObjKey.BizKey().FullKey(), this.bizKey);
-		persistentState.put(TaskInstanceObjKey.CommandId().FullKey(), this.commandId);
-		persistentState.put(TaskInstanceObjKey.CommandType().FullKey(), this.commandType);
-		persistentState.put(TaskInstanceObjKey.CommandMessage().FullKey(), this.commandMessage);
-		persistentState.put(TaskInstanceObjKey.TaskComment().FullKey(), this.taskComment);
-		persistentState.put(TaskInstanceObjKey.FormUri().FullKey(), this.formUri);
-		persistentState.put(TaskInstanceObjKey.FormUri().FullKey(), this.formUriView);
-		persistentState.put(TaskInstanceObjKey.TaskGroup().FullKey(), this.taskGroup);
-		persistentState.put(TaskInstanceObjKey.TaskInstanceType().FullKey(), this.taskInstanceType.toString());
-		persistentState.put(TaskInstanceObjKey.ProcessDefinitionName().FullKey(), this.getProcessDefinitionName());
-		persistentState.put(TaskInstanceObjKey.IsDraft().FullKey(), this.isDraft);
-		persistentState.put(TaskInstanceObjKey.Category().FullKey(), this.category);
-		persistentState.put(TaskInstanceObjKey.ExpectedExecutionTime().FullKey(), this.expectedExecutionTime);
-		persistentState.put(TaskInstanceObjKey.Agent().FullKey(), this.agent);
-		persistentState.put(TaskInstanceObjKey.Admin().FullKey(), this.admin);
-		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
-		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
-		
-		
-		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));	
-		}
-		
-		return persistentState;
-	}
 
 	
 
@@ -871,7 +819,7 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
         	String cType=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
         	String nameTemp=null;
         	if(cType.equals("system")){
-        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName("FixFlow_SystemTaskComandResource", "System_"+commandId);
+        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(FixFlowResources.TaskComandResource, "System_"+commandId);
             	
         	}
         	else{
@@ -1145,6 +1093,12 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 	 */
 	public TaskInstanceEntity(Map<String, Object> entityMap) {
 
+		persistentInit(entityMap);
+
+	}
+
+
+	public void persistentInit(Map<String, Object> entityMap) {
 		for (String dataKey : entityMap.keySet()) {
 
 			if (dataKey.equals(TaskInstanceObjKey.TaskInstanceId().DataBaseKey())) {
@@ -1352,11 +1306,9 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 			 * StringUtil.getString(entityMap.get(dataKey))); }
 			 */
 		}
-
 	}
 
-	public Map<String, Object> getTaskInstanceDbMap() {
-
+	public Map<String, Object> getPersistentDbMap() {
 		Map<String, Object> objectParam = new HashMap<String, Object>();
 
 		objectParam.put(TaskInstanceObjKey.TaskInstanceId().DataBaseKey(), this.getId());
@@ -1441,6 +1393,62 @@ public class TaskInstanceEntity implements TaskInstance, Assignable {
 		}
 		
 		return objectParam;
+	}
+
+
+	
+	public Map<String, Object> getPersistentState() {
+
+		Map<String, Object> persistentState = new HashMap<String, Object>();
+		
+		persistentState.put(TaskInstanceObjKey.TaskInstanceId().FullKey(), this.id);
+		persistentState.put(TaskInstanceObjKey.Name().FullKey(), this.name);
+		persistentState.put(TaskInstanceObjKey.Description().FullKey(), this.description);
+		persistentState.put(TaskInstanceObjKey.Priority().FullKey(), this.priority);
+		persistentState.put(TaskInstanceObjKey.Owner().FullKey(), this.owner);
+		persistentState.put(TaskInstanceObjKey.Assignee().FullKey(), this.assignee);
+		persistentState.put(TaskInstanceObjKey.NodeId().FullKey(), this.nodeId);
+		persistentState.put(TaskInstanceObjKey.NodeName().FullKey(), this.nodeName);
+		persistentState.put(TaskInstanceObjKey.ProcessInstanceId().FullKey(), this.processInstanceId);
+		persistentState.put(TaskInstanceObjKey.DelegationState().FullKey(), this.delegationState);
+		persistentState.put(TaskInstanceObjKey.TokenId().FullKey(), this.tokenId);
+		persistentState.put(TaskInstanceObjKey.CreateTime().FullKey(), this.createTime);
+		persistentState.put(TaskInstanceObjKey.StartTime().FullKey(), this.startTime);
+		persistentState.put(TaskInstanceObjKey.EndTime().FullKey(), this.endTime);
+		persistentState.put(TaskInstanceObjKey.ClaimTime().FullKey(), this.claimTime);
+		persistentState.put(TaskInstanceObjKey.ProcessDefinitionId().FullKey(), this.processDefinitionId);
+		persistentState.put(TaskInstanceObjKey.ProcessDefinitionKey().FullKey(), this.processDefinitionKey);
+		persistentState.put(TaskInstanceObjKey.DueDate().FullKey(), this.dueDate);
+		persistentState.put(TaskInstanceObjKey.ParentTaskInstanceId().FullKey(), this.parentTaskInstanceId);
+		persistentState.put(TaskInstanceObjKey.IsBlocking().FullKey(), this.isBlocking);
+		persistentState.put(TaskInstanceObjKey.IsOpen().FullKey(), this.isOpen);
+		persistentState.put(TaskInstanceObjKey.IsCancelled().FullKey(), this.isCancelled);
+		persistentState.put(TaskInstanceObjKey.IsSuspended().FullKey(), this.isSuspended);
+		persistentState.put(TaskInstanceObjKey.HasEnded().FullKey(), this.endTime != null);
+		persistentState.put(TaskInstanceObjKey.BizKey().FullKey(), this.bizKey);
+		persistentState.put(TaskInstanceObjKey.CommandId().FullKey(), this.commandId);
+		persistentState.put(TaskInstanceObjKey.CommandType().FullKey(), this.commandType);
+		persistentState.put(TaskInstanceObjKey.CommandMessage().FullKey(), this.commandMessage);
+		persistentState.put(TaskInstanceObjKey.TaskComment().FullKey(), this.taskComment);
+		persistentState.put(TaskInstanceObjKey.FormUri().FullKey(), this.formUri);
+		persistentState.put(TaskInstanceObjKey.FormUri().FullKey(), this.formUriView);
+		persistentState.put(TaskInstanceObjKey.TaskGroup().FullKey(), this.taskGroup);
+		persistentState.put(TaskInstanceObjKey.TaskInstanceType().FullKey(), this.taskInstanceType.toString());
+		persistentState.put(TaskInstanceObjKey.ProcessDefinitionName().FullKey(), this.getProcessDefinitionName());
+		persistentState.put(TaskInstanceObjKey.IsDraft().FullKey(), this.isDraft);
+		persistentState.put(TaskInstanceObjKey.Category().FullKey(), this.category);
+		persistentState.put(TaskInstanceObjKey.ExpectedExecutionTime().FullKey(), this.expectedExecutionTime);
+		persistentState.put(TaskInstanceObjKey.Agent().FullKey(), this.agent);
+		persistentState.put(TaskInstanceObjKey.Admin().FullKey(), this.admin);
+		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
+		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
+		
+		
+		for (String key : extensionFields.keySet()) {
+			persistentState.put(key, extensionFields.get(key));	
+		}
+		
+		return persistentState;
 	}
 
 }

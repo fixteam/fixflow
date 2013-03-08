@@ -8,6 +8,7 @@ import org.quartz.SchedulerFactory;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.impl.cmd.GetSchedulerFactoryCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetThreadPoolExecutorCmd;
+import com.founder.fix.fixflow.core.impl.job.JobEntity;
 
 public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService {
 
@@ -23,6 +24,16 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 
 	public ThreadPoolExecutor getThreadPoolExecutor(String threadPoolKey) {
 		return commandExecutor.execute(new GetThreadPoolExecutorCmd(threadPoolKey));
+	}
+
+	public JobEntity createJob() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	public void saveJob(JobEntity jobEntity) {
+		// TODO 自动生成的方法存根
+		
 	}
 	
 	

@@ -242,7 +242,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		//这里以后要从配置文件读取现在是写死的
 		threadPoolMap=new HashMap<String, FixThreadPoolExecutor>();
 		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();   
-		FixThreadPoolExecutor executor = new FixThreadPoolExecutor("default","默认线程池",4, 7, 1, TimeUnit.DAYS, queue);   
+		FixThreadPoolExecutor executor = new FixThreadPoolExecutor("default","默认线程池",1, 1, 1, TimeUnit.DAYS, queue);   
 		threadPoolMap.put(executor.getThreadPoolKey(), executor);
 		
 	}

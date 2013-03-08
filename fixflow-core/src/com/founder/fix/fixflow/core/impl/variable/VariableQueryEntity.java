@@ -11,6 +11,10 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 
 public class VariableQueryEntity extends VariableEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6017384908518015939L;
 	protected List<String> variableNames=new ArrayList<String>();
 	
 	public void addVariableName(String variableName){

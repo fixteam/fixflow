@@ -872,7 +872,7 @@ public class TaskInstancePersistence {
 	void insertTaskInstance(TaskInstanceEntity taskInstanceEntity) {
 
 
-		Map<String, Object> objectParam =taskInstanceEntity.getTaskInstanceDbMap();
+		Map<String, Object> objectParam =taskInstanceEntity.getPersistentDbMap();
 
 
 		// 执行插入语句
@@ -885,7 +885,7 @@ public class TaskInstancePersistence {
 	void updateTaskInstance(TaskInstanceEntity taskInstanceEntity) {
 		// 构建查询参数
 		
-		Map<String, Object> objectParam =taskInstanceEntity.getTaskInstanceDbMap();
+		Map<String, Object> objectParam =taskInstanceEntity.getPersistentDbMap();
 
 		// 构建Where查询参数
 		Object[] objectParamWhere = { taskInstanceEntity.getId() };

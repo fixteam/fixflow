@@ -72,7 +72,7 @@ public class AutoSendMail implements ConnectorHandler {
 			if (mailContent == null || mailContent.equals("")) {
 				mailContent = "<br>Hello,<br>你好,<br><br> " + mailTitle + "+<br><br>"
 						+ "Please click url to deal with job: <br>请访问此链接地址进入任务:<br> <a href=" + taskUrl + ">"
-						+ "http://sso.bfcec.cummins.com:82/fixweb/</a><br><br>"
+						+ "http://127.0.0.1:8080/fixweb/</a><br><br>"
 						+ "Best Regards!<br>诚挚问候!<br>Note: Please do not reply to this email , This mailbox does not allow incoming messages."
 						+ "<br>注意: 本邮件为工作流系统发送，请勿回复。 ";
 

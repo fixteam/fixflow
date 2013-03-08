@@ -3,6 +3,7 @@ package com.founder.fix.fixflow.core.impl.task;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
@@ -11,7 +12,7 @@ import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
-public class IdentityLinkEntity implements IdentityLink {
+public class IdentityLinkEntity extends AbstractPersistentObject implements IdentityLink {
 
 	private static final long serialVersionUID = 1L;
 
@@ -186,60 +187,70 @@ public class IdentityLinkEntity implements IdentityLink {
 
 	}
 
-	public IdentityLinkEntity(Map<String, Object> dataMap) {
-		for (String dataKey : dataMap.keySet()) {
+	public IdentityLinkEntity(Map<String, Object> entityMap){
+		persistentInit(entityMap);
+	}
+	public void persistentInit(Map<String, Object> entityMap) {
+		for (String dataKey : entityMap.keySet()) {
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.Id().DataBaseKey())) {
-				this.id = StringUtil.getString(dataMap.get(dataKey));
+				this.id = StringUtil.getString(entityMap.get(dataKey));
+				continue;
 			}
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.Type().DataBaseKey())) {
-				this.type = IdentityLinkType.valueOf(StringUtil.getString(dataMap.get(dataKey)));
+				this.type = IdentityLinkType.valueOf(StringUtil.getString(entityMap.get(dataKey)));
+				continue;
 			}
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.UserId().DataBaseKey())) {
-				this.userId = StringUtil.getString(dataMap.get(dataKey));
+				this.userId = StringUtil.getString(entityMap.get(dataKey));
+				continue;
 			}
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.GroupId().DataBaseKey())) {
-				this.groupId = StringUtil.getString(dataMap.get(dataKey));
+				this.groupId = StringUtil.getString(entityMap.get(dataKey));
+				continue;
 			}
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.GroupType().DataBaseKey())) {
-				this.groupType = StringUtil.getString(dataMap.get(dataKey));
+				this.groupType = StringUtil.getString(entityMap.get(dataKey));
+				continue;
 			}
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.IncludeExclusion().DataBaseKey())) {
-				this.includeExclusion = IncludeExclusion.valueOf(StringUtil.getString(dataMap.get(dataKey)));
+				this.includeExclusion = IncludeExclusion.valueOf(StringUtil.getString(entityMap.get(dataKey)));
+				continue;
 			}
 
 			if (dataKey.equals(TaskIdentityLinkObjKey.TaskInstanceId().DataBaseKey())) {
-				this.taskId = StringUtil.getString(dataMap.get(dataKey));
+				this.taskId = StringUtil.getString(entityMap.get(dataKey));
+				continue;
 			}
 
 		}
 	}
 
-	public Map<String, Object> getTaskInstanceDbMap() {
+	public Map<String, Object> getPersistentDbMap() {
 		// 构建查询参数
-		Map<String, Object> objectParam = new HashMap<String, Object>();
+				Map<String, Object> objectParam = new HashMap<String, Object>();
 
-		// 身份链接编号 String
-		objectParam.put(TaskIdentityLinkObjKey.Id().DataBaseKey(), this.getId());
-		// 身份链接类型 String
-		objectParam.put(TaskIdentityLinkObjKey.Type().DataBaseKey(), this.getType().toString());
-		// 用户编号 String
-		objectParam.put(TaskIdentityLinkObjKey.UserId().DataBaseKey(), this.getUserId());
-		// 组编号 String
-		objectParam.put(TaskIdentityLinkObjKey.GroupId().DataBaseKey(), this.getGroupId());
-		// 组类型 String
-		objectParam.put(TaskIdentityLinkObjKey.GroupType().DataBaseKey(), this.getGroupType());
+				// 身份链接编号 String
+				objectParam.put(TaskIdentityLinkObjKey.Id().DataBaseKey(), this.getId());
+				// 身份链接类型 String
+				objectParam.put(TaskIdentityLinkObjKey.Type().DataBaseKey(), this.getType().toString());
+				// 用户编号 String
+				objectParam.put(TaskIdentityLinkObjKey.UserId().DataBaseKey(), this.getUserId());
+				// 组编号 String
+				objectParam.put(TaskIdentityLinkObjKey.GroupId().DataBaseKey(), this.getGroupId());
+				// 组类型 String
+				objectParam.put(TaskIdentityLinkObjKey.GroupType().DataBaseKey(), this.getGroupType());
 
-		// 包含排除 String
-		objectParam.put(TaskIdentityLinkObjKey.IncludeExclusion().DataBaseKey(), this.getIncludeExclusion().toString());
-		// 任务实例编号 String
-		objectParam.put(TaskIdentityLinkObjKey.TaskInstanceId().DataBaseKey(), this.getTaskId());
+				// 包含排除 String
+				objectParam.put(TaskIdentityLinkObjKey.IncludeExclusion().DataBaseKey(), this.getIncludeExclusion().toString());
+				// 任务实例编号 String
+				objectParam.put(TaskIdentityLinkObjKey.TaskInstanceId().DataBaseKey(), this.getTaskId());
 
-		return objectParam;
+				return objectParam;
 	}
 }

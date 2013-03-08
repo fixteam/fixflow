@@ -22,8 +22,8 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
+import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
-import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
@@ -41,7 +41,7 @@ import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
-public class ProcessInstanceEntity implements ProcessInstance {
+public class ProcessInstanceEntity extends AbstractPersistentObject implements ProcessInstance {
 
 	// Field　字段
 	// //////////////////////////////////////////////////////
@@ -942,137 +942,144 @@ public class ProcessInstanceEntity implements ProcessInstance {
 	public void setProcessLocation(String processLocation) {
 		this.processLocation = processLocation;
 	}
+	
+	
+	public ProcessInstanceEntity(Map<String, Object> entityMap){
+		
+		persistentInit(entityMap);
+	}
 
-	public ProcessInstanceEntity(Map<String, Object> dataMap) {
-
-		for (String dataKey : dataMap.keySet()) {
+	@Override
+	public void persistentInit(Map<String, Object> entityMap) {
+		// TODO 自动生成的方法存根
+		for (String dataKey : entityMap.keySet()) {
 
 			if (dataKey.equals(ProcessInstanceObjKey.ProcessInstanceId().DataBaseKey())) {
-				this.id = StringUtil.getString(dataMap.get(dataKey));
+				this.id = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey())) {
-				this.processDefinitionId = StringUtil.getString(dataMap.get(dataKey));
+				this.processDefinitionId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.ProcessDefinitionKey().DataBaseKey())) {
-				this.processDefinitionKey = StringUtil.getString(dataMap.get(dataKey));
+				this.processDefinitionKey = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.StartTime().DataBaseKey())) {
-				this.startTime = StringUtil.getDate(dataMap.get(dataKey));
+				this.startTime = StringUtil.getDate(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.EndTime().DataBaseKey())) {
-				this.endTime = StringUtil.getDate(dataMap.get(dataKey));
+				this.endTime = StringUtil.getDate(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.DefinitionId().DataBaseKey())) {
-				this.definitionId = StringUtil.getString(dataMap.get(dataKey));
+				this.definitionId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.RootTokenId().DataBaseKey())) {
-				this.rootTokenId = StringUtil.getString(dataMap.get(dataKey));
+				this.rootTokenId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.BizKey().DataBaseKey())) {
-				this.bizKey = StringUtil.getString(dataMap.get(dataKey));
+				this.bizKey = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.StartAuthor().DataBaseKey())) {
-				this.startAuthor = StringUtil.getString(dataMap.get(dataKey));
+				this.startAuthor = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.Initiator().DataBaseKey())) {
-				this.initiator = StringUtil.getString(dataMap.get(dataKey));
+				this.initiator = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.IsSuspended().DataBaseKey())) {
-				this.isSuspended = StringUtil.getBoolean(StringUtil.getString(dataMap.get(dataKey)));
+				this.isSuspended = StringUtil.getBoolean(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
 
 			if (dataKey.equals(ProcessInstanceObjKey.Subject().DataBaseKey())) {
-				this.subject = StringUtil.getString(dataMap.get(dataKey));
+				this.subject = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 			
 			
 			if (dataKey.equals(ProcessInstanceObjKey.ParentProcessInstanceId().DataBaseKey())) {
-				this.parentProcessInstanceId = StringUtil.getString(dataMap.get(dataKey));
+				this.parentProcessInstanceId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 			
 			if (dataKey.equals(ProcessInstanceObjKey.ParentProcessInstanceTokenId().DataBaseKey())) {
-				this.parentProcessInstanceTokenId = StringUtil.getString(dataMap.get(dataKey));
+				this.parentProcessInstanceTokenId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 			
 			if (dataKey.equals(ProcessInstanceObjKey.ProcessLocation().DataBaseKey())) {
-				this.processLocation = StringUtil.getString(dataMap.get(dataKey));
+				this.processLocation = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
 			
 			
 
-			this.addExtensionField(dataKey, dataMap.get(dataKey));
+			this.addExtensionField(dataKey, entityMap.get(dataKey));
 
 		}
 
 	}
 
-	public Map<String, Object> getProcessInstanceDbMap() {
-
+	@Override
+	public Map<String, Object> getPersistentDbMap() {
 		// 构建查询参数
-		Map<String, Object> objectParam = new HashMap<String, Object>();
-		// 流程实例编号 String
-		objectParam.put(ProcessInstanceObjKey.ProcessInstanceId().DataBaseKey(), this.id);
+				Map<String, Object> objectParam = new HashMap<String, Object>();
+				// 流程实例编号 String
+				objectParam.put(ProcessInstanceObjKey.ProcessInstanceId().DataBaseKey(), this.id);
 
-		objectParam.put(ProcessInstanceObjKey.ProcessDefinitionKey().DataBaseKey(), this.getProcessDefinitionKey());
+				objectParam.put(ProcessInstanceObjKey.ProcessDefinitionKey().DataBaseKey(), this.getProcessDefinitionKey());
 
-		// 流程定义编号 String
-		objectParam.put(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey(), this.processDefinitionId);
-		// 任务开始时间(可以理解为已读) Date
-		objectParam.put(ProcessInstanceObjKey.StartTime().DataBaseKey(), this.startTime);
-		// 任务结束时间 Date
-		objectParam.put(ProcessInstanceObjKey.EndTime().DataBaseKey(), this.endTime);
-		// 业务定义编号 String
-		objectParam.put(ProcessInstanceObjKey.DefinitionId().DataBaseKey(), this.getProcessDefinition().getDefinitions().getId());
-		// 根令牌编号 String
-		objectParam.put(ProcessInstanceObjKey.RootTokenId().DataBaseKey(), this.getRootToken().getId());
-		// 流程实例的业务关联值 String
-		objectParam.put(ProcessInstanceObjKey.BizKey().DataBaseKey(), this.getBizKey());
-		// 流程的发起人 String
-		objectParam.put(ProcessInstanceObjKey.Initiator().DataBaseKey(), this.getInitiator());
+				// 流程定义编号 String
+				objectParam.put(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey(), this.processDefinitionId);
+				// 任务开始时间(可以理解为已读) Date
+				objectParam.put(ProcessInstanceObjKey.StartTime().DataBaseKey(), this.startTime);
+				// 任务结束时间 Date
+				objectParam.put(ProcessInstanceObjKey.EndTime().DataBaseKey(), this.endTime);
+				// 业务定义编号 String
+				objectParam.put(ProcessInstanceObjKey.DefinitionId().DataBaseKey(), this.getProcessDefinition().getDefinitions().getId());
+				// 根令牌编号 String
+				objectParam.put(ProcessInstanceObjKey.RootTokenId().DataBaseKey(), this.getRootToken().getId());
+				// 流程实例的业务关联值 String
+				objectParam.put(ProcessInstanceObjKey.BizKey().DataBaseKey(), this.getBizKey());
+				// 流程的发起人 String
+				objectParam.put(ProcessInstanceObjKey.Initiator().DataBaseKey(), this.getInitiator());
 
-		// 流程的启动人 String
-		objectParam.put(ProcessInstanceObjKey.StartAuthor().DataBaseKey(), this.getStartAuthor());
+				// 流程的启动人 String
+				objectParam.put(ProcessInstanceObjKey.StartAuthor().DataBaseKey(), this.getStartAuthor());
 
-		// 是否暂停
-		objectParam.put(ProcessInstanceObjKey.IsSuspended().DataBaseKey(), String.valueOf(this.isSuspended()));
-		// 父流程实例号
-		objectParam.put(ProcessInstanceObjKey.ParentProcessInstanceId().DataBaseKey(), this.getParentProcessInstanceId());
+				// 是否暂停
+				objectParam.put(ProcessInstanceObjKey.IsSuspended().DataBaseKey(), String.valueOf(this.isSuspended()));
+				// 父流程实例号
+				objectParam.put(ProcessInstanceObjKey.ParentProcessInstanceId().DataBaseKey(), this.getParentProcessInstanceId());
 
-		// 父流程实例号
-		objectParam.put(ProcessInstanceObjKey.ParentProcessInstanceTokenId().DataBaseKey(), this.getParentProcessInstanceTokenId());
+				// 父流程实例号
+				objectParam.put(ProcessInstanceObjKey.ParentProcessInstanceTokenId().DataBaseKey(), this.getParentProcessInstanceTokenId());
 
-		// 父流程实例号
-		objectParam.put(ProcessInstanceObjKey.Subject().DataBaseKey(), this.getSubject());
-		
-		// 父流程实例号
-		objectParam.put(ProcessInstanceObjKey.ProcessLocation().DataBaseKey(), this.getProcessLocation());
-		
-		return objectParam;
+				// 父流程实例号
+				objectParam.put(ProcessInstanceObjKey.Subject().DataBaseKey(), this.getSubject());
+				
+				// 父流程实例号
+				objectParam.put(ProcessInstanceObjKey.ProcessLocation().DataBaseKey(), this.getProcessLocation());
+				
+				return objectParam;
 	}
 
 }

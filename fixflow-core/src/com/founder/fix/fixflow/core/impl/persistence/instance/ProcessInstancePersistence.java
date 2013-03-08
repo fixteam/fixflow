@@ -358,7 +358,7 @@ public class ProcessInstancePersistence {
 	void addProcessInstance(ProcessInstanceEntity processInstance) {
 
 
-		 Map<String, Object> objectParam=processInstance.getProcessInstanceDbMap();
+		 Map<String, Object> objectParam=processInstance.getPersistentDbMap();
 
 		
 		// 执行插入语句
@@ -368,7 +368,7 @@ public class ProcessInstancePersistence {
 
 	void updateProcessInstance(ProcessInstanceEntity processInstance) {
 
-		Map<String, Object> objectParam=processInstance.getProcessInstanceDbMap();
+		Map<String, Object> objectParam=processInstance.getPersistentDbMap();
 
 		// 构建Where查询参数
 		Object[] objectParamWhere = { processInstance.getId() };
@@ -402,7 +402,7 @@ public class ProcessInstancePersistence {
 
 	void addToken(TokenEntity token) {
 
-		Map<String, Object> objectParam=token.getTokenDbMap();
+		Map<String, Object> objectParam=token.getPersistentDbMap();
 
 		// 执行插入语句
 		sqlCommand.insert("FIXFLOW_RUN_TOKEN", objectParam);
@@ -433,7 +433,7 @@ public class ProcessInstancePersistence {
 
 	void updateToken(TokenEntity token) {
 
-		Map<String, Object> objectParam=token.getTokenDbMap();
+		Map<String, Object> objectParam=token.getPersistentDbMap();
 
 
 		// 构建Where查询参数

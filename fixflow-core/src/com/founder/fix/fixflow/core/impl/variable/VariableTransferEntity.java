@@ -15,6 +15,10 @@ public class VariableTransferEntity extends VariableEntity{
 	
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5807158924996628168L;
 	protected Map<String, Object> variableMap=new HashMap<String, Object>();
 	
 

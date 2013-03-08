@@ -59,7 +59,9 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 
 		}
 		try {
-			FixResourceCore.loadAllLanguage("FixFlowConfigResource/SystemTaskComandResource.properties", "FixFlow_SystemTaskComandResource");
+			FixResourceCore.loadAllLanguage("FixFlowConfigResource/SystemTaskComandResource.properties",FixFlowResources.TaskComandResource);
+			FixResourceCore.loadAllLanguage("FixFlowConfigResource/FixFlowExceptionResource.properties", FixFlowResources.ExceptionResource);
+			
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();

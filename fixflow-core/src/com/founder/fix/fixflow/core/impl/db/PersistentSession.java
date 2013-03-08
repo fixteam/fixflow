@@ -5,17 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.job.JobEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.CommentPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.EventSubscriptionPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence;
@@ -54,7 +57,12 @@ public class PersistentSession {
 			DeploymentPersistence deploymentPersistence = new DeploymentPersistence(connection);
 			deploymentPersistence.deleteDeployment(StringUtil.getString(parameter.toString()));
 		}
-		if(deleteStatement.equals("deleteEventSubscriptionEntity")){
+
+		if (deleteStatement.equals("deleteJob")) {
+			JobPersistence jobPersistence = new JobPersistence(connection);
+			jobPersistence.deleteJob(parameter.toString());
+		}
+		if (deleteStatement.equals("deleteEventSubscriptionEntity")) {
 			EventSubscriptionPersistence eventSubscriptionPersistence = new EventSubscriptionPersistence(connection);
 			try {
 				eventSubscriptionPersistence.deleteEventSubscriptionEntityById(parameter.toString());
@@ -62,7 +70,7 @@ public class PersistentSession {
 				throw new FixFlowException("事件订阅删除出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
-		
+
 		if (deleteStatement.equals("deleteProcessDefinitionsByDeploymentId")) {
 			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
 			processDefinitionPersistence.deleteProcessDefinitionsByDeploymentId(StringUtil.getString(parameter.toString()));
@@ -78,7 +86,7 @@ public class PersistentSession {
 			processInstancePersistence.deleteProcessInstanceByProcessInstanceId(StringUtil.getString(parameter.toString()));
 		}
 		if (deleteStatement.equals("deleteTaskInstanceByProcessInstanceId")) {
-			
+
 			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);
 			taskInstancePersistence.deleteTaskInstanceByProcessInstanceId(StringUtil.getString(parameter.toString()));
 		}
@@ -109,82 +117,80 @@ public class PersistentSession {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List selectList(String statement, Object parameter, Page page) {
 
-		if(statement.equals("selectProcessDefinitionGroupKey")){
-			ProcessDefinitionPersistence processDefinitionPersistence=new ProcessDefinitionPersistence(connection);
+		if (statement.equals("selectProcessDefinitionGroupKey")) {
+			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
 			return processDefinitionPersistence.selectProcessDefinitionGroupKey();
 		}
-		
-		if(statement.endsWith("findAgentUsers")){
-			TaskInstancePersistence taskInstancePersistence=new TaskInstancePersistence(connection);
+
+		if (statement.endsWith("findAgentUsers")) {
+			TaskInstancePersistence taskInstancePersistence = new TaskInstancePersistence(connection);
 			return taskInstancePersistence.findAgentUsers(StringUtil.getString(parameter));
 		}
-		
+
 		if (statement.equals("selectTaskByQueryCriteria")) {
 			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);
 			return taskInstancePersistence.findTasksByQueryCriteria((TaskQueryImpl) parameter, page);
 		}
-		
-		if(statement.equals("findEventSubscriptionByQueryCriteria")){
+
+		if (statement.equals("findEventSubscriptionByQueryCriteria")) {
 			EventSubscriptionPersistence eventSubscriptionPersistence = new EventSubscriptionPersistence(connection);
 			try {
-				eventSubscriptionPersistence.findEventSubscriptionByQueryCriteria((EventSubscriptionQueryImpl)parameter, page);
+				eventSubscriptionPersistence.findEventSubscriptionByQueryCriteria((EventSubscriptionQueryImpl) parameter, page);
 			} catch (Exception e) {
 				throw new FixFlowException("事件订阅查询出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
-		
-		if(statement.equals("selectProcessPerformance")){
+
+		if (statement.equals("selectProcessPerformance")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,String> strmap = (Map<String, String>) parameter;
+			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
 			String processKey = strmap.get("processKey");
-			return processInstancePersistence.selectProcessPerformance(startTime,endTime,processKey,page);
+			return processInstancePersistence.selectProcessPerformance(startTime, endTime, processKey, page);
 		}
-		
-		if(statement.equals("selectProcessPerformanceInterface2")){
+
+		if (statement.equals("selectProcessPerformanceInterface2")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,String> strmap = (Map<String, String>) parameter;
+			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
-			return processInstancePersistence.selectProcessPerformance(startTime,endTime, page);
+			return processInstancePersistence.selectProcessPerformance(startTime, endTime, page);
 		}
-		
-		
-		
-		if(statement.equals("selectProcessPerformanceInterface1")){
+
+		if (statement.equals("selectProcessPerformanceInterface1")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,String> strmap = (Map<String, String>) parameter;
+			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
-			return processInstancePersistence.selectProcessPerformance(startTime,endTime);
+			return processInstancePersistence.selectProcessPerformance(startTime, endTime);
 		}
-		
-		if(statement.equals("selectProcessPerformanceInterface4")){
+
+		if (statement.equals("selectProcessPerformanceInterface4")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,Object> strmap = (Map<String, Object>) parameter;
+			Map<String, Object> strmap = (Map<String, Object>) parameter;
 			String[] processKey = (String[]) strmap.get("processKey");
 			String startTime = (String) strmap.get("startTime");
 			String endTime = (String) strmap.get("endTime");
-			return processInstancePersistence.selectProcessPerformance(processKey,startTime,endTime);
+			return processInstancePersistence.selectProcessPerformance(processKey, startTime, endTime);
 		}
-		
-		if(statement.equals("selectProcessPerformanceInterface3")){
+
+		if (statement.equals("selectProcessPerformanceInterface3")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,Object> strmap = (Map<String, Object>) parameter;
+			Map<String, Object> strmap = (Map<String, Object>) parameter;
 			String[] pid = (String[]) strmap.get("pid");
 			String startTime = (String) strmap.get("startTime");
 			String endTime = (String) strmap.get("endTime");
-			return processInstancePersistence.selectProcessPerformanceTask(pid,startTime,endTime);
+			return processInstancePersistence.selectProcessPerformanceTask(pid, startTime, endTime);
 		}
-		
-		if(statement.equals("selectProcessPerformanceInterface5")){
+
+		if (statement.equals("selectProcessPerformanceInterface5")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,String> strmap = (Map<String, String>) parameter;
+			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
 			String pid = strmap.get("pid");
-			return processInstancePersistence.selectProcessPerformance(startTime,endTime,pid);
+			return processInstancePersistence.selectProcessPerformance(startTime, endTime, pid);
 		}
 
 		if (statement.equals("selectCommentsByProcessInstanceId")) {
@@ -235,13 +241,13 @@ public class PersistentSession {
 
 	@SuppressWarnings("unchecked")
 	public Object selectOne(String statement, Object parameter) {
-		
-		if(statement.equals("selectProcessPerformanceInterface22")){
+
+		if (statement.equals("selectProcessPerformanceInterface22")) {
 			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
-			Map<String,String> strmap = (Map<String, String>) parameter;
+			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
-			return processInstancePersistence.selectProcessPerformance2(startTime,endTime);
+			return processInstancePersistence.selectProcessPerformance2(startTime, endTime);
 		}
 
 		if (statement.equals("selectProcessInstance")) {
@@ -341,7 +347,15 @@ public class PersistentSession {
 			try {
 				processInstancePersistence.saveProcessInstance((ProcessInstance) persistentObject);
 			} catch (Exception e) {
-				throw new FixFlowException("流程实例持久化出错! 错误信息:  " + e.getMessage(), e);
+				throw new FixFlowDbException("流程实例持久化出错! 错误信息:  " + e.getMessage(), e);
+			}
+		}
+		if (saveStatement.equals("saveJob")) {
+			try {
+				JobPersistence jobPersistence = new JobPersistence(connection);
+				jobPersistence.saveJob((JobEntity) persistentObject);
+			} catch (Exception e) {
+				throw new FixFlowDbException("流程实例持久化出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
 
@@ -350,7 +364,7 @@ public class PersistentSession {
 			try {
 				eventSubscriptionPersistence.saveEventSubscriptionEntity((EventSubscriptionEntity) persistentObject);
 			} catch (Exception e) {
-				throw new FixFlowException("事件订阅持久化出错! 错误信息:  " + e.getMessage(), e);
+				throw new FixFlowDbException("事件订阅持久化出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
 
@@ -359,7 +373,7 @@ public class PersistentSession {
 			try {
 				taskInstancePersistence.saveTaskInstance((TaskInstanceEntity) persistentObject);
 			} catch (Exception e) {
-				throw new FixFlowException("任务实例持久化出错! 错误信息:  " + e.getMessage(), e);
+				throw new FixFlowDbException("任务实例持久化出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
 
@@ -368,7 +382,7 @@ public class PersistentSession {
 			try {
 				variableInstancePersistence.saveVariable(persistentObject);
 			} catch (Exception e) {
-				throw new FixFlowException("数据变量持久化出错! 错误信息:  " + e.getMessage(), e);
+				throw new FixFlowDbException("数据变量持久化出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
 
@@ -377,7 +391,7 @@ public class PersistentSession {
 			try {
 				identityLinkPersistence.saveIdentityLink((IdentityLinkEntity) persistentObject);
 			} catch (Exception e) {
-				throw new FixFlowException("候选用户持久化出错! 错误信息:  " + e.getMessage(), e);
+				throw new FixFlowDbException("候选用户持久化出错! 错误信息:  " + e.getMessage(), e);
 			}
 		}
 

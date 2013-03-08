@@ -159,7 +159,7 @@ public class IdentityLinkPersistence {
 	public void insertIdentityLink(IdentityLinkEntity identityLink) {
 
 		
-		Map<String, Object> objectParam=identityLink.getTaskInstanceDbMap();
+		Map<String, Object> objectParam=identityLink.getPersistentDbMap();
 		// 执行插入语句
 		sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam);
 
@@ -167,7 +167,7 @@ public class IdentityLinkPersistence {
 
 	public void updateIdentityLink(IdentityLinkEntity identityLink) {
 
-		Map<String, Object> objectParam=identityLink.getTaskInstanceDbMap();
+		Map<String, Object> objectParam=identityLink.getPersistentDbMap();
 
 		// 构建Where查询参数
 		Object[] objectParamWhere = { identityLink.getId() };

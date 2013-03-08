@@ -7,6 +7,11 @@ import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 
 public abstract class VariableEntity  implements PersistentObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1397214384935667249L;
+	
 	protected List<VariableFlowTypeEntity> variableFlowTypeEntities=new ArrayList<VariableFlowTypeEntity>();
 	
 	public void addVariableFlowType(VariableFlowTypeEntity variableFlowType){
