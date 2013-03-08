@@ -768,9 +768,24 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		tableColumn_type.setMoveable(true);
 
 		TableColumn tableColumn_9 = new TableColumn(table_2, SWT.NONE);
-		tableColumn_9.setWidth(100);
+		tableColumn_9.setWidth(80);
 		tableColumn_9.setText("是否启用");
 		tableColumn_9.setMoveable(true);
+		
+		TableColumn tableColumn_15 = new TableColumn(table_2, SWT.NONE);
+		tableColumn_15.setWidth(80);
+		tableColumn_15.setText("是否验证");
+		tableColumn_15.setMoveable(true);
+		
+		TableColumn tableColumn_24 = new TableColumn(table_2, SWT.NONE);
+		tableColumn_24.setWidth(110);
+		tableColumn_24.setText("是否保存数据");
+		tableColumn_24.setMoveable(true);
+		
+		TableColumn tableColumn_25 = new TableColumn(table_2, SWT.NONE);
+		tableColumn_25.setWidth(110);
+		tableColumn_25.setText("是否虚拟运行");
+		tableColumn_25.setMoveable(true);
 
 		TableColumn tableColumn_7 = new TableColumn(table_2, SWT.NONE);
 		tableColumn_7.setWidth(150);
@@ -809,6 +824,10 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 				taskCommand.setId("id" + ((List<TaskCommandDef>) tableViewer_2.getInput()).size());
 				taskCommand.setName("类型名称" + ((List<TaskCommandDef>) tableViewer_2.getInput()).size());
 				taskCommand.setIsEnabled("true");
+				taskCommand.setIsVerification("true");
+				taskCommand.setIsSaveData("true");
+				taskCommand.setIsSimulationRun("false");
+				
 				((List<TaskCommandDef>) tableViewer_2.getInput()).add(taskCommand);
 				tableViewer_2.refresh();
 			}
@@ -2102,11 +2121,14 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		cellEditor[1] = new TextCellEditor(table_2);
 		cellEditor[2] = new ComboBoxCellEditor(table_2, strs, SWT.READ_ONLY);
 		cellEditor[3] = new CheckboxCellEditor(table_2);
-		cellEditor[4] = new TaskCommandCellEditor(table_2, getShell());
-		cellEditor[5] = new TaskCommandCellEditor(table_2, getShell());
-		cellEditor[6] = new TaskCommandCellEditor(table_2, getShell());
+		cellEditor[4] = new CheckboxCellEditor(table_2);
+		cellEditor[5] = new CheckboxCellEditor(table_2);
+		cellEditor[6] = new CheckboxCellEditor(table_2);
+		cellEditor[7] = new TaskCommandCellEditor(table_2, getShell());
+		cellEditor[8] = new TaskCommandCellEditor(table_2, getShell());
+		cellEditor[9] = new TaskCommandCellEditor(table_2, getShell());
 		
-		tableViewer_2.setColumnProperties(new String[] { "TASKCOMMANDID", "TASKCOMMANDNAME","TASKCOMMANDTYPE", "TASKCOMMANDENABLE", "TASKCOMMANDCOMMAND", "TASKCOMMANDCMD","TASKCOMMANDFILTER" });
+		tableViewer_2.setColumnProperties(new String[] { "TASKCOMMANDID", "TASKCOMMANDNAME","TASKCOMMANDTYPE", "TASKCOMMANDENABLE","TASKCOMMANDVERIFY","TASKCOMMANDSAVEDATA","TASKCOMMANDSIMULATION", "TASKCOMMANDCOMMAND", "TASKCOMMANDCMD","TASKCOMMANDFILTER" });
 		tableViewer_2.setCellEditors(cellEditor);
 		tableViewer_2.setCellModifier(new ICellModifier() {
 
@@ -2125,6 +2147,15 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 				}
 				if (property.equals("TASKCOMMANDENABLE")) {
 					taskCommand.setIsEnabled(((Boolean) value).booleanValue() ? "true" : "false");
+				}
+				if (property.equals("TASKCOMMANDVERIFY")) {
+					taskCommand.setIsVerification(((Boolean) value).booleanValue() ? "true" : "false");
+				}
+				if (property.equals("TASKCOMMANDSAVEDATA")) {
+					taskCommand.setIsSaveData(((Boolean) value).booleanValue() ? "true" : "false");
+				}
+				if (property.equals("TASKCOMMANDSIMULATION")) {
+					taskCommand.setIsSimulationRun(((Boolean) value).booleanValue() ? "true" : "false");
 				}
 				if (property.equals("TASKCOMMANDCOMMAND")) {
 					taskCommand.setCommand((String) value);
@@ -2156,6 +2187,24 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 					if (taskCommand.getIsEnabled().equals("true"))
 						return true;
 					if (taskCommand.getIsEnabled().equals("false"))
+						return false;
+				}
+				if (property.equals("TASKCOMMANDVERIFY")) {
+					if (taskCommand.getIsVerification().equals("true"))
+						return true;
+					if (taskCommand.getIsVerification().equals("false"))
+						return false;
+				}
+				if (property.equals("TASKCOMMANDSAVEDATA")) {
+					if (taskCommand.getIsSaveData().equals("true"))
+						return true;
+					if (taskCommand.getIsSaveData().equals("false"))
+						return false;
+				}
+				if (property.equals("TASKCOMMANDSIMULATION")) {
+					if (taskCommand.getIsSimulationRun().equals("true"))
+						return true;
+					if (taskCommand.getIsSimulationRun().equals("false"))
 						return false;
 				}
 				if (property.equals("TASKCOMMANDCOMMAND")) {
@@ -2894,7 +2943,7 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		tableViewer_1.setInput(fixFlowConfigGroupDefinitionObserveList);
 		//
 		ObservableListContentProvider listContentProvider_2 = new ObservableListContentProvider();
-		IObservableMap[] observeMaps_2 = EMFObservables.observeMaps(listContentProvider_2.getKnownElements(), new EStructuralFeature[]{Literals.TASK_COMMAND_DEF__ID, Literals.TASK_COMMAND_DEF__NAME, Literals.TASK_COMMAND_DEF__TYPE, Literals.TASK_COMMAND_DEF__IS_ENABLED, Literals.TASK_COMMAND_DEF__COMMAND, Literals.TASK_COMMAND_DEF__CMD, Literals.TASK_COMMAND_DEF__FILTER});
+		IObservableMap[] observeMaps_2 = EMFObservables.observeMaps(listContentProvider_2.getKnownElements(), new EStructuralFeature[]{Literals.TASK_COMMAND_DEF__ID, Literals.TASK_COMMAND_DEF__NAME, Literals.TASK_COMMAND_DEF__TYPE, Literals.TASK_COMMAND_DEF__IS_ENABLED, Literals.TASK_COMMAND_DEF__IS_VERIFICATION, Literals.TASK_COMMAND_DEF__IS_SAVE_DATA, Literals.TASK_COMMAND_DEF__IS_SIMULATION_RUN, Literals.TASK_COMMAND_DEF__COMMAND, Literals.TASK_COMMAND_DEF__CMD, Literals.TASK_COMMAND_DEF__FILTER});
 		tableViewer_2.setLabelProvider(new ObservableMapLabelProvider(observeMaps_2));
 		tableViewer_2.setContentProvider(listContentProvider_2);
 		//
@@ -2910,7 +2959,7 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		bindingContext.bindValue(combo_1ObserveTextObserveWidget, fixFlowConfigModeObserveValue, null, null);
 		//
 		ObservableListContentProvider listContentProvider_3 = new ObservableListContentProvider();
-		IObservableMap[] observeMaps_3 = EMFObservables.observeMaps(listContentProvider_3.getKnownElements(), new EStructuralFeature[]{Literals.GROUP_INFO__GROUP_ID, Literals.GROUP_INFO__GROUP_NAME, Literals.GROUP_INFO__IS_ENABLED, Literals.GROUP_INFO__IS_DISPLAY_USER, Literals.GROUP_INFO__GROUP_ID_FIELD, Literals.GROUP_INFO__GROUP_NAME_FIELD, Literals.GROUP_INFO__SUP_GROUP_ID_FIELD, Literals.GROUP_INFO__SQL_TEXT,Literals.GROUP_INFO__GROUP_DEFINITION_IMPL});
+		IObservableMap[] observeMaps_3 = EMFObservables.observeMaps(listContentProvider_3.getKnownElements(), new EStructuralFeature[]{Literals.GROUP_INFO__GROUP_ID, Literals.GROUP_INFO__GROUP_NAME, Literals.GROUP_INFO__IS_ENABLED, Literals.GROUP_INFO__IS_DISPLAY_USER, Literals.GROUP_INFO__GROUP_ID_FIELD, Literals.GROUP_INFO__GROUP_NAME_FIELD, Literals.GROUP_INFO__SUP_GROUP_ID_FIELD, Literals.GROUP_INFO__SQL_TEXT, Literals.GROUP_INFO__GROUP_DEFINITION_IMPL});
 		tableViewer_3.setLabelProvider(new ObservableMapLabelProvider(observeMaps_3));
 		tableViewer_3.setContentProvider(listContentProvider_3);
 		//
