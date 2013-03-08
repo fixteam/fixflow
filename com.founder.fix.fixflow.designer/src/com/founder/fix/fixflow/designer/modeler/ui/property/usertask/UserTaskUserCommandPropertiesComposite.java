@@ -405,11 +405,11 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 	}
 	
 	/**
-	 * EMF编辑处理命令
+	 * EMF编辑处理命令(不打乱顺序)
 	 * @param oldtask
 	 * @param newtask
 	 */
-	private void editTaskCommand(final TaskCommand oldtask, final TaskCommand newtask){
+	private void editTaskCommand(final TaskCommand oldtask, final TaskCommand newtask, final int index){
 		@SuppressWarnings("restriction")
 		TransactionalEditingDomain editingDomain = getDiagramEditor().getEditingDomain();
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
@@ -427,7 +427,7 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 						        (org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, newtask);
 						FeatureMap extensionElements = extensionAttributeValue.getValue();
 						extensionElements.remove(oldextensionElementEntry);
-						extensionElements.add(newextensionElementEntry);
+						extensionElements.add(index, newextensionElementEntry);
 					}
 				}
 			}
@@ -479,8 +479,8 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 				cnd.setBlockOnOpen(true);
 				if(cnd != null && cnd.open() == InputDialog.OK){
 					TaskCommand newTaskCommand = cnd.getTaskCommand();
-					editTaskCommand(taskCommand, newTaskCommand);
 					int index = ((List<TaskCommand>)treeViewer_1.getInput()).indexOf(taskCommand);
+					editTaskCommand(taskCommand, newTaskCommand, index);
 					((List<TaskCommand>)treeViewer_1.getInput()).remove(taskCommand);
 					((List<TaskCommand>)treeViewer_1.getInput()).add(index, newTaskCommand);
 					treeViewer_1.refresh();
