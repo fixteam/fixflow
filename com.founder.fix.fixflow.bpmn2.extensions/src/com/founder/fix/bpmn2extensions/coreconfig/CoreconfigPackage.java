@@ -197,13 +197,22 @@ public interface CoreconfigPackage extends EPackage {
 	int FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG = 13;
 
 	/**
+	 * The feature id for the '<em><b>Fix Thread Pool Executor Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG = 14;
+
+	/**
 	 * The number of structural features of the '<em>Fix Flow Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIX_FLOW_CONFIG_FEATURE_COUNT = 14;
+	int FIX_FLOW_CONFIG_FEATURE_COUNT = 15;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -545,13 +554,40 @@ public interface CoreconfigPackage extends EPackage {
 	int TASK_COMMAND_DEF__FILTER = 6;
 
 	/**
+	 * The feature id for the '<em><b>Is Verification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND_DEF__IS_VERIFICATION = 7;
+
+	/**
+	 * The feature id for the '<em><b>Is Save Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND_DEF__IS_SAVE_DATA = 8;
+
+	/**
+	 * The feature id for the '<em><b>Is Simulation Run</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND_DEF__IS_SIMULATION_RUN = 9;
+
+	/**
 	 * The number of structural features of the '<em>Task Command Def</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_COMMAND_DEF_FEATURE_COUNT = 7;
+	int TASK_COMMAND_DEF_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DesignerOrgConfigImpl <em>Designer Org Config</em>}' class.
@@ -1629,6 +1665,107 @@ public interface CoreconfigPackage extends EPackage {
 	int ASSIGN_POLICY_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorConfigImpl <em>Fix Thread Pool Executor Config</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorConfigImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getFixThreadPoolExecutorConfig()
+	 * @generated
+	 */
+	int FIX_THREAD_POOL_EXECUTOR_CONFIG = 27;
+
+	/**
+	 * The feature id for the '<em><b>Fix Thread Pool Executor</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR_CONFIG__FIX_THREAD_POOL_EXECUTOR = 0;
+
+	/**
+	 * The number of structural features of the '<em>Fix Thread Pool Executor Config</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR_CONFIG_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorImpl <em>Fix Thread Pool Executor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	int FIX_THREAD_POOL_EXECUTOR = 28;
+
+	/**
+	 * The feature id for the '<em><b>Thread Pool Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR__THREAD_POOL_KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Thread Pool Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR__THREAD_POOL_NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Core Pool Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR__CORE_POOL_SIZE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Maximum Pool Size</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR__MAXIMUM_POOL_SIZE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Keep Alive Time</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR__KEEP_ALIVE_TIME = 4;
+
+	/**
+	 * The feature id for the '<em><b>Time Unit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR__TIME_UNIT = 5;
+
+	/**
+	 * The number of structural features of the '<em>Fix Thread Pool Executor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_THREAD_POOL_EXECUTOR_FEATURE_COUNT = 6;
+
+	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1636,7 +1773,18 @@ public interface CoreconfigPackage extends EPackage {
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getDBType()
 	 * @generated
 	 */
-	int DB_TYPE = 27;
+	int DB_TYPE = 29;
+
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType <em>Time Unit Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTimeUnitType()
+	 * @generated
+	 */
+	int TIME_UNIT_TYPE = 30;
 
 
 	/**
@@ -1802,6 +1950,17 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFixFlowConfig_AssignPolicyConfig();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Fix Thread Pool Executor Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getFixThreadPoolExecutorConfig()
+	 * @see #getFixFlowConfig()
+	 * @generated
+	 */
+	EReference getFixFlowConfig_FixThreadPoolExecutorConfig();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig <em>Data Base Config</em>}'.
@@ -2148,6 +2307,39 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTaskCommandDef_Filter();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsVerification <em>Is Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Verification</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsVerification()
+	 * @see #getTaskCommandDef()
+	 * @generated
+	 */
+	EAttribute getTaskCommandDef_IsVerification();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSaveData <em>Is Save Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Save Data</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSaveData()
+	 * @see #getTaskCommandDef()
+	 * @generated
+	 */
+	EAttribute getTaskCommandDef_IsSaveData();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSimulationRun <em>Is Simulation Run</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Simulation Run</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSimulationRun()
+	 * @see #getTaskCommandDef()
+	 * @generated
+	 */
+	EAttribute getTaskCommandDef_IsSimulationRun();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig <em>Designer Org Config</em>}'.
@@ -3197,6 +3389,103 @@ public interface CoreconfigPackage extends EPackage {
 	EAttribute getAssignPolicy_Remarks();
 
 	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Fix Thread Pool Executor Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig
+	 * @generated
+	 */
+	EClass getFixThreadPoolExecutorConfig();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig#getFixThreadPoolExecutor <em>Fix Thread Pool Executor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Fix Thread Pool Executor</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig#getFixThreadPoolExecutor()
+	 * @see #getFixThreadPoolExecutorConfig()
+	 * @generated
+	 */
+	EReference getFixThreadPoolExecutorConfig_FixThreadPoolExecutor();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor <em>Fix Thread Pool Executor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Fix Thread Pool Executor</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor
+	 * @generated
+	 */
+	EClass getFixThreadPoolExecutor();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getThreadPoolKey <em>Thread Pool Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Thread Pool Key</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getThreadPoolKey()
+	 * @see #getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	EAttribute getFixThreadPoolExecutor_ThreadPoolKey();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getThreadPoolName <em>Thread Pool Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Thread Pool Name</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getThreadPoolName()
+	 * @see #getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	EAttribute getFixThreadPoolExecutor_ThreadPoolName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getCorePoolSize <em>Core Pool Size</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Core Pool Size</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getCorePoolSize()
+	 * @see #getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	EAttribute getFixThreadPoolExecutor_CorePoolSize();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getMaximumPoolSize <em>Maximum Pool Size</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Maximum Pool Size</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getMaximumPoolSize()
+	 * @see #getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	EAttribute getFixThreadPoolExecutor_MaximumPoolSize();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getKeepAliveTime <em>Keep Alive Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Keep Alive Time</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getKeepAliveTime()
+	 * @see #getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	EAttribute getFixThreadPoolExecutor_KeepAliveTime();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getTimeUnit <em>Time Unit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Time Unit</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor#getTimeUnit()
+	 * @see #getFixThreadPoolExecutor()
+	 * @generated
+	 */
+	EAttribute getFixThreadPoolExecutor_TimeUnit();
+
+	/**
 	 * Returns the meta object for enum '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3205,6 +3494,16 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getDBType();
+
+	/**
+	 * Returns the meta object for enum '{@link com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType <em>Time Unit Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Time Unit Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType
+	 * @generated
+	 */
+	EEnum getTimeUnitType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -3349,6 +3648,14 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG = eINSTANCE.getFixFlowConfig_AssignPolicyConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Fix Thread Pool Executor Config</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG = eINSTANCE.getFixFlowConfig_FixThreadPoolExecutorConfig();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -3617,6 +3924,30 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK_COMMAND_DEF__FILTER = eINSTANCE.getTaskCommandDef_Filter();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Verification</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND_DEF__IS_VERIFICATION = eINSTANCE.getTaskCommandDef_IsVerification();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Save Data</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND_DEF__IS_SAVE_DATA = eINSTANCE.getTaskCommandDef_IsSaveData();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Simulation Run</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND_DEF__IS_SIMULATION_RUN = eINSTANCE.getTaskCommandDef_IsSimulationRun();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DesignerOrgConfigImpl <em>Designer Org Config</em>}' class.
@@ -4435,6 +4766,82 @@ public interface CoreconfigPackage extends EPackage {
 		EAttribute ASSIGN_POLICY__REMARKS = eINSTANCE.getAssignPolicy_Remarks();
 
 		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorConfigImpl <em>Fix Thread Pool Executor Config</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorConfigImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getFixThreadPoolExecutorConfig()
+		 * @generated
+		 */
+		EClass FIX_THREAD_POOL_EXECUTOR_CONFIG = eINSTANCE.getFixThreadPoolExecutorConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Fix Thread Pool Executor</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIX_THREAD_POOL_EXECUTOR_CONFIG__FIX_THREAD_POOL_EXECUTOR = eINSTANCE.getFixThreadPoolExecutorConfig_FixThreadPoolExecutor();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorImpl <em>Fix Thread Pool Executor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.FixThreadPoolExecutorImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getFixThreadPoolExecutor()
+		 * @generated
+		 */
+		EClass FIX_THREAD_POOL_EXECUTOR = eINSTANCE.getFixThreadPoolExecutor();
+
+		/**
+		 * The meta object literal for the '<em><b>Thread Pool Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_THREAD_POOL_EXECUTOR__THREAD_POOL_KEY = eINSTANCE.getFixThreadPoolExecutor_ThreadPoolKey();
+
+		/**
+		 * The meta object literal for the '<em><b>Thread Pool Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_THREAD_POOL_EXECUTOR__THREAD_POOL_NAME = eINSTANCE.getFixThreadPoolExecutor_ThreadPoolName();
+
+		/**
+		 * The meta object literal for the '<em><b>Core Pool Size</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_THREAD_POOL_EXECUTOR__CORE_POOL_SIZE = eINSTANCE.getFixThreadPoolExecutor_CorePoolSize();
+
+		/**
+		 * The meta object literal for the '<em><b>Maximum Pool Size</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_THREAD_POOL_EXECUTOR__MAXIMUM_POOL_SIZE = eINSTANCE.getFixThreadPoolExecutor_MaximumPoolSize();
+
+		/**
+		 * The meta object literal for the '<em><b>Keep Alive Time</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_THREAD_POOL_EXECUTOR__KEEP_ALIVE_TIME = eINSTANCE.getFixThreadPoolExecutor_KeepAliveTime();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Unit</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_THREAD_POOL_EXECUTOR__TIME_UNIT = eINSTANCE.getFixThreadPoolExecutor_TimeUnit();
+
+		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4443,6 +4850,16 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum DB_TYPE = eINSTANCE.getDBType();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType <em>Time Unit Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTimeUnitType()
+		 * @generated
+		 */
+		EEnum TIME_UNIT_TYPE = eINSTANCE.getTimeUnitType();
 
 	}
 

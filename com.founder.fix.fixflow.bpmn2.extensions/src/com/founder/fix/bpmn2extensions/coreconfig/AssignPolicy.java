@@ -13,6 +13,10 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Assign Policy</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * 分配策略
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -36,6 +40,9 @@ public interface AssignPolicy extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 策略编号
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getAssignPolicy_Id()
@@ -63,6 +70,9 @@ public interface AssignPolicy extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 策略名称
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getAssignPolicy_Name()
@@ -90,6 +100,9 @@ public interface AssignPolicy extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 实现类
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Class Impl</em>' attribute.
 	 * @see #setClassImpl(String)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getAssignPolicy_ClassImpl()
@@ -117,6 +130,9 @@ public interface AssignPolicy extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 备注
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Remarks</em>' attribute.
 	 * @see #setRemarks(String)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getAssignPolicy_Remarks()

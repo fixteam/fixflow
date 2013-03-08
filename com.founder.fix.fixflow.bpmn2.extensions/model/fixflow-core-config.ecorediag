@@ -191,6 +191,18 @@
         <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//TaskCommandDef/filter"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_tUgPAh59EeKkzKCnug4XSA"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_Xv-TkIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//TaskCommandDef/isVerification"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Xv-TkYeZEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_aGYxUIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//TaskCommandDef/isSaveData"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aGYxUYeZEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_b7YkEIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//TaskCommandDef/isSimulationRun"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_b7YkEYeZEeK8N_SZqUiCGQ"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_YWC38k4PEeGeJLsIQ9w_dQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_YWC3804PEeGeJLsIQ9w_dQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_YWC39E4PEeGeJLsIQ9w_dQ"/>
@@ -827,6 +839,101 @@
     <element xmi:type="ecore:EClass" href="fixflow-core-config.ecore#//AssignPolicy"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OR9Uklo0EeKx28bKpgOngQ" x="105" y="870"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_oBCuUIeZEeK8N_SZqUiCGQ" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_oBCuU4eZEeK8N_SZqUiCGQ" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_oBCuVIeZEeK8N_SZqUiCGQ" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_oBCuVYeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_oBCuVoeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_oBCuV4eZEeK8N_SZqUiCGQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_oBCuWIeZEeK8N_SZqUiCGQ" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_oBCuWYeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_oBCuWoeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_oBCuW4eZEeK8N_SZqUiCGQ"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_oBCuUYeZEeK8N_SZqUiCGQ" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-core-config.ecore#//FixThreadPoolExecutorConfig"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oBCuUoeZEeK8N_SZqUiCGQ" x="540" y="885"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_xj9PAIeZEeK8N_SZqUiCGQ" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_xj9PA4eZEeK8N_SZqUiCGQ" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_xj9PBIeZEeK8N_SZqUiCGQ" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_19lhsIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixThreadPoolExecutor/threadPoolKey"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_19lhsYeZEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_4qSYgIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixThreadPoolExecutor/threadPoolName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_4qSYgYeZEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_62WAYIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixThreadPoolExecutor/corePoolSize"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_62WAYYeZEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_-i-qMIeZEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixThreadPoolExecutor/maximumPoolSize"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_-i-qMYeZEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_BvJrQIeaEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixThreadPoolExecutor/keepAliveTime"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BvJrQYeaEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_SFi1cIebEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixThreadPoolExecutor/timeUnit"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SFi1cYebEeK8N_SZqUiCGQ"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_xj9PBYeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_xj9PBoeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_xj9PB4eZEeK8N_SZqUiCGQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_xj9PCIeZEeK8N_SZqUiCGQ" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_xj9PCYeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_xj9PCoeZEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_xj9PC4eZEeK8N_SZqUiCGQ"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_xj9PAYeZEeK8N_SZqUiCGQ" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-core-config.ecore#//FixThreadPoolExecutor"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xj9PAoeZEeK8N_SZqUiCGQ" x="521" y="964"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_xi_wQIeaEeK8N_SZqUiCGQ" type="1005">
+    <children xmi:type="notation:Node" xmi:id="_xi_wQ4eaEeK8N_SZqUiCGQ" type="4010"/>
+    <children xmi:type="notation:Node" xmi:id="_xi_wRIeaEeK8N_SZqUiCGQ" type="5008">
+      <children xmi:type="notation:Node" xmi:id="_094iwIeaEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/DAYS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_094iwYeaEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_3mHwUIeaEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/HOURS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_3mHwUYeaEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_5Y25QIeaEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/MICROSECONDS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_5Y25QYeaEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_8raPIIeaEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/MILLISECONDS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_8raPIYeaEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_9BArsIeaEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/MINUTES"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_9BArsYeaEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_AjEdMIebEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/NANOSECONDS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AjEdMYebEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_DfGwgIebEeK8N_SZqUiCGQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-core-config.ecore#//TimeUnitType/SECONDS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DfGwgYebEeK8N_SZqUiCGQ"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_xi_wRYeaEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_xi_wRoeaEeK8N_SZqUiCGQ"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_xi_wR4eaEeK8N_SZqUiCGQ"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_xi_wQYeaEeK8N_SZqUiCGQ" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EEnum" href="fixflow-core-config.ecore#//TimeUnitType"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xi_wQoeaEeK8N_SZqUiCGQ" x="185" y="995"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_YYtxQjpiEeGATK0MSWXD6A"/>
   <element xmi:type="ecore:EPackage" href="fixflow-core-config.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_oVCtoDq7EeGATK0MSWXD6A" type="3002" source="_by2V0DpiEeGATK0MSWXD6A" target="_uCbPMDpjEeGATK0MSWXD6A">
@@ -1178,5 +1285,31 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZVIHEVo0EeKx28bKpgOngQ" points="[27, 7, -104, -25]$[132, 21, 1, -11]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZVJVMFo0EeKx28bKpgOngQ" id="(0.7050359712230215,0.8372093023255814)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZVJVMVo0EeKx28bKpgOngQ" id="(0.12745098039215685,0.27906976744186046)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_cqO8MIebEeK8N_SZqUiCGQ" type="3002" source="_by2V0DpiEeGATK0MSWXD6A" target="_oBCuUIeZEeK8N_SZqUiCGQ">
+    <children xmi:type="notation:Node" xmi:id="_cqO8NIebEeK8N_SZqUiCGQ" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_cqO8NYebEeK8N_SZqUiCGQ" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_cqO8NoebEeK8N_SZqUiCGQ" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_cqO8N4ebEeK8N_SZqUiCGQ" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_cqO8MYebEeK8N_SZqUiCGQ" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_cqO8MoebEeK8N_SZqUiCGQ" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-core-config.ecore#//FixFlowConfig/fixThreadPoolExecutorConfig"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cqO8M4ebEeK8N_SZqUiCGQ" points="[6, 20, -97, -282]$[104, 285, 1, -17]"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cqO8OIebEeK8N_SZqUiCGQ" id="(0.15270935960591134,0.4186046511627907)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_lsFXMIebEeK8N_SZqUiCGQ" type="3002" source="_oBCuUIeZEeK8N_SZqUiCGQ" target="_xj9PAIeZEeK8N_SZqUiCGQ">
+    <children xmi:type="notation:Node" xmi:id="_lsFXNIebEeK8N_SZqUiCGQ" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_lsFXNYebEeK8N_SZqUiCGQ" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_lsFXNoebEeK8N_SZqUiCGQ" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_lsFXN4ebEeK8N_SZqUiCGQ" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_lsFXMYebEeK8N_SZqUiCGQ" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_lsFXMoebEeK8N_SZqUiCGQ" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-core-config.ecore#//FixThreadPoolExecutorConfig/fixThreadPoolExecutor"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lsFXM4ebEeK8N_SZqUiCGQ" points="[-10, 21, 27, -50]$[-36, 59, 1, -12]"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_lsFXOIebEeK8N_SZqUiCGQ" id="(0.43455497382198954,0.09558823529411764)"/>
   </edges>
 </notation:Diagram>

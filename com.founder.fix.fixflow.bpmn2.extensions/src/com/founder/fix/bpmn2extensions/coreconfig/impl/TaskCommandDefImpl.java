@@ -30,6 +30,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl#getIsEnabled <em>Is Enabled</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl#getType <em>Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl#getFilter <em>Filter</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl#getIsVerification <em>Is Verification</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl#getIsSaveData <em>Is Save Data</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl#getIsSimulationRun <em>Is Simulation Run</em>}</li>
  * </ul>
  * </p>
  *
@@ -175,6 +178,66 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 	 * @ordered
 	 */
 	protected String filter = FILTER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIsVerification() <em>Is Verification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsVerification()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IS_VERIFICATION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIsVerification() <em>Is Verification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsVerification()
+	 * @generated
+	 * @ordered
+	 */
+	protected String isVerification = IS_VERIFICATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIsSaveData() <em>Is Save Data</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsSaveData()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IS_SAVE_DATA_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIsSaveData() <em>Is Save Data</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsSaveData()
+	 * @generated
+	 * @ordered
+	 */
+	protected String isSaveData = IS_SAVE_DATA_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIsSimulationRun() <em>Is Simulation Run</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsSimulationRun()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IS_SIMULATION_RUN_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIsSimulationRun() <em>Is Simulation Run</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsSimulationRun()
+	 * @generated
+	 * @ordered
+	 */
+	protected String isSimulationRun = IS_SIMULATION_RUN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -347,6 +410,69 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getIsVerification() {
+		return isVerification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsVerification(String newIsVerification) {
+		String oldIsVerification = isVerification;
+		isVerification = newIsVerification;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.TASK_COMMAND_DEF__IS_VERIFICATION, oldIsVerification, isVerification));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIsSaveData() {
+		return isSaveData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsSaveData(String newIsSaveData) {
+		String oldIsSaveData = isSaveData;
+		isSaveData = newIsSaveData;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.TASK_COMMAND_DEF__IS_SAVE_DATA, oldIsSaveData, isSaveData));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIsSimulationRun() {
+		return isSimulationRun;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsSimulationRun(String newIsSimulationRun) {
+		String oldIsSimulationRun = isSimulationRun;
+		isSimulationRun = newIsSimulationRun;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.TASK_COMMAND_DEF__IS_SIMULATION_RUN, oldIsSimulationRun, isSimulationRun));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -364,6 +490,12 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 				return getType();
 			case CoreconfigPackage.TASK_COMMAND_DEF__FILTER:
 				return getFilter();
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_VERIFICATION:
+				return getIsVerification();
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SAVE_DATA:
+				return getIsSaveData();
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SIMULATION_RUN:
+				return getIsSimulationRun();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -396,6 +528,15 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 				return;
 			case CoreconfigPackage.TASK_COMMAND_DEF__FILTER:
 				setFilter((String)newValue);
+				return;
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_VERIFICATION:
+				setIsVerification((String)newValue);
+				return;
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SAVE_DATA:
+				setIsSaveData((String)newValue);
+				return;
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SIMULATION_RUN:
+				setIsSimulationRun((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -430,6 +571,15 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 			case CoreconfigPackage.TASK_COMMAND_DEF__FILTER:
 				setFilter(FILTER_EDEFAULT);
 				return;
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_VERIFICATION:
+				setIsVerification(IS_VERIFICATION_EDEFAULT);
+				return;
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SAVE_DATA:
+				setIsSaveData(IS_SAVE_DATA_EDEFAULT);
+				return;
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SIMULATION_RUN:
+				setIsSimulationRun(IS_SIMULATION_RUN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -456,6 +606,12 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case CoreconfigPackage.TASK_COMMAND_DEF__FILTER:
 				return FILTER_EDEFAULT == null ? filter != null : !FILTER_EDEFAULT.equals(filter);
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_VERIFICATION:
+				return IS_VERIFICATION_EDEFAULT == null ? isVerification != null : !IS_VERIFICATION_EDEFAULT.equals(isVerification);
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SAVE_DATA:
+				return IS_SAVE_DATA_EDEFAULT == null ? isSaveData != null : !IS_SAVE_DATA_EDEFAULT.equals(isSaveData);
+			case CoreconfigPackage.TASK_COMMAND_DEF__IS_SIMULATION_RUN:
+				return IS_SIMULATION_RUN_EDEFAULT == null ? isSimulationRun != null : !IS_SIMULATION_RUN_EDEFAULT.equals(isSimulationRun);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -484,6 +640,12 @@ public class TaskCommandDefImpl extends EObjectImpl implements TaskCommandDef {
 		result.append(type);
 		result.append(", filter: ");
 		result.append(filter);
+		result.append(", isVerification: ");
+		result.append(isVerification);
+		result.append(", isSaveData: ");
+		result.append(isSaveData);
+		result.append(", isSimulationRun: ");
+		result.append(isSimulationRun);
 		result.append(')');
 		return result.toString();
 	}

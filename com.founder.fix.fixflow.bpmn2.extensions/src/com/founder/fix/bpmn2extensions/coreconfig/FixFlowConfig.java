@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getExpandCmdConfig <em>Expand Cmd Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getPriorityConfig <em>Priority Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getAssignPolicyConfig <em>Assign Policy Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -415,5 +416,32 @@ public interface FixFlowConfig extends EObject {
 	 * @generated
 	 */
 	void setAssignPolicyConfig(AssignPolicyConfig value);
+
+	/**
+	 * Returns the value of the '<em><b>Fix Thread Pool Executor Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Fix Thread Pool Executor Config</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Fix Thread Pool Executor Config</em>' containment reference.
+	 * @see #setFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixFlowConfig_FixThreadPoolExecutorConfig()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='fixThreadPoolExecutorConfig'"
+	 * @generated
+	 */
+	FixThreadPoolExecutorConfig getFixThreadPoolExecutorConfig();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Fix Thread Pool Executor Config</em>' containment reference.
+	 * @see #getFixThreadPoolExecutorConfig()
+	 * @generated
+	 */
+	void setFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig value);
 
 } // FixFlowConfig

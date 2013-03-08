@@ -194,6 +194,18 @@
         <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//TaskCommand/orderId"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_QesqkT-pEeK2PuE6fwWj9w"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_vOeQQYeXEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//TaskCommand/isVerification"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vOeQQoeXEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_F7R_YIeYEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//TaskCommand/isSaveData"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_F7R_YYeYEeK8N_SZqUiCGQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_kEvGQIeYEeK8N_SZqUiCGQ" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//TaskCommand/isSimulationRun"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_kEvGQYeYEeK8N_SZqUiCGQ"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1bQ6IQEtEeGYKayJr7w6IA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1bQ6IgEtEeGYKayJr7w6IA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_1bQ6IwEtEeGYKayJr7w6IA"/>

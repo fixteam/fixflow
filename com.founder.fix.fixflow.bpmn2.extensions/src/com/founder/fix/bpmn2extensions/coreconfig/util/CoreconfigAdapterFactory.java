@@ -180,6 +180,14 @@ public class CoreconfigAdapterFactory extends AdapterFactoryImpl {
 				return createAssignPolicyAdapter();
 			}
 			@Override
+			public Adapter caseFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig object) {
+				return createFixThreadPoolExecutorConfigAdapter();
+			}
+			@Override
+			public Adapter caseFixThreadPoolExecutor(FixThreadPoolExecutor object) {
+				return createFixThreadPoolExecutorAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -574,6 +582,34 @@ public class CoreconfigAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAssignPolicyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig
+	 * @generated
+	 */
+	public Adapter createFixThreadPoolExecutorConfigAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor <em>Fix Thread Pool Executor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor
+	 * @generated
+	 */
+	public Adapter createFixThreadPoolExecutorAdapter() {
 		return null;
 	}
 

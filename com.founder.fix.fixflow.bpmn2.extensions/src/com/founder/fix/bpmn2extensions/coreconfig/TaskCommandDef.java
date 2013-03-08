@@ -23,6 +23,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsEnabled <em>Is Enabled</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getType <em>Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getFilter <em>Filter</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsVerification <em>Is Verification</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSaveData <em>Is Save Data</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSimulationRun <em>Is Simulation Run</em>}</li>
  * </ul>
  * </p>
  *
@@ -218,5 +221,83 @@ public interface TaskCommandDef extends EObject {
 	 * @generated
 	 */
 	void setFilter(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Verification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Verification</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Verification</em>' attribute.
+	 * @see #setIsVerification(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getTaskCommandDef_IsVerification()
+	 * @model extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getIsVerification();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsVerification <em>Is Verification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Verification</em>' attribute.
+	 * @see #getIsVerification()
+	 * @generated
+	 */
+	void setIsVerification(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Save Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Save Data</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Save Data</em>' attribute.
+	 * @see #setIsSaveData(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getTaskCommandDef_IsSaveData()
+	 * @model extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getIsSaveData();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSaveData <em>Is Save Data</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Save Data</em>' attribute.
+	 * @see #getIsSaveData()
+	 * @generated
+	 */
+	void setIsSaveData(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Simulation Run</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Simulation Run</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Simulation Run</em>' attribute.
+	 * @see #setIsSimulationRun(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getTaskCommandDef_IsSimulationRun()
+	 * @model extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getIsSimulationRun();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef#getIsSimulationRun <em>Is Simulation Run</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Simulation Run</em>' attribute.
+	 * @see #getIsSimulationRun()
+	 * @generated
+	 */
+	void setIsSimulationRun(String value);
 
 } // TaskCommandDef

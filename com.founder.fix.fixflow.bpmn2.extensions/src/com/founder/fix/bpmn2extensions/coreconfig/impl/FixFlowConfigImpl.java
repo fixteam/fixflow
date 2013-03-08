@@ -14,6 +14,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.EventSubscriptionConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClassConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandCmdConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupDefinitionConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.InternationalizationConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.PigeonholeConfig;
@@ -53,6 +54,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getExpandCmdConfig <em>Expand Cmd Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getPriorityConfig <em>Priority Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getAssignPolicyConfig <em>Assign Policy Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -198,6 +200,16 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * @ordered
 	 */
 	protected AssignPolicyConfig assignPolicyConfig;
+
+	/**
+	 * The cached value of the '{@link #getFixThreadPoolExecutorConfig() <em>Fix Thread Pool Executor Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFixThreadPoolExecutorConfig()
+	 * @generated
+	 * @ordered
+	 */
+	protected FixThreadPoolExecutorConfig fixThreadPoolExecutorConfig;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -825,6 +837,49 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public FixThreadPoolExecutorConfig getFixThreadPoolExecutorConfig() {
+		return fixThreadPoolExecutorConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig newFixThreadPoolExecutorConfig, NotificationChain msgs) {
+		FixThreadPoolExecutorConfig oldFixThreadPoolExecutorConfig = fixThreadPoolExecutorConfig;
+		fixThreadPoolExecutorConfig = newFixThreadPoolExecutorConfig;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG, oldFixThreadPoolExecutorConfig, newFixThreadPoolExecutorConfig);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig newFixThreadPoolExecutorConfig) {
+		if (newFixThreadPoolExecutorConfig != fixThreadPoolExecutorConfig) {
+			NotificationChain msgs = null;
+			if (fixThreadPoolExecutorConfig != null)
+				msgs = ((InternalEObject)fixThreadPoolExecutorConfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG, null, msgs);
+			if (newFixThreadPoolExecutorConfig != null)
+				msgs = ((InternalEObject)newFixThreadPoolExecutorConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG, null, msgs);
+			msgs = basicSetFixThreadPoolExecutorConfig(newFixThreadPoolExecutorConfig, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG, newFixThreadPoolExecutorConfig, newFixThreadPoolExecutorConfig));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -856,6 +911,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return basicSetPriorityConfig(null, msgs);
 			case CoreconfigPackage.FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG:
 				return basicSetAssignPolicyConfig(null, msgs);
+			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
+				return basicSetFixThreadPoolExecutorConfig(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -896,6 +953,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return getPriorityConfig();
 			case CoreconfigPackage.FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG:
 				return getAssignPolicyConfig();
+			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
+				return getFixThreadPoolExecutorConfig();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -949,6 +1008,9 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG:
 				setAssignPolicyConfig((AssignPolicyConfig)newValue);
+				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
+				setFixThreadPoolExecutorConfig((FixThreadPoolExecutorConfig)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1004,6 +1066,9 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 			case CoreconfigPackage.FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG:
 				setAssignPolicyConfig((AssignPolicyConfig)null);
 				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
+				setFixThreadPoolExecutorConfig((FixThreadPoolExecutorConfig)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1044,6 +1109,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return priorityConfig != null;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG:
 				return assignPolicyConfig != null;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
+				return fixThreadPoolExecutorConfig != null;
 		}
 		return super.eIsSet(featureID);
 	}

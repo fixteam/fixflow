@@ -15,6 +15,10 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Assign Policy Config</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * 分配策略配置
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

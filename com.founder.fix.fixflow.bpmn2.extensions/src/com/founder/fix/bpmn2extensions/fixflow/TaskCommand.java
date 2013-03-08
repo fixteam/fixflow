@@ -27,6 +27,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getCommandType <em>Command Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getExpression <em>Expression</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getOrderId <em>Order Id</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsVerification <em>Is Verification</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSaveData <em>Is Save Data</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSimulationRun <em>Is Simulation Run</em>}</li>
  * </ul>
  * </p>
  *
@@ -166,5 +169,83 @@ public interface TaskCommand extends EObject {
 	 * @generated
 	 */
 	void setOrderId(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Verification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 是否验证
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Verification</em>' attribute.
+	 * @see #setIsVerification(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getTaskCommand_IsVerification()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getIsVerification();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsVerification <em>Is Verification</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Verification</em>' attribute.
+	 * @see #getIsVerification()
+	 * @generated
+	 */
+	void setIsVerification(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Save Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 是否保存表单数据
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Save Data</em>' attribute.
+	 * @see #setIsSaveData(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getTaskCommand_IsSaveData()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getIsSaveData();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSaveData <em>Is Save Data</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Save Data</em>' attribute.
+	 * @see #getIsSaveData()
+	 * @generated
+	 */
+	void setIsSaveData(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Simulation Run</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 是否模拟运行
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Simulation Run</em>' attribute.
+	 * @see #setIsSimulationRun(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getTaskCommand_IsSimulationRun()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getIsSimulationRun();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSimulationRun <em>Is Simulation Run</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Simulation Run</em>' attribute.
+	 * @see #getIsSimulationRun()
+	 * @generated
+	 */
+	void setIsSimulationRun(String value);
 
 } // TaskCommand

@@ -617,13 +617,40 @@ public interface FixFlowPackage extends EPackage {
 	int TASK_COMMAND__ORDER_ID = 4;
 
 	/**
+	 * The feature id for the '<em><b>Is Verification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND__IS_VERIFICATION = 5;
+
+	/**
+	 * The feature id for the '<em><b>Is Save Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND__IS_SAVE_DATA = 6;
+
+	/**
+	 * The feature id for the '<em><b>Is Simulation Run</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND__IS_SIMULATION_RUN = 7;
+
+	/**
 	 * The number of structural features of the '<em>Task Command</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_COMMAND_FEATURE_COUNT = 5;
+	int TASK_COMMAND_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.
@@ -2427,6 +2454,39 @@ public interface FixFlowPackage extends EPackage {
 	EAttribute getTaskCommand_OrderId();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsVerification <em>Is Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Verification</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsVerification()
+	 * @see #getTaskCommand()
+	 * @generated
+	 */
+	EAttribute getTaskCommand_IsVerification();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSaveData <em>Is Save Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Save Data</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSaveData()
+	 * @see #getTaskCommand()
+	 * @generated
+	 */
+	EAttribute getTaskCommand_IsSaveData();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSimulationRun <em>Is Simulation Run</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Simulation Run</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSimulationRun()
+	 * @see #getTaskCommand()
+	 * @generated
+	 */
+	EAttribute getTaskCommand_IsSimulationRun();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.ResourceFilter <em>Resource Filter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3993,6 +4053,30 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK_COMMAND__ORDER_ID = eINSTANCE.getTaskCommand_OrderId();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Verification</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND__IS_VERIFICATION = eINSTANCE.getTaskCommand_IsVerification();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Save Data</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND__IS_SAVE_DATA = eINSTANCE.getTaskCommand_IsSaveData();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Simulation Run</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND__IS_SIMULATION_RUN = eINSTANCE.getTaskCommand_IsSimulationRun();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.

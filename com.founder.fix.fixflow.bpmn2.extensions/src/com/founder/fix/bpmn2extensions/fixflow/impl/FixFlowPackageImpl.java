@@ -856,6 +856,33 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTaskCommand_IsVerification() {
+		return (EAttribute)taskCommandEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskCommand_IsSaveData() {
+		return (EAttribute)taskCommandEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskCommand_IsSimulationRun() {
+		return (EAttribute)taskCommandEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getResourceFilter() {
 		return resourceFilterEClass;
 	}
@@ -1840,6 +1867,9 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEAttribute(taskCommandEClass, TASK_COMMAND__COMMAND_TYPE);
 		createEReference(taskCommandEClass, TASK_COMMAND__EXPRESSION);
 		createEAttribute(taskCommandEClass, TASK_COMMAND__ORDER_ID);
+		createEAttribute(taskCommandEClass, TASK_COMMAND__IS_VERIFICATION);
+		createEAttribute(taskCommandEClass, TASK_COMMAND__IS_SAVE_DATA);
+		createEAttribute(taskCommandEClass, TASK_COMMAND__IS_SIMULATION_RUN);
 
 		resourceFilterEClass = createEClass(RESOURCE_FILTER);
 		createEAttribute(resourceFilterEClass, RESOURCE_FILTER__ID);
@@ -2062,6 +2092,9 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEAttribute(getTaskCommand_CommandType(), theXMLTypePackage.getString(), "commandType", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTaskCommand_Expression(), this.getExpression(), null, "expression", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskCommand_OrderId(), theXMLTypePackage.getInt(), "orderId", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskCommand_IsVerification(), theXMLTypePackage.getString(), "isVerification", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskCommand_IsSaveData(), theXMLTypePackage.getString(), "isSaveData", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskCommand_IsSimulationRun(), theXMLTypePackage.getString(), "isSimulationRun", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resourceFilterEClass, ResourceFilter.class, "ResourceFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getResourceFilter_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2600,6 +2633,24 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 			 "namespace", "",
 			 "kind", "attribute"
 		   });		
+		addAnnotation
+		  (getTaskCommand_IsVerification(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });			
+		addAnnotation
+		  (getTaskCommand_IsSaveData(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });			
+		addAnnotation
+		  (getTaskCommand_IsSimulationRun(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });			
 		addAnnotation
 		  (getResourceFilter_Expression(), 
 		   source, 

@@ -88,6 +88,8 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 			case CoreconfigPackage.PRIORITY: return createPriority();
 			case CoreconfigPackage.ASSIGN_POLICY_CONFIG: return createAssignPolicyConfig();
 			case CoreconfigPackage.ASSIGN_POLICY: return createAssignPolicy();
+			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR_CONFIG: return createFixThreadPoolExecutorConfig();
+			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR: return createFixThreadPoolExecutor();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -103,6 +105,8 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 		switch (eDataType.getClassifierID()) {
 			case CoreconfigPackage.DB_TYPE:
 				return createDBTypeFromString(eDataType, initialValue);
+			case CoreconfigPackage.TIME_UNIT_TYPE:
+				return createTimeUnitTypeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -118,6 +122,8 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 		switch (eDataType.getClassifierID()) {
 			case CoreconfigPackage.DB_TYPE:
 				return convertDBTypeToString(eDataType, instanceValue);
+			case CoreconfigPackage.TIME_UNIT_TYPE:
+				return convertTimeUnitTypeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -398,6 +404,26 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public FixThreadPoolExecutorConfig createFixThreadPoolExecutorConfig() {
+		FixThreadPoolExecutorConfigImpl fixThreadPoolExecutorConfig = new FixThreadPoolExecutorConfigImpl();
+		return fixThreadPoolExecutorConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FixThreadPoolExecutor createFixThreadPoolExecutor() {
+		FixThreadPoolExecutorImpl fixThreadPoolExecutor = new FixThreadPoolExecutorImpl();
+		return fixThreadPoolExecutor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DBType createDBTypeFromString(EDataType eDataType, String initialValue) {
 		DBType result = DBType.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -410,6 +436,26 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 	 * @generated
 	 */
 	public String convertDBTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeUnitType createTimeUnitTypeFromString(EDataType eDataType, String initialValue) {
+		TimeUnitType result = TimeUnitType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertTimeUnitTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

@@ -269,6 +269,24 @@ public interface CoreconfigFactory extends EFactory {
 	AssignPolicy createAssignPolicy();
 
 	/**
+	 * Returns a new object of class '<em>Fix Thread Pool Executor Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Fix Thread Pool Executor Config</em>'.
+	 * @generated
+	 */
+	FixThreadPoolExecutorConfig createFixThreadPoolExecutorConfig();
+
+	/**
+	 * Returns a new object of class '<em>Fix Thread Pool Executor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Fix Thread Pool Executor</em>'.
+	 * @generated
+	 */
+	FixThreadPoolExecutor createFixThreadPoolExecutor();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

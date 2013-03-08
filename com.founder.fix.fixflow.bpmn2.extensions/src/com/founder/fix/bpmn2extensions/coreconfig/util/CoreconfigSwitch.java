@@ -249,6 +249,18 @@ public class CoreconfigSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR_CONFIG: {
+				FixThreadPoolExecutorConfig fixThreadPoolExecutorConfig = (FixThreadPoolExecutorConfig)theEObject;
+				T result = caseFixThreadPoolExecutorConfig(fixThreadPoolExecutorConfig);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR: {
+				FixThreadPoolExecutor fixThreadPoolExecutor = (FixThreadPoolExecutor)theEObject;
+				T result = caseFixThreadPoolExecutor(fixThreadPoolExecutor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -655,6 +667,36 @@ public class CoreconfigSwitch<T> {
 	 * @generated
 	 */
 	public T caseAssignPolicy(AssignPolicy object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Fix Thread Pool Executor Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Fix Thread Pool Executor Config</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Fix Thread Pool Executor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Fix Thread Pool Executor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFixThreadPoolExecutor(FixThreadPoolExecutor object) {
 		return null;
 	}
 
