@@ -20,6 +20,14 @@ public class StringUtil {
     	}
     }
     
+    public static String decodeNull(String ojb1,String obj2){
+    	if(ojb1==null||obj2.equals("")){
+    		return obj2;
+    	}else{
+    		return ojb1;
+    	}
+    }
+    
     public static int getInt(Object obj)
     {
     	if(obj!=null){

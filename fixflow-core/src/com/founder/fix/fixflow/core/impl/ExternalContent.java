@@ -8,14 +8,17 @@ import java.sql.Connection;
  */
 public class ExternalContent {
 	
-	Connection connection;
+	protected Connection connection;
 	
-	String authenticatedUserId;
+	protected String authenticatedUserId;
 	
-	String languageType;
+	protected String languageType;
 
 	
+	protected boolean isQuartzTransactionAuto=true;
+	
 
+	
 	/**
 	 * 获取当前登陆用户
 	 * @return
@@ -64,6 +67,22 @@ public class ExternalContent {
 	 */
 	public void setLanguageType(String languageType) {
 		this.languageType = languageType;
+	}
+
+	/**
+	 * 获取定时任务框架的事务控制类型
+	 * @return
+	 */
+	public boolean isQuartzTransactionAuto() {
+		return isQuartzTransactionAuto;
+	}
+
+	/**
+	 * 设置定时任务框架的事务控制类型
+	 * @param isQuartzTransactionAuto true则框架自己控制事务 false则交由流程引擎控制
+	 */
+	public void setQuartzTransactionAuto(boolean isQuartzTransactionAuto) {
+		this.isQuartzTransactionAuto = isQuartzTransactionAuto;
 	}
 
 }

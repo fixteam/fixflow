@@ -2,7 +2,9 @@ package com.founder.fix.fixflow.core.impl.identity;
 
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 
 /**
  * 组,用于组的数据传递
@@ -88,7 +90,33 @@ public class GroupTo {
 	 * @return
 	 */
 	public String getGroupName() {
-		return groupName;
+		
+		
+		boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+
+		//用户名称国际化处理
+		if (booleanTemp) {
+
+			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
+
+			String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_"+groupType+"_Name_Key");
+			if (nameTemp == null || nameTemp.equals("")) {
+				return groupName;
+			} else {
+				Object otherName = this.getPropertyValue(nameTemp);
+				if (otherName == null || otherName.equals("")) {
+					return groupName;
+				} else {
+					return StringUtil.getString(otherName);
+				}
+			}
+
+		} else {
+			return groupName;
+		}
+		
+		
+	
 	}
 
 

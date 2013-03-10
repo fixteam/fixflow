@@ -9,8 +9,10 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowClassLoadingException;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
+import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.job.AbstractJob;
+import com.founder.fix.fixflow.core.job.Job;
 import com.founder.fix.fixflow.core.objkey.JobObjKey;
 
 /**
@@ -18,7 +20,7 @@ import com.founder.fix.fixflow.core.objkey.JobObjKey;
  * @author kenshin 
  *
  */
-public class JobEntity extends AbstractPersistentObject{
+public class JobEntity extends AbstractPersistentObject implements Job{
 
 
 	/**
@@ -26,28 +28,10 @@ public class JobEntity extends AbstractPersistentObject{
 	 */
 	private static final long serialVersionUID = -934877366500337782L;
 	
-	/**
-	 * 未注册
-	 */
-	public static int  JOB_NO_REG=0;
-	
-	/**
-	 * 执行中
-	 */
-	public static int  JOB_OPERATION=1;
-	
-	/**
-	 * 已经完成
-	 */
-	public static int  JOB_Complete=2;
-	
-	/**
-	 * 执行失败
-	 */
-	public static int  JOB_FAIL=3;
 	
 	
 	
+
 	
 	
 	protected String id;
@@ -74,7 +58,10 @@ public class JobEntity extends AbstractPersistentObject{
 
 	protected Map<String, JobDetailEntity> jobDetailEntityMap=new HashMap<String, JobDetailEntity>();
 
-	
+	public 	JobEntity(){
+		
+		this.id=GuidUtil.CreateGuid();
+	}
 	
 	public Map<String, JobDetailEntity> getJobDetailEntityMap() {
 		return jobDetailEntityMap;

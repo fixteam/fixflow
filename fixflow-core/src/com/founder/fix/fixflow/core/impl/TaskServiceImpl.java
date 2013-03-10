@@ -18,6 +18,7 @@ import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandTaskComplete;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentUsersAndCountCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentUsersCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetNextTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetPreviousStepTaskByTaskIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetPriorityCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessInstanceCommentsCmd;
@@ -358,6 +359,12 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	public Priority getPriority(int priorityValue) {
 		
 		return commandExecutor.execute(new GetPriorityCmd(priorityValue));
+	}
+
+	public List<TaskInstance> getNextTask(String taskId,String processInstanceId) {
+
+
+		return commandExecutor.execute(new GetNextTaskCmd(taskId,processInstanceId));
 	}
 
 	

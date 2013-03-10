@@ -823,7 +823,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
             	
         	}
         	else{
-        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId+"_"+id);
+        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId+"_"+commandId);
             	
         	}
 

@@ -10,6 +10,7 @@ import com.founder.fix.fixflow.core.impl.persistence.CommentManager;
 import com.founder.fix.fixflow.core.impl.persistence.DeploymentManager;
 import com.founder.fix.fixflow.core.impl.persistence.EventSubscriptionManager;
 import com.founder.fix.fixflow.core.impl.persistence.IdentityLinkManager;
+import com.founder.fix.fixflow.core.impl.persistence.JobManager;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.persistence.ResourceManager;
@@ -105,6 +106,13 @@ public class CommandContext {
 		EventSubscriptionManager eventSubscriptionManager = new EventSubscriptionManager();
 		eventSubscriptionManager.setCommandContext(this);
 		return eventSubscriptionManager;
+	}
+	
+	
+	public JobManager getJobManager() {
+		JobManager jobManager = new JobManager();
+		jobManager.setCommandContext(this);
+		return jobManager;
 	}
 	// getters and setters
 	// //////////////////////////////////////////////////////

@@ -59,8 +59,20 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 
 		}
 		try {
+			//加载系统处理命令国际化文件
 			FixResourceCore.loadAllLanguage("FixFlowConfigResource/SystemTaskComandResource.properties",FixFlowResources.TaskComandResource);
+			//加载异常国际化文件
 			FixResourceCore.loadAllLanguage("FixFlowConfigResource/FixFlowExceptionResource.properties", FixFlowResources.ExceptionResource);
+			//加载组织结构国际化文件
+			FixResourceCore.loadAllLanguage("FixFlowConfigResource/FixFlow_OrganizationResource.properties", FixFlowResources.OrganizationResource);
+			
+			
+			//加载系统资源文件
+			FixResourceCore.loadAllLanguage("FixFlowConfigResource/FixFlow_SystemResource.properties", FixFlowResources.SystemResource);
+			
+			
+
+			
 			
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块

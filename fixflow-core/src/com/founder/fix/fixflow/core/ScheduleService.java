@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.quartz.SchedulerFactory;
 
-import com.founder.fix.fixflow.core.impl.job.JobEntity;
+import com.founder.fix.fixflow.core.job.Job;
 
 public interface ScheduleService extends ProcessService{
 	
@@ -34,9 +34,19 @@ public interface ScheduleService extends ProcessService{
 	 * 创建一个定时任务
 	 * @return
 	 */
-	JobEntity createJob();
+	Job createJob();
 	
+	/**
+	 * 保存一个任务
+	 * @param job
+	 */
+	void saveJob(Job job);
 	
-	void saveJob(JobEntity jobEntity);
+	/**
+	 * 保存一个任务
+	 * @param job
+	 * @param isNowPerform 是否立刻注册
+	 */
+    void saveJob(Job job,boolean isNowPerform);
 	
 }

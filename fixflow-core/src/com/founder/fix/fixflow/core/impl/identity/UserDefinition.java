@@ -11,6 +11,8 @@ public abstract class UserDefinition {
 	protected AllUserInfo userInfoConfig;
 	
 	
+	
+	
 	public AllUserInfo getUserInfoConfig() {
 		return userInfoConfig;
 	}

@@ -1,0 +1,99 @@
+package com.founder.fix.fixflow.core.impl.cmd;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import com.founder.fix.fixflow.core.exception.FixFlowBizException;
+import com.founder.fix.fixflow.core.impl.interceptor.Command;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.task.TaskInstance;
+
+public class GetNextTaskCmd implements Command<List<TaskInstance>>{
+	
+	protected String taskId;
+	protected String processInstanceId;
+	
+	public GetNextTaskCmd(String taskId,String processInstanceId){
+		this.taskId=taskId;
+		this.processInstanceId=processInstanceId;
+	}
+	
+	
+	public List<TaskInstance> execute(CommandContext commandContext) {
+		// TODO 自动生成的方法存根
+		
+		
+		if(taskId==null||taskId.equals("")){
+			
+			if(processInstanceId==null||processInstanceId.equals("")){
+				throw new FixFlowBizException("模拟执行的流程实例编号不能为空!");
+			}
+			
+			ProcessInstance processInstance=commandContext.getProcessInstanceManager().findProcessInstanceById(processInstanceId);
+			if(processInstance==null){
+				throw new FixFlowBizException("流程实例没找到");
+			}
+			ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity)processInstance;
+			
+			
+			Set<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
+			List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
+			for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
+				if(!taskInstanceEntity.hasEnded()){
+					taskInstances.add(taskInstanceEntity);
+				}
+				
+			}
+			return taskInstances;
+			
+		}
+		else{
+			if(taskId==null||taskId.equals("")){
+				throw new FixFlowBizException("模拟执行的任务编号不能为空!");
+			}
+			
+			
+			
+			TaskInstance taskInstance=commandContext.getTaskManager().findTaskById(taskId);
+			
+			if(taskInstance==null){
+				throw new FixFlowBizException("模拟执行的任务无法找到!");
+			}
+			
+			
+			if(!taskInstance.hasEnded()){
+				throw new FixFlowBizException("模拟执行的当前任务必须已经结束!");
+			}
+			
+			ProcessInstance processInstance=commandContext.getProcessInstanceManager().findProcessInstanceById(taskInstance.getProcessInstanceId());
+			
+			if(processInstance==null){
+				throw new FixFlowBizException("未能找到任务对应的流程实例");
+			}
+			ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity)processInstance;
+			
+			
+			Set<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
+			List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
+			for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
+				if(!taskInstanceEntity.hasEnded()){
+					taskInstances.add(taskInstanceEntity);
+				}
+			}
+			
+
+			
+			
+			
+			return taskInstances;
+		}
+		
+		
+		
+	}
+
+}

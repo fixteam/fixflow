@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
@@ -28,13 +29,16 @@ import com.founder.fix.fixflow.core.impl.command.MessageStartProcessInstanceComm
 import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.SaveVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
 import com.founder.fix.fixflow.core.impl.subscription.EventSubscriptionQueryImpl;
+import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.core.subscription.EventSubscriptionQuery;
+import com.founder.fix.fixflow.core.task.TaskInstance;
 
 public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
@@ -228,6 +232,18 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
 		return commandExecutor.execute(new ExpandCommonCmd<T>(cmdId, parameterMap));
 
+	}
+
+	public List<TaskInstance> getNotDoneTask(ProcessInstance processInstance) {
+		Set<TaskInstanceEntity> taskInstanceEntities= ((ProcessInstanceEntity)processInstance).getTaskMgmtInstance().getTaskInstanceEntitys();
+		List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
+		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
+			if(!taskInstanceEntity.hasEnded()){
+				taskInstances.add(taskInstanceEntity);
+			}
+			
+		}
+		return taskInstances;
 	}
 
 	

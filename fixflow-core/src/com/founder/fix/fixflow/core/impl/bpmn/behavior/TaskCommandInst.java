@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.bpmn2.UserTask;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
+import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -33,10 +34,18 @@ public class TaskCommandInst implements UserCommandQueryTo{
 
 	
 	protected UserTask userTask;
+	
+	
+	boolean isVerification=true;
+	boolean isSaveData=true;
+	boolean isSimulationRun=false;
 
 	
 
 	
+
+
+
 
 	public TaskCommandInst(String id,String name,String expression,String taskCommandType,boolean isAdmin){
 		this.id=id;
@@ -63,6 +72,34 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		this.expression=expressionValue;
 		this.id=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "id");
 		this.name=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "name");
+		
+		
+		Object isVerificationObject=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isVerification");
+		Object isSaveDataObject=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isSaveData");
+		Object isSimulationRunObject=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isSimulationRun");
+		
+		
+		
+		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+		if(taskCommandDef!=null){
+			isVerification=StringUtil.getBoolean(taskCommandDef.getIsEnabled());
+			isSaveData=StringUtil.getBoolean(taskCommandDef.getIsSaveData());
+			isSimulationRun=StringUtil.getBoolean(taskCommandDef.getIsSimulationRun());
+		}
+		
+		
+		
+		
+		if(isVerificationObject!=null&&!isVerificationObject.equals("")){
+			isVerification=StringUtil.getBoolean(isVerificationObject);
+		}
+		if(isSaveDataObject!=null&&!isSaveDataObject.equals("")){
+			isSaveData=StringUtil.getBoolean(isSaveDataObject);
+		}
+		if(isSimulationRunObject!=null&&!isSimulationRunObject.equals("")){
+			isSimulationRun=StringUtil.getBoolean(isSimulationRunObject);
+		}
+		
 		
 		
 		this.taskCommandType=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "commandType");
@@ -114,7 +151,19 @@ public class TaskCommandInst implements UserCommandQueryTo{
 	}
 	
 	
-	
+	public boolean isVerification() {
+		return isVerification;
+	}
+
+
+	public boolean isSaveData() {
+		return isSaveData;
+	}
+
+
+	public boolean isSimulationRun() {
+		return isSimulationRun;
+	}
 
 	public Map<String, Object> getPersistentState() {
 		Map<String, Object> persistentState = new HashMap<String, Object>();
@@ -122,6 +171,10 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		persistentState.put("name", getName());
 		persistentState.put("type", this.taskCommandType);
 		persistentState.put("isAdmin", this.isAdmin);
+		persistentState.put("isVerification", this.isVerification);
+		persistentState.put("isSaveData", this.isSaveData);
+		persistentState.put("isSimulationRun", this.isSimulationRun);
+		
 		if( this.userTask!=null){
 			persistentState.put("nodeId", this.userTask.getId());
 			persistentState.put("nodeName", this.userTask.getName());

@@ -1,6 +1,5 @@
 package com.founder.fix.fixflow.core;
 
-
 import com.founder.fix.fixflow.core.impl.ExternalContent;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 
@@ -84,11 +83,20 @@ public interface ProcessEngine {
 	void setLanguageType(String languageType);
 	
 	/**
-	 * 清除线程副本中的对象
+	 * 清除线程副本中的对象并关闭内部connection事务
+	 * 
 	 */
 	void contextClose();
 	
+	/**
+	 * 回滚内部connection事务
+	 */
+	void rollback();
 	
+	/**
+	 * 提交内部connection事务
+	 */
+	void commit();
 	
 	/**
 	 * 获取流程引擎配置

@@ -390,5 +390,13 @@ public interface TaskService extends ProcessService {
 	 */
 	Priority getPriority(int priorityValue);
 
+	/**
+	 * 获取模拟运行下一步产生的任务
+	 * @param taskId 任务编号
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	List<TaskInstance> getNextTask(String taskId,String processInstanceId);
+
 
 }

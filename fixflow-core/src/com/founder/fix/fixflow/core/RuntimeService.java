@@ -12,6 +12,7 @@ import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.core.subscription.EventSubscriptionQuery;
+import com.founder.fix.fixflow.core.task.TaskInstance;
 
 /**
  * 获取运行时服务(用于管理运行时流程实例的操作)
@@ -328,5 +329,6 @@ public interface RuntimeService extends ProcessService{
 	
 	
 	
+	List<TaskInstance> getNotDoneTask(ProcessInstance processInstance);
 	
 }

@@ -6,6 +6,13 @@ public interface FixFlowResources {
 	public static String TaskComandResource="FixFlow_SystemTaskComandResource";
 	
 	public static String ExceptionResource="FixFlow_ExceptionResource";
+
+	public static String OrganizationResource="FixFlow_OrganizationResource";
+	
+	
+	
+	public static String SystemResource="FixFlow_SystemResource";
+	
 	
 
 	public String getResourceName(String processId,String resourceKey);

@@ -35,5 +35,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/apputil"/>
 	<classpathentry kind="src" path="/fixflow-api"/>
 	<classpathentry kind="src" path="/dbcore"/>
+	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/quartz-all-2.1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

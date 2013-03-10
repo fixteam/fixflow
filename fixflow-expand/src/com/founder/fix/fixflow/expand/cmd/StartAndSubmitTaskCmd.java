@@ -18,7 +18,7 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.expand.command.StartAndSubmitTaskCommand;
 
-public class StartAndSubmitTaskCmd extends AbstractExpandTaskCmd<StartAndSubmitTaskCommand, String>{
+public class StartAndSubmitTaskCmd extends AbstractExpandTaskCmd<StartAndSubmitTaskCommand, ProcessInstance>{
 
 	
 
@@ -28,7 +28,7 @@ public class StartAndSubmitTaskCmd extends AbstractExpandTaskCmd<StartAndSubmitT
 	
 	}
 
-	public String execute(CommandContext commandContext) {
+	public ProcessInstance execute(CommandContext commandContext) {
 		
 		
 
@@ -148,7 +148,7 @@ public class StartAndSubmitTaskCmd extends AbstractExpandTaskCmd<StartAndSubmitT
 				
 				
 			}
-			return processInstanceId;
+			return processInstanceQueryTo;
 		}
 		
 		

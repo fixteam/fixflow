@@ -189,7 +189,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 			FixResourceCore.setNowLanguage(languageType);}
 		
 		// }
-
+		Context.setQuartzTransactionAuto(externalContent.isQuartzTransactionAuto());
 	}
 	
 	public void setLanguageType(String languageType){
@@ -212,14 +212,25 @@ public class ProcessEngineImpl implements ProcessEngine {
 		Context.removeDbConnection();
 		Context.removeAbstractScriptLanguageMgmt();
 		Context.removeLanguageType();
+		Context.closeQuartzConnection();
+		Context.removeQuartzCloseConnection();
+		Context.removeQuartzCommitConnection();
+		Context.removeQuartzRollbackConnection();
+	}
+	
+	
+	
+	public void rollback(){
+		Context.rollbackQuartzConnection();
+	}
+	
+	public void commit(){
+		
+		Context.commitQuartzConnection();
+		
+		
 	}
 
-	public void contextNoConnectionClose() {
 
-		Context.removeCommandContext();
-		Context.removeProcessEngineConfiguration();
-		Context.removeAbstractScriptLanguageMgmt();
-		Context.removeLanguageType();
-	}
 
 }
