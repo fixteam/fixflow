@@ -169,8 +169,8 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 		isSimulation.setText("是否虚拟运行");
 
 		initCombo();
-		init();
 		getCheckBox();
+		init();
 		return container;
 	}
 
@@ -260,6 +260,9 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 		this.taskCommand = taskCommand;
 	}
 
+	/**
+	 * 初始化回填值
+	 */
 	public void init() {
 		if (taskCommand != null) {
 
@@ -277,7 +280,7 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 				expressionComboViewer.setDefaultExpressionInput(expressionTo);
 			}
 
-			if(taskCommand.getIsVerification()!=null && taskCommand.getIsSaveData()!=null && taskCommand.getIsSimulationRun()!=null) {
+			if(taskCommand.getIsVerification()!=null || taskCommand.getIsSaveData()!=null || taskCommand.getIsSimulationRun()!=null) {
 				isVerify.setSelection(taskCommand.getIsVerification().equals("true") ? true : false);
 				isSaveData.setSelection(taskCommand.getIsSaveData().equals("true") ? true : false);
 				isSimulation.setSelection(taskCommand.getIsSimulationRun().equals("true") ? true : false);
@@ -290,6 +293,11 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 
 	}
 
+	/**
+	 * 返回中文名称
+	 * @param type
+	 * @return
+	 */
 	public String getType(String type) {
 		String cntype = "";
 		if (type.equals("general")) {
@@ -314,6 +322,9 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 		return cntype;
 	}
 	
+	/**
+	 * 勾默认值
+	 */
 	private void getCheckBox() {
 		List<com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef> nameList = FixFlowConfigUtil.getTaskCommandNames(FixFlowConfigUtil.getFixFlowConfig());
 		for (com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef taskCommand : nameList) {
@@ -330,6 +341,9 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 		}
 	}
 
+	/**
+	 * 初始化Combo，加入items
+	 */
 	private void initCombo(){
 		// 添加扩展
 				List<com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef> nameList = FixFlowConfigUtil.getTaskCommandNames(FixFlowConfigUtil.getFixFlowConfig());
