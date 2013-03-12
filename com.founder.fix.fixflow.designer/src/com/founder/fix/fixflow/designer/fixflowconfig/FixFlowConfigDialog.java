@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow.designer.fixflowconfig;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -75,11 +76,13 @@ import com.founder.fix.bpmn2extensions.coreconfig.DBType;
 import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClass;
 import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutor;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupDefinition;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.MailInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.Priority;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType;
 import com.founder.fix.fixflow.designer.modeler.ui.common.FixFlowInputCellEditor;
 import com.founder.fix.fixflow.designer.util.ConnectorUtil;
 import com.founder.fix.fixflow.designer.util.EMFUtil;
@@ -172,6 +175,10 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 	private Button btnNewButton_4;
 	private Button btnNewButton_3;
 	private Table assignPolicytable;
+	private TableViewer threadPoolTableViewer;
+	private Table threadPoolTable;
+	private Button threadAdd;
+	private Button threadDelete;
 
 	/**
 	 * Create the dialog.
@@ -1714,6 +1721,104 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 			}
 		});
 		
+		CTabItem threadPoolExecutorConfig = new CTabItem(tabFolder, SWT.NONE);
+		threadPoolExecutorConfig.setText("异步线程池");
+		
+		Composite threadComposite = new Composite(tabFolder, SWT.NONE);
+		threadPoolExecutorConfig.setControl(threadComposite);
+		threadComposite.setLayout(new GridLayout(2, false));
+		
+		Label lblNewLabel_21 = new Label(threadComposite, SWT.NONE);
+		lblNewLabel_21.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		lblNewLabel_21.setText("异步池连接");
+		
+		threadPoolTableViewer = new TableViewer(threadComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		threadPoolTableViewer.setColumnProperties(new String[] {"THREADPOOLKEY", "THREADPOOLNAME", "COREPOOLSIZE", "MAXIMUMPOOLSIZE", "KEEPALIVETIME", "TIMEUNIT"});
+		threadPoolTable = threadPoolTableViewer.getTable();
+		threadPoolTable.setLinesVisible(true);
+		threadPoolTable.setHeaderVisible(true);
+		threadPoolTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		TableColumn tblclmnNewColumn_12 = new TableColumn(threadPoolTable, SWT.NONE);
+		tblclmnNewColumn_12.setWidth(100);
+		tblclmnNewColumn_12.setText("编号");
+		
+		TableColumn tableColumn_26 = new TableColumn(threadPoolTable, SWT.NONE);
+		tableColumn_26.setWidth(100);
+		tableColumn_26.setText("名称");
+		
+		TableColumn tableColumn_27 = new TableColumn(threadPoolTable, SWT.NONE);
+		tableColumn_27.setWidth(100);
+		tableColumn_27.setText("线程数");
+		
+		TableColumn tableColumn_28 = new TableColumn(threadPoolTable, SWT.NONE);
+		tableColumn_28.setWidth(100);
+		tableColumn_28.setText("最大线程数");
+		
+		TableColumn tableColumn_29 = new TableColumn(threadPoolTable, SWT.NONE);
+		tableColumn_29.setWidth(100);
+		tableColumn_29.setText("持续时间");
+		
+		TableColumn tableColumn_30 = new TableColumn(threadPoolTable, SWT.NONE);
+		tableColumn_30.setWidth(100);
+		tableColumn_30.setText("时间类型");
+		
+		Composite composite_13 = new Composite(threadComposite, SWT.NONE);
+		GridLayout gl_composite_13 = new GridLayout(1, false);
+		gl_composite_13.verticalSpacing = 1;
+		gl_composite_13.marginWidth = 0;
+		gl_composite_13.marginHeight = 0;
+		gl_composite_13.horizontalSpacing = 0;
+		composite_13.setLayout(gl_composite_13);
+		
+		threadAdd = new Button(composite_13, SWT.NONE);
+		threadAdd.setBounds(0, 0, 98, 30);
+		threadAdd.setText("添加");
+		threadAdd.addListener(SWT.Selection, new Listener() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handleEvent(Event event) {
+				
+				FixThreadPoolExecutor fixThreadPoolExecutor = CoreconfigFactory.eINSTANCE.createFixThreadPoolExecutor();
+				fixThreadPoolExecutor.setThreadPoolKey("编号" + ((List<FixThreadPoolExecutor>) threadPoolTableViewer.getInput()).size());
+				fixThreadPoolExecutor.setThreadPoolName("名称" + ((List<FixThreadPoolExecutor>) threadPoolTableViewer.getInput()).size());
+				fixThreadPoolExecutor.setCorePoolSize(1);
+				fixThreadPoolExecutor.setMaximumPoolSize(1);
+				fixThreadPoolExecutor.setKeepAliveTime(1);
+				fixThreadPoolExecutor.setTimeUnit(TimeUnitType.DAYS);
+				((List<FixThreadPoolExecutor>) threadPoolTableViewer.getInput()).add(fixThreadPoolExecutor);
+				threadPoolTableViewer.refresh();
+			}
+		});
+		
+		threadDelete = new Button(composite_13, SWT.NONE);
+		threadDelete.setText("删除");
+		threadDelete.addListener(SWT.Selection, new Listener() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handleEvent(Event event) {
+				
+				ISelection sel = threadPoolTableViewer.getSelection();
+				if (sel == null)
+					return;
+				Object[] objs = ((IStructuredSelection) sel).toArray();
+				if (objs == null || objs.length == 0)
+					return;
+				boolean b = MessageDialog.openConfirm(null, "警告", "你确认要删除吗？");
+				if (!b)
+					return;
+
+				for (int i = 0; i < objs.length; i++) {
+					FixThreadPoolExecutor col = (FixThreadPoolExecutor) objs[i];
+					((List<FixThreadPoolExecutor>) threadPoolTableViewer.getInput()).remove(col);
+					fixFlowConfig.getFixThreadPoolExecutorConfig().getFixThreadPoolExecutor().remove(col);
+				}
+				threadPoolTableViewer.refresh();
+			}
+		});
+		
 		CTabItem GDconfig = new CTabItem(tabFolder, SWT.NONE);
 		GDconfig.setText("归档");
 		
@@ -1982,6 +2087,8 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		createCellModifierPriority();
 		
 		createCellModifierAssignPolicy();
+		
+		createCellModifierThreadPool();
 
 		setMessage("配置FixFlow", IMessageProvider.INFORMATION);
 
@@ -2668,6 +2775,102 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 			}
 		});
 	}
+	
+	private void createCellModifierThreadPool() {
+		//往下拉控件里面放值
+		TimeUnitType[] timeUnitTypes = TimeUnitType.values();
+		List<String> list = new ArrayList<String>();
+		for (TimeUnitType timeUnitType : timeUnitTypes) {
+			list.add(timeUnitType.toString());
+		}
+		String[] items = (String[])list.toArray(new String[list.size()]);
+		
+		final Pattern pattern = Pattern.compile("^[1-9][0-9]*$");
+		
+		CellEditor[] cellEditor = new CellEditor[threadPoolTable.getColumnCount()];
+		cellEditor[0] = new TextCellEditor(threadPoolTable);
+		cellEditor[1] = new TextCellEditor(threadPoolTable);
+		cellEditor[2] = new TextCellEditor(threadPoolTable);
+		cellEditor[3] = new TextCellEditor(threadPoolTable);
+		cellEditor[4] = new TextCellEditor(threadPoolTable);
+		cellEditor[5] = new ComboBoxCellEditor(threadPoolTable, items, SWT.READ_ONLY);
+		
+		threadPoolTableViewer.setCellEditors(cellEditor);
+		threadPoolTableViewer.setCellModifier(new ICellModifier() {
+
+			public void modify(Object element, String property, Object value) {
+				Matcher matcher = pattern.matcher(value.toString());
+				
+				TableItem tableitem = (TableItem) element;
+				FixThreadPoolExecutor fixThreadPoolExecutor = (FixThreadPoolExecutor) tableitem.getData();
+				if (property.equals("THREADPOOLKEY")) {
+					fixThreadPoolExecutor.setThreadPoolKey((String) value);
+				}
+				if (property.equals("THREADPOOLNAME")) {
+					fixThreadPoolExecutor.setThreadPoolName((String) value);
+				}
+				if (property.equals("COREPOOLSIZE")) {
+					if(!matcher.matches()) {
+						FixFlowConfigDialog.this.setErrorMessage("请输入正整数");
+					} else {
+						FixFlowConfigDialog.this.setErrorMessage(null);
+						fixThreadPoolExecutor.setCorePoolSize(Integer.valueOf((String) value));
+					}
+				}
+				if (property.equals("MAXIMUMPOOLSIZE")) {
+					if(!matcher.matches()) {
+						FixFlowConfigDialog.this.setErrorMessage("请输入正整数");
+					} else {
+						FixFlowConfigDialog.this.setErrorMessage(null);
+						fixThreadPoolExecutor.setMaximumPoolSize(Integer.valueOf((String) value));
+					}
+				}
+				if (property.equals("KEEPALIVETIME")) {
+					if(!matcher.matches()) {
+						FixFlowConfigDialog.this.setErrorMessage("请输入正整数");
+					} else {
+						FixFlowConfigDialog.this.setErrorMessage(null);
+						fixThreadPoolExecutor.setKeepAliveTime(Long.valueOf((String) value));
+					}
+				}
+				if (property.equals("TIMEUNIT")) {
+					fixThreadPoolExecutor.setTimeUnit(TimeUnitType.values()[(Integer) value]);
+				}
+				threadPoolTableViewer.refresh();
+				updateButtons();
+			}
+
+			public Object getValue(Object element, String property) {
+				
+				FixThreadPoolExecutor fixThreadPoolExecutor = (FixThreadPoolExecutor) element;
+
+				if (property.equals("THREADPOOLKEY")) {
+					return fixThreadPoolExecutor.getThreadPoolKey();
+				}
+				if (property.equals("THREADPOOLNAME")) {
+					return fixThreadPoolExecutor.getThreadPoolName();
+				}
+				if (property.equals("COREPOOLSIZE")) {
+					return fixThreadPoolExecutor.getCorePoolSize()+"";
+				}
+				if (property.equals("MAXIMUMPOOLSIZE")) {
+					return fixThreadPoolExecutor.getMaximumPoolSize()+"";
+				}
+				if (property.equals("KEEPALIVETIME")) {
+					return fixThreadPoolExecutor.getKeepAliveTime()+"";
+				}
+				if (property.equals("TIMEUNIT")) {
+					return FixFlowConfigContants.TIME_UNIT_TYPE.get(fixThreadPoolExecutor.getTimeUnit());
+				}
+				return null;
+			}
+
+			public boolean canModify(Object element, String property) {
+				
+				return element instanceof FixThreadPoolExecutor;
+			}
+		});
+	}
 
 	
 	/**
@@ -3073,6 +3276,14 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		//
 		IObservableList fixFlowConfigAssignPolicyObserveList = EMFProperties.list(FeaturePath.fromList(Literals.FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG, Literals.ASSIGN_POLICY_CONFIG__ASSIGN_POLICY)).observe(fixFlowConfig);
 		assignPolicyConfigtableViewer.setInput(fixFlowConfigAssignPolicyObserveList);
+		//
+		ObservableListContentProvider listContentProvider_10 = new ObservableListContentProvider();
+		IObservableMap[] observeMaps_10 = EMFObservables.observeMaps(listContentProvider_10.getKnownElements(), new EStructuralFeature[]{Literals.FIX_THREAD_POOL_EXECUTOR__THREAD_POOL_KEY, Literals.FIX_THREAD_POOL_EXECUTOR__THREAD_POOL_NAME, Literals.FIX_THREAD_POOL_EXECUTOR__CORE_POOL_SIZE, Literals.FIX_THREAD_POOL_EXECUTOR__MAXIMUM_POOL_SIZE, Literals.FIX_THREAD_POOL_EXECUTOR__KEEP_ALIVE_TIME, Literals.FIX_THREAD_POOL_EXECUTOR__TIME_UNIT});
+		threadPoolTableViewer.setLabelProvider(new ObservableMapLabelProvider(observeMaps_10));
+		threadPoolTableViewer.setContentProvider(listContentProvider_10);
+		//
+		IObservableList fixFlowThreadPoolObserveList = EMFProperties.list(FeaturePath.fromList(Literals.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG, Literals.FIX_THREAD_POOL_EXECUTOR_CONFIG__FIX_THREAD_POOL_EXECUTOR)).observe(fixFlowConfig);
+		threadPoolTableViewer.setInput(fixFlowThreadPoolObserveList);
 		//
 		return bindingContext;
 	}

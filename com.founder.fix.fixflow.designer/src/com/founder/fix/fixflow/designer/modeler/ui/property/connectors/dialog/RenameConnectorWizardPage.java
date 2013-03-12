@@ -3,7 +3,6 @@
  */
 package com.founder.fix.fixflow.designer.modeler.ui.property.connectors.dialog;
 
-import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.UserTask;
 import org.eclipse.jface.resource.ImageDescriptor;
