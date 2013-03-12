@@ -70,7 +70,8 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 			//加载系统资源文件
 			FixResourceCore.loadAllLanguage("FixFlowConfigResource/FixFlow_SystemResource.properties", FixFlowResources.SystemResource);
 			
-			
+			//加载系统资源文件
+			FixResourceCore.loadAllLanguage("FixFlowConfigResource/FixFlow_FlowNameResource.properties", FixFlowResources.FlowNameResource);
 
 			
 			

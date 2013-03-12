@@ -13,6 +13,8 @@ public interface FixFlowResources {
 	
 	public static String SystemResource="FixFlow_SystemResource";
 	
+	public static String FlowNameResource="FixFlow_FlowNameResource";
+	
 	
 
 	public String getResourceName(String processId,String resourceKey);
