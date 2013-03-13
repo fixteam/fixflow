@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import com.founder.fix.fixflow.designer.modeler.ui.property.SectionBpmnElement;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionComboViewer;
 
 /**
  * @author wangzhiwei
@@ -39,6 +40,10 @@ public class RenameConnectorWizardPage extends WizardPage {
 //	private Combo connectEventCombo;
 	
 	private Combo connectExceptionCombo;
+	
+	private ExpressionComboViewer expressionComboViewer;
+	
+	private Combo combo;
 	
 	private Text connectNameErrorText;
 	
@@ -163,6 +168,13 @@ public class RenameConnectorWizardPage extends WizardPage {
 //				setEvent(lifeCycle.getEvent());
 			}
 		});		
+		
+		label = new Label(proGroup, SWT.NONE);
+		label.setText("跳过策略");
+		
+		expressionComboViewer = new ExpressionComboViewer(proGroup);
+		combo = expressionComboViewer.getCombo();
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("如果连接器失效");
@@ -310,5 +322,13 @@ public class RenameConnectorWizardPage extends WizardPage {
 
 	public void setLifeCycle(LifeCycleWidget lifeCycle) {
 		this.lifeCycle = lifeCycle;
+	}
+
+	public ExpressionComboViewer getExpressionComboViewer() {
+		return expressionComboViewer;
+	}
+
+	public void setExpressionComboViewer(ExpressionComboViewer expressionComboViewer) {
+		this.expressionComboViewer = expressionComboViewer;
 	}
 }

@@ -21,8 +21,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
+import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
 import com.founder.fix.fixflow.designer.modeler.ui.property.SectionBpmnElement;
 import com.founder.fix.fixflow.designer.modeler.ui.property.connectors.dialog.LifeCycleWidget;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionComboViewer;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionTo;
 
 /**
  * @author ququsxc
@@ -39,6 +42,10 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 //	private Combo connectEventCombo;
 	
 	private Combo connectExceptionCombo;
+	
+	private ExpressionComboViewer expressionComboViewer;
+	
+	private Combo combo;
 	
 	private Text connectNameErrorText;
 	
@@ -138,10 +145,6 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 			}
 		});
 		
-		lblNewLabel = new Label(proGroup, SWT.NONE);
-		lblNewLabel.setText("执行条件");
-		new Label(proGroup, SWT.NONE);
-		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("选择事件");
 		
@@ -178,9 +181,19 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		});		
 		
 		label = new Label(proGroup, SWT.NONE);
+		label.setText("跳过策略");
+		
+		expressionComboViewer = new ExpressionComboViewer(proGroup);
+		combo = expressionComboViewer.getCombo();
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		SkipComment skipComment = connectorInstance.getSkipComment();
+		ExpressionTo expressionTo = new ExpressionTo();
+		expressionTo.setName(skipComment == null ? "" : skipComment.getExpression().getName());
+		expressionTo.setExpressionText(skipComment == null ? "" : skipComment.getExpression().getValue());
+		expressionComboViewer.getExpressionCombo().setExpressionTo(expressionTo);
+		
+		label = new Label(proGroup, SWT.NONE);
 		label.setText("如果连接器失效");
-		new Label(proGroup, SWT.NONE);
-		new Label(proGroup, SWT.NONE);
 		
 		//创建文本框
 		connectExceptionCombo = new Combo(proGroup, SWT.BORDER | SWT.READ_ONLY);
@@ -326,6 +339,14 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 
 	public void setLifeCycle(LifeCycleWidget lifeCycle) {
 		this.lifeCycle = lifeCycle;
+	}
+
+	public ExpressionComboViewer getExpressionComboViewer() {
+		return expressionComboViewer;
+	}
+
+	public void setExpressionComboViewer(ExpressionComboViewer expressionComboViewer) {
+		this.expressionComboViewer = expressionComboViewer;
 	}
 
 }

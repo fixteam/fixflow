@@ -30,8 +30,10 @@ import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputs;
 import com.founder.fix.bpmn2extensions.fixflow.Documentation;
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
+import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
 import com.founder.fix.fixflow.designer.modeler.ui.property.connectors.tree.TreeViewerFactory;
 import com.founder.fix.fixflow.designer.usercontrol.ExpressionCombo;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionTo;
 
 /**
  * @author wangzhiwei
@@ -147,6 +149,16 @@ public class ModifyConnectorWizard extends Wizard {
 		String event = modifyRenameConnectorWizardPage.getLifeCycle().getEvent().trim();
 		String exception = modifyRenameConnectorWizardPage.getConnectExceptionCombo().getText();
 		String errorName = modifyRenameConnectorWizardPage.getConnectNameErrorText().getText().trim();
+		ExpressionTo expressionTo = modifyRenameConnectorWizardPage.getExpressionComboViewer().getExpressionCombo().getExpressionTo();
+		String expName = expressionTo == null ? "" : expressionTo.getName();
+		String expValue = expressionTo == null ? "" : expressionTo.getExpressionText();
+		
+		//跳过策略
+		Expression skipexpression = FixFlowFactory.eINSTANCE.createExpression();
+		skipexpression.setName(expName);
+		skipexpression.setValue(expValue);
+		SkipComment skipComment = FixFlowFactory.eINSTANCE.createSkipComment();
+		skipComment.setExpression(skipexpression);
 		
 		connectorInstance.setConnectorInstanceName(name);
 		
@@ -157,6 +169,9 @@ public class ModifyConnectorWizard extends Wizard {
 		connectorInstance.setEventType(event);
 		connectorInstance.setErrorHandling(exception);
 		connectorInstance.setErrorCode(errorName);
+		
+		//增加跳过策略
+		connectorInstance.setSkipComment(skipComment);
 		
 		//封装一个或多个输入页面数据
 		//获取所有的输入页面
