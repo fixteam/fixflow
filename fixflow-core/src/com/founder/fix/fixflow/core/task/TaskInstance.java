@@ -431,5 +431,10 @@ public interface TaskInstance extends PersistentObject{
 	 * @param value 值
 	 */
 	void setPersistenceExtensionField(String fieldName,Object value);
+	/**
+	 * 获取任务的代理处理人
+	 * @return
+	 */
+	String getAgent();
 
 }

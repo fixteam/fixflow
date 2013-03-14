@@ -409,7 +409,7 @@ public class TaskInstancePersistence {
 				" WHERE AUSER1 in (select a.EID from FIXFLOW_OUTAGENT_AGENTDETAILS a,FIXFLOW_OUTAGENT_AGENTINFO b "+
 				" WHERE a.EID=b.EID AND STATUS='0' ) "+
 				" ) z WHERE z.USERID=? AND z.EID=?) K WHERE "+
-				" T.PROCESSDEFINITION_ID=K.WFNAME AND  instr( K.NODEID, T.NODE_ID)>0 ";
+				"  (T.PROCESSDEFINITION_ID=K.WFNAME or K.WFNAME ='_fix_flow_all_flow')  AND  (instr( K.NODEID, T.NODE_ID)>0   or K.NODEID='_fix_flow_all_node') ";
 		
 		if(taskQuery.getAgentId()!=null){
 			
