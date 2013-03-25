@@ -579,7 +579,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		}
 		else{
 			
-			
+			this.setCommandId(TaskCommandType.AUTOEND);
 			this.setCommandType(TaskCommandType.AUTOEND);
 			TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.AUTOEND);
 			if(taskCommandDef!=null){

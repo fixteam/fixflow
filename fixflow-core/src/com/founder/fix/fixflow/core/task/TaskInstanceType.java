@@ -33,6 +33,11 @@ public enum TaskInstanceType {
 	 */
 	FIXENDEVENT,
 	
+	/**
+	 * 等待任务
+	 */
+	FIXRECEIVETASK,
+	
 	
 	/**
 	 * 其他流程引擎产生的任务

@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
+import com.founder.fix.fixflow.core.exception.FixFlowConnectorException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
 
@@ -24,6 +26,10 @@ public class ConnectorDefinition {
 	protected List<ConnectorParameterInputs> connectorParameterInputs;
 	protected List<ConnectorParameterOutputs> connectorParameterOutputs;
 
+	protected String skipExpression;
+	
+	
+	
 	public String getConnectorId() {
 		return connectorId;
 	}
@@ -95,6 +101,15 @@ public class ConnectorDefinition {
 	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 	}
+	
+	public String getSkipExpression() {
+		return skipExpression;
+	}
+
+	public void setSkipExpression(String skipExpression) {
+		this.skipExpression = skipExpression;
+	}
+
 
 	public List<ConnectorParameterInputs> getConnectorParameterInputs() {
 
@@ -117,6 +132,20 @@ public class ConnectorDefinition {
 		// TODO Auto-generated method stub
 
 		try {
+			
+			if(this.skipExpression!=null&&!this.skipExpression.equals("")){
+				Object skipExpressionObj=ExpressionMgmt.execute(skipExpression, executionContext);
+				if(StringUtil.getBoolean(skipExpressionObj)){
+					return ;
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
 			String classNameObj = packageName +"."+ className;
 			Class<?> connectorHandlerClass = Class.forName(classNameObj);
 			ConnectorHandler connectorInstance = (ConnectorHandler) connectorHandlerClass.newInstance();
@@ -182,7 +211,7 @@ public class ConnectorDefinition {
 		
 			
 		} catch (Throwable e) {
-			throw new FixFlowException("连接器执行出错!", e);
+			throw new FixFlowConnectorException("连接器执行出错!", e);
 			
 		}
 
