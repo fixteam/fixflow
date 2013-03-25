@@ -10,8 +10,8 @@
     <groupDefinition id="dept" name="部门" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl"/>
     <groupDefinition id="role" name="角色" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl"/>
   </groupDefinitionConfig>
-    <taskCommandConfig>
-   <taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+  <taskCommandConfig>
+    <taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="startandsubmit" name="启动并提交" command="com.founder.fix.fixflow.expand.command.StartAndSubmitTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.StartAndSubmitTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.StartAndSubmitTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="submit" name="提交" command="com.founder.fix.fixflow.expand.command.SubmitTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.SubmitTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.SubmitTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="transfer" name="转发" command="com.founder.fix.fixflow.expand.command.TransferTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.TransferTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.TransferTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
@@ -32,17 +32,17 @@
     <taskCommandDef id="jump" name="跳转" isEnabled="false" type="toDoTasks" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="pending" name="转办" command="com.founder.fix.fixflow.expand.command.PendingTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.PendingTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.PendingTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="resolved" name="还回" command="com.founder.fix.fixflow.expand.command.ResolvedTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.ResolvedTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.ResolvedTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+    <taskCommandDef id="pendingDifForm" name="转办不带表单" command="com.founder.fix.fixflow.expand.command.PendingTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.PendingDifFormTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.PendingTaskFilter" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="reminders" name="催办" command="com.founder.fix.fixflow.expand.command.RemindersTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.RemindersTaskCmd" isEnabled="true" type="processInstanceInfo" filter="com.founder.fix.fixflow.expand.filter.RemindersTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="recover" name="追回" command="com.founder.fix.fixflow.expand.command.RecoverTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.RecoverTaskCmd" isEnabled="true" type="processInstanceInfo" filter="com.founder.fix.fixflow.expand.filter.RecoverTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="updateCompletionRate" name="更新完成率" isEnabled="false" type="toDoTasks" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="processStatus" name="流程状态" isEnabled="true" type="all" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="skipNode" name="自动跳过" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="autoEnd" name="自动结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
-    <taskCommandDef id="countersign" name="会签" isEnabled="false" type="toDoTasks" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="subProcessEnd" name="子流程结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="startEvent" name="流程开始" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="endEvent" name="流程结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
-    <taskCommandDef id="pendingDifForm" name="转办不带表单" command="com.founder.fix.fixflow.expand.command.PendingTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.PendingDifFormTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.PendingTaskFilter" isVerification="false" isSaveData="false" isSimulationRun="false"/>
+    <taskCommandDef id="receiveEnd" name="等待结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
   </taskCommandConfig>
   <designerOrgConfig>
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>

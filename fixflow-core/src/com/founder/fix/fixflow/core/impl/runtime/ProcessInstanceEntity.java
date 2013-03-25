@@ -467,10 +467,10 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	
 		//taskInstance.setAssigneeId(Authentication.getAuthenticatedUserId());
 		//taskInstance.setEndTime(newTaskEndTime);
-		taskInstance.setCommandId(TaskCommandType.endEvent);
-		taskInstance.setCommandType(TaskCommandType.endEvent);
+		taskInstance.setCommandId(TaskCommandType.ENDEVENT);
+		taskInstance.setCommandType(TaskCommandType.ENDEVENT);
 		
-		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.endEvent);
+		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.ENDEVENT);
 		if(taskCommandDef!=null){
 			taskInstance.setCommandMessage(taskCommandDef.getName());
 		}

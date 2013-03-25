@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.expand.cmd;
 
+import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
@@ -34,10 +35,19 @@ public class ReleaseTaskCmd extends AbstractExpandTaskCmd<ReleaseTaskCommand, Vo
 					throw new FixFlowException("任务 " + taskId + " 已经被另一个用户领取!您不能做还回操作!");
 				}
 				else{
-					task.setAssignee(null);
-					task.setClaimTime(null);
-					Context.getCommandContext().getTaskManager()
-							.saveTaskInstanceEntity(task);
+					
+					if(task.getIdentityLinkQueryToList().size()>0){
+						task.setAssignee(null);
+						task.setClaimTime(null);
+						Context.getCommandContext().getTaskManager()
+								.saveTaskInstanceEntity(task);
+					}
+					else{
+						throw new FixFlowBizException("任务 " + taskId + " 没有候选处理者不能被释放!");
+					}
+					
+					
+					
 				}
 			} else {
 				throw new FixFlowException("任务 " + taskId + " 没有被领取,所以不能做还回操作!");

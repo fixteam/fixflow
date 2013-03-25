@@ -8,11 +8,11 @@ package com.founder.fix.fixflow.core.impl.task;
 public class TaskCommandType {
 
 	/**
-	 * 自动跳过
+	 * 自动结束
 	 */
 	public static String AUTOEND="autoEnd";
 	/**
-	 * 自动结束
+	 * 自动跳过
 	 */
 	public static String SKIPNODE="skipNode";
 	/**
@@ -26,6 +26,11 @@ public class TaskCommandType {
 	/**
 	 * 流程结束
 	 */
-	public static String endEvent="endEvent";
+	public static String ENDEVENT="endEvent";
+	
+	/**
+	 * 等待结束
+	 */
+	public static String RECEIVEEND="receiveEnd";
 
 }

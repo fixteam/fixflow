@@ -22,6 +22,7 @@ import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
+import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -60,7 +61,7 @@ public class CallActivityBehavior extends CallActivityImpl {
 	private void createSubTask(ExecutionContext executionContext,String subProcessInstanceId){
 		
 		//构造创建人物所需的数据
-		String newTaskId=subProcessInstanceId;
+		String newTaskId=GuidUtil.CreateGuid();
 		String newTaskProcessInstanceId=executionContext.getProcessInstance().getId();		
 		String newTaskProcessDefinitionId=executionContext.getProcessDefinition().getProcessDefinitionId();		
 		String newTaskTokenId=executionContext.getToken().getId();		
@@ -103,7 +104,7 @@ public class CallActivityBehavior extends CallActivityImpl {
 		
 		
 		ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
-		TaskInstanceEntity taskInstance=(TaskInstanceEntity)processEngine.getTaskService().createTaskQuery().callActivityInstanceId(supProcessInstanceId).singleResult();
+		TaskInstanceEntity taskInstance=(TaskInstanceEntity)processEngine.getTaskService().createTaskQuery().callActivityInstanceId(supProcessInstanceId).taskNotEnd().singleResult();
 		Date newTaskEndTime=ClockUtil.getCurrentTime();
 		//taskInstance.setAssigneeId("1200119390");
 		taskInstance.setEndTime(newTaskEndTime);

@@ -494,8 +494,16 @@ public class ProcessDefinitionPersistence {
 			String errorCodeString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "errorCode");
 			String documentationString = EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil
 					.getExtensionElementsInEntry(entry, "documentation").get(0));
-
+			
+			String skipExpression=null;
+			List<FeatureMap.Entry> skipExpressionObj=EMFExtensionUtil.getExtensionElementsInEntry(entry, "skipComment");
+			if(skipExpressionObj.size()>0){
+				skipExpression=EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil.getExtensionElementsInEntry(skipExpressionObj.get(0), "expression").get(0));
+				//skipExpression=EMFExtensionUtil.getExtensionElementValue(skipExpressionObj.get(0));
+			}
+			
 			ConnectorDefinition connectorDefinition = new ConnectorDefinition();
+			
 			connectorDefinition.setConnectorId(connectorIdString);
 			connectorDefinition.setConnectorInstanceId(connectorInstanceIdString);
 			connectorDefinition.setClassName(classNameString);
@@ -505,7 +513,7 @@ public class ProcessDefinitionPersistence {
 			connectorDefinition.setErrorHandling(errorHandlingString);
 			connectorDefinition.setEventType(eventTypeString);
 			connectorDefinition.setPackageName(packageNamesString);
-
+			connectorDefinition.setSkipExpression(skipExpression);
 			if (baseElementImpl.getEvents().get(eventTypeString) == null) {
 				BaseElementEventImpl flowNodeEventImpl = new BaseElementEventImpl(eventTypeString);
 				flowNodeEventImpl.addConnector(connectorDefinition);
