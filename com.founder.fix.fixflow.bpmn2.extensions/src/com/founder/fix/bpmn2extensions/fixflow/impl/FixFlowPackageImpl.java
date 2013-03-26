@@ -730,6 +730,15 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDocumentRoot_TaskType() {
+		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(43);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getExpression() {
 		return expressionEClass;
 	}
@@ -1850,6 +1859,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEReference(documentRootEClass, DOCUMENT_ROOT__TASK_PRIORITY);
 		createEReference(documentRootEClass, DOCUMENT_ROOT__ASSIGN_POLICY_TYPE);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__IS_PERSISTENCE);
+		createEAttribute(documentRootEClass, DOCUMENT_ROOT__TASK_TYPE);
 
 		expressionEClass = createEClass(EXPRESSION);
 		createEAttribute(expressionEClass, EXPRESSION__VALUE);
@@ -2075,6 +2085,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEReference(getDocumentRoot_TaskPriority(), this.getTaskPriority(), null, "taskPriority", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDocumentRoot_AssignPolicyType(), this.getAssignPolicyType(), null, "assignPolicyType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDocumentRoot_IsPersistence(), theXMLTypePackage.getBoolean(), "isPersistence", "true", 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDocumentRoot_TaskType(), theXMLTypePackage.getString(), "taskType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExpression_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2562,6 +2573,13 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 			 "namespace", "##targetNamespace",
 			 "kind", "attribute"
 		   });			
+		addAnnotation
+		  (getDocumentRoot_TaskType(), 
+		   source, 
+		   new String[] {
+			 "namespace", "##targetNamespace",
+			 "kind", "attribute"
+		   });		
 		addAnnotation
 		  (expressionEClass, 
 		   source, 

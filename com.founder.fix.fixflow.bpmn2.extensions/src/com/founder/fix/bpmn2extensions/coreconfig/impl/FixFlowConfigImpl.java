@@ -24,6 +24,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 
+import com.founder.fix.bpmn2extensions.coreconfig.TaskTypeConfig;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -55,6 +56,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getPriorityConfig <em>Priority Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getAssignPolicyConfig <em>Assign Policy Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getTaskTypeConfig <em>Task Type Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -210,6 +212,16 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * @ordered
 	 */
 	protected FixThreadPoolExecutorConfig fixThreadPoolExecutorConfig;
+
+	/**
+	 * The cached value of the '{@link #getTaskTypeConfig() <em>Task Type Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTaskTypeConfig()
+	 * @generated
+	 * @ordered
+	 */
+	protected TaskTypeConfig taskTypeConfig;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -880,6 +892,49 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TaskTypeConfig getTaskTypeConfig() {
+		return taskTypeConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetTaskTypeConfig(TaskTypeConfig newTaskTypeConfig, NotificationChain msgs) {
+		TaskTypeConfig oldTaskTypeConfig = taskTypeConfig;
+		taskTypeConfig = newTaskTypeConfig;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG, oldTaskTypeConfig, newTaskTypeConfig);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTaskTypeConfig(TaskTypeConfig newTaskTypeConfig) {
+		if (newTaskTypeConfig != taskTypeConfig) {
+			NotificationChain msgs = null;
+			if (taskTypeConfig != null)
+				msgs = ((InternalEObject)taskTypeConfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG, null, msgs);
+			if (newTaskTypeConfig != null)
+				msgs = ((InternalEObject)newTaskTypeConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG, null, msgs);
+			msgs = basicSetTaskTypeConfig(newTaskTypeConfig, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG, newTaskTypeConfig, newTaskTypeConfig));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -913,6 +968,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return basicSetAssignPolicyConfig(null, msgs);
 			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
 				return basicSetFixThreadPoolExecutorConfig(null, msgs);
+			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
+				return basicSetTaskTypeConfig(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -955,6 +1012,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return getAssignPolicyConfig();
 			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
 				return getFixThreadPoolExecutorConfig();
+			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
+				return getTaskTypeConfig();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1011,6 +1070,9 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
 				setFixThreadPoolExecutorConfig((FixThreadPoolExecutorConfig)newValue);
+				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
+				setTaskTypeConfig((TaskTypeConfig)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1069,6 +1131,9 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
 				setFixThreadPoolExecutorConfig((FixThreadPoolExecutorConfig)null);
 				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
+				setTaskTypeConfig((TaskTypeConfig)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1111,6 +1176,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return assignPolicyConfig != null;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG:
 				return fixThreadPoolExecutorConfig != null;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
+				return taskTypeConfig != null;
 		}
 		return super.eIsSet(featureID);
 	}

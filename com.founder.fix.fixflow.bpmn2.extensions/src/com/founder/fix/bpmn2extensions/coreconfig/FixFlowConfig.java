@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getPriorityConfig <em>Priority Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getAssignPolicyConfig <em>Assign Policy Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getTaskTypeConfig <em>Task Type Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -443,5 +444,32 @@ public interface FixFlowConfig extends EObject {
 	 * @generated
 	 */
 	void setFixThreadPoolExecutorConfig(FixThreadPoolExecutorConfig value);
+
+	/**
+	 * Returns the value of the '<em><b>Task Type Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Task Type Config</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Task Type Config</em>' containment reference.
+	 * @see #setTaskTypeConfig(TaskTypeConfig)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixFlowConfig_TaskTypeConfig()
+	 * @model containment="true"
+	 *        extendedMetaData="name='taskTypeConfig' kind='element'"
+	 * @generated
+	 */
+	TaskTypeConfig getTaskTypeConfig();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getTaskTypeConfig <em>Task Type Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Task Type Config</em>' containment reference.
+	 * @see #getTaskTypeConfig()
+	 * @generated
+	 */
+	void setTaskTypeConfig(TaskTypeConfig value);
 
 } // FixFlowConfig

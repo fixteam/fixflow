@@ -461,13 +461,22 @@ public interface FixFlowPackage extends EPackage {
 	int DOCUMENT_ROOT__IS_PERSISTENCE = 42;
 
 	/**
+	 * The feature id for the '<em><b>Task Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__TASK_TYPE = 43;
+
+	/**
 	 * The number of structural features of the '<em>Document Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 43;
+	int DOCUMENT_ROOT_FEATURE_COUNT = 44;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ExpressionImpl <em>Expression</em>}' class.
@@ -2303,6 +2312,17 @@ public interface FixFlowPackage extends EPackage {
 	EAttribute getDocumentRoot_IsPersistence();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskType <em>Task Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Task Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskType()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EAttribute getDocumentRoot_TaskType();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.Expression <em>Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3935,6 +3955,14 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DOCUMENT_ROOT__IS_PERSISTENCE = eINSTANCE.getDocumentRoot_IsPersistence();
+
+		/**
+		 * The meta object literal for the '<em><b>Task Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOCUMENT_ROOT__TASK_TYPE = eINSTANCE.getDocumentRoot_TaskType();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ExpressionImpl <em>Expression</em>}' class.

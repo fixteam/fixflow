@@ -64,6 +64,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskPriority <em>Task Priority</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getAssignPolicyType <em>Assign Policy Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#isIsPersistence <em>Is Persistence</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskType <em>Task Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -1154,5 +1155,32 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setIsPersistence(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Task Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Task Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Task Type</em>' attribute.
+	 * @see #setTaskType(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDocumentRoot_TaskType()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="namespace='##targetNamespace' kind='attribute'"
+	 * @generated
+	 */
+	String getTaskType();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskType <em>Task Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Task Type</em>' attribute.
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	void setTaskType(String value);
 
 } // DocumentRoot
