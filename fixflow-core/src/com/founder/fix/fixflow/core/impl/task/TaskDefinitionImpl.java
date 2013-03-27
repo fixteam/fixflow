@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
 import com.founder.fix.fixflow.core.task.IncludeExclusion;
 import com.founder.fix.fixflow.core.task.TaskDefinition;
+import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
 public class TaskDefinitionImpl implements TaskDefinition {
 
@@ -38,6 +39,12 @@ public class TaskDefinitionImpl implements TaskDefinition {
 	protected String dueDateExpression;
 
 	protected int expectedExecutionTimeValue;
+	
+	protected TaskInstanceType taskInstanceType;
+
+	public TaskInstanceType getTaskInstanceType() {
+		return taskInstanceType;
+	}
 
 	/**
 	 * 分配策略
@@ -95,6 +102,24 @@ public class TaskDefinitionImpl implements TaskDefinition {
 
 		}
 		expectedExecutionTimeValue = second + (minute * 60) + (hour * 60 * 60) + (day * 24 * 60 * 60);
+		
+		
+		String taskTypeString=EMFExtensionUtil.getAnyAttributeValue(userTask, "taskType");
+		if(taskTypeString==null||taskTypeString.equals("")){
+			taskInstanceType=TaskInstanceType.FIXFLOWTASK;
+		}
+		else{
+			if(TaskInstanceType.FIXFLOWTASK.equals(taskTypeString)){
+				taskInstanceType=TaskInstanceType.FIXFLOWTASK;
+			}else{
+				if(TaskInstanceType.FIXNOTICETASK.equals(taskTypeString)){
+					taskInstanceType=TaskInstanceType.FIXNOTICETASK;
+				}
+				else {
+					taskInstanceType=TaskInstanceType.FIXFLOWTASK;
+				}
+			}
+		}
 
 		/*
 		 * if(userTask.getDueDate()!=null&&userTask.getDueDate().getExpression()!=
@@ -164,6 +189,9 @@ public class TaskDefinitionImpl implements TaskDefinition {
 
 			taskAssigneeDefinitionTos.add(taskAssigneeDefinitionTo);
 		}
+		
+		
+		
 	}
 
 	public AssignmentHandler getAssignAction() {

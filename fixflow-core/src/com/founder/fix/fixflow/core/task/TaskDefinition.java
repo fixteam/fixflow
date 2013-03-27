@@ -34,5 +34,6 @@ public interface TaskDefinition extends Serializable{
 	UserTask getUserTaskNode();
 	
 	AssignPolicyType getAssignPolicyType();
-
+	
+	TaskInstanceType getTaskInstanceType();
 }

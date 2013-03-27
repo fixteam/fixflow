@@ -174,6 +174,10 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 				// 创建任务实例
 				taskInstance.create(executionContext);
+				
+				
+				//设置任务的类型
+				taskInstance.setTaskInstanceType(taskDefinition.getTaskInstanceType());
 
 				// 对已经分配的任务进行分配
 				if (taskDefinition != null) {
