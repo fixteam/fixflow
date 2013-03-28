@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.cmd.GetPreviousStepTaskByTaskIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetPriorityCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessInstanceCommentsCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetRollBackNodeCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetRollBackScreeningTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetRollBackTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetSubTaskUserCommandCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetSystemTaskCommandCmd;
@@ -365,6 +366,11 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 
 
 		return commandExecutor.execute(new GetNextTaskCmd(taskId,processInstanceId));
+	}
+
+	public List<TaskInstance> getRollBackScreeningTask(String taskId) {
+
+		return commandExecutor.execute(new GetRollBackScreeningTaskCmd(taskId));
 	}
 
 	

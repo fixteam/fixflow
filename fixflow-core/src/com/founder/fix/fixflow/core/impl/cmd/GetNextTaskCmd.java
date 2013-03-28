@@ -8,8 +8,10 @@ import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
 public class GetNextTaskCmd implements Command<List<TaskInstance>>{
@@ -52,17 +54,27 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 			
 		}
 		else{
+			
+			
 			if(taskId==null||taskId.equals("")){
 				throw new FixFlowBizException("模拟执行的任务编号不能为空!");
 			}
 			
 			
 			
+			
+			
+			
 			TaskInstance taskInstance=commandContext.getTaskManager().findTaskById(taskId);
+			
+		
+			
 			
 			if(taskInstance==null){
 				throw new FixFlowBizException("模拟执行的任务无法找到!");
 			}
+			
+			String tokenIdString=taskInstance.getTokenId();
 			
 			
 			if(!taskInstance.hasEnded()){
@@ -75,13 +87,23 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 				throw new FixFlowBizException("未能找到任务对应的流程实例");
 			}
 			ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity)processInstance;
-			
+			TokenEntity tokenEntity=processInstanceEntity.getTokenMap().get(tokenIdString);
 			
 			Set<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
 			List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
 			for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 				if(!taskInstanceEntity.hasEnded()){
-					taskInstances.add(taskInstanceEntity);
+					String nextTokenId=taskInstanceEntity.getTokenId();
+					if(tokenIdString.equals(nextTokenId)){
+						taskInstances.add(taskInstanceEntity);
+					}else{
+						Token tokenObj=tokenEntity.getChildren().get(nextTokenId);
+						if(tokenObj!=null){
+							taskInstances.add(taskInstanceEntity);
+						}
+					}
+					//tokenEntity.getChild(taskInstanceEntity.getTokenId())
+					
 				}
 			}
 			

@@ -227,6 +227,17 @@ public interface TaskService extends ProcessService {
 	 * @return 可退回的任务
 	 */
 	List<TaskInstance> getRollBackTask(String taskId);
+	
+	
+	/**
+	 * 获取可退回的任务(只包含前面的节点的任务,且剔除掉重复数据)
+	 * 
+	 * @param taskId
+	 *            任务编号
+	 * @return 可退回的任务
+	 */
+	List<TaskInstance> getRollBackScreeningTask(String taskId);
+	
 
 	/**
 	 * 获取可退回的节点
