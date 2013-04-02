@@ -100,7 +100,13 @@ public class CoreUtil {
 			if(sequenceFlow.getSourceRef()!=null){
 				if(sequenceFlow.getSourceRef() instanceof UserTask){
 					//sourceRefFlowNode.add(sequenceFlow.getSourceRef());
-					sourceRefFlowNode.put(sequenceFlow.getSourceRef().getId(), sequenceFlow.getSourceRef());
+					if(sourceRefFlowNode.get(sequenceFlow.getSourceRef().getId())!=null){
+						continue;
+					}
+					else{
+						sourceRefFlowNode.put(sequenceFlow.getSourceRef().getId(), sequenceFlow.getSourceRef());
+					}
+					
 				}
 				
 				getBeforeFlowNodeDG(sequenceFlow.getSourceRef(),sourceRefFlowNode);

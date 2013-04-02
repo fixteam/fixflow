@@ -97,7 +97,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	/**
 	 * 子令牌集合
 	 */
-	protected Map<String, TokenEntity> children;
+	protected Map<String, TokenEntity> children=new HashMap<String, TokenEntity>();
 
 	/**
 	 * 自由子令牌集合

@@ -99,5 +99,19 @@ public interface ModelService extends ProcessService{
 	 * @return
 	 */
 	List<Map<String, Object>> selectProcessDefinitionGroupKey();
+	
+	/**
+	 * 获取流程图图片地址
+	 * @param processDefinitionId 流程唯一编号
+	 * @return 图片地址
+	 */
+	String GetFlowGraphicsImgPath(String processDefinitionId);
+	
+	/**
+	 * 获取流程图节点信息
+	 * @param processDefinitionId  流程唯一编号
+	 * @return key为节点编号,value为 Map<String,Object> Key(height,width,x,y) (height="36.0" width="36.0" x="100.0" y="100.0")
+	 */
+	Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId);
 }
   

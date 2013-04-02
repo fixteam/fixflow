@@ -23,7 +23,7 @@ public interface FixFlowResources {
 	
 	public void systemInit();
 	
-	
+	public String getNowLanguage();
 		
 
 }

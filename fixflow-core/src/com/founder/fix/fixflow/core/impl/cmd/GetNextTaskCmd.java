@@ -89,6 +89,9 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 			ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity)processInstance;
 			TokenEntity tokenEntity=processInstanceEntity.getTokenMap().get(tokenIdString);
 			
+			
+			
+			
 			Set<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
 			List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
 			for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
@@ -97,10 +100,22 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 					if(tokenIdString.equals(nextTokenId)){
 						taskInstances.add(taskInstanceEntity);
 					}else{
-						Token tokenObj=tokenEntity.getChildren().get(nextTokenId);
-						if(tokenObj!=null){
-							taskInstances.add(taskInstanceEntity);
+						
+						//分支走到合并的时候的处理.
+						if(tokenEntity==null){
+							if(taskInstanceEntity.getCreateTime().compareTo(taskInstance.getCreateTime())>=0){
+								taskInstances.add(taskInstanceEntity);
+							}
 						}
+						else{
+							Token tokenObj=tokenEntity.getChildren().get(nextTokenId);
+							if(tokenObj!=null){
+								taskInstances.add(taskInstanceEntity);
+							}
+						}
+						
+						
+						
 					}
 					//tokenEntity.getChild(taskInstanceEntity.getTokenId())
 					
