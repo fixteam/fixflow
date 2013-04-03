@@ -190,7 +190,11 @@ public class VariablePersistence {
 
 		String variableKeyDb = variableKey;
 		byte[] variableValueDb = ObjectToBytes(variableValue);
-		String variableClassName = variableValue.getClass().getCanonicalName();
+		String variableClassName=null;
+		if(variableValue!=null){
+			variableClassName= variableValue.getClass().getCanonicalName();
+		}
+		 
 
 		// 构建查询参数
 		Map<String, Object> objectParam = new HashMap<String, Object>();
@@ -220,7 +224,10 @@ public class VariablePersistence {
 
 		String variableKeyDb = variableKey;
 		byte[] variableValueDb = ObjectToBytes(variableValue);
-		String variableClassName = variableValue.getClass().getCanonicalName();
+		String variableClassName=null;
+		if(variableValue!=null){
+			variableClassName= variableValue.getClass().getCanonicalName();
+		}
 
 		// 构建查询参数
 		Map<String, Object> objectParam = new HashMap<String, Object>();

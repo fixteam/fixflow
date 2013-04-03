@@ -90,6 +90,8 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 			case CoreconfigPackage.ASSIGN_POLICY: return createAssignPolicy();
 			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR_CONFIG: return createFixThreadPoolExecutorConfig();
 			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR: return createFixThreadPoolExecutor();
+			case CoreconfigPackage.TASK_TYPE_CONFIG: return createTaskTypeConfig();
+			case CoreconfigPackage.TASK_TYPE: return createTaskType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -417,6 +419,26 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 	public FixThreadPoolExecutor createFixThreadPoolExecutor() {
 		FixThreadPoolExecutorImpl fixThreadPoolExecutor = new FixThreadPoolExecutorImpl();
 		return fixThreadPoolExecutor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskTypeConfig createTaskTypeConfig() {
+		TaskTypeConfigImpl taskTypeConfig = new TaskTypeConfigImpl();
+		return taskTypeConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskType createTaskType() {
+		TaskTypeImpl taskType = new TaskTypeImpl();
+		return taskType;
 	}
 
 	/**

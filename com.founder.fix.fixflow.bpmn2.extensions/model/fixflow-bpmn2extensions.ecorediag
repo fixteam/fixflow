@@ -95,6 +95,10 @@
         <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DocumentRoot/isPersistence"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Od0dsXgtEeKfksFNuyrCPA"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_hMzZQZVhEeKgQ-KpU-ZMQg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DocumentRoot/taskType"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_hMzZQpVhEeKgQ-KpU-ZMQg"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_FCuS1QEQEeGYKayJr7w6IA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_FCuS1gEQEeGYKayJr7w6IA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_FCuS1wEQEeGYKayJr7w6IA"/>

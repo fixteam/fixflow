@@ -42,6 +42,7 @@ public interface FixThreadPoolExecutor extends EObject {
 	 * @see #setThreadPoolKey(String)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixThreadPoolExecutor_ThreadPoolKey()
 	 * @model required="true"
+	 *        extendedMetaData="kind='attribute'"
 	 * @generated
 	 */
 	String getThreadPoolKey();
@@ -67,7 +68,7 @@ public interface FixThreadPoolExecutor extends EObject {
 	 * @return the value of the '<em>Thread Pool Name</em>' attribute.
 	 * @see #setThreadPoolName(String)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixThreadPoolExecutor_ThreadPoolName()
-	 * @model
+	 * @model extendedMetaData="kind='attribute'"
 	 * @generated
 	 */
 	String getThreadPoolName();
@@ -94,6 +95,7 @@ public interface FixThreadPoolExecutor extends EObject {
 	 * @see #setCorePoolSize(int)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixThreadPoolExecutor_CorePoolSize()
 	 * @model required="true"
+	 *        extendedMetaData="kind='attribute'"
 	 * @generated
 	 */
 	int getCorePoolSize();
@@ -120,6 +122,7 @@ public interface FixThreadPoolExecutor extends EObject {
 	 * @see #setMaximumPoolSize(int)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixThreadPoolExecutor_MaximumPoolSize()
 	 * @model required="true"
+	 *        extendedMetaData="kind='attribute'"
 	 * @generated
 	 */
 	int getMaximumPoolSize();
@@ -146,6 +149,7 @@ public interface FixThreadPoolExecutor extends EObject {
 	 * @see #setKeepAliveTime(long)
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixThreadPoolExecutor_KeepAliveTime()
 	 * @model required="true"
+	 *        extendedMetaData="kind='attribute'"
 	 * @generated
 	 */
 	long getKeepAliveTime();

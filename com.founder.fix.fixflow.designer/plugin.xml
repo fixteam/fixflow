@@ -380,6 +380,15 @@
             label="数据映射"
             replaceTab="org.eclipse.bpmn2.modeler.description.tab">
       </propertyTab>
+       <propertyTab
+            class="com.founder.fix.fixflow.designer.modeler.ui.property.process.ProcessInternationPropertySection"
+            id="bpmn2.fix.ProcessInternationPropertySection.tab"
+            label="国际化"
+            replaceTab="org.eclipse.bpmn2.modeler.description.tab">
+      </propertyTab>
+      
+      
+      
    </extension>
    <extension
          point="org.codehaus.groovy.eclipse.ui.syntaxHighlightingExtension">

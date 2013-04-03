@@ -261,6 +261,18 @@ public class CoreconfigSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CoreconfigPackage.TASK_TYPE_CONFIG: {
+				TaskTypeConfig taskTypeConfig = (TaskTypeConfig)theEObject;
+				T result = caseTaskTypeConfig(taskTypeConfig);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CoreconfigPackage.TASK_TYPE: {
+				TaskType taskType = (TaskType)theEObject;
+				T result = caseTaskType(taskType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -697,6 +709,36 @@ public class CoreconfigSwitch<T> {
 	 * @generated
 	 */
 	public T caseFixThreadPoolExecutor(FixThreadPoolExecutor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Task Type Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Task Type Config</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTaskTypeConfig(TaskTypeConfig object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Task Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Task Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTaskType(TaskType object) {
 		return null;
 	}
 

@@ -36,6 +36,26 @@ public class FixFlowConfigUtil {
 				.getProject("fixflow-expand").getLocation().toString()
 				+ "/src/com/founder/fix/fixflow/expand/config/";
 	}
+	/**
+	 * 得到FixFlow配置文件所存放的路径
+	 * 
+	 * @return
+	 */
+	public static String getFixFlowExpandPath() {
+		return ResourcesPlugin.getWorkspace().getRoot()
+				.getProject("fixflow-expand").getLocation().toString();
+	}
+	
+	/**
+	 * 得到FixFlow配置文件所存放的路径
+	 * 
+	 * @return
+	 */
+	public static String getFixFlowInternationPath() {
+		return ResourcesPlugin.getWorkspace().getRoot()
+				.getProject("fixflow-expand").getLocation().toString()
+				+ "/internationalization/resource";
+	}
 
 	/**
 	 * 得到FixFlowXML所存放的路径

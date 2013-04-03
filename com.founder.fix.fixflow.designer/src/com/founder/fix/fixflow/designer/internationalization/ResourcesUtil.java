@@ -31,6 +31,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import com.founder.fix.apputil.util.FixResourceUtil;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
+import com.founder.fix.fixflow.designer.util.FixFlowConfigUtil;
 
 public class ResourcesUtil {
 	
@@ -291,8 +292,13 @@ public class ResourcesUtil {
 	 * 获取eclipse的workspace真实目录
 	 */
 	public static String getWorkspaceRealPath() {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		return root.getLocation().toString() + "/";
+		//IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		
+		String projectString=FixFlowConfigUtil.getFixFlowExpandPath();
+		projectString=projectString.substring(0,projectString.lastIndexOf("/"));
+		
+		return projectString +"/";
+		
 	}
 	
 	/**

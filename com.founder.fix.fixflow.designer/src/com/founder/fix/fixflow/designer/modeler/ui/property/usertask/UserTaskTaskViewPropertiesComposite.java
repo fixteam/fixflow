@@ -30,6 +30,8 @@ import com.founder.fix.fixflow.designer.usercontrol.IExpressionChangedListener;
 import com.founder.fix.fixflow.designer.util.StringUtil;
 
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -37,6 +39,8 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.emf.databinding.EMFObservables;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage.Literals;
 
@@ -53,7 +57,7 @@ public class UserTaskTaskViewPropertiesComposite extends
 	private Spinner spinner_1;
 	private Spinner spinner_2;
 	private Spinner spinner_3;
-
+	Combo combo;
 	public UserTaskTaskViewPropertiesComposite(AbstractBpmn2PropertySection section) {
 		super(section);
 	}
@@ -93,7 +97,18 @@ public class UserTaskTaskViewPropertiesComposite extends
 		
 
 		toolkit.adapt(combo_1, true, true);
-
+		
+		Label lblNewLabel_2 = new Label(composite, SWT.NONE);
+		lblNewLabel_2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblNewLabel_2.setText("任务类型");
+		toolkit.adapt(lblNewLabel_2, true, true);
+		
+		combo = new Combo(composite, SWT.READ_ONLY);
+		combo.setItems(new String[] {"FIXFLOWTASK", "FIXNOTICETASK"});
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		combo.select(0);
+		toolkit.adapt(combo, true, true);
+		
 		Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1,
 				1));
@@ -183,8 +198,63 @@ public class UserTaskTaskViewPropertiesComposite extends
 		
 		final UserTask userTask = (UserTask) be;
 		
-		
+		Object taskTypeObject=userTask.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_TYPE);
+		if(taskTypeObject==null||taskTypeObject.equals("")){
+			
+			@SuppressWarnings("restriction")
+			TransactionalEditingDomain editingDomain = getDiagramEditor().getEditingDomain();
+			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+				@Override
+				protected void doExecute() {
 
+					userTask.eSet(FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_TYPE, "FIXFLOWTASK");
+					combo.select(0);
+				}
+			});
+			
+			
+		}
+		else{
+			//userTask.eSet(FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_TYPE, arg1)
+			if(taskTypeObject.equals("FIXFLOWTASK")){
+				combo.select(0);
+			}else{
+				if(taskTypeObject.equals("FIXNOTICETASK")){
+					combo.select(1);
+				}else {
+					combo.select(0);
+				}
+			}
+			
+			
+		}
+		
+		combo.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				Combo comboEvent=(Combo)e.getSource();
+				final String taskTypeString=comboEvent.getItem(comboEvent.getSelectionIndex());
+				@SuppressWarnings("restriction")
+				TransactionalEditingDomain editingDomain = getDiagramEditor().getEditingDomain();
+				editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+					@Override
+					protected void doExecute() {
+
+						userTask.eSet(FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_TYPE,taskTypeString);
+
+					}
+				});
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		if (userTask.getExtensionValues().size() > 0) {
 
 			for (ExtensionAttributeValue extensionAttributeValue : userTask.getExtensionValues()) {

@@ -86,6 +86,10 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 		
 	}
 
+	public String getNowLanguage() {
+		return FixResourceCore.getNowLanguage();
+	}
+
 
 
 

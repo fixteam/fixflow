@@ -206,13 +206,22 @@ public interface CoreconfigPackage extends EPackage {
 	int FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG = 14;
 
 	/**
+	 * The feature id for the '<em><b>Task Type Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_FLOW_CONFIG__TASK_TYPE_CONFIG = 15;
+
+	/**
 	 * The number of structural features of the '<em>Fix Flow Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIX_FLOW_CONFIG_FEATURE_COUNT = 15;
+	int FIX_FLOW_CONFIG_FEATURE_COUNT = 16;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -1766,6 +1775,71 @@ public interface CoreconfigPackage extends EPackage {
 	int FIX_THREAD_POOL_EXECUTOR_FEATURE_COUNT = 6;
 
 	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeConfigImpl <em>Task Type Config</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeConfigImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTaskTypeConfig()
+	 * @generated
+	 */
+	int TASK_TYPE_CONFIG = 29;
+
+	/**
+	 * The feature id for the '<em><b>Task Type</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE_CONFIG__TASK_TYPE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Task Type Config</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE_CONFIG_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeImpl <em>Task Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTaskType()
+	 * @generated
+	 */
+	int TASK_TYPE = 30;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__TYPE_ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__TYPE_NAME = 1;
+
+	/**
+	 * The number of structural features of the '<em>Task Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1773,7 +1847,7 @@ public interface CoreconfigPackage extends EPackage {
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getDBType()
 	 * @generated
 	 */
-	int DB_TYPE = 29;
+	int DB_TYPE = 31;
 
 
 	/**
@@ -1784,7 +1858,7 @@ public interface CoreconfigPackage extends EPackage {
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTimeUnitType()
 	 * @generated
 	 */
-	int TIME_UNIT_TYPE = 30;
+	int TIME_UNIT_TYPE = 32;
 
 
 	/**
@@ -1961,6 +2035,17 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFixFlowConfig_FixThreadPoolExecutorConfig();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getTaskTypeConfig <em>Task Type Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Task Type Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getTaskTypeConfig()
+	 * @see #getFixFlowConfig()
+	 * @generated
+	 */
+	EReference getFixFlowConfig_TaskTypeConfig();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig <em>Data Base Config</em>}'.
@@ -3486,6 +3571,59 @@ public interface CoreconfigPackage extends EPackage {
 	EAttribute getFixThreadPoolExecutor_TimeUnit();
 
 	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskTypeConfig <em>Task Type Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Task Type Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskTypeConfig
+	 * @generated
+	 */
+	EClass getTaskTypeConfig();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskTypeConfig#getTaskType <em>Task Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Task Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskTypeConfig#getTaskType()
+	 * @see #getTaskTypeConfig()
+	 * @generated
+	 */
+	EReference getTaskTypeConfig_TaskType();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskType <em>Task Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Task Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskType
+	 * @generated
+	 */
+	EClass getTaskType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskType#getTypeId <em>Type Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Id</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskType#getTypeId()
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	EAttribute getTaskType_TypeId();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskType#getTypeName <em>Type Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Name</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskType#getTypeName()
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	EAttribute getTaskType_TypeName();
+
+	/**
 	 * Returns the meta object for enum '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3656,6 +3794,14 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG = eINSTANCE.getFixFlowConfig_FixThreadPoolExecutorConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Task Type Config</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIX_FLOW_CONFIG__TASK_TYPE_CONFIG = eINSTANCE.getFixFlowConfig_TaskTypeConfig();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -4840,6 +4986,50 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FIX_THREAD_POOL_EXECUTOR__TIME_UNIT = eINSTANCE.getFixThreadPoolExecutor_TimeUnit();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeConfigImpl <em>Task Type Config</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeConfigImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTaskTypeConfig()
+		 * @generated
+		 */
+		EClass TASK_TYPE_CONFIG = eINSTANCE.getTaskTypeConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Task Type</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_TYPE_CONFIG__TASK_TYPE = eINSTANCE.getTaskTypeConfig_TaskType();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeImpl <em>Task Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.TaskTypeImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTaskType()
+		 * @generated
+		 */
+		EClass TASK_TYPE = eINSTANCE.getTaskType();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_TYPE__TYPE_ID = eINSTANCE.getTaskType_TypeId();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_TYPE__TYPE_NAME = eINSTANCE.getTaskType_TypeName();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}' enum.

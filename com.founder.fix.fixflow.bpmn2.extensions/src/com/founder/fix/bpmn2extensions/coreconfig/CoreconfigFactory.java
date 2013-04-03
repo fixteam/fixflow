@@ -287,6 +287,24 @@ public interface CoreconfigFactory extends EFactory {
 	FixThreadPoolExecutor createFixThreadPoolExecutor();
 
 	/**
+	 * Returns a new object of class '<em>Task Type Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Task Type Config</em>'.
+	 * @generated
+	 */
+	TaskTypeConfig createTaskTypeConfig();
+
+	/**
+	 * Returns a new object of class '<em>Task Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Task Type</em>'.
+	 * @generated
+	 */
+	TaskType createTaskType();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

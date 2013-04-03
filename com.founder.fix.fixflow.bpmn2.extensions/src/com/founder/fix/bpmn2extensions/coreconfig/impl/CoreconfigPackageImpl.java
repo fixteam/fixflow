@@ -37,6 +37,8 @@ import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.coreconfig.TaskType;
+import com.founder.fix.bpmn2extensions.coreconfig.TaskTypeConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TimeUnitType;
 import com.founder.fix.bpmn2extensions.coreconfig.UserInfo;
 
@@ -263,6 +265,20 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass taskTypeConfigEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass taskTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum dbTypeEEnum = null;
 
 	/**
@@ -475,6 +491,15 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 */
 	public EReference getFixFlowConfig_FixThreadPoolExecutorConfig() {
 		return (EReference)fixFlowConfigEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFixFlowConfig_TaskTypeConfig() {
+		return (EReference)fixFlowConfigEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -1751,6 +1776,51 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTaskTypeConfig() {
+		return taskTypeConfigEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskTypeConfig_TaskType() {
+		return (EReference)taskTypeConfigEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTaskType() {
+		return taskTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskType_TypeId() {
+		return (EAttribute)taskTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskType_TypeName() {
+		return (EAttribute)taskTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDBType() {
 		return dbTypeEEnum;
 	}
@@ -1808,6 +1878,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__PRIORITY_CONFIG);
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG);
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG);
+		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__TASK_TYPE_CONFIG);
 
 		dataBaseConfigEClass = createEClass(DATA_BASE_CONFIG);
 		createEReference(dataBaseConfigEClass, DATA_BASE_CONFIG__DATA_BASE);
@@ -1978,6 +2049,13 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		createEAttribute(fixThreadPoolExecutorEClass, FIX_THREAD_POOL_EXECUTOR__KEEP_ALIVE_TIME);
 		createEAttribute(fixThreadPoolExecutorEClass, FIX_THREAD_POOL_EXECUTOR__TIME_UNIT);
 
+		taskTypeConfigEClass = createEClass(TASK_TYPE_CONFIG);
+		createEReference(taskTypeConfigEClass, TASK_TYPE_CONFIG__TASK_TYPE);
+
+		taskTypeEClass = createEClass(TASK_TYPE);
+		createEAttribute(taskTypeEClass, TASK_TYPE__TYPE_ID);
+		createEAttribute(taskTypeEClass, TASK_TYPE__TYPE_NAME);
+
 		// Create enums
 		dbTypeEEnum = createEEnum(DB_TYPE);
 		timeUnitTypeEEnum = createEEnum(TIME_UNIT_TYPE);
@@ -2029,6 +2107,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEReference(getFixFlowConfig_PriorityConfig(), this.getPriorityConfig(), null, "priorityConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFixFlowConfig_AssignPolicyConfig(), this.getAssignPolicyConfig(), null, "assignPolicyConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFixFlowConfig_FixThreadPoolExecutorConfig(), this.getFixThreadPoolExecutorConfig(), null, "fixThreadPoolExecutorConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFixFlowConfig_TaskTypeConfig(), this.getTaskTypeConfig(), null, "taskTypeConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dataBaseConfigEClass, DataBaseConfig.class, "DataBaseConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataBaseConfig_DataBase(), this.getDataBase(), null, "dataBase", null, 1, -1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2199,6 +2278,13 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEAttribute(getFixThreadPoolExecutor_KeepAliveTime(), ecorePackage.getELong(), "keepAliveTime", null, 1, 1, FixThreadPoolExecutor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFixThreadPoolExecutor_TimeUnit(), this.getTimeUnitType(), "timeUnit", null, 1, 1, FixThreadPoolExecutor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(taskTypeConfigEClass, TaskTypeConfig.class, "TaskTypeConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTaskTypeConfig_TaskType(), this.getTaskType(), null, "taskType", null, 0, -1, TaskTypeConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(taskTypeEClass, TaskType.class, "TaskType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTaskType_TypeId(), ecorePackage.getEString(), "typeId", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskType_TypeName(), ecorePackage.getEString(), "typeName", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(dbTypeEEnum, DBType.class, "DBType");
 		addEEnumLiteral(dbTypeEEnum, DBType.OTHER);
@@ -2339,6 +2425,13 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		   new String[] {
 			 "kind", "element",
 			 "name", "fixThreadPoolExecutorConfig"
+		   });		
+		addAnnotation
+		  (getFixFlowConfig_TaskTypeConfig(), 
+		   source, 
+		   new String[] {
+			 "name", "taskTypeConfig",
+			 "kind", "element"
 		   });		
 		addAnnotation
 		  (dataBaseConfigEClass, 
@@ -3173,11 +3266,72 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 			 "name", "fixThreadPoolExecutor"
 		   });		
 		addAnnotation
+		  (getFixThreadPoolExecutor_ThreadPoolKey(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getFixThreadPoolExecutor_ThreadPoolName(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getFixThreadPoolExecutor_CorePoolSize(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getFixThreadPoolExecutor_MaximumPoolSize(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getFixThreadPoolExecutor_KeepAliveTime(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
 		  (getFixThreadPoolExecutor_TimeUnit(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute"
-		   });
+		   });			
+		addAnnotation
+		  (taskTypeConfigEClass, 
+		   source, 
+		   new String[] {
+			 "name", "taskTypeConfig"
+		   });		
+		addAnnotation
+		  (getTaskTypeConfig_TaskType(), 
+		   source, 
+		   new String[] {
+			 "name", "taskType",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (taskTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "taskType"
+		   });			
+		addAnnotation
+		  (getTaskType_TypeId(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });			
+		addAnnotation
+		  (getTaskType_TypeName(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });	
 	}
 
 } //CoreconfigPackageImpl

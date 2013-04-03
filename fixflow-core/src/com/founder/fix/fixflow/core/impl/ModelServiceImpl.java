@@ -9,6 +9,8 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior
 import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsElementPositionCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgPathCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsSvgCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionGroupKeyCmd;
@@ -59,10 +61,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 		return null;
 	}
 
-	public String getFlowGraphicsSvg(String processDefinitionId) {
-		return commandExecutor.execute(new GetFlowGraphicsSvgCmd(processDefinitionId));
-	}
-
+	
 	public ResourceEntity getResourceAsStream(String resourceId) {
 	
 		return commandExecutor.execute(new GetResourceAsStreamCmd<ResourceEntity>(resourceId));
@@ -92,6 +91,22 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 	public List<Map<String, Object>> selectProcessDefinitionGroupKey() {
 		
 		return commandExecutor.execute(new GetProcessDefinitionGroupKeyCmd());
+	}
+
+	
+	public String getFlowGraphicsSvg(String processDefinitionId) {
+		return commandExecutor.execute(new GetFlowGraphicsSvgCmd(processDefinitionId));
+	}
+
+	
+	public String GetFlowGraphicsImgPath(String processDefinitionId) {
+
+		return commandExecutor.execute(new GetFlowGraphicsImgPathCmd(processDefinitionId));
+	}
+
+	public Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId) {
+
+		return commandExecutor.execute(new GetFlowGraphicsElementPositionCmd(processDefinitionId));
 	}
 
 }

@@ -100,6 +100,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getTaskPriority <em>Task Priority</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getAssignPolicyType <em>Assign Policy Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#isIsPersistence <em>Is Persistence</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getTaskType <em>Task Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -705,6 +706,26 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @ordered
 	 */
 	protected boolean isPersistence = IS_PERSISTENCE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTaskType() <em>Task Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTaskType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TASK_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTaskType() <em>Task Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTaskType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String taskType = TASK_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1819,6 +1840,27 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getTaskType() {
+		return taskType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTaskType(String newTaskType) {
+		String oldTaskType = taskType;
+		taskType = newTaskType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE, oldTaskType, taskType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1965,6 +2007,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getAssignPolicyType();
 			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
 				return isIsPersistence();
+			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
+				return getTaskType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2112,6 +2156,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
 				setIsPersistence((Boolean)newValue);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
+				setTaskType((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2253,6 +2300,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
 				setIsPersistence(IS_PERSISTENCE_EDEFAULT);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
+				setTaskType(TASK_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2351,6 +2401,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return assignPolicyType != null;
 			case FixFlowPackage.DOCUMENT_ROOT__IS_PERSISTENCE:
 				return isPersistence != IS_PERSISTENCE_EDEFAULT;
+			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
+				return TASK_TYPE_EDEFAULT == null ? taskType != null : !TASK_TYPE_EDEFAULT.equals(taskType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2411,6 +2463,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 		result.append(orderId);
 		result.append(", isPersistence: ");
 		result.append(isPersistence);
+		result.append(", taskType: ");
+		result.append(taskType);
 		result.append(')');
 		return result.toString();
 	}

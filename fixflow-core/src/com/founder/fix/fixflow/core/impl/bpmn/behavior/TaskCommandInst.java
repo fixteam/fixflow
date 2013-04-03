@@ -179,7 +179,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 			persistentState.put("nodeId", this.userTask.getId());
 			persistentState.put("nodeName", this.userTask.getName());
 		}
-	
+		
 		return persistentState;
 	}
 
