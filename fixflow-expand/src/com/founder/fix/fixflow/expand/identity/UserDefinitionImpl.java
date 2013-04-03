@@ -55,7 +55,7 @@ public class UserDefinitionImpl extends UserDefinition {
 				return null;
 			}
 			UserTo userTo = new UserTo(userId, StringUtil.getString(dataObj.get(0).get(userNameField)), dataObj.get(0));
-			cache.putCacheData("user_findUserByUserId_", userTo);
+			cache.putCacheData("user_findUserByUserId_"+userId, userTo);
 			
 			return userTo;
 		}
