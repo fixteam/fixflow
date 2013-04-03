@@ -71,13 +71,31 @@ public class GetRollBackScreeningTaskCmd implements Command<List<TaskInstance>>{
 		List<TaskInstance> taskInstanceQueryToListNew=new ArrayList<TaskInstance>();
 		Map<String, TaskInstance> taskMap=new HashMap<String, TaskInstance>();
 		
+		TaskInstance previousTaskInstance=null;
+		
 		//剔除掉重复的和之后的任务。
 		for (TaskInstance taskInstance : taskInstanceQueryToList) {
+			
+			
+			
+			
 			if(taskMap.get(taskInstance.getNodeId())==null&&flowNodes.get(taskInstance.getNodeId())!=null){
 				taskMap.put(taskInstance.getNodeId(), taskInstance);
 				taskInstanceQueryToListNew.add(taskInstance);
+				previousTaskInstance=taskInstance;
 			}
-			
+			else{
+				if(flowNodes.get(taskInstance.getNodeId())!=null){
+					if(previousTaskInstance!=null){
+						if(taskInstance.getNodeId().equals(previousTaskInstance.getNodeId())){
+							taskMap.put(taskInstance.getNodeId(), taskInstance);
+							taskInstanceQueryToListNew.add(taskInstance);
+							previousTaskInstance=taskInstance;
+						}
+					}
+				}
+			}
+		
 		}
 		
 		
