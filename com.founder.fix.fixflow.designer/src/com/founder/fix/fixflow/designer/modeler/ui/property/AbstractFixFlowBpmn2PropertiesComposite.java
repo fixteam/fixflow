@@ -216,11 +216,12 @@ public abstract class AbstractFixFlowBpmn2PropertiesComposite extends AbstractBp
 			@Override
 			public void handleValueChange(final ValueChangeEvent e) {
 				//为了美观添加长度验证 2012-07-06 wy
+				/*
 				if(text.getText().length()>20 && !(SectionBpmnElement.sectionElement instanceof TextAnnotation)) {
 					MessageDialog.openInformation(getShell(), "提示", "名称长度不能超过20个字符");
 					text.setText(e.diff.getOldValue().toString());
 					return;
-				}
+				}*/
 
 				if (!text.getText().equals(SectionBpmnElement.sectionElement.eGet(a))) {
 					TransactionalEditingDomain editingDomain = getDiagramEditor().getEditingDomain();

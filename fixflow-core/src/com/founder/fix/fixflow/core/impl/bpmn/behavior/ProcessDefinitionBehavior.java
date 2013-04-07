@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
+import com.founder.fix.fixflow.core.impl.util.EMFUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public class ProcessDefinitionBehavior extends ProcessImpl implements PersistentObject {
@@ -202,18 +203,18 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 */
 	public Map<String, FlowElement> getFlowElementsMap() {
 
-		if (flowElementsMap == null) {
 			Map<String, FlowElement> flowElementsMap_tmp;
 			flowElementsMap_tmp = new HashMap<String, FlowElement>();
 			if ((flowElements != null)) {
-				for (FlowElement rootElementObj : flowElements) {
+				
+				List<FlowElement> flowElementsObj=EMFUtil.getAllFlowElement(this);
+				
+				for (FlowElement rootElementObj : flowElementsObj) {
 					flowElementsMap_tmp.put(rootElementObj.getId(), rootElementObj);
 				}
 			}
 			return flowElementsMap_tmp;
-		} else {
-			return this.flowElementsMap;
-		}
+
 
 	}
 	
@@ -248,7 +249,11 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 * @generated
 	 */
 	public FlowElement getFlowElement(String flowElementId) {
-		return getFlowElementsMap().get(flowElementId);
+		
+		
+		return EMFUtil.findFlowElement(flowElementId, this);
+		
+		//return getFlowElementsMap().get(flowElementId);
 	}
 
 	protected String resourceId;

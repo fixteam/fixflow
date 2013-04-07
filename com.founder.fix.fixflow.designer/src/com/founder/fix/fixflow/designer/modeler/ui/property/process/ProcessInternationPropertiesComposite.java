@@ -10,8 +10,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.Lane;
+import org.eclipse.bpmn2.LaneSet;
 import org.eclipse.bpmn2.Process;
+import org.eclipse.bpmn2.modeler.core.ModelHandler;
 import org.eclipse.bpmn2.modeler.ui.property.AbstractBpmn2PropertySection;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -192,35 +196,67 @@ public class ProcessInternationPropertiesComposite extends AbstractFixFlowBpmn2P
 			@Override
 			protected void doExecute() {
 				
-				Process process=SectionBpmnElement.process;
+		
+				ModelHandler modelHandler=null;
+				try {
+					modelHandler = ModelHandler.getInstance(be);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				List<BaseElement> baseElements = modelHandler.getAll(BaseElement.class);
 
-				List<FlowElement> flowElementList=process.getFlowElements();
-				
-				
-				for (FlowElement flowElement : flowElementList) {
+				for (BaseElement baseElement : baseElements) {
+
 					
-					
-					
-					Object returnObject=properties.get(flowElement.getId());
-					if(returnObject!=null&&!returnObject.equals("")){
+					if(baseElement instanceof FlowElement){
+						Object returnObject=properties.get(baseElement.getId());
+
 						
-				
-						try {
-							flowElement.setName(new String(StringUtil.getString(returnObject).getBytes(Const.PageEncoding.ISO88591), Const.PageEncoding.UTF8));
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(returnObject!=null&&!returnObject.equals("")){
+							
+							
+							try {
+								
+								((FlowElement)baseElement).setName(new String(StringUtil.getString(returnObject).getBytes(Const.PageEncoding.ISO88591), Const.PageEncoding.UTF8));
+							} catch (UnsupportedEncodingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
+					}else{
+						if(baseElement instanceof Lane){
+							Object returnObject=properties.get(baseElement.getId());
+
+							
+							if(returnObject!=null&&!returnObject.equals("")){
+								
+								
+								try {
+									
+									((Lane)baseElement).setName(new String(StringUtil.getString(returnObject).getBytes(Const.PageEncoding.ISO88591), Const.PageEncoding.UTF8));
+								} catch (UnsupportedEncodingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+						
 					}
+					
+					
+					
+			
+
+					
 				}
 			}
 		});
 		
-		
-		
-		//process.getFlowElements().get(0)process.setName(value)
+
 		
 	}
 	
-	
+
 }
