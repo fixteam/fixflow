@@ -3,7 +3,6 @@ package com.founder.fix.fixflow.core.impl.persistence;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
@@ -84,7 +83,7 @@ public class ProcessInstanceManager extends AbstractManager {
 		
 		String processLocation="";
 		
-		Set<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
+		List<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
 		
 		
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {

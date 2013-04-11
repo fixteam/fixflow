@@ -526,7 +526,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
 		props.put("org.quartz.threadPool.threadCount", "3");
 		props.put("org.quartz.threadPool.threadPriority", "5");
-		props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreFix");
+		//JobStoreTX
+		//props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreFix");
+		props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
 		props.put("org.quartz.jobStore.driverDelegateClass", driverDelegateClass);
 		props.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
 		props.put("org.quartz.jobStore.dataSource", "fixDS");

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
+import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
 import com.founder.fix.fixflow.core.query.Query;
 
 
@@ -30,6 +32,13 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	TaskQuery tokenId(String tokenId);
 	
 	TaskQuery callActivityInstanceId(String callActivityInstanceId);
+	
+	/**
+	 * 任务信息扩展查询
+	 * @param queryExpandTo
+	 * @return
+	 */
+	TaskQuery queryExpandTo(QueryExpandTo queryExpandTo);
 	/**
 	 * 提交人
 	 * @return

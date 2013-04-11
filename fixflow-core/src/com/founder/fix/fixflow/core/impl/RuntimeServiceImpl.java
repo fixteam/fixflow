@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
@@ -235,7 +234,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 	}
 
 	public List<TaskInstance> getNotDoneTask(ProcessInstance processInstance) {
-		Set<TaskInstanceEntity> taskInstanceEntities= ((ProcessInstanceEntity)processInstance).getTaskMgmtInstance().getTaskInstanceEntitys();
+		List<TaskInstanceEntity> taskInstanceEntities= ((ProcessInstanceEntity)processInstance).getTaskMgmtInstance().getTaskInstanceEntitys();
 		List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 			if(!taskInstanceEntity.hasEnded()){

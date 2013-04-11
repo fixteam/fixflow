@@ -520,8 +520,25 @@ public class ProcessInstancePersistence {
 	private String selectProcessInstanceByQueryCriteriaSql(String sqlString, ProcessInstanceQueryImpl processInstanceQuery, Page page, List<Object> objectParamWhere) {
 
 		sqlString = sqlString + " FROM FIXFLOW_RUN_PROCESSINSTANECE E ";
+		
+		//自定义扩展查询
+		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
+			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
+		}
+		
+		
+	
 
 		sqlString = sqlString + " WHERE 1=1";
+		
+		
+		//自定义扩展查询
+		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSql()!=null&&!processInstanceQuery.getQueryExpandTo().getWhereSql().equals("")){
+			sqlString=sqlString+" and "+processInstanceQuery.getQueryExpandTo().getWhereSql();
+			if(processInstanceQuery.getQueryExpandTo().getWhereSqlObj()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
+				objectParamWhere.add(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
+			}
+		}
 
 		if (processInstanceQuery.getBusinessKey() != null) {
 			sqlString = sqlString + " and E.BIZ_KEY=? ";
@@ -640,6 +657,12 @@ public class ProcessInstancePersistence {
 	public List<ProcessInstanceEntity> selectProcessInstanceByQueryCriteria(ProcessInstanceQueryImpl processInstanceQuery, Page page) {
 
 		String sqlString = " select " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " E.* ";
+		
+		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getFieldSql()!=null&&!processInstanceQuery.getQueryExpandTo().getFieldSql().equals("")){
+			sqlString=sqlString+" , "+processInstanceQuery.getQueryExpandTo().getFieldSql();
+		}
+		
+		
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		sqlString = selectProcessInstanceByQueryCriteriaSql(sqlString, processInstanceQuery, page, objectParamWhere);
 

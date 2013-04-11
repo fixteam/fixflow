@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow.expand.cmd;
 
-import java.util.Set;
+import java.util.List;
+
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
@@ -101,7 +102,7 @@ public class RollBackTaskCmd extends AbstractExpandTaskCmd<RollBackTaskCommand,V
 			
 
 
-			Set<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
+			List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
 			TaskInstanceEntity taskInstanceImpl = null;
 			for (TaskInstanceEntity taskInstance : taskInstances) {
 				if (taskInstance.getId().equals(taskId)) {

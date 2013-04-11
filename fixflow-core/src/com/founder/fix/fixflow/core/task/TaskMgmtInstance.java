@@ -1,6 +1,6 @@
 package com.founder.fix.fixflow.core.task;
 
-import java.util.Set;
+import java.util.List;
 
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -27,7 +27,7 @@ public interface TaskMgmtInstance {
 	 */
 	void resume(Token token);
 
-	Set<TaskInstanceEntity> getTaskInstanceEntitys(Token token);
+	List<TaskInstanceEntity> getTaskInstanceEntitys(Token token);
 
-	Set<TaskInstanceEntity> getTaskInstanceEntitys();
+	List<TaskInstanceEntity> getTaskInstanceEntitys();
 }

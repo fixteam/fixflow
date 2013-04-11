@@ -1,7 +1,8 @@
 package com.founder.fix.fixflow.core.impl.cmd;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
@@ -88,7 +89,7 @@ public class SaveTaskDraftCmd implements Command<Void> {
 
 		
 
-			Set<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
+			List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
 
 			for (TaskInstanceEntity taskInstance : taskInstances) {
 				if (taskInstance.getId().equals(taskId)) {

@@ -2,7 +2,6 @@ package com.founder.fix.fixflow.core.impl.cmd;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
@@ -42,7 +41,7 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 			ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity)processInstance;
 			
 			
-			Set<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
+			List<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
 			List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
 			for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 				if(!taskInstanceEntity.hasEnded()){
@@ -92,7 +91,7 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 			
 			
 			
-			Set<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
+			List<TaskInstanceEntity> taskInstanceEntities= processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys();
 			List<TaskInstance> taskInstances=new ArrayList<TaskInstance>();
 			for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 				if(!taskInstanceEntity.hasEnded()){

@@ -82,7 +82,7 @@ public class GetRollBackScreeningTaskCmd implements Command<List<TaskInstance>>{
 			if(taskMap.get(taskInstance.getNodeId())==null&&flowNodes.get(taskInstance.getNodeId())!=null){
 				taskMap.put(taskInstance.getNodeId(), taskInstance);
 				taskInstanceQueryToListNew.add(taskInstance);
-				previousTaskInstance=taskInstance;
+				
 			}
 			else{
 				if(flowNodes.get(taskInstance.getNodeId())!=null){
@@ -90,11 +90,16 @@ public class GetRollBackScreeningTaskCmd implements Command<List<TaskInstance>>{
 						if(taskInstance.getNodeId().equals(previousTaskInstance.getNodeId())){
 							taskMap.put(taskInstance.getNodeId(), taskInstance);
 							taskInstanceQueryToListNew.add(taskInstance);
-							previousTaskInstance=taskInstance;
+							//previousTaskInstance=taskInstance;
 						}
+						//else{
+						//	previousTaskInstance=taskInstance;
+						//}
 					}
 				}
 			}
+			
+			previousTaskInstance=taskInstance;
 		
 		}
 		

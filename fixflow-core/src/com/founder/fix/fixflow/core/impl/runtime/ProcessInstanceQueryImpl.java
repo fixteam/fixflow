@@ -10,6 +10,7 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessInstanceQueryProperty;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 
@@ -36,7 +37,15 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected String activityId;
 
 	protected CommandExecutor commandExecutor;
+	
+	
+	
+	protected QueryExpandTo queryExpandTo;
+	
+	
+	
 
+	
 	public ProcessInstanceQueryImpl() {
 	}
 
@@ -61,6 +70,14 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 			throw new FixFlowException("Business key is null");
 		}
 		this.businessKey = businessKey;
+		return this;
+	}
+	
+	public ProcessInstanceQuery queryExpandTo(QueryExpandTo queryExpandTo) {
+		if (queryExpandTo == null) {
+			throw new FixFlowException("queryExpandTo  is null");
+		}
+		this.queryExpandTo = queryExpandTo;
 		return this;
 	}
 	
@@ -366,5 +383,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return processDefinitionKeyList;
 	}
 
-	
+	public QueryExpandTo getQueryExpandTo() {
+		return queryExpandTo;
+	}
+
 }

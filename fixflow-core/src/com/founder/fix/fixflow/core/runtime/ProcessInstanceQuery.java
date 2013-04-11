@@ -4,6 +4,7 @@ package com.founder.fix.fixflow.core.runtime;
 import java.util.Date;
 import java.util.List;
 
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.query.Query;
 
 
@@ -26,6 +27,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	ProcessInstanceQuery initiatorLike(String initiatorLike);
 	
 	ProcessInstanceQuery isEnd();
+	
+	ProcessInstanceQuery queryExpandTo(QueryExpandTo queryExpandTo);
 	
 
 	ProcessInstanceQuery notEnd();

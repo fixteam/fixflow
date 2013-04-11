@@ -1,7 +1,7 @@
 package com.founder.fix.fixflow.core.impl.cmd;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
@@ -124,7 +124,7 @@ public class CompleteGeneralTaskSimulationRunCmd implements
 			}
 		}
 
-		Set<TaskInstanceEntity> taskInstances = processInstanceImpl
+		List<TaskInstanceEntity> taskInstances = processInstanceImpl
 				.getTaskMgmtInstance().getTaskInstanceEntitys();
 
 		for (TaskInstanceEntity taskInstance : taskInstances) {

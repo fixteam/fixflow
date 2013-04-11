@@ -92,7 +92,10 @@ public class TaskInstancePersistence {
 		// taskQuery.getProcessDefinitionName() != null) {
 		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "  LEFT JOIN  FIXFLOW_RUN_PROCESSINSTANECE P on T.PROCESSINSTANCE_ID = P.PROCESSINSTANCE_ID ";
 		// }
-
+		//自定义扩展查询
+		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!taskQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + taskQuery.getQueryExpandTo().getLeftJoinSql(); 
+		}
 		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " WHERE 1=1 ";
 
 		if (taskQuery.getTaskTypeList().size() > 0) {
@@ -115,6 +118,13 @@ public class TaskInstancePersistence {
 
 		}
 
+		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getWhereSql()!=null&&!taskQuery.getQueryExpandTo().getWhereSql().equals("")){
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +" and "+taskQuery.getQueryExpandTo().getWhereSql();
+			if(taskQuery.getQueryExpandTo().getWhereSqlObj()!=null&&taskQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
+				objectParamWhere.add(taskQuery.getQueryExpandTo().getWhereSqlObj());
+			}
+			
+		}
 		if (taskQuery.getCreateTime() != null) {
 
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  T.CREATE_TIME=? ";
@@ -449,6 +459,8 @@ public class TaskInstancePersistence {
 		}
 		
 		
+		
+		
 		//initiator
 		if(taskQuery.isAssigneeNotNull()){
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.ASSIGNEE IS NOT NULL ";
@@ -469,7 +481,13 @@ public class TaskInstancePersistence {
 		// taskQuery.getProcessDefinitionName() != null) {
 		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "  LEFT JOIN  FIXFLOW_RUN_PROCESSINSTANECE P on T.PROCESSINSTANCE_ID = P.PROCESSINSTANCE_ID ";
 		// }
-
+		
+		
+		//自定义扩展查询
+		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!taskQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + taskQuery.getQueryExpandTo().getLeftJoinSql(); 
+		}
+		
 		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " WHERE 1=1 ";
 
 		if (taskQuery.getTaskTypeList().size() > 0) {
@@ -490,6 +508,14 @@ public class TaskInstancePersistence {
 
 			}
 
+		}
+		
+		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getWhereSql()!=null&&!taskQuery.getQueryExpandTo().getWhereSql().equals("")){
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +" and "+taskQuery.getQueryExpandTo().getWhereSql();
+			if(taskQuery.getQueryExpandTo().getWhereSqlObj()!=null&&taskQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
+				objectParamWhere.add(taskQuery.getQueryExpandTo().getWhereSqlObj());
+			}
+			
 		}
 
 		if (taskQuery.getCreateTime() != null) {
@@ -768,7 +794,15 @@ public class TaskInstancePersistence {
 		if(taskQuery.getIsAgent()){
 			
 			selectTaskByQueryCriteriaSql = "SELECT distinct T.* FROM ( select distinct " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " T.* ";
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
+			
+
+			if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getFieldSql()!=null&&!taskQuery.getQueryExpandTo().getFieldSql().equals("")){
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT, "+taskQuery.getQueryExpandTo().getFieldSql();
+			}else{
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
+			}
+			
+			
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSqlAgent(selectTaskByQueryCriteriaSql, taskQuery, page, objectParamWhere);
 
 		}
@@ -779,8 +813,13 @@ public class TaskInstancePersistence {
 
 			//selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
 
+			if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getFieldSql()!=null&&!taskQuery.getQueryExpandTo().getFieldSql().equals("")){
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ,"+taskQuery.getQueryExpandTo().getFieldSql();
+			}else{
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
+			}
 			
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
+			
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql(selectTaskByQueryCriteriaSql, taskQuery, page, objectParamWhere);
 
 		}

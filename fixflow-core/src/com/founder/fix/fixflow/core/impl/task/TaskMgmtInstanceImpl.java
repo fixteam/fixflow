@@ -33,7 +33,7 @@ import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
-	Set<TaskInstanceEntity> taskInstances = new HashSet<TaskInstanceEntity>();
+	List<TaskInstanceEntity> taskInstances = new ArrayList<TaskInstanceEntity>();
 
 	public TaskMgmtInstanceImpl() {
 	}
@@ -220,7 +220,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 	public void addTaskInstanceEntity(TaskInstanceEntity taskInstance) {
 		if (taskInstances == null)
-			taskInstances = new HashSet<TaskInstanceEntity>();
+			taskInstances = new ArrayList<TaskInstanceEntity>();
 		taskInstances.add(taskInstance);
 		taskInstance.setTaskMgmtInstance(this);
 	}
@@ -456,9 +456,9 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		return unfinishedTasks;
 	}
 
-	public Set<TaskInstanceEntity> getTaskInstanceEntitys(Token token) {
+	public List<TaskInstanceEntity> getTaskInstanceEntitys(Token token) {
 
-		Set<TaskInstanceEntity> taskInstancesTemp = new HashSet<TaskInstanceEntity>();
+		List<TaskInstanceEntity> taskInstancesTemp = new ArrayList<TaskInstanceEntity>();
 
 		for (TaskInstanceEntity taskInstance : taskInstances) {
 			if (taskInstance.getToken().getId().equals(token.getId())) {
@@ -469,7 +469,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		return taskInstancesTemp;
 	}
 
-	public Set<TaskInstanceEntity> getTaskInstanceEntitys() {
+	public List<TaskInstanceEntity> getTaskInstanceEntitys() {
 		return taskInstances;
 	}
 

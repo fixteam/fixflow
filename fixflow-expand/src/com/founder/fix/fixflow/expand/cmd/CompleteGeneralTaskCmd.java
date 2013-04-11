@@ -1,6 +1,6 @@
 package com.founder.fix.fixflow.expand.cmd;
 
-import java.util.Set;
+import java.util.List;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
@@ -95,7 +95,7 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 			}
 		}
 
-		Set<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
+		List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
 
 		TaskInstanceEntity taskInstanceImpl=null;
 		

@@ -79,12 +79,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	
 
+	protected QueryExpandTo queryExpandTo;
 
+	
 
 	
 
 	
-
 	protected List<TaskInstanceType> taskTypeList=new ArrayList<TaskInstanceType>();
 
 	
@@ -104,6 +105,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 			throw new FixFlowException("Task id is null");
 		}
 		this.taskId = taskId;
+		return this;
+	}
+	
+	public TaskQueryImpl queryExpandTo(QueryExpandTo queryExpandTo) {
+		if (queryExpandTo == null) {
+			throw new FixFlowException("queryExpandTo  is null");
+		}
+		this.queryExpandTo = queryExpandTo;
 		return this;
 	}
 	
@@ -616,6 +625,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public List<String> getProcessDefinitionKeyList() {
 		return processDefinitionKeyList;
+	}
+
+	
+	public QueryExpandTo getQueryExpandTo() {
+		return queryExpandTo;
 	}
 
 
