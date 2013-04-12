@@ -1,16 +1,17 @@
 package com.founder.fix.fixflow.expand.connector.SendMail;
 
 
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.Date;
 
 import com.founder.fix.bpmn2extensions.coreconfig.MailInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.util.MailUtil;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.expand.mail.FixMailEngine;
+import com.founder.fix.fixflow.expand.mail.FixMailTo;
 
 public class SendMail implements ConnectorHandler {
 
@@ -35,10 +36,32 @@ public class SendMail implements ConnectorHandler {
 			throw new FixFlowException("系统邮件配置错误请检查流程邮件配置！");
 		}
 		
+		
+		
+		FixMailTo fixMailTo=new FixMailTo();
+		
+		fixMailTo.setMailName(title);
+		fixMailTo.setMailSubject(title);
+		fixMailTo.setMailTo(to);
+		fixMailTo.setMailCc(cc);
+		fixMailTo.setMailBody(mailContent);
+		fixMailTo.setCreateTime(new Date());
+		fixMailTo.setBizType("fixother");
+		fixMailTo.setBizValue("proxessinsid:"+executionContext.getProcessInstance().getId()+"_FIX_nodeid:"+executionContext.getToken().getFlowNode().getId());
+		fixMailTo.setCreateUser(Authentication.getAuthenticatedUserId());
+
+		
+		FixMailEngine.saveMail(fixMailTo);
+		
+		
+		/*
 		final MailUtil mailUtil=new MailUtil();
 		mailUtil.setSmtpHost(mailInfoObj.getSmtpHost(), StringUtil.getInt(mailInfoObj.getSmtpPort()));
 		mailUtil.setSmtpAuthentication(mailInfoObj.getUserName(), mailInfoObj.getPassWord());
 		//支持发送多人邮件 #4185
+		if(to==null||to.equals("")){
+			return ;
+		}
 		String[] str = to.split(",");
 		mailUtil.setTo(str);
 		
@@ -63,7 +86,7 @@ public class SendMail implements ConnectorHandler {
                 mailUtil.send();   
             }   
         });   
-		
+		*/
 		
 
 	}
