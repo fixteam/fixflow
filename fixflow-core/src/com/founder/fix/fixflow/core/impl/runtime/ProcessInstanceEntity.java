@@ -340,9 +340,11 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 
-		
-			processDefinition.getTaskSubject().getExpressionValue();
-			String processInstanceSubjectExpression=processDefinition.getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression="";
+			if(processDefinition.getTaskSubject()!=null){
+				processInstanceSubjectExpression=processDefinition.getTaskSubject().getExpressionValue();
+			}
+			
 			
 			try {
 				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression,executionContext);
