@@ -104,7 +104,7 @@ public class UserTaskTaskViewPropertiesComposite extends
 		toolkit.adapt(lblNewLabel_2, true, true);
 		
 		combo = new Combo(composite, SWT.READ_ONLY);
-		combo.setItems(new String[] {"FIXFLOWTASK", "FIXNOTICETASK"});
+		combo.setItems(new String[] {"FIXFLOWTASK", "FIXNOTICETASK", "FIXREMIND"});
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		combo.select(0);
 		toolkit.adapt(combo, true, true);

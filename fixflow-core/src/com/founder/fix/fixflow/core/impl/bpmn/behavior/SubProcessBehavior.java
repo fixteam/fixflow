@@ -1,5 +1,7 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
+import java.util.Map;
+
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.bpmn2.impl.SubProcessImpl;
@@ -7,7 +9,6 @@ import org.eclipse.bpmn2.impl.SubProcessImpl;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
-
 
 
 public class SubProcessBehavior extends SubProcessImpl {
@@ -56,6 +57,24 @@ public class SubProcessBehavior extends SubProcessImpl {
 	 */
 	public void setStartElement(FlowElement startElement) {
 		this.startElement = startElement;
+	}
+	
+	
+	/**
+	 * 离开节点的时候需要清理的数据.
+	 * 每个子类需要自己实现.
+	 */
+	public void leaveClearData(ExecutionContext executionContext) {
+
+		Map<String, TokenEntity> children=executionContext.getToken().getChildren();;
+		 
+		for (String tokenKey : children.keySet()) {
+			TokenEntity child = children.get(tokenKey);
+			if (!child.hasEnded()) {
+				child.end(false);
+			}
+		}
+		
 	}
 	
 	

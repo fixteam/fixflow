@@ -116,7 +116,8 @@ public class TaskDefinitionImpl implements TaskDefinition {
 					taskInstanceType=TaskInstanceType.FIXNOTICETASK;
 				}
 				else {
-					taskInstanceType=TaskInstanceType.FIXFLOWTASK;
+					
+					taskInstanceType=TaskInstanceType.valueOf(taskTypeString);
 				}
 			}
 		}

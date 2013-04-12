@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import org.eclipse.bpmn2.Activity;
 import org.eclipse.bpmn2.FlowNode;
+import org.eclipse.bpmn2.LoopCharacteristics;
+import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -490,6 +493,8 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 			processInstance.end();
 		} else {
 			if (parent != null) {
+				//下面这句话是用来当存在分支时 一个分支走到结束另一个分支没结束的时候,不能结束他的父令牌
+				//只有当到达结束节点的令牌的同级分支都结束才能结束父令牌
 				if (!parent.hasActiveChildren()) {
 					// 推动父令牌向后执行
 					if (this.isSubProcessRootToken) {
@@ -501,6 +506,27 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 						parent.end();
 					}
 
+				}
+				else{
+					//子流程多实例的时候 每个子流程结束的时候去触发验证完成条件
+					if(parent.getFlowNode() instanceof Activity){
+					
+						Activity activity = (Activity) parent.getFlowNode();
+						LoopCharacteristics loopCharacteristics = activity.getLoopCharacteristics();
+
+						if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics) {
+							if (this.isSubProcessRootToken) {
+								if (!parent.hasEnded()) {
+									parent.signal();
+								}
+
+							}
+						}
+						
+					}
+					
+					
+					
 				}
 			} else {
 				if (this.isFreeToken()) {

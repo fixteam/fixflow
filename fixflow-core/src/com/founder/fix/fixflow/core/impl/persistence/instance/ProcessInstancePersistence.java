@@ -677,8 +677,30 @@ public class ProcessInstancePersistence {
 		}
 		
 		if (processInstanceQuery.getOrderBy() != null&&page != null) {
+			
+			
+			String orderBySql=processInstanceQuery.getOrderBy();
+			String orderBySqlFin="";
+			if(orderBySql.indexOf(",")>=0){
+				
+				String[] orderBySqlTemp=orderBySql.split(",");
+				for (String orderByObj : orderBySqlTemp) {
+					if(orderBySqlFin.equals("")){
+						orderBySqlFin=orderBySqlFin+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+					else{
+						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+					
+				}
+				sqlString = sqlString + " order by " + orderBySqlFin;
+				
+			}else{
+				sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
+			}
+			
 			 
-			sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
+			//sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
 		}
 
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);

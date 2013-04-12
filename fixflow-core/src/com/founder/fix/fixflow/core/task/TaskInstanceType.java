@@ -27,6 +27,11 @@ public enum TaskInstanceType {
 	 */
 	FIXSTARTEVENT,
 	
+	/**
+	 * 提醒
+	 */
+	FIXREMIND,
+	
 	
 	/**
 	 * 结束任务
