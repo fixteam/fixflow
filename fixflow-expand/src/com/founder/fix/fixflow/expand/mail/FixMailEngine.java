@@ -25,7 +25,7 @@ public class FixMailEngine {
 
 	}
 
-	public static void sendMail() {
+	public synchronized static void sendMail() {
 
 		SysMailConfig sysMailConfig = Context.getProcessEngineConfiguration().getSysMailConfig();
 		MailInfo mailInfoObj = null;

@@ -274,6 +274,26 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	public boolean hasChild(String name) {
 		return (children != null ? children.containsKey(name) : false);
 	}
+	
+	public boolean hasChildRecursive(String tokenId) {
+		
+		boolean hasChildRecursive=false;
+		if(children!=null){
+			if(!children.containsKey(tokenId)){
+				for (String tokenChildrenKey : children.keySet()) {
+					hasChildRecursive= children.get(tokenChildrenKey).hasChildRecursive(tokenId);
+					if(hasChildRecursive){
+						return true;
+					}
+				}
+			}
+			else{
+				return true;
+			}
+		}
+		
+		return hasChildRecursive;
+	}
 
 	public Token getChild(String id) {
 		Token child = null;

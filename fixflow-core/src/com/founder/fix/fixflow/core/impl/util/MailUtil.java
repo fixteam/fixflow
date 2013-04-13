@@ -382,10 +382,10 @@ public class MailUtil {
 
 		} catch (javax.mail.internet.AddressException e) {
 			e.printStackTrace();
-			throw new FixFlowException("邮件发送失败!", e);
+			throw new FixFlowException(e.getMessage(), e);
 		} catch (javax.mail.MessagingException e) {
 			e.printStackTrace();
-			throw new FixFlowException("邮件发送失败!", e);
+			throw new FixFlowException(e.getMessage(), e);
 		}
 	}
 	

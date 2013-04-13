@@ -10,7 +10,6 @@ import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
-import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
 public class GetNextTaskCmd implements Command<List<TaskInstance>>{
@@ -107,8 +106,8 @@ public class GetNextTaskCmd implements Command<List<TaskInstance>>{
 							}
 						}
 						else{
-							Token tokenObj=tokenEntity.getChildren().get(nextTokenId);
-							if(tokenObj!=null){
+			
+							if(tokenEntity.hasChildRecursive(nextTokenId)){
 								taskInstances.add(taskInstanceEntity);
 							}
 						}
