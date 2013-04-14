@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.eclipse.bpmn2.CallActivity;
 import org.eclipse.bpmn2.FlowNode;
+import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
@@ -21,6 +22,7 @@ import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -411,7 +413,19 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 			
 			ExecutionContext  executionContext=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(rootToken);
 			//插入流程结束任务
-			createEndEventTask(executionContext);
+			
+			
+			if(this.getProcessDefinition().getStartElement()!=null&&this.getProcessDefinition().getStartElement() instanceof StartEvent){
+				
+				//插入流程启动记录
+				StartEventBehavior startEventBehavior=(StartEventBehavior)this.getProcessDefinition().getStartElement();
+				if(startEventBehavior.isPersistence()){
+					createEndEventTask(executionContext);
+				}
+				
+			}
+			
+			//createEndEventTask(executionContext);
 
 			if (this.getParentProcessInstanceTokenId() != null && this.getParentProcessInstanceToken() != null) {
 				

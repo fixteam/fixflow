@@ -51,8 +51,14 @@ public class StartEventBehavior extends StartEventImpl {
 		// 设置令牌进入节点的时间
 		token.setNodeEnterTime(new Date());
 		
-		//插入流程启动记录
-		createStartEventTask(executionContext);
+		
+		if(this.isPersistence()){
+			//插入流程启动记录
+			createStartEventTask(executionContext);
+		}
+		
+		
+		
 
 		// 移除执行内容对象的线条关联
 		executionContext.setSequenceFlow(null);
