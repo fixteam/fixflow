@@ -57,11 +57,54 @@ public class FixMailEngine {
 					throw new FixFlowBizException("mailTo is null");
 				}
 				String[] str = to.split(",");
-				mailUtil.setTo(str);
+				List<String> userMailToList=new ArrayList<String>();
+				for (String userMail : str) {
+					
+					if(userMail==null||userMail.equals("")||userMail.trim().equals("")){
+						
+					}
+					else{
+						userMailToList.add(userMail);
+					}
+					
+					
+					
+					
+				}
+				
+				if(userMailToList.size()==0){
+					throw new FixFlowBizException("Mail toaddress is null");
+				}
+				String[] userMailToFinStrings=(String[])userMailToList.toArray();
+				
+				mailUtil.setTo(userMailToFinStrings);
+				
+				
+				
 				String cc = fixMailTo.getMailCc();
 				if (cc != null && !cc.equals("")) {
 					String[] strCC = cc.split(",");
-					mailUtil.setCC(strCC);
+					
+					List<String> userMailCCList=new ArrayList<String>();
+					for (String userMail : strCC) {
+						
+						if(userMail==null||userMail.equals("")||userMail.trim().equals("")){
+							
+						}
+						else{
+							userMailCCList.add(userMail);
+						}
+						
+					}
+					
+					if(userMailCCList.size()==0){
+						throw new FixFlowBizException("Mail ccaddress is null");
+					}
+					String[] userMailCCFinStrings=(String[])userMailCCList.toArray();
+					
+					
+					
+					mailUtil.setCC(userMailCCFinStrings);
 				}
 				String title = fixMailTo.getMailSubject();
 				String mailContent = fixMailTo.getMailBody();
