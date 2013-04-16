@@ -26,7 +26,7 @@ public class GetTaskCommandByTaskInstanceCmd  implements Command<List<TaskComman
 		
 		
 		if(taskInstance!=null){
-			if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK){
+			if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK||taskInstance.getTaskInstanceType()==TaskInstanceType.FIXNOTICETASK){
 				taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance);
 			}
 		}
