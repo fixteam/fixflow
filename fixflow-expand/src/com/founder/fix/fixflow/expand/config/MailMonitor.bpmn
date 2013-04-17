@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com/fixflow/sample/process">
-  <bpmn2:process id="MailMonitor" fixflow:verification="false" fixflow:dbid="MailMonitor:1:2c6d3db8-b756-436d-baeb-6ed17f0270b7" name="邮件定时监听">
+  <bpmn2:process id="MailMonitor" fixflow:verification="false" fixflow:dbid="MailMonitor:1:3c3390b2-df30-41c4-ac85-124cedeafb35" name="邮件定时监听">
     <bpmn2:startEvent id="StartEvent_1" fixflow:isPersistence="false" name="定时启动">
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
       <bpmn2:timerEventDefinition id="TimerEventDefinition_1">
-        <bpmn2:timeCycle xsi:type="bpmn2:tFormalExpression" id="0*0-23**?" body="0 * 0-23 * * ?">0 * 0-23 * * ?0 * 0-23 * * ?0 * 0-23 * * ?</bpmn2:timeCycle>
+        <bpmn2:timeCycle xsi:type="bpmn2:tFormalExpression" id="0*0-23**?" body="0 * 0-23 * * ?">0 * 0-23 * * ?0 * 0-23 * * ?0 * 0-23 * * ?0 * 0-23 * * ?</bpmn2:timeCycle>
       </bpmn2:timerEventDefinition>
     </bpmn2:startEvent>
     <bpmn2:endEvent id="EndEvent_1" name="结束">

@@ -503,7 +503,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		password=quartzDataBase.getPassword();
 		
 		if(quartzDataBase.getDbtype().equals(DBType.ORACLE)){
-			driverDelegateClass = "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+			driverDelegateClass = "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.oracle.OracleDelegate";
+			//driverDelegateClass = "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 		}
 		else{
 			driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
@@ -527,8 +528,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.threadPool.threadCount", "3");
 		props.put("org.quartz.threadPool.threadPriority", "5");
 		//JobStoreTX
-		//props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreFix");
-		props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
+		props.put("org.quartz.jobStore.class", "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.JobStoreFix");
+		//props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
 		props.put("org.quartz.jobStore.driverDelegateClass", driverDelegateClass);
 		props.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
 		props.put("org.quartz.jobStore.dataSource", "fixDS");

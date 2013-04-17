@@ -36,5 +36,7 @@
 	<classpathentry kind="src" path="/fixflow-api"/>
 	<classpathentry kind="src" path="/dbcore"/>
 	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/quartz-all-2.1.5.jar"/>
+	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/ojdbc5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
