@@ -39,6 +39,11 @@ public enum TaskInstanceType {
 	FIXENDEVENT,
 	
 	/**
+	 * 捕获型任务记录
+	 */
+	INTERMEDIATECATCHEVENT,
+	
+	/**
 	 * 等待任务
 	 */
 	FIXRECEIVETASK,

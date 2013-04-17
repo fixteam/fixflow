@@ -3,6 +3,7 @@ package com.founder.fix.fixflow.designer.modeler.ui.property.boundaryevent;
 
 import org.eclipse.bpmn2.BoundaryEvent;
 import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.CatchEvent;
 import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.TimerEventDefinition;
 import org.eclipse.bpmn2.modeler.ui.property.AbstractBpmn2PropertySection;
@@ -55,7 +56,7 @@ public class BoundaryEventTimerEventDefinitionPropertiesComposite extends Abstra
 	public void createUIBindings(EObject eObject) {
 		
 		
-		BoundaryEvent boundaryEvent = (BoundaryEvent) be;
+		CatchEvent boundaryEvent = (CatchEvent) be;
 
 		// 绑定开始时间
 		final TimerEventDefinition timerEventDefinition = (TimerEventDefinition) boundaryEvent.getEventDefinitions().get(0);

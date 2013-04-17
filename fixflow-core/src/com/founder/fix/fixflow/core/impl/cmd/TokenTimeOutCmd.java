@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.BoundaryEvent;
+import org.eclipse.bpmn2.CatchEvent;
 import org.eclipse.bpmn2.Event;
 import org.eclipse.bpmn2.impl.FlowNodeImpl;
 
@@ -77,6 +78,10 @@ public class TokenTimeOutCmd implements Command<Void> {
 				}
 				
 			}
+			if(event instanceof CatchEvent){
+				tokenEntity.signal();
+			}
+			
 		}
 		else{
 			BaseElement baseElement=processDefinition.getDefinitions().getElement(nodeId);

@@ -1,8 +1,10 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
 import java.util.Date;
+import java.util.List;
 
-import org.eclipse.bpmn2.impl.ReceiveTaskImpl;
+import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.impl.IntermediateCatchEventImpl;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.fixflow.core.ProcessEngine;
@@ -16,15 +18,28 @@ import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
-public class ReceiveTaskBehavior extends ReceiveTaskImpl {
-
+public class IntermediateCatchEventBehavior extends IntermediateCatchEventImpl {
+	
+	
+	
 	@Override
 	public void execute(ExecutionContext executionContext) {
+		
+		
+		List<EventDefinition> eventDefinitionList = this.getEventDefinitions();
+		if (eventDefinitionList != null) {
+			for (EventDefinition eventDefinition : eventDefinitionList) {
+				eventDefinition.execute(executionContext, this);
+			}
+		}
+		
+		
 
-		createReceiveTask(executionContext);
+		createEventTask(executionContext);
 	}
-
-	private void createReceiveTask(ExecutionContext executionContext) {
+	
+	
+	private void createEventTask(ExecutionContext executionContext) {
 
 		// 构造创建任务所需的数据
 		String newTaskId = GuidUtil.CreateGuid();
@@ -37,7 +52,7 @@ public class ReceiveTaskBehavior extends ReceiveTaskImpl {
 		Date newTaskCreateTime = ClockUtil.getCurrentTime();
 		int newTaskPriority = TaskInstance.PRIORITY_NORMAL;
 		String newTaskProcessDefinitionKey = executionContext.getProcessDefinition().getProcessDefinitionKey();
-		TaskInstanceType newTaskTaskInstanceType = TaskInstanceType.FIXRECEIVETASK;
+		TaskInstanceType newTaskTaskInstanceType = TaskInstanceType.INTERMEDIATECATCHEVENT;
 		String newTaskProcessDefinitionName = executionContext.getProcessDefinition().getName();
 		boolean isDraft = false;
 
@@ -66,7 +81,7 @@ public class ReceiveTaskBehavior extends ReceiveTaskImpl {
 	public void leaveClearData(ExecutionContext executionContext){
 
 		ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
-		TaskInstanceEntity taskInstance=(TaskInstanceEntity)processEngine.getTaskService().createTaskQuery().tokenId(executionContext.getToken().getId()).addTaskType(TaskInstanceType.FIXRECEIVETASK).taskNotEnd().singleResult();
+		TaskInstanceEntity taskInstance=(TaskInstanceEntity)processEngine.getTaskService().createTaskQuery().tokenId(executionContext.getToken().getId()).addTaskType(TaskInstanceType.INTERMEDIATECATCHEVENT).taskNotEnd().singleResult();
 		//当发现老任务,并没有创建等待接收任务的时候,不需要清理
 		if(taskInstance==null){
 			return;
@@ -87,6 +102,5 @@ public class ReceiveTaskBehavior extends ReceiveTaskImpl {
 		
 
 	}
-	
 
 }

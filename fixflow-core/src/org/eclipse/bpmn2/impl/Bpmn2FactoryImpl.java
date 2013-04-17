@@ -31,6 +31,7 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehav
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior;
@@ -1192,7 +1193,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public IntermediateCatchEvent createIntermediateCatchEvent() {
-        IntermediateCatchEventImpl intermediateCatchEvent = new IntermediateCatchEventImpl();
+        IntermediateCatchEventImpl intermediateCatchEvent = new IntermediateCatchEventBehavior();
         return intermediateCatchEvent;
     }
 

@@ -451,7 +451,7 @@
 			<disable object="Participant"/>
 			<disable object="MessageFlow"/>
 			<disable object="EventBasedGateway"/>
-			<disable object="IntermediateCatchEvent"/>
+			<!--<disable object="IntermediateCatchEvent"/>-->
 			<disable object="IntermediateThrowEvent"/>
 			
 			<disable object="ConditionalEventDefinition"/>

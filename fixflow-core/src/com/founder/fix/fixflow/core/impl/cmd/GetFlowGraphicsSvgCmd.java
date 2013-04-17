@@ -22,6 +22,7 @@ import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.Gateway;
 import org.eclipse.bpmn2.Group;
 import org.eclipse.bpmn2.InclusiveGateway;
+import org.eclipse.bpmn2.IntermediateCatchEvent;
 import org.eclipse.bpmn2.Lane;
 import org.eclipse.bpmn2.ManualTask;
 import org.eclipse.bpmn2.Message;
@@ -49,6 +50,7 @@ import org.eclipse.dd.di.DiagramElement;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.FlowSvgUtil;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.SvgBench;
@@ -184,6 +186,11 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 
 					}
 					
+					if (bpmnElement instanceof IntermediateCatchEventBehavior) {
+						String intermediateTimerEventSVG = intermediateTimerEventToSVG(bpmnShape);
+						svg.addChildren(intermediateTimerEventSVG);
+						
+					}
 					
 
 					if (bpmnElement instanceof Task) {
@@ -706,6 +713,29 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 		}
 		
 		return CommonNodeToSVG(bpmnShape, new SvgEndTo());
+	}
+	
+	
+	private String intermediateTimerEventToSVG(BPMNShape bpmnShape) {
+		
+//SvgIntermediateTimerEventTo
+		if (getBaseElement(bpmnShape.getBpmnElement()) instanceof IntermediateCatchEvent) {
+			IntermediateCatchEvent intermediateCatchEvent=(IntermediateCatchEvent)getBaseElement(bpmnShape.getBpmnElement());
+			
+			for (EventDefinition eventDefinition : intermediateCatchEvent.getEventDefinitions()) {
+				if(eventDefinition instanceof TimerEventDefinition){
+					return CommonNodeToSVG(bpmnShape, new SvgIntermediateTimerEventTo());
+				}
+				if(eventDefinition instanceof ErrorEventDefinition){
+					return CommonNodeToSVG(bpmnShape, new SvgIntermediateErrorEventTo());
+				}
+			}
+			
+			return CommonNodeToSVG(bpmnShape, new SvgIntermediateEventTo());
+			
+		}
+		
+		return CommonNodeToSVG(bpmnShape, new SvgIntermediateEventTo());
 	}
 
 	private String gatewayToSVG(BPMNShape bpmnShape) {

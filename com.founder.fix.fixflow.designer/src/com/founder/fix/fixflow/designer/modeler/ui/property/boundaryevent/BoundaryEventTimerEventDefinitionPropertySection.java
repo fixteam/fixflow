@@ -1,8 +1,10 @@
 package com.founder.fix.fixflow.designer.modeler.ui.property.boundaryevent;
 
 
-import org.eclipse.bpmn2.BoundaryEvent;
+
+import org.eclipse.bpmn2.CatchEvent;
 import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.bpmn2.TimerEventDefinition;
 import org.eclipse.bpmn2.modeler.core.utils.BusinessObjectUtil;
 import org.eclipse.bpmn2.modeler.ui.property.AbstractBpmn2PropertiesComposite;
@@ -19,9 +21,14 @@ public class BoundaryEventTimerEventDefinitionPropertySection extends AbstractBp
 	@Override
 	public boolean appliesTo(IWorkbenchPart part, ISelection selection) {
 		EObject eObject = BusinessObjectUtil.getBusinessObjectForSelection(selection);
-		if(eObject instanceof BoundaryEvent)
+		if(eObject instanceof CatchEvent)
 		{
-			BoundaryEvent boundaryEvent=(BoundaryEvent)eObject;
+			CatchEvent boundaryEvent=(CatchEvent)eObject;
+			
+			if(boundaryEvent instanceof StartEvent){
+				return false;
+			}
+			
 			if(boundaryEvent.getEventDefinitions().size()>0)
 			{
 				
