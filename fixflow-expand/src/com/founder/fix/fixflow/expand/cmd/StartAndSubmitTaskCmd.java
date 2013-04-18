@@ -8,7 +8,6 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.TaskService;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
@@ -77,19 +76,19 @@ public class StartAndSubmitTaskCmd extends AbstractExpandTaskCmd<StartAndSubmitT
 					.list();
 
 			for (TaskInstance instanceQueryTo : taskQueryList) {
-				String nodeId = instanceQueryTo.getNodeId();
-				String processDefinitionId = instanceQueryTo
-						.getProcessDefinitionId();
-				List<TaskCommandInst> commandList = taskService.getTaskCommandById(processDefinitionId, nodeId);
+				//String nodeId = instanceQueryTo.getNodeId();
+				//String processDefinitionId = instanceQueryTo
+				//		.getProcessDefinitionId();
+				//List<TaskCommandInst> commandList = taskService.getTaskCommandById(processDefinitionId, nodeId);
 				
-				TaskCommandInst userCommand = commandList.get(0);
+				//TaskCommandInst userCommand = commandList.get(0);
 				
 				
 				ExpandTaskCommand expandTaskCommand=new ExpandTaskCommand();
 				expandTaskCommand.setCommandType("submit");
 				expandTaskCommand.setTaskComment(this.taskComment);
 				expandTaskCommand.setTaskId(instanceQueryTo.getId());
-				expandTaskCommand.setUserCommandId(userCommand.getId());
+				expandTaskCommand.setUserCommandId(this.userCommandId);
 				expandTaskCommand.setTransientVariables(transientVariables);
 				expandTaskCommand.setBusinessKey(businessKey);
 				expandTaskCommand.setInitiator(initiator);
