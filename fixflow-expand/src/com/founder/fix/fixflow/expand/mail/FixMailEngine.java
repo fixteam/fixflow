@@ -75,9 +75,12 @@ public class FixMailEngine {
 				if(userMailToList.size()==0){
 					throw new FixFlowBizException("Mail toaddress is null");
 				}
-				String[] userMailToFinStrings=(String[])userMailToList.toArray();
+				String[] userMailToFinStrings=(String[])userMailToList.toArray(new String[userMailToList.size()]);
+				
 				
 				mailUtil.setTo(userMailToFinStrings);
+				
+				
 				
 				
 				

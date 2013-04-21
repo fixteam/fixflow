@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.expand.cmd;
 
+import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
@@ -33,7 +34,9 @@ public class ClaimTaskCmd extends AbstractExpandTaskCmd<ClaimTaskCommand, Void> 
 		if (task == null) {
 			throw new FixFlowException("无法找到编号为: " + taskId + " 的任务!");
 		}
-		
+		if(task.hasEnded()){
+			throw new FixFlowBizException("当前的任务已经结束,无法继续处理!");
+		}
 		
 		if (Authentication.getAuthenticatedUserId() != null) {
 			

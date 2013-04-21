@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.expand.cmd;
 
 import java.util.List;
 
+import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
@@ -39,6 +40,10 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 		TaskManager taskManager = commandContext.getTaskManager();
 
 		TaskInstance taskInstanceQuery = taskManager.findTaskById(taskId);
+		
+		if(taskInstanceQuery.hasEnded()){
+			throw new FixFlowBizException("当前的任务已经结束,无法继续处理!");
+		}
 
 		String tokenId = taskInstanceQuery.getTokenId();
 		String nodeId = taskInstanceQuery.getNodeId();

@@ -105,7 +105,28 @@ public class GetRollBackScreeningTaskCmd implements Command<List<TaskInstance>>{
 		
 		
 		
+		List<TaskInstance> taskInstanceQueryToListFin=new ArrayList<TaskInstance>();
 		
+		Map<String,TaskInstance> flowNodesNew=new HashMap<String, TaskInstance>();
+		
+		
+		
+		
+		for (TaskInstance taskInstanceNewObj : taskInstanceQueryToListNew) {
+			
+			if(taskInstanceNewObj.getId().equals(this.taskId)){
+				
+			}
+			else{
+				if(flowNodesNew.get(taskInstanceNewObj.getNodeId())==null){
+					flowNodesNew.put(taskInstanceNewObj.getNodeId(), taskInstanceNewObj);
+					taskInstanceQueryToListFin.add(taskInstanceNewObj);
+				}
+
+				
+			}
+			
+		}
 		
 		
 		
@@ -117,8 +138,9 @@ public class GetRollBackScreeningTaskCmd implements Command<List<TaskInstance>>{
 			}
 		}*/
 
+
 		
-		return taskInstanceQueryToListNew;
+		return taskInstanceQueryToListFin;
 	}
 	
 	
