@@ -127,6 +127,10 @@ public interface ExecutionContext {
 	
 	void setSkipStrategy(SkipStrategy skipStrategy);
 	
-	
+	/**
+	 * 获取上一步任务
+	 * @return 如果上一步是会签则返回多个任务,否则则是一个。
+	 */
+	List<TaskInstance> getPreviousAssignee();
 	
 }

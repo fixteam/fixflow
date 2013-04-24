@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.core.impl.runtime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.bpmn2.BaseElement;
@@ -16,6 +17,7 @@ import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
+import com.founder.fix.fixflow.core.impl.util.CoreUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskDefinition;
@@ -61,8 +63,7 @@ public class ExecutionContextImpl implements ExecutionContext {
 	 * 将要去的节点 当指定了将要去的节点，离开节点的时候令牌将不按照线条上的走向行走， 而是直接转移到指定的节点，多用于退回跳转。
 	 */
 	protected FlowNode toFlowNode;
-	
-	
+
 	protected SkipStrategy skipStrategy;
 
 	/**
@@ -82,15 +83,15 @@ public class ExecutionContextImpl implements ExecutionContext {
 	}
 
 	public void clearExecutionContextData() {
-		
+
 		this.setSequenceFlow(null);
 
 		this.setSequenceFlowSource(null);
 
 		this.setGroupID(null);
-		
+
 		this.setToFlowNode(null);
-		
+
 	}
 
 	/**
@@ -289,6 +290,29 @@ public class ExecutionContextImpl implements ExecutionContext {
 	}
 
 	public void setSkipStrategy(SkipStrategy skipStrategy) {
-		this.skipStrategy=skipStrategy;
+		this.skipStrategy = skipStrategy;
 	}
+
+	/**
+	 * 获取上一步任务
+	 */
+	public List<TaskInstance> getPreviousAssignee() {
+
+		
+		List<TaskInstance> taskInstanceQueryToTemp=new ArrayList<TaskInstance>();
+		TaskInstance taskInstanceQuery = getTaskInstance();
+		
+		if(taskInstanceQuery==null){
+			taskInstanceQueryToTemp=CoreUtil.getRollBackTaskByToken(getToken());
+		}
+		else{
+			taskInstanceQueryToTemp=CoreUtil.getRollBackTask(taskInstanceQuery);
+		}
+		
+
+		return taskInstanceQueryToTemp;
+		
+	}
+
+
 }

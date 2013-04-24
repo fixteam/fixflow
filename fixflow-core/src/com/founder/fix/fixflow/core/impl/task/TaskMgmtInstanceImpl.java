@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.core.impl.task;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,8 +48,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 		// 创建任务实例
 		TaskInstanceEntity taskInstance = instantiateNewTaskInstanceEntity();
-		// 将任务实例添加任务管理的任务实例集合中
-		addTaskInstanceEntity(taskInstance);
+		
 		// 如果任务定义不为空,则将任务的任务定义赋值.
 		if (taskDefinition != null) {
 			taskInstance.setTaskDefinition(taskDefinition);
@@ -204,6 +204,8 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 			}
 
 		}
+		// 将任务实例添加任务管理的任务实例集合中
+		addTaskInstanceEntity(taskInstance);
 
 		return taskInstance;
 
@@ -389,6 +391,10 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 			if (result instanceof Integer) {
 				resultList.add(result.toString());
 			}
+			if (result instanceof BigDecimal) {
+				resultList.add(result.toString());
+			}
+	
 
 			if (result instanceof List<?>) {
 				List<?> resultTempList = (List<?>) result;

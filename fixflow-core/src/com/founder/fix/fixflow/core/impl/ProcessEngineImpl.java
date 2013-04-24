@@ -212,10 +212,10 @@ public class ProcessEngineImpl implements ProcessEngine {
 		Context.removeDbConnection();
 		Context.removeAbstractScriptLanguageMgmt();
 		Context.removeLanguageType();
-		Context.closeQuartzConnection();
-		Context.removeQuartzCloseConnection();
-		Context.removeQuartzCommitConnection();
-		Context.removeQuartzRollbackConnection();
+		//Context.closeQuartzConnection();
+		//Context.removeQuartzCloseConnection();
+		//Context.removeQuartzCommitConnection();
+		//Context.removeQuartzRollbackConnection();
 	}
 	
 	

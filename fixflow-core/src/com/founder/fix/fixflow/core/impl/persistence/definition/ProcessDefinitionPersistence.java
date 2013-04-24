@@ -478,6 +478,20 @@ public class ProcessDefinitionPersistence {
 
 	private void loadEventObj(BaseElement baseElement) {
 		BaseElementImpl baseElementImpl = (BaseElementImpl) baseElement;
+		
+		
+		if(baseElement instanceof SubProcess){
+			SubProcess subProcess=(SubProcess)baseElement;
+			List<FlowElement> flowElements=subProcess.getFlowElements();
+			for (FlowElement flowElement : flowElements) {
+				if (flowElement instanceof Activity) {
+
+					loadEventObj(flowElement);
+
+				}
+			}
+	
+		}
 
 		List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(baseElementImpl, "connectorInstance");
 		for (FeatureMap.Entry entry : entryList) {

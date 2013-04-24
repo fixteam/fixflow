@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowConnectorException;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -211,7 +210,12 @@ public class ConnectorDefinition {
 		
 			
 		} catch (Throwable e) {
-			throw new FixFlowConnectorException("连接器执行出错!", e);
+			
+			
+				throw new FixFlowConnectorException(e.getMessage(), e);
+			
+			
+			
 			
 		}
 

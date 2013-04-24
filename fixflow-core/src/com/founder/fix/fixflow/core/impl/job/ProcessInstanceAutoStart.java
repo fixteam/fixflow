@@ -106,6 +106,7 @@ public class ProcessInstanceAutoStart implements Job {
 					e.printStackTrace();
 				}
 			}
+			processEngine.contextClose();
 		}
 		
 		
