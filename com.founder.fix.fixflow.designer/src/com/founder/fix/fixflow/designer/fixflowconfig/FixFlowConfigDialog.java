@@ -95,6 +95,7 @@ import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.custom.StackLayout;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandCmd;
+import org.eclipse.swt.widgets.Group;
 
 public class FixFlowConfigDialog extends TitleAreaDialog {
 	private DataBindingContext m_bindingContext;
@@ -179,6 +180,9 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 	private Table threadPoolTable;
 	private Button threadAdd;
 	private Button threadDelete;
+	private Button btnCheckButton_1;
+	private Button autoclaimbtnRadioButton;
+	private Button manualclaimRadioButton;
 
 	/**
 	 * Create the dialog.
@@ -233,7 +237,7 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 
 		Composite composite = new Composite(dbconfigcomposite, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		GridLayout gl_composite = new GridLayout(2, false);
+		GridLayout gl_composite = new GridLayout(8, false);
 		gl_composite.verticalSpacing = 0;
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
@@ -294,6 +298,32 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		gd_combo_1.widthHint = 150;
 		combo_1.setLayoutData(gd_combo_1);
 		combo_1.select(0);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		btnCheckButton_1 = new Button(composite, SWT.CHECK);
+		btnCheckButton_1.setText("禁用设计器数据库链接");
+		btnCheckButton_1.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				if (btnCheckButton_1.getSelection()) {
+					fixFlowConfig.getDataBaseConfig().setIsEnableDesCon("true");
+				} else {
+					fixFlowConfig.getDataBaseConfig().setIsEnableDesCon("false");
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+
+			}
+		});
 
 		Label label_1 = new Label(dbconfigcomposite, SWT.NONE);
 		label_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -733,11 +763,60 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		Composite taskcommandconfigcomposite = new Composite(tabFolder, SWT.NONE);
 		taskcommandconfigItem.setControl(taskcommandconfigcomposite);
 		taskcommandconfigcomposite.setLayout(new GridLayout(2, false));
-
-		Label label_3 = new Label(taskcommandconfigcomposite, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		label_3.setText("任务命令配置");
-		label_3.setLocation(0, 0);
+		
+		Composite composite_14 = new Composite(taskcommandconfigcomposite, SWT.NONE);
+		composite_14.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+				composite_14.setLayout(new GridLayout(2, false));
+		
+				Label label_3 = new Label(composite_14, SWT.NONE);
+				label_3.setText("任务命令配置");
+				
+				Group group = new Group(composite_14, SWT.NONE);
+				group.setText("任务处理方式");
+				GridLayout gl_group = new GridLayout(3, false);
+				gl_group.verticalSpacing = 0;
+				gl_group.horizontalSpacing = 0;
+				gl_group.marginWidth = 0;
+				gl_group.marginHeight = 0;
+				group.setLayout(gl_group);
+				
+				manualclaimRadioButton = new Button(group, SWT.RADIO);
+				manualclaimRadioButton.setText("手动领取");
+				manualclaimRadioButton.addSelectionListener(new SelectionListener() {
+					
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						if (manualclaimRadioButton.getSelection()) {
+							fixFlowConfig.getTaskCommandConfig().setCommandType("manualclaim");
+						} else {
+							fixFlowConfig.getTaskCommandConfig().setCommandType("");
+						}
+					}
+					
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						
+					}
+				});
+				
+				autoclaimbtnRadioButton = new Button(group, SWT.RADIO);
+				autoclaimbtnRadioButton.setText("自动领取");
+				autoclaimbtnRadioButton.addSelectionListener(new SelectionListener() {
+					
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						if (autoclaimbtnRadioButton.getSelection()) {
+							fixFlowConfig.getTaskCommandConfig().setCommandType("autoclaim");
+						} else {
+							fixFlowConfig.getTaskCommandConfig().setCommandType("");
+						}
+					}
+					
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						
+					}
+				});
 
 		tableViewer_2 = new TableViewer(taskcommandconfigcomposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		tableViewer_2.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -3124,6 +3203,16 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 				stackLayout.topControl = dayComposite;
 				parentComposite.layout();
 			}
+		}
+		
+		if (fixFlowConfig.getDataBaseConfig().getIsEnableDesCon() != null && fixFlowConfig.getDataBaseConfig().getIsEnableDesCon().equals("true")) {
+			btnCheckButton_1.setSelection(true);
+		}
+		if (fixFlowConfig.getTaskCommandConfig().getCommandType() != null && fixFlowConfig.getTaskCommandConfig().getCommandType().equals("autoclaim")) {
+			autoclaimbtnRadioButton.setSelection(true);
+		}
+		if (fixFlowConfig.getTaskCommandConfig().getCommandType() != null && fixFlowConfig.getTaskCommandConfig().getCommandType().equals("manualclaim")) {
+			manualclaimRadioButton.setSelection(true);
 		}
 	}
 	protected DataBindingContext initDataBindings() {

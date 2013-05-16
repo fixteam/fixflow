@@ -363,6 +363,8 @@ public class DataVarUtil {
 		if (userInforeturnList == null) {
 			
 			userInforeturnList = new ArrayList<UserInfoEntity>();
+			if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true"))
+				return userInforeturnList;
 			Connection connection = null;
 			try {
 				connection = FixFlowConfigUtil.createConnection();
@@ -408,6 +410,8 @@ public class DataVarUtil {
 			
 			userInforeturnListMap=new HashMap<String, List<UserInfoEntity>>();
 			List<UserInfoEntity> userInforeturnList= new ArrayList<UserInfoEntity>();
+			if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true"))
+				return userInforeturnList;
 			Connection connection = null;
 			try {
 				connection = FixFlowConfigUtil.createConnection();
@@ -538,6 +542,8 @@ public class DataVarUtil {
 		List<OrgInfoEntity> list = new ArrayList<OrgInfoEntity>();
 		if (map == null || map.size() < 1)
 			map = new HashMap<String, List>();
+		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true"))
+			return list;
 		Connection connection = null;
 		// 根据数据源信息连接数据库
 		try {

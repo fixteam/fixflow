@@ -266,7 +266,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 		FixFlowConfig fixFlowConfig = FixFlowConfigUtil.getFixFlowConfig();
 		QuartzConfig quartzConfig = FixFlowConfigUtil.getFixFlowConfig().getQuartzConfig();
 		
-		if(quartzConfig.getIsEnable().equals("false"))
+		if(quartzConfig.getIsEnable().equals("false")||fixFlowConfig.getDataBaseConfig().getIsEnableDesCon().equals("true"))
 			return;
 		
 		String DBDRIVER = "";

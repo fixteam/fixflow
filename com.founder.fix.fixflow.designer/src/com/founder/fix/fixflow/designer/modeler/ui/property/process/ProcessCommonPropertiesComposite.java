@@ -266,6 +266,13 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 		toolkit.adapt(composite, true, true);
 
 		Button verifybuttondj = new Button(composite, SWT.NONE);
+		
+		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true")){
+			verifybuttondj.setEnabled(false);
+		}else {
+			verifybuttondj.setEnabled(true);
+		}
+		
 		verifybuttondj.setToolTipText("验证流程是否正确(不发布)");
 		verifybuttondj.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		verifybuttondj.setText("验证");
@@ -286,6 +293,12 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 		publishButton = new Button(composite, SWT.NONE);
 		publishButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		publishButton.setText("发布");
+		
+		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true")){
+			publishButton.setEnabled(false);
+		}else {
+			publishButton.setEnabled(true);
+		}
 
 		uppreverButton = new Button(composite, SWT.NONE);
 		uppreverButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -675,6 +688,9 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 		processToList.clear();
 
+		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("false"))
+			return;
+		
 		Connection connection = null;
 
 		// MessageDialog.openInformation(null, "流程历史列表信息",
