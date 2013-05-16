@@ -12,6 +12,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -19,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandConfigImpl#getTaskCommandDef <em>Task Command Def</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandConfigImpl#getCommandType <em>Command Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +50,24 @@ public class TaskCommandConfigImpl extends EObjectImpl implements TaskCommandCon
 	 * @ordered
 	 */
 	protected EList<TaskCommandDef> taskCommandDef;
+	/**
+	 * The default value of the '{@link #getCommandType() <em>Command Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COMMAND_TYPE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getCommandType() <em>Command Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String commandType = COMMAND_TYPE_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,6 +104,27 @@ public class TaskCommandConfigImpl extends EObjectImpl implements TaskCommandCon
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCommandType() {
+		return commandType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCommandType(String newCommandType) {
+		String oldCommandType = commandType;
+		commandType = newCommandType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.TASK_COMMAND_CONFIG__COMMAND_TYPE, oldCommandType, commandType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -102,6 +144,8 @@ public class TaskCommandConfigImpl extends EObjectImpl implements TaskCommandCon
 		switch (featureID) {
 			case CoreconfigPackage.TASK_COMMAND_CONFIG__TASK_COMMAND_DEF:
 				return getTaskCommandDef();
+			case CoreconfigPackage.TASK_COMMAND_CONFIG__COMMAND_TYPE:
+				return getCommandType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -119,6 +163,9 @@ public class TaskCommandConfigImpl extends EObjectImpl implements TaskCommandCon
 				getTaskCommandDef().clear();
 				getTaskCommandDef().addAll((Collection<? extends TaskCommandDef>)newValue);
 				return;
+			case CoreconfigPackage.TASK_COMMAND_CONFIG__COMMAND_TYPE:
+				setCommandType((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -134,6 +181,9 @@ public class TaskCommandConfigImpl extends EObjectImpl implements TaskCommandCon
 			case CoreconfigPackage.TASK_COMMAND_CONFIG__TASK_COMMAND_DEF:
 				getTaskCommandDef().clear();
 				return;
+			case CoreconfigPackage.TASK_COMMAND_CONFIG__COMMAND_TYPE:
+				setCommandType(COMMAND_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -148,8 +198,26 @@ public class TaskCommandConfigImpl extends EObjectImpl implements TaskCommandCon
 		switch (featureID) {
 			case CoreconfigPackage.TASK_COMMAND_CONFIG__TASK_COMMAND_DEF:
 				return taskCommandDef != null && !taskCommandDef.isEmpty();
+			case CoreconfigPackage.TASK_COMMAND_CONFIG__COMMAND_TYPE:
+				return COMMAND_TYPE_EDEFAULT == null ? commandType != null : !COMMAND_TYPE_EDEFAULT.equals(commandType);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (commandType: ");
+		result.append(commandType);
+		result.append(')');
+		return result.toString();
 	}
 
 } //TaskCommandConfigImpl

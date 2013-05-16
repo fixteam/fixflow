@@ -490,13 +490,22 @@ public interface CoreconfigPackage extends EPackage {
 	int TASK_COMMAND_CONFIG__TASK_COMMAND_DEF = 0;
 
 	/**
+	 * The feature id for the '<em><b>Command Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND_CONFIG__COMMAND_TYPE = 1;
+
+	/**
 	 * The number of structural features of the '<em>Task Command Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_COMMAND_CONFIG_FEATURE_COUNT = 1;
+	int TASK_COMMAND_CONFIG_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl <em>Task Command Def</em>}' class.
@@ -2327,6 +2336,17 @@ public interface CoreconfigPackage extends EPackage {
 	EReference getTaskCommandConfig_TaskCommandDef();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig#getCommandType <em>Command Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Command Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig#getCommandType()
+	 * @see #getTaskCommandConfig()
+	 * @generated
+	 */
+	EAttribute getTaskCommandConfig_CommandType();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef <em>Task Command Def</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4032,6 +4052,14 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK_COMMAND_CONFIG__TASK_COMMAND_DEF = eINSTANCE.getTaskCommandConfig_TaskCommandDef();
+
+		/**
+		 * The meta object literal for the '<em><b>Command Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_COMMAND_CONFIG__COMMAND_TYPE = eINSTANCE.getTaskCommandConfig_CommandType();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.TaskCommandDefImpl <em>Task Command Def</em>}' class.

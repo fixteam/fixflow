@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig#getTaskCommandDef <em>Task Command Def</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig#getCommandType <em>Command Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,5 +44,31 @@ public interface TaskCommandConfig extends EObject {
 	 * @generated
 	 */
 	EList<TaskCommandDef> getTaskCommandDef();
+
+	/**
+	 * Returns the value of the '<em><b>Command Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Command Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Command Type</em>' attribute.
+	 * @see #setCommandType(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getTaskCommandConfig_CommandType()
+	 * @model extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getCommandType();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig#getCommandType <em>Command Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Command Type</em>' attribute.
+	 * @see #getCommandType()
+	 * @generated
+	 */
+	void setCommandType(String value);
 
 } // TaskCommandConfig

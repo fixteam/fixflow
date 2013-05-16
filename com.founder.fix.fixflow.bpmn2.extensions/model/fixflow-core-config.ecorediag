@@ -151,6 +151,10 @@
   <children xmi:type="notation:Node" xmi:id="_fGQc8U4OEeGeJLsIQ9w_dQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_fGSSIE4OEeGeJLsIQ9w_dQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_fGS5ME4OEeGeJLsIQ9w_dQ" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_fiKiob4BEeKOx9SRGxfb-A" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//TaskCommandConfig/commandType"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_fiKior4BEeKOx9SRGxfb-A"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_fGTgQE4OEeGeJLsIQ9w_dQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_fGTgQU4OEeGeJLsIQ9w_dQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_fGTgQk4OEeGeJLsIQ9w_dQ"/>

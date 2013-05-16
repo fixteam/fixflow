@@ -732,6 +732,15 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTaskCommandConfig_CommandType() {
+		return (EAttribute)taskCommandConfigEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTaskCommandDef() {
 		return taskCommandDefEClass;
 	}
@@ -1918,6 +1927,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 
 		taskCommandConfigEClass = createEClass(TASK_COMMAND_CONFIG);
 		createEReference(taskCommandConfigEClass, TASK_COMMAND_CONFIG__TASK_COMMAND_DEF);
+		createEAttribute(taskCommandConfigEClass, TASK_COMMAND_CONFIG__COMMAND_TYPE);
 
 		taskCommandDefEClass = createEClass(TASK_COMMAND_DEF);
 		createEAttribute(taskCommandDefEClass, TASK_COMMAND_DEF__ID);
@@ -2148,6 +2158,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 
 		initEClass(taskCommandConfigEClass, TaskCommandConfig.class, "TaskCommandConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTaskCommandConfig_TaskCommandDef(), this.getTaskCommandDef(), null, "taskCommandDef", null, 0, -1, TaskCommandConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskCommandConfig_CommandType(), ecorePackage.getEString(), "commandType", null, 0, 1, TaskCommandConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(taskCommandDefEClass, TaskCommandDef.class, "TaskCommandDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTaskCommandDef_Id(), ecorePackage.getEString(), "id", null, 1, 1, TaskCommandDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2606,6 +2617,12 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		   new String[] {
 			 "name", "taskCommandDef",
 			 "kind", "element"
+		   });		
+		addAnnotation
+		  (getTaskCommandConfig_CommandType(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
 		   });		
 		addAnnotation
 		  (taskCommandDefEClass, 
