@@ -261,13 +261,22 @@ public interface CoreconfigPackage extends EPackage {
 	int DATA_BASE_CONFIG__MODE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Is Enable Des Con</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_BASE_CONFIG__IS_ENABLE_DES_CON = 3;
+
+	/**
 	 * The number of structural features of the '<em>Data Base Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_BASE_CONFIG_FEATURE_COUNT = 3;
+	int DATA_BASE_CONFIG_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.GroupDefinitionConfigImpl <em>Group Definition Config</em>}' class.
@@ -2091,6 +2100,17 @@ public interface CoreconfigPackage extends EPackage {
 	EAttribute getDataBaseConfig_Mode();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getIsEnableDesCon <em>Is Enable Des Con</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Enable Des Con</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getIsEnableDesCon()
+	 * @see #getDataBaseConfig()
+	 * @generated
+	 */
+	EAttribute getDataBaseConfig_IsEnableDesCon();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.GroupDefinitionConfig <em>Group Definition Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3836,6 +3856,14 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_BASE_CONFIG__MODE = eINSTANCE.getDataBaseConfig_Mode();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Enable Des Con</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_BASE_CONFIG__IS_ENABLE_DES_CON = eINSTANCE.getDataBaseConfig_IsEnableDesCon();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.GroupDefinitionConfigImpl <em>Group Definition Config</em>}' class.

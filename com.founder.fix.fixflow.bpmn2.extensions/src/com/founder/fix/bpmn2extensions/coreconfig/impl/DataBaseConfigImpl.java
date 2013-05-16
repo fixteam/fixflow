@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl#getDataBase <em>Data Base</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl#getSelected <em>Selected</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl#getMode <em>Mode</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl#getIsEnableDesCon <em>Is Enable Des Con</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,6 +92,26 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 	 * @ordered
 	 */
 	protected String mode = MODE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIsEnableDesCon() <em>Is Enable Des Con</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsEnableDesCon()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IS_ENABLE_DES_CON_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIsEnableDesCon() <em>Is Enable Des Con</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsEnableDesCon()
+	 * @generated
+	 * @ordered
+	 */
+	protected String isEnableDesCon = IS_ENABLE_DES_CON_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -170,6 +191,27 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getIsEnableDesCon() {
+		return isEnableDesCon;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsEnableDesCon(String newIsEnableDesCon) {
+		String oldIsEnableDesCon = isEnableDesCon;
+		isEnableDesCon = newIsEnableDesCon;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.DATA_BASE_CONFIG__IS_ENABLE_DES_CON, oldIsEnableDesCon, isEnableDesCon));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -193,6 +235,8 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 				return getSelected();
 			case CoreconfigPackage.DATA_BASE_CONFIG__MODE:
 				return getMode();
+			case CoreconfigPackage.DATA_BASE_CONFIG__IS_ENABLE_DES_CON:
+				return getIsEnableDesCon();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -216,6 +260,9 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 			case CoreconfigPackage.DATA_BASE_CONFIG__MODE:
 				setMode((String)newValue);
 				return;
+			case CoreconfigPackage.DATA_BASE_CONFIG__IS_ENABLE_DES_CON:
+				setIsEnableDesCon((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -237,6 +284,9 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 			case CoreconfigPackage.DATA_BASE_CONFIG__MODE:
 				setMode(MODE_EDEFAULT);
 				return;
+			case CoreconfigPackage.DATA_BASE_CONFIG__IS_ENABLE_DES_CON:
+				setIsEnableDesCon(IS_ENABLE_DES_CON_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -255,6 +305,8 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 				return SELECTED_EDEFAULT == null ? selected != null : !SELECTED_EDEFAULT.equals(selected);
 			case CoreconfigPackage.DATA_BASE_CONFIG__MODE:
 				return MODE_EDEFAULT == null ? mode != null : !MODE_EDEFAULT.equals(mode);
+			case CoreconfigPackage.DATA_BASE_CONFIG__IS_ENABLE_DES_CON:
+				return IS_ENABLE_DES_CON_EDEFAULT == null ? isEnableDesCon != null : !IS_ENABLE_DES_CON_EDEFAULT.equals(isEnableDesCon);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -273,6 +325,8 @@ public class DataBaseConfigImpl extends EObjectImpl implements DataBaseConfig {
 		result.append(selected);
 		result.append(", mode: ");
 		result.append(mode);
+		result.append(", isEnableDesCon: ");
+		result.append(isEnableDesCon);
 		result.append(')');
 		return result.toString();
 	}

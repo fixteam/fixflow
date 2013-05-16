@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getDataBase <em>Data Base</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getSelected <em>Selected</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getMode <em>Mode</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getIsEnableDesCon <em>Is Enable Des Con</em>}</li>
  * </ul>
  * </p>
  *
@@ -99,5 +100,31 @@ public interface DataBaseConfig extends EObject {
 	 * @generated
 	 */
 	void setMode(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Enable Des Con</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Enable Des Con</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Enable Des Con</em>' attribute.
+	 * @see #setIsEnableDesCon(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getDataBaseConfig_IsEnableDesCon()
+	 * @model extendedMetaData="name='isEnableDesCon' kind='attribute'"
+	 * @generated
+	 */
+	String getIsEnableDesCon();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig#getIsEnableDesCon <em>Is Enable Des Con</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Enable Des Con</em>' attribute.
+	 * @see #getIsEnableDesCon()
+	 * @generated
+	 */
+	void setIsEnableDesCon(String value);
 
 } // DataBaseConfig

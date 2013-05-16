@@ -27,6 +27,10 @@
         <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//DataBaseConfig/mode"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_YE3OQTq8EeGATK0MSWXD6A"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_UuF9Eb32EeKVvr1qgraNzg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//DataBaseConfig/isEnableDesCon"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_UuF9Er32EeKVvr1qgraNzg"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_uCb2QjpjEeGATK0MSWXD6A"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_uCb2QzpjEeGATK0MSWXD6A"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_uCb2RDpjEeGATK0MSWXD6A"/>
@@ -542,7 +546,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_YWV5MsQLEeGB6LKKT1qvsg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="fixflow-core-config.ecore#//QuartzConfig"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YWV5M8QLEeGB6LKKT1qvsg" x="8" y="516"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YWV5M8QLEeGB6LKKT1qvsg" x="5" y="535"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_SNjPkcmpEeGmD9E2JntpYg" type="1005">
     <children xmi:type="notation:Node" xmi:id="_SNlEwMmpEeGmD9E2JntpYg" type="4010"/>

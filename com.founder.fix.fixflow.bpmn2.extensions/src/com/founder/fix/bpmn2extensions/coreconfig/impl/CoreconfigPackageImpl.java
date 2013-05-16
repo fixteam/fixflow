@@ -543,6 +543,15 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDataBaseConfig_IsEnableDesCon() {
+		return (EAttribute)dataBaseConfigEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGroupDefinitionConfig() {
 		return groupDefinitionConfigEClass;
 	}
@@ -1884,6 +1893,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		createEReference(dataBaseConfigEClass, DATA_BASE_CONFIG__DATA_BASE);
 		createEAttribute(dataBaseConfigEClass, DATA_BASE_CONFIG__SELECTED);
 		createEAttribute(dataBaseConfigEClass, DATA_BASE_CONFIG__MODE);
+		createEAttribute(dataBaseConfigEClass, DATA_BASE_CONFIG__IS_ENABLE_DES_CON);
 
 		groupDefinitionConfigEClass = createEClass(GROUP_DEFINITION_CONFIG);
 		createEReference(groupDefinitionConfigEClass, GROUP_DEFINITION_CONFIG__GROUP_DEFINITION);
@@ -2113,6 +2123,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEReference(getDataBaseConfig_DataBase(), this.getDataBase(), null, "dataBase", null, 1, -1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataBaseConfig_Selected(), ecorePackage.getEString(), "selected", null, 1, 1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataBaseConfig_Mode(), ecorePackage.getEString(), "mode", null, 1, 1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataBaseConfig_IsEnableDesCon(), ecorePackage.getEString(), "isEnableDesCon", null, 0, 1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(groupDefinitionConfigEClass, GroupDefinitionConfig.class, "GroupDefinitionConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getGroupDefinitionConfig_GroupDefinition(), this.getGroupDefinition(), null, "groupDefinition", null, 1, -1, GroupDefinitionConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2457,6 +2468,13 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		  (getDataBaseConfig_Mode(), 
 		   source, 
 		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getDataBaseConfig_IsEnableDesCon(), 
+		   source, 
+		   new String[] {
+			 "name", "isEnableDesCon",
 			 "kind", "attribute"
 		   });		
 		addAnnotation
