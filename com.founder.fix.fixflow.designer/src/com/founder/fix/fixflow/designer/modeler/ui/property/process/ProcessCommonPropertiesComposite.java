@@ -622,6 +622,8 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 	public static List<ProcessTo> getProcessList() {
 
 		List<ProcessTo> processTos = new ArrayList<ProcessTo>();
+		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true"))
+			return processTos;
 		Connection connection = null;
 
 		// try {
@@ -688,7 +690,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 		processToList.clear();
 
-		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("false"))
+		if(FixFlowConfigUtil.getFixFlowConfig().getDataBaseConfig().getIsEnableDesCon().equals("true"))
 			return;
 		
 		Connection connection = null;
