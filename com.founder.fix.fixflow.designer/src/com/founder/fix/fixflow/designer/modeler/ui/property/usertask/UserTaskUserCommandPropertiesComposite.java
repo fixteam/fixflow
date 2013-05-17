@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.ExtensionAttributeValue;
-import org.eclipse.bpmn2.UserTask; 
+import org.eclipse.bpmn2.UserTask;
 import org.eclipse.bpmn2.modeler.ui.property.AbstractBpmn2PropertySection;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.SimpleFeatureMapEntry;
@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Tree;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
+import com.founder.fix.bpmn2extensions.fixflow.impl.TaskCommandImpl;
 import com.founder.fix.fixflow.designer.modeler.ui.common.CreateNewTaskDialog;
 import com.founder.fix.fixflow.designer.modeler.ui.property.AbstractFixFlowBpmn2PropertiesComposite;
 import com.founder.fix.fixflow.designer.util.FixFlowConfigUtil;
@@ -55,12 +56,10 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 	}
 	public UserTaskUserCommandPropertiesComposite(Composite parent, int style) {
 		super(parent, style);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void createUI() {
-		// TODO Auto-generated method stub 
 		setLayout(null);
 		
 		Label advanceHandlelabel = new Label(this, SWT.NONE);
@@ -108,7 +107,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 			@SuppressWarnings("unchecked")
 			@Override
 			public void handleEvent(Event event) {
-				// TODO Auto-generated method stub
 				IStructuredSelection selection = (IStructuredSelection) treeViewer_1.getSelection();
 				TaskCommand taskCommand = (TaskCommand) selection.getFirstElement();
 				int idx = ((List<TaskCommand>) treeViewer_1.getInput()).indexOf(taskCommand);
@@ -134,7 +132,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 			@SuppressWarnings("unchecked")
 			@Override
 			public void handleEvent(Event event) {
-				// TODO Auto-generated method stub
 				IStructuredSelection selection = (IStructuredSelection) treeViewer_1.getSelection();
 				TaskCommand taskCommand = (TaskCommand) selection.getFirstElement();
 				int idx = ((List<TaskCommand>) treeViewer_1.getInput()).indexOf(taskCommand);
@@ -155,7 +152,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 	
 	@Override
 	public void createUIBindings(EObject eObject) {
-		// TODO Auto-generated method stub
 		//bindTaskCommand(treeViewer);
 		treeViewer_1.setInput(getAdvanceTaskCommands());
 		
@@ -163,7 +159,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				// TODO Auto-generated method stub
 				updateButtons();
 			}
 		});
@@ -181,32 +176,26 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 	private static class TreeContentProvider implements ITreeContentProvider {
 		public void inputChanged(Viewer viewer, Object oldInput,
 				Object newInput) {
-			// TODO Auto-generated method stub
 
 		}
 
 		public void dispose() {
-			// TODO Auto-generated method stub
 
 		}
 
 		public boolean hasChildren(Object element) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
 		public Object getParent(Object element) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		public Object[] getChildren(Object parentElement) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
 		public Object[] getElements(Object inputElement) {
-			// TODO Auto-generated method stub
 			if (inputElement instanceof List) {
 				@SuppressWarnings("rawtypes")
 				List list = (List) inputElement;
@@ -265,7 +254,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 		}
 		@Override
 		public void update(ViewerCell cell) {
-			// TODO Auto-generated method stub
 			if (cell.getElement() instanceof TaskCommand) {
 				TaskCommand d = (TaskCommand) cell.getElement();
 				StyledString styledString = new StyledString();
@@ -350,27 +338,38 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 			@Override
 			protected void doExecute() {
 				UserTask userTask = (UserTask) be;
-				
-				if(userTask.getExtensionValues().size()>0){
-					
+
+				if (userTask.getExtensionValues().size() > 0) {
+
 					for (ExtensionAttributeValue extensionAttributeValue : userTask.getExtensionValues()) {
+
+						FeatureMap extensionElements = extensionAttributeValue.getValue();
 						
-						FeatureMap extensionElements=extensionAttributeValue.getValue();
-						Object objectElement = extensionElements.get(FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, true);
-						if(objectElement != null){
-							FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry(
-							        (org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, taskC);
-							extensionElements.add(index, extensionElementEntry);
+						List<FeatureMap.Entry> objlist = new ArrayList<FeatureMap.Entry>();
+						
+						for (int i=0;i<extensionElements.size();i++) {
+							FeatureMap.Entry objectElement = extensionElements.get(i);
+							if(objectElement.getValue() instanceof TaskCommandImpl)
+							objlist.add(objectElement);
 						}
 						
+						extensionElements.removeAll(objlist);
+						
+						if (objlist.size() > 0) {
+							FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND,
+									taskC);
+							objlist.remove(taskC);
+							objlist.add(index,extensionElementEntry);
+							for (FeatureMap.Entry entry : objlist) {
+								extensionElements.add(entry);
+							}
+						}
+
 					}
-				}
-				else{
-					ExtensionAttributeValue extensionElement = Bpmn2Factory.eINSTANCE
-					        .createExtensionAttributeValue();
+				} else {
+					ExtensionAttributeValue extensionElement = Bpmn2Factory.eINSTANCE.createExtensionAttributeValue();
 					userTask.getExtensionValues().add(extensionElement);
-					FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry(
-					        (org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, taskC);
+					FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, taskC);
 					extensionElement.getValue().add(index, extensionElementEntry);
 				}
 			}
@@ -439,7 +438,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleEvent(Event event) {
-			// TODO Auto-generated method stub
 			CreateNewTaskDialog cnd = new CreateNewTaskDialog(getShell(), treeViewer_1);
 			cnd.setBlockOnOpen(true);
 			if(cnd != null && cnd.open() == InputDialog.OK){
@@ -455,7 +453,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleEvent(Event event) {
-			// TODO Auto-generated method stub
 			if(!treeViewer_1.getSelection().isEmpty()){
 				IStructuredSelection selection = (IStructuredSelection) treeViewer_1.getSelection();
 				TaskCommand taskCommand  = (TaskCommand) selection.getFirstElement();
@@ -471,7 +468,6 @@ public class UserTaskUserCommandPropertiesComposite extends AbstractFixFlowBpmn2
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleEvent(Event event) {
-			// TODO Auto-generated method stub
 			if(!treeViewer_1.getSelection().isEmpty()){
 				IStructuredSelection selection = (IStructuredSelection) treeViewer_1.getSelection();
 				TaskCommand taskCommand  = (TaskCommand) selection.getFirstElement();
