@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
+import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 
 
@@ -61,7 +62,7 @@ public class GetRecoverTaskCmd implements Command<List<TaskInstance>>{
 		ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
 		TaskQuery taskQuery = processEngine.getTaskService().createTaskQuery();
 		List<TaskInstance> taskInstancesEnd = taskQuery.processInstanceId(taskInstanceQuery.getProcessInstanceId())
-				.taskAssignee(Authentication.getAuthenticatedUserId()).taskIsEnd().list();
+				.taskAssignee(Authentication.getAuthenticatedUserId()).addTaskType(TaskInstanceType.FIXFLOWTASK).addTaskType(TaskInstanceType.FIXNOTICETASK).taskIsEnd().list();
 
 		String tokenId = taskInstanceQuery.getTokenId();
 		String nodeId = taskInstanceQuery.getNodeId();

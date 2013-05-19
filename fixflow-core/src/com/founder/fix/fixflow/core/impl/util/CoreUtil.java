@@ -47,7 +47,10 @@ public class CoreUtil {
 					taskCommandInstsNew.add(taskCommandInst);
 				}
 			} else {
-				taskCommandInstsNew.add(taskCommandInst);
+				if(!isProcessTracking){
+					taskCommandInstsNew.add(taskCommandInst);
+				}
+				
 			}
 		}
 
