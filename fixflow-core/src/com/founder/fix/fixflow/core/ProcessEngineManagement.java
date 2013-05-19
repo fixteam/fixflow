@@ -8,6 +8,8 @@ import com.founder.fix.fixflow.core.impl.db.DbType;
 public abstract class ProcessEngineManagement {
 
 	public static final String NAME_DEFAULT = "default";
+	
+	public static final String NAME_DESIGNER = "designer";
 
 	protected static boolean isInitialized = false;
 	
@@ -47,14 +49,14 @@ public abstract class ProcessEngineManagement {
 	/**
 	 * 初始化流程引擎管理器
 	 */
-	public synchronized static void init() {
+	public synchronized static void init(String processEngineName) {
 		if (!isInitialized) {
 			if (processEngines == null) {
 
 				processEngines = new HashMap<String, ProcessEngine>();
 			}
 
-			ProcessEngineConfiguration.createProcessEngineConfiguration()
+			ProcessEngineConfiguration.createProcessEngineConfiguration(processEngineName)
 			.setProcessEngineName(NAME_DEFAULT).buildProcessEngine();
 			
 			isInitialized = true;
@@ -72,7 +74,7 @@ public abstract class ProcessEngineManagement {
 	 */
 	public static ProcessEngine getProcessEngine(String processEngineName) {
 		if (!isInitialized) {
-			init();
+			init(processEngineName);
 		}
 
 		return processEngines.get(processEngineName);

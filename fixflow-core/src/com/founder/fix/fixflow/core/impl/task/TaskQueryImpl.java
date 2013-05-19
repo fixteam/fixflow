@@ -77,6 +77,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 	
 	protected String tokenId;
 
+	protected boolean isContainsSubProcess=false;
+
 	
 
 	protected QueryExpandTo queryExpandTo;
@@ -302,6 +304,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public TaskQueryImpl processInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId;
+		return this;
+	}
+	
+	
+	public TaskQueryImpl containsSubProcess() {
+		this.isContainsSubProcess=true;
 		return this;
 	}
 
@@ -632,5 +640,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return queryExpandTo;
 	}
 
+
+	public boolean isContainsSubProcess() {
+		return isContainsSubProcess;
+	}
 
 }

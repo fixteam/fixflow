@@ -22,16 +22,16 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 
 public class CoreUtil {
 
-	public static List<TaskCommandInst> getTaskCommandInst(TaskInstance taskInstance) {
+	public static List<TaskCommandInst> getTaskCommandInst(TaskInstance taskInstance,boolean isProcessTracking) {
 
 		ProcessDefinitionManager processDefinitionManager = Context.getCommandContext().getProcessDefinitionManager();
 		ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(taskInstance.getProcessDefinitionId());
 
-		return getTaskCommandInst(taskInstance, processDefinition);
+		return getTaskCommandInst(taskInstance, processDefinition,isProcessTracking);
 
 	}
 
-	public static List<TaskCommandInst> getTaskCommandInst(TaskInstance taskInstance, ProcessDefinitionBehavior processDefinition) {
+	public static List<TaskCommandInst> getTaskCommandInst(TaskInstance taskInstance, ProcessDefinitionBehavior processDefinition,boolean isProcessTracking) {
 
 		UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(taskInstance.getNodeId());
 
@@ -41,6 +41,8 @@ public class CoreUtil {
 			AbstractCommandFilter abstractCommandFilter = Context.getProcessEngineConfiguration().getAbstractCommandFilterMap()
 					.get(taskCommandInst.getTaskCommandType());
 			if (abstractCommandFilter != null) {
+				abstractCommandFilter.setProcessTracking(isProcessTracking);
+				abstractCommandFilter.setTaskCommandInst(taskCommandInst);
 				if (abstractCommandFilter.accept(taskInstance)) {
 					taskCommandInstsNew.add(taskCommandInst);
 				}
@@ -60,6 +62,8 @@ public class CoreUtil {
 			AbstractCommandFilter abstractCommandFilter = Context.getProcessEngineConfiguration().getAbstractCommandFilterMap()
 					.get(taskCommandInst.getTaskCommandType());
 			if (abstractCommandFilter != null) {
+				abstractCommandFilter.setProcessTracking(false);
+				abstractCommandFilter.setTaskCommandInst(taskCommandInst);
 				if (abstractCommandFilter.accept(null)) {
 					taskCommandInstsNew.add(taskCommandInst);
 				}
@@ -95,7 +99,7 @@ public class CoreUtil {
 					}
 
 				}
-
+				
 				getBeforeFlowNodeDG(sequenceFlow.getSourceRef(), sourceRefFlowNode);
 			}
 

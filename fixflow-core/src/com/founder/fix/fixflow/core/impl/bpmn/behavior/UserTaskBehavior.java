@@ -269,6 +269,9 @@ public class UserTaskBehavior extends UserTaskImpl {
 						if (groupTo == null) {
 
 						} else {
+							
+							//这里是否需要验证一下组里边是否还有人？
+							
 							return;
 						}
 						// identityLink.getGroupId()

@@ -12,13 +12,46 @@ public class ReleaseTaskFilter extends AbstractCommandFilter {
 			return false;
 		}
 		
-		// TODO 自动生成的方法存根
-		if(!taskInstance.hasEnded()&&taskInstance.getAssignee()!=null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
-			return true;
-		}
-		else{
+		if(isAutoClaim()){
 			return false;
 		}
+		
+		
+		
+		
+		
+	
+		if(taskInstance.isSuspended()){
+			return false;
+		}
+		
+		if(taskInstance.hasEnded()){
+			return false;
+		}
+		
+		if(isProcessTracking()){
+			return false;
+		}
+		
+		if(taskInstance.getDelegationState()!=null){
+			return false;
+		}
+
+		if(taskInstance.getAssignee()!=null){
+			
+			return true;
+			
+		}
+		else{
+			
+			return false;
+			
+		}
+		
+		
+	
+		
+		
 	}
 
 }

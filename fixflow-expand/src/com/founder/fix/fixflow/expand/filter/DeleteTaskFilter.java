@@ -13,7 +13,7 @@ public class DeleteTaskFilter extends AbstractCommandFilter {
 			return false;
 		}
 		
-		if(!taskInstance.hasEnded()&&taskInstance.getAssignee()!=null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
+		if(!isProcessTracking()&&!taskInstance.hasEnded()&&taskInstance.getAssignee()!=null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
 			return true;
 		}
 		else{

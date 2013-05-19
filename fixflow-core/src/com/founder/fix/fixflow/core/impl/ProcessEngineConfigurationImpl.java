@@ -16,9 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -79,7 +77,6 @@ import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.impl.util.XmlUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.variable.BizData;
 
@@ -91,11 +88,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected DeploymentCache deploymentCache;
 	protected List<GroupDefinition> groupDefinitions;
 	protected UserDefinition userDefinition;
-	
-	
 
 	protected DbConfig dbConfig;
-
 
 	protected ModelService modelService = new ModelServiceImpl();
 	protected RuntimeService runtimeService = new RuntimeServiceImpl();
@@ -108,116 +102,60 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected DataBase selectedDatabase;
 	protected SysMailConfig sysMailConfig;
 	protected EventSubscriptionConfig eventSubscriptionConfig;
-	
+
 	protected ScriptLanguageConfig scriptLanguageConfig;
-	
+
 	protected InternationalizationConfig internationalizationConfig;
-	
+
 	protected FixFlowResources fixFlowResources;
-	
+
 	protected PigeonholeConfig pigeonholeConfig;
-	
-	
+
 	protected ExpandCmdConfig expandCmdConfig;
 
 	protected TaskCommandConfig taskCommandConfig;
 
-	protected Map<String,TaskCommandDef> taskCommandDefMap;
+	protected Map<String, TaskCommandDef> taskCommandDefMap;
 
-	
-	protected Map<String,AbstractCommandFilter> abstractCommandFilterMap;
-	
+	protected Map<String, AbstractCommandFilter> abstractCommandFilterMap;
 
 	List<GroupInfo> groupInfos;
 
 	protected BizData bizData;
 
-	
-	
 	protected PriorityConfig priorityConfig;
-	
-
-
-	
-
 
 	protected ExpandClassConfig expandClassConfig;
-	
-	
-	
 
 	protected SchedulerFactory schedulerFactory;
-	
-	
-	
+
 	protected AssignPolicyConfig assignPolicyConfig;
-	
+
 	/**
 	 * 线程池
 	 */
 	protected Map<String, FixThreadPoolExecutor> threadPoolMap;
 
-
-
-	
-
-
 	public ProcessEngine buildProcessEngine() {
 
-		loadEmfFile();
 		init();
 		return new ProcessEngineImpl(this);
 	}
-	
-	
-	private void loadEmfFile(){
-		
-		ResourceSet resourceSet = new ResourceSetImpl();
-
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
-		
-		String filePath=this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").toString();
-		Resource resource = null;
-		try {
-			if(!filePath.startsWith("jar")){
-				filePath= java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile(),"utf-8");
-				resource = resourceSet.createResource(URI.createFileURI(filePath));
-			}else{
-				resource = resourceSet.createResource(URI.createURI(filePath));
-			}
-				
-		} catch (UnsupportedEncodingException e2) {
-			e2.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败！",e2);
-		}
-		
-		// register package in local resource registry
-		resourceSet.getPackageRegistry().put(CoreconfigPackage.eINSTANCE.getNsURI(), CoreconfigPackage.eINSTANCE);
-		// load resource
-		try {
-			resource.load(null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败", e);
-		}
-
-		fixFlowConfig = (FixFlowConfig) resource.getContents().get(0);
-
-	}
 
 	protected void init() {
-
+		initEmfFile();
+		
 		initCommandContextFactory();
 		initCommandExecutors();
 		initServices();
+		initConnection();
 		initCache();
 		initDeployers();
 		initGroupDefinitions();
 		initDbConfig();// dbType
 		// 任务命令配置加载
 		initTaskCommandConfig();
-		initConnection();
+		
 		initQuartz();
 		initUserDefinition();
 		initSysMailConfig();
@@ -234,177 +172,198 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initPriorityConfig();
 		initAssignPolicyConfig();
 		initThreadPool();
-		
+
 	}
 
-	private void initThreadPool() {
-		
-		//这里以后要从配置文件读取现在是写死的
-		threadPoolMap=new HashMap<String, FixThreadPoolExecutor>();
-		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();   
-		FixThreadPoolExecutor executor = new FixThreadPoolExecutor("default","默认线程池",1, 1, 1, TimeUnit.DAYS, queue);   
+	protected void initEmfFile() {
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
+
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").toString();
+		Resource resource = null;
+		try {
+			if (!filePath.startsWith("jar")) {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile(),
+						"utf-8");
+				resource = resourceSet.createResource(URI.createFileURI(filePath));
+			} else {
+				resource = resourceSet.createResource(URI.createURI(filePath));
+			}
+
+		} catch (UnsupportedEncodingException e2) {
+			e2.printStackTrace();
+			throw new FixFlowException("流程配置文件加载失败！", e2);
+		}
+
+		// register package in local resource registry
+		resourceSet.getPackageRegistry().put(CoreconfigPackage.eINSTANCE.getNsURI(), CoreconfigPackage.eINSTANCE);
+		// load resource
+		try {
+			resource.load(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("流程配置文件加载失败", e);
+		}
+
+		fixFlowConfig = (FixFlowConfig) resource.getContents().get(0);
+
+	}
+
+	protected void initThreadPool() {
+
+		// 这里以后要从配置文件读取现在是写死的
+		threadPoolMap = new HashMap<String, FixThreadPoolExecutor>();
+		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();
+		FixThreadPoolExecutor executor = new FixThreadPoolExecutor("default", "默认线程池", 1, 1, 1, TimeUnit.DAYS, queue);
 		threadPoolMap.put(executor.getThreadPoolKey(), executor);
-		
+
 	}
 
+	// 加载任务分配策略配置
+	protected void initAssignPolicyConfig() {
 
-	//加载任务分配策略配置
-	private void initAssignPolicyConfig() {
-		 		
-		 assignPolicyConfig=fixFlowConfig.getAssignPolicyConfig();
-		
+		assignPolicyConfig = fixFlowConfig.getAssignPolicyConfig();
+
 	}
 
-
-	private void initPriorityConfig() {
+	protected void initPriorityConfig() {
 		// TODO 自动生成的方法存根
-		priorityConfig=fixFlowConfig.getPriorityConfig();
+		priorityConfig = fixFlowConfig.getPriorityConfig();
 	}
 
+	protected void initBizData() {
 
-	private void initBizData() {
-
-		ExpandClassConfig expandClassConfig=getExpandClassConfig();
-		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		ExpandClassConfig expandClassConfig = getExpandClassConfig();
+		List<ExpandClass> expandClasses = expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
-			if(expandClass.getClassId().equals("BizData")){
-				bizData =(BizData) ReflectUtil.instantiate(expandClass.getClassImpl());
+			if (expandClass.getClassId().equals("BizData")) {
+				bizData = (BizData) ReflectUtil.instantiate(expandClass.getClassImpl());
 				break;
 			}
 		}
 
 	}
 
+	protected void initAbstractCommandFilter() {
 
-	private void initAbstractCommandFilter() {
-		
-		abstractCommandFilterMap=new HashMap<String, AbstractCommandFilter>();
-		List<TaskCommandDef> taskCommandDefs=fixFlowConfig.getTaskCommandConfig().getTaskCommandDef();
+		abstractCommandFilterMap = new HashMap<String, AbstractCommandFilter>();
+		List<TaskCommandDef> taskCommandDefs = fixFlowConfig.getTaskCommandConfig().getTaskCommandDef();
 		for (TaskCommandDef taskCommandDef : taskCommandDefs) {
-			if(StringUtil.getBoolean(taskCommandDef.getIsEnabled())&&taskCommandDef.getFilter()!=null&&!taskCommandDef.getFilter().equals("")){
-				AbstractCommandFilter abstractCommandFilter =(AbstractCommandFilter) ReflectUtil.instantiate(taskCommandDef.getFilter());
+			if (StringUtil.getBoolean(taskCommandDef.getIsEnabled()) && taskCommandDef.getFilter() != null && !taskCommandDef.getFilter().equals("")) {
+				AbstractCommandFilter abstractCommandFilter = (AbstractCommandFilter) ReflectUtil.instantiate(taskCommandDef.getFilter());
 				abstractCommandFilterMap.put(taskCommandDef.getId(), abstractCommandFilter);
 			}
-			
+
 		}
-		
+
 	}
 
+	protected void initExpandCmdConfig() {
 
-	private void initExpandCmdConfig() {
-
-		this.expandCmdConfig=fixFlowConfig.getExpandCmdConfig();
+		this.expandCmdConfig = fixFlowConfig.getExpandCmdConfig();
 	}
 
-
-	private void initPigeonholeConfig() {
+	protected void initPigeonholeConfig() {
 		// TODO 自动生成的方法存根
-		pigeonholeConfig=fixFlowConfig.getPigeonholeConfig();
+		pigeonholeConfig = fixFlowConfig.getPigeonholeConfig();
 	}
 
+	protected void intiFixFlowResources() {
 
-	private void intiFixFlowResources() {
-		
-		if(!StringUtil.getBoolean(internationalizationConfig.getIsEnable())){
+		if (!StringUtil.getBoolean(internationalizationConfig.getIsEnable())) {
 			return;
 		}
-	
-			List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
-			for (ExpandClass expandClass : expandClasses) {
-				if(expandClass.getClassId().equals("FixFlowResources")){
-					
-					fixFlowResources =(FixFlowResources) ReflectUtil.instantiate(expandClass.getClassImpl());
-					
-					break;
-				}
+
+		List<ExpandClass> expandClasses = expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if (expandClass.getClassId().equals("FixFlowResources")) {
+
+				fixFlowResources = (FixFlowResources) ReflectUtil.instantiate(expandClass.getClassImpl());
+
+				break;
 			}
-			if(fixFlowResources==null){
-				throw new FixFlowException("流程国际化处理文件加载失败!");
-			}
-			
-			
-			Connection connection= createConnection();
+		}
+		if (fixFlowResources == null) {
+			throw new FixFlowException("流程国际化处理文件加载失败!");
+		}
+
+		Connection connection = createConnection();
+		try {
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			throw new FixFlowException("流程国际化处理文件加载失败!", e);
+		}
+		Context.setDbConnection(connection);
+
+		try {
+			fixFlowResources.systemInit();
+			connection.commit();
+		} catch (Exception e) {
 			try {
-				connection.setAutoCommit(false);
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO 自动生成的 catch 块
+				throw new FixFlowException("流程国际化处理文件加载失败!", e1);
+			}
+			throw new FixFlowException("流程国际化处理文件加载失败!", e);
+		} finally {
+			try {
+				connection.close();
+				Context.removeDbConnection();
 			} catch (SQLException e) {
-				throw new FixFlowException("流程国际化处理文件加载失败!",e);
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+				throw new FixFlowException("流程国际化处理文件加载失败!", e);
 			}
-			Context.setDbConnection(connection);
-			
-			try {
-				fixFlowResources.systemInit();
-				connection.commit();
-			} catch (Exception e) {
-				try {
-					connection.rollback();
-				} catch (SQLException e1) {
-					// TODO 自动生成的 catch 块
-					throw new FixFlowException("流程国际化处理文件加载失败!",e1);
-				}
-				throw new FixFlowException("流程国际化处理文件加载失败!",e);
-			}
-			finally{
-				try {
-					connection.close();
-					Context.removeDbConnection();
-				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
-					e.printStackTrace();
-					throw new FixFlowException("流程国际化处理文件加载失败!",e);
-				}
-				
-			}
-			
+
+		}
 
 	}
 
-
-	private void initInternationalizationConfig() {
+	protected void initInternationalizationConfig() {
 		// TODO 自动生成的方法存根
-		
-		internationalizationConfig=fixFlowConfig.getInternationalizationConfig();
-		
+
+		internationalizationConfig = fixFlowConfig.getInternationalizationConfig();
+
 	}
 
+	protected void initScriptLanguageConfig() {
 
-	private void initScriptLanguageConfig() {
-
-		this.scriptLanguageConfig=fixFlowConfig.getScriptLanguageConfig();
+		this.scriptLanguageConfig = fixFlowConfig.getScriptLanguageConfig();
 	}
 
+	protected void initMessageSubscription() {
 
-	private void initMessageSubscription() {
-		
-		if(StringUtil.getBoolean(this.eventSubscriptionConfig.getIsEnable())){
-			String serverAddress=this.eventSubscriptionConfig.getServerAddress();
-			
-			String ServerPort=this.eventSubscriptionConfig.getServerPort();
-			
-			String messageInfo=this.eventSubscriptionConfig.getMessageInfo();
-			
-			MessageReceiver reciver=null;
+		if (StringUtil.getBoolean(this.eventSubscriptionConfig.getIsEnable())) {
+			String serverAddress = this.eventSubscriptionConfig.getServerAddress();
+
+			String ServerPort = this.eventSubscriptionConfig.getServerPort();
+
+			String messageInfo = this.eventSubscriptionConfig.getMessageInfo();
+
+			MessageReceiver reciver = null;
 			try {
-				reciver = new MessageReceiver("tcp://"+serverAddress+":"+ServerPort+"");
+				reciver = new MessageReceiver("tcp://" + serverAddress + ":" + ServerPort + "");
 				FlowMessageListener listener = new FlowMessageListener();
-				reciver.addTopicListener(messageInfo,listener);
+				reciver.addTopicListener(messageInfo, listener);
 				System.out.print("Message监听启动成功!\n");
 			} catch (JMSException e) {
 
 				System.out.print("Message监听启动失败!\n");
 				e.printStackTrace();
-				
+
 			}
 
-			
 		}
-		
-		
-		
+
 	}
-	
-	public Connection createConnection(){
+
+	public Connection createConnection() {
 		DataBase dataBase = this.selectedDatabase;
-		Connection connection=null;
+		Connection connection = null;
 		String driver = dataBase.getDriverClassName();
 		String url = dataBase.getUrl();
 		String user = dataBase.getUsername();
@@ -419,39 +378,36 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		try {
 			connection = DriverManager.getConnection(url, user, password);
 		} catch (Exception e) {
-		
+
 		}
 
 		return connection;
-		
+
 	}
 
-
-	private void initEventSubscriptionConfig() {
+	protected void initEventSubscriptionConfig() {
 		// TODO Auto-generated method stub
-		this.eventSubscriptionConfig=fixFlowConfig.getEventSubscriptionConfig();
+		this.eventSubscriptionConfig = fixFlowConfig.getEventSubscriptionConfig();
 	}
 
-
-	private void initExpandClassConfig() {
-		this.expandClassConfig=fixFlowConfig.getExpandClassConfig();
+	protected void initExpandClassConfig() {
+		this.expandClassConfig = fixFlowConfig.getExpandClassConfig();
 	}
 
-
-	private void initSysMailConfig() {
-		this.sysMailConfig=fixFlowConfig.getSysMailConfig();
+	protected void initSysMailConfig() {
+		this.sysMailConfig = fixFlowConfig.getSysMailConfig();
 	}
 
-	private void initUserDefinition() {
-		
+	protected void initUserDefinition() {
+
 		UserDefinition userDefinitionObj = (UserDefinition) ReflectUtil.instantiate("com.founder.fix.fixflow.expand.identity.UserDefinitionImpl");
-		AllUserInfo allUserInfo=fixFlowConfig.getDesignerOrgConfig().getAllUserInfo();
+		AllUserInfo allUserInfo = fixFlowConfig.getDesignerOrgConfig().getAllUserInfo();
 		userDefinitionObj.setUserInfoConfig(allUserInfo);
-		this.userDefinition=userDefinitionObj;
-		
+		this.userDefinition = userDefinitionObj;
+
 	}
 
-	private void initConnection() {
+	protected void initConnection() {
 		String selectedDB = fixFlowConfig.getDataBaseConfig().getSelected();
 		for (DataBase dataBase : fixFlowConfig.getDataBaseConfig().getDataBase()) {
 			if (dataBase.getId().equals(selectedDB)) {
@@ -461,75 +417,73 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	}
 
-	private void initQuartz() {
-	/*	SchedulerFactory schedulerFactory = QuartzUtil.createSchedulerFactory();
-		Scheduler scheduler = null;*/
-		
-		QuartzConfig quartzConfig=fixFlowConfig.getQuartzConfig();
-		
-		if(!StringUtil.getBoolean(quartzConfig.getIsEnable())){
+	protected void initQuartz() {
+		/*
+		 * SchedulerFactory schedulerFactory =
+		 * QuartzUtil.createSchedulerFactory(); Scheduler scheduler = null;
+		 */
+
+		QuartzConfig quartzConfig = fixFlowConfig.getQuartzConfig();
+
+		if (!StringUtil.getBoolean(quartzConfig.getIsEnable())) {
 			return;
 		}
-		
-		String driverClassName="";
-		String url="";
-		String username="";
+
+		String driverClassName = "";
+		String url = "";
+		String username = "";
 		String driverDelegateClass = "";
-		String password="";
-		DataBase quartzDataBase=null;
-		
-		if(StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())){
-			quartzDataBase=selectedDatabase;
-		}
-		else{
-			
-			String selectedDB =quartzConfig.getDataBaseId();
+		String password = "";
+		DataBase quartzDataBase = null;
+
+		if (StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())) {
+			quartzDataBase = selectedDatabase;
+		} else {
+
+			String selectedDB = quartzConfig.getDataBaseId();
 			for (DataBase dataBase : fixFlowConfig.getDataBaseConfig().getDataBase()) {
 				if (dataBase.getId().equals(selectedDB)) {
 					quartzDataBase = dataBase;
 				}
 			}
-			
+
 		}
-		
-		if(quartzDataBase==null){
+
+		if (quartzDataBase == null) {
 			throw new FixFlowException("定时任务框架启动失败！未找到指定的数据库");
 		}
-		
-	
-		driverClassName=quartzDataBase.getDriverClassName();
-		url=quartzDataBase.getUrl();
-		username=quartzDataBase.getUsername();
-		password=quartzDataBase.getPassword();
-		
-		if(quartzDataBase.getDbtype().equals(DBType.ORACLE)){
+
+		driverClassName = quartzDataBase.getDriverClassName();
+		url = quartzDataBase.getUrl();
+		username = quartzDataBase.getUsername();
+		password = quartzDataBase.getPassword();
+
+		if (quartzDataBase.getDbtype().equals(DBType.ORACLE)) {
 			driverDelegateClass = "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.oracle.OracleDelegate";
-			//driverDelegateClass = "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-		}
-		else{
+			// driverDelegateClass =
+			// "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+		} else {
 			driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
 		}
 
 		/*
-		if(quartzDataBase.getId().toLowerCase().equals("sqlserver")) {
-			driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
-		}
-		else {
-			driverDelegateClass = "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-		}
-		*/
-		
-		
-		
+		 * if(quartzDataBase.getId().toLowerCase().equals("sqlserver")) {
+		 * driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate"; }
+		 * else { driverDelegateClass =
+		 * "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate"
+		 * ;//org.quartz.impl.jdbcjobstore.StdJDBCDelegate }
+		 */
+
 		Properties props = new Properties();
 		props.put("org.quartz.scheduler.instanceName", "FixFlowQuartzScheduler");
 		props.put("org.quartz.scheduler.instanceId", "AUTO");
 		props.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
 		props.put("org.quartz.threadPool.threadCount", "3");
 		props.put("org.quartz.threadPool.threadPriority", "5");
-		//JobStoreTX
+		// JobStoreTX
 		props.put("org.quartz.jobStore.class", "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.JobStoreFix");
-		//props.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
+		// props.put("org.quartz.jobStore.class",
+		// "org.quartz.impl.jdbcjobstore.JobStoreTX");
 		props.put("org.quartz.jobStore.driverDelegateClass", driverDelegateClass);
 		props.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
 		props.put("org.quartz.jobStore.dataSource", "fixDS");
@@ -539,15 +493,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.dataSource.fixDS.user", username);
 		props.put("org.quartz.dataSource.fixDS.password", password);
 		props.put("org.quartz.dataSource.fixDS.maxConnections", "5");
-		
+
 		schedulerFactory = null;
 		Scheduler scheduler = null;
 		schedulerFactory = QuartzUtil.createSchedulerFactory(props);
-		
+
 		try {
 			scheduler = schedulerFactory.getScheduler();
 			scheduler.start();
-	
+
 			System.out.println("定时框架启动成功");
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
@@ -556,42 +510,34 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 	}
 
-	
+	protected void initTaskCommandConfig() {
 
-	private void initTaskCommandConfig() {
-		
-		
-		this.taskCommandConfig=fixFlowConfig.getTaskCommandConfig();
-		
-		
+		this.taskCommandConfig = fixFlowConfig.getTaskCommandConfig();
+
 		// TODO Auto-generated method stub
 		taskCommandDefMap = new HashMap<String, TaskCommandDef>();
 
-		
-		for (TaskCommandDef taskCommandDef :taskCommandConfig.getTaskCommandDef()) {
-			
+		for (TaskCommandDef taskCommandDef : taskCommandConfig.getTaskCommandDef()) {
+
 			String id = taskCommandDef.getId();
-			
 
 			taskCommandDefMap.put(id, taskCommandDef);
-	
-			
 
 		}
-		
 
 	}
-	
-
 
 	protected void initDbConfig() {
-		Element dataBaseConfigEle = getDataBaseConfigEle(getFixFlowConfigDoc());
-		if (dataBaseConfigEle.attributeValue("selected") != null) {
-			if (dataBaseConfigEle.attributeValue("selected").toLowerCase().equals(DbType.SQLSERVER.toString().toLowerCase())) {
+		//Element dataBaseConfigEle = getDataBaseConfigEle(getFixFlowConfigDoc());
+		
+		
+		DataBase dataBase=this.selectedDatabase;
+		if (dataBase != null) {
+			if (dataBase.getDbtype().toString().toLowerCase().equals(DbType.SQLSERVER.toString().toLowerCase())) {
 				initSqlServerDbConfig();
 				return;
 			}
-			if (dataBaseConfigEle.attributeValue("selected").toLowerCase().equals(DbType.ORACLE.toString().toLowerCase())) {
+			if (dataBase.getDbtype().toString().toLowerCase().equals(DbType.ORACLE.toString().toLowerCase())) {
 				initOracleDbConfig();
 				return;
 			}
@@ -611,8 +557,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initSqlServerDbConfig() {
+		
+		DataBase dataBase=this.selectedDatabase;
+		
 		// OraclePaginationImpl
-		Pagination pagination = (Pagination) ReflectUtil.instantiate(getDataBaseEle(getDataBaseConfigEle(getFixFlowConfigDoc())).attributeValue("paginationImpl"));
+		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
 		DbConfig dbConfig = new DbConfig();
 		dbConfig.setDbType(DbType.SQLSERVER);
 		dbConfig.setPagination(pagination);
@@ -627,8 +576,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initOracleDbConfig() {
+		DataBase dataBase=this.selectedDatabase;
 		// OraclePaginationImpl
-		Pagination pagination = (Pagination) ReflectUtil.instantiate(getDataBaseEle(getDataBaseConfigEle(getFixFlowConfigDoc())).attributeValue("paginationImpl"));
+		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
 		DbConfig dbConfig = new DbConfig();
 		dbConfig.setDbType(DbType.ORACLE);
 		dbConfig.setPagination(pagination);
@@ -644,21 +594,18 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	protected void initGroupDefinitions() {
 		groupDefinitions = new ArrayList<GroupDefinition>();
-		
-		
-		groupInfos=fixFlowConfig.getDesignerOrgConfig().getGroupInfo();
-		
+
+		groupInfos = fixFlowConfig.getDesignerOrgConfig().getGroupInfo();
+
 		for (GroupInfo groupInfo : groupInfos) {
-			
+
 			GroupDefinition groupDefinition = (GroupDefinition) ReflectUtil.instantiate(groupInfo.getGroupDefinitionImpl());
 			groupDefinition.setId(groupInfo.getGroupId());
 			groupDefinition.setName(groupInfo.getGroupName());
 			groupDefinition.setGroupInfo(groupInfo);
 			groupDefinitions.add(groupDefinition);
-			
-		} 
 
-
+		}
 
 	}
 
@@ -726,7 +673,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return this;
 	}
 
-
 	public DbConfig getDbConfig() {
 		return dbConfig;
 	}
@@ -774,7 +720,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public List<GroupDefinition> getGroupDefinitions() {
 		return groupDefinitions;
 	}
-	
+
 	public TaskCommandConfig getTaskCommandConfig() {
 		return taskCommandConfig;
 	}
@@ -810,83 +756,27 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		this.cacheHandler = cacheHandler;
 		return this;
 	}
-	
+
 	public InternationalizationConfig getInternationalizationConfig() {
 		return internationalizationConfig;
 	}
 
-
-	public void setInternationalizationConfig(
-			InternationalizationConfig internationalizationConfig) {
+	public void setInternationalizationConfig(InternationalizationConfig internationalizationConfig) {
 		this.internationalizationConfig = internationalizationConfig;
-	}
-
-	/**
-	 * 拿到fixflowconfig.xml的doc
-	 * 
-	 * @return
-	 */
-	private Document getFixFlowConfigDoc() {
-		Document document = null;
-		try {
-			document = XmlUtil.read(ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/expand/config/fixflowconfig.xml"));
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new FixFlowException("读取fixflow配置出错", e);
-		}
-		return document;
 	}
 
 	public Map<String, TaskCommandDef> getTaskCommandDefMap() {
 		return taskCommandDefMap;
 	}
 
-	
 	public Map<String, FixThreadPoolExecutor> getThreadPoolMap() {
 		return threadPoolMap;
 	}
-	/**
-	 * 拿到数据库配置元素
-	 * 
-	 * @return
-	 */
-	private Element getDataBaseConfigEle(Document document) {
-		Element dataBaseConfigEle = null;
-		dataBaseConfigEle = document.getRootElement().element("dataBaseConfig");
-		return dataBaseConfigEle;
-	}
 
-	/**
-	 * 拿到组定义配置元素
-	 * 
-	 * @return
-	 */
-	/*
-	 * private Element getGroupDefinitionEle(Document document) { Element
-	 * groupDefinitionEle = null; Element groupDefinitionConfigEle =
-	 * document.getRootElement().element("groupDefinitionConfig"); for(Object
-	 * obj : groupDefinitionConfigEle.elements("groupDefinition")) { if() }
-	 * 
-	 * return groupDefinitionEle; }
-	 */
 
-	/**
-	 * 取得对应ID的数据库元素
-	 * 
-	 * @return
-	 */
-	private Element getDataBaseEle(Element dataBaseConfigEle) {
-		Element dataBaseEle = null;
-		for (Object ele : dataBaseConfigEle.elements("dataBase")) {
-			dataBaseEle = (Element) ele;
-			if (dataBaseEle.attributeValue("id").equals(dataBaseConfigEle.attributeValue("selected"))) {
-				return dataBaseEle;
-			}
-		}
-		return dataBaseEle;
-	}
+
 	
+
 	public Map<String, AbstractCommandFilter> getAbstractCommandFilterMap() {
 		return abstractCommandFilterMap;
 	}
@@ -894,7 +784,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public DataBase getSelectedDatabase() {
 		return selectedDatabase;
 	}
-	
+
 	public UserDefinition getUserDefinition() {
 		return userDefinition;
 	}
@@ -902,40 +792,40 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public void setUserDefinition(UserDefinition userDefinition) {
 		this.userDefinition = userDefinition;
 	}
+
 	/**
 	 * 获取系统配置邮件
+	 * 
 	 * @return
 	 */
 	public SysMailConfig getSysMailConfig() {
 		return sysMailConfig;
 	}
-	
+
 	/**
 	 * 获取调度工厂对象
+	 * 
 	 * @return 调度工厂对象
 	 */
 	public SchedulerFactory getSchedulerFactory() {
 		return schedulerFactory;
 	}
-	
+
 	public ExpandClassConfig getExpandClassConfig() {
 		return expandClassConfig;
 	}
-	
 
 	public EventSubscriptionConfig getEventSubscriptionConfig() {
 		return eventSubscriptionConfig;
 	}
-	
+
 	public ScriptLanguageConfig getScriptLanguageConfig() {
 		return scriptLanguageConfig;
 	}
-	
+
 	public FixFlowResources getFixFlowResources() {
 		return fixFlowResources;
 	}
-
-
 
 	public void setFixFlowResources(FixFlowResources fixFlowResources) {
 		this.fixFlowResources = fixFlowResources;
@@ -944,37 +834,31 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public PigeonholeConfig getPigeonholeConfig() {
 		return pigeonholeConfig;
 	}
-	
+
 	public ExpandCmdConfig getExpandCmdConfig() {
-		
+
 		return expandCmdConfig;
 	}
-	
 
 	public BizData getBizData() {
 		return bizData;
 	}
-	
+
 	public PriorityConfig getPriorityConfig() {
-		
+
 		return priorityConfig;
 	}
-	
-	
-	public Priority getPriority(int priorityValue){
-		
-		
+
+	public Priority getPriority(int priorityValue) {
+
 		for (Priority priority : priorityConfig.getPriority()) {
-			if(priority.getValue().equals(StringUtil.getString(priorityValue))){
+			if (priority.getValue().equals(StringUtil.getString(priorityValue))) {
 				return priority;
 			}
 		}
-		
-		
-		
-		
+
 		return priorityConfig.getPriority().get(1);
-		
+
 	}
 
 	public AssignPolicyConfig getAssignPolicyConfig() {

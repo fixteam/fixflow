@@ -9,15 +9,39 @@ public class PendingTaskFilter extends AbstractCommandFilter {
 	public boolean accept(TaskInstance taskInstance) {
 
 
+		
+		
 		if(taskInstance==null){
 			return false;
 		}
 		
-		if(!taskInstance.hasEnded()&&taskInstance.getAssignee()!=null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
+		if(taskInstance.isSuspended()){
+			return false;
+		}
+		
+		if(taskInstance.hasEnded()){
+			return false;
+		}
+		
+		if(isProcessTracking()){
+			return false;
+		}
+		
+		if(taskInstance.getDelegationState()!=null){
+			return false;
+		}
+
+		if(taskInstance.getAssignee()!=null){
+			
 			return true;
+			
 		}
 		else{
-			return false;
+			if(isAutoClaim()){
+				return true;
+			}else{
+				return false;
+			}
 		}
 
 	}

@@ -13,7 +13,11 @@ public class ClaimTaskFilter extends AbstractCommandFilter {
 			return false;
 		}
 		
-		if(!taskInstance.hasEnded()&&taskInstance.getAssignee()==null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
+		if(isAutoClaim()){
+			return false;
+		}
+		
+		if(!isProcessTracking()&&!taskInstance.hasEnded()&&taskInstance.getAssignee()==null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
 			return true;
 		}
 		else{

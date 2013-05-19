@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
-import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
 import com.founder.fix.fixflow.core.query.Query;
 
 
@@ -80,6 +79,8 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	TaskQuery taskCandidateGroup(GroupTo candidateGroup);
 
 	TaskQuery processInstanceId(String processInstanceId);
+	
+	TaskQuery containsSubProcess();
 
 	TaskQuery executionId(String executionId);
 
