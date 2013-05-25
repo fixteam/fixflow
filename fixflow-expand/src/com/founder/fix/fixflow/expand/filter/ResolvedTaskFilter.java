@@ -28,9 +28,7 @@ public class ResolvedTaskFilter extends AbstractCommandFilter {
 			return false;
 		}
 		
-		if(taskInstance.getDelegationState()!=null){
-			return false;
-		}
+
 
 		if(taskInstance.getAssignee()!=null){
 			

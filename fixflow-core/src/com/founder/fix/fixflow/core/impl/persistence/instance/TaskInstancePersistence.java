@@ -1065,6 +1065,12 @@ public class TaskInstancePersistence {
 	
 	public List<Map<String, Object>> findAgentUsers(String userId){
 		
+		
+		
+		String sql="SELECT distinct(z.EID) EID FROM ( select a.EID,b.STATUS,a.AUSER1 as USERID  from FIXFLOW_OUTAGENT_AGENTDETAILS a left join "
+		+"FIXFLOW_OUTAGENT_AGENTINFO b on a.EID=b.EID where b.STATUS='0'"+
+		"and  a.AUSER1=?) z";
+		/*
 		String sql=" SELECT distinct(z.EID) EID FROM "+
 				"( "+
 				" select EID,WFNAME,NODEID,AUSER1 as USERID from FIXFLOW_OUTAGENT_AGENTDETAILS "+
@@ -1075,7 +1081,7 @@ public class TaskInstancePersistence {
 				" WHERE AUSER1 in (select a.EID from FIXFLOW_OUTAGENT_AGENTDETAILS a,FIXFLOW_OUTAGENT_AGENTINFO b "+
 				" WHERE a.EID=b.EID AND STATUS='0' ) "+
 				" ) z WHERE z.USERID=? ";
-		
+		*/
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(userId);
 		

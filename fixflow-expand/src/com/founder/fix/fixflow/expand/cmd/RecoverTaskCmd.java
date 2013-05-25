@@ -18,6 +18,7 @@ import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -70,7 +71,10 @@ public class RecoverTaskCmd extends AbstractExpandTaskCmd<RecoverTaskCommand,Voi
 
 			UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(recoverNodeId);
 
-			TaskCommandInst taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
+			
+			UserTaskBehavior userTaskNow=(UserTaskBehavior) processDefinition.getDefinitions().getElement(taskInstanceTemp.getNodeId());
+			
+			TaskCommandInst taskCommand = userTaskNow.getTaskCommandsMap().get(userCommandId);
 
 			ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
 			
@@ -94,7 +98,15 @@ public class RecoverTaskCmd extends AbstractExpandTaskCmd<RecoverTaskCommand,Voi
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
 
 			
-			 
+			List<TaskInstanceEntity> taskInstances=processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
+			
+			
+			for (TaskInstanceEntity taskInstanceEntity : taskInstances) {
+				if(taskInstanceEntity.getId().equals(taskId)){
+					taskInstanceEntity.setAssigneeWithoutCascade(userId);
+					taskInstanceEntity.customEnd(taskCommand, taskComment, this.agent, this.admin);
+				}
+			}
 			
 			
 			token.removeTaskInstanceSynchronization(taskCommand.getTaskCommandType(), taskCommand.getName(),this.taskComment, userId,this.agent,this.admin);
