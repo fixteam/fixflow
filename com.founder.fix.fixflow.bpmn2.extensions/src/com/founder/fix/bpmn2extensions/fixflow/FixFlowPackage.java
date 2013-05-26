@@ -8,6 +8,7 @@ package com.founder.fix.bpmn2extensions.fixflow;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -470,13 +471,31 @@ public interface FixFlowPackage extends EPackage {
 	int DOCUMENT_ROOT__TASK_TYPE = 43;
 
 	/**
+	 * The feature id for the '<em><b>Validation Level</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__VALIDATION_LEVEL = 44;
+
+	/**
+	 * The feature id for the '<em><b>Language Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__LANGUAGE_TYPE = 45;
+
+	/**
 	 * The number of structural features of the '<em>Document Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 44;
+	int DOCUMENT_ROOT_FEATURE_COUNT = 46;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ExpressionImpl <em>Expression</em>}' class.
@@ -1829,6 +1848,17 @@ public interface FixFlowPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel <em>Process Validation Level</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getProcessValidationLevel()
+	 * @generated
+	 */
+	int PROCESS_VALIDATION_LEVEL = 30;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2321,6 +2351,28 @@ public interface FixFlowPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDocumentRoot_TaskType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getValidationLevel <em>Validation Level</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Validation Level</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getValidationLevel()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EAttribute getDocumentRoot_ValidationLevel();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getLanguageType <em>Language Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Language Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getLanguageType()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EAttribute getDocumentRoot_LanguageType();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.Expression <em>Expression</em>}'.
@@ -3581,6 +3633,16 @@ public interface FixFlowPackage extends EPackage {
 	EReference getSkipComment_Expression();
 
 	/**
+	 * Returns the meta object for enum '{@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel <em>Process Validation Level</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Process Validation Level</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel
+	 * @generated
+	 */
+	EEnum getProcessValidationLevel();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3963,6 +4025,22 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DOCUMENT_ROOT__TASK_TYPE = eINSTANCE.getDocumentRoot_TaskType();
+
+		/**
+		 * The meta object literal for the '<em><b>Validation Level</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOCUMENT_ROOT__VALIDATION_LEVEL = eINSTANCE.getDocumentRoot_ValidationLevel();
+
+		/**
+		 * The meta object literal for the '<em><b>Language Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOCUMENT_ROOT__LANGUAGE_TYPE = eINSTANCE.getDocumentRoot_LanguageType();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ExpressionImpl <em>Expression</em>}' class.
@@ -4957,6 +5035,16 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SKIP_COMMENT__EXPRESSION = eINSTANCE.getSkipComment_Expression();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel <em>Process Validation Level</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getProcessValidationLevel()
+		 * @generated
+		 */
+		EEnum PROCESS_VALIDATION_LEVEL = eINSTANCE.getProcessValidationLevel();
 
 	}
 

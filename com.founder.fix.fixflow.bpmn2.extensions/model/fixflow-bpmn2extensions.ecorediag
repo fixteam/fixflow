@@ -99,6 +99,14 @@
         <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DocumentRoot/taskType"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_hMzZQpVhEeKgQ-KpU-ZMQg"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_PvhH4MKkEeKo3exuoSMERg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DocumentRoot/validationLevel"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_PvhH4cKkEeKo3exuoSMERg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_tUqDscW4EeKLPPrxnQ1Z4A" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DocumentRoot/languageType"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_tUqDssW4EeKLPPrxnQ1Z4A"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_FCuS1QEQEeGYKayJr7w6IA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_FCuS1gEQEeGYKayJr7w6IA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_FCuS1wEQEeGYKayJr7w6IA"/>
@@ -794,6 +802,33 @@
     <styles xmi:type="notation:ShapeStyle" xmi:id="_Cg_PsV5MEeKgedTxR1ksug" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="fixflow-bpmn2extensions.ecore#//SkipComment"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Cg_Psl5MEeKgedTxR1ksug" x="1940" y="165"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_7tHwkcKjEeKo3exuoSMERg" type="1005">
+    <children xmi:type="notation:Node" xmi:id="_7tHwlMKjEeKo3exuoSMERg" type="4010"/>
+    <children xmi:type="notation:Node" xmi:id="_7tHwlcKjEeKo3exuoSMERg" type="5008">
+      <children xmi:type="notation:Node" xmi:id="_9bsLMMKjEeKo3exuoSMERg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-bpmn2extensions.ecore#//ProcessValidationLevel/HIGH"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_9bsLMcKjEeKo3exuoSMERg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_96Y5YMKjEeKo3exuoSMERg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-bpmn2extensions.ecore#//ProcessValidationLevel/MEDIUM"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_96Y5YcKjEeKo3exuoSMERg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Bs_BQMKkEeKo3exuoSMERg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-bpmn2extensions.ecore#//ProcessValidationLevel/LOW"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Bs_BQcKkEeKo3exuoSMERg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_CujL8MKkEeKo3exuoSMERg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="fixflow-bpmn2extensions.ecore#//ProcessValidationLevel/NONE"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_CujL8cKkEeKo3exuoSMERg"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_7tHwlsKjEeKo3exuoSMERg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_7tHwl8KjEeKo3exuoSMERg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_7tHwmMKjEeKo3exuoSMERg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_7tHwksKjEeKo3exuoSMERg" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EEnum" href="fixflow-bpmn2extensions.ecore#//ProcessValidationLevel"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7tHwk8KjEeKo3exuoSMERg" x="1762" y="693"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_FCqocQEQEeGYKayJr7w6IA"/>
   <element xmi:type="ecore:EPackage" href="fixflow-bpmn2extensions.ecore#/"/>

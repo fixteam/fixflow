@@ -19,6 +19,7 @@ import com.founder.fix.bpmn2extensions.fixflow.LoopDataInputCollection;
 import com.founder.fix.bpmn2extensions.fixflow.LoopDataOutputCollection;
 import com.founder.fix.bpmn2extensions.fixflow.LoopMaximum;
 import com.founder.fix.bpmn2extensions.fixflow.MessageObj;
+import com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel;
 import com.founder.fix.bpmn2extensions.fixflow.ReceiveMessage;
 import com.founder.fix.bpmn2extensions.fixflow.ResourceFilter;
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
@@ -101,6 +102,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getAssignPolicyType <em>Assign Policy Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#isIsPersistence <em>Is Persistence</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getTaskType <em>Task Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getValidationLevel <em>Validation Level</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getLanguageType <em>Language Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -726,6 +729,46 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @ordered
 	 */
 	protected String taskType = TASK_TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getValidationLevel() <em>Validation Level</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValidationLevel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final ProcessValidationLevel VALIDATION_LEVEL_EDEFAULT = ProcessValidationLevel.HIGH;
+
+	/**
+	 * The cached value of the '{@link #getValidationLevel() <em>Validation Level</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValidationLevel()
+	 * @generated
+	 * @ordered
+	 */
+	protected ProcessValidationLevel validationLevel = VALIDATION_LEVEL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getLanguageType() <em>Language Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLanguageType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LANGUAGE_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLanguageType() <em>Language Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLanguageType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String languageType = LANGUAGE_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1861,6 +1904,48 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ProcessValidationLevel getValidationLevel() {
+		return validationLevel;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setValidationLevel(ProcessValidationLevel newValidationLevel) {
+		ProcessValidationLevel oldValidationLevel = validationLevel;
+		validationLevel = newValidationLevel == null ? VALIDATION_LEVEL_EDEFAULT : newValidationLevel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.DOCUMENT_ROOT__VALIDATION_LEVEL, oldValidationLevel, validationLevel));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getLanguageType() {
+		return languageType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLanguageType(String newLanguageType) {
+		String oldLanguageType = languageType;
+		languageType = newLanguageType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE, oldLanguageType, languageType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -2009,6 +2094,10 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return isIsPersistence();
 			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
 				return getTaskType();
+			case FixFlowPackage.DOCUMENT_ROOT__VALIDATION_LEVEL:
+				return getValidationLevel();
+			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
+				return getLanguageType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2159,6 +2248,12 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
 				setTaskType((String)newValue);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__VALIDATION_LEVEL:
+				setValidationLevel((ProcessValidationLevel)newValue);
+				return;
+			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
+				setLanguageType((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2303,6 +2398,12 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
 				setTaskType(TASK_TYPE_EDEFAULT);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__VALIDATION_LEVEL:
+				setValidationLevel(VALIDATION_LEVEL_EDEFAULT);
+				return;
+			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
+				setLanguageType(LANGUAGE_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2403,6 +2504,10 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return isPersistence != IS_PERSISTENCE_EDEFAULT;
 			case FixFlowPackage.DOCUMENT_ROOT__TASK_TYPE:
 				return TASK_TYPE_EDEFAULT == null ? taskType != null : !TASK_TYPE_EDEFAULT.equals(taskType);
+			case FixFlowPackage.DOCUMENT_ROOT__VALIDATION_LEVEL:
+				return validationLevel != VALIDATION_LEVEL_EDEFAULT;
+			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
+				return LANGUAGE_TYPE_EDEFAULT == null ? languageType != null : !LANGUAGE_TYPE_EDEFAULT.equals(languageType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2465,6 +2570,10 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 		result.append(isPersistence);
 		result.append(", taskType: ");
 		result.append(taskType);
+		result.append(", validationLevel: ");
+		result.append(validationLevel);
+		result.append(", languageType: ");
+		result.append(languageType);
 		result.append(')');
 		return result.toString();
 	}

@@ -28,6 +28,7 @@ import com.founder.fix.bpmn2extensions.fixflow.LoopDataOutputCollection;
 import com.founder.fix.bpmn2extensions.fixflow.LoopMaximum;
 import com.founder.fix.bpmn2extensions.fixflow.MessageObj;
 import com.founder.fix.bpmn2extensions.fixflow.ProcessInstanceVariable;
+import com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel;
 import com.founder.fix.bpmn2extensions.fixflow.ReceiveMessage;
 import com.founder.fix.bpmn2extensions.fixflow.ResourceFilter;
 import com.founder.fix.bpmn2extensions.fixflow.SkipAssignee;
@@ -41,6 +42,7 @@ import com.founder.fix.bpmn2extensions.fixflow.TokenVariable;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -264,6 +266,13 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * @generated
 	 */
 	private EClass skipCommentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum processValidationLevelEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -732,6 +741,24 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 */
 	public EAttribute getDocumentRoot_TaskType() {
 		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(43);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDocumentRoot_ValidationLevel() {
+		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(44);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDocumentRoot_LanguageType() {
+		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(45);
 	}
 
 	/**
@@ -1792,6 +1819,15 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getProcessValidationLevel() {
+		return processValidationLevelEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FixFlowFactory getFixFlowFactory() {
 		return (FixFlowFactory)getEFactoryInstance();
 	}
@@ -1860,6 +1896,8 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEReference(documentRootEClass, DOCUMENT_ROOT__ASSIGN_POLICY_TYPE);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__IS_PERSISTENCE);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__TASK_TYPE);
+		createEAttribute(documentRootEClass, DOCUMENT_ROOT__VALIDATION_LEVEL);
+		createEAttribute(documentRootEClass, DOCUMENT_ROOT__LANGUAGE_TYPE);
 
 		expressionEClass = createEClass(EXPRESSION);
 		createEAttribute(expressionEClass, EXPRESSION__VALUE);
@@ -2006,6 +2044,9 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 
 		skipCommentEClass = createEClass(SKIP_COMMENT);
 		createEReference(skipCommentEClass, SKIP_COMMENT__EXPRESSION);
+
+		// Create enums
+		processValidationLevelEEnum = createEEnum(PROCESS_VALIDATION_LEVEL);
 	}
 
 	/**
@@ -2086,6 +2127,8 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEReference(getDocumentRoot_AssignPolicyType(), this.getAssignPolicyType(), null, "assignPolicyType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDocumentRoot_IsPersistence(), theXMLTypePackage.getBoolean(), "isPersistence", "true", 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDocumentRoot_TaskType(), theXMLTypePackage.getString(), "taskType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDocumentRoot_ValidationLevel(), this.getProcessValidationLevel(), "validationLevel", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDocumentRoot_LanguageType(), theXMLTypePackage.getString(), "languageType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExpression_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2232,6 +2275,13 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 
 		initEClass(skipCommentEClass, SkipComment.class, "SkipComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSkipComment_Expression(), this.getExpression(), null, "expression", null, 0, 1, SkipComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(processValidationLevelEEnum, ProcessValidationLevel.class, "ProcessValidationLevel");
+		addEEnumLiteral(processValidationLevelEEnum, ProcessValidationLevel.HIGH);
+		addEEnumLiteral(processValidationLevelEEnum, ProcessValidationLevel.MEDIUM);
+		addEEnumLiteral(processValidationLevelEEnum, ProcessValidationLevel.LOW);
+		addEEnumLiteral(processValidationLevelEEnum, ProcessValidationLevel.NONE);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -2579,6 +2629,20 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		   new String[] {
 			 "namespace", "##targetNamespace",
 			 "kind", "attribute"
+		   });			
+		addAnnotation
+		  (getDocumentRoot_ValidationLevel(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getDocumentRoot_LanguageType(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
 		  (expressionEClass, 
@@ -3217,7 +3281,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 			 "name", "expression",
 			 "kind", "element",
 			 "namespace", "##targetNamespace"
-		   });
+		   });					
 	}
 
 } //FixFlowPackageImpl
