@@ -28,6 +28,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	
 	ProcessInstanceQuery isEnd();
 	
+	ProcessInstanceQuery containsSubProcess();
+	
 	ProcessInstanceQuery queryExpandTo(QueryExpandTo queryExpandTo);
 	
 

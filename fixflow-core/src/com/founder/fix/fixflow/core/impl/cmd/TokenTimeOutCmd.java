@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.core.impl.cmd;
 
 import java.util.Map;
 
+import org.eclipse.bpmn2.Activity;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.BoundaryEvent;
 import org.eclipse.bpmn2.CatchEvent;
@@ -67,10 +68,11 @@ public class TokenTimeOutCmd implements Command<Void> {
 			Event event=(Event)tokenEntity.getFlowNode();
 			if(event instanceof BoundaryEvent){
 				BoundaryEvent boundaryEvent=(BoundaryEvent)event;
+				Activity activity =boundaryEvent.getAttachedToRef();
 				boolean isCancelActivity=boundaryEvent.isCancelActivity();
 				if(isCancelActivity){
 					//如果是终止事件 则结束进入节点的时候的散发的所有子令牌 然后将父令牌 移动到超时节点往下进行
-					tokenEntity.signalKillChildMoveParentToken(boundaryEvent);
+					tokenEntity.signalKillChildMoveParentToken(boundaryEvent,activity);
 				}
 				else{
 					//如果不是终止事件 则默认方法驱动令牌
@@ -87,22 +89,25 @@ public class TokenTimeOutCmd implements Command<Void> {
 			BaseElement baseElement=processDefinition.getDefinitions().getElement(nodeId);
 			if(baseElement instanceof BoundaryEvent){
 				BoundaryEvent boundaryEvent=(BoundaryEvent)baseElement;
-				
+				Activity activity =boundaryEvent.getAttachedToRef();
 				
 				//String nodeTokenId = this.getId();
 				// 创建分支令牌并添加到集合中
 				boolean isCancelActivity=boundaryEvent.isCancelActivity();
 				if(isCancelActivity){
 					
+					//设置超时节点
+					//nodeChildExecutionContext.setTimeOutNode(nodeToken.getFlowNode());
 					//ExecutionContext executionContext=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity);
-					tokenEntity.signalKillChildMoveParentToken(boundaryEvent);
+					tokenEntity.signalKillChildMoveParentToken(boundaryEvent,activity);
 					//boundaryEvent.leave(executionContext);
 				}
 				else{
 					TokenEntity nodeToken=((FlowNodeImpl)tokenEntity.getFlowNode()).createForkedToken(tokenEntity, boundaryEvent.getId()).token;
 					
 					ExecutionContext nodeChildExecutionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(nodeToken);
-
+					//设置超时节点
+					nodeChildExecutionContext.setTimeOutNode(activity);
 					boundaryEvent.leave(nodeChildExecutionContext);
 					//this.forkedTokenEnter(nodeChildExecutionContext);
 				}
