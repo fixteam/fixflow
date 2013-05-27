@@ -240,6 +240,7 @@ public class FixFlowManageDialog extends TitleAreaDialog {
 						sqlCommand.delete("FIXFLOW_RUN_VARIABLE");
 						sqlCommand.delete("FIXFLOW_RUN_TASKIDENTITYLINK");
 						sqlCommand.delete("FIXFLOW_RUN_EVENT_SUBSCRIPTION");
+						sqlCommand.commit();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
