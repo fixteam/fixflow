@@ -6,7 +6,7 @@
  */
 package com.founder.fix.bpmn2extensions.coreconfig.impl;
 
-import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -18,20 +18,20 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Connection Management</b></em>'.
+ * An implementation of the model object '<em><b>Connection Management Instance Config</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl#getId <em>Id</em>}</li>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl#getName <em>Name</em>}</li>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl#getClassImpl <em>Class Impl</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl#getId <em>Id</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl#getName <em>Name</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl#getClassImpl <em>Class Impl</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ConnectionManagementImpl extends EObjectImpl implements ConnectionManagement {
+public class ConnectionManagementInstanceConfigImpl extends EObjectImpl implements ConnectionManagementInstanceConfig {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -97,7 +97,7 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ConnectionManagementImpl() {
+	protected ConnectionManagementInstanceConfigImpl() {
 		super();
 	}
 
@@ -108,7 +108,7 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CoreconfigPackage.Literals.CONNECTION_MANAGEMENT;
+		return CoreconfigPackage.Literals.CONNECTION_MANAGEMENT_INSTANCE_CONFIG;
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 		String oldId = id;
 		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.CONNECTION_MANAGEMENT__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID, oldId, id));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.CONNECTION_MANAGEMENT__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME, oldName, name));
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 		String oldClassImpl = classImpl;
 		classImpl = newClassImpl;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.CONNECTION_MANAGEMENT__CLASS_IMPL, oldClassImpl, classImpl));
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL, oldClassImpl, classImpl));
 	}
 
 	/**
@@ -182,11 +182,11 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__ID:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID:
 				return getId();
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__NAME:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME:
 				return getName();
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__CLASS_IMPL:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL:
 				return getClassImpl();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -200,13 +200,13 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__ID:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID:
 				setId((String)newValue);
 				return;
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__NAME:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME:
 				setName((String)newValue);
 				return;
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__CLASS_IMPL:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL:
 				setClassImpl((String)newValue);
 				return;
 		}
@@ -221,13 +221,13 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__ID:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__NAME:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__CLASS_IMPL:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL:
 				setClassImpl(CLASS_IMPL_EDEFAULT);
 				return;
 		}
@@ -242,11 +242,11 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__ID:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__NAME:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case CoreconfigPackage.CONNECTION_MANAGEMENT__CLASS_IMPL:
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL:
 				return CLASS_IMPL_EDEFAULT == null ? classImpl != null : !CLASS_IMPL_EDEFAULT.equals(classImpl);
 		}
 		return super.eIsSet(featureID);
@@ -272,4 +272,4 @@ public class ConnectionManagementImpl extends EObjectImpl implements ConnectionM
 		return result.toString();
 	}
 
-} //ConnectionManagementImpl
+} //ConnectionManagementInstanceConfigImpl

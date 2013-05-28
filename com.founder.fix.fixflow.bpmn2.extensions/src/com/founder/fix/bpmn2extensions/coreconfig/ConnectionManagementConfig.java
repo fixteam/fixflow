@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getSelected <em>Selected</em>}</li>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagement <em>Connection Management</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagementInstanceConfig <em>Connection Management Instance Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,20 +56,20 @@ public interface ConnectionManagementConfig extends EObject {
 	void setSelected(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Connection Management</b></em>' containment reference list.
-	 * The list contents are of type {@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement}.
+	 * Returns the value of the '<em><b>Connection Management Instance Config</b></em>' containment reference list.
+	 * The list contents are of type {@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Connection Management</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Connection Management Instance Config</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Connection Management</em>' containment reference list.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagementConfig_ConnectionManagement()
+	 * @return the value of the '<em>Connection Management Instance Config</em>' containment reference list.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagementConfig_ConnectionManagementInstanceConfig()
 	 * @model containment="true"
-	 *        extendedMetaData="name='connectionManagement' kind='element'"
+	 *        extendedMetaData="name='connectionManagementInstanceConfig' kind='element'"
 	 * @generated
 	 */
-	EList<ConnectionManagement> getConnectionManagement();
+	EList<ConnectionManagementInstanceConfig> getConnectionManagementInstanceConfig();
 
 } // ConnectionManagementConfig

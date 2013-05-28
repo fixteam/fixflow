@@ -10,23 +10,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Connection Management</b></em>'.
+ * A representation of the model object '<em><b>Connection Management Instance Config</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getId <em>Id</em>}</li>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getName <em>Name</em>}</li>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getClassImpl <em>Class Impl</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getId <em>Id</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getName <em>Name</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getClassImpl <em>Class Impl</em>}</li>
  * </ul>
  * </p>
  *
- * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagement()
- * @model extendedMetaData="name='connectionManagement'"
+ * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagementInstanceConfig()
+ * @model extendedMetaData="name='connectionManagementInstanceConfig'"
  * @generated
  */
-public interface ConnectionManagement extends EObject {
+public interface ConnectionManagementInstanceConfig extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -37,7 +37,7 @@ public interface ConnectionManagement extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagement_Id()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagementInstanceConfig_Id()
 	 * @model required="true"
 	 *        extendedMetaData="kind='attribute' name='id'"
 	 * @generated
@@ -45,7 +45,7 @@ public interface ConnectionManagement extends EObject {
 	String getId();
 
 	/**
-	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.
@@ -64,7 +64,7 @@ public interface ConnectionManagement extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagement_Name()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagementInstanceConfig_Name()
 	 * @model required="true"
 	 *        extendedMetaData="kind='attribute'"
 	 * @generated
@@ -72,7 +72,7 @@ public interface ConnectionManagement extends EObject {
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -91,7 +91,7 @@ public interface ConnectionManagement extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Class Impl</em>' attribute.
 	 * @see #setClassImpl(String)
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagement_ClassImpl()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getConnectionManagementInstanceConfig_ClassImpl()
 	 * @model required="true"
 	 *        extendedMetaData="kind='attribute'"
 	 * @generated
@@ -99,7 +99,7 @@ public interface ConnectionManagement extends EObject {
 	String getClassImpl();
 
 	/**
-	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getClassImpl <em>Class Impl</em>}' attribute.
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getClassImpl <em>Class Impl</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Class Impl</em>' attribute.
@@ -108,4 +108,4 @@ public interface ConnectionManagement extends EObject {
 	 */
 	void setClassImpl(String value);
 
-} // ConnectionManagement
+} // ConnectionManagementInstanceConfig

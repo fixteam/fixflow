@@ -200,8 +200,8 @@ public class CoreconfigAdapterFactory extends AdapterFactoryImpl {
 				return createConnectionManagementConfigAdapter();
 			}
 			@Override
-			public Adapter caseConnectionManagement(ConnectionManagement object) {
-				return createConnectionManagementAdapter();
+			public Adapter caseConnectionManagementInstanceConfig(ConnectionManagementInstanceConfig object) {
+				return createConnectionManagementInstanceConfigAdapter();
 			}
 			@Override
 			public Adapter caseImportDataVariableConfig(ImportDataVariableConfig object) {
@@ -680,16 +680,16 @@ public class CoreconfigAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement <em>Connection Management</em>}'.
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig <em>Connection Management Instance Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig
 	 * @generated
 	 */
-	public Adapter createConnectionManagementAdapter() {
+	public Adapter createConnectionManagementInstanceConfigAdapter() {
 		return null;
 	}
 

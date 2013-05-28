@@ -279,9 +279,9 @@ public class CoreconfigSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CoreconfigPackage.CONNECTION_MANAGEMENT: {
-				ConnectionManagement connectionManagement = (ConnectionManagement)theEObject;
-				T result = caseConnectionManagement(connectionManagement);
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG: {
+				ConnectionManagementInstanceConfig connectionManagementInstanceConfig = (ConnectionManagementInstanceConfig)theEObject;
+				T result = caseConnectionManagementInstanceConfig(connectionManagementInstanceConfig);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -782,17 +782,17 @@ public class CoreconfigSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Connection Management</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Connection Management Instance Config</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Connection Management</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Connection Management Instance Config</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseConnectionManagement(ConnectionManagement object) {
+	public T caseConnectionManagementInstanceConfig(ConnectionManagementInstanceConfig object) {
 		return null;
 	}
 

@@ -6,8 +6,8 @@
  */
 package com.founder.fix.bpmn2extensions.coreconfig.impl;
 
-import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement;
 import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 
 import java.util.Collection;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl#getSelected <em>Selected</em>}</li>
- *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl#getConnectionManagement <em>Connection Management</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl#getConnectionManagementInstanceConfig <em>Connection Management Instance Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,14 +62,14 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 	protected String selected = SELECTED_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getConnectionManagement() <em>Connection Management</em>}' containment reference list.
+	 * The cached value of the '{@link #getConnectionManagementInstanceConfig() <em>Connection Management Instance Config</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getConnectionManagement()
+	 * @see #getConnectionManagementInstanceConfig()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ConnectionManagement> connectionManagement;
+	protected EList<ConnectionManagementInstanceConfig> connectionManagementInstanceConfig;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -116,11 +116,11 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ConnectionManagement> getConnectionManagement() {
-		if (connectionManagement == null) {
-			connectionManagement = new EObjectContainmentEList<ConnectionManagement>(ConnectionManagement.class, this, CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT);
+	public EList<ConnectionManagementInstanceConfig> getConnectionManagementInstanceConfig() {
+		if (connectionManagementInstanceConfig == null) {
+			connectionManagementInstanceConfig = new EObjectContainmentEList<ConnectionManagementInstanceConfig>(ConnectionManagementInstanceConfig.class, this, CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG);
 		}
-		return connectionManagement;
+		return connectionManagementInstanceConfig;
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT:
-				return ((InternalEList<?>)getConnectionManagement()).basicRemove(otherEnd, msgs);
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG:
+				return ((InternalEList<?>)getConnectionManagementInstanceConfig()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -147,8 +147,8 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 		switch (featureID) {
 			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__SELECTED:
 				return getSelected();
-			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT:
-				return getConnectionManagement();
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG:
+				return getConnectionManagementInstanceConfig();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -165,9 +165,9 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__SELECTED:
 				setSelected((String)newValue);
 				return;
-			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT:
-				getConnectionManagement().clear();
-				getConnectionManagement().addAll((Collection<? extends ConnectionManagement>)newValue);
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG:
+				getConnectionManagementInstanceConfig().clear();
+				getConnectionManagementInstanceConfig().addAll((Collection<? extends ConnectionManagementInstanceConfig>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -184,8 +184,8 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__SELECTED:
 				setSelected(SELECTED_EDEFAULT);
 				return;
-			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT:
-				getConnectionManagement().clear();
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG:
+				getConnectionManagementInstanceConfig().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -201,8 +201,8 @@ public class ConnectionManagementConfigImpl extends EObjectImpl implements Conne
 		switch (featureID) {
 			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__SELECTED:
 				return SELECTED_EDEFAULT == null ? selected != null : !SELECTED_EDEFAULT.equals(selected);
-			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT:
-				return connectionManagement != null && !connectionManagement.isEmpty();
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG:
+				return connectionManagementInstanceConfig != null && !connectionManagementInstanceConfig.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

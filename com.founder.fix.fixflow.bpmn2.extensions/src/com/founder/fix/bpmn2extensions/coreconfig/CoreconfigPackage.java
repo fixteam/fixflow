@@ -1895,13 +1895,13 @@ public interface CoreconfigPackage extends EPackage {
 	int CONNECTION_MANAGEMENT_CONFIG__SELECTED = 0;
 
 	/**
-	 * The feature id for the '<em><b>Connection Management</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Connection Management Instance Config</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT = 1;
+	int CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG = 1;
 
 	/**
 	 * The number of structural features of the '<em>Connection Management Config</em>' class.
@@ -1913,14 +1913,14 @@ public interface CoreconfigPackage extends EPackage {
 	int CONNECTION_MANAGEMENT_CONFIG_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl <em>Connection Management</em>}' class.
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl <em>Connection Management Instance Config</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagement()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagementInstanceConfig()
 	 * @generated
 	 */
-	int CONNECTION_MANAGEMENT = 32;
+	int CONNECTION_MANAGEMENT_INSTANCE_CONFIG = 32;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1929,7 +1929,7 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_MANAGEMENT__ID = 0;
+	int CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1938,7 +1938,7 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_MANAGEMENT__NAME = 1;
+	int CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Class Impl</b></em>' attribute.
@@ -1947,16 +1947,16 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_MANAGEMENT__CLASS_IMPL = 2;
+	int CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL = 2;
 
 	/**
-	 * The number of structural features of the '<em>Connection Management</em>' class.
+	 * The number of structural features of the '<em>Connection Management Instance Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_MANAGEMENT_FEATURE_COUNT = 3;
+	int CONNECTION_MANAGEMENT_INSTANCE_CONFIG_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableConfigImpl <em>Import Data Variable Config</em>}' class.
@@ -3882,58 +3882,58 @@ public interface CoreconfigPackage extends EPackage {
 	EAttribute getConnectionManagementConfig_Selected();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagement <em>Connection Management</em>}'.
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagementInstanceConfig <em>Connection Management Instance Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Connection Management</em>'.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagement()
+	 * @return the meta object for the containment reference list '<em>Connection Management Instance Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagementInstanceConfig()
 	 * @see #getConnectionManagementConfig()
 	 * @generated
 	 */
-	EReference getConnectionManagementConfig_ConnectionManagement();
+	EReference getConnectionManagementConfig_ConnectionManagementInstanceConfig();
 
 	/**
-	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement <em>Connection Management</em>}'.
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig <em>Connection Management Instance Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Connection Management</em>'.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement
+	 * @return the meta object for class '<em>Connection Management Instance Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig
 	 * @generated
 	 */
-	EClass getConnectionManagement();
+	EClass getConnectionManagementInstanceConfig();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getId()
-	 * @see #getConnectionManagement()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getId()
+	 * @see #getConnectionManagementInstanceConfig()
 	 * @generated
 	 */
-	EAttribute getConnectionManagement_Id();
+	EAttribute getConnectionManagementInstanceConfig_Id();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getName()
-	 * @see #getConnectionManagement()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getName()
+	 * @see #getConnectionManagementInstanceConfig()
 	 * @generated
 	 */
-	EAttribute getConnectionManagement_Name();
+	EAttribute getConnectionManagementInstanceConfig_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getClassImpl <em>Class Impl</em>}'.
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getClassImpl <em>Class Impl</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Class Impl</em>'.
-	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getClassImpl()
-	 * @see #getConnectionManagement()
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig#getClassImpl()
+	 * @see #getConnectionManagementInstanceConfig()
 	 * @generated
 	 */
-	EAttribute getConnectionManagement_ClassImpl();
+	EAttribute getConnectionManagementInstanceConfig_ClassImpl();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig <em>Import Data Variable Config</em>}'.
@@ -5458,22 +5458,22 @@ public interface CoreconfigPackage extends EPackage {
 		EAttribute CONNECTION_MANAGEMENT_CONFIG__SELECTED = eINSTANCE.getConnectionManagementConfig_Selected();
 
 		/**
-		 * The meta object literal for the '<em><b>Connection Management</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Connection Management Instance Config</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT = eINSTANCE.getConnectionManagementConfig_ConnectionManagement();
+		EReference CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG = eINSTANCE.getConnectionManagementConfig_ConnectionManagementInstanceConfig();
 
 		/**
-		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl <em>Connection Management</em>}' class.
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl <em>Connection Management Instance Config</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl
-		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagement()
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementInstanceConfigImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagementInstanceConfig()
 		 * @generated
 		 */
-		EClass CONNECTION_MANAGEMENT = eINSTANCE.getConnectionManagement();
+		EClass CONNECTION_MANAGEMENT_INSTANCE_CONFIG = eINSTANCE.getConnectionManagementInstanceConfig();
 
 		/**
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
@@ -5481,7 +5481,7 @@ public interface CoreconfigPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CONNECTION_MANAGEMENT__ID = eINSTANCE.getConnectionManagement_Id();
+		EAttribute CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID = eINSTANCE.getConnectionManagementInstanceConfig_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -5489,7 +5489,7 @@ public interface CoreconfigPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CONNECTION_MANAGEMENT__NAME = eINSTANCE.getConnectionManagement_Name();
+		EAttribute CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME = eINSTANCE.getConnectionManagementInstanceConfig_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Class Impl</b></em>' attribute feature.
@@ -5497,7 +5497,7 @@ public interface CoreconfigPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CONNECTION_MANAGEMENT__CLASS_IMPL = eINSTANCE.getConnectionManagement_ClassImpl();
+		EAttribute CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL = eINSTANCE.getConnectionManagementInstanceConfig_ClassImpl();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableConfigImpl <em>Import Data Variable Config</em>}' class.

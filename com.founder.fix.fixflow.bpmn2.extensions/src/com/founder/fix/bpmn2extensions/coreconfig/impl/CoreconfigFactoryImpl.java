@@ -93,7 +93,7 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 			case CoreconfigPackage.TASK_TYPE_CONFIG: return createTaskTypeConfig();
 			case CoreconfigPackage.TASK_TYPE: return createTaskType();
 			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG: return createConnectionManagementConfig();
-			case CoreconfigPackage.CONNECTION_MANAGEMENT: return createConnectionManagement();
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_INSTANCE_CONFIG: return createConnectionManagementInstanceConfig();
 			case CoreconfigPackage.IMPORT_DATA_VARIABLE_CONFIG: return createImportDataVariableConfig();
 			case CoreconfigPackage.IMPORT_DATA_VARIABLE: return createImportDataVariable();
 			default:
@@ -460,9 +460,9 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ConnectionManagement createConnectionManagement() {
-		ConnectionManagementImpl connectionManagement = new ConnectionManagementImpl();
-		return connectionManagement;
+	public ConnectionManagementInstanceConfig createConnectionManagementInstanceConfig() {
+		ConnectionManagementInstanceConfigImpl connectionManagementInstanceConfig = new ConnectionManagementInstanceConfigImpl();
+		return connectionManagementInstanceConfig;
 	}
 
 	/**

@@ -1074,17 +1074,17 @@
         <details key="kind" value="attribute"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionManagement" upperBound="-1"
-        eType="#//ConnectionManagement" containment="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionManagementInstanceConfig"
+        upperBound="-1" eType="#//ConnectionManagementInstanceConfig" containment="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="name" value="connectionManagement"/>
+        <details key="name" value="connectionManagementInstanceConfig"/>
         <details key="kind" value="element"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConnectionManagement">
+  <eClassifiers xsi:type="ecore:EClass" name="ConnectionManagementInstanceConfig">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="connectionManagement"/>
+      <details key="name" value="connectionManagementInstanceConfig"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">

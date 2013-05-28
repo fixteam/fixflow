@@ -314,13 +314,13 @@ public interface CoreconfigFactory extends EFactory {
 	ConnectionManagementConfig createConnectionManagementConfig();
 
 	/**
-	 * Returns a new object of class '<em>Connection Management</em>'.
+	 * Returns a new object of class '<em>Connection Management Instance Config</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Connection Management</em>'.
+	 * @return a new object of class '<em>Connection Management Instance Config</em>'.
 	 * @generated
 	 */
-	ConnectionManagement createConnectionManagement();
+	ConnectionManagementInstanceConfig createConnectionManagementInstanceConfig();
 
 	/**
 	 * Returns a new object of class '<em>Import Data Variable Config</em>'.

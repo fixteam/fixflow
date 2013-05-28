@@ -9,8 +9,8 @@ package com.founder.fix.bpmn2extensions.coreconfig.impl;
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicy;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
-import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement;
 import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigFactory;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 import com.founder.fix.bpmn2extensions.coreconfig.DBType;
@@ -290,7 +290,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass connectionManagementEClass = null;
+	private EClass connectionManagementInstanceConfigEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1907,7 +1907,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConnectionManagementConfig_ConnectionManagement() {
+	public EReference getConnectionManagementConfig_ConnectionManagementInstanceConfig() {
 		return (EReference)connectionManagementConfigEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1916,8 +1916,8 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getConnectionManagement() {
-		return connectionManagementEClass;
+	public EClass getConnectionManagementInstanceConfig() {
+		return connectionManagementInstanceConfigEClass;
 	}
 
 	/**
@@ -1925,8 +1925,8 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getConnectionManagement_Id() {
-		return (EAttribute)connectionManagementEClass.getEStructuralFeatures().get(0);
+	public EAttribute getConnectionManagementInstanceConfig_Id() {
+		return (EAttribute)connectionManagementInstanceConfigEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1934,8 +1934,8 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getConnectionManagement_Name() {
-		return (EAttribute)connectionManagementEClass.getEStructuralFeatures().get(1);
+	public EAttribute getConnectionManagementInstanceConfig_Name() {
+		return (EAttribute)connectionManagementInstanceConfigEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1943,8 +1943,8 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getConnectionManagement_ClassImpl() {
-		return (EAttribute)connectionManagementEClass.getEStructuralFeatures().get(2);
+	public EAttribute getConnectionManagementInstanceConfig_ClassImpl() {
+		return (EAttribute)connectionManagementInstanceConfigEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2247,12 +2247,12 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 
 		connectionManagementConfigEClass = createEClass(CONNECTION_MANAGEMENT_CONFIG);
 		createEAttribute(connectionManagementConfigEClass, CONNECTION_MANAGEMENT_CONFIG__SELECTED);
-		createEReference(connectionManagementConfigEClass, CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT);
+		createEReference(connectionManagementConfigEClass, CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT_INSTANCE_CONFIG);
 
-		connectionManagementEClass = createEClass(CONNECTION_MANAGEMENT);
-		createEAttribute(connectionManagementEClass, CONNECTION_MANAGEMENT__ID);
-		createEAttribute(connectionManagementEClass, CONNECTION_MANAGEMENT__NAME);
-		createEAttribute(connectionManagementEClass, CONNECTION_MANAGEMENT__CLASS_IMPL);
+		connectionManagementInstanceConfigEClass = createEClass(CONNECTION_MANAGEMENT_INSTANCE_CONFIG);
+		createEAttribute(connectionManagementInstanceConfigEClass, CONNECTION_MANAGEMENT_INSTANCE_CONFIG__ID);
+		createEAttribute(connectionManagementInstanceConfigEClass, CONNECTION_MANAGEMENT_INSTANCE_CONFIG__NAME);
+		createEAttribute(connectionManagementInstanceConfigEClass, CONNECTION_MANAGEMENT_INSTANCE_CONFIG__CLASS_IMPL);
 
 		importDataVariableConfigEClass = createEClass(IMPORT_DATA_VARIABLE_CONFIG);
 		createEReference(importDataVariableConfigEClass, IMPORT_DATA_VARIABLE_CONFIG__IMPORT_DATA_VARIABLE);
@@ -2497,12 +2497,12 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 
 		initEClass(connectionManagementConfigEClass, ConnectionManagementConfig.class, "ConnectionManagementConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getConnectionManagementConfig_Selected(), ecorePackage.getEString(), "selected", null, 1, 1, ConnectionManagementConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getConnectionManagementConfig_ConnectionManagement(), this.getConnectionManagement(), null, "connectionManagement", null, 0, -1, ConnectionManagementConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnectionManagementConfig_ConnectionManagementInstanceConfig(), this.getConnectionManagementInstanceConfig(), null, "connectionManagementInstanceConfig", null, 0, -1, ConnectionManagementConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(connectionManagementEClass, ConnectionManagement.class, "ConnectionManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getConnectionManagement_Id(), ecorePackage.getEString(), "id", null, 1, 1, ConnectionManagement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConnectionManagement_Name(), ecorePackage.getEString(), "name", null, 1, 1, ConnectionManagement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConnectionManagement_ClassImpl(), ecorePackage.getEString(), "classImpl", null, 1, 1, ConnectionManagement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(connectionManagementInstanceConfigEClass, ConnectionManagementInstanceConfig.class, "ConnectionManagementInstanceConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConnectionManagementInstanceConfig_Id(), ecorePackage.getEString(), "id", null, 1, 1, ConnectionManagementInstanceConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConnectionManagementInstanceConfig_Name(), ecorePackage.getEString(), "name", null, 1, 1, ConnectionManagementInstanceConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConnectionManagementInstanceConfig_ClassImpl(), ecorePackage.getEString(), "classImpl", null, 1, 1, ConnectionManagementInstanceConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(importDataVariableConfigEClass, ImportDataVariableConfig.class, "ImportDataVariableConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getImportDataVariableConfig_ImportDataVariable(), this.getImportDataVariable(), null, "importDataVariable", null, 1, -1, ImportDataVariableConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3600,33 +3600,33 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 			 "kind", "attribute"
 		   });		
 		addAnnotation
-		  (getConnectionManagementConfig_ConnectionManagement(), 
+		  (getConnectionManagementConfig_ConnectionManagementInstanceConfig(), 
 		   source, 
 		   new String[] {
-			 "name", "connectionManagement",
+			 "name", "connectionManagementInstanceConfig",
 			 "kind", "element"
 		   });		
 		addAnnotation
-		  (connectionManagementEClass, 
+		  (connectionManagementInstanceConfigEClass, 
 		   source, 
 		   new String[] {
-			 "name", "connectionManagement"
+			 "name", "connectionManagementInstanceConfig"
 		   });		
 		addAnnotation
-		  (getConnectionManagement_Id(), 
+		  (getConnectionManagementInstanceConfig_Id(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
 		   });		
 		addAnnotation
-		  (getConnectionManagement_Name(), 
+		  (getConnectionManagementInstanceConfig_Name(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute"
 		   });		
 		addAnnotation
-		  (getConnectionManagement_ClassImpl(), 
+		  (getConnectionManagementInstanceConfig_ClassImpl(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute"

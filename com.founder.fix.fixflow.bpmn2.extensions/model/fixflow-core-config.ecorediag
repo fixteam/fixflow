@@ -1006,15 +1006,15 @@
     <children xmi:type="notation:Node" xmi:id="_roLQoMdhEeK8TvUaFwohKA" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_roLQocdhEeK8TvUaFwohKA" type="5001">
       <children xmi:type="notation:Node" xmi:id="_y_dnQMdhEeK8TvUaFwohKA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//ConnectionManagement/id"/>
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//ConnectionManagementInstanceConfig/id"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_y_dnQcdhEeK8TvUaFwohKA"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_0htdIMdhEeK8TvUaFwohKA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//ConnectionManagement/name"/>
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//ConnectionManagementInstanceConfig/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_0htdIcdhEeK8TvUaFwohKA"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_2oHwAMdhEeK8TvUaFwohKA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//ConnectionManagement/classImpl"/>
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//ConnectionManagementInstanceConfig/classImpl"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_2oHwAcdhEeK8TvUaFwohKA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_roLQosdhEeK8TvUaFwohKA"/>
@@ -1027,8 +1027,8 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_roLQqMdhEeK8TvUaFwohKA"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_roKpkcdhEeK8TvUaFwohKA" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EClass" href="fixflow-core-config.ecore#//ConnectionManagement"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_roKpksdhEeK8TvUaFwohKA" x="305" y="1090"/>
+    <element xmi:type="ecore:EClass" href="fixflow-core-config.ecore#//ConnectionManagementInstanceConfig"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_roKpksdhEeK8TvUaFwohKA" x="250" y="1115"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_OcRFMMdjEeK8TvUaFwohKA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_OcRsQMdjEeK8TvUaFwohKA" type="4001"/>
@@ -1499,7 +1499,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_p8UWUcdiEeK8TvUaFwohKA" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_p8UWUsdiEeK8TvUaFwohKA" fontColor="4210752" fontName="Microsoft YaHei UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="fixflow-core-config.ecore#//ConnectionManagementConfig/connectionManagement"/>
+    <element xmi:type="ecore:EReference" href="fixflow-core-config.ecore#//ConnectionManagementConfig/connectionManagementInstanceConfig"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p8UWU8diEeK8TvUaFwohKA" points="[-7, 25, 4, -57]$[-7, 41, 4, -41]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_88BFEMdjEeK8TvUaFwohKA" type="3002" source="_by2V0DpiEeGATK0MSWXD6A" target="_OcRFMMdjEeK8TvUaFwohKA">
