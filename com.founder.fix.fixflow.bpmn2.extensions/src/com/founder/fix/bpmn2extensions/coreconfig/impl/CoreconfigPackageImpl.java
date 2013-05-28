@@ -9,6 +9,8 @@ package com.founder.fix.bpmn2extensions.coreconfig.impl;
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicy;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigFactory;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 import com.founder.fix.bpmn2extensions.coreconfig.DBType;
@@ -26,6 +28,8 @@ import com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupDefinition;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupDefinitionConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
+import com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable;
+import com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.InternationalizationConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.MailInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.PigeonholeConfig;
@@ -279,6 +283,34 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass connectionManagementConfigEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass connectionManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass importDataVariableConfigEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass importDataVariableEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum dbTypeEEnum = null;
 
 	/**
@@ -500,6 +532,24 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 */
 	public EReference getFixFlowConfig_TaskTypeConfig() {
 		return (EReference)fixFlowConfigEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFixFlowConfig_ConnectionManagementConfig() {
+		return (EReference)fixFlowConfigEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFixFlowConfig_ImportDataVariableConfig() {
+		return (EReference)fixFlowConfigEClass.getEStructuralFeatures().get(17);
 	}
 
 	/**
@@ -1839,6 +1889,123 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getConnectionManagementConfig() {
+		return connectionManagementConfigEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectionManagementConfig_Selected() {
+		return (EAttribute)connectionManagementConfigEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConnectionManagementConfig_ConnectionManagement() {
+		return (EReference)connectionManagementConfigEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getConnectionManagement() {
+		return connectionManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectionManagement_Id() {
+		return (EAttribute)connectionManagementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectionManagement_Name() {
+		return (EAttribute)connectionManagementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectionManagement_ClassImpl() {
+		return (EAttribute)connectionManagementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getImportDataVariableConfig() {
+		return importDataVariableConfigEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getImportDataVariableConfig_ImportDataVariable() {
+		return (EReference)importDataVariableConfigEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getImportDataVariable() {
+		return importDataVariableEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImportDataVariable_Id() {
+		return (EAttribute)importDataVariableEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImportDataVariable_Name() {
+		return (EAttribute)importDataVariableEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImportDataVariable_Expression() {
+		return (EAttribute)importDataVariableEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDBType() {
 		return dbTypeEEnum;
 	}
@@ -1897,6 +2064,8 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__ASSIGN_POLICY_CONFIG);
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG);
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__TASK_TYPE_CONFIG);
+		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG);
+		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG);
 
 		dataBaseConfigEClass = createEClass(DATA_BASE_CONFIG);
 		createEReference(dataBaseConfigEClass, DATA_BASE_CONFIG__DATA_BASE);
@@ -2076,6 +2245,23 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		createEAttribute(taskTypeEClass, TASK_TYPE__TYPE_ID);
 		createEAttribute(taskTypeEClass, TASK_TYPE__TYPE_NAME);
 
+		connectionManagementConfigEClass = createEClass(CONNECTION_MANAGEMENT_CONFIG);
+		createEAttribute(connectionManagementConfigEClass, CONNECTION_MANAGEMENT_CONFIG__SELECTED);
+		createEReference(connectionManagementConfigEClass, CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT);
+
+		connectionManagementEClass = createEClass(CONNECTION_MANAGEMENT);
+		createEAttribute(connectionManagementEClass, CONNECTION_MANAGEMENT__ID);
+		createEAttribute(connectionManagementEClass, CONNECTION_MANAGEMENT__NAME);
+		createEAttribute(connectionManagementEClass, CONNECTION_MANAGEMENT__CLASS_IMPL);
+
+		importDataVariableConfigEClass = createEClass(IMPORT_DATA_VARIABLE_CONFIG);
+		createEReference(importDataVariableConfigEClass, IMPORT_DATA_VARIABLE_CONFIG__IMPORT_DATA_VARIABLE);
+
+		importDataVariableEClass = createEClass(IMPORT_DATA_VARIABLE);
+		createEAttribute(importDataVariableEClass, IMPORT_DATA_VARIABLE__ID);
+		createEAttribute(importDataVariableEClass, IMPORT_DATA_VARIABLE__NAME);
+		createEAttribute(importDataVariableEClass, IMPORT_DATA_VARIABLE__EXPRESSION);
+
 		// Create enums
 		dbTypeEEnum = createEEnum(DB_TYPE);
 		timeUnitTypeEEnum = createEEnum(TIME_UNIT_TYPE);
@@ -2128,6 +2314,8 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEReference(getFixFlowConfig_AssignPolicyConfig(), this.getAssignPolicyConfig(), null, "assignPolicyConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFixFlowConfig_FixThreadPoolExecutorConfig(), this.getFixThreadPoolExecutorConfig(), null, "fixThreadPoolExecutorConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFixFlowConfig_TaskTypeConfig(), this.getTaskTypeConfig(), null, "taskTypeConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFixFlowConfig_ConnectionManagementConfig(), this.getConnectionManagementConfig(), null, "connectionManagementConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFixFlowConfig_ImportDataVariableConfig(), this.getImportDataVariableConfig(), null, "importDataVariableConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dataBaseConfigEClass, DataBaseConfig.class, "DataBaseConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataBaseConfig_DataBase(), this.getDataBase(), null, "dataBase", null, 1, -1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2307,6 +2495,23 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEAttribute(getTaskType_TypeId(), ecorePackage.getEString(), "typeId", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskType_TypeName(), ecorePackage.getEString(), "typeName", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(connectionManagementConfigEClass, ConnectionManagementConfig.class, "ConnectionManagementConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConnectionManagementConfig_Selected(), ecorePackage.getEString(), "selected", null, 1, 1, ConnectionManagementConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnectionManagementConfig_ConnectionManagement(), this.getConnectionManagement(), null, "connectionManagement", null, 0, -1, ConnectionManagementConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(connectionManagementEClass, ConnectionManagement.class, "ConnectionManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConnectionManagement_Id(), ecorePackage.getEString(), "id", null, 1, 1, ConnectionManagement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConnectionManagement_Name(), ecorePackage.getEString(), "name", null, 1, 1, ConnectionManagement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConnectionManagement_ClassImpl(), ecorePackage.getEString(), "classImpl", null, 1, 1, ConnectionManagement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(importDataVariableConfigEClass, ImportDataVariableConfig.class, "ImportDataVariableConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getImportDataVariableConfig_ImportDataVariable(), this.getImportDataVariable(), null, "importDataVariable", null, 1, -1, ImportDataVariableConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(importDataVariableEClass, ImportDataVariable.class, "ImportDataVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getImportDataVariable_Id(), ecorePackage.getEString(), "id", null, 1, 1, ImportDataVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getImportDataVariable_Name(), ecorePackage.getEString(), "name", null, 1, 1, ImportDataVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getImportDataVariable_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, ImportDataVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(dbTypeEEnum, DBType.class, "DBType");
 		addEEnumLiteral(dbTypeEEnum, DBType.OTHER);
@@ -2453,6 +2658,20 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		   source, 
 		   new String[] {
 			 "name", "taskTypeConfig",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (getFixFlowConfig_ConnectionManagementConfig(), 
+		   source, 
+		   new String[] {
+			 "name", "connectionManagementConfig",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (getFixFlowConfig_ImportDataVariableConfig(), 
+		   source, 
+		   new String[] {
+			 "name", "importDataVariableConfig",
 			 "kind", "element"
 		   });		
 		addAnnotation
@@ -3366,7 +3585,91 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		   source, 
 		   new String[] {
 			 "kind", "attribute"
-		   });	
+		   });			
+		addAnnotation
+		  (connectionManagementConfigEClass, 
+		   source, 
+		   new String[] {
+			 "name", "connectionManagementConfig"
+		   });		
+		addAnnotation
+		  (getConnectionManagementConfig_Selected(), 
+		   source, 
+		   new String[] {
+			 "name", "selected",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getConnectionManagementConfig_ConnectionManagement(), 
+		   source, 
+		   new String[] {
+			 "name", "connectionManagement",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (connectionManagementEClass, 
+		   source, 
+		   new String[] {
+			 "name", "connectionManagement"
+		   });		
+		addAnnotation
+		  (getConnectionManagement_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
+		   });		
+		addAnnotation
+		  (getConnectionManagement_Name(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getConnectionManagement_ClassImpl(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (importDataVariableConfigEClass, 
+		   source, 
+		   new String[] {
+			 "name", "importDataVariableConfig"
+		   });		
+		addAnnotation
+		  (getImportDataVariableConfig_ImportDataVariable(), 
+		   source, 
+		   new String[] {
+			 "name", "importDataVariable",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (importDataVariableEClass, 
+		   source, 
+		   new String[] {
+			 "name", "importDataVariable"
+		   });		
+		addAnnotation
+		  (getImportDataVariable_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getImportDataVariable_Name(), 
+		   source, 
+		   new String[] {
+			 "name", "name",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getImportDataVariable_Expression(), 
+		   source, 
+		   new String[] {
+			 "name", "expression",
+			 "kind", "attribute"
+		   });
 	}
 
 } //CoreconfigPackageImpl

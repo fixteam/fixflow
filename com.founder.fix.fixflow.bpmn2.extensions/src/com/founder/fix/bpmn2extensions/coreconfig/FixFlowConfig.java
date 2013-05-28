@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getAssignPolicyConfig <em>Assign Policy Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getTaskTypeConfig <em>Task Type Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getConnectionManagementConfig <em>Connection Management Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getImportDataVariableConfig <em>Import Data Variable Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -471,5 +473,59 @@ public interface FixFlowConfig extends EObject {
 	 * @generated
 	 */
 	void setTaskTypeConfig(TaskTypeConfig value);
+
+	/**
+	 * Returns the value of the '<em><b>Connection Management Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Connection Management Config</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Connection Management Config</em>' containment reference.
+	 * @see #setConnectionManagementConfig(ConnectionManagementConfig)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixFlowConfig_ConnectionManagementConfig()
+	 * @model containment="true"
+	 *        extendedMetaData="name='connectionManagementConfig' kind='element'"
+	 * @generated
+	 */
+	ConnectionManagementConfig getConnectionManagementConfig();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getConnectionManagementConfig <em>Connection Management Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Connection Management Config</em>' containment reference.
+	 * @see #getConnectionManagementConfig()
+	 * @generated
+	 */
+	void setConnectionManagementConfig(ConnectionManagementConfig value);
+
+	/**
+	 * Returns the value of the '<em><b>Import Data Variable Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Import Data Variable Config</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Import Data Variable Config</em>' containment reference.
+	 * @see #setImportDataVariableConfig(ImportDataVariableConfig)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixFlowConfig_ImportDataVariableConfig()
+	 * @model containment="true"
+	 *        extendedMetaData="name='importDataVariableConfig' kind='element'"
+	 * @generated
+	 */
+	ImportDataVariableConfig getImportDataVariableConfig();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getImportDataVariableConfig <em>Import Data Variable Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Import Data Variable Config</em>' containment reference.
+	 * @see #getImportDataVariableConfig()
+	 * @generated
+	 */
+	void setImportDataVariableConfig(ImportDataVariableConfig value);
 
 } // FixFlowConfig

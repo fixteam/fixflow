@@ -7,6 +7,7 @@
 package com.founder.fix.bpmn2extensions.coreconfig.impl;
 
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 import com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig;
@@ -16,6 +17,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.ExpandCmdConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.FixThreadPoolExecutorConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupDefinitionConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.InternationalizationConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.PigeonholeConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.PriorityConfig;
@@ -57,6 +59,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getAssignPolicyConfig <em>Assign Policy Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getFixThreadPoolExecutorConfig <em>Fix Thread Pool Executor Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getTaskTypeConfig <em>Task Type Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getConnectionManagementConfig <em>Connection Management Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getImportDataVariableConfig <em>Import Data Variable Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -222,6 +226,26 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * @ordered
 	 */
 	protected TaskTypeConfig taskTypeConfig;
+
+	/**
+	 * The cached value of the '{@link #getConnectionManagementConfig() <em>Connection Management Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConnectionManagementConfig()
+	 * @generated
+	 * @ordered
+	 */
+	protected ConnectionManagementConfig connectionManagementConfig;
+
+	/**
+	 * The cached value of the '{@link #getImportDataVariableConfig() <em>Import Data Variable Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportDataVariableConfig()
+	 * @generated
+	 * @ordered
+	 */
+	protected ImportDataVariableConfig importDataVariableConfig;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -935,6 +959,92 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ConnectionManagementConfig getConnectionManagementConfig() {
+		return connectionManagementConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetConnectionManagementConfig(ConnectionManagementConfig newConnectionManagementConfig, NotificationChain msgs) {
+		ConnectionManagementConfig oldConnectionManagementConfig = connectionManagementConfig;
+		connectionManagementConfig = newConnectionManagementConfig;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG, oldConnectionManagementConfig, newConnectionManagementConfig);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConnectionManagementConfig(ConnectionManagementConfig newConnectionManagementConfig) {
+		if (newConnectionManagementConfig != connectionManagementConfig) {
+			NotificationChain msgs = null;
+			if (connectionManagementConfig != null)
+				msgs = ((InternalEObject)connectionManagementConfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG, null, msgs);
+			if (newConnectionManagementConfig != null)
+				msgs = ((InternalEObject)newConnectionManagementConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG, null, msgs);
+			msgs = basicSetConnectionManagementConfig(newConnectionManagementConfig, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG, newConnectionManagementConfig, newConnectionManagementConfig));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImportDataVariableConfig getImportDataVariableConfig() {
+		return importDataVariableConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetImportDataVariableConfig(ImportDataVariableConfig newImportDataVariableConfig, NotificationChain msgs) {
+		ImportDataVariableConfig oldImportDataVariableConfig = importDataVariableConfig;
+		importDataVariableConfig = newImportDataVariableConfig;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG, oldImportDataVariableConfig, newImportDataVariableConfig);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImportDataVariableConfig(ImportDataVariableConfig newImportDataVariableConfig) {
+		if (newImportDataVariableConfig != importDataVariableConfig) {
+			NotificationChain msgs = null;
+			if (importDataVariableConfig != null)
+				msgs = ((InternalEObject)importDataVariableConfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG, null, msgs);
+			if (newImportDataVariableConfig != null)
+				msgs = ((InternalEObject)newImportDataVariableConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG, null, msgs);
+			msgs = basicSetImportDataVariableConfig(newImportDataVariableConfig, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG, newImportDataVariableConfig, newImportDataVariableConfig));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -970,6 +1080,10 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return basicSetFixThreadPoolExecutorConfig(null, msgs);
 			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
 				return basicSetTaskTypeConfig(null, msgs);
+			case CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG:
+				return basicSetConnectionManagementConfig(null, msgs);
+			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
+				return basicSetImportDataVariableConfig(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1014,6 +1128,10 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return getFixThreadPoolExecutorConfig();
 			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
 				return getTaskTypeConfig();
+			case CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG:
+				return getConnectionManagementConfig();
+			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
+				return getImportDataVariableConfig();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1073,6 +1191,12 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
 				setTaskTypeConfig((TaskTypeConfig)newValue);
+				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG:
+				setConnectionManagementConfig((ConnectionManagementConfig)newValue);
+				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
+				setImportDataVariableConfig((ImportDataVariableConfig)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1134,6 +1258,12 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
 				setTaskTypeConfig((TaskTypeConfig)null);
 				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG:
+				setConnectionManagementConfig((ConnectionManagementConfig)null);
+				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
+				setImportDataVariableConfig((ImportDataVariableConfig)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1178,6 +1308,10 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return fixThreadPoolExecutorConfig != null;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__TASK_TYPE_CONFIG:
 				return taskTypeConfig != null;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG:
+				return connectionManagementConfig != null;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
+				return importDataVariableConfig != null;
 		}
 		return super.eIsSet(featureID);
 	}

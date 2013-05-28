@@ -92,6 +92,10 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 			case CoreconfigPackage.FIX_THREAD_POOL_EXECUTOR: return createFixThreadPoolExecutor();
 			case CoreconfigPackage.TASK_TYPE_CONFIG: return createTaskTypeConfig();
 			case CoreconfigPackage.TASK_TYPE: return createTaskType();
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG: return createConnectionManagementConfig();
+			case CoreconfigPackage.CONNECTION_MANAGEMENT: return createConnectionManagement();
+			case CoreconfigPackage.IMPORT_DATA_VARIABLE_CONFIG: return createImportDataVariableConfig();
+			case CoreconfigPackage.IMPORT_DATA_VARIABLE: return createImportDataVariable();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -439,6 +443,46 @@ public class CoreconfigFactoryImpl extends EFactoryImpl implements CoreconfigFac
 	public TaskType createTaskType() {
 		TaskTypeImpl taskType = new TaskTypeImpl();
 		return taskType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConnectionManagementConfig createConnectionManagementConfig() {
+		ConnectionManagementConfigImpl connectionManagementConfig = new ConnectionManagementConfigImpl();
+		return connectionManagementConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConnectionManagement createConnectionManagement() {
+		ConnectionManagementImpl connectionManagement = new ConnectionManagementImpl();
+		return connectionManagement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImportDataVariableConfig createImportDataVariableConfig() {
+		ImportDataVariableConfigImpl importDataVariableConfig = new ImportDataVariableConfigImpl();
+		return importDataVariableConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImportDataVariable createImportDataVariable() {
+		ImportDataVariableImpl importDataVariable = new ImportDataVariableImpl();
+		return importDataVariable;
 	}
 
 	/**

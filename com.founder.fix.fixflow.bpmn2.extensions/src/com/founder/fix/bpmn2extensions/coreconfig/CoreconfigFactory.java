@@ -305,6 +305,42 @@ public interface CoreconfigFactory extends EFactory {
 	TaskType createTaskType();
 
 	/**
+	 * Returns a new object of class '<em>Connection Management Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Connection Management Config</em>'.
+	 * @generated
+	 */
+	ConnectionManagementConfig createConnectionManagementConfig();
+
+	/**
+	 * Returns a new object of class '<em>Connection Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Connection Management</em>'.
+	 * @generated
+	 */
+	ConnectionManagement createConnectionManagement();
+
+	/**
+	 * Returns a new object of class '<em>Import Data Variable Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Import Data Variable Config</em>'.
+	 * @generated
+	 */
+	ImportDataVariableConfig createImportDataVariableConfig();
+
+	/**
+	 * Returns a new object of class '<em>Import Data Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Import Data Variable</em>'.
+	 * @generated
+	 */
+	ImportDataVariable createImportDataVariable();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

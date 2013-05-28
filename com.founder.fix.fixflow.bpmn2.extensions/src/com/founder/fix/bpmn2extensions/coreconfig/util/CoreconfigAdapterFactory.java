@@ -196,6 +196,22 @@ public class CoreconfigAdapterFactory extends AdapterFactoryImpl {
 				return createTaskTypeAdapter();
 			}
 			@Override
+			public Adapter caseConnectionManagementConfig(ConnectionManagementConfig object) {
+				return createConnectionManagementConfigAdapter();
+			}
+			@Override
+			public Adapter caseConnectionManagement(ConnectionManagement object) {
+				return createConnectionManagementAdapter();
+			}
+			@Override
+			public Adapter caseImportDataVariableConfig(ImportDataVariableConfig object) {
+				return createImportDataVariableConfigAdapter();
+			}
+			@Override
+			public Adapter caseImportDataVariable(ImportDataVariable object) {
+				return createImportDataVariableAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -646,6 +662,62 @@ public class CoreconfigAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTaskTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig <em>Connection Management Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig
+	 * @generated
+	 */
+	public Adapter createConnectionManagementConfigAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement <em>Connection Management</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement
+	 * @generated
+	 */
+	public Adapter createConnectionManagementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig <em>Import Data Variable Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig
+	 * @generated
+	 */
+	public Adapter createImportDataVariableConfigAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable <em>Import Data Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable
+	 * @generated
+	 */
+	public Adapter createImportDataVariableAdapter() {
 		return null;
 	}
 

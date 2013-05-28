@@ -215,13 +215,31 @@ public interface CoreconfigPackage extends EPackage {
 	int FIX_FLOW_CONFIG__TASK_TYPE_CONFIG = 15;
 
 	/**
+	 * The feature id for the '<em><b>Connection Management Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG = 16;
+
+	/**
+	 * The feature id for the '<em><b>Import Data Variable Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG = 17;
+
+	/**
 	 * The number of structural features of the '<em>Fix Flow Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIX_FLOW_CONFIG_FEATURE_COUNT = 16;
+	int FIX_FLOW_CONFIG_FEATURE_COUNT = 18;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -1858,6 +1876,163 @@ public interface CoreconfigPackage extends EPackage {
 	int TASK_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl <em>Connection Management Config</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagementConfig()
+	 * @generated
+	 */
+	int CONNECTION_MANAGEMENT_CONFIG = 31;
+
+	/**
+	 * The feature id for the '<em><b>Selected</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT_CONFIG__SELECTED = 0;
+
+	/**
+	 * The feature id for the '<em><b>Connection Management</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Connection Management Config</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT_CONFIG_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl <em>Connection Management</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagement()
+	 * @generated
+	 */
+	int CONNECTION_MANAGEMENT = 32;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Class Impl</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT__CLASS_IMPL = 2;
+
+	/**
+	 * The number of structural features of the '<em>Connection Management</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_MANAGEMENT_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableConfigImpl <em>Import Data Variable Config</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableConfigImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getImportDataVariableConfig()
+	 * @generated
+	 */
+	int IMPORT_DATA_VARIABLE_CONFIG = 33;
+
+	/**
+	 * The feature id for the '<em><b>Import Data Variable</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_DATA_VARIABLE_CONFIG__IMPORT_DATA_VARIABLE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Import Data Variable Config</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_DATA_VARIABLE_CONFIG_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableImpl <em>Import Data Variable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableImpl
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getImportDataVariable()
+	 * @generated
+	 */
+	int IMPORT_DATA_VARIABLE = 34;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_DATA_VARIABLE__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_DATA_VARIABLE__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_DATA_VARIABLE__EXPRESSION = 2;
+
+	/**
+	 * The number of structural features of the '<em>Import Data Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_DATA_VARIABLE_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1865,7 +2040,7 @@ public interface CoreconfigPackage extends EPackage {
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getDBType()
 	 * @generated
 	 */
-	int DB_TYPE = 31;
+	int DB_TYPE = 35;
 
 
 	/**
@@ -1876,7 +2051,7 @@ public interface CoreconfigPackage extends EPackage {
 	 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getTimeUnitType()
 	 * @generated
 	 */
-	int TIME_UNIT_TYPE = 32;
+	int TIME_UNIT_TYPE = 36;
 
 
 	/**
@@ -2064,6 +2239,28 @@ public interface CoreconfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFixFlowConfig_TaskTypeConfig();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getConnectionManagementConfig <em>Connection Management Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Connection Management Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getConnectionManagementConfig()
+	 * @see #getFixFlowConfig()
+	 * @generated
+	 */
+	EReference getFixFlowConfig_ConnectionManagementConfig();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getImportDataVariableConfig <em>Import Data Variable Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Import Data Variable Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getImportDataVariableConfig()
+	 * @see #getFixFlowConfig()
+	 * @generated
+	 */
+	EReference getFixFlowConfig_ImportDataVariableConfig();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig <em>Data Base Config</em>}'.
@@ -3664,6 +3861,145 @@ public interface CoreconfigPackage extends EPackage {
 	EAttribute getTaskType_TypeName();
 
 	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig <em>Connection Management Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Connection Management Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig
+	 * @generated
+	 */
+	EClass getConnectionManagementConfig();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getSelected <em>Selected</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Selected</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getSelected()
+	 * @see #getConnectionManagementConfig()
+	 * @generated
+	 */
+	EAttribute getConnectionManagementConfig_Selected();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagement <em>Connection Management</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Connection Management</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementConfig#getConnectionManagement()
+	 * @see #getConnectionManagementConfig()
+	 * @generated
+	 */
+	EReference getConnectionManagementConfig_ConnectionManagement();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement <em>Connection Management</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Connection Management</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement
+	 * @generated
+	 */
+	EClass getConnectionManagement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getId()
+	 * @see #getConnectionManagement()
+	 * @generated
+	 */
+	EAttribute getConnectionManagement_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getName()
+	 * @see #getConnectionManagement()
+	 * @generated
+	 */
+	EAttribute getConnectionManagement_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getClassImpl <em>Class Impl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Class Impl</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagement#getClassImpl()
+	 * @see #getConnectionManagement()
+	 * @generated
+	 */
+	EAttribute getConnectionManagement_ClassImpl();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig <em>Import Data Variable Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Import Data Variable Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig
+	 * @generated
+	 */
+	EClass getImportDataVariableConfig();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig#getImportDataVariable <em>Import Data Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Import Data Variable</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig#getImportDataVariable()
+	 * @see #getImportDataVariableConfig()
+	 * @generated
+	 */
+	EReference getImportDataVariableConfig_ImportDataVariable();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable <em>Import Data Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Import Data Variable</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable
+	 * @generated
+	 */
+	EClass getImportDataVariable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable#getId()
+	 * @see #getImportDataVariable()
+	 * @generated
+	 */
+	EAttribute getImportDataVariable_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable#getName()
+	 * @see #getImportDataVariable()
+	 * @generated
+	 */
+	EAttribute getImportDataVariable_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariable#getExpression()
+	 * @see #getImportDataVariable()
+	 * @generated
+	 */
+	EAttribute getImportDataVariable_Expression();
+
+	/**
 	 * Returns the meta object for enum '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3842,6 +4178,22 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FIX_FLOW_CONFIG__TASK_TYPE_CONFIG = eINSTANCE.getFixFlowConfig_TaskTypeConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Connection Management Config</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG = eINSTANCE.getFixFlowConfig_ConnectionManagementConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Import Data Variable Config</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG = eINSTANCE.getFixFlowConfig_ImportDataVariableConfig();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -5086,6 +5438,118 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK_TYPE__TYPE_NAME = eINSTANCE.getTaskType_TypeName();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl <em>Connection Management Config</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementConfigImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagementConfig()
+		 * @generated
+		 */
+		EClass CONNECTION_MANAGEMENT_CONFIG = eINSTANCE.getConnectionManagementConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Selected</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTION_MANAGEMENT_CONFIG__SELECTED = eINSTANCE.getConnectionManagementConfig_Selected();
+
+		/**
+		 * The meta object literal for the '<em><b>Connection Management</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONNECTION_MANAGEMENT_CONFIG__CONNECTION_MANAGEMENT = eINSTANCE.getConnectionManagementConfig_ConnectionManagement();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl <em>Connection Management</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ConnectionManagementImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getConnectionManagement()
+		 * @generated
+		 */
+		EClass CONNECTION_MANAGEMENT = eINSTANCE.getConnectionManagement();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTION_MANAGEMENT__ID = eINSTANCE.getConnectionManagement_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTION_MANAGEMENT__NAME = eINSTANCE.getConnectionManagement_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Class Impl</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTION_MANAGEMENT__CLASS_IMPL = eINSTANCE.getConnectionManagement_ClassImpl();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableConfigImpl <em>Import Data Variable Config</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableConfigImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getImportDataVariableConfig()
+		 * @generated
+		 */
+		EClass IMPORT_DATA_VARIABLE_CONFIG = eINSTANCE.getImportDataVariableConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Import Data Variable</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference IMPORT_DATA_VARIABLE_CONFIG__IMPORT_DATA_VARIABLE = eINSTANCE.getImportDataVariableConfig_ImportDataVariable();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableImpl <em>Import Data Variable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.ImportDataVariableImpl
+		 * @see com.founder.fix.bpmn2extensions.coreconfig.impl.CoreconfigPackageImpl#getImportDataVariable()
+		 * @generated
+		 */
+		EClass IMPORT_DATA_VARIABLE = eINSTANCE.getImportDataVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORT_DATA_VARIABLE__ID = eINSTANCE.getImportDataVariable_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORT_DATA_VARIABLE__NAME = eINSTANCE.getImportDataVariable_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORT_DATA_VARIABLE__EXPRESSION = eINSTANCE.getImportDataVariable_Expression();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.DBType <em>DB Type</em>}' enum.

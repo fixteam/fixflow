@@ -273,6 +273,30 @@ public class CoreconfigSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CoreconfigPackage.CONNECTION_MANAGEMENT_CONFIG: {
+				ConnectionManagementConfig connectionManagementConfig = (ConnectionManagementConfig)theEObject;
+				T result = caseConnectionManagementConfig(connectionManagementConfig);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CoreconfigPackage.CONNECTION_MANAGEMENT: {
+				ConnectionManagement connectionManagement = (ConnectionManagement)theEObject;
+				T result = caseConnectionManagement(connectionManagement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CoreconfigPackage.IMPORT_DATA_VARIABLE_CONFIG: {
+				ImportDataVariableConfig importDataVariableConfig = (ImportDataVariableConfig)theEObject;
+				T result = caseImportDataVariableConfig(importDataVariableConfig);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CoreconfigPackage.IMPORT_DATA_VARIABLE: {
+				ImportDataVariable importDataVariable = (ImportDataVariable)theEObject;
+				T result = caseImportDataVariable(importDataVariable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -739,6 +763,66 @@ public class CoreconfigSwitch<T> {
 	 * @generated
 	 */
 	public T caseTaskType(TaskType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Connection Management Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Connection Management Config</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConnectionManagementConfig(ConnectionManagementConfig object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Connection Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Connection Management</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConnectionManagement(ConnectionManagement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Import Data Variable Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Import Data Variable Config</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseImportDataVariableConfig(ImportDataVariableConfig object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Import Data Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Import Data Variable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseImportDataVariable(ImportDataVariable object) {
 		return null;
 	}
 
