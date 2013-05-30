@@ -3,6 +3,10 @@
   <children xmi:type="notation:Node" xmi:id="_by2V0DpiEeGATK0MSWXD6A" type="1001">
     <children xmi:type="notation:Node" xmi:id="_by3j8DpiEeGATK0MSWXD6A" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_by4LADpiEeGATK0MSWXD6A" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_vHTZEckFEeK4AO3AFmM3lw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixFlowConfig/version"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vHTZEskFEeK4AO3AFmM3lw"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_by4LATpiEeGATK0MSWXD6A"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_by4LAjpiEeGATK0MSWXD6A"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_by4LAzpiEeGATK0MSWXD6A"/>

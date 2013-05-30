@@ -61,6 +61,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getTaskTypeConfig <em>Task Type Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getConnectionManagementConfig <em>Connection Management Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getImportDataVariableConfig <em>Import Data Variable Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.FixFlowConfigImpl#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -246,6 +247,26 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * @ordered
 	 */
 	protected ImportDataVariableConfig importDataVariableConfig;
+
+	/**
+	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VERSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String version = VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1045,6 +1066,27 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVersion(String newVersion) {
+		String oldVersion = version;
+		version = newVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.FIX_FLOW_CONFIG__VERSION, oldVersion, version));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1132,6 +1174,8 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return getConnectionManagementConfig();
 			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
 				return getImportDataVariableConfig();
+			case CoreconfigPackage.FIX_FLOW_CONFIG__VERSION:
+				return getVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1197,6 +1241,9 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
 				setImportDataVariableConfig((ImportDataVariableConfig)newValue);
+				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__VERSION:
+				setVersion((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1264,6 +1311,9 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
 				setImportDataVariableConfig((ImportDataVariableConfig)null);
 				return;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__VERSION:
+				setVersion(VERSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1312,8 +1362,26 @@ public class FixFlowConfigImpl extends EObjectImpl implements FixFlowConfig {
 				return connectionManagementConfig != null;
 			case CoreconfigPackage.FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG:
 				return importDataVariableConfig != null;
+			case CoreconfigPackage.FIX_FLOW_CONFIG__VERSION:
+				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (version: ");
+		result.append(version);
+		result.append(')');
+		return result.toString();
 	}
 
 } //FixFlowConfigImpl

@@ -233,13 +233,22 @@ public interface CoreconfigPackage extends EPackage {
 	int FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG = 17;
 
 	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIX_FLOW_CONFIG__VERSION = 18;
+
+	/**
 	 * The number of structural features of the '<em>Fix Flow Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIX_FLOW_CONFIG_FEATURE_COUNT = 18;
+	int FIX_FLOW_CONFIG_FEATURE_COUNT = 19;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.
@@ -2263,6 +2272,17 @@ public interface CoreconfigPackage extends EPackage {
 	EReference getFixFlowConfig_ImportDataVariableConfig();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Version</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getVersion()
+	 * @see #getFixFlowConfig()
+	 * @generated
+	 */
+	EAttribute getFixFlowConfig_Version();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.DataBaseConfig <em>Data Base Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4194,6 +4214,14 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG = eINSTANCE.getFixFlowConfig_ImportDataVariableConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIX_FLOW_CONFIG__VERSION = eINSTANCE.getFixFlowConfig_Version();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DataBaseConfigImpl <em>Data Base Config</em>}' class.

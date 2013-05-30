@@ -557,6 +557,15 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getFixFlowConfig_Version() {
+		return (EAttribute)fixFlowConfigEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDataBaseConfig() {
 		return dataBaseConfigEClass;
 	}
@@ -2066,6 +2075,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__TASK_TYPE_CONFIG);
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__CONNECTION_MANAGEMENT_CONFIG);
 		createEReference(fixFlowConfigEClass, FIX_FLOW_CONFIG__IMPORT_DATA_VARIABLE_CONFIG);
+		createEAttribute(fixFlowConfigEClass, FIX_FLOW_CONFIG__VERSION);
 
 		dataBaseConfigEClass = createEClass(DATA_BASE_CONFIG);
 		createEReference(dataBaseConfigEClass, DATA_BASE_CONFIG__DATA_BASE);
@@ -2316,6 +2326,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEReference(getFixFlowConfig_TaskTypeConfig(), this.getTaskTypeConfig(), null, "taskTypeConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFixFlowConfig_ConnectionManagementConfig(), this.getConnectionManagementConfig(), null, "connectionManagementConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFixFlowConfig_ImportDataVariableConfig(), this.getImportDataVariableConfig(), null, "importDataVariableConfig", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFixFlowConfig_Version(), ecorePackage.getEString(), "version", null, 0, 1, FixFlowConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dataBaseConfigEClass, DataBaseConfig.class, "DataBaseConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataBaseConfig_DataBase(), this.getDataBase(), null, "dataBase", null, 1, -1, DataBaseConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2673,6 +2684,13 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		   new String[] {
 			 "name", "importDataVariableConfig",
 			 "kind", "element"
+		   });		
+		addAnnotation
+		  (getFixFlowConfig_Version(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "namespace", ""
 		   });		
 		addAnnotation
 		  (dataBaseConfigEClass, 

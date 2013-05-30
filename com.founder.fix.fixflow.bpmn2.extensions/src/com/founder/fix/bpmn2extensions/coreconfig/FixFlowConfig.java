@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getTaskTypeConfig <em>Task Type Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getConnectionManagementConfig <em>Connection Management Config</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getImportDataVariableConfig <em>Import Data Variable Config</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -527,5 +528,31 @@ public interface FixFlowConfig extends EObject {
 	 * @generated
 	 */
 	void setImportDataVariableConfig(ImportDataVariableConfig value);
+
+	/**
+	 * Returns the value of the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Version</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Version</em>' attribute.
+	 * @see #setVersion(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getFixFlowConfig_Version()
+	 * @model extendedMetaData="kind='attribute' namespace=''"
+	 * @generated
+	 */
+	String getVersion();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig#getVersion <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Version</em>' attribute.
+	 * @see #getVersion()
+	 * @generated
+	 */
+	void setVersion(String value);
 
 } // FixFlowConfig
