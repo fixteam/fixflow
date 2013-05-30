@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DesignerOrgConfigImpl#getAllUserInfo <em>All User Info</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DesignerOrgConfigImpl#getGroupInfo <em>Group Info</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.impl.DesignerOrgConfigImpl#getDataBaseId <em>Data Base Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,6 +62,26 @@ public class DesignerOrgConfigImpl extends EObjectImpl implements DesignerOrgCon
 	 * @ordered
 	 */
 	protected EList<GroupInfo> groupInfo;
+
+	/**
+	 * The default value of the '{@link #getDataBaseId() <em>Data Base Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataBaseId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DATA_BASE_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDataBaseId() <em>Data Base Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataBaseId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String dataBaseId = DATA_BASE_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -141,6 +162,27 @@ public class DesignerOrgConfigImpl extends EObjectImpl implements DesignerOrgCon
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getDataBaseId() {
+		return dataBaseId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataBaseId(String newDataBaseId) {
+		String oldDataBaseId = dataBaseId;
+		dataBaseId = newDataBaseId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CoreconfigPackage.DESIGNER_ORG_CONFIG__DATA_BASE_ID, oldDataBaseId, dataBaseId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -164,6 +206,8 @@ public class DesignerOrgConfigImpl extends EObjectImpl implements DesignerOrgCon
 				return getAllUserInfo();
 			case CoreconfigPackage.DESIGNER_ORG_CONFIG__GROUP_INFO:
 				return getGroupInfo();
+			case CoreconfigPackage.DESIGNER_ORG_CONFIG__DATA_BASE_ID:
+				return getDataBaseId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -184,6 +228,9 @@ public class DesignerOrgConfigImpl extends EObjectImpl implements DesignerOrgCon
 				getGroupInfo().clear();
 				getGroupInfo().addAll((Collection<? extends GroupInfo>)newValue);
 				return;
+			case CoreconfigPackage.DESIGNER_ORG_CONFIG__DATA_BASE_ID:
+				setDataBaseId((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -202,6 +249,9 @@ public class DesignerOrgConfigImpl extends EObjectImpl implements DesignerOrgCon
 			case CoreconfigPackage.DESIGNER_ORG_CONFIG__GROUP_INFO:
 				getGroupInfo().clear();
 				return;
+			case CoreconfigPackage.DESIGNER_ORG_CONFIG__DATA_BASE_ID:
+				setDataBaseId(DATA_BASE_ID_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -218,8 +268,26 @@ public class DesignerOrgConfigImpl extends EObjectImpl implements DesignerOrgCon
 				return allUserInfo != null;
 			case CoreconfigPackage.DESIGNER_ORG_CONFIG__GROUP_INFO:
 				return groupInfo != null && !groupInfo.isEmpty();
+			case CoreconfigPackage.DESIGNER_ORG_CONFIG__DATA_BASE_ID:
+				return DATA_BASE_ID_EDEFAULT == null ? dataBaseId != null : !DATA_BASE_ID_EDEFAULT.equals(dataBaseId);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (dataBaseId: ");
+		result.append(dataBaseId);
+		result.append(')');
+		return result.toString();
 	}
 
 } //DesignerOrgConfigImpl

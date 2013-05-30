@@ -231,6 +231,10 @@
   <children xmi:type="notation:Node" xmi:id="_1t1PAVbbEeG5ye0ECmWF6Q" type="1001">
     <children xmi:type="notation:Node" xmi:id="_1t6ukFbbEeG5ye0ECmWF6Q" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_1t7VoFbbEeG5ye0ECmWF6Q" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_AS4CUMkIEeK4AO3AFmM3lw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//DesignerOrgConfig/dataBaseId"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AS4CUckIEeK4AO3AFmM3lw"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1t7VoVbbEeG5ye0ECmWF6Q"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1t7VolbbEeG5ye0ECmWF6Q"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_1t7Vo1bbEeG5ye0ECmWF6Q"/>

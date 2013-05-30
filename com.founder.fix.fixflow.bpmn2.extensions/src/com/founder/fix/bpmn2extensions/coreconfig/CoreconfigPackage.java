@@ -672,13 +672,22 @@ public interface CoreconfigPackage extends EPackage {
 	int DESIGNER_ORG_CONFIG__GROUP_INFO = 1;
 
 	/**
+	 * The feature id for the '<em><b>Data Base Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESIGNER_ORG_CONFIG__DATA_BASE_ID = 2;
+
+	/**
 	 * The number of structural features of the '<em>Designer Org Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DESIGNER_ORG_CONFIG_FEATURE_COUNT = 2;
+	int DESIGNER_ORG_CONFIG_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.AllUserInfoImpl <em>All User Info</em>}' class.
@@ -2716,6 +2725,17 @@ public interface CoreconfigPackage extends EPackage {
 	EReference getDesignerOrgConfig_GroupInfo();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig#getDataBaseId <em>Data Base Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Data Base Id</em>'.
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig#getDataBaseId()
+	 * @see #getDesignerOrgConfig()
+	 * @generated
+	 */
+	EAttribute getDesignerOrgConfig_DataBaseId();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo <em>All User Info</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4556,6 +4576,14 @@ public interface CoreconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DESIGNER_ORG_CONFIG__GROUP_INFO = eINSTANCE.getDesignerOrgConfig_GroupInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Base Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DESIGNER_ORG_CONFIG__DATA_BASE_ID = eINSTANCE.getDesignerOrgConfig_DataBaseId();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.coreconfig.impl.AllUserInfoImpl <em>All User Info</em>}' class.

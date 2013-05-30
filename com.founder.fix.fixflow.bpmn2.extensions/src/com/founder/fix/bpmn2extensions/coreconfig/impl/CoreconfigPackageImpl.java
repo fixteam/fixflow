@@ -926,6 +926,15 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDesignerOrgConfig_DataBaseId() {
+		return (EAttribute)designerOrgConfigEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAllUserInfo() {
 		return allUserInfoEClass;
 	}
@@ -2123,6 +2132,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		designerOrgConfigEClass = createEClass(DESIGNER_ORG_CONFIG);
 		createEReference(designerOrgConfigEClass, DESIGNER_ORG_CONFIG__ALL_USER_INFO);
 		createEReference(designerOrgConfigEClass, DESIGNER_ORG_CONFIG__GROUP_INFO);
+		createEAttribute(designerOrgConfigEClass, DESIGNER_ORG_CONFIG__DATA_BASE_ID);
 
 		allUserInfoEClass = createEClass(ALL_USER_INFO);
 		createEAttribute(allUserInfoEClass, ALL_USER_INFO__IS_ENABLED);
@@ -2374,6 +2384,7 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		initEClass(designerOrgConfigEClass, DesignerOrgConfig.class, "DesignerOrgConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDesignerOrgConfig_AllUserInfo(), this.getAllUserInfo(), null, "allUserInfo", null, 0, 1, DesignerOrgConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDesignerOrgConfig_GroupInfo(), this.getGroupInfo(), null, "groupInfo", null, 0, -1, DesignerOrgConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDesignerOrgConfig_DataBaseId(), ecorePackage.getEString(), "dataBaseId", null, 0, 1, DesignerOrgConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(allUserInfoEClass, AllUserInfo.class, "AllUserInfo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAllUserInfo_IsEnabled(), ecorePackage.getEString(), "isEnabled", null, 1, 1, AllUserInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2944,6 +2955,13 @@ public class CoreconfigPackageImpl extends EPackageImpl implements CoreconfigPac
 		   source, 
 		   new String[] {
 			 "kind", "element"
+		   });		
+		addAnnotation
+		  (getDesignerOrgConfig_DataBaseId(), 
+		   source, 
+		   new String[] {
+			 "name", "dataBaseId",
+			 "kind", "attribute"
 		   });		
 		addAnnotation
 		  (allUserInfoEClass, 
