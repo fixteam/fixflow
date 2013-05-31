@@ -16,7 +16,7 @@ public class SuspendProcessInstanceFilter extends AbstractCommandFilter {
 			return false;
 		}
 		
-		if(!taskInstance.hasEnded()&&taskInstance.getAssignee()!=null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
+		if(!isProcessTracking()&&!taskInstance.hasEnded()&&taskInstance.getAssignee()!=null&&taskInstance.getDelegationState()==null&&!taskInstance.isSuspended()){
 			ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
 			ProcessInstance processInstance=processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(taskInstance.getProcessInstanceId()).singleResult();
 			if(!processInstance.isSuspended()){

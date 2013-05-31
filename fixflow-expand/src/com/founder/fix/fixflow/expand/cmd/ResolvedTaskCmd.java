@@ -1,17 +1,26 @@
 package com.founder.fix.fixflow.expand.cmd;
 
+import org.eclipse.bpmn2.impl.FlowNodeImpl;
+
+import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
+import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
+import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.DelegationState;
 import com.founder.fix.fixflow.expand.command.ResolvedTaskCommand;
 
@@ -28,7 +37,9 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 		}
 
 		TaskInstanceEntity task = Context.getCommandContext().getTaskManager().findTaskById(taskId);
-
+		if(AbstractCommandFilter.isAutoClaim()){
+			task.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+		}
 		if (task == null) {
 			throw new FixFlowException("无法找到编号为: " + taskId + " 的任务!");
 		}
@@ -90,6 +101,28 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 			
 			
 			Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(task);
+			
+			
+			
+			
+			
+			//转办通知
+			//任务分配事件
+
+			
+			ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
+
+			String processInstanceId = task.getProcessInstanceId();
+
+			ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
+
+			TokenEntity token=processInstanceImpl.getTokenMap().get(task.getTokenId());
+
+			
+			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+			
+			((FlowNodeImpl) token.getFlowNode()).fireEvent(BaseElementEvent.EVENTTYPE_TASK_ASSIGN, executionContext, task);
+
 
 		} else {
 			throw new FixFlowException("无法找到当前处理者");

@@ -6,6 +6,8 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
+import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
+import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
@@ -39,8 +41,16 @@ public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand,
 			throw new FixFlowException("无法找到编号为: " + taskId + " 的任务!");
 		}
 		if (transferUserId != null) {
+			
+			if(AbstractCommandFilter.isAutoClaim()){
+				taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+			}
 			if (taskInstance.getAssignee() == null) {
 
+				
+				
+				
+				
 				throw new FixFlowException("任务 " + taskId + " 无代理人!");
 
 			} else {
@@ -68,7 +78,7 @@ public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand,
 					taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 				}
 				
-				
+			
 				
 			
 				taskInstance.customEnd(taskCommand, taskComment, this.agent, this.admin);

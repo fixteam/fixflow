@@ -3,18 +3,49 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.founder.fix.fixflow.bpmn2.extensions/src"
     modelPluginID="com.founder.fix.fixflow.bpmn2.extensions" modelName="fixflow-core-config"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false">
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false">
   <foreignModel>fixflow-core-config.ecore</foreignModel>
   <genPackages prefix="Coreconfig" basePackage="com.founder.fix.bpmn2extensions" resource="XML"
       disposableProviderFactory="true" ecorePackage="fixflow-core-config.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fixflow-core-config.ecore#//DBType">
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//DBType/other"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//DBType/oracle"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//DBType/sqlserver"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//DBType/db2"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//DBType/mysql"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fixflow-core-config.ecore#//TimeUnitType">
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/DAYS"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/HOURS"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/MICROSECONDS"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/MILLISECONDS"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/MINUTES"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/NANOSECONDS"/>
+      <genEnumLiterals ecoreEnumLiteral="fixflow-core-config.ecore#//TimeUnitType/SECONDS"/>
+    </genEnums>
     <genClasses ecoreClass="fixflow-core-config.ecore#//FixFlowConfig">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/dataBaseConfig"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/groupDefinitionConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/taskCommandConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/designerOrgConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/sysMailConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/expandClassConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/eventSubscriptionConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/quartzConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/scriptLanguageConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/internationalizationConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/pigeonholeConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/expandCmdConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/priorityConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/assignPolicyConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/fixThreadPoolExecutorConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixFlowConfig/taskTypeConfig"/>
     </genClasses>
     <genClasses ecoreClass="fixflow-core-config.ecore#//DataBaseConfig">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//DataBaseConfig/dataBase"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBaseConfig/selected"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBaseConfig/mode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBaseConfig/isEnableDesCon"/>
     </genClasses>
     <genClasses ecoreClass="fixflow-core-config.ecore#//GroupDefinitionConfig">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//GroupDefinitionConfig/groupDefinition"/>
@@ -30,11 +61,163 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBase/maxIdle"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBase/maxWait"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBase/paginationImpl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//DataBase/dbtype"/>
     </genClasses>
     <genClasses ecoreClass="fixflow-core-config.ecore#//GroupDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupDefinition/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupDefinition/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupDefinition/groupDefinitionImpl"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//TaskCommandConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//TaskCommandConfig/taskCommandDef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandConfig/commandType"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//TaskCommandDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/command"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/cmd"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/isEnabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/filter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/isVerification"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/isSaveData"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskCommandDef/isSimulationRun"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//DesignerOrgConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//DesignerOrgConfig/allUserInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//DesignerOrgConfig/groupInfo"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//AllUserInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/isEnabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/userIdField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/userNameField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/sqlText"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AllUserInfo/dataSource"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//GroupInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/groupId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/groupName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/isEnabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/isDisplayUser"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/groupIdField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/groupNameField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/supGroupIdField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/sqlText"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//GroupInfo/userInfo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/dataSource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//GroupInfo/groupDefinitionImpl"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//UserInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//UserInfo/userIdField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//UserInfo/userNameField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//UserInfo/groupIdField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//UserInfo/sqlText"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//UserInfo/dataSource"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//SysMailConfig">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//SysMailConfig/selected"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//SysMailConfig/mailInfo"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//MailInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//MailInfo/mailAddress"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//MailInfo/mailName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//MailInfo/smtpHost"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//MailInfo/smtpPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//MailInfo/userName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//MailInfo/passWord"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//ExpandClassConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//ExpandClassConfig/expandClass"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//ExpandClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandClass/classId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandClass/className"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandClass/classInterface"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandClass/classImpl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandClass/remarks"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//EventSubscriptionConfig">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//EventSubscriptionConfig/serverAddress"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//EventSubscriptionConfig/serverPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//EventSubscriptionConfig/messageInfo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//EventSubscriptionConfig/signalInfo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//EventSubscriptionConfig/isEnable"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//QuartzConfig">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//QuartzConfig/isEnable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//QuartzConfig/isDefaultConfig"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//QuartzConfig/dataBaseId"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//ScriptLanguageConfig">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ScriptLanguageConfig/selected"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//ScriptLanguageConfig/scriptLanguage"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//ScriptLanguage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ScriptLanguage/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ScriptLanguage/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ScriptLanguage/classImpl"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//InternationalizationConfig">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//InternationalizationConfig/isEnable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//InternationalizationConfig/folderPath"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//PigeonholeConfig">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/serverPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/pdfPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/time"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/frequency"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/week"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/code"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//PigeonholeConfig/isEnable"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//ExpandCmdConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//ExpandCmdConfig/expandCmd"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//ExpandCmd">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandCmd/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandCmd/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//ExpandCmd/cmd"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//PriorityConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//PriorityConfig/priority"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//Priority">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//Priority/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//Priority/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//Priority/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//Priority/color"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//Priority/remark"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//AssignPolicyConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//AssignPolicyConfig/assignPolicy"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//AssignPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AssignPolicy/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AssignPolicy/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AssignPolicy/classImpl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//AssignPolicy/remarks"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//FixThreadPoolExecutorConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//FixThreadPoolExecutorConfig/fixThreadPoolExecutor"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//FixThreadPoolExecutor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//FixThreadPoolExecutor/threadPoolKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//FixThreadPoolExecutor/threadPoolName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//FixThreadPoolExecutor/corePoolSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//FixThreadPoolExecutor/maximumPoolSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//FixThreadPoolExecutor/keepAliveTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//FixThreadPoolExecutor/timeUnit"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//TaskTypeConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-core-config.ecore#//TaskTypeConfig/taskType"/>
+    </genClasses>
+    <genClasses ecoreClass="fixflow-core-config.ecore#//TaskType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskType/typeId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-core-config.ecore#//TaskType/typeName"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

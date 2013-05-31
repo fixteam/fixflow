@@ -14,9 +14,10 @@ import com.founder.fix.fixflow.core.task.TaskInstanceType;
 public class GetTaskCommandByTaskIdCmd implements Command<List<TaskCommandInst>>{
 
 	protected String taskId;
-	
-	public GetTaskCommandByTaskIdCmd(String taskId){
+	protected boolean isProcessTracking;
+	public GetTaskCommandByTaskIdCmd(String taskId,boolean isProcessTracking){
 		this.taskId=taskId;
+		this.isProcessTracking=isProcessTracking;
 	}
 	
 	
@@ -24,17 +25,28 @@ public class GetTaskCommandByTaskIdCmd implements Command<List<TaskCommandInst>>
 		// TODO 自动生成的方法存根
 		List<TaskCommandInst> taskCommandInsts=new ArrayList<TaskCommandInst>();
 		
-		
 		TaskInstanceEntity taskInstance=commandContext.getTaskManager().findTaskById(taskId);
-		if(taskInstance!=null){
-			if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK){
-				taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance);
+		
+		if(isProcessTracking){
+			//流程追踪查询
+			if(taskInstance!=null){
+				if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK){
+					taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance,this.isProcessTracking);
+				}
+				
 			}
-			
 		}
-		
-	
-		
+		else{
+
+			//非流程追踪查询
+			if(taskInstance!=null){
+				if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK||taskInstance.getTaskInstanceType()==TaskInstanceType.FIXNOTICETASK){
+					taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance,this.isProcessTracking);
+				}
+				
+			}
+		}
+
 		return taskCommandInsts;
 	}
 

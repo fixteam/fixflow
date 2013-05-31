@@ -200,7 +200,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 		signal(executionContext);
 	}
 	
-	public void signalKillChildMoveParentToken(FlowNode flowNode) {
+	public void signalKillChildMoveParentToken(FlowNode flowNode,FlowNode timeOutNode) {
 		
 		TokenEntity tokenParent=this.parent;
 		if(tokenParent==null){
@@ -208,6 +208,9 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 		}
 		tokenParent.terminationChildToken();
 		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenParent);
+		if(timeOutNode!=null){
+			executionContext.setTimeOutNode(timeOutNode);
+		}
 		flowNode.leave(executionContext);
 		
 		//throw new FixFlowException("没有实现");

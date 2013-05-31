@@ -58,6 +58,13 @@ public class ExecutionContextImpl implements ExecutionContext {
 	protected String groupID;
 
 	protected String callActivityInstanceId;
+	
+	/**
+	 * 超时节点
+	 */
+	protected FlowNode timeOutNode;
+
+	
 
 	/**
 	 * 将要去的节点 当指定了将要去的节点，离开节点的时候令牌将不按照线条上的走向行走， 而是直接转移到指定的节点，多用于退回跳转。
@@ -312,6 +319,14 @@ public class ExecutionContextImpl implements ExecutionContext {
 
 		return taskInstanceQueryToTemp;
 		
+	}
+	
+	public FlowNode getTimeOutNode() {
+		return timeOutNode;
+	}
+
+	public void setTimeOutNode(FlowNode timeOutNode) {
+		this.timeOutNode = timeOutNode;
 	}
 
 

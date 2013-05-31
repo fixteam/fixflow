@@ -565,6 +565,40 @@ public class ProcessInstancePersistence {
 			sqlString = sqlString + " and E.PROCESSINSTANCE_ID=? ";
 			objectParamWhere.add(processInstanceQuery.getProcessInstanceId());
 		}
+		
+		
+		
+		
+		if (processInstanceQuery.getProcessInstanceId() != null) {
+			if(processInstanceQuery.isContainsSubProcess()){
+				
+				
+				//这个地方需要用到递归去寻找所有的子流程
+				
+				List<Object> dataList=new ArrayList<Object>();
+				
+				dataList.add(processInstanceQuery.getProcessInstanceId());
+				StringBuffer  processInstanceIdList=new StringBuffer();
+	
+				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+				processInstanceIdList.append("'"+processInstanceQuery.getProcessInstanceId()+"'");
+				if(dataListMaps.size()>0){
+					
+					
+					
+					getSubProcessId(processInstanceQuery.getProcessInstanceId(),processInstanceIdList);
+				}
+				
+				sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ("+processInstanceIdList.toString()+") ";
+				
+			}
+			else{
+				
+				sqlString = sqlString + " and E.PROCESSINSTANCE_ID=? ";
+					objectParamWhere.add(processInstanceQuery.getProcessInstanceId());
+				
+			}
+		}
 
 		if (processInstanceQuery.getProcessDefinitionId() != null) {
 			sqlString = sqlString + " and E.PROCESSDEFINITION_ID=? ";
@@ -618,6 +652,8 @@ public class ProcessInstancePersistence {
 		}
 		
 		
+		
+		
 		if (processInstanceQuery.getStartTime() != null) {
 
 			sqlString = sqlString + " and  E.START_TIME=? ";
@@ -652,6 +688,25 @@ public class ProcessInstancePersistence {
 		}
 
 		return sqlString;
+	}
+	
+	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList){
+		//这个地方需要用到递归去寻找所有的子流程
+		List<Object> dataList=new ArrayList<Object>();
+		
+		
+		dataList.add(processInstanceId);
+		
+		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+		if(dataListMaps.size()>0){
+			
+			for (Map<String, Object> map : dataListMaps) {
+				processInstanceIdList.append(",'"+StringUtil.getString(map.get("PROCESSINSTANCE_ID"))+"'");
+				getSubProcessId(StringUtil.getString(map.get("PROCESSINSTANCE_ID")),processInstanceIdList);
+			}
+
+		}
+
 	}
 
 	public List<ProcessInstanceEntity> selectProcessInstanceByQueryCriteria(ProcessInstanceQueryImpl processInstanceQuery, Page page) {

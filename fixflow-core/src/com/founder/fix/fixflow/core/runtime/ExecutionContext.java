@@ -43,7 +43,9 @@ public interface ExecutionContext {
 	
 	void setTaskInstance(TaskInstance taskInstance);
 	
+	FlowNode getTimeOutNode();
 
+	void setTimeOutNode(FlowNode timeOutNode);
 
 	/**
 	 * 清理内容执行器临时数据

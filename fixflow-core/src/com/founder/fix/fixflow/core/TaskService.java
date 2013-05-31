@@ -386,10 +386,15 @@ public interface TaskService extends ProcessService {
 	
 	List<UserTaskBehavior> getUserEndTaskNodesInProcessInstance(String processInstanceId);
 	
+	/**
+	 * 获取任务的处理命令
+	 * @param taskId 任务编号
+	 * @param isProcessTracking 是否为流程追踪查询
+	 * @return
+	 */
+	List<TaskCommandInst> GetTaskCommandByTaskId(String taskId,boolean isProcessTracking);
 	
-	List<TaskCommandInst> GetTaskCommandByTaskId(String taskId);
-	
-	List<TaskCommandInst> GetTaskCommandByTaskInstance(TaskInstance taskInstance);
+	List<TaskCommandInst> GetTaskCommandByTaskInstance(TaskInstance taskInstance,boolean isProcessTracking);
 	
 	
 	List<UserTo> getTaskUsersByTaskId(String taskId);
@@ -408,6 +413,15 @@ public interface TaskService extends ProcessService {
 	 * @return
 	 */
 	List<TaskInstance> getNextTask(String taskId,String processInstanceId);
+	
+	
+	/**
+	 * 获取可以追回到的任务
+	 * @param taskId 当前任务号
+	 * @param taskCommandId 点击处理命令编号
+	 * @return 可以追回的任务
+	 */
+	List<TaskInstance> GetRecoverTask(String taskId,String taskCommandId);
 
 
 }

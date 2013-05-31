@@ -245,15 +245,41 @@ public class TaskInstancePersistence {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.BIZKEY=? ";
 			objectParamWhere.add(taskQuery.getBusinessKey());
 		}
-
+		
 		if (taskQuery.getProcessInstanceId() != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID=? ";
-			objectParamWhere.add(taskQuery.getProcessInstanceId());
+			if(taskQuery.isContainsSubProcess()){
+				
+				
+				//这个地方需要用到递归去寻找所有的子流程
+				
+				List<Object> dataList=new ArrayList<Object>();
+				
+				dataList.add(taskQuery.getProcessInstanceId());
+				StringBuffer  processInstanceIdList=new StringBuffer();
+				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+				processInstanceIdList.append("'"+taskQuery.getProcessInstanceId()+"'");
+				if(dataListMaps.size()>0){
+					
+					
+					
+					getSubProcessId(taskQuery.getProcessInstanceId(),processInstanceIdList);
+				}
+				
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID in ("+processInstanceIdList.toString()+") ";
+				
+			}
+			else{
+				
+					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID=? ";
+					objectParamWhere.add(taskQuery.getProcessInstanceId());
+				
+			}
 		}
+	
 
 		if (taskQuery.getEnd() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.END_TIME " + taskQuery.getEnd() + " ";
-
+			
 		}
 		
 		
@@ -639,8 +665,33 @@ public class TaskInstancePersistence {
 		}
 
 		if (taskQuery.getProcessInstanceId() != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID=? ";
-			objectParamWhere.add(taskQuery.getProcessInstanceId());
+			if(taskQuery.isContainsSubProcess()){
+				
+				
+				//这个地方需要用到递归去寻找所有的子流程
+				
+				List<Object> dataList=new ArrayList<Object>();
+				
+				dataList.add(taskQuery.getProcessInstanceId());
+				StringBuffer  processInstanceIdList=new StringBuffer();
+				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+				processInstanceIdList.append("'"+taskQuery.getProcessInstanceId()+"'");
+				if(dataListMaps.size()>0){
+					
+					
+					
+					getSubProcessId(taskQuery.getProcessInstanceId(),processInstanceIdList);
+				}
+				
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID in ("+processInstanceIdList.toString()+") ";
+				
+			}
+			else{
+				
+					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID=? ";
+					objectParamWhere.add(taskQuery.getProcessInstanceId());
+				
+			}
 		}
 
 		if (taskQuery.getEnd() != null) {
@@ -1040,6 +1091,12 @@ public class TaskInstancePersistence {
 	
 	public List<Map<String, Object>> findAgentUsers(String userId){
 		
+		
+		
+		String sql="SELECT distinct(z.EID) EID FROM ( select a.EID,b.STATUS,a.AUSER1 as USERID  from FIXFLOW_OUTAGENT_AGENTDETAILS a left join "
+		+"FIXFLOW_OUTAGENT_AGENTINFO b on a.EID=b.EID where b.STATUS='0'"+
+		"and  a.AUSER1=?) z";
+		/*
 		String sql=" SELECT distinct(z.EID) EID FROM "+
 				"( "+
 				" select EID,WFNAME,NODEID,AUSER1 as USERID from FIXFLOW_OUTAGENT_AGENTDETAILS "+
@@ -1050,7 +1107,7 @@ public class TaskInstancePersistence {
 				" WHERE AUSER1 in (select a.EID from FIXFLOW_OUTAGENT_AGENTDETAILS a,FIXFLOW_OUTAGENT_AGENTINFO b "+
 				" WHERE a.EID=b.EID AND STATUS='0' ) "+
 				" ) z WHERE z.USERID=? ";
-		
+		*/
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(userId);
 		
@@ -1059,5 +1116,25 @@ public class TaskInstancePersistence {
 		List<Map<String, Object>> listMaps=sqlCommand.queryForList(sql, objectParamWhere);
 		return listMaps;
 	}
+	
+	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList){
+		//这个地方需要用到递归去寻找所有的子流程
+		List<Object> dataList=new ArrayList<Object>();
+		
+		
+		dataList.add(processInstanceId);
+		
+		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+		if(dataListMaps.size()>0){
+			
+			for (Map<String, Object> map : dataListMaps) {
+				processInstanceIdList.append(",'"+StringUtil.getString(map.get("PROCESSINSTANCE_ID"))+"'");
+				getSubProcessId(StringUtil.getString(map.get("PROCESSINSTANCE_ID")),processInstanceIdList);
+			}
+
+		}
+
+	}
+
 
 }

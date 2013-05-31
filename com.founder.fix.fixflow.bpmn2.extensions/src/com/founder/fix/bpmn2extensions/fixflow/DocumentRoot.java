@@ -65,6 +65,8 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getAssignPolicyType <em>Assign Policy Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#isIsPersistence <em>Is Persistence</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskType <em>Task Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getValidationLevel <em>Validation Level</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getLanguageType <em>Language Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -1182,5 +1184,60 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setTaskType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Validation Level</b></em>' attribute.
+	 * The literals are from the enumeration {@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 流程验证级别
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Validation Level</em>' attribute.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel
+	 * @see #setValidationLevel(ProcessValidationLevel)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDocumentRoot_ValidationLevel()
+	 * @model extendedMetaData="kind='attribute' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ProcessValidationLevel getValidationLevel();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getValidationLevel <em>Validation Level</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Validation Level</em>' attribute.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel
+	 * @see #getValidationLevel()
+	 * @generated
+	 */
+	void setValidationLevel(ProcessValidationLevel value);
+
+	/**
+	 * Returns the value of the '<em><b>Language Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Language Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Language Type</em>' attribute.
+	 * @see #setLanguageType(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDocumentRoot_LanguageType()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	String getLanguageType();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getLanguageType <em>Language Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Language Type</em>' attribute.
+	 * @see #getLanguageType()
+	 * @generated
+	 */
+	void setLanguageType(String value);
 
 } // DocumentRoot

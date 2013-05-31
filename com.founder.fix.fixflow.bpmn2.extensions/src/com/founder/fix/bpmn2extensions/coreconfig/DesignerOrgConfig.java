@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig#getAllUserInfo <em>All User Info</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig#getGroupInfo <em>Group Info</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig#getDataBaseId <em>Data Base Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,5 +72,31 @@ public interface DesignerOrgConfig extends EObject {
 	 * @generated
 	 */
 	EList<GroupInfo> getGroupInfo();
+
+	/**
+	 * Returns the value of the '<em><b>Data Base Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Base Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Base Id</em>' attribute.
+	 * @see #setDataBaseId(String)
+	 * @see com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage#getDesignerOrgConfig_DataBaseId()
+	 * @model extendedMetaData="name='dataBaseId' kind='attribute'"
+	 * @generated
+	 */
+	String getDataBaseId();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig#getDataBaseId <em>Data Base Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data Base Id</em>' attribute.
+	 * @see #getDataBaseId()
+	 * @generated
+	 */
+	void setDataBaseId(String value);
 
 } // DesignerOrgConfig

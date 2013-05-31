@@ -29,7 +29,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected String isSuspended;
 	protected List<String> processDefinitionKeyList=new ArrayList<String>();
 
-	
+	protected boolean isContainsSubProcess=false;
 	
 
 
@@ -78,6 +78,11 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 			throw new FixFlowException("queryExpandTo  is null");
 		}
 		this.queryExpandTo = queryExpandTo;
+		return this;
+	}
+	
+	public ProcessInstanceQuery containsSubProcess() {
+		this.isContainsSubProcess=true;
 		return this;
 	}
 	
@@ -385,6 +390,10 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 
 	public QueryExpandTo getQueryExpandTo() {
 		return queryExpandTo;
+	}
+	
+	public boolean isContainsSubProcess() {
+		return isContainsSubProcess;
 	}
 
 }

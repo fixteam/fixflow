@@ -6,6 +6,7 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
+import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
@@ -38,6 +39,9 @@ public class PendingDifFormTaskCmd extends AbstractExpandTaskCmd<PendingTaskComm
 
 		TaskInstanceEntity task = Context.getCommandContext().getTaskManager()
 				.findTaskById(taskId);
+		if(AbstractCommandFilter.isAutoClaim()){
+			task.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+		}
 		
 		TaskInstanceEntity pendingTask = Context.getCommandContext().getTaskManager()
 				.findTaskById(pendingTaskId);
@@ -77,6 +81,8 @@ public class PendingDifFormTaskCmd extends AbstractExpandTaskCmd<PendingTaskComm
 			else{
 				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 			}
+			
+			
 		
 			task.customEnd(taskCommand, taskComment, this.agent, this.admin);
 

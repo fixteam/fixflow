@@ -14,23 +14,43 @@ public class GetTaskCommandByTaskInstanceCmd  implements Command<List<TaskComman
 	
 	protected TaskInstance taskInstance;
 	
-	public GetTaskCommandByTaskInstanceCmd(TaskInstance taskInstance){
+	protected boolean isProcessTracking;
+	
+	public GetTaskCommandByTaskInstanceCmd(TaskInstance taskInstance,boolean isProcessTracking){
 		this.taskInstance=taskInstance;
+		this.isProcessTracking=isProcessTracking;
 	}
 	
 	
 	public List<TaskCommandInst> execute(CommandContext commandContext) {
-		// TODO 自动生成的方法存根
+
 		List<TaskCommandInst> taskCommandInsts=new ArrayList<TaskCommandInst>();
 		
 		
 		
-		if(taskInstance!=null){
-			if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK||taskInstance.getTaskInstanceType()==TaskInstanceType.FIXNOTICETASK){
-				taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance);
+		if(isProcessTracking){
+			//流程追踪查询
+			if(taskInstance!=null){
+				if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK){
+					taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance,this.isProcessTracking);
+				}
+				
+			}
+		}
+		else{
+			
+
+			
+			//非流程追踪查询
+			if(taskInstance!=null){
+				if(taskInstance.getTaskInstanceType()==TaskInstanceType.FIXFLOWTASK||taskInstance.getTaskInstanceType()==TaskInstanceType.FIXNOTICETASK){
+					taskCommandInsts= CoreUtil.getTaskCommandInst(taskInstance,this.isProcessTracking);
+				}
+				
 			}
 		}
 		
+
 	
 		
 		return taskCommandInsts;

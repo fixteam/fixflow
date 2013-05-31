@@ -22,6 +22,7 @@ import com.founder.fix.fixflow.core.impl.cmd.GetNextTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetPreviousStepTaskByTaskIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetPriorityCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessInstanceCommentsCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetRecoverTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetRollBackNodeCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetRollBackScreeningTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetRollBackTaskCmd;
@@ -340,14 +341,15 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 		return commandExecutor.execute(new GetUserEndTaskNodesInProcessInstanceCmd(processInstanceId));
 	}
 
-	public List<TaskCommandInst> GetTaskCommandByTaskId(String taskId) {
+	public List<TaskCommandInst> GetTaskCommandByTaskId(String taskId,boolean isProcessTracking) {
 		// TODO 自动生成的方法存根
-		return commandExecutor.execute(new GetTaskCommandByTaskIdCmd(taskId));
+		return commandExecutor.execute(new GetTaskCommandByTaskIdCmd(taskId,isProcessTracking));
 	}
 
+	
 	public List<TaskCommandInst> GetTaskCommandByTaskInstance(
-			TaskInstance taskInstance) {
-		return commandExecutor.execute(new GetTaskCommandByTaskInstanceCmd(taskInstance));
+			TaskInstance taskInstance,boolean isProcessTracking) {
+		return commandExecutor.execute(new GetTaskCommandByTaskInstanceCmd(taskInstance,isProcessTracking));
 	}
 
 	public List<UserTo> getTaskUsersByTaskId(String taskId) {
@@ -371,6 +373,10 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	public List<TaskInstance> getRollBackScreeningTask(String taskId) {
 
 		return commandExecutor.execute(new GetRollBackScreeningTaskCmd(taskId));
+	}
+
+	public List<TaskInstance> GetRecoverTask(String taskId, String taskCommandId) {
+		return commandExecutor.execute(new GetRecoverTaskCmd(taskId,taskCommandId));
 	}
 
 	
