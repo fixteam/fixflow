@@ -17,6 +17,8 @@ import java.io.IOException;
 import org.eclipse.bpmn2.Activity;
 import org.eclipse.bpmn2.BoundaryEvent;
 import org.eclipse.bpmn2.FlowElementsContainer;
+import org.eclipse.bpmn2.FlowNode;
+import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.modeler.core.Activator;
 import org.eclipse.bpmn2.modeler.core.ModelHandler;
 import org.eclipse.bpmn2.modeler.core.features.AbstractBpmn2CreateFeature;
@@ -58,6 +60,12 @@ public class CreateBoundaryEventFeature extends AbstractBpmn2CreateFeature {
 			event.setCancelActivity(true); // by default is interrupting
 			Object bo = getBusinessObjectForPictogramElement(context.getTargetContainer());
 			if (bo instanceof FlowElementsContainer) {
+				bo = getBusinessObjectForPictogramElement((PictogramElement) context.getTargetContainer().eContainer());
+			}
+			if (bo instanceof FlowNode &&  !((FlowNode)bo).getLanes().isEmpty()) {
+				((FlowNode)bo).getLanes().get(0).getFlowNodeRefs().add(event);
+			}
+			if (bo instanceof SubProcess) {
 				bo = getBusinessObjectForPictogramElement((PictogramElement) context.getTargetContainer().eContainer());
 			}
 			handler.addFlowElement(bo, event);
