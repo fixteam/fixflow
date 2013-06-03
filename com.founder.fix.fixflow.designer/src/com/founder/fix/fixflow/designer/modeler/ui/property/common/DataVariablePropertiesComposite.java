@@ -48,7 +48,6 @@ import org.eclipse.jface.viewers.Viewer;
 
 public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2PropertiesComposite {
 
-
 	private Text text;
 	private Button addbutton;
 	private Button editbutton;
@@ -58,10 +57,10 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 	private Tree tree;
 	private Button buttonImp;
 
-	
 	public DataVariablePropertiesComposite(AbstractBpmn2PropertySection section) {
 		super(section);
 	}
+
 	public DataVariablePropertiesComposite(Composite parent, int style) {
 		super(parent, style);
 	}
@@ -78,7 +77,6 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		tree = treeViewer.getTree();
 		tree.setBounds(10, 34, 245, 128);
 
-
 		toolkit.adapt(tree, true, true);
 
 		addbutton = new Button(this, SWT.NONE);
@@ -91,13 +89,11 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		editbutton.setText("编辑...");
 		editbutton.setBounds(261, 94, 55, 22);
 
-	
 		toolkit.adapt(editbutton, true, true);
 
 		removebutton = new Button(this, SWT.NONE);
 		removebutton.setText("移除");
 		removebutton.setBounds(261, 117, 55, 22);
-
 
 		toolkit.adapt(removebutton, true, true);
 
@@ -107,12 +103,10 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		updatebutton.setBounds(261, 140, 55, 22);
 		updatebutton.setVisible(false);
 
-
 		toolkit.adapt(updatebutton, true, true);
 
 		text = new Text(this, SWT.BORDER | SWT.SEARCH);
 		text.setBounds(10, 10, 245, 19);
-
 
 		toolkit.adapt(text, true, true);
 
@@ -136,10 +130,10 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 				updateButtons();
 			}
 		});
-		
+
 		// 设置按钮可用性
 		updateButtons();
-		
+
 		treeViewer.setInput(getDataVariable());
 		addbutton.addListener(SWT.Selection, addlisListener);
 		editbutton.addListener(SWT.Selection, editlisListener);
@@ -150,12 +144,10 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		}
 	}
 
-
-
 	private static class ViewerLabelProvider extends StyledCellLabelProvider implements ILabelProvider {
 		public Image getImage(Object element) {
 			Image image = ImageUtil.getImageFromURL("/datavar_16.png");
-			if(element instanceof DataVariable){
+			if (element instanceof DataVariable) {
 				return image;
 			}
 			return null;
@@ -231,39 +223,39 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 					protected void doExecute() {
 
 						DataObjImport dataObjImport = dvid.getDataObjImport();
-						
+
 						List<String> froms = FormUtil.getHtmlFilesRealPathFromBizobjId(dataObjImport.getId(), dataObjImport.getFilePath());
-						
+
 						List<DataVariable> dataVariables = new ArrayList<DataVariable>();
-						
+
 						List<DataVariable> removeDataVariables = new ArrayList<DataVariable>();
-						
-						for(String form : froms){
+
+						for (String form : froms) {
 							DataVariable dataVariable = FixFlowFactory.eINSTANCE.createDataVariable();
 							dataVariable.setId(FormUtil.getFormNameByFormPath(form).replace(".html", "表单"));
 							dataVariable.setDataType("java.lang.String");
 							Expression expression = FixFlowFactory.eINSTANCE.createExpression();
 							expression.setName(dataVariable.getId());
-							expression.setValue("\""+form+"\"");
+							expression.setValue("\"" + form + "\"");
 							dataVariable.setExpression(expression);
-							
+
 							dataVariables.add(dataVariable);
-							
-							//相同的节点需要先删除掉
+
+							// 相同的节点需要先删除掉
 							replaceElement(removeDataVariables, dataVariable);
-							
+
 						}
-						
+
 						dataVariables.removeAll(removeDataVariables);
 						addDataVariables(dataVariables);
 						((List<DataVariable>) treeViewer.getInput()).addAll(dataVariables);
-						
+
 						List<DataVariableImport> dataVariableImports = dataObjImport.getDataVariableList(dvid.getImportType());
-						
+
 						removeDataVariables = new ArrayList<DataVariable>();
-						
+
 						dataVariables = new ArrayList<DataVariable>();
-						
+
 						for (DataVariableImport dataVariableImport : dataVariableImports) {
 
 							DataVariable dataVariable = FixFlowFactory.eINSTANCE.createDataVariable();
@@ -274,17 +266,17 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 							expression.setName(dataVariable.getId());
 							expression.setValue(dataVariableImport.getVariableValue());
 							dataVariable.setExpression(expression);
-							
+
 							dataVariables.add(dataVariable);
-							//相同的节点需要先删除掉
+							// 相同的节点需要先删除掉
 							replaceElement(removeDataVariables, dataVariable);
-							
+
 						}
-						
+
 						dataVariables.removeAll(removeDataVariables);
 						addDataVariables(dataVariables);
 						((List<DataVariable>) treeViewer.getInput()).addAll(dataVariables);
-						
+
 						treeViewer.refresh();
 					}
 				});
@@ -349,18 +341,19 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 			for (int i = 0; i < objs.length; i++) {
 				DataVariable col = (DataVariable) objs[i];
 				deleteDataVariable(col);
-				((List<DataVariable>)treeViewer.getInput()).remove(col);
+				((List<DataVariable>) treeViewer.getInput()).remove(col);
 			}
 			treeViewer.refresh();
 			updateButtons();
-			/*if (!treeViewer.getSelection().isEmpty()) {
-				IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
-				DataVariable dataVariable = (DataVariable) selection.getFirstElement();
-				deleteDataVariable(dataVariable);
-				((List<DataVariable>) treeViewer.getInput()).remove(dataVariable);
-				treeViewer.refresh();
-				updateButtons();
-			}*/
+			/*
+			 * if (!treeViewer.getSelection().isEmpty()) { IStructuredSelection
+			 * selection = (IStructuredSelection) treeViewer.getSelection();
+			 * DataVariable dataVariable = (DataVariable)
+			 * selection.getFirstElement(); deleteDataVariable(dataVariable);
+			 * ((List<DataVariable>)
+			 * treeViewer.getInput()).remove(dataVariable);
+			 * treeViewer.refresh(); updateButtons(); }
+			 */
 		}
 	};
 
@@ -370,7 +363,7 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 			@Override
 			protected void doExecute() {
-				BaseElement baseElement = (BaseElement)SectionBpmnElement.sectionElement;
+				BaseElement baseElement = (BaseElement) SectionBpmnElement.sectionElement;
 
 				if (baseElement.getExtensionValues().size() > 0) {
 
@@ -402,7 +395,7 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 			@Override
 			protected void doExecute() {
-				BaseElement baseElement = (BaseElement)SectionBpmnElement.sectionElement;
+				BaseElement baseElement = (BaseElement) SectionBpmnElement.sectionElement;
 
 				if (baseElement.getExtensionValues().size() > 0) {
 
@@ -427,7 +420,7 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 			@Override
 			protected void doExecute() {
-				BaseElement baseElement = (BaseElement)SectionBpmnElement.sectionElement;
+				BaseElement baseElement = (BaseElement) SectionBpmnElement.sectionElement;
 
 				if (baseElement.getExtensionValues().size() > 0) {
 
@@ -446,7 +439,7 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 
 	@SuppressWarnings("unchecked")
 	private List<DataVariable> getDataVariable() {
-		BaseElement baseElement = (BaseElement)SectionBpmnElement.sectionElement;
+		BaseElement baseElement = (BaseElement) SectionBpmnElement.sectionElement;
 		List<DataVariable> dataVariables = new ArrayList<DataVariable>();
 
 		if (baseElement.getExtensionValues().size() > 0) {
@@ -464,7 +457,7 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 
 		return dataVariables;
 	}
-	
+
 	/**
 	 * 设置按钮可用性
 	 */
@@ -472,7 +465,7 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 	public void updateButtons() {
 		Object[] objs = null;
 		ISelection sel = treeViewer.getSelection();
-		if(sel != null) {
+		if (sel != null) {
 			objs = ((IStructuredSelection) sel).toArray();
 		}
 		Object selectedPage = ((IStructuredSelection) treeViewer.getSelection()).getFirstElement();
@@ -481,42 +474,43 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 			index++;
 		}
 		removebutton.setEnabled(selectedPage != null);
-		editbutton.setEnabled(selectedPage != null && objs != null && objs.length<2);
+		editbutton.setEnabled(selectedPage != null && objs != null && objs.length < 2);
 	}
-	
+
 	/**
-	  * replaceElement(将相同的值删除掉)
-	  * @Title: replaceElement
-	  * @Description: TODO
-	  * @param @param dataVariable    设定文件
-	  * @return void    返回类型
-	  * @throws
+	 * replaceElement(将相同的值删除掉)
+	 * 
+	 * @Title: replaceElement
+	 * @Description: TODO
+	 * @param @param dataVariable 设定文件
+	 * @return void 返回类型
+	 * @throws
 	 */
 	private void replaceElement(List<DataVariable> removedataVariables, DataVariable dataVariable) {
-		//相同的节点需要先删除掉
+		// 相同的节点需要先删除掉
 		List<DataVariable> dataVariables = (List<DataVariable>) treeViewer.getInput();
-		if(dataVariables != null && dataVariables.size() > 0) {
+		if (dataVariables != null && dataVariables.size() > 0) {
 			for (int i = 0; i < dataVariables.size(); i++) {
 				DataVariable dataVariable2 = dataVariables.get(i);
-				if(dataVariable2.getId().equals(dataVariable.getId())) {
-					//在EMF中同样删掉--20120903 wy #4840
+				if (dataVariable2.getId().equals(dataVariable.getId())) {
+					// 在EMF中同样删掉--20120903 wy #4840
 					removedataVariables.add(dataVariable2);
 					dataVariables.remove(i);
-					if(i > 0) {
+					if (i > 0) {
 						i--;
 					} else {
 						i = 0;
 					}
 				}
 			}
-			
+
 			deleteDataVariables(removedataVariables);
 		}
 	}
-	
-	
+
 	/**
 	 * 删除多个EMF元素
+	 * 
 	 * @param removedataVariables
 	 */
 	private void deleteDataVariables(final List<DataVariable> removedataVariables) {
@@ -526,20 +520,19 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 			@Override
 			protected void doExecute() {
 				List<FeatureMap.Entry> entries = new ArrayList<FeatureMap.Entry>();
-				
-				BaseElement baseElement = (BaseElement)SectionBpmnElement.sectionElement;
+
+				BaseElement baseElement = (BaseElement) SectionBpmnElement.sectionElement;
 
 				if (baseElement.getExtensionValues().size() > 0) {
 
 					for (ExtensionAttributeValue extensionAttributeValue : baseElement.getExtensionValues()) {
-						
+
 						for (DataVariable dataVariable2 : removedataVariables) {
-							FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__DATA_VARIABLE,
-									dataVariable2);
+							FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry(
+									(org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__DATA_VARIABLE, dataVariable2);
 							entries.add(extensionElementEntry);
 						}
 
-						
 						FeatureMap extensionElements = extensionAttributeValue.getValue();
 						extensionElements.removeAll(entries);
 
@@ -548,9 +541,10 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 			}
 		});
 	}
-	
+
 	/**
 	 * 增加多个EMF元素
+	 * 
 	 * @param dataVariables
 	 */
 	private void addDataVariables(final List<DataVariable> dataVariables) {
@@ -560,8 +554,8 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 			@Override
 			protected void doExecute() {
 				List<FeatureMap.Entry> entries = new ArrayList<FeatureMap.Entry>();
-				
-				BaseElement baseElement = (BaseElement)SectionBpmnElement.sectionElement;
+
+				BaseElement baseElement = (BaseElement) SectionBpmnElement.sectionElement;
 
 				if (baseElement.getExtensionValues().size() > 0) {
 
@@ -575,11 +569,20 @@ public class DataVariablePropertiesComposite extends AbstractFixFlowBpmn2Propert
 										(org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__DATA_VARIABLE, dataVariable2);
 								entries.add(extensionElementEntry);
 							}
-							
+
 							extensionElements.addAll(entries);
 						}
 
 					}
+				} else {
+					ExtensionAttributeValue extensionElement = Bpmn2Factory.eINSTANCE.createExtensionAttributeValue();
+					baseElement.getExtensionValues().add(extensionElement);
+					for (DataVariable dataVariable2 : dataVariables) {
+						FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__DATA_VARIABLE,
+								dataVariable2);
+						entries.add(extensionElementEntry);
+					}
+					extensionElement.getValue().addAll(entries);
 				}
 			}
 		});
