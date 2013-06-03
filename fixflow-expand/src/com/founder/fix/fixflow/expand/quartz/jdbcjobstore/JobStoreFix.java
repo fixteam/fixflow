@@ -97,8 +97,7 @@ public class JobStoreFix extends JobStoreTX {
 		if (Context.getProcessEngineConfiguration() == null) {
 			super.rollbackConnection(arg0);
 		} else {
-			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration()
-					.getQuartzConfig();
+			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration().getQuartzConfig();
 			if (quartzConfig == null) {
 				return;
 			}
