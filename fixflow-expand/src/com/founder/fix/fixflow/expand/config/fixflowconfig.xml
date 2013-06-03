@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.7.1.20130530">
+<coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.6.1.20130530">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
     <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="DB_FIX_ACC" name="DB_FIX_ACC" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
