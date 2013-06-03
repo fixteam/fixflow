@@ -1,6 +1,8 @@
 package com.founder.fix.fixflow.core.impl;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * 外部内容构造器
  * @author kenshin
@@ -51,6 +53,23 @@ public class ExternalContent {
 	 */
 	public void setConnection(Connection connection) {
 		this.connection = connection;
+	}
+	
+	
+	Map<String, Connection> connectionMap=new HashMap<String, Connection>();
+	
+	
+	/**
+	 * 设置数据库链接
+	 * @param connectionKey
+	 * @param connection
+	 */
+	public void setConnection(String connectionKey,Connection connection) {
+		this.connectionMap.put(connectionKey, connection);
+	}
+	
+	public void cleanConnection(){
+		connectionMap.clear();
 	}
 	
 	/**

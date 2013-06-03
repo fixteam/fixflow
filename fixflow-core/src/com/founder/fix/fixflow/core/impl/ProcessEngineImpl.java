@@ -5,9 +5,6 @@ import java.util.Map;
 
 import org.quartz.SchedulerException;
 
-
-import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguage;
-import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
@@ -20,9 +17,8 @@ import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
 import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
-import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
-import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 import com.founder.fix.fl.core.FixResourceCore;
 
 public class ProcessEngineImpl implements ProcessEngine {
@@ -134,49 +130,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 	public void setExternalContent(ExternalContent externalContent) {
 		Connection connection = externalContent.getConnection();
-		// CacheObject cacheObject = new CacheObject(cacheHandler);
-		// Context.setCacheObject(cacheObject);
 
-		/*
-		 * if(connection==null){ Context.setBshInterpreter(new Interpreter());
-		 * 
-		 * 
-		 * DataBase dataBase =
-		 * this.processEngineConfiguration.getSelectedDatabase();
-		 * 
-		 * 
-		 * if (connection == null) { try {
-		 * Class.forName(dataBase.getDriverClassName()); } catch
-		 * (ClassNotFoundException e) { // TODO Auto-generated catch block //
-		 * e.printStackTrace(); } String url = dataBase.getUrl(); String user =
-		 * dataBase.getUsername(); String password = dataBase.getPassword(); try
-		 * { connection = DriverManager.getConnection(url, user, password); }
-		 * catch (SQLException e) { // TODO Auto-generated catch block //
-		 * e.printStackTrace(); }
-		 * 
-		 * }
-		 * 
-		 * Context.setDbConnection(connection);
-		 * 
-		 * 
-		 * String authenticatedUserId=externalContent.getAuthenticatedUserId();
-		 * Authentication.setAuthenticatedUserId(authenticatedUserId); } else{
-		 */
-		
-		//ContextInstanceImpl contextInstanceImpl = new ContextInstanceImpl(processInstance);
-		AbstractScriptLanguageMgmt abstractScriptLanguageMgmt=null;
-		ScriptLanguageConfig scriptLanguageConfig=processEngineConfiguration.getScriptLanguageConfig();
-		for (ScriptLanguage scriptLanguage : scriptLanguageConfig.getScriptLanguage()) {
-			if(scriptLanguage.getId().equals(scriptLanguageConfig.getSelected())){
-				abstractScriptLanguageMgmt= (AbstractScriptLanguageMgmt)ReflectUtil.instantiate(scriptLanguage.getClassImpl());
-				break;
-			}
-		}
-		
-
-		
-
-		Context.setAbstractScriptLanguageMgmt(abstractScriptLanguageMgmt.init());
 		Context.setDbConnection(connection);
 		String authenticatedUserId = externalContent.getAuthenticatedUserId();
 		Authentication.setAuthenticatedUserId(authenticatedUserId);
@@ -186,7 +140,8 @@ public class ProcessEngineImpl implements ProcessEngine {
 			//Context.setLanguageType("defauld");
 		}
 		else{
-			FixResourceCore.setNowLanguage(languageType);}
+			FixResourceCore.setNowLanguage(languageType);
+		}
 		
 		// }
 		Context.setQuartzTransactionAuto(externalContent.isQuartzTransactionAuto());
@@ -229,6 +184,12 @@ public class ProcessEngineImpl implements ProcessEngine {
 		Context.commitQuartzConnection();
 		
 		
+	}
+
+
+
+	public FixFlowVersion getVersion() {
+		return processEngineConfiguration.getFixFlowVersion();
 	}
 
 

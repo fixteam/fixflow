@@ -17,6 +17,21 @@ public interface ScheduleService extends ProcessService{
 	SchedulerFactory getSchedulerFactory();
 	
 	/**
+	 * 定时任务调度器重启
+	 */
+	void schedulerRestart();
+	
+	/**
+	 * 定时任务调度器启动
+	 */
+	void schedulerStart();
+	
+	/**
+	 * 定时任务调度器关闭
+	 */
+	void schedulerShutdown();
+	
+	/**
 	 * 获取默认的线程池
 	 * @return
 	 */

@@ -28,6 +28,7 @@ import org.quartz.SchedulerFactory;
 
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 import com.founder.fix.bpmn2extensions.coreconfig.DBType;
 import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
@@ -37,6 +38,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.ExpandClassConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandCmdConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
+import com.founder.fix.bpmn2extensions.coreconfig.ImportDataVariableConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.InternationalizationConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.PigeonholeConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.Priority;
@@ -46,6 +48,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
@@ -73,6 +76,7 @@ import com.founder.fix.fixflow.core.impl.message.FlowMessageListener;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.BpmnDeployer;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.Deployer;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.DeploymentCache;
+import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
 import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
@@ -99,6 +103,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected FormService formService = new FormServiceImpl();
 	protected ScheduleService scheduleService = new ScheduleServiceImpl();
 	protected FixFlowConfig fixFlowConfig;
+
+	protected FixFlowVersion fixFlowVersion;
+
+	
+
 	protected DataBase selectedDatabase;
 	protected SysMailConfig sysMailConfig;
 	protected EventSubscriptionConfig eventSubscriptionConfig;
@@ -130,6 +139,16 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected SchedulerFactory schedulerFactory;
 
 	protected AssignPolicyConfig assignPolicyConfig;
+	
+	protected ImportDataVariableConfig importDataVariableConfig;
+	
+	protected QuartzConfig 	quartzConfig;
+	
+	
+
+	
+
+	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfig;
 
 	/**
 	 * 线程池
@@ -156,6 +175,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		// 任务命令配置加载
 		initTaskCommandConfig();
 		
+		initConnectionManagementConfig();
+		initImportDataVariableConfig();
+		
+		
 		initQuartz();
 		initUserDefinition();
 		initSysMailConfig();
@@ -173,6 +196,38 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initAssignPolicyConfig();
 		initThreadPool();
 
+	}
+	
+
+
+	private void initImportDataVariableConfig() {
+		this.importDataVariableConfig=this.fixFlowConfig.getImportDataVariableConfig();
+	}
+	
+	protected ConnectionManagement connectionManagement;
+
+	
+
+	private void initConnectionManagementConfig() {
+		// TODO 自动生成的方法存根
+		
+		
+		List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
+		String selectId=this.fixFlowConfig.getConnectionManagementConfig().getSelected();
+		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
+			if(connectionManagementInstanceConfigTemp.getId().equals(selectId)){
+				this.connectionManagementInstanceConfig=connectionManagementInstanceConfigTemp;
+				break;
+			}
+		}
+		if(this.connectionManagementInstanceConfig==null){
+			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+		}
+		
+		connectionManagement=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfig.getClassImpl());
+		if(this.connectionManagement==null){
+			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+		}
 	}
 
 	protected void initEmfFile() {
@@ -209,7 +264,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 
 		fixFlowConfig = (FixFlowConfig) resource.getContents().get(0);
-
+		
+		String versionString=fixFlowConfig.getVersion();
+		
+		this.fixFlowVersion=new FixFlowVersion(versionString);
 	}
 
 	protected void initThreadPool() {
@@ -296,9 +354,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		} catch (SQLException e) {
 			throw new FixFlowException("流程国际化处理文件加载失败!", e);
 		}
-		Context.setDbConnection(connection);
-
+		
 		try {
+			Context.setDbConnection(connection);
 			fixFlowResources.systemInit();
 			connection.commit();
 		} catch (Exception e) {
@@ -412,6 +470,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		for (DataBase dataBase : fixFlowConfig.getDataBaseConfig().getDataBase()) {
 			if (dataBase.getId().equals(selectedDB)) {
 				selectedDatabase = dataBase;
+				ConnectionManagement.defaultDataBaseId=selectedDatabase.getId();
 			}
 		}
 
@@ -423,7 +482,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		 * QuartzUtil.createSchedulerFactory(); Scheduler scheduler = null;
 		 */
 
-		QuartzConfig quartzConfig = fixFlowConfig.getQuartzConfig();
+		this.quartzConfig = fixFlowConfig.getQuartzConfig();
 
 		if (!StringUtil.getBoolean(quartzConfig.getIsEnable())) {
 			return;
@@ -863,6 +922,28 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	public AssignPolicyConfig getAssignPolicyConfig() {
 		return assignPolicyConfig;
+	}
+	
+	public ImportDataVariableConfig getImportDataVariableConfig() {
+		return importDataVariableConfig;
+	}
+
+	public ConnectionManagementInstanceConfig getConnectionManagementInstanceConfig() {
+		return connectionManagementInstanceConfig;
+	}
+	
+	public ConnectionManagement getConnectionManagement() {
+		return connectionManagement;
+	}
+	
+	public FixFlowConfig getFixFlowConfig() {
+		return fixFlowConfig;
+	}
+	public FixFlowVersion getFixFlowVersion() {
+		return fixFlowVersion;
+	}
+	public QuartzConfig getQuartzConfig() {
+		return quartzConfig;
 	}
 
 }

@@ -7,7 +7,9 @@ import org.quartz.JobPersistenceException;
 import org.quartz.impl.jdbcjobstore.JobStoreTX;
 
 
+import com.founder.fix.bpmn2extensions.coreconfig.QuartzConfig;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 
 public class JobStoreFix extends JobStoreTX {
@@ -15,12 +17,30 @@ public class JobStoreFix extends JobStoreTX {
 	@Override
 	protected Connection getConnection() throws JobPersistenceException{
 		
-		if(Context.getDbConnection()==null){
-			return super.getConnection();
+		
+		
+		QuartzConfig quartzConfig=Context.getProcessEngineConfiguration().getQuartzConfig();
+		if(quartzConfig==null){
+			return null;
 		}
-		else{
-			return Context.getDbConnection();
+		if(StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())){
+			if(Context.getDbConnection()==null){
+				return super.getConnection();
+			}
+			else{
+				return Context.getDbConnection();
+			}
+		}else{
+			if(Context.getDbConnection(quartzConfig.getDataBaseId())==null){
+				return super.getConnection();
+			}
+			else{
+				return Context.getDbConnection(quartzConfig.getIsDefaultConfig());
+			}
 		}
+
+		
+	
 		
 	}
 
@@ -28,18 +48,22 @@ public class JobStoreFix extends JobStoreTX {
 	protected void closeConnection(Connection arg0) {
 		
 		
-		if(Context.getDbConnection()==null){
-			super.closeConnection(arg0);
+
+		QuartzConfig quartzConfig=Context.getProcessEngineConfiguration().getQuartzConfig();
+		if(quartzConfig==null){
+			return;
 		}
-		
-		/*
-		// TODO 自动生成的方法存根
-		boolean isQuartzTransactionAuto=Context.isQuartzTransactionAuto();
-		if(!isQuartzTransactionAuto){
-			Context.setQuartzCloseConnection(arg0);
+		if(StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())){
+			if(Context.getDbConnection()==null){
+				super.closeConnection(arg0);
+			}
 		}else{
-			super.closeConnection(arg0);
-		}*/
+			if(Context.getDbConnection(quartzConfig.getDataBaseId())==null){
+				super.closeConnection(arg0);
+			}
+		}
+
+		
 		
 		
 		
@@ -48,41 +72,44 @@ public class JobStoreFix extends JobStoreTX {
 	@Override
 	protected void commitConnection(Connection arg0) throws JobPersistenceException {
 		
-
-		if(Context.getDbConnection()==null){
-			super.commitConnection(arg0);
-		}
-		/*
 		
-		// TODO 自动生成的方法存根
-		boolean isQuartzTransactionAuto=Context.isQuartzTransactionAuto();
-		if(!isQuartzTransactionAuto){
-			Context.setQuartzCommitConnection(arg0);
+		QuartzConfig quartzConfig=Context.getProcessEngineConfiguration().getQuartzConfig();
+		if(quartzConfig==null){
+			return;
 		}
-		else{
-			super.commitConnection(arg0);
-		}*/
+		if(StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())){
+			if(Context.getDbConnection()==null){
+				super.commitConnection(arg0);
+			}
+		}else{
+			if(Context.getDbConnection(quartzConfig.getDataBaseId())==null){
+				super.commitConnection(arg0);
+			}
+		}
+
+
 		
 	}
 
 	@Override
 	protected void rollbackConnection(Connection arg0) {
 		
+		QuartzConfig quartzConfig=Context.getProcessEngineConfiguration().getQuartzConfig();
+		if(quartzConfig==null){
+			return;
+		}
+		if(StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())){
+			if(Context.getDbConnection()==null){
+				super.rollbackConnection(arg0);
+			}
+		}else{
+			if(Context.getDbConnection(quartzConfig.getDataBaseId())==null){
+				super.rollbackConnection(arg0);
+			}
+		}
 		
 		
-		if(Context.getDbConnection()==null){
-			super.rollbackConnection(arg0);
-		}
-		/*
-		// TODO 自动生成的方法存根
-		boolean isQuartzTransactionAuto=Context.isQuartzTransactionAuto();
-		if(!isQuartzTransactionAuto){
-			Context.setQuartzRollbackConnection(arg0);
-			throw new FixFlowException("quartz error");
-		}
-		else{
-			super.rollbackConnection(arg0);
-		}*/
+
 	}
    
 }

@@ -2,12 +2,17 @@ package com.founder.fix.fixflow.core.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
-
+import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguage;
+import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 
 /**
@@ -15,7 +20,7 @@ import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
  */
 public class Context {
 
-	protected static ThreadLocal<Stack<Connection>> dbConnectionThreadLocal = new ThreadLocal<Stack<Connection>>();
+	protected static ThreadLocal<Stack<Map<String, Connection>>> dbConnectionThreadLocal = new ThreadLocal<Stack<Map<String, Connection>>>();
 	protected static ThreadLocal<Stack<CacheObject>> cacheObjectThreadLocal = new ThreadLocal<Stack<CacheObject>>();
 
 	protected static ThreadLocal<Stack<CommandContext>> commandContextThreadLocal = new ThreadLocal<Stack<CommandContext>>();
@@ -67,7 +72,22 @@ public class Context {
 	public static AbstractScriptLanguageMgmt getAbstractScriptLanguageMgmt() {
 		Stack<AbstractScriptLanguageMgmt> stack = getStack(abstractScriptLanguageMgmtThreadLocal);
 		if (stack.isEmpty()) {
-			return null;
+			
+
+			AbstractScriptLanguageMgmt abstractScriptLanguageMgmt=null;
+			ScriptLanguageConfig scriptLanguageConfig=getProcessEngineConfiguration().getScriptLanguageConfig();
+			for (ScriptLanguage scriptLanguage : scriptLanguageConfig.getScriptLanguage()) {
+				if(scriptLanguage.getId().equals(scriptLanguageConfig.getSelected())){
+					abstractScriptLanguageMgmt= (AbstractScriptLanguageMgmt)ReflectUtil.instantiate(scriptLanguage.getClassImpl());
+					break;
+				}
+			}
+			
+			
+			
+			Context.setAbstractScriptLanguageMgmt(abstractScriptLanguageMgmt.init());
+
+			return abstractScriptLanguageMgmt;
 		}
 		return stack.peek();
 	}
@@ -106,16 +126,101 @@ public class Context {
 
 	public static Connection getDbConnection() {
 
-		Stack<Connection> stack = getStack(dbConnectionThreadLocal);
+		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
 		if (stack.isEmpty()) {
 			return null;
 		}
-		return stack.peek();
+
+		Map<String, Connection> connMap= stack.peek();
+		if(connMap==null){
+			return null;
+		}
+		else{
+			
+				String dbID=ConnectionManagement.defaultDataBaseId;
+				Connection connection=connMap.get(dbID);
+				if(connection==null){
+					return null;
+				}
+				else{
+					return connection;
+				}
+			
+		}
+		
+		
+	}
+	
+	
+	public static Connection getDbConnection(String dbId) {
+
+		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
+		if (stack.isEmpty()) {
+			return null;
+		}
+
+		Map<String, Connection> connMap= stack.peek();
+		if(connMap==null){
+			return null;
+		}
+		else{
+			return connMap.get(dbId);
+		}
+		
+		
 	}
 
-	public static void setDbConnection(Connection dbConnection) {
-		getStack(dbConnectionThreadLocal).push(dbConnection);
+	public static void setDbConnection(String dbID,Connection dbConnection) {
+		
+		
+		
+		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
+		if (stack.isEmpty()) {
+			Map<String, Connection> conMap=new HashMap<String, Connection>();
+			conMap.put(dbID, dbConnection);
+			
+			getStack(dbConnectionThreadLocal).push(conMap);
+		}else{
+			Map<String, Connection> connMap= stack.peek();
+			if(connMap==null){
+				Map<String, Connection> conMap=new HashMap<String, Connection>();
+				conMap.put(dbID, dbConnection);
+				
+				getStack(dbConnectionThreadLocal).push(conMap);
+			}else{
+				connMap.put(dbID, dbConnection);
+			}
+		}
+
 	}
+	
+	
+	public static void setDbConnection(Connection dbConnection) {
+		
+	
+		String dbID=ConnectionManagement.defaultDataBaseId;
+		
+		
+		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
+		if (stack.isEmpty()) {
+			Map<String, Connection> conMap=new HashMap<String, Connection>();
+			conMap.put(dbID, dbConnection);
+			
+			getStack(dbConnectionThreadLocal).push(conMap);
+		}else{
+			Map<String, Connection> connMap= stack.peek();
+			if(connMap==null){
+				Map<String, Connection> conMap=new HashMap<String, Connection>();
+				conMap.put(dbID, dbConnection);
+				
+				getStack(dbConnectionThreadLocal).push(conMap);
+			}else{
+				connMap.put(dbID, dbConnection);
+			}
+		}
+
+	}
+	
 	
 	
 	public static Connection getQuartzCloseConnection() {

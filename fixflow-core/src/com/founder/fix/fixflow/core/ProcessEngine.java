@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.core;
 
 import com.founder.fix.fixflow.core.impl.ExternalContent;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
+import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
 
 
 
@@ -103,6 +104,13 @@ public interface ProcessEngine {
 	 * @return
 	 */
 	ProcessEngineConfigurationImpl getProcessEngineConfiguration();
+	
+	/**
+	 * 获取流程的版本号
+	 * @return
+	 */
+	FixFlowVersion getVersion();
+	
 
 
 

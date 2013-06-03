@@ -17,7 +17,6 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
-import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
@@ -135,9 +134,12 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			
 			if(taskInstanceImpl!=null){
 				
-				if(AbstractCommandFilter.isAutoClaim()){
-					taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-				}
+				
+				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				
+				//if(AbstractCommandFilter.isAutoClaim()){
+					
+				//}
 				
 				taskInstanceImpl.setDraft(true);
 				
