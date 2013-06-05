@@ -331,4 +331,11 @@ public interface RuntimeService extends ProcessService{
 	
 	List<TaskInstance> getNotDoneTask(ProcessInstance processInstance);
 	
+	/**
+	 * 执行规则脚本
+	 * @param ruleScript 规则脚本
+	 * @return
+	 */
+	Object executeRuleScript(String ruleScript);
+	
 }

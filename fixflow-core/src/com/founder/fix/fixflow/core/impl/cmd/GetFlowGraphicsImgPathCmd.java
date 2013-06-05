@@ -33,7 +33,7 @@ public class GetFlowGraphicsImgPathCmd implements Command<String>{
 	
 		//当前语言
 		String nowLanguage=commandContext.getProcessEngineConfigurationImpl().getFixFlowResources().getNowLanguage();
-		String pathString="fixflowdiagram/"+nowLanguage+"/"+processDefinition.getProcessDefinitionKey()+"/"+processDefinition.getProcessDefinitionId().replace(":","_")+".bmp";
+		String pathString="fixflowdiagram/"+nowLanguage+"/"+processDefinition.getProcessDefinitionKey()+"/"+processDefinition.getProcessDefinitionId().replace(":","_")+".PNG";
 		
 		return pathString;
 		

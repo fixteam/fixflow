@@ -15,7 +15,12 @@ public abstract class AbstractScriptLanguageMgmt {
 	
 	
 	
-	
+	/**
+	 * 执行表达式
+	 * @param scriptText 表达式文本
+	 * @return
+	 */
+	public abstract Object execute(String scriptText);
 	
 	
 	

@@ -146,6 +146,18 @@ public class BeanShellScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt 
 		return resultObj;
 	}
 
+	@Override
+	public Object execute(String scriptText) {
+		
+		try {
+			return interpreter.eval(scriptText);
+		} catch (EvalError e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	
 
 }

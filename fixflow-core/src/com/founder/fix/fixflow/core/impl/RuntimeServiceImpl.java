@@ -9,6 +9,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdCmd;
+import com.founder.fix.fixflow.core.impl.cmd.ExecuteRuleScriptCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.MessageStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.NoneStartProcessInstanceCmd;
@@ -243,6 +244,12 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 			
 		}
 		return taskInstances;
+	}
+
+	public Object executeRuleScript(String ruleScript) {
+
+		return commandExecutor.execute(new ExecuteRuleScriptCmd<Object>(ruleScript));
+
 	}
 
 	

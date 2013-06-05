@@ -112,4 +112,9 @@ public class GroovyScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt {
 		return resultObj;
 	}
 
+	@Override
+	public Object execute(String scriptText) {
+		 return groovyShell.evaluate(scriptText);
+	}
+
 }

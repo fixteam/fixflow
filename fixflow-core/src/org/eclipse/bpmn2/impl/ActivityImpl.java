@@ -818,20 +818,15 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			}
 
 		}
-
-		if (this instanceof Activity && ((Activity) this).getLoopCharacteristics() != null) {
-
-			loopExecute(executionContext);
-
-		} else {
-
-			eventExecute(executionContext);
-
-		}
+		
+		
+		eventExecute(executionContext);
+		
+		
 
 	}
 
-	private void forkedTokenEnter(ExecutionContext executionContext) {
+	private void forkedTokenEnter(ExecutionContext executionContext,boolean isMultiple) {
 		TokenEntity token = executionContext.getToken();
 
 		// 把令牌的所在节点设置为当前节点
@@ -848,14 +843,21 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 		executionContext.setSequenceFlowSource(null);
 
+		if(isMultiple){
+			execute(executionContext);
+		}else{
+			loopExecute(executionContext);
+		}
+		
+		/*
 		if (this instanceof Activity && ((Activity) this).getLoopCharacteristics() != null) {
 
 			loopExecute(executionContext);
 
 		} else {
 
-			execute(executionContext);
-		}
+			
+		}*/
 	}
 
 	protected void eventExecute(ExecutionContext executionContext) {
@@ -872,7 +874,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			TokenEntity nodeToken = this.createForkedToken(tokenEntity, nodeTokenId).token;
 			ExecutionContext nodeChildExecutionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(nodeToken);
 
-			this.forkedTokenEnter(nodeChildExecutionContext);
+			this.forkedTokenEnter(nodeChildExecutionContext,false);
 
 			// 遍历边界事件
 			for (BoundaryEvent boundaryEvent : boundaryEvents) {
@@ -975,7 +977,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 							ExpressionMgmt.setVariable(expressionValueTemp, object, executionContext);
 
-							eventExecute(executionContext);
+							this.forkedTokenEnter(executionContext,true);
 						}
 					} else {
 						if (valueObj instanceof String[]) {
@@ -991,7 +993,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 								ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
 
-								eventExecute(executionContext);
+								this.forkedTokenEnter(executionContext,true);
 
 							}
 						} else {
@@ -1010,7 +1012,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 										ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
 
-										eventExecute(executionContext);
+										this.forkedTokenEnter(executionContext,true);
 
 									}
 								} else {
