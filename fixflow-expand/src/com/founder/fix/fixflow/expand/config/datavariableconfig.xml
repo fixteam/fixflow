@@ -100,4 +100,14 @@
     <dataTypeDef name="List&lt;Object>" typeValue="java.util.List&lt;Object>" id="List&lt;Object>"/>
     <dataTypeDef name="用户组" typeValue="com.founder.fix.fixflow.core.impl.identity.GroupTo" id="GroupTo"/>
   </dataVariableDataType>
+  
+  <dataVariableBizTypeConfig>
+	  <dataVariableBizType typeId="form" typeName="表单" img="copynext_16.png"/>
+	  <dataVariableBizType typeId="formVariable" typeName="表单变量" img="messagesend_16.png"/>
+	  <dataVariableBizType typeId="dataBaseVariable" typeName="数据库变量" img="systemsave_16.png"/>
+	  <dataVariableBizType typeId="bizObjVariable" typeName="业务对象变量" img="estat_16.png"/>
+	  <dataVariableBizType typeId="relatedFieldVariable" typeName="关联字段变量" img="estat_16.png"/>
+	  <dataVariableBizType typeId="customVariable" typeName="自定义变量" img="recycle_16"/>
+  </dataVariableBizTypeConfig>
+  
 </variableconfig:DataVariableConfig>

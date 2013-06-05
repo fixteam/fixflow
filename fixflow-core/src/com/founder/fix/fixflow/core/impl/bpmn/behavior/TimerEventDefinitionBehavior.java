@@ -112,6 +112,9 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		job.getJobDataMap().put("transientVariableId", guidString);
 		job.getJobDataMap().put("processInstanceId", processInstanceId);
 		job.getJobDataMap().put("nodeId", event.getId());
+		job.getJobDataMap().put("processKey", tokenEntity.getProcessInstance().getProcessDefinitionKey());
+		job.getJobDataMap().put("processId", tokenEntity.getProcessInstance().getProcessDefinitionId());
+		job.getJobDataMap().put("processName", tokenEntity.getProcessInstance().getProcessDefinition().getName());
 		try {
 			scheduler.scheduleJob(job, trigger);
 		} catch (SchedulerException e) {

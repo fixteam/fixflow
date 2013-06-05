@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.7.1.20130530">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
-    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
+    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.128.91:1521:orcl" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="DB_FIX_ACC" name="DB_FIX_ACC" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2数据库" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.OraclePaginationImpl" dbtype="db2"/>
     <dataBase id="mysql" name="mysql数据库" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/myDB?user=soft&amp;password=soft1234&amp;useUnicode=true&amp;characterEncoding=8859_1" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.SqlServerPaginationImpl" dbtype="mysql"/>
@@ -57,6 +57,7 @@
     <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
     <expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
     <expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
+  	<expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.FixAuthenticationImpl" remarks="业务数据操作对象"/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
   <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>
@@ -88,8 +89,8 @@
     <connectionManagementInstanceConfig id="General" name="通用连接管理" classImpl="com.founder.fix.fixflow.expand.database.GeneralConnectionManagement"/>
   </connectionManagementConfig>
   <importDataVariableConfig>
-    <importDataVariable id="FixCSForm" name="FixCS平台表单变量" expression="formInfo.getData(#{FieldName})"/>
-    <importDataVariable id="FixCSDB" name="FixCS平台数据库变量" expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),#{FieldName})"/>
+    <importDataVariable id="FixCSForm" name="FixCS平台表单变量" expression="formInfo.getData(&quot;#{FieldName}&quot;)"/>
+    <importDataVariable id="FixCSDB" name="FixCS平台数据库变量" expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)"/>
     <importDataVariable id="GeneralDB" name="通用数据库变量" expression="#{DataBaseId},#{BizObjName},#{FieldName}"/>
   </importDataVariableConfig>
 </coreconfig:FixFlowConfig>

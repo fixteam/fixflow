@@ -129,9 +129,13 @@ public class ProcessEngineImpl implements ProcessEngine {
 	}
 
 	public void setExternalContent(ExternalContent externalContent) {
+		
+		
 		Connection connection = externalContent.getConnection();
-
-		Context.setDbConnection(connection);
+		if(connection!=null){
+			Context.setDbConnection(connection);
+		}
+		
 		String authenticatedUserId = externalContent.getAuthenticatedUserId();
 		Authentication.setAuthenticatedUserId(authenticatedUserId);
 		

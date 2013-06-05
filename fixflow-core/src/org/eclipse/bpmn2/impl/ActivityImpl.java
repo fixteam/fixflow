@@ -1122,7 +1122,6 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			String parentTokenId = tokenEntity.getParent().getId();
 			try {
 				Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
-
 				scheduler.deleteJob(JobKey.jobKey(tokenEntity.getParent().getId(), "FixTimeOutTask_" + parentTokenId));
 
 			} catch (SchedulerException e) {

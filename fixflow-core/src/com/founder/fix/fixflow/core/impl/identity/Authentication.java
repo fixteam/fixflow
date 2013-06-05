@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 
 import edu.emory.mathcs.backport.java.util.Collections;
@@ -15,15 +16,30 @@ public abstract class Authentication {
 
 	static ThreadLocal<String> authenticatedUserIdThreadLocal = new ThreadLocal<String>();
 
+	
+	
+	
+	
 	public static void setAuthenticatedUserId(String authenticatedUserId) {
+
 		authenticatedUserIdThreadLocal.set(authenticatedUserId);
 	}
 
 	public static String getAdminId() {
-		return "1200119390";
+		
+		
+		
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getAuthenticationInstance().getAdminId();
 	}
 
 	public static String getAuthenticatedUserId() {
+		
+		if(authenticatedUserIdThreadLocal.get()==null){
+			String userIdString=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getAuthenticationInstance().getAuthenticatedUserId();
+			if(userIdString!=null){
+				setAuthenticatedUserId(userIdString);
+			}
+		}
 		return authenticatedUserIdThreadLocal.get();
 	}
 

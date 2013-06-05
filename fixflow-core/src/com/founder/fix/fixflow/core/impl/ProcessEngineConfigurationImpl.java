@@ -65,6 +65,7 @@ import com.founder.fix.fixflow.core.impl.cache.CacheImpl;
 import com.founder.fix.fixflow.core.impl.db.DbConfig;
 import com.founder.fix.fixflow.core.impl.db.DbType;
 import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
+import com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.identity.UserDefinition;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContextFactory;
@@ -105,8 +106,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected FixFlowConfig fixFlowConfig;
 
 	protected FixFlowVersion fixFlowVersion;
+	
+	
+	public AbstractAuthentication authenticationInstance;
 
 	
+
+
 
 	protected DataBase selectedDatabase;
 	protected SysMailConfig sysMailConfig;
@@ -450,6 +456,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	protected void initExpandClassConfig() {
 		this.expandClassConfig = fixFlowConfig.getExpandClassConfig();
+		for (ExpandClass expandClass : expandClassConfig.getExpandClass()) {
+			if(expandClass.getClassId().equals("Authentication")){
+				this.authenticationInstance=(AbstractAuthentication)ReflectUtil.instantiate(expandClass.getClassImpl());
+			}
+		}
+		
+		
 	}
 
 	protected void initSysMailConfig() {
@@ -944,6 +957,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 	public QuartzConfig getQuartzConfig() {
 		return quartzConfig;
+	}
+	public AbstractAuthentication getAuthenticationInstance() {
+		return authenticationInstance;
 	}
 
 }
