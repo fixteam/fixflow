@@ -27,6 +27,7 @@ import org.eclipse.bpmn2.DataInputAssociation;
 import org.eclipse.bpmn2.DataOutputAssociation;
 import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
+import org.eclipse.bpmn2.StandardLoopCharacteristics;
 
 import org.eclipse.bpmn2.InputOutputSpecification;
 import org.eclipse.bpmn2.LoopCharacteristics;
@@ -896,7 +897,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			// execute(executionContext);
 
 		} else {
-			execute(executionContext);
+			loopExecute(executionContext);
 		}
 
 	}
@@ -1034,7 +1035,15 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			}
 
 		} else {
-			// 串行多实例
+			//当发现不是多实例的情况下继续节点的执行,以后添加了串行多实例要在这里加判断
+			if(loopCharacteristics instanceof StandardLoopCharacteristics){
+					//串行多实例执行
+				execute(executionContext);
+			}else{
+				//无多实例执行
+				execute(executionContext);
+				
+			}
 
 		}
 

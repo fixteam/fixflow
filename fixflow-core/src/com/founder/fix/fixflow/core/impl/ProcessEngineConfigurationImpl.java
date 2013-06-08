@@ -550,8 +550,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.scheduler.instanceName", "FixFlowQuartzScheduler");
 		props.put("org.quartz.scheduler.instanceId", "AUTO");
 		props.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
-		props.put("org.quartz.threadPool.threadCount", "3");
+		props.put("org.quartz.threadPool.threadCount", "10");
 		props.put("org.quartz.threadPool.threadPriority", "5");
+		
+		props.put("org.quartz.jobStore.misfireThreshold", "60000");
+
 		// JobStoreTX
 		props.put("org.quartz.jobStore.class", "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.JobStoreFix");
 		// props.put("org.quartz.jobStore.class",

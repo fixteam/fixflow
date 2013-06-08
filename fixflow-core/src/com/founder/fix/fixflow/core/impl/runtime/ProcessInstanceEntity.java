@@ -1095,7 +1095,22 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				// 父流程实例号
 				objectParam.put(ProcessInstanceObjKey.ProcessLocation().DataBaseKey(), this.getProcessLocation());
 				
+				for (String key : persistenceExtensionFields.keySet()) {
+					objectParam.put(key, persistenceExtensionFields.get(key));	
+				}
+				
 				return objectParam;
 	}
+	
+	/**
+	 * 持久化扩展字段
+	 */
+	protected Map<String, Object> persistenceExtensionFields = new HashMap<String, Object>();
+	
+	public void setPersistenceExtensionField(String fieldName,Object value){
+		extensionFields.put(fieldName, value);
+		persistenceExtensionFields.put(fieldName, value);
+	}
+	
 
 }
