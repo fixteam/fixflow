@@ -128,8 +128,6 @@ public class AddLaneFeature extends AbstractAddBPMNShapeFeature {
 			FeatureSupport.redraw(context.getTargetContainer());
 		}
 		
-		layoutPictogramElement(containerShape);
-		
 		return containerShape;
 	}
 
