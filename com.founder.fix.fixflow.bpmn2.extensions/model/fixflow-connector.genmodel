@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.founder.fix.fixflow.bpmn2.extensions/src"
     modelPluginID="com.founder.fix.fixflow.bpmn2.extensions" modelName="fixflow-connector"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     language="">
   <foreignModel>fixflow-connector.ecore</foreignModel>
   <genPackages prefix="Connector" basePackage="com.founder.fix.bpmn2extensions" resource="XML"
@@ -13,51 +12,40 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Connector/icon"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Connector/className"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Connector/packageName"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/Documentation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/documentation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Connector/connectorName"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/Outputs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/Inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/outputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/Pages"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Connector/Categories"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Connector/connectorNote"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Connector/category"/>
     </genClasses>
     <genClasses ecoreClass="fixflow-connector.ecore#//Documentation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Documentation/value"/>
     </genClasses>
-    <genClasses ecoreClass="fixflow-connector.ecore#//Category">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Category/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Category/id"/>
-    </genClasses>
-    <genClasses ecoreClass="fixflow-connector.ecore#//Parameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Parameter/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Parameter/dataType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Parameter/id"/>
-    </genClasses>
     <genClasses ecoreClass="fixflow-connector.ecore#//Page">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Page/pageId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Page/pageTitle"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Page/Documentation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Page/Widgets"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Page/documentation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Page/pageNote"/>
-    </genClasses>
-    <genClasses ecoreClass="fixflow-connector.ecore#//Widget">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Widget/parameterReference"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//Widget/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Page/inputParameter"/>
     </genClasses>
     <genClasses ecoreClass="fixflow-connector.ecore#//Outputs">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Outputs/Parameter"/>
-    </genClasses>
-    <genClasses ecoreClass="fixflow-connector.ecore#//Inputs">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Inputs/Parameter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Outputs/outputParameter"/>
     </genClasses>
     <genClasses ecoreClass="fixflow-connector.ecore#//Pages">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Pages/Page"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Pages/page"/>
     </genClasses>
-    <genClasses ecoreClass="fixflow-connector.ecore#//Widgets">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Widgets/Widget"/>
+    <genClasses ecoreClass="fixflow-connector.ecore#//InputParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//InputParameter/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//InputParameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//InputParameter/dataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//InputParameter/controlType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//InputParameter/isRequired"/>
     </genClasses>
-    <genClasses ecoreClass="fixflow-connector.ecore#//Categories">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fixflow-connector.ecore#//Categories/Category"/>
+    <genClasses ecoreClass="fixflow-connector.ecore#//OutputParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//OutputParameter/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//OutputParameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fixflow-connector.ecore#//OutputParameter/dataType"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

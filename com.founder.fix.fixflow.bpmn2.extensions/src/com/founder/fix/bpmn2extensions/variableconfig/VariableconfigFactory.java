@@ -98,6 +98,24 @@ public interface VariableconfigFactory extends EFactory {
 	DataVariableDef createDataVariableDef();
 
 	/**
+	 * Returns a new object of class '<em>Data Variable Biz Type Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data Variable Biz Type Config</em>'.
+	 * @generated
+	 */
+	DataVariableBizTypeConfig createDataVariableBizTypeConfig();
+
+	/**
+	 * Returns a new object of class '<em>Data Variable Biz Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data Variable Biz Type</em>'.
+	 * @generated
+	 */
+	DataVariableBizType createDataVariableBizType();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

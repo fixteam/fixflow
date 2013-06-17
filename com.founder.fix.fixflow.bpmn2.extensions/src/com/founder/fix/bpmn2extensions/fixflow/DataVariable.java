@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#isIsPersistence <em>Is Persistence</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getExpression <em>Expression</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getDocumentation <em>Documentation</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getBizType <em>Biz Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getFileName <em>File Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -184,5 +186,59 @@ public interface DataVariable extends EObject {
 	 * @generated
 	 */
 	EList<Documentation> getDocumentation();
+
+	/**
+	 * Returns the value of the '<em><b>Biz Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Biz Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Biz Type</em>' attribute.
+	 * @see #setBizType(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDataVariable_BizType()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getBizType();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getBizType <em>Biz Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Biz Type</em>' attribute.
+	 * @see #getBizType()
+	 * @generated
+	 */
+	void setBizType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>File Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>File Name</em>' attribute.
+	 * @see #setFileName(String)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDataVariable_FileName()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	String getFileName();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getFileName <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>File Name</em>' attribute.
+	 * @see #getFileName()
+	 * @generated
+	 */
+	void setFileName(String value);
 
 } // DataVariable

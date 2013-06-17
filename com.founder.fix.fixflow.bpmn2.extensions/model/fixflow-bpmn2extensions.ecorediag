@@ -274,6 +274,14 @@
         <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DataVariable/isPersistence"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_m2Fj8QlFEeG_MfC0BIJO3g"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_jU12IMy_EeKcTL4tNhAeHw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DataVariable/bizType"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_jU12Icy_EeKcTL4tNhAeHw"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_k2r8kM0xEeKgXY14406maw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-bpmn2extensions.ecore#//DataVariable/fileName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_k2r8kc0xEeKgXY14406maw"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_9hmIAAlEEeG_MfC0BIJO3g"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_9hmIAQlEEeG_MfC0BIJO3g"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_9hmIAglEEeG_MfC0BIJO3g"/>

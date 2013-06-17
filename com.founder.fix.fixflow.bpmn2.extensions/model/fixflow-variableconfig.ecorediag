@@ -187,6 +187,50 @@
     <element xmi:type="ecore:EClass" href="fixflow-variableconfig.ecore#//DataVariableDef"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tOp1IiDWEeGDMaIzcEkldQ" x="876" y="292"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_INc8oMzAEeKcTL4tNhAeHw" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_INeKwMzAEeKcTL4tNhAeHw" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_INeKwczAEeKcTL4tNhAeHw" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_INeKwszAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_INeKw8zAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_INeKxMzAEeKcTL4tNhAeHw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_INex0MzAEeKcTL4tNhAeHw" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_INex0czAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_INex0szAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_INex08zAEeKcTL4tNhAeHw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_INc8oczAEeKcTL4tNhAeHw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-variableconfig.ecore#//DataVariableBizTypeConfig"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_INc8oszAEeKcTL4tNhAeHw" x="552" y="88"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_TV_-YMzAEeKcTL4tNhAeHw" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_TWAlcMzAEeKcTL4tNhAeHw" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_TWAlcczAEeKcTL4tNhAeHw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_ezJXIMzAEeKcTL4tNhAeHw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-variableconfig.ecore#//DataVariableBizType/typeId"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_ezJXIczAEeKcTL4tNhAeHw"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_fGuacMzAEeKcTL4tNhAeHw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-variableconfig.ecore#//DataVariableBizType/typeName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_fGuacczAEeKcTL4tNhAeHw"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="__vtDgMzbEeKcTL4tNhAeHw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="fixflow-variableconfig.ecore#//DataVariableBizType/img"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__vtDgczbEeKcTL4tNhAeHw"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_TWAlcszAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_TWAlc8zAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_TWAldMzAEeKcTL4tNhAeHw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_TWAldczAEeKcTL4tNhAeHw" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_TWAldszAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_TWAld8zAEeKcTL4tNhAeHw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_TWAleMzAEeKcTL4tNhAeHw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_TV_-YczAEeKcTL4tNhAeHw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="fixflow-variableconfig.ecore#//DataVariableBizType"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TV_-YszAEeKcTL4tNhAeHw" x="572" y="196"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_LKcI4SDWEeGDMaIzcEkldQ"/>
   <element xmi:type="ecore:EPackage" href="fixflow-variableconfig.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_wR48oCDWEeGDMaIzcEkldQ" type="3002" source="_hFr4MCDWEeGDMaIzcEkldQ" target="_iJDZsCDWEeGDMaIzcEkldQ">
@@ -279,5 +323,29 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3TsygyDWEeGDMaIzcEkldQ" points="[-18, 2, 412, -39]$[-428, 34, 2, -7]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3TunsCDWEeGDMaIzcEkldQ" id="(0.12025316455696203,0.14285714285714285)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3TunsSDWEeGDMaIzcEkldQ" id="(0.7478260869565218,0.19047619047619047)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_XX-mEMzAEeKcTL4tNhAeHw" type="3002" source="_hFr4MCDWEeGDMaIzcEkldQ" target="_INc8oMzAEeKcTL4tNhAeHw">
+    <children xmi:type="notation:Node" xmi:id="_XX_NIMzAEeKcTL4tNhAeHw" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_XX_NIczAEeKcTL4tNhAeHw" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_XX_0MMzAEeKcTL4tNhAeHw" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_XX_0MczAEeKcTL4tNhAeHw" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_XX-mEczAEeKcTL4tNhAeHw" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_XX-mEszAEeKcTL4tNhAeHw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-variableconfig.ecore#//DataVariableConfig/dataVariableBizTypeConfig"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_XX-mE8zAEeKcTL4tNhAeHw" points="[-56, 6, 105, -14]$[-85, 17, 76, -3]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_aqp3wMzAEeKcTL4tNhAeHw" type="3002" source="_INc8oMzAEeKcTL4tNhAeHw" target="_TV_-YMzAEeKcTL4tNhAeHw">
+    <children xmi:type="notation:Node" xmi:id="_aqqe0MzAEeKcTL4tNhAeHw" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_aqqe0czAEeKcTL4tNhAeHw" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aqqe0szAEeKcTL4tNhAeHw" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_aqqe08zAEeKcTL4tNhAeHw" x="5" y="2"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_aqp3wczAEeKcTL4tNhAeHw" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_aqp3wszAEeKcTL4tNhAeHw" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-variableconfig.ecore#//DataVariableBizTypeConfig/dataVariableBizType"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_aqp3w8zAEeKcTL4tNhAeHw" points="[-5, 20, -13, -68]$[-51, 79, -59, -9]"/>
   </edges>
 </notation:Diagram>

@@ -68,6 +68,8 @@ public class VariableconfigFactoryImpl extends EFactoryImpl implements Variablec
 			case VariableconfigPackage.DATA_TYPE_DEF: return createDataTypeDef();
 			case VariableconfigPackage.FIX_FLOW_DATA_VARIABLE: return createFixFlowDataVariable();
 			case VariableconfigPackage.DATA_VARIABLE_DEF: return createDataVariableDef();
+			case VariableconfigPackage.DATA_VARIABLE_BIZ_TYPE_CONFIG: return createDataVariableBizTypeConfig();
+			case VariableconfigPackage.DATA_VARIABLE_BIZ_TYPE: return createDataVariableBizType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -151,6 +153,26 @@ public class VariableconfigFactoryImpl extends EFactoryImpl implements Variablec
 	public DataVariableDef createDataVariableDef() {
 		DataVariableDefImpl dataVariableDef = new DataVariableDefImpl();
 		return dataVariableDef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataVariableBizTypeConfig createDataVariableBizTypeConfig() {
+		DataVariableBizTypeConfigImpl dataVariableBizTypeConfig = new DataVariableBizTypeConfigImpl();
+		return dataVariableBizTypeConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataVariableBizType createDataVariableBizType() {
+		DataVariableBizTypeImpl dataVariableBizType = new DataVariableBizTypeImpl();
+		return dataVariableBizType;
 	}
 
 	/**

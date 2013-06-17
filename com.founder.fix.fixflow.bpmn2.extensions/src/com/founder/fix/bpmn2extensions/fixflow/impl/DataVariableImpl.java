@@ -40,6 +40,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DataVariableImpl#isIsPersistence <em>Is Persistence</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DataVariableImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DataVariableImpl#getDocumentation <em>Documentation</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DataVariableImpl#getBizType <em>Biz Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DataVariableImpl#getFileName <em>File Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -145,6 +147,46 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 	 * @ordered
 	 */
 	protected EList<Documentation> documentation;
+
+	/**
+	 * The default value of the '{@link #getBizType() <em>Biz Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBizType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String BIZ_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getBizType() <em>Biz Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBizType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String bizType = BIZ_TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FILE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String fileName = FILE_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -309,6 +351,48 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getBizType() {
+		return bizType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBizType(String newBizType) {
+		String oldBizType = bizType;
+		bizType = newBizType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.DATA_VARIABLE__BIZ_TYPE, oldBizType, bizType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFileName(String newFileName) {
+		String oldFileName = fileName;
+		fileName = newFileName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.DATA_VARIABLE__FILE_NAME, oldFileName, fileName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -340,6 +424,10 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 				return getExpression();
 			case FixFlowPackage.DATA_VARIABLE__DOCUMENTATION:
 				return getDocumentation();
+			case FixFlowPackage.DATA_VARIABLE__BIZ_TYPE:
+				return getBizType();
+			case FixFlowPackage.DATA_VARIABLE__FILE_NAME:
+				return getFileName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -372,6 +460,12 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 				getDocumentation().clear();
 				getDocumentation().addAll((Collection<? extends Documentation>)newValue);
 				return;
+			case FixFlowPackage.DATA_VARIABLE__BIZ_TYPE:
+				setBizType((String)newValue);
+				return;
+			case FixFlowPackage.DATA_VARIABLE__FILE_NAME:
+				setFileName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -402,6 +496,12 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 			case FixFlowPackage.DATA_VARIABLE__DOCUMENTATION:
 				getDocumentation().clear();
 				return;
+			case FixFlowPackage.DATA_VARIABLE__BIZ_TYPE:
+				setBizType(BIZ_TYPE_EDEFAULT);
+				return;
+			case FixFlowPackage.DATA_VARIABLE__FILE_NAME:
+				setFileName(FILE_NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -426,6 +526,10 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 				return expression != null;
 			case FixFlowPackage.DATA_VARIABLE__DOCUMENTATION:
 				return documentation != null && !documentation.isEmpty();
+			case FixFlowPackage.DATA_VARIABLE__BIZ_TYPE:
+				return BIZ_TYPE_EDEFAULT == null ? bizType != null : !BIZ_TYPE_EDEFAULT.equals(bizType);
+			case FixFlowPackage.DATA_VARIABLE__FILE_NAME:
+				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -448,6 +552,10 @@ public class DataVariableImpl extends EObjectImpl implements DataVariable {
 		result.append(isList);
 		result.append(", isPersistence: ");
 		result.append(isPersistence);
+		result.append(", bizType: ");
+		result.append(bizType);
+		result.append(", fileName: ");
+		result.append(fileName);
 		result.append(')');
 		return result.toString();
 	}

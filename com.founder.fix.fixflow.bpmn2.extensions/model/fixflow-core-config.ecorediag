@@ -3,9 +3,9 @@
   <children xmi:type="notation:Node" xmi:id="_by2V0DpiEeGATK0MSWXD6A" type="1001">
     <children xmi:type="notation:Node" xmi:id="_by3j8DpiEeGATK0MSWXD6A" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_by4LADpiEeGATK0MSWXD6A" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_vHTZEckFEeK4AO3AFmM3lw" type="2001">
+      <children xmi:type="notation:Node" xmi:id="_K77MAckFEeKscdWEEq_IMA" type="2001">
         <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//FixFlowConfig/version"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_vHTZEskFEeK4AO3AFmM3lw"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_K77MAskFEeKscdWEEq_IMA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_by4LATpiEeGATK0MSWXD6A"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_by4LAjpiEeGATK0MSWXD6A"/>
@@ -231,9 +231,9 @@
   <children xmi:type="notation:Node" xmi:id="_1t1PAVbbEeG5ye0ECmWF6Q" type="1001">
     <children xmi:type="notation:Node" xmi:id="_1t6ukFbbEeG5ye0ECmWF6Q" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_1t7VoFbbEeG5ye0ECmWF6Q" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_AS4CUMkIEeK4AO3AFmM3lw" type="2001">
+      <children xmi:type="notation:Node" xmi:id="_XFxLUMkIEeK9eIs0SgP0lg" type="2001">
         <element xmi:type="ecore:EAttribute" href="fixflow-core-config.ecore#//DesignerOrgConfig/dataBaseId"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_AS4CUckIEeK4AO3AFmM3lw"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_XFxLUckIEeK9eIs0SgP0lg"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1t7VoVbbEeG5ye0ECmWF6Q"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1t7VolbbEeG5ye0ECmWF6Q"/>

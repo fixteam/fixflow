@@ -6,6 +6,7 @@
  */
 package com.founder.fix.bpmn2extensions.variableconfig.impl;
 
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableDataType;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableType;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableConfigImpl#getDataVariableType <em>Data Variable Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableConfigImpl#getFixFlowDataVariable <em>Fix Flow Data Variable</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableConfigImpl#getDataVariableDataType <em>Data Variable Data Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableConfigImpl#getDataVariableBizTypeConfig <em>Data Variable Biz Type Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,6 +75,16 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 	 * @ordered
 	 */
 	protected DataVariableDataType dataVariableDataType;
+
+	/**
+	 * The cached value of the '{@link #getDataVariableBizTypeConfig() <em>Data Variable Biz Type Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataVariableBizTypeConfig()
+	 * @generated
+	 * @ordered
+	 */
+	protected DataVariableBizTypeConfig dataVariableBizTypeConfig;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,6 +208,49 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public DataVariableBizTypeConfig getDataVariableBizTypeConfig() {
+		return dataVariableBizTypeConfig;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetDataVariableBizTypeConfig(DataVariableBizTypeConfig newDataVariableBizTypeConfig, NotificationChain msgs) {
+		DataVariableBizTypeConfig oldDataVariableBizTypeConfig = dataVariableBizTypeConfig;
+		dataVariableBizTypeConfig = newDataVariableBizTypeConfig;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG, oldDataVariableBizTypeConfig, newDataVariableBizTypeConfig);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataVariableBizTypeConfig(DataVariableBizTypeConfig newDataVariableBizTypeConfig) {
+		if (newDataVariableBizTypeConfig != dataVariableBizTypeConfig) {
+			NotificationChain msgs = null;
+			if (dataVariableBizTypeConfig != null)
+				msgs = ((InternalEObject)dataVariableBizTypeConfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG, null, msgs);
+			if (newDataVariableBizTypeConfig != null)
+				msgs = ((InternalEObject)newDataVariableBizTypeConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG, null, msgs);
+			msgs = basicSetDataVariableBizTypeConfig(newDataVariableBizTypeConfig, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG, newDataVariableBizTypeConfig, newDataVariableBizTypeConfig));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -205,6 +260,8 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 				return ((InternalEList<?>)getFixFlowDataVariable()).basicRemove(otherEnd, msgs);
 			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE:
 				return basicSetDataVariableDataType(null, msgs);
+			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG:
+				return basicSetDataVariableBizTypeConfig(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -223,6 +280,8 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 				return getFixFlowDataVariable();
 			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE:
 				return getDataVariableDataType();
+			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG:
+				return getDataVariableBizTypeConfig();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -246,6 +305,9 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE:
 				setDataVariableDataType((DataVariableDataType)newValue);
 				return;
+			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG:
+				setDataVariableBizTypeConfig((DataVariableBizTypeConfig)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -267,6 +329,9 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE:
 				setDataVariableDataType((DataVariableDataType)null);
 				return;
+			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG:
+				setDataVariableBizTypeConfig((DataVariableBizTypeConfig)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -285,6 +350,8 @@ public class DataVariableConfigImpl extends EObjectImpl implements DataVariableC
 				return fixFlowDataVariable != null && !fixFlowDataVariable.isEmpty();
 			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE:
 				return dataVariableDataType != null;
+			case VariableconfigPackage.DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG:
+				return dataVariableBizTypeConfig != null;
 		}
 		return super.eIsSet(featureID);
 	}

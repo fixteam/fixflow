@@ -7,6 +7,8 @@
 package com.founder.fix.bpmn2extensions.variableconfig.impl;
 
 import com.founder.fix.bpmn2extensions.variableconfig.DataTypeDef;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableDataType;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableDef;
@@ -88,6 +90,20 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 	 * @generated
 	 */
 	private EClass dataVariableDefEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dataVariableBizTypeConfigEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dataVariableBizTypeEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -232,6 +248,15 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 	 */
 	public EReference getDataVariableConfig_DataVariableDataType() {
 		return (EReference)dataVariableConfigEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataVariableConfig_DataVariableBizTypeConfig() {
+		return (EReference)dataVariableConfigEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -410,6 +435,60 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDataVariableBizTypeConfig() {
+		return dataVariableBizTypeConfigEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataVariableBizTypeConfig_DataVariableBizType() {
+		return (EReference)dataVariableBizTypeConfigEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDataVariableBizType() {
+		return dataVariableBizTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataVariableBizType_TypeId() {
+		return (EAttribute)dataVariableBizTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataVariableBizType_TypeName() {
+		return (EAttribute)dataVariableBizTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataVariableBizType_Img() {
+		return (EAttribute)dataVariableBizTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public VariableconfigFactory getVariableconfigFactory() {
 		return (VariableconfigFactory)getEFactoryInstance();
 	}
@@ -443,6 +522,7 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 		createEReference(dataVariableConfigEClass, DATA_VARIABLE_CONFIG__DATA_VARIABLE_TYPE);
 		createEReference(dataVariableConfigEClass, DATA_VARIABLE_CONFIG__FIX_FLOW_DATA_VARIABLE);
 		createEReference(dataVariableConfigEClass, DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE);
+		createEReference(dataVariableConfigEClass, DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG);
 
 		dataVariableTypeEClass = createEClass(DATA_VARIABLE_TYPE);
 		createEReference(dataVariableTypeEClass, DATA_VARIABLE_TYPE__TYPE);
@@ -468,6 +548,14 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 		createEAttribute(dataVariableDefEClass, DATA_VARIABLE_DEF__DATA_TYPE);
 		createEAttribute(dataVariableDefEClass, DATA_VARIABLE_DEF__VALUE);
 		createEAttribute(dataVariableDefEClass, DATA_VARIABLE_DEF__DOC);
+
+		dataVariableBizTypeConfigEClass = createEClass(DATA_VARIABLE_BIZ_TYPE_CONFIG);
+		createEReference(dataVariableBizTypeConfigEClass, DATA_VARIABLE_BIZ_TYPE_CONFIG__DATA_VARIABLE_BIZ_TYPE);
+
+		dataVariableBizTypeEClass = createEClass(DATA_VARIABLE_BIZ_TYPE);
+		createEAttribute(dataVariableBizTypeEClass, DATA_VARIABLE_BIZ_TYPE__TYPE_ID);
+		createEAttribute(dataVariableBizTypeEClass, DATA_VARIABLE_BIZ_TYPE__TYPE_NAME);
+		createEAttribute(dataVariableBizTypeEClass, DATA_VARIABLE_BIZ_TYPE__IMG);
 	}
 
 	/**
@@ -513,6 +601,7 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 		initEReference(getDataVariableConfig_DataVariableType(), this.getDataVariableType(), null, "dataVariableType", null, 1, 1, DataVariableConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataVariableConfig_FixFlowDataVariable(), this.getFixFlowDataVariable(), null, "fixFlowDataVariable", null, 0, -1, DataVariableConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataVariableConfig_DataVariableDataType(), this.getDataVariableDataType(), null, "dataVariableDataType", null, 1, 1, DataVariableConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataVariableConfig_DataVariableBizTypeConfig(), this.getDataVariableBizTypeConfig(), null, "dataVariableBizTypeConfig", null, 0, 1, DataVariableConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dataVariableTypeEClass, DataVariableType.class, "DataVariableType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataVariableType_Type(), this.getType(), null, "type", null, 0, -1, DataVariableType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -538,6 +627,14 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 		initEAttribute(getDataVariableDef_DataType(), theXMLTypePackage.getString(), "dataType", null, 0, 1, DataVariableDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataVariableDef_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, DataVariableDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataVariableDef_Doc(), theXMLTypePackage.getString(), "doc", null, 0, 1, DataVariableDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(dataVariableBizTypeConfigEClass, DataVariableBizTypeConfig.class, "DataVariableBizTypeConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDataVariableBizTypeConfig_DataVariableBizType(), this.getDataVariableBizType(), null, "dataVariableBizType", null, 0, -1, DataVariableBizTypeConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(dataVariableBizTypeEClass, DataVariableBizType.class, "DataVariableBizType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDataVariableBizType_TypeId(), theXMLTypePackage.getString(), "typeId", null, 0, 1, DataVariableBizType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataVariableBizType_TypeName(), theXMLTypePackage.getString(), "typeName", null, 0, 1, DataVariableBizType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataVariableBizType_Img(), theXMLTypePackage.getString(), "img", null, 0, 1, DataVariableBizType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -616,6 +713,13 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 		   new String[] {
 			 "kind", "element",
 			 "name", "dataVariableDataType"
+		   });		
+		addAnnotation
+		  (getDataVariableConfig_DataVariableBizTypeConfig(), 
+		   source, 
+		   new String[] {
+			 "name", "dataVariableBizTypeConfig",
+			 "kind", "element"
 		   });		
 		addAnnotation
 		  (dataVariableTypeEClass, 
@@ -741,6 +845,45 @@ public class VariableconfigPackageImpl extends EPackageImpl implements Variablec
 		   source, 
 		   new String[] {
 			 "kind", "simple"
+		   });		
+		addAnnotation
+		  (dataVariableBizTypeConfigEClass, 
+		   source, 
+		   new String[] {
+			 "name", "dataVariableBizTypeConfig"
+		   });		
+		addAnnotation
+		  (getDataVariableBizTypeConfig_DataVariableBizType(), 
+		   source, 
+		   new String[] {
+			 "name", "dataVariableBizType",
+			 "kind", "element"
+		   });		
+		addAnnotation
+		  (dataVariableBizTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "dataVariableBizType"
+		   });		
+		addAnnotation
+		  (getDataVariableBizType_TypeId(), 
+		   source, 
+		   new String[] {
+			 "name", "typeId",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getDataVariableBizType_TypeName(), 
+		   source, 
+		   new String[] {
+			 "name", "typeName",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getDataVariableBizType_Img(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
 		   });
 	}
 

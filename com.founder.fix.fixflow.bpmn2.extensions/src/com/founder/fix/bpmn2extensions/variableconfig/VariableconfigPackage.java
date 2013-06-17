@@ -156,13 +156,22 @@ public interface VariableconfigPackage extends EPackage {
 	int DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Data Variable Biz Type Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG = 3;
+
+	/**
 	 * The number of structural features of the '<em>Data Variable Config</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_VARIABLE_CONFIG_FEATURE_COUNT = 3;
+	int DATA_VARIABLE_CONFIG_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableTypeImpl <em>Data Variable Type</em>}' class.
@@ -397,6 +406,81 @@ public interface VariableconfigPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeConfigImpl <em>Data Variable Biz Type Config</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeConfigImpl
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.VariableconfigPackageImpl#getDataVariableBizTypeConfig()
+	 * @generated
+	 */
+	int DATA_VARIABLE_BIZ_TYPE_CONFIG = 8;
+
+	/**
+	 * The feature id for the '<em><b>Data Variable Biz Type</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_BIZ_TYPE_CONFIG__DATA_VARIABLE_BIZ_TYPE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Data Variable Biz Type Config</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_BIZ_TYPE_CONFIG_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeImpl <em>Data Variable Biz Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeImpl
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.VariableconfigPackageImpl#getDataVariableBizType()
+	 * @generated
+	 */
+	int DATA_VARIABLE_BIZ_TYPE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_BIZ_TYPE__TYPE_ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_BIZ_TYPE__TYPE_NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Img</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_BIZ_TYPE__IMG = 2;
+
+	/**
+	 * The number of structural features of the '<em>Data Variable Biz Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE_BIZ_TYPE_FEATURE_COUNT = 3;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.variableconfig.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -492,6 +576,17 @@ public interface VariableconfigPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDataVariableConfig_DataVariableDataType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getDataVariableBizTypeConfig <em>Data Variable Biz Type Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Data Variable Biz Type Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getDataVariableBizTypeConfig()
+	 * @see #getDataVariableConfig()
+	 * @generated
+	 */
+	EReference getDataVariableConfig_DataVariableBizTypeConfig();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableType <em>Data Variable Type</em>}'.
@@ -697,6 +792,70 @@ public interface VariableconfigPackage extends EPackage {
 	EAttribute getDataVariableDef_Doc();
 
 	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig <em>Data Variable Biz Type Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data Variable Biz Type Config</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig
+	 * @generated
+	 */
+	EClass getDataVariableBizTypeConfig();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig#getDataVariableBizType <em>Data Variable Biz Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Data Variable Biz Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig#getDataVariableBizType()
+	 * @see #getDataVariableBizTypeConfig()
+	 * @generated
+	 */
+	EReference getDataVariableBizTypeConfig_DataVariableBizType();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType <em>Data Variable Biz Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data Variable Biz Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType
+	 * @generated
+	 */
+	EClass getDataVariableBizType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType#getTypeId <em>Type Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Id</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType#getTypeId()
+	 * @see #getDataVariableBizType()
+	 * @generated
+	 */
+	EAttribute getDataVariableBizType_TypeId();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType#getTypeName <em>Type Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Name</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType#getTypeName()
+	 * @see #getDataVariableBizType()
+	 * @generated
+	 */
+	EAttribute getDataVariableBizType_TypeName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType#getImg <em>Img</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Img</em>'.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType#getImg()
+	 * @see #getDataVariableBizType()
+	 * @generated
+	 */
+	EAttribute getDataVariableBizType_Img();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -793,6 +952,14 @@ public interface VariableconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DATA_VARIABLE_CONFIG__DATA_VARIABLE_DATA_TYPE = eINSTANCE.getDataVariableConfig_DataVariableDataType();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Variable Biz Type Config</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_VARIABLE_CONFIG__DATA_VARIABLE_BIZ_TYPE_CONFIG = eINSTANCE.getDataVariableConfig_DataVariableBizTypeConfig();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableTypeImpl <em>Data Variable Type</em>}' class.
@@ -957,6 +1124,58 @@ public interface VariableconfigPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_VARIABLE_DEF__DOC = eINSTANCE.getDataVariableDef_Doc();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeConfigImpl <em>Data Variable Biz Type Config</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeConfigImpl
+		 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.VariableconfigPackageImpl#getDataVariableBizTypeConfig()
+		 * @generated
+		 */
+		EClass DATA_VARIABLE_BIZ_TYPE_CONFIG = eINSTANCE.getDataVariableBizTypeConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Variable Biz Type</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_VARIABLE_BIZ_TYPE_CONFIG__DATA_VARIABLE_BIZ_TYPE = eINSTANCE.getDataVariableBizTypeConfig_DataVariableBizType();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeImpl <em>Data Variable Biz Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.DataVariableBizTypeImpl
+		 * @see com.founder.fix.bpmn2extensions.variableconfig.impl.VariableconfigPackageImpl#getDataVariableBizType()
+		 * @generated
+		 */
+		EClass DATA_VARIABLE_BIZ_TYPE = eINSTANCE.getDataVariableBizType();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_VARIABLE_BIZ_TYPE__TYPE_ID = eINSTANCE.getDataVariableBizType_TypeId();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_VARIABLE_BIZ_TYPE__TYPE_NAME = eINSTANCE.getDataVariableBizType_TypeName();
+
+		/**
+		 * The meta object literal for the '<em><b>Img</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_VARIABLE_BIZ_TYPE__IMG = eINSTANCE.getDataVariableBizType_Img();
 
 	}
 

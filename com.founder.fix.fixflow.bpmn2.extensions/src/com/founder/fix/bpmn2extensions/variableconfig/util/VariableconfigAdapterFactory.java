@@ -104,6 +104,14 @@ public class VariableconfigAdapterFactory extends AdapterFactoryImpl {
 				return createDataVariableDefAdapter();
 			}
 			@Override
+			public Adapter caseDataVariableBizTypeConfig(DataVariableBizTypeConfig object) {
+				return createDataVariableBizTypeConfigAdapter();
+			}
+			@Override
+			public Adapter caseDataVariableBizType(DataVariableBizType object) {
+				return createDataVariableBizTypeAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -232,6 +240,34 @@ public class VariableconfigAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDataVariableDefAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig <em>Data Variable Biz Type Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig
+	 * @generated
+	 */
+	public Adapter createDataVariableBizTypeConfigAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType <em>Data Variable Biz Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType
+	 * @generated
+	 */
+	public Adapter createDataVariableBizTypeAdapter() {
 		return null;
 	}
 

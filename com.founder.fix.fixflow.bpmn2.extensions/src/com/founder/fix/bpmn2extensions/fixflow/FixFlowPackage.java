@@ -800,13 +800,31 @@ public interface FixFlowPackage extends EPackage {
 	int DATA_VARIABLE__DOCUMENTATION = 5;
 
 	/**
+	 * The feature id for the '<em><b>Biz Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE__BIZ_TYPE = 6;
+
+	/**
+	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_VARIABLE__FILE_NAME = 7;
+
+	/**
 	 * The number of structural features of the '<em>Data Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_VARIABLE_FEATURE_COUNT = 6;
+	int DATA_VARIABLE_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentationImpl <em>Documentation</em>}' class.
@@ -2689,6 +2707,28 @@ public interface FixFlowPackage extends EPackage {
 	EReference getDataVariable_Documentation();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getBizType <em>Biz Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Biz Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.DataVariable#getBizType()
+	 * @see #getDataVariable()
+	 * @generated
+	 */
+	EAttribute getDataVariable_BizType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.DataVariable#getFileName <em>File Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>File Name</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.DataVariable#getFileName()
+	 * @see #getDataVariable()
+	 * @generated
+	 */
+	EAttribute getDataVariable_FileName();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.Documentation <em>Documentation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4283,6 +4323,22 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DATA_VARIABLE__DOCUMENTATION = eINSTANCE.getDataVariable_Documentation();
+
+		/**
+		 * The meta object literal for the '<em><b>Biz Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_VARIABLE__BIZ_TYPE = eINSTANCE.getDataVariable_BizType();
+
+		/**
+		 * The meta object literal for the '<em><b>File Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_VARIABLE__FILE_NAME = eINSTANCE.getDataVariable_FileName();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentationImpl <em>Documentation</em>}' class.

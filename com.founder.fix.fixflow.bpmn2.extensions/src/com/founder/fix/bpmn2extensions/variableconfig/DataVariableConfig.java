@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getDataVariableType <em>Data Variable Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getFixFlowDataVariable <em>Fix Flow Data Variable</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getDataVariableDataType <em>Data Variable Data Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getDataVariableBizTypeConfig <em>Data Variable Biz Type Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -99,5 +100,32 @@ public interface DataVariableConfig extends EObject {
 	 * @generated
 	 */
 	void setDataVariableDataType(DataVariableDataType value);
+
+	/**
+	 * Returns the value of the '<em><b>Data Variable Biz Type Config</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Variable Biz Type Config</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Variable Biz Type Config</em>' containment reference.
+	 * @see #setDataVariableBizTypeConfig(DataVariableBizTypeConfig)
+	 * @see com.founder.fix.bpmn2extensions.variableconfig.VariableconfigPackage#getDataVariableConfig_DataVariableBizTypeConfig()
+	 * @model containment="true"
+	 *        extendedMetaData="name='dataVariableBizTypeConfig' kind='element'"
+	 * @generated
+	 */
+	DataVariableBizTypeConfig getDataVariableBizTypeConfig();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig#getDataVariableBizTypeConfig <em>Data Variable Biz Type Config</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data Variable Biz Type Config</em>' containment reference.
+	 * @see #getDataVariableBizTypeConfig()
+	 * @generated
+	 */
+	void setDataVariableBizTypeConfig(DataVariableBizTypeConfig value);
 
 } // DataVariableConfig
