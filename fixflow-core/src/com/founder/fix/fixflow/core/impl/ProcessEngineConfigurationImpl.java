@@ -488,6 +488,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 
 	}
+	protected Scheduler scheduler;
+	public Scheduler getScheduler() {
+		return scheduler;
+	}
 
 	protected void initQuartz() {
 		/*
@@ -550,7 +554,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.scheduler.instanceName", "FixFlowQuartzScheduler");
 		props.put("org.quartz.scheduler.instanceId", "AUTO");
 		props.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
-		props.put("org.quartz.threadPool.threadCount", "10");
+		props.put("org.quartz.threadPool.threadCount", "15");
 		props.put("org.quartz.threadPool.threadPriority", "5");
 		
 		props.put("org.quartz.jobStore.misfireThreshold", "60000");
@@ -570,9 +574,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.dataSource.fixDS.maxConnections", "5");
 
 		schedulerFactory = null;
-		Scheduler scheduler = null;
 		schedulerFactory = QuartzUtil.createSchedulerFactory(props);
-
 		try {
 			scheduler = schedulerFactory.getScheduler();
 			scheduler.start();

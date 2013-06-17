@@ -338,4 +338,11 @@ public interface RuntimeService extends ProcessService{
 	 */
 	Object executeRuleScript(String ruleScript);
 	
+	/**
+	 * 获取流程追踪中的处理命令
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	List<Map<String, Object>> GetProcessCommandByProcessInstanceId(String processInstanceId);
+	
 }

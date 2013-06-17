@@ -10,7 +10,6 @@ import org.eclipse.bpmn2.impl.TimerEventDefinitionImpl;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 
@@ -76,17 +75,9 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		Context.getCommandContext().getVariableManager().saveVariable(variableTransferEntity);
 
 		
-		
-		
-		SchedulerFactory schedulerFactory=Context.getProcessEngineConfiguration().getSchedulerFactory();
-		Scheduler scheduler=null;
 	
-		try {
-			scheduler=schedulerFactory.getScheduler();
-		} catch (SchedulerException e) {
-			e.printStackTrace();
-			throw new FixFlowException("获取定时任务框架失败");
-		}
+		Scheduler scheduler=Context.getProcessEngineConfiguration().getScheduler();
+
 		
 		JobDetail job = QuartzUtil.createJobDetail(
 				TokenTimeOutJob.class, tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId());

@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.core;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 
 import com.founder.fix.fixflow.core.job.Job;
@@ -10,11 +11,13 @@ public interface ScheduleService extends ProcessService{
 	
 	
 	/**
-	 * 获取quartz引擎调度工厂对象
+	 * 获取quartz引擎调度工厂对象(不推荐直接拿SchedulerFactory而是直接拿Scheduler)
 	 * SchedulerFactory在系统启动的时候被创建出来并且已经Start。
 	 * @return 调度工厂对象
 	 */
 	SchedulerFactory getSchedulerFactory();
+	
+	Scheduler getScheduler();
 	
 	/**
 	 * 定时任务调度器重启

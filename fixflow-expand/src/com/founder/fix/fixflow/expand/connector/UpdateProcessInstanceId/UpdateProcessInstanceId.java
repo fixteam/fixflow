@@ -1,4 +1,4 @@
-package com.founder.fix.fixflow.expand.connector.UpdateProcessStatus;
+package com.founder.fix.fixflow.expand.connector.UpdateProcessInstanceId;
 
 
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -8,11 +8,11 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
-public class UpdateProcessStatus implements ConnectorHandler {
-
-	private java.lang.String statusValue;
+public class UpdateProcessInstanceId implements ConnectorHandler {
 
 	public void execute(ExecutionContext executionContext) throws Exception {
+
+		
 
 		SqlCommand sqlCommand=new SqlCommand(Context.getDbConnection());
 
@@ -25,16 +25,12 @@ public class UpdateProcessStatus implements ConnectorHandler {
 			throw new FixFlowException("数据变量${Fix_BizKeyFile}为空");
 		}
 		
+		String processInstId=executionContext.getProcessInstance().getId();
 		
-		
-		String sqlText="UPDATE "+Fix_BizName+" SET  FIX_PROCESSSTATE='"+statusValue+"' WHERE "+Fix_BizKeyFile+"='"+executionContext.getBizKey()+"'";
+		String sqlText="UPDATE "+Fix_BizName+" SET  FIX_PROCESSINSTANCE_ID='"+processInstId+"' WHERE "+Fix_BizKeyFile+"='"+executionContext.getBizKey()+"'";
 		
 		sqlCommand.execute(sqlText);
 
-	}
-
-	public void  setStatusValue(java.lang.String statusValue){
-		this.statusValue = statusValue;
 	}
 
 }

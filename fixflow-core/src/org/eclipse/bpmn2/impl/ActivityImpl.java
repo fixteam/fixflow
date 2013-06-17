@@ -864,7 +864,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	protected void eventExecute(ExecutionContext executionContext) {
 
 		// 触发节点进入事件
-		fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
+		//fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
 		if (this.getBoundaryEventRefs().size() > 0) {
 			List<BoundaryEvent> boundaryEvents = this.getBoundaryEventRefs();

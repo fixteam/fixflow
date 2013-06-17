@@ -7,6 +7,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.cmd.GetSchedulerFactoryCmd;
@@ -22,17 +23,22 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 		return commandExecutor.execute(new GetSchedulerFactoryCmd());
 	}
 	
+	public Scheduler getScheduler() {
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getScheduler();
+	}
+	
 	
 	public void schedulerRestart() {
 		
-		SchedulerFactory schedulerFactory=getSchedulerFactory();
 		Scheduler scheduler;
 		try {
-			scheduler = schedulerFactory.getScheduler();
-			if(scheduler.isStarted()){
-				scheduler.shutdown();
+			scheduler = getScheduler();
+			if(scheduler.isInStandbyMode()){
+				
+				
 				scheduler.start();
 			}else{
+				scheduler.standby();
 				scheduler.start();
 			}
 
@@ -45,11 +51,10 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 
 	public void schedulerStart() {
-		SchedulerFactory schedulerFactory=getSchedulerFactory();
 		Scheduler scheduler;
 		try {
-			scheduler = schedulerFactory.getScheduler();
-			if(!scheduler.isStarted()){
+			scheduler = getScheduler();
+			if(scheduler.isInStandbyMode()){
 				scheduler.start();
 			}
 
@@ -62,12 +67,11 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 
 	public void schedulerShutdown() {
 		
-		SchedulerFactory schedulerFactory=getSchedulerFactory();
 		Scheduler scheduler;
 		try {
-			scheduler = schedulerFactory.getScheduler();
-			if(scheduler.isStarted()){
-				scheduler.shutdown();
+			scheduler = getScheduler();
+			if(!scheduler.isInStandbyMode()){
+				scheduler.standby();
 
 			}
 			
@@ -101,6 +105,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	public void saveJob(Job job,boolean isNowPerform) {
 		commandExecutor.execute(new SaveJobCmd(job, isNowPerform));
 	}
+
+
+	
 
 	
 	

@@ -40,8 +40,9 @@ public class FixMailEngine {
 
 		List<Object> pObjects = new ArrayList<Object>();
 		pObjects.add(MailStatus.COMPLETE.toString());
+		pObjects.add(MailStatus.FAILURE.toString());
 		SqlCommand sqlCommand = new SqlCommand(Context.getDbConnection());
-		List<Map<String, Object>> dataList = sqlCommand.queryForList("SELECT * FROM FIXFLOW_MAIL WHERE MAIL_STATUS!=?", pObjects);
+		List<Map<String, Object>> dataList = sqlCommand.queryForList("SELECT * FROM FIXFLOW_MAIL WHERE MAIL_STATUS!=? AND MAIL_STATUS!=?", pObjects);
 		for (Map<String, Object> mapData : dataList) {
 
 			try {

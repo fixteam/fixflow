@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="UpdateProcessInstanceId" icon="founderico.jpg" className="UpdateProcessInstanceId" packageName="com.founder.fix.fixflow.expand.connector.UpdateProcessInstanceId" connectorName="更新业务数据流程实例号" connectorNote="更新业务数据流程实例号" category="FixFlow">
+  <outputs/>
+  <Pages/>
+</connector:Connector>

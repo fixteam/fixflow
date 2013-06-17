@@ -10,6 +10,7 @@
     <menuConnector id="CreateSubpProcessData" name="创建子流程数据" note="启动子流程后需要插入一个默认的数据"/>
     <menuConnector id="UpdateProcessStatus" name="更新流程状态" note="更新流程状态"/>
     <menuConnector id="TimeoutHandling" name="超时任务处理" note="超时任务处理"/>
+    <menuConnector id="UpdateProcessInstanceId" name="更新业务数据流程实例号" note="更新业务数据流程实例号"/>
   </node>
   <node id="8cd83844-8779-4781-bff2-3f0c5b236117" name="Messaging" ico="images.jpg">
     <menuConnector id="SendMail" name="SendMail" note="根据系统配置的邮箱发送给指定人员邮件"/>

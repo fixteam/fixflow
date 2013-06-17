@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.7.1.20130530">
+<coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.7.1.20130617">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
     <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.128.91:1521:orcl" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="DB_FIX_ACC" name="DB_FIX_ACC" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
@@ -20,7 +20,7 @@
     <taskCommandDef id="rollBackTaskByTaskId" name="退回-任务" command="com.founder.fix.fixflow.expand.command.RollBackTaskByTaskIdCommand" cmd="com.founder.fix.fixflow.expand.cmd.RollBackTaskByTaskIdCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.RollBackTaskByTaskIdFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="rollBackTaskByExpression" name="退回-指定步骤" command="com.founder.fix.fixflow.expand.command.RollBackTaskByExpressionCommand" cmd="com.founder.fix.fixflow.expand.cmd.RollBackTaskByExpressionCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.RollBackTaskByExpressionFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="saveTaskDraft" name="保存草稿" command="com.founder.fix.fixflow.expand.command.SaveTaskDraftCommand" cmd="com.founder.fix.fixflow.expand.cmd.SaveTaskDraftCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.SaveTaskDraftFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-    <taskCommandDef id="deleteTask" name="删除任务" command="com.founder.fix.fixflow.expand.command.DeleteTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.DeleteTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.DeleteTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+    <taskCommandDef id="deleteTask" name="删除任务" command="com.founder.fix.fixflow.expand.command.DeleteTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.DeleteTaskCmd" isEnabled="false" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.DeleteTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="deleteProcessInstance" name="删除实例" command="com.founder.fix.fixflow.expand.command.DeleteProcessInstanceCommand" cmd="com.founder.fix.fixflow.expand.cmd.DeleteProcessInstanceCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.DeleteProcessInstanceFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="suspendTask" name="暂停任务" command="com.founder.fix.fixflow.expand.command.SuspendTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.SuspendTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.SuspendTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="continueTask" name="恢复任务" command="com.founder.fix.fixflow.expand.command.ContinueTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.ContinueTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.ContinueTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
@@ -45,10 +45,10 @@
   <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="true" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
-      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.orgid from au_userinfo t1,  au_orgmember t2 where t1.userid = t2.userid"/>
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.ORGID from au_userinfo t1,  au_orgmember t2 where t1.userid = t2.userid"/>
     </groupInfo>
     <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
-      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.roleid from au_userinfo t1,  au_rolemember t2 where t1.userid = t2.userid "/>
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.ROLEID from au_userinfo t1,  au_rolemember t2 where t1.userid = t2.userid "/>
     </groupInfo>
   </designerOrgConfig>
   <sysMailConfig selected=""/>
@@ -57,7 +57,7 @@
     <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
     <expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
     <expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
-  	<expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.FixAuthenticationImpl" remarks="业务数据操作对象"/>
+    <expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.FixAuthenticationImpl" remarks="业务数据操作对象"/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
   <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>

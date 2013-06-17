@@ -11,6 +11,7 @@ import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAn
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExecuteRuleScriptCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetProcessCommand;
 import com.founder.fix.fixflow.core.impl.cmd.MessageStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.NoneStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceCmd;
@@ -250,6 +251,11 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
 		return commandExecutor.execute(new ExecuteRuleScriptCmd<Object>(ruleScript));
 
+	}
+
+	public List<Map<String, Object>> GetProcessCommandByProcessInstanceId(String processInstanceId) {
+		// TODO 自动生成的方法存根
+		return commandExecutor.execute(new GetProcessCommand(processInstanceId));
 	}
 
 	
