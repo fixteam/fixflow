@@ -755,6 +755,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	 * @throws Exception
 	 */
 	public void enter(ExecutionContext executionContext) {
+		
+		//事件顺序如下,先判断跳过策略,再判断边界事件,
+		//再执行多实例,最后执行节点进入事件
 		TokenEntity token = executionContext.getToken();
 
 		// 把令牌的所在节点设置为当前节点
