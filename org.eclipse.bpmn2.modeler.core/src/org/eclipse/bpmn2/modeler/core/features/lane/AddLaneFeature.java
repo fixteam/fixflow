@@ -127,9 +127,6 @@ public class AddLaneFeature extends AbstractAddBPMNShapeFeature {
 				&& (FeatureSupport.isTargetLane(context) || FeatureSupport.isTargetParticipant(context))) {
 			FeatureSupport.redraw(context.getTargetContainer());
 		}
-		
-		layoutPictogramElement(containerShape);
-		
 		return containerShape;
 	}
 
