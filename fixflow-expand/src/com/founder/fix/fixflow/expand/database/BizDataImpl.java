@@ -17,6 +17,7 @@ import com.founder.fix.dbcore.DBGetResultHandle;
 import com.founder.fix.dbcore.DataTable;
 import com.founder.fix.dbcore.DataTableUtil;
 import com.founder.fix.fixflow.api.task.FlowUtil;
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.variable.BizData;
@@ -156,12 +157,9 @@ public class BizDataImpl implements BizData {
 		String tableName = bizObjTo.getTableName();
 		String sqlStr = buildSql(tableName, bizField,filedList);
 		Map<String, Object> returnVal = new HashMap<String, Object>();
-		DBGetResult dbgr = null;
 		try {
 			String dbSource = bizObjTo.getDbsource();
-			dbgr = DBGetResultHandle.createDBGetResult(dbSource);
-			dbgr.openConn();
-			SqlCommand sqlCmd = new SqlCommand(dbgr.getConnection());
+			SqlCommand sqlCmd = new SqlCommand(ConnectionManagement.INSTANCE().getConnection(dbSource));
 			List<Object> data = new ArrayList<Object>();
 			data.add(bizkey);
 			List<Map<String, Object>> bizData = sqlCmd.queryForList(sqlStr,
@@ -175,12 +173,7 @@ public class BizDataImpl implements BizData {
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
-			try {
-				dbgr.closeConn();
-			} catch (SQLException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			
 		}
 		return returnVal;
 	}

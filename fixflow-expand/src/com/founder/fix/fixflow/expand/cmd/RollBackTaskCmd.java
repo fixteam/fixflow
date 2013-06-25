@@ -11,7 +11,6 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
-import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
@@ -116,8 +115,12 @@ public class RollBackTaskCmd extends AbstractExpandTaskCmd<RollBackTaskCommand,V
 				throw new FixFlowException("需要退回的任务: " + taskId + " 不存在!");
 			}
 			
-			if(AbstractCommandFilter.isAutoClaim()){
+			if(this.agent!=null&&!this.agent.equals("")){
+				taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
+			}else{
 				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAgent(null);
 			}
 			try {
 

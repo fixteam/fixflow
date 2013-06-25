@@ -9,7 +9,6 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
-import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
@@ -113,17 +112,19 @@ public class SubmitTaskCmd extends AbstractExpandTaskCmd<SubmitTaskCommand, Void
 		}
 
 		if (taskInstanceImpl != null) {
-			if(AbstractCommandFilter.isAutoClaim()){
+			if(this.agent!=null&&!this.agent.equals("")){
+				taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
+			}else{
 				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAgent(null);
 			}
 			taskInstanceImpl.end();
 			taskInstanceImpl.setCommandId(taskCommand.getId());
 			taskInstanceImpl.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
 			taskInstanceImpl.setCommandMessage(taskCommand.getName());
 			taskInstanceImpl.setTaskComment(this.taskComment);
-			if(this.agent!=null&&!this.agent.equals("")){
-				taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
-			}
+			
 			
 		} else {
 			throw new FixFlowException("没有找到id为: " + taskId + " 的任务");

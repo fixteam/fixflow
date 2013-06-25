@@ -79,7 +79,13 @@ public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand,
 				}
 				
 			
-				
+				if(this.agent!=null&&!this.agent.equals("")){
+					taskInstance.setAgent(Authentication.getAuthenticatedUserId());
+					taskInstance.setAssigneeWithoutCascade(this.agent);
+				}else{
+					taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+					taskInstance.setAgent(null);
+				}
 			
 				taskInstance.customEnd(taskCommand, taskComment, this.agent, this.admin);
 

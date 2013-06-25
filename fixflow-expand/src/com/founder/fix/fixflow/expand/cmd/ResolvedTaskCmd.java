@@ -67,6 +67,15 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 			}
 
+			
+			if(this.agent!=null&&!this.agent.equals("")){
+				task.setAgent(Authentication.getAuthenticatedUserId());
+				task.setAssigneeWithoutCascade(this.agent);
+			}else{
+				task.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				task.setAgent(null);
+			}
+			
 			task.customEnd(taskCommand, taskComment, this.agent, this.admin);
 
 			

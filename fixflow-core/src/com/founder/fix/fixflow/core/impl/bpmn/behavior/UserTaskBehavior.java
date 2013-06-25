@@ -227,9 +227,9 @@ public class UserTaskBehavior extends UserTaskImpl {
 		}
 
 		// 是否启用验证
-		if (!executionContext.getProcessDefinition().isVerification()) {
-			return;
-		}
+		//if (!executionContext.getProcessDefinition().isVerification()) {
+		//	return;
+		//
 
 		// 当独占任务和候选任务都没有的时候则直接弹出异常消息.
 		if (taskInstance.getAssignee() == null && taskInstance.getTaskIdentityLinks().size() == 0) {

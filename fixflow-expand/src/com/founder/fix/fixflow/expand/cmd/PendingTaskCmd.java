@@ -96,6 +96,14 @@ public class PendingTaskCmd extends AbstractExpandTaskCmd<PendingTaskCommand, Vo
 			
 			
 			String assigneeId=task.getAssignee();
+			
+			if(this.agent!=null&&!this.agent.equals("")){
+				task.setAgent(Authentication.getAuthenticatedUserId());
+				task.setAssigneeWithoutCascade(this.agent);
+			}else{
+				task.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				task.setAgent(null);
+			}
 			//task.setOwner(assigneeId);
 			//task.setAssignee(pendingUserId);
 			task.setDelegationState(DelegationState.PENDING);

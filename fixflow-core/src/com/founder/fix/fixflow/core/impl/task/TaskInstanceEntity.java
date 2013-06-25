@@ -549,9 +549,18 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		
 		this.taskComment=taskComment;
 		
-		if(agent!=null&&!agent.equals("")){
+		
+		if(this.agent!=null&&!this.agent.equals("")){
 			this.setAgent(Authentication.getAuthenticatedUserId());
+			//this.setAssigneeWithoutCascade(this.agent);
+		}else{
+			//this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+			this.setAgent(null);
 		}
+		
+		//if(agent!=null&&!agent.equals("")){
+		//	this.setAgent(Authentication.getAuthenticatedUserId());
+		//}
 		if(admin!=null&&!admin.equals("")){
 			this.setAdmin(admin);
 		}

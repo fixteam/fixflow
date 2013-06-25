@@ -12,12 +12,14 @@ import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsElementPositionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgPathCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsSvgCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetModelInternationalizationResourcesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionGroupKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetResourceAsStreamCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateResourceCmd;
 import com.founder.fix.fixflow.core.impl.model.DeploymentBuilderImpl;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
+import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.model.Deployment;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
 import com.founder.fix.fixflow.core.model.DeploymentQuery;
@@ -107,6 +109,14 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 	public Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId) {
 
 		return commandExecutor.execute(new GetFlowGraphicsElementPositionCmd(processDefinitionId));
+	}
+
+	public String getModelInternationalizationResources(String resourcesType, String resourceKey) {
+		return commandExecutor.execute(new GetModelInternationalizationResourcesCmd(resourcesType,resourceKey));
+	}
+
+	public String getFlowNameInternationalizationResources(String resourceKey) {
+		return commandExecutor.execute(new GetModelInternationalizationResourcesCmd(FixFlowResources.FlowNameResource,resourceKey));
 	}
 
 }

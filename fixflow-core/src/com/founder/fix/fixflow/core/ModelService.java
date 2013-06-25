@@ -113,5 +113,21 @@ public interface ModelService extends ProcessService{
 	 * @return key为节点编号,value为 Map<String,Object> Key(height,width,x,y) (height="36.0" width="36.0" x="100.0" y="100.0")
 	 */
 	Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId);
+	
+	/**
+	 * 获取资源国际化信息
+	 * @param resourcesType 资源的类型 (FixFlowResources.FlowNameResource)
+	 * @param resourceKey 资源编号
+	 * @return
+	 */
+	String getModelInternationalizationResources(String resourcesType,String resourceKey);
+	
+	
+	/**
+	 * 获取流程名称资源国际化信息
+	 * @param resourceKey 流程编号
+	 * @return
+	 */
+	String getFlowNameInternationalizationResources(String resourceKey);
 }
   

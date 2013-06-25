@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
@@ -57,6 +56,7 @@ public class TaskInstancePersistence {
 
 	
 	
+	@SuppressWarnings("unused")
 	private String selectTaskByQueryCriteriaSqlAgent(String selectTaskByQueryCriteriaSql, TaskQueryImpl taskQuery, Page page, List<Object> objectParamWhere) {
 
 		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " FROM FIXFLOW_RUN_TAKSINSTANECE T ";
@@ -842,38 +842,53 @@ public class TaskInstancePersistence {
 		
 		String selectTaskByQueryCriteriaSql ="";
 		List<Object> objectParamWhere = new ArrayList<Object>();
+		
+		
 		if(taskQuery.getIsAgent()){
 			
-			selectTaskByQueryCriteriaSql = "SELECT distinct T.* FROM ( select distinct " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " T.* ";
 			
-
-			if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getFieldSql()!=null&&!taskQuery.getQueryExpandTo().getFieldSql().equals("")){
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT, "+taskQuery.getQueryExpandTo().getFieldSql();
-			}else{
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
+			if(taskQuery.getAssignee()!=null&&!taskQuery.getAssignee().equals("")){
+				taskQuery.taskAssignee(taskQuery.getAgentId());
+			}
+			
+			if(taskQuery.getCandidateUser()!=null&&!taskQuery.getCandidateUser().equals("")){
+				taskQuery.taskCandidateUser(taskQuery.getAgentId());
 			}
 			
 			
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSqlAgent(selectTaskByQueryCriteriaSql, taskQuery, page, objectParamWhere);
-
 		}
-		else{
-			
-			
-			selectTaskByQueryCriteriaSql = "select distinct " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " T.* ";
+		
+		
+		selectTaskByQueryCriteriaSql = "select distinct " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " T.* ";
 
-			//selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
+		//selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
 
-			if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getFieldSql()!=null&&!taskQuery.getQueryExpandTo().getFieldSql().equals("")){
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ,"+taskQuery.getQueryExpandTo().getFieldSql();
-			}else{
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
-			}
-			
-			
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql(selectTaskByQueryCriteriaSql, taskQuery, page, objectParamWhere);
-
+		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getFieldSql()!=null&&!taskQuery.getQueryExpandTo().getFieldSql().equals("")){
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ,"+taskQuery.getQueryExpandTo().getFieldSql();
+		}else{
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + ",P.INITIATOR AS PI_INITIATOR ,P.START_AUTHOR AS PI_START_AUTHOR,P.START_TIME AS PI_START_TIME,P.SUBJECT AS PI_SUBJECT ";
 		}
+		
+		
+		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql(selectTaskByQueryCriteriaSql, taskQuery, page, objectParamWhere);
+
+		
+		
+		if(taskQuery.getIsAgent()){
+			
+			selectTaskByQueryCriteriaSql =selectTaskByQueryCriteriaSql+
+					" and ((SELECT count(1) FROM "+
+					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
+					"where ag1.AGENT_ID=ag2.AGENT_ID AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag2.STATUS='1' AND ag1.AUSER='"+Authentication.getAuthenticatedUserId()+"' "+
+					"AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"' and ag1.PROCESS_ID='_fix_flow_all_flow')>0 or "+
+					"(T.PROCESSDEFINITION_KEY in (SELECT ag.PROCESS_ID FROM (SELECT ag1.*,ag2.SDATE,ag2.EDATE FROM "+
+					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
+					"where ag1.AGENT_ID=ag2.AGENT_ID and ag2.STATUS='1' AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag1.AUSER='"+Authentication.getAuthenticatedUserId()+"' AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"') ag)"+
+					"))";
+			
+			
+		}
+		
 
 
 		if (taskQuery.getOrderBy() != null) {
@@ -932,7 +947,42 @@ public class TaskInstancePersistence {
 		String selectTaskByQueryCriteriaSql = "";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		
+		if(taskQuery.getIsAgent()){
+			
+			
+			if(taskQuery.getAssignee()!=null&&!taskQuery.getAssignee().equals("")){
+				taskQuery.taskAssignee(taskQuery.getAgentId());
+			}
+			
+			if(taskQuery.getCandidateUser()!=null&&!taskQuery.getCandidateUser().equals("")){
+				taskQuery.taskCandidateUser(taskQuery.getAgentId());
+			}
+			
+			
+		}
 		
+		
+		selectTaskByQueryCriteriaSql = "select count(distinct T.TASKINSTANCE_ID) ";
+		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql(selectTaskByQueryCriteriaSql, taskQuery, null, objectParamWhere);
+		
+		
+		if(taskQuery.getIsAgent()){
+			
+			selectTaskByQueryCriteriaSql =selectTaskByQueryCriteriaSql+
+					" and ((SELECT count(1) FROM "+
+					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
+					"where ag1.AGENT_ID=ag2.AGENT_ID  AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag1.AUSER='"+Authentication.getAuthenticatedUserId()+"' "+
+					"AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"' and ag1.PROCESS_ID='_fix_flow_all_flow')>0 or "+
+					"(T.PROCESSDEFINITION_KEY in (SELECT ag.PROCESS_ID FROM (SELECT ag1.*,ag2.SDATE,ag2.EDATE FROM "+
+					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
+					"where ag1.AGENT_ID=ag2.AGENT_ID and ag2.STATUS='1' AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag1.AUSER='"+Authentication.getAuthenticatedUserId()+"' AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"') ag)"+
+					"))";
+			
+			
+		}
+		
+		
+		/*
 		if(taskQuery.getIsAgent()){
 			
 			selectTaskByQueryCriteriaSql = "SELECT count(distinct T.TASKINSTANCE_ID) FROM ( select distinct " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " T.* ";
@@ -948,7 +998,7 @@ public class TaskInstancePersistence {
 		
 			selectTaskByQueryCriteriaSql = "select count(distinct T.TASKINSTANCE_ID) ";
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql(selectTaskByQueryCriteriaSql, taskQuery, null, objectParamWhere);
-		}
+		}*/
 		
 		
 		Object returnObj = sqlCommand.queryForValue(selectTaskByQueryCriteriaSql, objectParamWhere);
@@ -1093,9 +1143,9 @@ public class TaskInstancePersistence {
 		
 		
 		
-		String sql="SELECT distinct(z.EID) EID FROM ( select a.EID,b.STATUS,a.AUSER1 as USERID  from FIXFLOW_OUTAGENT_AGENTDETAILS a left join "
-		+"FIXFLOW_OUTAGENT_AGENTINFO b on a.EID=b.EID where b.STATUS='0'"+
-		"and  a.AUSER1=?) z";
+		String sql="SELECT distinct(z.AGENT_ID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join "
+		+"FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1'"+
+		"and  a.AUSER=?) z";
 		/*
 		String sql=" SELECT distinct(z.EID) EID FROM "+
 				"( "+

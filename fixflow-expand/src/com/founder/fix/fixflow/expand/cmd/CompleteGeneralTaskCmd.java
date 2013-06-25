@@ -129,9 +129,17 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 				taskInstanceImpl.setAdmin(this.admin);
 			}
 			
+			
 			if(this.agent!=null&&!this.agent.equals("")){
 				taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
+			}else{
+				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAgent(null);
 			}
+			//if(this.agent!=null&&!this.agent.equals("")){
+			//	taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
+			//}
 			
 		}
 		else{

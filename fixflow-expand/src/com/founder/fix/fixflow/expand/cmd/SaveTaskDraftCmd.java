@@ -53,6 +53,12 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 	
 
 	public Void execute(CommandContext commandContext) {
+		
+		
+		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
+			throw new FixFlowException("登录用户不能!");
+		}
+		
 
 		if (taskId != null&&!taskId.equals("")) {
 			
@@ -85,6 +91,7 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 				taskCommand=new TaskCommandInst(userCommandId, taskCommandName, null, userCommandId, true);
 				
 				
+				
 			}
 			else{
 				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
@@ -100,6 +107,11 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			processInstanceImpl.getContextInstance().addTransientVariable("fixVariable_userCommand", userCommandId);
 
 			processInstanceImpl.getContextInstance().setVariableMap(variables);
+			
+			//在第一次启动的时候没有bizkey 的时候,在保存草稿的时候去设置bizkey
+			if(processInstanceImpl.getBizKey()==null&&this.businessKey!=null){
+				processInstanceImpl.setBizKey(this.businessKey);
+			}
 			
 			//processInstanceImpl.setBizKey(this.businessKey);
 
@@ -134,8 +146,14 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			
 			if(taskInstanceImpl!=null){
 				
+				if(this.agent!=null&&!this.agent.equals("")){
+					taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
+					taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
+				}else{
+					taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+					taskInstanceImpl.setAgent(null);
+				}
 				
-				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
 				
 				//if(AbstractCommandFilter.isAutoClaim()){
 					
@@ -171,8 +189,12 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 				}
 				
 				
-				
-				commandContext.getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstanceImpl);
+				try {
+					commandContext.getProcessInstanceManager().saveProcessInstance(processInstanceImpl);
+				} catch (Exception e) {
+					throw new FixFlowException("任务 "+taskId+" 保存出错！");
+				}
+				//commandContext.getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstanceImpl);
 				
 			}
 			else{
@@ -194,7 +216,7 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
 			startProcessInstanceCommand.setProcessDefinitionKey(processDefinitionKey);
 			startProcessInstanceCommand.setBusinessKey(businessKey);
-			startProcessInstanceCommand.setStartAuthor(initiator);
+			startProcessInstanceCommand.setStartAuthor(Authentication.getAuthenticatedUserId());
 			startProcessInstanceCommand.setTransientVariables(transientVariables);
 			// startProcessInstanceCommand.setVariables(Variables);
 			ProcessInstance processInstanceQueryTo = runtimeService
@@ -208,24 +230,38 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 					.processInstanceId(processInstanceId);
 
 			//先去找独占任务没有的话就去找共享任务并完成他
-			List<TaskInstance> taskQueryList = taskQuery.taskAssignee(initiator).taskNotEnd()
+			List<TaskInstance> taskQueryList = taskQuery.taskAssignee(Authentication.getAuthenticatedUserId()).taskNotEnd()
 					.list();
 
 			
 			if(taskQueryList.size()>0){
-				TaskInstance taskInstance=taskQueryList.get(0);
+				TaskInstanceEntity taskInstance=(TaskInstanceEntity)taskQueryList.get(0);
 				taskInstance.setDraft(true);
-				taskInstance.setAssignee(Authentication.getAuthenticatedUserId());
-				commandContext.getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstance);
+				if(this.agent!=null&&!this.agent.equals("")){
+					taskInstance.setAgent(Authentication.getAuthenticatedUserId());
+					taskInstance.setAssigneeWithoutCascade(this.agent);
+				}else{
+					taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+					taskInstance.setAgent(null);
+				}
+				//taskInstance.setAssignee(Authentication.getAuthenticatedUserId());
+				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
 			}
 			else{
 				TaskQuery taskQueryNew=taskService.createTaskQuery().processInstanceId(processInstanceId);
-				List<TaskInstance> taskQueryCandidateList = taskQueryNew.taskCandidateUser(initiator).taskNotEnd().list();
+				List<TaskInstance> taskQueryCandidateList = taskQueryNew.taskCandidateUser(Authentication.getAuthenticatedUserId()).taskNotEnd().list();
 				if(taskQueryCandidateList.size()>0){
-					TaskInstance taskInstanceCandidate=taskQueryCandidateList.get(0);
+					TaskInstanceEntity taskInstanceCandidate=(TaskInstanceEntity)taskQueryCandidateList.get(0);
 					taskInstanceCandidate.setDraft(true);
-					taskInstanceCandidate.setAssignee(Authentication.getAuthenticatedUserId());
-					commandContext.getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstanceCandidate);
+					if(this.agent!=null&&!this.agent.equals("")){
+						taskInstanceCandidate.setAgent(Authentication.getAuthenticatedUserId());
+						taskInstanceCandidate.setAssigneeWithoutCascade(this.agent);
+					}else{
+						taskInstanceCandidate.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+						taskInstanceCandidate.setAgent(null);
+					}
+					//taskInstanceCandidate.setAssignee(Authentication.getAuthenticatedUserId());
+					commandContext.getTaskManager().saveTaskInstanceEntity(taskInstanceCandidate);
 				}
 			}
 			
