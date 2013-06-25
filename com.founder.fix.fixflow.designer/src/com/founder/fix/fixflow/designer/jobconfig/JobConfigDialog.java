@@ -52,6 +52,7 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.beans.PojoObservables;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
 
 public class JobConfigDialog extends TitleAreaDialog {
@@ -59,11 +60,17 @@ public class JobConfigDialog extends TitleAreaDialog {
 	private Table table;
 	private TableViewer tableViewer;
 	private List<JobTo> jobTos;
+	private List<JobTo> overtimejobTos;
 	private Button stopButton;
 	private Button continueButton;
 	private Button deleteButton;
 	private SchedulerFactory schedulerFactory;
 	private Scheduler scheduler;
+	private Table table_1;
+	private TableViewer tableViewer_1;
+	private Button overStopButton;
+	private Button overContinueButton;
+	private Button overDeleteButton;
 
 	/**构造方法
 	 * Create the dialog.
@@ -100,8 +107,8 @@ public class JobConfigDialog extends TitleAreaDialog {
 		composite.setLayout(gl_composite);
 		
 		Label lblNewLabel = new Label(composite, SWT.NONE);
-		lblNewLabel.setText("全局管理");
-		new Label(composite, SWT.NONE);
+		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		lblNewLabel.setText("定时任务全局管理");
 		
 		tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table = tableViewer.getTable();
@@ -233,6 +240,137 @@ public class JobConfigDialog extends TitleAreaDialog {
 			}
 		});
 
+		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
+		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		lblNewLabel_1.setText("超时任务全局管理");
+		
+		tableViewer_1 = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		table_1 = tableViewer_1.getTable();
+		table_1.setHeaderVisible(true);
+		table_1.setLinesVisible(true);
+		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		tableViewer_1.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				tableViewer_1.refresh();
+				updateButtons();
+			}
+		});
+		
+		TableColumn tblclmnNewColumn_1 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_1.setWidth(100);
+		tblclmnNewColumn_1.setText("流程名称");
+		
+		TableColumn tblclmnNewColumn_2 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_2.setWidth(100);
+		tblclmnNewColumn_2.setText("流程唯一编号");
+		
+		TableColumn tblclmnNewColumn_3 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_3.setWidth(100);
+		tblclmnNewColumn_3.setText("流程编号");
+		
+		TableColumn tblclmnNewColumn_7 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_7.setWidth(100);
+		tblclmnNewColumn_7.setText("节点编号");
+		
+		TableColumn tblclmnNewColumn_8 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_8.setWidth(100);
+		tblclmnNewColumn_8.setText("流程实例号");
+		
+		TableColumn tblclmnNewColumn_9 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_9.setWidth(100);
+		tblclmnNewColumn_9.setText("令牌号");
+		
+		TableColumn tblclmnNewColumn_4 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_4.setWidth(100);
+		tblclmnNewColumn_4.setText("下次执行时间");
+		
+		TableColumn tblclmnNewColumn_5 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_5.setWidth(100);
+		tblclmnNewColumn_5.setText("表达式");
+		
+		TableColumn tblclmnNewColumn_6 = new TableColumn(table_1, SWT.NONE);
+		tblclmnNewColumn_6.setWidth(100);
+		tblclmnNewColumn_6.setText("当前状态");
+		
+		Composite composite_2 = new Composite(composite, SWT.NONE);
+		composite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridLayout gl_composite_2 = new GridLayout(1, false);
+		gl_composite_2.horizontalSpacing = 0;
+		gl_composite_2.marginHeight = 0;
+		gl_composite_2.marginWidth = 0;
+		gl_composite_2.verticalSpacing = 1;
+		composite_2.setLayout(gl_composite_2);
+		
+		overStopButton = new Button(composite_2, SWT.NONE);
+		overStopButton.setText("暂停");
+		overStopButton.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(!tableViewer_1.getSelection().isEmpty()){
+					IStructuredSelection selection = (IStructuredSelection) tableViewer_1.getSelection();
+					JobTo jobTo  = (JobTo) selection.getFirstElement();
+					try {
+						scheduler.pauseTrigger(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
+						jobTo.setCurrentStatus("暂停");
+					} catch (SchedulerException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				tableViewer_1.refresh();
+				updateButtons();
+			}
+		});
+		
+		overContinueButton = new Button(composite_2, SWT.NONE);
+		overContinueButton.setText("继续");
+		overContinueButton.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(!tableViewer_1.getSelection().isEmpty()){
+					IStructuredSelection selection = (IStructuredSelection) tableViewer_1.getSelection();
+					JobTo jobTo  = (JobTo) selection.getFirstElement();
+					try {
+						scheduler.resumeTrigger(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
+						jobTo.setCurrentStatus("普通");
+					} catch (SchedulerException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				tableViewer_1.refresh();
+				updateButtons();
+			}
+		});
+		
+		overDeleteButton = new Button(composite_2, SWT.NONE);
+		overDeleteButton.setText("删除");
+		overDeleteButton.addListener(SWT.Selection, new Listener() {
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handleEvent(Event event) {
+				if(!tableViewer_1.getSelection().isEmpty()){
+					IStructuredSelection selection = (IStructuredSelection) tableViewer_1.getSelection();
+					JobTo jobTo  = (JobTo) selection.getFirstElement();
+					try {
+						scheduler.unscheduleJob(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
+						((List<JobTo>)tableViewer_1.getInput()).remove(jobTo);
+					} catch (SchedulerException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				tableViewer_1.refresh();
+				updateButtons();
+			}
+		});
+		
 		updateButtons();
 		setMessage("管理定时任务", IMessageProvider.INFORMATION);
 		return area;
@@ -254,7 +392,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(603, 544);
+		return new Point(650, 550);
 	}
 	
 	/**
@@ -262,6 +400,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 	 */
 	public void loadAllJobs() {
 		jobTos = new ArrayList<JobTo>();
+		overtimejobTos = new ArrayList<JobTo>();
 		
 		FixFlowConfig fixFlowConfig = FixFlowConfigUtil.getFixFlowConfig();
 		QuartzConfig quartzConfig = FixFlowConfigUtil.getFixFlowConfig().getQuartzConfig();
@@ -330,35 +469,73 @@ public class JobConfigDialog extends TitleAreaDialog {
 	         for (int i = 0; i < jobGroups.size(); i++)
 	         {
 	            String name = (String) jobGroups.get(i);
-	            Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(name));
-	            Iterator<JobKey> iter = keys.iterator();
-	            while (iter.hasNext())
-	            {
-	               JobKey jobKey = (JobKey)iter.next();
-	               JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-	               JobDataMap jobDataMap = jobDetail.getJobDataMap();
-	               Trigger trigger = scheduler.getTriggersOfJob(jobKey).get(0);
-	               
-	               Date date = trigger.getNextFireTime();
-	               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	               
-	               JobTo jobTo = new JobTo();
-	               jobTo.setProcessName(jobDataMap.getString("processName"));
-	               jobTo.setProcessUniqueKey(jobDataMap.getString("processUniqueKey"));
-	               jobTo.setProcessId(jobDataMap.getString("processid"));
-	               if(trigger instanceof SimpleTrigger) {
-	            	   
-	            	   jobTo.setQuartzExpression(simpleDateFormat.format(jobDataMap.get("simpleExp")));
-	               }
-	               if(trigger instanceof CronTrigger) {
-	            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
-	               }
-	               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
-	              
-	               jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
-	               jobTo.setJobKey(jobKey);
-	               
-	               jobTos.add(jobTo);
+	            if(name.equals("schedulestart")) {
+	            	Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(name));
+		            Iterator<JobKey> iter = keys.iterator();
+		            while (iter.hasNext())
+		            {
+		               JobKey jobKey = (JobKey)iter.next();
+		               JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+		               JobDataMap jobDataMap = jobDetail.getJobDataMap();
+		               Trigger trigger = scheduler.getTriggersOfJob(jobKey).get(0);
+		               
+		               Date date = trigger.getNextFireTime();
+		               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		               
+		               JobTo jobTo = new JobTo();
+		               jobTo.setProcessName(jobDataMap.getString("processName"));
+		               jobTo.setProcessUniqueKey(jobDataMap.getString("processUniqueKey"));
+		               jobTo.setProcessId(jobDataMap.getString("processid"));
+		               if(trigger instanceof SimpleTrigger) {
+		            	   
+		            	   jobTo.setQuartzExpression(simpleDateFormat.format(jobDataMap.get("simpleExp")));
+		               }
+		               if(trigger instanceof CronTrigger) {
+		            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
+		               }
+		               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
+		              
+		               jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
+		               jobTo.setJobKey(jobKey);
+		               
+		               jobTos.add(jobTo);
+		            }
+	            }else{
+	            	Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(name));
+		            Iterator<JobKey> iter = keys.iterator();
+		            while (iter.hasNext())
+		            {
+		               JobKey jobKey = (JobKey)iter.next();
+		               JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+		               JobDataMap jobDataMap = jobDetail.getJobDataMap();
+		               Trigger trigger = scheduler.getTriggersOfJob(jobKey).get(0);
+		               
+		               Date date = trigger.getNextFireTime();
+		               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		               
+		               JobTo jobTo = new JobTo();
+		               jobTo.setProcessName(jobDataMap.getString("processName"));
+		               jobTo.setProcessUniqueKey(jobDataMap.getString("processId"));
+		               jobTo.setProcessId(jobDataMap.getString("processKey"));
+		               jobTo.setNodeId(jobDataMap.getString("nodeId"));
+		               jobTo.setProcessInstanceId(jobDataMap.getString("processInstanceId"));
+		               jobTo.setTokenId(jobDataMap.getString("tokenId"));
+		               if(trigger instanceof SimpleTrigger) {
+		            	   
+		            	   jobTo.setQuartzExpression(simpleDateFormat.format( ((SimpleTrigger)trigger).getStartTime()));
+		               }
+		               if(trigger instanceof CronTrigger) {
+		            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
+		               }
+		               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
+		              
+		               if(date!=null) {
+		            	   jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
+		               }
+		               jobTo.setJobKey(jobKey);
+		               
+		               overtimejobTos.add(jobTo);
+		            }
 	            }
 	         }
 	      }
@@ -376,6 +553,11 @@ public class JobConfigDialog extends TitleAreaDialog {
 		stopButton.setEnabled(selectedPage != null);
 		continueButton.setEnabled(selectedPage != null);
 		deleteButton.setEnabled(selectedPage != null);
+		
+		Object selectedPage1 = ((IStructuredSelection)tableViewer_1.getSelection()).getFirstElement();
+		overStopButton.setEnabled(selectedPage1 != null);
+		overContinueButton.setEnabled(selectedPage1 != null);
+		overDeleteButton.setEnabled(selectedPage1 != null);
 	}
 	
 	/**
@@ -417,13 +599,20 @@ public class JobConfigDialog extends TitleAreaDialog {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
 		ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
-		tableViewer.setContentProvider(listContentProvider);
-		//
 		IObservableMap[] observeMaps = PojoObservables.observeMaps(listContentProvider.getKnownElements(), JobTo.class, new String[]{"processName", "processUniqueKey", "processId", "nextFireTime", "quartzExpression", "currentStatus"});
 		tableViewer.setLabelProvider(new ObservableMapLabelProvider(observeMaps));
+		tableViewer.setContentProvider(listContentProvider);
 		//
 		WritableList writableList = new WritableList(jobTos, JobTo.class);
 		tableViewer.setInput(writableList);
+		//
+		ObservableListContentProvider listContentProvider_1 = new ObservableListContentProvider();
+		IObservableMap[] observeMaps_1 = PojoObservables.observeMaps(listContentProvider_1.getKnownElements(), JobTo.class, new String[]{"processName", "processUniqueKey", "processId", "nodeId", "processInstanceId", "tokenId", "nextFireTime", "quartzExpression", "currentStatus"});
+		tableViewer_1.setLabelProvider(new ObservableMapLabelProvider(observeMaps_1));
+		tableViewer_1.setContentProvider(listContentProvider_1);
+		//
+		IObservableList selfList = org.eclipse.core.databinding.property.Properties.selfList(JobTo.class).observe(overtimejobTos);
+		tableViewer_1.setInput(selfList);
 		//
 		return bindingContext;
 	}

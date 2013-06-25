@@ -6,6 +6,9 @@ public class JobTo {
 	private String processName;
 	private String processUniqueKey;
 	private String processId;
+	private String nodeId;
+	private String processInstanceId;
+	private String tokenId;
 	private String quartzExpression;
 	private String currentStatus;
 	private String nextFireTime;
@@ -53,5 +56,23 @@ public class JobTo {
 	}
 	public void setJobKey(JobKey jobKey) {
 		this.jobKey = jobKey;
+	}
+	public String getNodeId() {
+		return nodeId;
+	}
+	public void setNodeId(String nodeId) {
+		this.nodeId = nodeId;
+	}
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+	public String getTokenId() {
+		return tokenId;
+	}
+	public void setTokenId(String tokenId) {
+		this.tokenId = tokenId;
 	}
 }
