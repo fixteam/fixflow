@@ -755,6 +755,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	 * @throws Exception
 	 */
 	public void enter(ExecutionContext executionContext) {
+		
+		//事件顺序如下,先判断跳过策略,再判断边界事件,
+		//再执行多实例,最后执行节点进入事件
 		TokenEntity token = executionContext.getToken();
 
 		// 把令牌的所在节点设置为当前节点
@@ -826,15 +829,46 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		
 
 	}
+	
+	private void tokenEnter(ExecutionContext executionContext) {
+		//TokenEntity token = executionContext.getToken();
 
-	private void forkedTokenEnter(ExecutionContext executionContext,boolean isMultiple) {
+		// 把令牌的所在节点设置为当前节点
+		//token.setFlowNode(this);
+
+		fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
+
+		// 设置令牌进入节点的时间
+		//token.setNodeEnterTime(new Date());
+
+		// 移除执行内容对象的线条关联
+		//executionContext.setSequenceFlow(null);
+
+		//executionContext.setSequenceFlowSource(null);
+
+
+		execute(executionContext);
+
+		
+		/*
+		if (this instanceof Activity && ((Activity) this).getLoopCharacteristics() != null) {
+
+			loopExecute(executionContext);
+
+		} else {
+
+			
+		}*/
+	}
+	
+
+	private void forkedTokenEnter(ExecutionContext executionContext) {
 		TokenEntity token = executionContext.getToken();
 
 		// 把令牌的所在节点设置为当前节点
 		token.setFlowNode(this);
 
-		// 触发节点进入事件
-		fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
+		//fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
 		// 设置令牌进入节点的时间
 		token.setNodeEnterTime(new Date());
@@ -844,11 +878,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 		executionContext.setSequenceFlowSource(null);
 
-		if(isMultiple){
-			execute(executionContext);
-		}else{
-			loopExecute(executionContext);
-		}
+		
+		loopExecute(executionContext);
+		
 		
 		/*
 		if (this instanceof Activity && ((Activity) this).getLoopCharacteristics() != null) {
@@ -875,7 +907,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			TokenEntity nodeToken = this.createForkedToken(tokenEntity, nodeTokenId).token;
 			ExecutionContext nodeChildExecutionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(nodeToken);
 
-			this.forkedTokenEnter(nodeChildExecutionContext,false);
+			this.forkedTokenEnter(nodeChildExecutionContext);
 
 			// 遍历边界事件
 			for (BoundaryEvent boundaryEvent : boundaryEvents) {
@@ -978,7 +1010,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 							ExpressionMgmt.setVariable(expressionValueTemp, object, executionContext);
 
-							this.forkedTokenEnter(executionContext,true);
+							this.tokenEnter(executionContext);
 						}
 					} else {
 						if (valueObj instanceof String[]) {
@@ -994,7 +1026,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 								ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
 
-								this.forkedTokenEnter(executionContext,true);
+								this.tokenEnter(executionContext);
 
 							}
 						} else {
@@ -1013,7 +1045,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 										ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
 
-										this.forkedTokenEnter(executionContext,true);
+										this.tokenEnter(executionContext);
 
 									}
 								} else {
@@ -1038,10 +1070,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			//当发现不是多实例的情况下继续节点的执行,以后添加了串行多实例要在这里加判断
 			if(loopCharacteristics instanceof StandardLoopCharacteristics){
 					//串行多实例执行
-				execute(executionContext);
+				tokenEnter(executionContext);
 			}else{
-				//无多实例执行
-				execute(executionContext);
+				tokenEnter(executionContext);
 				
 			}
 
