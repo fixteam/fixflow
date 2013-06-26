@@ -1,6 +1,9 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpmn2.Event;
@@ -13,6 +16,7 @@ import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 
+import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -28,6 +32,7 @@ import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 	
+	@SuppressWarnings("unchecked")
 	public boolean execute(ExecutionContext executionContext,Event event) {
 		
 		
@@ -47,13 +52,19 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		}
 		Date date=null;
 		String expressionTemp=null;//"0 0-5 14 * * ?" 在每天下午2点到下午2:05期间的每1分钟触发 
+		List<Object> timeObjects=new ArrayList<Object>();
 		try {
 			Object dateObj=ExpressionMgmt.execute(expressionText, executionContext);
 			if(dateObj instanceof Date){
 				date=(Date)dateObj;
 			}
 			else{
-				expressionTemp=StringUtil.getString(dateObj);
+				if(dateObj instanceof List){
+					timeObjects=(List<Object>)dateObj;
+				}else{
+					expressionTemp=StringUtil.getString(dateObj);
+				}
+				
 			}
 			
 		} catch (Exception e) {
@@ -66,39 +77,27 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		Map<String, Object> transientVariableMap=tokenEntity.getProcessInstance().getContextInstance().getTransientVariableMap();
 		String guidString=GuidUtil.CreateGuid();
 		variableTransferEntity.addVariable(guidString, transientVariableMap);
-
+		
 		if (processInstanceId != null && !processInstanceId.equals("")) {
 			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, processInstanceId);
 			variableTransferEntity.addVariableFlowType(variableFlowTypeEntity);
 		}
 	
 		Context.getCommandContext().getVariableManager().saveVariable(variableTransferEntity);
-
 		
-	
+		
+		
 		Scheduler scheduler=Context.getProcessEngineConfiguration().getScheduler();
 
 		
+		
+		
+		Map<JobDetail, List<Trigger>> jobList=new HashMap<JobDetail, List<Trigger>>();
+		
+		
+		
 		JobDetail job = QuartzUtil.createJobDetail(
 				TokenTimeOutJob.class, tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId());
-
-		
-		
-		Trigger trigger = null;
-		
-		if(date==null){
-			trigger =  QuartzUtil.createCronTrigger(
-					tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), expressionTemp);
-		}else{
-			trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(
-					tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), date);
-		}
-		
-		
-		
-		
-		//QuartzUtil.createCronTrigger(jobName, groupName, cronExpression);
-		
 		job.getJobDataMap().put("tokenId", tokenEntity.getId());
 		job.getJobDataMap().put("transientVariableId", guidString);
 		job.getJobDataMap().put("processInstanceId", processInstanceId);
@@ -106,8 +105,78 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		job.getJobDataMap().put("processKey", tokenEntity.getProcessInstance().getProcessDefinitionKey());
 		job.getJobDataMap().put("processId", tokenEntity.getProcessInstance().getProcessDefinitionId());
 		job.getJobDataMap().put("processName", tokenEntity.getProcessInstance().getProcessDefinition().getName());
+		job.getJobDataMap().put("bizKey", tokenEntity.getProcessInstance().getBizKey());
+		
+		
+		if(date==null){
+			
+			if(expressionTemp!=null&&!expressionTemp.equals("")){
+				Trigger trigger = null;
+				trigger =  QuartzUtil.createCronTrigger(
+						tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), expressionTemp);
+				
+				List<Trigger> triggers=new ArrayList<Trigger>();
+				triggers.add(trigger);
+				jobList.put(job, triggers);
+				
+			}else{
+				
+				if(timeObjects.size()>0){
+					
+					List<Trigger> triggers=new ArrayList<Trigger>();
+					for (Object object : timeObjects) {
+						if(object instanceof Date){
+							Trigger trigger = null;
+							
+							
+							
+							trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(
+									tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), date);
+							
+							triggers.add(trigger);
+							
+						}
+						if(object instanceof String){
+							Trigger trigger = null;
+							trigger =  QuartzUtil.createCronTrigger(
+									tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), expressionTemp);
+							triggers.add(trigger);
+						}
+					}
+					jobList.put(job, triggers);
+				}else{
+					throw new FixFlowBizException("定时任务节点没有设置时间!");
+				}
+				
+			
+				
+			}
+			
+			
+			
+			
+		}else{
+			
+			
+			Trigger trigger = null;
+			
+			
+			
+			trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(
+					tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), date);
+			List<Trigger> triggers=new ArrayList<Trigger>();
+			triggers.add(trigger);
+			jobList.put(job, triggers);
+		}
+		
+		
+		
+		
+		//QuartzUtil.createCronTrigger(jobName, groupName, cronExpression);
+		
+		
 		try {
-			scheduler.scheduleJob(job, trigger);
+			scheduler.scheduleJobs(jobList, true);//.scheduleJob(job, trigger);
 		} catch (SchedulerException e) {
 			throw new FixFlowException("超时任务启动记录失败!错误信息: "+e.toString(), e);
 		}
