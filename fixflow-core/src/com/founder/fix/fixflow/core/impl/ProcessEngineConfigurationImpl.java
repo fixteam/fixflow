@@ -620,6 +620,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				initOracleDbConfig();
 				return;
 			}
+			if (dataBase.getDbtype().toString().toLowerCase().equals(DbType.MYSQL.toString().toLowerCase())) {
+				initMySqlDbConfig();
+				return;
+			}
+			if (dataBase.getDbtype().toString().toLowerCase().equals(DbType.DB2.toString().toLowerCase())) {
+				initDB2DbConfig();
+				return;
+			}
 			initOracleDbConfig();
 		} else {
 			initOracleDbConfig();
@@ -648,6 +656,41 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("topOrderBy", " top 100 percent ");
+
+		dbConfig.setDbSqlMap(map);
+
+		this.dbConfig = dbConfig;
+	}
+	
+	protected void initMySqlDbConfig() {
+		
+		DataBase dataBase=this.selectedDatabase;
+		// OraclePaginationImpl
+		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
+		DbConfig dbConfig = new DbConfig();
+		dbConfig.setDbType(DbType.ORACLE);
+		dbConfig.setPagination(pagination);
+		dbConfig.setKeyword("?");
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("topOrderBy", " ");
+
+		dbConfig.setDbSqlMap(map);
+
+		this.dbConfig = dbConfig;
+	}
+	
+	protected void initDB2DbConfig() {
+		DataBase dataBase=this.selectedDatabase;
+		// OraclePaginationImpl
+		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
+		DbConfig dbConfig = new DbConfig();
+		dbConfig.setDbType(DbType.ORACLE);
+		dbConfig.setPagination(pagination);
+		dbConfig.setKeyword("?");
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("topOrderBy", " ");
 
 		dbConfig.setDbSqlMap(map);
 
