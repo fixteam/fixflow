@@ -82,6 +82,7 @@
     <assignPolicy id="humanPerformer_TaskAtLeast" name="独占   (资源中任务最少者)" classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerTaskAtLeastAssignmentImpl" remarks=""/>
     <assignPolicy id="humanPerformer_Random" name="独占   (在资源中随机分配任务)" classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerRandomAssignmentImpl" remarks=""/>
     <assignPolicy id="potentialOwner_One" name="共享   (当只有一人时采用独占策略)" classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerOneAssignmentImpl" remarks=""/>
+    <assignPolicy id="simulationRun" name="虚拟运行策略" classImpl="com.founder.fix.fixflow.expand.assignment.SimulationRunAssignmentImpl" remarks=""/>
     <assignPolicy id="custom" name="动态   (根据策略表达式动态分配策略)" classImpl="com.founder.fix.fixflow.expand.assignment.CustomAssignmentImpl" remarks=""/>
   </assignPolicyConfig>
   <connectionManagementConfig selected="FixCS">
