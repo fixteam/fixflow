@@ -558,6 +558,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.threadPool.threadPriority", "5");
 		
 		props.put("org.quartz.jobStore.misfireThreshold", "60000");
+		
+		props.put("org.quartz.scheduler.jmx.export", "true");
 
 		// JobStoreTX
 		props.put("org.quartz.jobStore.class", "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.JobStoreFix");
@@ -578,7 +580,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		try {
 			scheduler = schedulerFactory.getScheduler();
 			scheduler.start();
-
+			
 			System.out.println("定时框架启动成功");
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block

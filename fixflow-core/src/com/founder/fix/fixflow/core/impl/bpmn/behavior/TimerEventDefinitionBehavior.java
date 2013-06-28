@@ -12,7 +12,6 @@ import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.impl.TimerEventDefinitionImpl;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 
@@ -113,7 +112,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 			if(expressionTemp!=null&&!expressionTemp.equals("")){
 				Trigger trigger = null;
 				trigger =  QuartzUtil.createCronTrigger(
-						tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), expressionTemp);
+						GuidUtil.CreateGuid(), "FixTimeOutTask_"+tokenEntity.getId(), expressionTemp);
 				
 				List<Trigger> triggers=new ArrayList<Trigger>();
 				triggers.add(trigger);
@@ -131,7 +130,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 							
 							
 							trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(
-									tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), date);
+									GuidUtil.CreateGuid(), "FixTimeOutTask_"+tokenEntity.getId(), StringUtil.getDate(object));
 							
 							triggers.add(trigger);
 							
@@ -139,7 +138,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 						if(object instanceof String){
 							Trigger trigger = null;
 							trigger =  QuartzUtil.createCronTrigger(
-									tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), expressionTemp);
+									GuidUtil.CreateGuid(), "FixTimeOutTask_"+tokenEntity.getId(), StringUtil.getString(object));
 							triggers.add(trigger);
 						}
 					}
@@ -163,7 +162,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 			
 			
 			trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(
-					tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId(), date);
+					GuidUtil.CreateGuid(), "FixTimeOutTask_"+tokenEntity.getId(), date);
 			List<Trigger> triggers=new ArrayList<Trigger>();
 			triggers.add(trigger);
 			jobList.put(job, triggers);
@@ -177,7 +176,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		
 		try {
 			scheduler.scheduleJobs(jobList, true);//.scheduleJob(job, trigger);
-		} catch (SchedulerException e) {
+		} catch (Exception e) {
 			throw new FixFlowException("超时任务启动记录失败!错误信息: "+e.toString(), e);
 		}
 		

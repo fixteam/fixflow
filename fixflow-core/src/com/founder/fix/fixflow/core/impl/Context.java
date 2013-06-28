@@ -9,7 +9,6 @@ import java.util.Stack;
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguage;
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.fixflow.core.ConnectionManagement;
-import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
@@ -361,9 +360,9 @@ public class Context {
 		Stack<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
 		if (stack.isEmpty()) {
 			
-			setProcessEngineConfiguration(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration());
+			//setProcessEngineConfiguration(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration());
 			
-			return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+			return null;//ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
 		}
 		return stack.peek();
 	}
