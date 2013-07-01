@@ -1,8 +1,6 @@
 package com.founder.fix.fixflow.expand.worktime;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.worktime.WorkTime;
@@ -25,6 +24,11 @@ public class WorkTimeImpl implements WorkTime {
 	private String returnDateStr;
 	private String nextWorkDate;
 
+	public boolean isWorkDate(Date nowDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	/**
 	 * 重写方法
 	 */
@@ -36,7 +40,7 @@ public class WorkTimeImpl implements WorkTime {
 			sqlCommand = executionContext.getSqlCommand();
 		} catch (Exception e) {
 			try {
-				sqlCommand = new SqlCommand(createConnection());
+				sqlCommand = new SqlCommand(ConnectionManagement.INSTANCE().getConnection());
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -294,6 +298,7 @@ public class WorkTimeImpl implements WorkTime {
 		return date;
 	}
 	
+	/*
 	private Connection createConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		String url = "jdbc:oracle:thin:@172.29.128.91:1521:orcl";
@@ -302,5 +307,7 @@ public class WorkTimeImpl implements WorkTime {
 		Connection connection = DriverManager.getConnection(url, user, password);
 		connection.setAutoCommit(false);
 		return connection;
-	}
+	}*/
+
+	
 }
