@@ -30,7 +30,7 @@ public class DB2PaginationImpl implements Pagination{
 	}
 
 	public String getIsNullLocalismSql(String sql) {
-		return "ISNULL("+sql+")";
+		return "COALESCE("+sql+")";
 	}
 
 	public String getDateSql() {
@@ -48,7 +48,7 @@ public class DB2PaginationImpl implements Pagination{
 	public String getLocalismSql(String localismKey, String localismValue) {
 
 		if(localismKey.equals("processperformance")){
-			return "ISNULL(end_time-start_time)";
+			return "COALESCE(end_time-start_time)";
 		}
 		
 		if(localismKey.equals("datediffconvert")) {
