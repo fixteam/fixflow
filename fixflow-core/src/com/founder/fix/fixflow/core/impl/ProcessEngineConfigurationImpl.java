@@ -539,7 +539,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			// driverDelegateClass =
 			// "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 		} else {
-			driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
+			
+			if(quartzDataBase.getDbtype().equals(DBType.SQLSERVER))
+			{
+				driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
+			}
+			else{
+				driverDelegateClass = "org.quartz.impl.jdbcjobstore.StdJDBCDelegate";
+			}
+			
 		}
 
 		/*
