@@ -16,10 +16,13 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import com.founder.fix.fixflow.designer.modeler.ui.property.SectionBpmnElement;
@@ -33,6 +36,8 @@ public class RenameConnectorWizardPage extends WizardPage {
 	
 	private Label namelabel;
 	
+	private Button checkButton;
+	
 	private Text connectNameText;
 	
 	private Text connectDescriptionText;
@@ -41,9 +46,13 @@ public class RenameConnectorWizardPage extends WizardPage {
 	
 	private Combo connectExceptionCombo;
 	
+	private ExpressionComboViewer timeExpressionComboViewer;
+	
 	private ExpressionComboViewer expressionComboViewer;
 	
 	private Combo combo;
+	
+	private Combo timecombo;
 	
 	private Text connectNameErrorText;
 	
@@ -168,6 +177,31 @@ public class RenameConnectorWizardPage extends WizardPage {
 //				setEvent(lifeCycle.getEvent());
 			}
 		});		
+		
+		checkButton = new Button(proGroup, SWT.CHECK);
+		checkButton.setText("启动定时器");
+		
+		new Label(proGroup, SWT.NONE);
+		
+		label = new Label(proGroup, SWT.NONE);
+		label.setText("时间表达式");
+
+		timeExpressionComboViewer = new ExpressionComboViewer(proGroup);
+		timecombo = timeExpressionComboViewer.getCombo();
+		timecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		timecombo.setEnabled(false);
+		
+		checkButton.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(checkButton.getSelection()) {
+					timecombo.setEnabled(true);
+				}else{
+					timecombo.setEnabled(false);
+				}
+			}
+		});
 		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("跳过策略");
