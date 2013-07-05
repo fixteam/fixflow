@@ -193,7 +193,7 @@ public class RenameConnectorWizardPage extends WizardPage {
 		group.setText("定时器配置");
 		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		GridLayout gl_group = new GridLayout(2, false);
-		gl_group.verticalSpacing = 0;
+		gl_group.verticalSpacing = 5;
 		gl_group.horizontalSpacing = 0;
 		gl_group.marginWidth = 0;
 		gl_group.marginHeight = 0;
