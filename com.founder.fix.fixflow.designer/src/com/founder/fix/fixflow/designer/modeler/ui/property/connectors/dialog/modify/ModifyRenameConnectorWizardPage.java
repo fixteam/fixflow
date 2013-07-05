@@ -50,11 +50,15 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 	
 	private ExpressionComboViewer timeExpressionComboViewer;
 	
+	private ExpressionComboViewer skipExpressionComboViewer;
+	
 	private ExpressionComboViewer expressionComboViewer;
 	
 	private Combo combo;
 	
 	private Combo timecombo;
+	
+	private Combo skipcombo;
 	
 	private Text connectNameErrorText;
 	
@@ -189,31 +193,6 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 			}*/
 		});		
 		
-		checkButton = new Button(proGroup, SWT.CHECK);
-		checkButton.setText("启动定时器");
-		
-		new Label(proGroup, SWT.NONE);
-		
-		label = new Label(proGroup, SWT.NONE);
-		label.setText("时间表达式");
-
-		timeExpressionComboViewer = new ExpressionComboViewer(proGroup);
-		timecombo = timeExpressionComboViewer.getCombo();
-		timecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		timecombo.setEnabled(false);
-		
-		checkButton.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				if(checkButton.getSelection()) {
-					timecombo.setEnabled(true);
-				}else{
-					timecombo.setEnabled(false);
-				}
-			}
-		});
-		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("跳过策略");
 		
@@ -225,6 +204,58 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		expressionTo.setName(skipComment == null ? "" : skipComment.getExpression().getName());
 		expressionTo.setExpressionText(skipComment == null ? "" : skipComment.getExpression().getValue());
 		expressionComboViewer.getExpressionCombo().setExpressionTo(expressionTo);
+		
+		Group group = new Group(proGroup, SWT.NONE);
+		group.setText("定时器配置");
+		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		GridLayout gl_group = new GridLayout(2, false);
+		gl_group.verticalSpacing = 0;
+		gl_group.horizontalSpacing = 0;
+		gl_group.marginWidth = 0;
+		gl_group.marginHeight = 0;
+		group.setLayout(gl_group);
+		
+		checkButton = new Button(group, SWT.CHECK);
+		checkButton.setToolTipText("终止、结束事件中定时器无效");
+		checkButton.setText("启用定时器");
+		
+		new Label(group, SWT.NONE);
+		
+		label = new Label(group, SWT.NONE);
+		label.setText("时间表达式");
+
+		timeExpressionComboViewer = new ExpressionComboViewer(group);
+		timecombo = timeExpressionComboViewer.getCombo();
+		timecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		timecombo.setEnabled(false);
+		
+		label = new Label(group, SWT.NONE);
+		label.setText("定时器跳过策略");
+		
+		skipExpressionComboViewer = new ExpressionComboViewer(group);
+		skipcombo = skipExpressionComboViewer.getCombo();
+		skipcombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		skipcombo.setEnabled(false);
+		
+		checkButton.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(checkButton.getSelection()) {
+					timecombo.setEnabled(true);
+					skipcombo.setEnabled(true);
+					//timeExpressionComboViewer.setExpressionInput(null);
+					timeExpressionComboViewer.getExpressionCombo().setExpressionTo(null);
+					skipExpressionComboViewer.getExpressionCombo().setExpressionTo(null);
+				}else{
+					timecombo.setEnabled(false);
+					skipcombo.setEnabled(false);
+					//timeExpressionComboViewer.setExpressionInput(null);
+					timeExpressionComboViewer.getExpressionCombo().setExpressionTo(null);
+					skipExpressionComboViewer.getExpressionCombo().setExpressionTo(null);
+				}
+			}
+		});
 		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("如果连接器失效");

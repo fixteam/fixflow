@@ -92,7 +92,7 @@ public class ConnectorsPropertiesComposite extends AbstractFixFlowBpmn2Propertie
 			public void handleEvent(Event event) {
 				// TODO Auto-generated method stub
 				OverrideWizard dialog = new OverrideWizard(getShell(), new AddConnectorWizard(SectionBpmnElement.sectionElement));
-				dialog.setPageSize(-1, 400); // -1代表宽度自适应, 240为高度
+				dialog.setPageSize(-1, 470); // -1代表宽度自适应, 240为高度
 				if (dialog.open() == Dialog.OK) {
 					// 获取实例
 					((List<ConnectorInstance>) treeViewer.getInput()).add(dialog.getAddedValue());
@@ -121,7 +121,7 @@ public class ConnectorsPropertiesComposite extends AbstractFixFlowBpmn2Propertie
 					ConnectorInstance connectorInstance = (ConnectorInstance) selection.getFirstElement();
 
 					WizardDialog dialog = new OverrideWizard(getShell(), new ModifyConnectorWizard(SectionBpmnElement.sectionElement, getDiagramEditor(), connectorInstance));
-					dialog.setPageSize(-1, 400); // -1代表宽度自适应, 240为高度
+					dialog.setPageSize(-1, 470); // -1代表宽度自适应, 240为高度
 					if (dialog.open() == Dialog.OK) {
 						treeViewer.refresh();
 					}
