@@ -3,16 +3,25 @@ package com.founder.fix.fixflow.designer.jobconfig;
 import org.quartz.JobKey;
 
 public class JobTo {
+	private String jobName;
+	private String jobGroupName;
 	private String processName;
 	private String processUniqueKey;
 	private String processId;
 	private String nodeId;
+	private String nodeName;
 	private String processInstanceId;
 	private String tokenId;
 	private String quartzExpression;
 	private String currentStatus;
+	private String bizKey;
+	private String jobType;
+	private String transientVariableId;
 	private String nextFireTime;
 	private JobKey jobKey;
+	private String connectorId;
+	private String connectorInstanceId;
+	private String connectorInstanceName;
 	
 	
 	public String getProcessName() {
@@ -74,5 +83,59 @@ public class JobTo {
 	}
 	public void setTokenId(String tokenId) {
 		this.tokenId = tokenId;
+	}
+	public String getJobName() {
+		return jobName;
+	}
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+	public String getJobGroupName() {
+		return jobGroupName;
+	}
+	public void setJobGroupName(String jobGroupName) {
+		this.jobGroupName = jobGroupName;
+	}
+	public String getBizKey() {
+		return bizKey;
+	}
+	public void setBizKey(String bizKey) {
+		this.bizKey = bizKey;
+	}
+	public String getJobType() {
+		return jobType;
+	}
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
+	public String getTransientVariableId() {
+		return transientVariableId;
+	}
+	public void setTransientVariableId(String transientVariableId) {
+		this.transientVariableId = transientVariableId;
+	}
+	public String getNodeName() {
+		return nodeName;
+	}
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
+	}
+	public String getConnectorId() {
+		return connectorId;
+	}
+	public void setConnectorId(String connectorId) {
+		this.connectorId = connectorId;
+	}
+	public String getConnectorInstanceId() {
+		return connectorInstanceId;
+	}
+	public void setConnectorInstanceId(String connectorInstanceId) {
+		this.connectorInstanceId = connectorInstanceId;
+	}
+	public String getConnectorInstanceName() {
+		return connectorInstanceName;
+	}
+	public void setConnectorInstanceName(String connectorInstanceName) {
+		this.connectorInstanceName = connectorInstanceName;
 	}
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Factory;
@@ -26,20 +27,26 @@ import org.eclipse.bpmn2.di.BPMNShape;
 import org.eclipse.bpmn2.modeler.core.ModelHandlerLocator;
 import org.eclipse.bpmn2.modeler.core.utils.ModelUtil.Bpmn2DiagramType;
 import org.eclipse.bpmn2.modeler.ui.property.AbstractBpmn2PropertySection;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
-import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.SimpleFeatureMapEntry;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.SimpleFeatureMapEntry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -53,6 +60,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -61,6 +69,16 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.quartz.CronTrigger;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import com.founder.fix.bpmn2extensions.coreconfig.DBType;
 import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
@@ -74,41 +92,22 @@ import com.founder.fix.bpmn2extensions.fixflow.ReceiveMessage;
 import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
 import com.founder.fix.fixflow.core.impl.job.ProcessInstanceAutoStart;
 import com.founder.fix.fixflow.designer.database.SqlCommand;
-import com.founder.fix.fixflow.designer.internationalization.ResourcesUtil;
 import com.founder.fix.fixflow.designer.modeler.ui.property.AbstractFixFlowBpmn2PropertiesComposite;
 import com.founder.fix.fixflow.designer.modeler.ui.property.SectionBpmnElement;
 import com.founder.fix.fixflow.designer.persistence.BpmnDeployer;
 import com.founder.fix.fixflow.designer.persistence.EventSubscriptionEntity;
 import com.founder.fix.fixflow.designer.persistence.EventSubscriptionPersistence;
 import com.founder.fix.fixflow.designer.persistence.EventSubscriptionType;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionChangedEvent;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionComboViewer;
+import com.founder.fix.fixflow.designer.usercontrol.ExpressionTo;
+import com.founder.fix.fixflow.designer.usercontrol.IExpressionChangedListener;
 import com.founder.fix.fixflow.designer.util.FixBpmnUtil;
 import com.founder.fix.fixflow.designer.util.FixFlowConfigUtil;
 import com.founder.fix.fixflow.designer.util.GuidUtil;
 import com.founder.fix.fixflow.designer.util.QuartzUtil;
 import com.founder.fix.fixflow.designer.util.StringUtil;
 import com.founder.fix.fixflow.designer.util.VerificationUtil;
-
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.core.databinding.beans.PojoObservables;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
-import org.eclipse.core.databinding.observable.list.WritableList;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Combo;
-import org.quartz.CronTrigger;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
-
-import com.founder.fix.fixflow.designer.usercontrol.ExpressionChangedEvent;
-import com.founder.fix.fixflow.designer.usercontrol.ExpressionComboViewer;
-import com.founder.fix.fixflow.designer.usercontrol.ExpressionTo;
-import com.founder.fix.fixflow.designer.usercontrol.IExpressionChangedListener;
 
 public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2PropertiesComposite {
 	@SuppressWarnings("unused")
@@ -838,7 +837,10 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 					bpmnDeployer.deleteDeploy(col.getProcessKey(), col.getVersion(), FixFlowConfigUtil.createConnection());
 
 					Scheduler scheduler = QuartzUtil.getScheduler(QuartzUtil.createSchedulerFactory(getQuartzProps()));
-					scheduler.deleteJob(JobKey.jobKey(col.getProcessId(), "schedulestart"));
+					Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(col.getProcessId()));
+					List<JobKey> jobkeys = new ArrayList<JobKey>();
+					jobkeys.addAll(keys);
+					scheduler.deleteJobs(jobkeys);
 
 				} catch (Exception e) {
 					MessageDialog.openInformation(null, "流程定义删除信息", "流程删除出错。");
@@ -992,7 +994,10 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 				Scheduler scheduler = QuartzUtil.getScheduler(QuartzUtil.createSchedulerFactory(getQuartzProps()));
 				try {
-					scheduler.deleteJob(JobKey.jobKey(newProcessGuid, "schedulestart"));
+					List<StartEvent> startEvents = modelHandler.getAll(StartEvent.class);
+					for (StartEvent startEvent : startEvents) {
+						scheduler.deleteJob(JobKey.jobKey(startEvent.getId(), newProcessGuid));
+					}
 				} catch (SchedulerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1122,6 +1127,9 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 	 *            流程定义文件id
 	 */
 	private void readyQuartz(String id) {
+		String nodeId = "";
+		String nodeName = "";
+		
 		// 定时任务数据插入及启动(在勾选发布定时任务的情况下)
 		QuartzConfig quartzConfig = FixFlowConfigUtil.getFixFlowConfig().getQuartzConfig();
 		FixFlowConfig fixFlowConfig = FixFlowConfigUtil.getFixFlowConfig();
@@ -1155,6 +1163,8 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 					for (EventDefinition eventDefinition : startEvent.getEventDefinitions()) {
 						if (eventDefinition instanceof TimerEventDefinition) {
 							hasTimerEvent = true;
+							nodeId = startEvent.getId();
+							nodeName = startEvent.getName();
 							break;
 						}
 					}
@@ -1163,7 +1173,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 			if (hasTimerEvent) {
 				SchedulerFactory schedulerFactory = QuartzUtil.createSchedulerFactory(getQuartzProps());
-				JobDetail job = QuartzUtil.createJobDetail(ProcessInstanceAutoStart.class, id, "schedulestart");
+				JobDetail job = QuartzUtil.createJobDetail(ProcessInstanceAutoStart.class, nodeId, id);
 
 				Trigger trigger = null;
 
@@ -1180,16 +1190,27 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 						// TODO Auto-generated catch block
 						//System.out.println("时间格式有误");
 					}
-					trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(id, "schedulestart", date);
+					trigger = (SimpleTrigger) QuartzUtil.createSimpleTrigger(GuidUtil.CreateGuid(), id, date);
 
 					Scheduler scheduler = null;
 					try {
 						scheduler = schedulerFactory.getScheduler();
 
-						job.getJobDataMap().put("processUniqueKey", id);
-						job.getJobDataMap().put("processid", SectionBpmnElement.process.getId());
-						job.getJobDataMap().put("processName", SectionBpmnElement.process.getName());
+						job.getJobDataMap().put("tokenId", "");//令牌
+						job.getJobDataMap().put("transientVariableId", "");//不管
+						job.getJobDataMap().put("processInstanceId", "");//流程实例
+						job.getJobDataMap().put("nodeId", nodeId);//节点编号
+						job.getJobDataMap().put("nodeName", nodeName);//节点名称
+						job.getJobDataMap().put("processUniqueKey", id);//流程key
+						job.getJobDataMap().put("processid", process.getId());//流程编号
+						job.getJobDataMap().put("processName", process.getName());//流程名称
+						job.getJobDataMap().put("bizKey", "");//业务关联值
+						job.getJobDataMap().put("jobType", "automateTask");//流程类型
 						job.getJobDataMap().put("simpleExp", date);
+						job.getJobDataMap().put("connectorId", "");//连接器编号
+						job.getJobDataMap().put("connectorInstanceId", "");//连接器实例编号
+						job.getJobDataMap().put("connectorInstanceName", "");//连接器实例名称
+
 
 						scheduler.scheduleJob(job, trigger);
 
@@ -1203,15 +1224,25 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 				}
 				// 如果是复杂的定时任务则创建CronTrigger
 				else if (((FormalExpression) timerEventDefinition.getTimeCycle()) != null && ((FormalExpression) timerEventDefinition.getTimeDate()) == null) {
-					trigger = (CronTrigger) QuartzUtil.createCronTrigger(id, "schedulestart", ((FormalExpression) timerEventDefinition.getTimeCycle()).getBody());
+					trigger = (CronTrigger) QuartzUtil.createCronTrigger(GuidUtil.CreateGuid(), id, ((FormalExpression) timerEventDefinition.getTimeCycle()).getBody());
 
 					Scheduler scheduler = null;
 					try {
 						scheduler = schedulerFactory.getScheduler();
 
-						job.getJobDataMap().put("processUniqueKey", id);
-						job.getJobDataMap().put("processid", SectionBpmnElement.process.getId());
-						job.getJobDataMap().put("processName", SectionBpmnElement.process.getName());
+						job.getJobDataMap().put("tokenId", "");//令牌
+						job.getJobDataMap().put("transientVariableId", "");//不管
+						job.getJobDataMap().put("processInstanceId", "");//流程实例
+						job.getJobDataMap().put("nodeId", nodeId);//节点编号
+						job.getJobDataMap().put("nodeName", nodeName);//节点名称
+						job.getJobDataMap().put("processUniqueKey", id);//流程key
+						job.getJobDataMap().put("processid", process.getId());//流程编号
+						job.getJobDataMap().put("processName", process.getName());//流程名称
+						job.getJobDataMap().put("bizKey", "");//业务关联值
+						job.getJobDataMap().put("jobType", "automateTask");//流程类型
+						job.getJobDataMap().put("connectorId", "");//连接器编号
+						job.getJobDataMap().put("connectorInstanceId", "");//连接器实例编号
+						job.getJobDataMap().put("connectorInstanceName", "");//连接器实例名称
 
 						scheduler.scheduleJob(job, trigger);
 

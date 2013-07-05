@@ -8,19 +8,37 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.ICellModifier;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -29,6 +47,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -47,30 +66,20 @@ import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.QuartzConfig;
 import com.founder.fix.fixflow.designer.util.FixFlowConfigUtil;
 import com.founder.fix.fixflow.designer.util.QuartzUtil;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.core.databinding.beans.PojoObservables;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
-import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.list.WritableList;
 
 public class JobConfigDialog extends TitleAreaDialog {
 	private DataBindingContext m_bindingContext;
 	private Table table;
 	private TableViewer tableViewer;
 	private List<JobTo> jobTos;
-	private List<JobTo> overtimejobTos;
+	private List<JobDetail> jobDetails;
 	private Button stopButton;
 	private Button continueButton;
 	private Button deleteButton;
 	private SchedulerFactory schedulerFactory;
 	private Scheduler scheduler;
-	private Table table_1;
-	private TableViewer tableViewer_1;
-	private Button overStopButton;
-	private Button overContinueButton;
-	private Button overDeleteButton;
+	private Combo combo;
+	private TimeTaskFilter filter;
 
 	/**构造方法
 	 * Create the dialog.
@@ -90,14 +99,14 @@ public class JobConfigDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		setTitle("定时任务管理");
+		setTitle("任务管理");
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		Composite composite = new Composite(container, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(2, false);
+		GridLayout gl_composite = new GridLayout(3, false);
 		gl_composite.verticalSpacing = 10;
 		gl_composite.marginRight = 25;
 		gl_composite.marginLeft = 25;
@@ -107,14 +116,82 @@ public class JobConfigDialog extends TitleAreaDialog {
 		composite.setLayout(gl_composite);
 		
 		Label lblNewLabel = new Label(composite, SWT.NONE);
-		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		lblNewLabel.setText("定时任务全局管理");
+		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		lblNewLabel.setText("全局任务管理");
+		
+		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
+		lblNewLabel_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblNewLabel_1.setText("按流程名称查询任务");
+		
+		combo = new Combo(composite, SWT.NONE);
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		if (combo.getItemCount() >= 0) {
+			combo.select(0);
+		}
+
+		combo.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				String oldValue = combo.getText().trim();
+				// 读取表格中的数据库ID
+				List<JobTo> jobTos = (List<JobTo>) tableViewer.getInput();
+				if (jobTos != null && jobTos.size() > 0) {
+					combo.setItems(new String[0]);
+					combo.add("");
+					for (Iterator iterator = jobTos.iterator(); iterator.hasNext();) {
+						JobTo jobTo = (JobTo) iterator.next();
+						combo.add(jobTo.getProcessName());
+					}
+				}
+				if (oldValue != null) {
+					combo.setText(oldValue);
+				}
+			}
+		});
+		
+		combo.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filter.setSearchText(combo.getText());
+				tableViewer.refresh();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+//				e.doit = false;
+			}
+		});
+		
+		combo.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				filter.setSearchText(combo.getText());
+				tableViewer.refresh();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
+		
+		new Label(composite, SWT.NONE);
 		
 		tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		filter = new TimeTaskFilter();
+		tableViewer.addFilter(filter);
 		table = tableViewer.getTable();
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.addListener(SWT.MeasureItem, new Listener() {
 			public void handleEvent(Event event) {
 				// 设置行高度
@@ -126,35 +203,80 @@ public class JobConfigDialog extends TitleAreaDialog {
 			
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				// TODO Auto-generated method stub
-				tableViewer.refresh();
 				updateButtons();
+			}
+		});
+		
+		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
+			
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+				JobTo jobTo = (JobTo) selection.getFirstElement();
+				TriggerConfigDialog triggerConfigDialog = new TriggerConfigDialog(getShell(), scheduler, jobTo);
+				triggerConfigDialog.open();
 			}
 		});
 		
 		TableColumn tblclmnNewColumn = new TableColumn(table, SWT.NONE);
 		tblclmnNewColumn.setWidth(100);
-		tblclmnNewColumn.setText("流程名称");
+		tblclmnNewColumn.setText("名称");
 		
 		TableColumn tableColumn_3 = new TableColumn(table, SWT.NONE);
 		tableColumn_3.setWidth(100);
-		tableColumn_3.setText("流程唯一编号");
+		tableColumn_3.setText("组名");
+		
+		TableColumn tblclmnNewColumn_1 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_1.setWidth(100);
+		tblclmnNewColumn_1.setText("流程名称");
+		
+		TableColumn tblclmnNewColumn_2 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_2.setWidth(100);
+		tblclmnNewColumn_2.setText("流程编号");
+		
+		TableColumn tblclmnNewColumn_3 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_3.setWidth(100);
+		tblclmnNewColumn_3.setText("流程key");
+		
+		TableColumn tblclmnNewColumn_4 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_4.setWidth(100);
+		tblclmnNewColumn_4.setText("节点");
+		
+		TableColumn tblclmnNewColumn_9 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_9.setWidth(100);
+		tblclmnNewColumn_9.setText("节点名称");
+		
+		TableColumn tblclmnNewColumn_5 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_5.setWidth(100);
+		tblclmnNewColumn_5.setText("流程实例");
 		
 		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
-		tableColumn.setText("流程编号");
 		tableColumn.setWidth(100);
-		
-		TableColumn tableColumn_4 = new TableColumn(table, SWT.NONE);
-		tableColumn_4.setText("下次执行时间");
-		tableColumn_4.setWidth(100);
+		tableColumn.setText("流程类型");
 		
 		TableColumn tableColumn_1 = new TableColumn(table, SWT.NONE);
 		tableColumn_1.setWidth(100);
-		tableColumn_1.setText("表达式");
+		tableColumn_1.setText("业务关联值");
 		
 		TableColumn tableColumn_2 = new TableColumn(table, SWT.NONE);
 		tableColumn_2.setWidth(100);
-		tableColumn_2.setText("当前状态");
+		tableColumn_2.setText("令牌");
+		
+		TableColumn tableColumn_5 = new TableColumn(table, SWT.NONE);
+		tableColumn_5.setWidth(100);
+		tableColumn_5.setText("当前状态");
+		
+		TableColumn tblclmnNewColumn_6 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_6.setWidth(100);
+		tblclmnNewColumn_6.setText("连接器编号");
+		
+		TableColumn tblclmnNewColumn_7 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_7.setWidth(100);
+		tblclmnNewColumn_7.setText("连接器实例编号");
+		
+		TableColumn tblclmnNewColumn_8 = new TableColumn(table, SWT.NONE);
+		tblclmnNewColumn_8.setWidth(100);
+		tblclmnNewColumn_8.setText("连接器实例名称");
 		
 		Composite composite_1 = new Composite(composite, SWT.NONE);
 		GridLayout gl_composite_1 = new GridLayout(1, false);
@@ -171,7 +293,6 @@ public class JobConfigDialog extends TitleAreaDialog {
 			
 			@Override
 			public void handleEvent(Event event) {
-				// TODO Auto-generated method stub
 				if(!tableViewer.getSelection().isEmpty()){
 					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 					JobTo jobTo  = (JobTo) selection.getFirstElement();
@@ -179,7 +300,6 @@ public class JobConfigDialog extends TitleAreaDialog {
 						scheduler.pauseTrigger(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
 						jobTo.setCurrentStatus("暂停");
 					} catch (SchedulerException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -196,7 +316,6 @@ public class JobConfigDialog extends TitleAreaDialog {
 			
 			@Override
 			public void handleEvent(Event event) {
-				// TODO Auto-generated method stub
 				if(!tableViewer.getSelection().isEmpty()){
 					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 					JobTo jobTo  = (JobTo) selection.getFirstElement();
@@ -204,7 +323,6 @@ public class JobConfigDialog extends TitleAreaDialog {
 						scheduler.resumeTrigger(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
 						jobTo.setCurrentStatus("普通");
 					} catch (SchedulerException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -222,15 +340,13 @@ public class JobConfigDialog extends TitleAreaDialog {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void handleEvent(Event event) {
-				// TODO Auto-generated method stub
 				if(!tableViewer.getSelection().isEmpty()){
 					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 					JobTo jobTo  = (JobTo) selection.getFirstElement();
 					try {
-						scheduler.unscheduleJob(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
+						scheduler.deleteJob(jobTo.getJobKey());
 						((List<JobTo>)tableViewer.getInput()).remove(jobTo);
 					} catch (SchedulerException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -239,138 +355,8 @@ public class JobConfigDialog extends TitleAreaDialog {
 				updateButtons();
 			}
 		});
-
-		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
-		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		lblNewLabel_1.setText("超时任务全局管理");
 		
-		tableViewer_1 = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1 = tableViewer_1.getTable();
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
-		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		tableViewer_1.addSelectionChangedListener(new ISelectionChangedListener() {
-			
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				tableViewer_1.refresh();
-				updateButtons();
-			}
-		});
-		
-		TableColumn tblclmnNewColumn_1 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_1.setWidth(100);
-		tblclmnNewColumn_1.setText("流程名称");
-		
-		TableColumn tblclmnNewColumn_2 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_2.setWidth(100);
-		tblclmnNewColumn_2.setText("流程唯一编号");
-		
-		TableColumn tblclmnNewColumn_3 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_3.setWidth(100);
-		tblclmnNewColumn_3.setText("流程编号");
-		
-		TableColumn tblclmnNewColumn_7 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_7.setWidth(100);
-		tblclmnNewColumn_7.setText("节点编号");
-		
-		TableColumn tblclmnNewColumn_8 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_8.setWidth(100);
-		tblclmnNewColumn_8.setText("流程实例号");
-		
-		TableColumn tblclmnNewColumn_9 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_9.setWidth(100);
-		tblclmnNewColumn_9.setText("令牌号");
-		
-		TableColumn tblclmnNewColumn_4 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_4.setWidth(100);
-		tblclmnNewColumn_4.setText("下次执行时间");
-		
-		TableColumn tblclmnNewColumn_5 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_5.setWidth(100);
-		tblclmnNewColumn_5.setText("表达式");
-		
-		TableColumn tblclmnNewColumn_6 = new TableColumn(table_1, SWT.NONE);
-		tblclmnNewColumn_6.setWidth(100);
-		tblclmnNewColumn_6.setText("当前状态");
-		
-		Composite composite_2 = new Composite(composite, SWT.NONE);
-		composite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridLayout gl_composite_2 = new GridLayout(1, false);
-		gl_composite_2.horizontalSpacing = 0;
-		gl_composite_2.marginHeight = 0;
-		gl_composite_2.marginWidth = 0;
-		gl_composite_2.verticalSpacing = 1;
-		composite_2.setLayout(gl_composite_2);
-		
-		overStopButton = new Button(composite_2, SWT.NONE);
-		overStopButton.setText("暂停");
-		overStopButton.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				if(!tableViewer_1.getSelection().isEmpty()){
-					IStructuredSelection selection = (IStructuredSelection) tableViewer_1.getSelection();
-					JobTo jobTo  = (JobTo) selection.getFirstElement();
-					try {
-						scheduler.pauseTrigger(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
-						jobTo.setCurrentStatus("暂停");
-					} catch (SchedulerException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				tableViewer_1.refresh();
-				updateButtons();
-			}
-		});
-		
-		overContinueButton = new Button(composite_2, SWT.NONE);
-		overContinueButton.setText("继续");
-		overContinueButton.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				if(!tableViewer_1.getSelection().isEmpty()){
-					IStructuredSelection selection = (IStructuredSelection) tableViewer_1.getSelection();
-					JobTo jobTo  = (JobTo) selection.getFirstElement();
-					try {
-						scheduler.resumeTrigger(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
-						jobTo.setCurrentStatus("普通");
-					} catch (SchedulerException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				tableViewer_1.refresh();
-				updateButtons();
-			}
-		});
-		
-		overDeleteButton = new Button(composite_2, SWT.NONE);
-		overDeleteButton.setText("删除");
-		overDeleteButton.addListener(SWT.Selection, new Listener() {
-			
-			@SuppressWarnings("unchecked")
-			@Override
-			public void handleEvent(Event event) {
-				if(!tableViewer_1.getSelection().isEmpty()){
-					IStructuredSelection selection = (IStructuredSelection) tableViewer_1.getSelection();
-					JobTo jobTo  = (JobTo) selection.getFirstElement();
-					try {
-						scheduler.unscheduleJob(scheduler.getTriggersOfJob(jobTo.getJobKey()).get(0).getKey());
-						((List<JobTo>)tableViewer_1.getInput()).remove(jobTo);
-					} catch (SchedulerException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				tableViewer_1.refresh();
-				updateButtons();
-			}
-		});
-		
+		createCellModifier();
 		updateButtons();
 		setMessage("管理定时任务", IMessageProvider.INFORMATION);
 		return area;
@@ -392,7 +378,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(650, 550);
+		return new Point(700, 544);
 	}
 	
 	/**
@@ -400,7 +386,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 	 */
 	public void loadAllJobs() {
 		jobTos = new ArrayList<JobTo>();
-		overtimejobTos = new ArrayList<JobTo>();
+		jobDetails = new ArrayList<JobDetail>();
 		
 		FixFlowConfig fixFlowConfig = FixFlowConfigUtil.getFixFlowConfig();
 		QuartzConfig quartzConfig = FixFlowConfigUtil.getFixFlowConfig().getQuartzConfig();
@@ -422,7 +408,13 @@ public class JobConfigDialog extends TitleAreaDialog {
 			if (FixFlowConfigUtil.getSelectedDataBase().getDbtype().equals(DBType.ORACLE)) {
 				driverDelegateClass = "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";
 			} else {
-				driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
+				if(FixFlowConfigUtil.getSelectedDataBase().getDbtype().equals(DBType.SQLSERVER))
+				{
+					driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
+				}
+				else{
+					driverDelegateClass = "org.quartz.impl.jdbcjobstore.StdJDBCDelegate";
+				}
 			}
 		}else {
 			for (DataBase dataBase : fixFlowConfig.getDataBaseConfig().getDataBase()) {
@@ -469,73 +461,49 @@ public class JobConfigDialog extends TitleAreaDialog {
 	         for (int i = 0; i < jobGroups.size(); i++)
 	         {
 	            String name = (String) jobGroups.get(i);
-	            if(name.equals("schedulestart")) {
-	            	Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(name));
-		            Iterator<JobKey> iter = keys.iterator();
-		            while (iter.hasNext())
-		            {
-		               JobKey jobKey = (JobKey)iter.next();
-		               JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-		               JobDataMap jobDataMap = jobDetail.getJobDataMap();
-		               Trigger trigger = scheduler.getTriggersOfJob(jobKey).get(0);
-		               
-		               Date date = trigger.getNextFireTime();
-		               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		               
-		               JobTo jobTo = new JobTo();
-		               jobTo.setProcessName(jobDataMap.getString("processName"));
-		               jobTo.setProcessUniqueKey(jobDataMap.getString("processUniqueKey"));
-		               jobTo.setProcessId(jobDataMap.getString("processid"));
-		               if(trigger instanceof SimpleTrigger) {
-		            	   
-		            	   jobTo.setQuartzExpression(simpleDateFormat.format(jobDataMap.get("simpleExp")));
-		               }
-		               if(trigger instanceof CronTrigger) {
-		            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
-		               }
-		               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
-		              
-		               jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
-		               jobTo.setJobKey(jobKey);
-		               
-		               jobTos.add(jobTo);
-		            }
-	            }else{
-	            	Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(name));
-		            Iterator<JobKey> iter = keys.iterator();
-		            while (iter.hasNext())
-		            {
-		               JobKey jobKey = (JobKey)iter.next();
-		               JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-		               JobDataMap jobDataMap = jobDetail.getJobDataMap();
-		               Trigger trigger = scheduler.getTriggersOfJob(jobKey).get(0);
-		               
-		               Date date = trigger.getNextFireTime();
-		               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		               
-		               JobTo jobTo = new JobTo();
-		               jobTo.setProcessName(jobDataMap.getString("processName"));
-		               jobTo.setProcessUniqueKey(jobDataMap.getString("processId"));
-		               jobTo.setProcessId(jobDataMap.getString("processKey"));
-		               jobTo.setNodeId(jobDataMap.getString("nodeId"));
-		               jobTo.setProcessInstanceId(jobDataMap.getString("processInstanceId"));
-		               jobTo.setTokenId(jobDataMap.getString("tokenId"));
-		               if(trigger instanceof SimpleTrigger) {
-		            	   
-		            	   jobTo.setQuartzExpression(simpleDateFormat.format( ((SimpleTrigger)trigger).getStartTime()));
-		               }
-		               if(trigger instanceof CronTrigger) {
-		            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
-		               }
-		               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
-		              
-		               if(date!=null) {
-		            	   jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
-		               }
-		               jobTo.setJobKey(jobKey);
-		               
-		               overtimejobTos.add(jobTo);
-		            }
+	            Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(name));
+	            Iterator<JobKey> iter = keys.iterator();
+	            while (iter.hasNext())
+	            {
+	               JobKey jobKey = (JobKey)iter.next();
+	               JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+	               jobDetails.add(jobDetail);
+	               
+	               
+	               JobDataMap jobDataMap = jobDetail.getJobDataMap();
+	               Trigger trigger = scheduler.getTriggersOfJob(jobKey).get(0);
+	               
+	               Date date = trigger.getNextFireTime();
+	               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	               
+	               JobTo jobTo = new JobTo();
+	               jobTo.setJobName(jobKey.getName());
+	               jobTo.setJobGroupName(jobKey.getGroup());
+	               jobTo.setProcessName(jobDataMap.getString("processName"));
+	               jobTo.setProcessUniqueKey(jobDataMap.getString("processUniqueKey"));
+	               jobTo.setProcessId(jobDataMap.getString("processid"));
+	               jobTo.setNodeId(jobDataMap.getString("nodeId"));
+	               jobTo.setNodeName(jobDataMap.getString("nodeName"));
+	               jobTo.setBizKey(jobDataMap.getString("bizKey"));
+	               jobTo.setProcessInstanceId(jobDataMap.getString("processInstanceId"));
+	               jobTo.setJobType(jobDataMap.getString("jobType"));
+	               jobTo.setTokenId(jobDataMap.getString("tokenId"));
+	               jobTo.setConnectorId(jobDataMap.getString("connectorId"));
+	               jobTo.setConnectorInstanceId(jobDataMap.getString("connectorInstanceId"));
+	               jobTo.setConnectorInstanceName(jobDataMap.getString("connectorInstanceName"));
+	               if(trigger instanceof SimpleTrigger) {
+	            	   
+	            	   jobTo.setQuartzExpression(simpleDateFormat.format(jobDataMap.get("simpleExp")));
+	               }
+	               if(trigger instanceof CronTrigger) {
+	            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
+	               }
+	               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
+	              
+	               jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
+	               jobTo.setJobKey(jobKey);
+	               
+	               jobTos.add(jobTo);
 	            }
 	         }
 	      }
@@ -553,11 +521,6 @@ public class JobConfigDialog extends TitleAreaDialog {
 		stopButton.setEnabled(selectedPage != null);
 		continueButton.setEnabled(selectedPage != null);
 		deleteButton.setEnabled(selectedPage != null);
-		
-		Object selectedPage1 = ((IStructuredSelection)tableViewer_1.getSelection()).getFirstElement();
-		overStopButton.setEnabled(selectedPage1 != null);
-		overContinueButton.setEnabled(selectedPage1 != null);
-		overDeleteButton.setEnabled(selectedPage1 != null);
 	}
 	
 	/**
@@ -595,24 +558,143 @@ public class JobConfigDialog extends TitleAreaDialog {
 		}
 	}
 	
+	private void createCellModifier() {
+		final CellEditor[] cellEditor = new CellEditor[table.getColumnCount()];
+		cellEditor[0] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[1] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[2] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[3] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[4] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[5] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[6] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[7] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[8] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[9] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[10] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[11] = null;
+		cellEditor[12] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[13] = new TextCellEditor(table, SWT.READ_ONLY);
+		cellEditor[14] = new TextCellEditor(table, SWT.READ_ONLY);
+
+		tableViewer.setCellEditors(cellEditor);
+		tableViewer.setColumnProperties(new String[]{"JOBTOJOBNAME","JOBTOJOBGROUPNAME","JOBTOPROCESSNAME","JOBTOPROCESSID","JOBTOPROCESSKEY","JOBTONODEID","JOBTONODENAME","JOBTOPROCESSINSTANCEID","JOBTOJOBTYPE","JOBTOBIZKEY","JOBTOTOKENID","JOBTOCURRENTSTATUS","JOBTOCONNECTORID","JOBTOCONNECTORINSTANCEID","JOBTOCONNECTORINSTANCENAME"});
+		tableViewer.setCellModifier(new ICellModifier() {
+
+			public void modify(Object element, String property, Object value) {
+
+				TableItem tableitem = (TableItem) element;
+				JobTo jobTo = (JobTo) tableitem.getData();
+				if (property.equals("JOBTOJOBNAME")) {
+					jobTo.setJobName(jobTo.getJobName());
+				}
+				if (property.equals("JOBTOJOBGROUPNAME")) {
+					jobTo.setJobGroupName(jobTo.getJobGroupName());
+				}
+				if (property.equals("JOBTOPROCESSNAME")) {
+					jobTo.setProcessName(jobTo.getProcessName());
+				}
+				if (property.equals("JOBTOPROCESSID")) {
+					jobTo.setProcessId(jobTo.getProcessId());
+				}
+				if (property.equals("JOBTOPROCESSKEY")) {
+					jobTo.setProcessUniqueKey(jobTo.getProcessUniqueKey());
+				}
+				if (property.equals("JOBTONODEID")) {
+					jobTo.setNodeId(jobTo.getNodeId());
+				}
+				if (property.equals("JOBTONODENAME")) {
+					jobTo.setNodeName(jobTo.getNodeName());
+				}
+				if (property.equals("JOBTOPROCESSINSTANCEID")) {
+					jobTo.setProcessInstanceId(jobTo.getProcessInstanceId());
+				}
+				if (property.equals("JOBTOJOBTYPE")) {
+					jobTo.setJobType(jobTo.getJobType());
+				}
+				if (property.equals("JOBTOBIZKEY")) {
+					jobTo.setBizKey(jobTo.getBizKey());
+				}
+				if (property.equals("JOBTOTOKENID")) {
+					jobTo.setTokenId(jobTo.getTokenId());
+				}
+				if (property.equals("JOBTOCONNECTORID")) {
+					jobTo.setConnectorId(jobTo.getConnectorId());
+				}
+				if (property.equals("JOBTOCONNECTORINSTANCEID")) {
+					jobTo.setConnectorInstanceId(jobTo.getConnectorInstanceId());
+				}
+				if (property.equals("JOBTOCONNECTORINSTANCENAME")) {
+					jobTo.setConnectorInstanceName(jobTo.getConnectorInstanceName());
+				}
+				tableViewer.refresh();
+				updateButtons();
+			}
+
+			public Object getValue(Object element, String property) {
+
+				JobTo jobTo = (JobTo) element;
+
+				if (property.equals("JOBTOJOBNAME")) {
+					return jobTo.getJobName();
+				}
+				if (property.equals("JOBTOJOBGROUPNAME")) {
+					return jobTo.getJobGroupName();
+				}
+				if (property.equals("JOBTOPROCESSNAME")) {
+					return jobTo.getProcessName();
+				}
+				if (property.equals("JOBTOPROCESSID")) {
+					return jobTo.getProcessId();
+				}
+				if (property.equals("JOBTOPROCESSKEY")) {
+					return jobTo.getProcessUniqueKey();
+				}
+				if (property.equals("JOBTONODEID")) {
+					return jobTo.getNodeId();
+				}
+				if (property.equals("JOBTONODENAME")) {
+					return jobTo.getNodeName();
+				}
+				if (property.equals("JOBTOPROCESSINSTANCEID")) {
+					return jobTo.getProcessInstanceId();
+				}
+				if (property.equals("JOBTOJOBTYPE")) {
+					return jobTo.getJobType();
+				}
+				if (property.equals("JOBTOBIZKEY")) {
+					return jobTo.getBizKey();
+				}
+				if (property.equals("JOBTOTOKENID")) {
+					return jobTo.getTokenId();
+				}
+				if (property.equals("JOBTOCONNECTORID")) {
+					return jobTo.getConnectorId();
+				}
+				if (property.equals("JOBTOCONNECTORINSTANCEID")) {
+					return jobTo.getConnectorInstanceId();
+				}
+				if (property.equals("JOBTOCONNECTORINSTANCENAME")) {
+					return jobTo.getConnectorInstanceName();
+				}	
+				return null;
+			}
+
+			public boolean canModify(Object element, String property) {
+
+				return element instanceof JobTo;
+			}
+		});
+	}
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
 		ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
-		IObservableMap[] observeMaps = PojoObservables.observeMaps(listContentProvider.getKnownElements(), JobTo.class, new String[]{"processName", "processUniqueKey", "processId", "nextFireTime", "quartzExpression", "currentStatus"});
+		IObservableMap[] observeMaps = PojoObservables.observeMaps(listContentProvider.getKnownElements(), JobTo.class, new String[]{"jobName", "jobGroupName", "processName", "processId", "processUniqueKey", "nodeId", "nodeName", "processInstanceId", "jobType", "bizKey", "tokenId", "currentStatus", "connectorId", "connectorInstanceId", "connectorInstanceName"});
 		tableViewer.setLabelProvider(new ObservableMapLabelProvider(observeMaps));
 		tableViewer.setContentProvider(listContentProvider);
 		//
-		WritableList writableList = new WritableList(jobTos, JobTo.class);
-		tableViewer.setInput(writableList);
-		//
-		ObservableListContentProvider listContentProvider_1 = new ObservableListContentProvider();
-		IObservableMap[] observeMaps_1 = PojoObservables.observeMaps(listContentProvider_1.getKnownElements(), JobTo.class, new String[]{"processName", "processUniqueKey", "processId", "nodeId", "processInstanceId", "tokenId", "nextFireTime", "quartzExpression", "currentStatus"});
-		tableViewer_1.setLabelProvider(new ObservableMapLabelProvider(observeMaps_1));
-		tableViewer_1.setContentProvider(listContentProvider_1);
-		//
-		IObservableList selfList = org.eclipse.core.databinding.property.Properties.selfList(JobTo.class).observe(overtimejobTos);
-		tableViewer_1.setInput(selfList);
+		IObservableList selfList = org.eclipse.core.databinding.property.Properties.selfList(JobTo.class).observe(jobTos);
+		tableViewer.setInput(selfList);
 		//
 		return bindingContext;
 	}
