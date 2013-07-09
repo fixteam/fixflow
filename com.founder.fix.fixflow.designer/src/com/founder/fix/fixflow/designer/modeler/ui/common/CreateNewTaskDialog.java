@@ -152,7 +152,14 @@ public class CreateNewTaskDialog extends TitleAreaDialog {
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 		if (treeViewer != null) {
-			idtext.setText("HandleCommand_" + (treeViewer.getTree().getItemCount() + 1));
+			String str = "HandleCommand_";
+			int count = (treeViewer.getTree().getItemCount() + 1);
+			for(int i=0;i<((List<TaskCommand>) treeViewer.getInput()).size();i++){
+				if (((List<TaskCommand>) treeViewer.getInput()).get(i).getId().equals(str+count) && !idtext.getText().equals(str+count)) {
+					count++;
+				}
+			}
+			idtext.setText(str+count);
 		}
 
 		Composite composite_1 = new Composite(composite, SWT.NONE);
