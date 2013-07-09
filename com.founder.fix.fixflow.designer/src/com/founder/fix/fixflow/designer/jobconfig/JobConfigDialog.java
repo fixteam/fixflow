@@ -80,6 +80,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 	private Scheduler scheduler;
 	private Combo combo;
 	private TimeTaskFilter filter;
+	private Button editbutton;
 
 	/**构造方法
 	 * Create the dialog.
@@ -214,6 +215,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 				IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 				JobTo jobTo = (JobTo) selection.getFirstElement();
 				TriggerConfigDialog triggerConfigDialog = new TriggerConfigDialog(getShell(), scheduler, jobTo);
+				triggerConfigDialog.setBlockOnOpen(true);
 				triggerConfigDialog.open();
 			}
 		});
@@ -306,6 +308,20 @@ public class JobConfigDialog extends TitleAreaDialog {
 				
 				tableViewer.refresh();
 				updateButtons();
+			}
+		});
+		
+		editbutton = new Button(composite_1, SWT.NONE);
+		editbutton.setText("编辑");
+		editbutton.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+				JobTo jobTo = (JobTo) selection.getFirstElement();
+				TriggerConfigDialog triggerConfigDialog = new TriggerConfigDialog(getShell(), scheduler, jobTo);
+				triggerConfigDialog.setBlockOnOpen(true);
+				triggerConfigDialog.open();
 			}
 		});
 		
