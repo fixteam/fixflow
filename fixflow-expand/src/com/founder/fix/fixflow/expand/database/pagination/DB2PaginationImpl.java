@@ -48,15 +48,15 @@ public class DB2PaginationImpl implements Pagination{
 	public String getLocalismSql(String localismKey, String localismValue) {
 
 		if(localismKey.equals("processperformance")){
-			return "COALESCE(end_time-start_time)";
+			return "COALESCE(TIMESTAMPDIFF(8,end_time-start_time),0)";
 		}
 		
 		if(localismKey.equals("datediffconvert")) {
-			return "avg(end_time-create_time)";
+			return "avg(TIMESTAMPDIFF(8,end_time-create_time))";
 		}
 		
 		if(localismKey.equals("datediffconvertorg")) {
-			return "avg(x.end_time-x.create_time)";
+			return "avg(TIMESTAMPDIFF(8,x.end_time-x.create_time))";
 		}
 		
 		return null;
