@@ -1140,7 +1140,7 @@ public class ProcessInstancePersistence {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(
 				"select ASSIGNEE, round("+pagination.getLocalismSql("datediffconvert", null)+",2) as AVGTIME FROM FIXFLOW_RUN_TAKSINSTANECE " +
-				" where end_time is not null " +
+				" where end_time is not null and TASKTYPE='FIXFLOWTASK'" +
 				" and create_time>=? and create_time<=? " +
 				" and assignee in(");
 		

@@ -44,15 +44,15 @@ public class MySqlPaginationImpl implements Pagination {
 
 	public String getLocalismSql(String localismKey, String localismValue) {
 		if(localismKey.equals("processperformance")){
-			return "ISNULL(TIMEDIFF(start_time,end_time))";
+			return "ISNULL(TIMESTAMPDIFF(HOUR,start_time,end_time))";
 		}
 		
 		if(localismKey.equals("datediffconvert")) {
-			return "avg(TIMEDIFF(create_time,end_time))";
+			return "avg(TIMESTAMPDIFF(HOUR,create_time,end_time))";
 		}
 		
 		if(localismKey.equals("datediffconvertorg")) {
-			return "avg(TIMEDIFF(x.create_time,x.end_time))";
+			return "avg(TIMESTAMPDIFF(HOUR,x.create_time,x.end_time))";
 		}
 		
 		return null;
