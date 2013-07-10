@@ -183,6 +183,7 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 	private Button btnCheckButton_1;
 	private Button autoclaimbtnRadioButton;
 	private Button manualclaimRadioButton;
+	private Combo orgcombo;
 
 	/**
 	 * Create the dialog.
@@ -554,11 +555,64 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		Composite orgconfigcomposite = new Composite(tabFolder, SWT.NONE);
 		tabItem.setControl(orgconfigcomposite);
 		orgconfigcomposite.setLayout(new GridLayout(2, false));
+		
+		Label label_9 = new Label(orgconfigcomposite, SWT.NONE);
+		label_9.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		label_9.setText("使用数据库");
 
 		Composite composite_4 = new Composite(orgconfigcomposite, SWT.NONE);
 		composite_4.setLayout(new GridLayout(2, false));
 		composite_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-
+		
+		orgcombo = new Combo(composite_4, SWT.NONE);
+		GridData gd_orgcombo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1);
+		gd_orgcombo.widthHint = 200;
+		orgcombo.setLayoutData(gd_orgcombo);
+		
+		if (orgcombo.getItemCount() >= 0) {
+			orgcombo.select(0);
+		}
+		
+		orgcombo.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				String oldValue = orgcombo.getText().trim();
+				//读取表格中的数据库ID
+				List<DataBase> databases = (List<DataBase>) tableViewer.getInput();
+				if(databases != null && databases.size() > 0) {
+					orgcombo.setItems(new String[0]);
+					orgcombo.add("");
+					for (Iterator iterator = databases.iterator(); iterator
+							.hasNext();) {
+						DataBase database = (DataBase) iterator.next();
+						orgcombo.add(database.getId());
+					}
+				}
+				if(oldValue != null) {
+					orgcombo.setText(oldValue);
+				}
+			}
+		});
+		orgcombo.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				e.doit = false;
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				e.doit = false;
+			}
+		});
+		
 		Label lblNewLabel = new Label(composite_4, SWT.NONE);
 		lblNewLabel.setText("所有用户");
 
@@ -801,6 +855,7 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 				
 				autoclaimbtnRadioButton = new Button(group, SWT.RADIO);
 				autoclaimbtnRadioButton.setText("自动领取");
+				new Label(group, SWT.NONE);
 				autoclaimbtnRadioButton.addSelectionListener(new SelectionListener() {
 					
 					@Override
@@ -2146,6 +2201,10 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		if (combo_3.getItemCount() >= 0) {
 			combo_3.select(0);
 		}
+		
+		if (orgcombo.getItemCount() >= 0) {
+			orgcombo.select(0);
+		}
 
 		createCellModifier1();
 
@@ -3373,6 +3432,10 @@ public class FixFlowConfigDialog extends TitleAreaDialog {
 		//
 		IObservableList fixFlowThreadPoolObserveList = EMFProperties.list(FeaturePath.fromList(Literals.FIX_FLOW_CONFIG__FIX_THREAD_POOL_EXECUTOR_CONFIG, Literals.FIX_THREAD_POOL_EXECUTOR_CONFIG__FIX_THREAD_POOL_EXECUTOR)).observe(fixFlowConfig);
 		threadPoolTableViewer.setInput(fixFlowThreadPoolObserveList);
+		//
+		IObservableValue orgcomboObserveTextObserveWidget = SWTObservables.observeText(orgcombo);
+		IObservableValue fixFlowConfigDataBaseIdObserveValue_1 = EMFProperties.value(FeaturePath.fromList(Literals.FIX_FLOW_CONFIG__DESIGNER_ORG_CONFIG, Literals.DESIGNER_ORG_CONFIG__DATA_BASE_ID)).observe(fixFlowConfig);
+		bindingContext.bindValue(orgcomboObserveTextObserveWidget, fixFlowConfigDataBaseIdObserveValue_1, null, null);
 		//
 		return bindingContext;
 	}
