@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.core;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 
@@ -33,6 +34,13 @@ public interface ScheduleService extends ProcessService{
 	 * 定时任务调度器关闭
 	 */
 	void schedulerShutdown();
+	
+	/**
+	 * 执行定时连接器
+	 * @param jobExecutionContext job内容
+	 */
+	void executeConnectorTimeJob(JobExecutionContext jobExecutionContext);
+
 	
 	/**
 	 * 获取默认的线程池

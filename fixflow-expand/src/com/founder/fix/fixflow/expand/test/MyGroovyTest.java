@@ -1,0 +1,21 @@
+package com.founder.fix.fixflow.expand.test;
+
+public class MyGroovyTest {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		MyGroovy myGroovy=new MyGroovy();
+		
+		
+		
+		
+		
+
+	}
+
+}

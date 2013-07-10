@@ -43,7 +43,12 @@ public interface RuntimeService extends ProcessService{
 	 */
 	ProcessInstance messageStartProcessInstance(MessageStartProcessInstanceCommand messageStartProcessInstanceCommand);
 	
-	
+	/**
+	 * 获取流程实例对象
+	 * @param processInstanceId 流程实例编号
+	 * @return 流程实例对象
+	 */
+	ProcessInstance getProcessInstance(String processInstanceId);
 	
 	
 	@Deprecated

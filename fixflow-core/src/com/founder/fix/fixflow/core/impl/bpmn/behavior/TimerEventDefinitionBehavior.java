@@ -19,6 +19,7 @@ import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
+import com.founder.fix.fixflow.core.impl.job.ConnectorTimeJob;
 import com.founder.fix.fixflow.core.impl.job.TokenTimeOutJob;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
@@ -72,7 +73,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		
 		TokenEntity tokenEntity=executionContext.getToken();
 		String processInstanceId=tokenEntity.getProcessInstance().getId();
-		VariableTransferEntity variableTransferEntity = new VariableTransferEntity();
+		/*VariableTransferEntity variableTransferEntity = new VariableTransferEntity();
 		Map<String, Object> transientVariableMap=tokenEntity.getProcessInstance().getContextInstance().getTransientVariableMap();
 		String guidString=GuidUtil.CreateGuid();
 		variableTransferEntity.addVariable(guidString, transientVariableMap);
@@ -83,7 +84,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		}
 	
 		Context.getCommandContext().getVariableManager().saveVariable(variableTransferEntity);
-		
+		*/
 		
 		
 		Scheduler scheduler=Context.getProcessEngineConfiguration().getScheduler();
@@ -95,16 +96,21 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 		
 		
 		
+		
+		
+		
+		
 		JobDetail job = QuartzUtil.createJobDetail(
-				TokenTimeOutJob.class, tokenEntity.getId(), "FixTimeOutTask_"+tokenEntity.getId());
+				TokenTimeOutJob.class,  GuidUtil.CreateGuid()+"_"+tokenEntity.getId(), tokenEntity.getId()+"_"+processInstanceId+"_"+tokenEntity.getProcessInstance().getProcessDefinitionId());
 		job.getJobDataMap().put("tokenId", tokenEntity.getId());
-		job.getJobDataMap().put("transientVariableId", guidString);
+		//job.getJobDataMap().put("transientVariableId", guidString);
 		job.getJobDataMap().put("processInstanceId", processInstanceId);
 		job.getJobDataMap().put("nodeId", event.getId());
 		job.getJobDataMap().put("processKey", tokenEntity.getProcessInstance().getProcessDefinitionKey());
 		job.getJobDataMap().put("processId", tokenEntity.getProcessInstance().getProcessDefinitionId());
 		job.getJobDataMap().put("processName", tokenEntity.getProcessInstance().getProcessDefinition().getName());
 		job.getJobDataMap().put("bizKey", tokenEntity.getProcessInstance().getBizKey());
+		job.getJobDataMap().put("jobType", "fixTimeOutTask");
 		
 		
 		if(date==null){

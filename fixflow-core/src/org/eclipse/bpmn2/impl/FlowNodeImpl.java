@@ -344,6 +344,7 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 		// 发生节点离开事件
 		fireEvent(BaseElementEvent.EVENTTYPE_NODE_LEAVE, executionContext);
 		
+		
 		//离开时数据清理。
 		leaveClearData(executionContext);
 		

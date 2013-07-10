@@ -474,6 +474,18 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 		return taskInstancesTemp;
 	}
+	
+	public TaskInstanceEntity getTaskInstanceEntitys(String taskId) {
+
+		
+		for (TaskInstanceEntity taskInstance : taskInstances) {
+			if (taskInstance.getId().equals(taskId)) {
+				return taskInstance;
+			}
+		}
+
+		return null;
+	}
 
 	public List<TaskInstanceEntity> getTaskInstanceEntitys() {
 		return taskInstances;

@@ -28,6 +28,8 @@ public interface TaskMgmtInstance {
 	void resume(Token token);
 
 	List<TaskInstanceEntity> getTaskInstanceEntitys(Token token);
-
+	
+	TaskInstanceEntity getTaskInstanceEntitys(String taskId);
+	
 	List<TaskInstanceEntity> getTaskInstanceEntitys();
 }

@@ -16,7 +16,6 @@ import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.RootElement;
 import org.eclipse.bpmn2.SubProcess;
-import org.eclipse.bpmn2.Task;
 import org.eclipse.bpmn2.di.BpmnDiPackage;
 import org.eclipse.bpmn2.impl.BaseElementImpl;
 import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
@@ -325,6 +324,7 @@ public class ProcessDefinitionPersistence {
 
 	}
 
+	@SuppressWarnings("unused")
 	private ProcessDefinitionBehavior getProcessDefinitionNew(String deploymentId, String resourceName,
 			String processKey) {
 
@@ -506,6 +506,7 @@ public class ProcessDefinitionPersistence {
 					"connectorInstanceName");
 			String errorHandlingString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "errorHandling");
 			String errorCodeString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "errorCode");
+			String isTimeExecute = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isTimeExecute");
 			String documentationString = EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil
 					.getExtensionElementsInEntry(entry, "documentation").get(0));
 			
@@ -513,6 +514,13 @@ public class ProcessDefinitionPersistence {
 			List<FeatureMap.Entry> skipExpressionObj=EMFExtensionUtil.getExtensionElementsInEntry(entry, "skipComment");
 			if(skipExpressionObj.size()>0){
 				skipExpression=EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil.getExtensionElementsInEntry(skipExpressionObj.get(0), "expression").get(0));
+				//skipExpression=EMFExtensionUtil.getExtensionElementValue(skipExpressionObj.get(0));
+			}
+			
+			String timeExpression=null;
+			List<FeatureMap.Entry> timeExpressionObj=EMFExtensionUtil.getExtensionElementsInEntry(entry, "timeExpression");
+			if(timeExpressionObj.size()>0){
+				timeExpression=EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil.getExtensionElementsInEntry(timeExpressionObj.get(0), "expression").get(0));
 				//skipExpression=EMFExtensionUtil.getExtensionElementValue(skipExpressionObj.get(0));
 			}
 			
@@ -528,6 +536,15 @@ public class ProcessDefinitionPersistence {
 			connectorDefinition.setEventType(eventTypeString);
 			connectorDefinition.setPackageName(packageNamesString);
 			connectorDefinition.setSkipExpression(skipExpression);
+			
+			if(isTimeExecute!=null&&!isTimeExecute.equals("")&&isTimeExecute.equals("true")){
+				connectorDefinition.setTimeExecute(true);
+				connectorDefinition.setTimeExpression(timeExpression);
+			}
+			
+			
+			
+			
 			if (baseElementImpl.getEvents().get(eventTypeString) == null) {
 				BaseElementEventImpl flowNodeEventImpl = new BaseElementEventImpl(eventTypeString);
 				flowNodeEventImpl.addConnector(connectorDefinition);

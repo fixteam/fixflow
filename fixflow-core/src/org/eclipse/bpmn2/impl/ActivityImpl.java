@@ -14,8 +14,11 @@
  */
 package org.eclipse.bpmn2.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.util.List;
 
@@ -48,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
@@ -1158,13 +1162,22 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	 */
 	public void leaveClearData(ExecutionContext executionContext) {
 		TokenEntity tokenEntity = executionContext.getToken();
-
+		
 		if (this.getBoundaryEventRefs().size() > 0) {
 
 			String parentTokenId = tokenEntity.getParent().getId();
 			try {
+				//Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
+				//scheduler.deleteJob(JobKey.jobKey(tokenEntity.getParent().getId(), "FixTimeOutTask_" + parentTokenId));
+				
 				Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
-				scheduler.deleteJob(JobKey.jobKey(tokenEntity.getParent().getId(), "FixTimeOutTask_" + parentTokenId));
+				Set<JobKey> jobKeys=new HashSet<JobKey>();
+				jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(parentTokenId));
+				if(jobKeys.size()>0){
+					List<JobKey> jobKeysList=new ArrayList<JobKey>();
+					jobKeysList.addAll(jobKeys);
+					scheduler.deleteJobs(jobKeysList);
+				}
 
 			} catch (SchedulerException e) {
 				e.printStackTrace();
@@ -1172,7 +1185,25 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			}
 
 		}
-
+		
+		
+		try {
+			Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
+			Set<JobKey> jobKeys=new HashSet<JobKey>();
+			jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(tokenEntity.getId()));
+			if(jobKeys.size()>0){
+				List<JobKey> jobKeysList=new ArrayList<JobKey>();
+				jobKeysList.addAll(jobKeys);
+				scheduler.deleteJobs(jobKeysList);
+			}
+			
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);
+		}
+		
+	
 	}
 
 	public void boundaryEventExecute() {

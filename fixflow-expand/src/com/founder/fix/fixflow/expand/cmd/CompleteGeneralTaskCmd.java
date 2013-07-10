@@ -90,16 +90,7 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 		
 		processInstanceImpl.getContextInstance().setTransientVariableMap(transientVariables);
 
-		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
-
-		if (taskCommand != null && taskCommand.getExpression() != null) {
-			try {
-				
-				ExpressionMgmt.execute(taskCommand.getExpression(), executionContext);
-			} catch (Exception e) {
-				throw new FixFlowException("用户命令表达式执行异常!", e);
-			}
-		}
+		
 
 		List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
 
@@ -111,6 +102,17 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 				
 				taskInstanceImpl=taskInstance;
 	
+			}
+		}
+		
+		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+		executionContext.setTaskInstance(taskInstanceImpl);
+		if (taskCommand != null && taskCommand.getExpression() != null) {
+			try {
+				
+				ExpressionMgmt.execute(taskCommand.getExpression(), executionContext);
+			} catch (Exception e) {
+				throw new FixFlowException("用户命令表达式执行异常!", e);
 			}
 		}
 		

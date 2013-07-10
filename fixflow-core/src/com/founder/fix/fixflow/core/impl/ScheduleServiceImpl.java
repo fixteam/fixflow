@@ -3,6 +3,7 @@ package com.founder.fix.fixflow.core.impl;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -10,6 +11,7 @@ import org.quartz.SchedulerFactory;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.impl.cmd.ExecuteConnectorTimeJobCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetSchedulerFactoryCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetThreadPoolExecutorCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveJobCmd;
@@ -106,12 +108,11 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 		commandExecutor.execute(new SaveJobCmd(job, isNowPerform));
 	}
 
+	public void executeConnectorTimeJob(JobExecutionContext jobExecutionContext) {
+		
+		commandExecutor.execute(new ExecuteConnectorTimeJobCmd(jobExecutionContext));
+		
+	}
 
-	
-
-	
-	
-	
-	
 	
 }

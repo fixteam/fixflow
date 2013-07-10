@@ -402,6 +402,7 @@ public class UserTaskBehavior extends UserTaskImpl {
 	public void leaveClearData(ExecutionContext executionContext) {
 		// 移除没有完成任务 多用在会签的时候
 		removeTaskInstanceSynchronization(executionContext.getToken());
+		super.leaveClearData(executionContext);
 	}
 
 

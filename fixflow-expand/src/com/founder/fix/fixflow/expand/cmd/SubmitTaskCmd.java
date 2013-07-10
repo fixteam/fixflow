@@ -90,14 +90,7 @@ public class SubmitTaskCmd extends AbstractExpandTaskCmd<SubmitTaskCommand, Void
 			processInstanceImpl.setSubject(processDefinition.getName());
 		}
 
-		if (taskCommand != null && taskCommand.getExpression() != null) {
-			try {
-
-				ExpressionMgmt.execute(taskCommand.getExpression(), executionContext);
-			} catch (Exception e) {
-				throw new FixFlowException("用户命令表达式执行异常!", e);
-			}
-		}
+		
 
 		List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
 
@@ -108,6 +101,15 @@ public class SubmitTaskCmd extends AbstractExpandTaskCmd<SubmitTaskCommand, Void
 
 				taskInstanceImpl = taskInstance;
 
+			}
+		}
+		
+		if (taskCommand != null && taskCommand.getExpression() != null) {
+			try {
+				executionContext.setTaskInstance(taskInstanceImpl);
+				ExpressionMgmt.execute(taskCommand.getExpression(), executionContext);
+			} catch (Exception e) {
+				throw new FixFlowException("用户命令表达式执行异常!", e);
 			}
 		}
 

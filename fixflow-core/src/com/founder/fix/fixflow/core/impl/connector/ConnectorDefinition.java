@@ -24,6 +24,12 @@ public class ConnectorDefinition {
 	protected String errorCode;
 	protected List<ConnectorParameterInputs> connectorParameterInputs;
 	protected List<ConnectorParameterOutputs> connectorParameterOutputs;
+	
+	protected boolean isTimeExecute=false;
+
+	protected String timeExpression;
+
+	
 
 	protected String skipExpression;
 	
@@ -107,6 +113,22 @@ public class ConnectorDefinition {
 
 	public void setSkipExpression(String skipExpression) {
 		this.skipExpression = skipExpression;
+	}
+	
+	public boolean isTimeExecute() {
+		return isTimeExecute;
+	}
+
+	public void setTimeExecute(boolean isTimeExecute) {
+		this.isTimeExecute = isTimeExecute;
+	}
+	
+	public String getTimeExpression() {
+		return timeExpression;
+	}
+
+	public void setTimeExpression(String timeExpression) {
+		this.timeExpression = timeExpression;
 	}
 
 
@@ -220,5 +242,8 @@ public class ConnectorDefinition {
 		}
 
 	}
+	
+	
+	
 
 }
