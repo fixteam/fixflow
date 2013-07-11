@@ -1,5 +1,7 @@
 package com.founder.fix.fixflow.core.internationalization;
 
+import java.sql.Connection;
+
 
 public interface FixFlowResources {
 	
@@ -21,7 +23,7 @@ public interface FixFlowResources {
 	
 	public String getResourceName(String processId,String resourceKey,String languageType);
 	
-	public void systemInit();
+	public void systemInit(Connection connection);
 	
 	public String getNowLanguage();
 		

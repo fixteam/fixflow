@@ -3,14 +3,16 @@ package com.founder.fix.fixflow.core.impl;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.founder.fix.fixflow.core.ConnectionManagement;
 /**
  * 外部内容构造器
  * @author kenshin
  *
  */
 public class ExternalContent {
+
 	
-	protected Connection connection;
 	
 	protected String authenticatedUserId;
 	
@@ -44,7 +46,24 @@ public class ExternalContent {
 	 * @return
 	 */
 	public Connection getConnection() {
-		return connection;
+		return getConnection(ConnectionManagement.defaultDataBaseId);
+	}
+	
+
+	/**
+	 * 获取数据库连接
+	 * @return
+	 */
+	public Connection getConnection(String dbId) {
+		return connectionMap.get(dbId);
+	}
+	
+	/**
+	 * 获取数据库连接
+	 * @return
+	 */
+	public Map<String, Connection> getConnectionMap() {
+		return connectionMap;
 	}
 
 	/**
@@ -52,10 +71,10 @@ public class ExternalContent {
 	 * @param connection
 	 */
 	public void setConnection(Connection connection) {
-		this.connection = connection;
+		setConnection(ConnectionManagement.defaultDataBaseId,connection);
 	}
 	
-	
+
 	Map<String, Connection> connectionMap=new HashMap<String, Connection>();
 	
 	

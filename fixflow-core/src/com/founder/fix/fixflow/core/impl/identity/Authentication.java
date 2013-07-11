@@ -31,6 +31,14 @@ public abstract class Authentication {
 		
 		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getAuthenticationInstance().getAdminId();
 	}
+	
+	/**
+	 * 获取系统自动处理的账号
+	 * @return
+	 */
+	public static String getSystemId(){
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getAuthenticationInstance().getSystemId();
+	}
 
 	public static String getAuthenticatedUserId() {
 		

@@ -17,4 +17,10 @@ public class CommonAuthenticationImpl extends AbstractAuthentication {
 		return null;
 	}
 
+	@Override
+	public String getSystemId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

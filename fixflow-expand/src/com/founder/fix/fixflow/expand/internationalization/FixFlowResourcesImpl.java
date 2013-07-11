@@ -1,11 +1,11 @@
 package com.founder.fix.fixflow.expand.internationalization;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fl.core.FixResourceCore;
@@ -31,12 +31,12 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 		return resourceName;
 	}
 
-	public void systemInit() {
+	public void systemInit(Connection connection) {
 		
 		
 		
 		
-		SqlCommand sqlCommand =new SqlCommand(Context.getDbConnection());
+		SqlCommand sqlCommand =new SqlCommand(connection);
 		
 		List<Map<String, Object>> ListMap =sqlCommand.queryForList("SELECT PROCESS_KEY,PROCESS_ID,VERSION FROM FIXFLOW_DEF_PROCESSDEFINITION");
 		

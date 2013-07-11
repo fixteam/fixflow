@@ -12,10 +12,9 @@ public interface ProcessEngine {
 	/**
 	 * fixflow引擎的版本号
 	 */
-	public static String VERSION = "1.0";
+	public static String VERSION = "4.7";
 
-	/** 这里的名称是 'process-core-name'
-	 * 在 fixflow.cfg.xml 配置文件里.
+	/** 
 	 * 默认名称为 'default' */
 	String getName();
 
@@ -71,10 +70,11 @@ public interface ProcessEngine {
 
 	/**
 	 * 关闭流程引擎
-	 * (关注销引擎对象、关闭定时服务)
+	 * (关注销引擎对象、关闭定时服务、数据库连接、脚本语言)
 	 */
-	void close();
+	void closeEngine();
 	
+
 	/**
 	 * 设置引擎使用的外部数据库连接
 	 * @param connection
@@ -84,20 +84,40 @@ public interface ProcessEngine {
 	void setLanguageType(String languageType);
 	
 	/**
-	 * 清除线程副本中的对象并关闭内部connection事务
-	 * 
+	 * 清除线程副本中的对象、脚本引擎对象
+	 * 不关闭数据库链接
 	 */
-	void contextClose();
+	void contextClose(boolean threadLocalContext,boolean connection);
 	
 	/**
 	 * 回滚内部connection事务
 	 */
-	void rollback();
+	void rollBackConnection();
+	
+	/**
+	 * 回滚内部connection事务
+	 */
+	void rollBackConnection(String dataBaseId);
 	
 	/**
 	 * 提交内部connection事务
 	 */
-	void commit();
+	void commitConnection();
+	
+	/**
+	 * 提交内部connection事务
+	 */
+	void commitConnection(String dataBaseId);
+	
+	/**
+	 * 关闭内部connection
+	 */
+	void colseConnection();
+	
+	/**
+	 * 关闭内部connection
+	 */
+	void colseConnection(String dataBaseId);
 	
 	/**
 	 * 获取流程引擎配置

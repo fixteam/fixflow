@@ -87,6 +87,8 @@ import com.founder.fix.fixflow.core.variable.BizData;
 
 public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
+	
+
 	protected CommandExecutor commandExecutor;
 	protected CommandContextFactory commandContextFactory;
 	protected CacheHandler cacheHandler;
@@ -172,6 +174,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		
 		initCommandContextFactory();
 		initCommandExecutors();
+		initConnectionManagementConfig();
 		initServices();
 		initConnection();
 		initCache();
@@ -181,7 +184,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		// 任务命令配置加载
 		initTaskCommandConfig();
 		
-		initConnectionManagementConfig();
+		
 		initImportDataVariableConfig();
 		
 		
@@ -355,30 +358,20 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 
 		Connection connection = createConnection();
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			throw new FixFlowException("流程国际化处理文件加载失败!", e);
-		}
 		
 		try {
-			Context.setDbConnection(connection);
-			fixFlowResources.systemInit();
-			connection.commit();
+
+			fixFlowResources.systemInit(connection);
+			
 		} catch (Exception e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				// TODO 自动生成的 catch 块
-				throw new FixFlowException("流程国际化处理文件加载失败!", e1);
-			}
-			throw new FixFlowException("流程国际化处理文件加载失败!", e);
+			
+				throw new FixFlowException("流程国际化处理文件加载失败!", e);
+
 		} finally {
 			try {
 				connection.close();
-				Context.removeDbConnection();
+
 			} catch (SQLException e) {
-				// TODO 自动生成的 catch 块
 				e.printStackTrace();
 				throw new FixFlowException("流程国际化处理文件加载失败!", e);
 			}
@@ -1018,6 +1011,33 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 	public AbstractAuthentication getAuthenticationInstance() {
 		return authenticationInstance;
+	}
+	
+	public void setConnectionManagement(ConnectionManagement connectionManagement) {
+		this.connectionManagement = connectionManagement;
+	}
+	
+	public ProcessEngineConfigurationImpl setConnectionManagement(String cmId) {
+		
+		List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
+		String selectId=cmId;
+		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
+			if(connectionManagementInstanceConfigTemp.getId().equals(selectId)){
+				this.connectionManagementInstanceConfig=connectionManagementInstanceConfigTemp;
+				break;
+			}
+		}
+		if(this.connectionManagementInstanceConfig==null){
+			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+		}
+		
+		this.connectionManagement=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfig.getClassImpl());
+		if(this.connectionManagement==null){
+			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+		}
+		
+		return this;
+		//this.connectionManagement = connectionManagement;
 	}
 
 }

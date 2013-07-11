@@ -1,6 +1,5 @@
 package com.founder.fix.fixflow.expand.database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,13 +11,11 @@ import com.founder.fix.apputil.to.bizobj.BizObjTo;
 import com.founder.fix.apputil.to.bizobj.ObjFlow;
 import com.founder.fix.apputil.util.BizObjectUtil;
 import com.founder.fix.apputil.util.ListUtil;
-import com.founder.fix.dbcore.DBGetResult;
-import com.founder.fix.dbcore.DBGetResultHandle;
 import com.founder.fix.dbcore.DataTable;
 import com.founder.fix.dbcore.DataTableUtil;
 import com.founder.fix.fixflow.api.task.FlowUtil;
-import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.variable.BizData;
 import com.founder.fix.webcore.DataView;
@@ -159,7 +156,7 @@ public class BizDataImpl implements BizData {
 		Map<String, Object> returnVal = new HashMap<String, Object>();
 		try {
 			String dbSource = bizObjTo.getDbsource();
-			SqlCommand sqlCmd = new SqlCommand(ConnectionManagement.INSTANCE().getConnection(dbSource));
+			SqlCommand sqlCmd = new SqlCommand(Context.getDbConnection(dbSource));
 			List<Object> data = new ArrayList<Object>();
 			data.add(bizkey);
 			List<Map<String, Object>> bizData = sqlCmd.queryForList(sqlStr,

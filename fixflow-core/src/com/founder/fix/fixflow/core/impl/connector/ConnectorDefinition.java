@@ -231,7 +231,7 @@ public class ConnectorDefinition {
 			
 		
 			
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			
 			
 				throw new FixFlowConnectorException(e.getMessage(), e);

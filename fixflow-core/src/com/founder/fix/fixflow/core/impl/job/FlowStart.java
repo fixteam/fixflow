@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.RuntimeService;
@@ -60,7 +59,7 @@ public class FlowStart {
 		
 
 		// 获取流程当前配置的数据库
-		DataBase dataBase = processEngine.getProcessEngineConfiguration().getSelectedDatabase();
+		//DataBase dataBase = processEngine.getProcessEngineConfiguration().getSelectedDatabase();
 
 		//创建流程线程副本对象
 		ExternalContent externalContent = new ExternalContent();

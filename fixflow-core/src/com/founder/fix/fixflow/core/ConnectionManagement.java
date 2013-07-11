@@ -1,6 +1,9 @@
 package com.founder.fix.fixflow.core;
 
+
 import java.sql.Connection;
+
+import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
 
 /**
  * FixFlow数据库管理中心
@@ -26,21 +29,28 @@ public abstract class ConnectionManagement {
 	 * 获取默认的数据库连接
 	 * @return
 	 */
-	public abstract Connection getConnection();
+	public abstract FixConnectionResult getFixConnectionResult();
 	
 	/**
 	 * 获取指定ID的数据库链接
 	 * @param dbId 数据库配置ID
 	 * @return
 	 */
-	public abstract Connection getConnection(String dbId);
+	public abstract FixConnectionResult getFixConnectionResult(String dbId);
 	
 	/**
 	 * 设置数据库连接,默认会放置到流程的线程副本中
 	 * @param dbId 数据库配置ID
 	 * @param connection 数据库连接
 	 */
-	public abstract void setConnection(String dbId,Connection connection);
+	public abstract void setFixConnectionResult(String dbId,FixConnectionResult connection);
+	
+	/**
+	 * 设置数据库连接,默认会放置到流程的线程副本中
+	 * @param dbId 数据库配置ID
+	 * @param connection 数据库连接
+	 */
+	public abstract void setFixConnection(String dbId,Connection connection);
 	
 
 }

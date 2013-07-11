@@ -139,7 +139,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 * 
 	 * @return
 	 */
-	public StartEvent getTimeStartEvent() {
+	public StartEvent getTimeStartEvent(String nodeId) {
 		StartEvent timeStartEvent;
 
 		for (FlowElement flowElement : this.getFlowElements()) {
@@ -149,7 +149,14 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 				List<EventDefinition> eventDefinitions = startEventBehavior.getEventDefinitions();
 				for (EventDefinition eventDefinition : eventDefinitions) {
 					if (eventDefinition instanceof TimerEventDefinition) {
-						return timeStartEvent;
+						if(nodeId==null||nodeId.equals("")){
+							return timeStartEvent;
+						}else{
+							if(timeStartEvent.getId().equals(nodeId)){
+								return timeStartEvent;
+							}
+						}
+						
 					}
 				}
 			}

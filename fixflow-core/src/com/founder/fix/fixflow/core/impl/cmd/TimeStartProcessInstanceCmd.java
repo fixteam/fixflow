@@ -46,6 +46,11 @@ public class TimeStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 	 * 持久化流程实例变量Map
 	 */
 	protected Map<String, Object> variables = null;
+	
+	/**
+	 * 定时启动的节点
+	 */
+	protected String nodeId;
 
 	/**
 	 * 流程实例启动操作
@@ -73,6 +78,7 @@ public class TimeStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 		this.startAuthor = startAuthor;
 		this.transientVariables = transientVariables;
 		this.variables = variables;
+		this.nodeId=startProcessInstanceCommand.getNodeId();
 		
 		
 		
@@ -108,9 +114,9 @@ public class TimeStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 	
 
 			
-			StartEventBehavior startEvent=(StartEventBehavior)processDefinition.getTimeStartEvent();
+			StartEventBehavior startEvent=(StartEventBehavior)processDefinition.getTimeStartEvent(this.nodeId);
 			
-			processInstanceEntity.timeStart();
+			processInstanceEntity.timeStart(this.nodeId);
 			
 			//
 			if(startEvent.isPersistence()){

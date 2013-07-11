@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
-import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -144,7 +143,7 @@ public abstract class GroupDefinition {
 		String dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
 		
 
-		Connection connection = ConnectionManagement.INSTANCE().getConnection(dataBaseId);// Context.getDbConnection();
+		Connection connection = Context.getDbConnection(dataBaseId);// Context.getDbConnection();
 
 		SqlCommand sqlCommand = new SqlCommand(connection);
 

@@ -3,8 +3,8 @@ package com.founder.fix.fixflow.core.impl;
 import java.sql.Connection;
 import java.util.Map;
 
-import org.quartz.SchedulerException;
 
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
@@ -15,6 +15,8 @@ import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
+import com.founder.fix.fixflow.core.exception.FixFlowDbException;
+import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
@@ -34,12 +36,10 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 	protected CommandExecutor commandExecutor;
 	protected CacheHandler cacheHandler;
-	
 
 	protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-	public ProcessEngineImpl(
-			ProcessEngineConfigurationImpl processEngineConfiguration) {
+	public ProcessEngineImpl(ProcessEngineConfigurationImpl processEngineConfiguration) {
 
 		this.processEngineConfiguration = processEngineConfiguration;
 		this.name = processEngineConfiguration.getProcessEngineName();
@@ -58,25 +58,6 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 		ProcessEngineManagement.registerProcessEngine(this);
 
-	}
-	
-	
-
-	public void close() {
-		try {
-			processEngineConfiguration.getSchedulerFactory().getScheduler()
-					.shutdown();
-			
-			Map<String, FixThreadPoolExecutor> threadPoolMap=processEngineConfiguration.getThreadPoolMap();
-			for (String mapKey : threadPoolMap.keySet()) {
-				threadPoolMap.get(mapKey).shutdown();
-			}
-			
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ProcessEngineManagement.unregister(this);
 	}
 
 	public String getName() {
@@ -129,40 +110,39 @@ public class ProcessEngineImpl implements ProcessEngine {
 	}
 
 	public void setExternalContent(ExternalContent externalContent) {
-		
-		
-		Connection connection = externalContent.getConnection();
-		if(connection!=null){
-			Context.setDbConnection(connection);
+
+		if( externalContent.getConnectionMap()!=null){
+			for (String connKey : externalContent.getConnectionMap().keySet()) {
+				Connection connection = externalContent.getConnectionMap().get(connKey);
+				if (connection != null) {
+					ConnectionManagement.INSTANCE().setFixConnection(connKey, connection);
+					// Context.setDbConnection(connection);
+				}
+			}
 		}
 		
+
 		String authenticatedUserId = externalContent.getAuthenticatedUserId();
 		Authentication.setAuthenticatedUserId(authenticatedUserId);
-		
-		String languageType=externalContent.getLanguageType();
-		if(languageType==null||languageType.equals("")){
-			//Context.setLanguageType("defauld");
-		}
-		else{
+
+		String languageType = externalContent.getLanguageType();
+		if (languageType == null || languageType.equals("")) {
+
+		} else {
 			FixResourceCore.setNowLanguage(languageType);
 		}
-		
-		// }
-		Context.setQuartzTransactionAuto(externalContent.isQuartzTransactionAuto());
+
 	}
-	
-	public void setLanguageType(String languageType){
-		
-		if(languageType==null||languageType.equals("")){
-			//Context.setLanguageType("defauld");
-		}
-		else{
+
+	public void setLanguageType(String languageType) {
+
+		if (languageType == null || languageType.equals("")) {
+			// Context.setLanguageType("defauld");
+		} else {
 			FixResourceCore.setNowLanguage(languageType);
-			//Context.setLanguageType(languageType);
+			// Context.setLanguageType(languageType);
 		}
 	}
-	
-	
 
 	public void contextClose() {
 
@@ -171,31 +151,180 @@ public class ProcessEngineImpl implements ProcessEngine {
 		Context.removeDbConnection();
 		Context.removeAbstractScriptLanguageMgmt();
 		Context.removeLanguageType();
-		//Context.closeQuartzConnection();
-		//Context.removeQuartzCloseConnection();
-		//Context.removeQuartzCommitConnection();
-		//Context.removeQuartzRollbackConnection();
+		// Context.closeQuartzConnection();
+		// Context.removeQuartzCloseConnection();
+		// Context.removeQuartzCommitConnection();
+		// Context.removeQuartzRollbackConnection();
 	}
-	
-	
-	
-	public void rollback(){
-		Context.rollbackQuartzConnection();
-	}
-	
-	public void commit(){
-		
-		Context.commitQuartzConnection();
-		
-		
-	}
-
-
 
 	public FixFlowVersion getVersion() {
 		return processEngineConfiguration.getFixFlowVersion();
 	}
 
+	public void closeEngine() {
+		// TODO Auto-generated method stub
+		try {
+			processEngineConfiguration.getSchedulerFactory().getScheduler().shutdown();
 
+			contextClose();
+
+			Map<String, FixThreadPoolExecutor> threadPoolMap = processEngineConfiguration.getThreadPoolMap();
+			for (String mapKey : threadPoolMap.keySet()) {
+				threadPoolMap.get(mapKey).shutdown();
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ProcessEngineManagement.unregister(this);
+	}
+
+	public void rollBackConnection() {
+		// TODO Auto-generated method stub
+		Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+		if (connectionMap != null) {
+			for (String mapKey : connectionMap.keySet()) {
+				FixConnectionResult connectionobj = connectionMap.get(mapKey);
+				try {
+					if (connectionobj != null) {
+						connectionobj.rollBackConnection();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new FixFlowDbException(e.toString(), e);
+				}
+			}
+		}
+	}
+
+	public void rollBackConnection(String dataBaseId) {
+		// TODO Auto-generated method stub
+		Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+		if (connectionMap != null) {
+			for (String mapKey : connectionMap.keySet()) {
+				if (mapKey.equals(dataBaseId)) {
+					FixConnectionResult connectionobj = connectionMap.get(mapKey);
+					try {
+						if (connectionobj != null) {
+							connectionobj.rollBackConnection();
+
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new FixFlowDbException(e.toString(), e);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	public void commitConnection() {
+		// TODO Auto-generated method stub
+		Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+		if (connectionMap != null) {
+			for (String mapKey : connectionMap.keySet()) {
+				FixConnectionResult connectionobj = connectionMap.get(mapKey);
+				try {
+					if (connectionobj != null) {
+						connectionobj.commitConnection();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new FixFlowDbException(e.toString(), e);
+				}
+			}
+		}
+	}
+
+	public void commitConnection(String dataBaseId) {
+		// TODO Auto-generated method stub
+		Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+		if (connectionMap != null) {
+			for (String mapKey : connectionMap.keySet()) {
+				if (mapKey.equals(dataBaseId)) {
+					FixConnectionResult connectionobj = connectionMap.get(mapKey);
+					try {
+						if (connectionobj != null) {
+							connectionobj.commitConnection();
+
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new FixFlowDbException(e.toString(), e);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	public void colseConnection() {
+		// TODO Auto-generated method stub
+		Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+		if (connectionMap != null) {
+			for (String mapKey : connectionMap.keySet()) {
+				FixConnectionResult connectionobj = connectionMap.get(mapKey);
+				try {
+					if (connectionobj != null) {
+						connectionobj.colseConnection();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new FixFlowDbException(e.toString(), e);
+				}
+			}
+		}
+	}
+
+	public void colseConnection(String dataBaseId) {
+		// TODO Auto-generated method stub
+		Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+		if (connectionMap != null) {
+			for (String mapKey : connectionMap.keySet()) {
+				if (mapKey.equals(dataBaseId)) {
+					FixConnectionResult connectionobj = connectionMap.get(mapKey);
+					try {
+						if (connectionobj != null) {
+							connectionobj.colseConnection();
+
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new FixFlowDbException(e.toString(), e);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	public void contextClose(boolean threadLocalContext, boolean connection) {
+		if (connection) {
+			Map<String, FixConnectionResult> connectionMap = Context.getDbConnectionMap();
+			if (connectionMap != null) {
+				for (String mapKey : connectionMap.keySet()) {
+					FixConnectionResult connectionobj = connectionMap.get(mapKey);
+					try {
+						if (connectionobj != null) {
+							connectionobj.colseConnection();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new FixFlowDbException(e.toString(), e);
+					}
+				}
+			}
+		}
+		if (threadLocalContext) {
+			Context.removeCommandContext();
+			Context.removeProcessEngineConfiguration();
+			Context.removeDbConnection();
+			Context.removeAbstractScriptLanguageMgmt();
+			Context.removeLanguageType();
+		}
+		
+	}
 
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.founder.fix.fixflow.core.ConnectionManagement;
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.worktime.WorkTime;
@@ -40,7 +40,7 @@ public class WorkTimeImpl implements WorkTime {
 			sqlCommand = executionContext.getSqlCommand();
 		} catch (Exception e) {
 			try {
-				sqlCommand = new SqlCommand(ConnectionManagement.INSTANCE().getConnection());
+				sqlCommand = new SqlCommand(Context.getDbConnection());
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

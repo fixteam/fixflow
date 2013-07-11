@@ -50,7 +50,6 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.quartz.impl.matchers.GroupMatcher;
 
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
@@ -1179,7 +1178,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 					scheduler.deleteJobs(jobKeysList);
 				}
 
-			} catch (SchedulerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);
 			}
@@ -1197,7 +1196,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 				scheduler.deleteJobs(jobKeysList);
 			}
 			
-		} catch (SchedulerException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);

@@ -2,7 +2,6 @@
 package com.founder.fix.fixflow.core.impl.interceptor;
 
 
-import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 
@@ -31,7 +30,8 @@ public class CommandContextInterceptor extends CommandInterceptor {
    // try {
       Context.setCommandContext(context);
       Context.setProcessEngineConfiguration(processEngineConfiguration);
-      ConnectionManagement.INSTANCE().getConnection();
+      //ConnectionManagement.INSTANCE().getConnection();
+      Context.setQuartzTransactionAuto(false);
       return next.execute(command);
        
     //} catch (Exception e) {

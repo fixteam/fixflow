@@ -25,7 +25,11 @@ public class FixAuthenticationImpl extends AbstractAuthentication {
 
 	@Override
 	public String getAdminId() {
-		// TODO 自动生成的方法存根
+		return "1200119390";
+	}
+
+	@Override
+	public String getSystemId() {
 		return "1200119390";
 	}
 	

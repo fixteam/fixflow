@@ -91,7 +91,7 @@ public abstract class ProcessEngineManagement {
 			for (String processEngineName : engines.keySet()) {
 				ProcessEngine processEngine = engines.get(processEngineName);
 				try {
-					processEngine.close();
+					processEngine.closeEngine();
 				} catch (Exception e) {
 					// 抛出异常
 				}

@@ -1,16 +1,16 @@
 package com.founder.fix.fixflow.core.impl;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguage;
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.fixflow.core.ConnectionManagement;
-import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
+import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
@@ -20,7 +20,7 @@ import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
  */
 public class Context {
 
-	protected static ThreadLocal<Stack<Map<String, Connection>>> dbConnectionThreadLocal = new ThreadLocal<Stack<Map<String, Connection>>>();
+	protected static ThreadLocal<Stack<Map<String, FixConnectionResult>>> dbConnectionThreadLocal = new ThreadLocal<Stack<Map<String, FixConnectionResult>>>();
 	protected static ThreadLocal<Stack<CacheObject>> cacheObjectThreadLocal = new ThreadLocal<Stack<CacheObject>>();
 
 	protected static ThreadLocal<Stack<CommandContext>> commandContextThreadLocal = new ThreadLocal<Stack<CommandContext>>();
@@ -30,16 +30,11 @@ public class Context {
 	protected static ThreadLocal<Stack<String>> languageTypeThreadLocal = new ThreadLocal<Stack<String>>();
 
 	
-	protected static ThreadLocal<Stack<Boolean>> isQuartzTransactionAutoThreadLocal = new ThreadLocal<Stack<Boolean>>();
-
 	
 	protected static ThreadLocal<Stack<AbstractScriptLanguageMgmt>> abstractScriptLanguageMgmtThreadLocal = new ThreadLocal<Stack<AbstractScriptLanguageMgmt>>();
 	
-	protected static ThreadLocal<Stack<Connection>> quartzCloseConnectionThreadLocal = new ThreadLocal<Stack<Connection>>();
-	
-	protected static ThreadLocal<Stack<Connection>> quartzCommitConnectionThreadLocal = new ThreadLocal<Stack<Connection>>();
-	
-	protected static ThreadLocal<Stack<Connection>> quartzRollbackConnectionThreadLocal = new ThreadLocal<Stack<Connection>>();
+	protected static ThreadLocal<Stack<Boolean>> isQuartzTransactionAutoThreadLocal = new ThreadLocal<Stack<Boolean>>();
+
 	
 	
 	//protected static ThreadLocal<Stack<Interpreter>> bshInterpreterThreadLocal = new ThreadLocal<Stack<Interpreter>>();
@@ -108,6 +103,7 @@ public class Context {
 		getStack(cacheObjectThreadLocal).push(cacheObject);
 	}
 	
+
 	public static void setQuartzTransactionAuto(boolean isAuto) {
 		getStack(isQuartzTransactionAutoThreadLocal).push(isAuto);
 	}
@@ -119,209 +115,141 @@ public class Context {
 		}
 		return stack.peek();
 	}
-
-	
 	
 
 
 	public static Connection getDbConnection() {
-
-		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
-		if (stack.isEmpty()) {
-			return null;
-		}
-
-		Map<String, Connection> connMap= stack.peek();
-		if(connMap==null){
-			return null;
-		}
-		else{
-			
-				String dbID=ConnectionManagement.defaultDataBaseId;
-				Connection connection=connMap.get(dbID);
-				if(connection==null){
-					return null;
-				}
-				else{
-					return connection;
-				}
-			
-		}
 		
+		String dbID=ConnectionManagement.defaultDataBaseId;
 		
+		return getDbConnection(dbID);
+
 	}
 	
 	
 	public static Connection getDbConnection(String dbId) {
 
-		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
+		Stack<Map<String, FixConnectionResult>> stack = getStack(dbConnectionThreadLocal);
+		if (stack.isEmpty()) {
+			
+			Map<String, FixConnectionResult> connectioMap=new HashMap<String, FixConnectionResult>();
+			
+		
+			
+			FixConnectionResult fixConnectionResult=ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
+			
+			connectioMap.put(dbId, fixConnectionResult);
+			
+			getStack(dbConnectionThreadLocal).push(connectioMap);
+			
+			fixConnectionResult.openConnection();
+
+			return fixConnectionResult.getConnection();
+			
+		}
+
+		Map<String, FixConnectionResult> connMap= stack.peek();
+		if(connMap==null){
+			Map<String, FixConnectionResult> connectioMap=new HashMap<String, FixConnectionResult>();
+			
+		
+			
+			FixConnectionResult fixConnectionResult=ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
+			
+			connectioMap.put(dbId, fixConnectionResult);
+			
+			getStack(dbConnectionThreadLocal).push(connectioMap);
+			
+			fixConnectionResult.openConnection();
+
+			return fixConnectionResult.getConnection();
+		}
+		else{
+			
+		
+			FixConnectionResult fixConnectionResult=connMap.get(dbId);
+			
+			if(fixConnectionResult==null){
+				
+				FixConnectionResult fixConnectionResultObj=ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
+				
+				connMap.put(dbId, fixConnectionResultObj);
+
+				fixConnectionResultObj.openConnection();
+				
+				return fixConnectionResultObj.getConnection();
+				
+			}
+			else{
+				
+				//fixConnectionResult.openConnection();
+
+				return fixConnectionResult.getConnection();
+			}
+		}
+		
+		
+	}
+	
+	public static Map<String, FixConnectionResult> getDbConnectionMap() {
+
+		Stack<Map<String, FixConnectionResult>> stack = getStack(dbConnectionThreadLocal);
 		if (stack.isEmpty()) {
 			return null;
 		}
 
-		Map<String, Connection> connMap= stack.peek();
+		Map<String, FixConnectionResult> connMap= stack.peek();
 		if(connMap==null){
 			return null;
 		}
 		else{
-			return connMap.get(dbId);
+			return connMap;
 		}
 		
 		
 	}
 
-	public static void setDbConnection(String dbID,Connection dbConnection) {
+	public static void setFixConnectionResult(String dbID,FixConnectionResult fixConnectionResult) {
 		
 		
 		
-		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
+		Stack<Map<String, FixConnectionResult>> stack = getStack(dbConnectionThreadLocal);
 		if (stack.isEmpty()) {
-			Map<String, Connection> conMap=new HashMap<String, Connection>();
-			conMap.put(dbID, dbConnection);
+			Map<String, FixConnectionResult> conMap=new HashMap<String, FixConnectionResult>();
+			conMap.put(dbID, fixConnectionResult);
 			
 			getStack(dbConnectionThreadLocal).push(conMap);
 		}else{
-			Map<String, Connection> connMap= stack.peek();
+			Map<String, FixConnectionResult> connMap= stack.peek();
 			if(connMap==null){
-				Map<String, Connection> conMap=new HashMap<String, Connection>();
-				conMap.put(dbID, dbConnection);
+				Map<String, FixConnectionResult> conMap=new HashMap<String, FixConnectionResult>();
+				conMap.put(dbID, fixConnectionResult);
 				
 				getStack(dbConnectionThreadLocal).push(conMap);
 			}else{
-				connMap.put(dbID, dbConnection);
+				connMap.put(dbID, fixConnectionResult);
 			}
 		}
 
 	}
 	
 	
-	public static void setDbConnection(Connection dbConnection) {
+	public static void setFixConnectionResult(FixConnectionResult fixConnectionResult) {
 		
 	
 		String dbID=ConnectionManagement.defaultDataBaseId;
 		
 		
-		Stack<Map<String, Connection>> stack = getStack(dbConnectionThreadLocal);
-		if (stack.isEmpty()) {
-			Map<String, Connection> conMap=new HashMap<String, Connection>();
-			conMap.put(dbID, dbConnection);
-			
-			getStack(dbConnectionThreadLocal).push(conMap);
-		}else{
-			Map<String, Connection> connMap= stack.peek();
-			if(connMap==null){
-				Map<String, Connection> conMap=new HashMap<String, Connection>();
-				conMap.put(dbID, dbConnection);
-				
-				getStack(dbConnectionThreadLocal).push(conMap);
-			}else{
-				connMap.put(dbID, dbConnection);
-			}
-		}
+		setFixConnectionResult(dbID, fixConnectionResult);
 
 	}
 	
 	
 	
-	public static Connection getQuartzCloseConnection() {
-
-		Stack<Connection> stack = getStack(quartzCloseConnectionThreadLocal);
-		if (stack.isEmpty()) {
-			return null;
-		}
-		return stack.peek();
-	}
-
-	public static void setQuartzCloseConnection(Connection dbConnection) {
-		getStack(quartzCloseConnectionThreadLocal).push(dbConnection);
-	}
-	
-	public static void closeQuartzConnection(){
-		Stack<Connection> connections = getStack(quartzCloseConnectionThreadLocal);
-
-		for (int i = 0; i < connections.size(); i++) {
-			if(connections.get(i)!=null){
-				try {
-					connections.get(i).close();
-				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
-					throw new FixFlowDbException("quartz transaction close failure", e);
-				}
-			}
-			
-		}
-	}
-	
-	
-	public static Connection getQuartzCommitConnection() {
-
-		Stack<Connection> stack = getStack(quartzCommitConnectionThreadLocal);
-		if (stack.isEmpty()) {
-			return null;
-		}
-		return stack.peek();
-	}
-
-	public static void setQuartzCommitConnection(Connection dbConnection) {
-		getStack(quartzCommitConnectionThreadLocal).push(dbConnection);
-	}
-	
-	public static void commitQuartzConnection(){
-		Stack<Connection> connections = getStack(quartzCommitConnectionThreadLocal);
-
-		for (int i = 0; i < connections.size(); i++) {
-			if(connections.get(i)!=null){
-				try {
-					connections.get(i).commit();
-				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
-					throw new FixFlowDbException("quartz transaction submit failure", e);
-				}
-			}
-			
-		}
-	}
-	
-	public static Connection getQuartzRollbackConnection() {
-
-		Stack<Connection> stack = getStack(quartzRollbackConnectionThreadLocal);
-		if (stack.isEmpty()) {
-			return null;
-		}
-		return stack.peek();
-	}
-
-	public static void setQuartzRollbackConnection(Connection dbConnection) {
-		getStack(quartzRollbackConnectionThreadLocal).push(dbConnection);
-	}
 
 	
-	public static void rollbackQuartzConnection(){
-		Stack<Connection> connections = getStack(quartzRollbackConnectionThreadLocal);
+	
 
-		for (int i = 0; i < connections.size(); i++) {
-			if(connections.get(i)!=null){
-				try {
-					connections.get(i).rollback();
-				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
-					throw new FixFlowDbException("quartz transaction rollback failure", e);
-				}
-			}
-			
-		}
-	}
-	
-	public static void removeQuartzCloseConnection() {
-		getStack(quartzCloseConnectionThreadLocal).clear();
-	}
-	public static void removeQuartzCommitConnection() {
-		getStack(quartzCommitConnectionThreadLocal).clear();
-	}
-	public static void removeQuartzRollbackConnection() {
-		getStack(quartzRollbackConnectionThreadLocal).clear();
-	}
-	
 	public static void removeDbConnection() {
 
 		getStack(dbConnectionThreadLocal).clear();

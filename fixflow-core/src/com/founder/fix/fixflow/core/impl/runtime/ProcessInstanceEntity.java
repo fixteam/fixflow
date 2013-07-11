@@ -335,7 +335,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	}
 	
 	
-	public void timeStart() throws Exception {
+	public void timeStart(String nodeId) throws Exception {
 		if (this.getRootToken().getFlowNode() == null) {
 			// 设置流程实例的开始时间
 			this.startTime = new Date();
@@ -367,7 +367,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
 			// executionContext);
 			// 将令牌设置到开始节点
-			processDefinition.getTimeStartEvent().enter(executionContext);
+			processDefinition.getTimeStartEvent(nodeId).enter(executionContext);
 		} else {
 			throw new FixFlowException("流程实例已经启动!");
 		}

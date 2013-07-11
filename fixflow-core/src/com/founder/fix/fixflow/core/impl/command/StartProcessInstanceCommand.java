@@ -24,6 +24,7 @@ import com.founder.fix.fixflow.core.runtime.Token;
  */
 public class StartProcessInstanceCommand extends CommandParams {
 
+	
 	/**
 	 * 流程定义id，唯一编号,不能为空。(数据库中的 id)
 	 */
@@ -43,6 +44,11 @@ public class StartProcessInstanceCommand extends CommandParams {
 	 * 启动人
 	 */
 	protected String startAuthor;
+	
+	/**
+	 * 定时启动的节点
+	 */
+	protected String nodeId;
 	
 	/**
 	 * 父流程实例
@@ -124,6 +130,14 @@ public class StartProcessInstanceCommand extends CommandParams {
 
 	public void setParentProcessInstanceToken(Token parentProcessInstanceToken) {
 		this.parentProcessInstanceToken = parentProcessInstanceToken;
+	}
+
+	public String getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(String nodeId) {
+		this.nodeId = nodeId;
 	}
 
 }
