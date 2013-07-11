@@ -146,6 +146,10 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			
 			if(taskInstanceImpl!=null){
 				
+				if(taskInstanceImpl.getBizKey()==null||taskInstanceImpl.equals("")){
+					taskInstanceImpl.setBizKey(this.businessKey);
+				}
+				
 				if(this.agent!=null&&!this.agent.equals("")){
 					taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
 					taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
