@@ -65,7 +65,7 @@
     <scriptLanguage id="BeanShell" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl"/>
     <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>
   </scriptLanguageConfig>
-  <internationalizationConfig isEnable="true" folderPath="/fixflow-expand/internationalization/"/>
+  <internationalizationConfig isEnable="false" folderPath="/fixflow-expand/internationalization/"/>
   <pigeonholeConfig serverPath="http://&lt;127.0.0.1>:&lt;8080>/&lt;xxweb>" pdfPath="&lt;C:>/&lt;xxfolder>/&lt;xxfolder>"/>
   <expandCmdConfig>
     <expandCmd id="MyTestCmd" name="测试执行器" cmd="com.founder.fix.fixflow.expand.cmd.MyTestCmd"/>
@@ -85,6 +85,9 @@
     <assignPolicy id="simulationRun" name="虚拟运行策略" classImpl="com.founder.fix.fixflow.expand.assignment.SimulationRunAssignmentImpl" remarks=""/>
     <assignPolicy id="custom" name="动态   (根据策略表达式动态分配策略)" classImpl="com.founder.fix.fixflow.expand.assignment.CustomAssignmentImpl" remarks=""/>
   </assignPolicyConfig>
+  <fixThreadPoolExecutorConfig>
+    <fixThreadPoolExecutor threadPoolKey="default" threadPoolName="默认线程池" corePoolSize="1" maximumPoolSize="1" keepAliveTime="1"/>
+  </fixThreadPoolExecutorConfig>
   <connectionManagementConfig selected="FixCS">
     <connectionManagementInstanceConfig id="FixCS" name="FixCS平台连接管理" classImpl="com.founder.fix.fixflow.expand.database.FixConnectionManagement"/>
     <connectionManagementInstanceConfig id="General" name="通用连接管理" classImpl="com.founder.fix.fixflow.expand.database.GeneralConnectionManagement"/>
@@ -94,7 +97,4 @@
     <importDataVariable id="FixCSDB" name="FixCS平台数据库变量" expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)"/>
     <importDataVariable id="GeneralDB" name="通用数据库变量" expression="#{DataBaseId},#{BizObjName},#{FieldName}"/>
   </importDataVariableConfig>
-  <fixThreadPoolExecutorConfig>
-  <fixThreadPoolExecutor threadPoolKey="default"  threadPoolName="默认线程池"  corePoolSize="1"  maximumPoolSize="1"   keepAliveTime="1"  timeUnit="DAYS"/>
-  </fixThreadPoolExecutorConfig>
 </coreconfig:FixFlowConfig>
