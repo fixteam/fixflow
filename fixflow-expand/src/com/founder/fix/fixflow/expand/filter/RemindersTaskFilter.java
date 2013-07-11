@@ -63,7 +63,9 @@ public class RemindersTaskFilter extends AbstractCommandFilter {
 			ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
 
 			ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
-
+			if(processInstanceImpl.hasEnded()){
+				return false;
+			}
 			TokenEntity token = processInstanceImpl.getTokenMap().get(tokenId);
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);

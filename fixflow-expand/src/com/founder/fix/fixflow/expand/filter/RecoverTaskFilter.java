@@ -74,7 +74,9 @@ public class RecoverTaskFilter extends AbstractCommandFilter {
 
 
 			ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
-
+			if(processInstanceImpl.hasEnded()){
+				return false;
+			}
 
 			TokenEntity token = processInstanceImpl.getTokenMap().get(tokenId);
 	
