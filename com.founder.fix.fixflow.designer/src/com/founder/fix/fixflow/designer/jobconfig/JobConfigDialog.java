@@ -16,6 +16,7 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -76,7 +77,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 	private Button stopButton;
 	private Button continueButton;
 	private Button deleteButton;
-	private SchedulerFactory schedulerFactory;
+
 	private Scheduler scheduler;
 	private Combo combo;
 	private TimeTaskFilter filter;
@@ -122,7 +123,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 		
 		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
 		lblNewLabel_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblNewLabel_1.setText("按流程名称查询任务");
+		lblNewLabel_1.setText("查询任务");
 		
 		combo = new Combo(composite, SWT.NONE);
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -303,6 +304,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 						jobTo.setCurrentStatus("暂停");
 					} catch (SchedulerException e) {
 						e.printStackTrace();
+						 MessageDialog.openInformation(null, "定时任务", "定时任务暂停出错,请查看错误日志。");
 					}
 				}
 				
@@ -340,6 +342,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 						jobTo.setCurrentStatus("普通");
 					} catch (SchedulerException e) {
 						e.printStackTrace();
+						 MessageDialog.openInformation(null, "定时任务", "定时任务继续出错,请查看错误日志。");
 					}
 				}
 				
@@ -364,6 +367,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 						((List<JobTo>)tableViewer.getInput()).remove(jobTo);
 					} catch (SchedulerException e) {
 						e.printStackTrace();
+						 MessageDialog.openInformation(null, "定时任务", "定时任务删除,请查看错误日志。");
 					}
 				}
 				
@@ -372,7 +376,7 @@ public class JobConfigDialog extends TitleAreaDialog {
 			}
 		});
 		
-		createCellModifier();
+		//createCellModifier();
 		updateButtons();
 		setMessage("管理定时任务", IMessageProvider.INFORMATION);
 		return area;
@@ -442,7 +446,13 @@ public class JobConfigDialog extends TitleAreaDialog {
 					if (dataBase.getDbtype().equals(DBType.ORACLE)) {
 						driverDelegateClass = "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";
 					} else {
-						driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
+						if(dataBase.getDbtype().equals(DBType.SQLSERVER))
+						{
+							driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
+						}
+						else{
+							driverDelegateClass = "org.quartz.impl.jdbcjobstore.StdJDBCDelegate";
+						}
 					}
 				}
 			}
@@ -471,8 +481,8 @@ public class JobConfigDialog extends TitleAreaDialog {
 		
 		 try
 	      { 
-			 schedulerFactory = QuartzUtil.createSchedulerFactory(props);
-			 scheduler = QuartzUtil.getScheduler(schedulerFactory);
+			
+			 scheduler = QuartzUtil.getScheduler();
 	         List<String> jobGroups = scheduler.getJobGroupNames();
 	         for (int i = 0; i < jobGroups.size(); i++)
 	         {
@@ -507,25 +517,28 @@ public class JobConfigDialog extends TitleAreaDialog {
 	               jobTo.setConnectorId(jobDataMap.getString("connectorId"));
 	               jobTo.setConnectorInstanceId(jobDataMap.getString("connectorInstanceId"));
 	               jobTo.setConnectorInstanceName(jobDataMap.getString("connectorInstanceName"));
-	               if(trigger instanceof SimpleTrigger) {
+	             /*  if(trigger instanceof SimpleTrigger) {
 	            	   
 	            	   jobTo.setQuartzExpression(simpleDateFormat.format(jobDataMap.get("simpleExp")));
 	               }
 	               if(trigger instanceof CronTrigger) {
 	            	   jobTo.setQuartzExpression(((CronTrigger)trigger).getCronExpression());
-	               }
+	               }*/
 	               jobTo.setCurrentStatus(getTriggerStateByEmuType(scheduler.getTriggerState(trigger.getKey())));
-	              
-	               jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
+	              if(date!=null){
+	            	  jobTo.setNextFireTime(simpleDateFormat.format(date).toString());
+	              }
+	               
 	               jobTo.setJobKey(jobKey);
 	               
 	               jobTos.add(jobTo);
 	            }
 	         }
 	      }
-	      catch (SchedulerException se)
+	      catch (Exception se)
 	      {
 	         se.printStackTrace();
+	         MessageDialog.openInformation(null, "定时任务", "定时任务加载出错,请查看错误日志。");
 	      }
 	}
 	

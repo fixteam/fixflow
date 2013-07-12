@@ -27,6 +27,8 @@ import com.founder.fix.bpmn2extensions.fixflow.Documentation;
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
 import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
+import com.founder.fix.bpmn2extensions.fixflow.TimeExpression;
+import com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression;
 import com.founder.fix.fixflow.designer.usercontrol.ExpressionCombo;
 import com.founder.fix.fixflow.designer.usercontrol.ExpressionTo;
 
@@ -89,44 +91,81 @@ public class AddConnectorWizard extends DynamicPageWizard {
 	 * 保存
 	 */
 	private ConnectorInstance save() {
-		//封装连接器页面数据
-		String name = renameConnectorWizardPage.getConnectNameText().getText().trim();
-		String description = renameConnectorWizardPage.getConnectDescriptionText().getText().trim();
-		String event = renameConnectorWizardPage.getLifeCycle().getEvent().trim();
-		String exception = renameConnectorWizardPage.getConnectExceptionCombo().getText();
-		String errorName = renameConnectorWizardPage.getConnectNameErrorText().getText().trim();
-		String className=selectConnectorWizardPage.getConnector().getClassName();
-		String packageName=selectConnectorWizardPage.getConnector().getPackageName();
-		ExpressionTo expressionTo = renameConnectorWizardPage.getExpressionComboViewer().getExpressionCombo().getExpressionTo();
-		String expName = expressionTo == null ? "" : expressionTo.getName();
-		String expValue = expressionTo == null ? "" : expressionTo.getExpressionText();
-		
-		//跳过策略
-		Expression skipexpression = FixFlowFactory.eINSTANCE.createExpression();
-		skipexpression.setName(expName);
-		skipexpression.setValue(expValue);
-		SkipComment skipComment = FixFlowFactory.eINSTANCE.createSkipComment();
-		skipComment.setExpression(skipexpression);
-		
-		ConnectorInstance connectorInstance = FixFlowFactory.eINSTANCE.createConnectorInstance();
-		connectorInstance.setConnectorId(selectConnectorWizardPage.getConnector().getConnectorId());
-		connectorInstance.setConnectorInstanceId(UUID.randomUUID().toString());
-		connectorInstance.setConnectorInstanceName(name);
-		
-		connectorInstance.setClassName(className);
-		connectorInstance.setPackageName(packageName);
-		
-		Documentation documentation = FixFlowFactory.eINSTANCE.createDocumentation();
-		documentation.setValue(description);
-		connectorInstance.setDocumentation(documentation);
-		
-		connectorInstance.setEventType(event);
-		connectorInstance.setErrorHandling(exception);
-		connectorInstance.setErrorCode(errorName);
-		
-		//增加跳过策略
-		connectorInstance.setSkipComment(skipComment);
-		
+		// 封装连接器页面数据
+				String name = renameConnectorWizardPage.getConnectNameText().getText().trim();
+				String description = renameConnectorWizardPage.getConnectDescriptionText().getText().trim();
+				String event = renameConnectorWizardPage.getLifeCycle().getEvent().trim();
+				String exception = renameConnectorWizardPage.getConnectExceptionCombo().getText();
+				String errorName = renameConnectorWizardPage.getConnectNameErrorText().getText().trim();
+				String className = selectConnectorWizardPage.getConnector().getClassName();
+				String packageName = selectConnectorWizardPage.getConnector().getPackageName();
+				ExpressionTo expressionTo = renameConnectorWizardPage.getExpressionComboViewer().getExpressionCombo().getExpressionTo();
+				String expName = expressionTo == null ? "" : expressionTo.getName();
+				String expValue = expressionTo == null ? "" : expressionTo.getExpressionText();
+
+				// 跳过策略
+				Expression skipexpression = FixFlowFactory.eINSTANCE.createExpression();
+				skipexpression.setName(expName);
+				skipexpression.setValue(expValue);
+				SkipComment skipComment = FixFlowFactory.eINSTANCE.createSkipComment();
+				skipComment.setExpression(skipexpression);
+
+				ConnectorInstance connectorInstance = FixFlowFactory.eINSTANCE.createConnectorInstance();
+				connectorInstance.setConnectorId(selectConnectorWizardPage.getConnector().getConnectorId());
+				connectorInstance.setConnectorInstanceId(UUID.randomUUID().toString());
+				connectorInstance.setConnectorInstanceName(name);
+
+				connectorInstance.setClassName(className);
+				connectorInstance.setPackageName(packageName);
+
+				Documentation documentation = FixFlowFactory.eINSTANCE.createDocumentation();
+				documentation.setValue(description);
+				connectorInstance.setDocumentation(documentation);
+
+				connectorInstance.setEventType(event);
+				connectorInstance.setErrorHandling(exception);
+				connectorInstance.setErrorCode(errorName);
+
+				// 增加跳过策略
+				if(skipComment.getExpression().getValue()!=null&&!skipComment.getExpression().getValue().equals("")){
+					connectorInstance.setSkipComment(skipComment);
+				}else{
+					connectorInstance.setSkipComment(null);
+				}
+				
+				
+				boolean isTimeExecute=renameConnectorWizardPage.getCheckButton().getSelection();
+				
+				connectorInstance.setIsTimeExecute(isTimeExecute);
+				
+				if(isTimeExecute){
+					TimeExpression timeExpression=FixFlowFactory.eINSTANCE.createTimeExpression();
+					
+					ExpressionTo expressionToTime = renameConnectorWizardPage.getTimeExpressionComboViewer().getExpressionCombo().getExpressionTo();
+					ExpressionTo expressionToTimeSkip = renameConnectorWizardPage.getSkipExpressionComboViewer().getExpressionCombo().getExpressionTo();
+					
+					
+					Expression expressionTime=FixFlowFactory.eINSTANCE.createExpression();
+					expressionTime.setName(expressionToTime == null ? "" : expressionToTime.getName());
+					expressionTime.setValue(expressionToTime == null ? "" : expressionToTime.getExpressionText());
+					timeExpression.setExpression(expressionTime);
+					connectorInstance.setTimeExpression(timeExpression);
+					
+					
+					TimeSkipExpression timeExpressionSkip=FixFlowFactory.eINSTANCE.createTimeSkipExpression();
+					Expression expressionTimeSkip=FixFlowFactory.eINSTANCE.createExpression();
+					expressionTimeSkip.setName(expressionToTimeSkip == null ? "" : expressionToTimeSkip.getName());
+					expressionTimeSkip.setValue(expressionToTimeSkip == null ? "" : expressionToTimeSkip.getExpressionText());
+					
+					timeExpressionSkip.setExpression(expressionTimeSkip);
+					
+					connectorInstance.setTimeSkipExpression(timeExpressionSkip);
+					
+					
+				}else{
+					connectorInstance.setTimeExpression(null);
+					connectorInstance.setTimeSkipExpression(null);
+				}	
 		//封装一个或多个输入页面数据
 		//获取所有的输入页面
 		CommonConnectorWizardPage[] commonConnectotWizardPages = selectConnectorWizardPage.getCommonConnectotWizardPages();
