@@ -79,6 +79,7 @@ public class ExecuteConnectorTimeJobCmd implements Command<Void> {
 				}
 			}
 			if(connectorDefinition!=null){
+				//connectorDefinition.setSkipExpression(null);
 				connectorDefinition.execute(executionContext);
 			}
 			

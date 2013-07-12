@@ -154,14 +154,14 @@ public class ConnectorDefinition {
 
 		try {
 			
-			if(this.skipExpression!=null&&!this.skipExpression.equals("")){
-				Object skipExpressionObj=ExpressionMgmt.execute(skipExpression, executionContext);
-				if(StringUtil.getBoolean(skipExpressionObj)){
+			
+			
+			if(this.timeExpression!=null&&!this.timeExpression.equals("")){
+				Object timeExpressionObj=ExpressionMgmt.execute(this.timeExpression, executionContext);
+				if(StringUtil.getBoolean(timeExpressionObj)){
 					return ;
 				}
 			}
-			
-			
 			
 			
 			

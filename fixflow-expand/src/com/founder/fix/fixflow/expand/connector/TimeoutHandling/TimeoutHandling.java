@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow.expand.connector.TimeoutHandling;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.bpmn2.FlowNode;
@@ -65,6 +66,7 @@ public class TimeoutHandling implements ConnectorHandler {
 				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
 				
 				taskInstanceImpl.end();
+				taskInstanceImpl.setDueDate(new Date());
 				taskInstanceImpl.setDraft(false);
 				taskInstanceImpl.setCommandId(commandId);
 				taskInstanceImpl.setCommandType(StringUtil.getString(taskCommandInst.getTaskCommandType()));

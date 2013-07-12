@@ -50,6 +50,7 @@ import com.founder.fix.fixflow.core.impl.job.ConnectorTimeJob;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
@@ -489,7 +490,14 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 			// log.debug("executing action '"+action+"'");
 			try {
 				token.lock();
-
+				
+				if(connector.getSkipExpression()!=null&&!connector.getSkipExpression().equals("")){
+					Object skipExpressionObj=ExpressionMgmt.execute(connector.getSkipExpression(), executionContext);
+					if(StringUtil.getBoolean(skipExpressionObj)){
+						return ;
+					}
+				}
+				
 				if (connector.isTimeExecute()) {
 					// 定时器执行方式
 					timeExecute(executionContext, connector);
