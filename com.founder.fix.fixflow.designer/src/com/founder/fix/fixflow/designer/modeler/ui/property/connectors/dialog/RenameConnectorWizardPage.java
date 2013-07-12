@@ -396,4 +396,30 @@ public class RenameConnectorWizardPage extends WizardPage {
 	public void setExpressionComboViewer(ExpressionComboViewer expressionComboViewer) {
 		this.expressionComboViewer = expressionComboViewer;
 	}
+	
+	public Button getCheckButton() {
+		return checkButton;
+	}
+
+	public void setCheckButton(Button checkButton) {
+		this.checkButton = checkButton;
+	}
+	
+	public ExpressionComboViewer getTimeExpressionComboViewer() {
+		return timeExpressionComboViewer;
+	}
+
+	public void setTimeExpressionComboViewer(ExpressionComboViewer timeExpressionComboViewer) {
+		this.timeExpressionComboViewer = timeExpressionComboViewer;
+	}
+	
+	public ExpressionComboViewer getSkipExpressionComboViewer() {
+		return skipExpressionComboViewer;
+	}
+
+	public void setSkipExpressionComboViewer(ExpressionComboViewer skipExpressionComboViewer) {
+		this.skipExpressionComboViewer = skipExpressionComboViewer;
+	}
+
+	
 }

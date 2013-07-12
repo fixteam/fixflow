@@ -8,9 +8,6 @@ package com.founder.fix.bpmn2extensions.fixflow.util;
 
 import com.founder.fix.bpmn2extensions.fixflow.*;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -249,6 +246,24 @@ public class FixFlowSwitch<T> extends Switch<T> {
 			case FixFlowPackage.SKIP_COMMENT: {
 				SkipComment skipComment = (SkipComment)theEObject;
 				T result = caseSkipComment(skipComment);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FixFlowPackage.CONNECTOR_INSTANCE_ELEMENTS: {
+				ConnectorInstanceElements connectorInstanceElements = (ConnectorInstanceElements)theEObject;
+				T result = caseConnectorInstanceElements(connectorInstanceElements);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FixFlowPackage.TIME_EXPRESSION: {
+				TimeExpression timeExpression = (TimeExpression)theEObject;
+				T result = caseTimeExpression(timeExpression);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FixFlowPackage.TIME_SKIP_EXPRESSION: {
+				TimeSkipExpression timeSkipExpression = (TimeSkipExpression)theEObject;
+				T result = caseTimeSkipExpression(timeSkipExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -703,6 +718,51 @@ public class FixFlowSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseSkipComment(SkipComment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Connector Instance Elements</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Connector Instance Elements</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConnectorInstanceElements(ConnectorInstanceElements object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Time Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Time Expression</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTimeExpression(TimeExpression object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Time Skip Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Time Skip Expression</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTimeSkipExpression(TimeSkipExpression object) {
 		return null;
 	}
 

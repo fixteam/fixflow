@@ -195,16 +195,18 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		
 		label = new Label(proGroup, SWT.NONE);
 		label.setText("跳过策略");
-		
+
 		expressionComboViewer = new ExpressionComboViewer(proGroup);
 		combo = expressionComboViewer.getCombo();
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		SkipComment skipComment = connectorInstance.getSkipComment();
-		ExpressionTo expressionTo = new ExpressionTo();
-		expressionTo.setName(skipComment == null ? "" : skipComment.getExpression().getName());
-		expressionTo.setExpressionText(skipComment == null ? "" : skipComment.getExpression().getValue());
-		expressionComboViewer.getExpressionCombo().setExpressionTo(expressionTo);
-		
+		if(skipComment!=null){
+			ExpressionTo expressionTo = new ExpressionTo();
+			expressionTo.setName(skipComment == null ? "" : skipComment.getExpression().getName());
+			expressionTo.setExpressionText(skipComment == null ? "" : skipComment.getExpression().getValue());
+			expressionComboViewer.getExpressionCombo().setExpressionTo(expressionTo);
+		}
+
 		Group group = new Group(proGroup, SWT.NONE);
 		group.setText("定时器配置");
 		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -224,7 +226,7 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		label = new Label(group, SWT.NONE);
 		label.setText("时间表达式");
 
-		timeExpressionComboViewer = new ExpressionComboViewer(group);
+		timeExpressionComboViewer = new ExpressionComboViewer(proGroup);
 		timecombo = timeExpressionComboViewer.getCombo();
 		timecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		timecombo.setEnabled(false);
@@ -232,10 +234,25 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		label = new Label(group, SWT.NONE);
 		label.setText("定时器跳过策略");
 		
-		skipExpressionComboViewer = new ExpressionComboViewer(group);
+		skipExpressionComboViewer = new ExpressionComboViewer(proGroup);
 		skipcombo = skipExpressionComboViewer.getCombo();
 		skipcombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		skipcombo.setEnabled(false);
+		
+		if(connectorInstance.isIsTimeExecute()){
+			checkButton.setSelection(true);
+			ExpressionTo expressionTo = new ExpressionTo();
+			expressionTo.setName(connectorInstance.getTimeExpression() == null ? "" : connectorInstance.getTimeExpression().getExpression().getName());
+			expressionTo.setExpressionText(connectorInstance.getTimeExpression() == null ? "" : connectorInstance.getTimeExpression().getExpression().getValue());
+			timeExpressionComboViewer.getExpressionCombo().setExpressionTo(expressionTo);
+			timecombo.setEnabled(true);
+			skipcombo.setEnabled(true);
+			
+			ExpressionTo expressionToSkip = new ExpressionTo();
+			expressionToSkip.setName(connectorInstance.getTimeSkipExpression() == null ? "" : connectorInstance.getTimeSkipExpression().getExpression().getName());
+			expressionToSkip.setExpressionText(connectorInstance.getTimeSkipExpression() == null ? "" : connectorInstance.getTimeSkipExpression().getExpression().getValue());
+			skipExpressionComboViewer.getExpressionCombo().setExpressionTo(expressionToSkip);
+		}
 		
 		checkButton.addListener(SWT.Selection, new Listener() {
 			
@@ -412,6 +429,30 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 
 	public void setExpressionComboViewer(ExpressionComboViewer expressionComboViewer) {
 		this.expressionComboViewer = expressionComboViewer;
+	}
+	
+	public Button getCheckButton() {
+		return checkButton;
+	}
+
+	public void setCheckButton(Button checkButton) {
+		this.checkButton = checkButton;
+	}
+	
+	public ExpressionComboViewer getTimeExpressionComboViewer() {
+		return timeExpressionComboViewer;
+	}
+
+	public void setTimeExpressionComboViewer(ExpressionComboViewer timeExpressionComboViewer) {
+		this.timeExpressionComboViewer = timeExpressionComboViewer;
+	}
+
+	public ExpressionComboViewer getSkipExpressionComboViewer() {
+		return skipExpressionComboViewer;
+	}
+
+	public void setSkipExpressionComboViewer(ExpressionComboViewer skipExpressionComboViewer) {
+		this.skipExpressionComboViewer = skipExpressionComboViewer;
 	}
 
 }

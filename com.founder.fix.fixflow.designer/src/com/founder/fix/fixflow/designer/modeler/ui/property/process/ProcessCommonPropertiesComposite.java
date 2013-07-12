@@ -836,7 +836,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 				try {
 					bpmnDeployer.deleteDeploy(col.getProcessKey(), col.getVersion(), FixFlowConfigUtil.createConnection());
 
-					Scheduler scheduler = QuartzUtil.getScheduler(QuartzUtil.createSchedulerFactory(getQuartzProps()));
+					Scheduler scheduler = QuartzUtil.getScheduler();
 					Set<JobKey> keys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(col.getProcessId()));
 					List<JobKey> jobkeys = new ArrayList<JobKey>();
 					jobkeys.addAll(keys);
@@ -992,7 +992,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 				getDiagramEditor().doSave(null);
 
-				Scheduler scheduler = QuartzUtil.getScheduler(QuartzUtil.createSchedulerFactory(getQuartzProps()));
+				Scheduler scheduler = QuartzUtil.getScheduler();
 				try {
 					List<StartEvent> startEvents = modelHandler.getAll(StartEvent.class);
 					for (StartEvent startEvent : startEvents) {
@@ -1172,7 +1172,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 			}
 
 			if (hasTimerEvent) {
-				SchedulerFactory schedulerFactory = QuartzUtil.createSchedulerFactory(getQuartzProps());
+		
 				JobDetail job = QuartzUtil.createJobDetail(ProcessInstanceAutoStart.class, nodeId, id);
 
 				Trigger trigger = null;
@@ -1194,7 +1194,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 					Scheduler scheduler = null;
 					try {
-						scheduler = schedulerFactory.getScheduler();
+						scheduler = QuartzUtil.getScheduler();
 
 						job.getJobDataMap().put("tokenId", "");//令牌
 						job.getJobDataMap().put("transientVariableId", "");//不管
@@ -1228,7 +1228,7 @@ public class ProcessCommonPropertiesComposite extends AbstractFixFlowBpmn2Proper
 
 					Scheduler scheduler = null;
 					try {
-						scheduler = schedulerFactory.getScheduler();
+						scheduler = QuartzUtil.getScheduler();
 
 						job.getJobDataMap().put("tokenId", "");//令牌
 						job.getJobDataMap().put("transientVariableId", "");//不管

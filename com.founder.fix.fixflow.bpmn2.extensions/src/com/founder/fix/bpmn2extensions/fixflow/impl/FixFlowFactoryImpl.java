@@ -91,6 +91,9 @@ public class FixFlowFactoryImpl extends EFactoryImpl implements FixFlowFactory {
 			case FixFlowPackage.ASSIGN_POLICY_TYPE: return createAssignPolicyType();
 			case FixFlowPackage.SKIP_ASSIGNEE: return createSkipAssignee();
 			case FixFlowPackage.SKIP_COMMENT: return createSkipComment();
+			case FixFlowPackage.CONNECTOR_INSTANCE_ELEMENTS: return createConnectorInstanceElements();
+			case FixFlowPackage.TIME_EXPRESSION: return createTimeExpression();
+			case FixFlowPackage.TIME_SKIP_EXPRESSION: return createTimeSkipExpression();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -424,6 +427,36 @@ public class FixFlowFactoryImpl extends EFactoryImpl implements FixFlowFactory {
 	public SkipComment createSkipComment() {
 		SkipCommentImpl skipComment = new SkipCommentImpl();
 		return skipComment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConnectorInstanceElements createConnectorInstanceElements() {
+		ConnectorInstanceElementsImpl connectorInstanceElements = new ConnectorInstanceElementsImpl();
+		return connectorInstanceElements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeExpression createTimeExpression() {
+		TimeExpressionImpl timeExpression = new TimeExpressionImpl();
+		return timeExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeSkipExpression createTimeSkipExpression() {
+		TimeSkipExpressionImpl timeSkipExpression = new TimeSkipExpressionImpl();
+		return timeSkipExpression;
 	}
 
 	/**

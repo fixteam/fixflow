@@ -14,6 +14,8 @@ import com.founder.fix.bpmn2extensions.fixflow.Documentation;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 
 import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
+import com.founder.fix.bpmn2extensions.fixflow.TimeExpression;
+import com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -50,6 +52,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getConnectorParameterOutputs <em>Connector Parameter Outputs</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getConnectorParameterOutputsDef <em>Connector Parameter Outputs Def</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getSkipComment <em>Skip Comment</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getTimeExpression <em>Time Expression</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#isIsTimeExecute <em>Is Time Execute</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceImpl#getTimeSkipExpression <em>Time Skip Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -265,6 +270,46 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 	 * @ordered
 	 */
 	protected SkipComment skipComment;
+
+	/**
+	 * The cached value of the '{@link #getTimeExpression() <em>Time Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTimeExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected TimeExpression timeExpression;
+
+	/**
+	 * The default value of the '{@link #isIsTimeExecute() <em>Is Time Execute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsTimeExecute()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_TIME_EXECUTE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsTimeExecute() <em>Is Time Execute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsTimeExecute()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isTimeExecute = IS_TIME_EXECUTE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTimeSkipExpression() <em>Time Skip Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTimeSkipExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected TimeSkipExpression timeSkipExpression;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -580,6 +625,113 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TimeExpression getTimeExpression() {
+		return timeExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetTimeExpression(TimeExpression newTimeExpression, NotificationChain msgs) {
+		TimeExpression oldTimeExpression = timeExpression;
+		timeExpression = newTimeExpression;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION, oldTimeExpression, newTimeExpression);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTimeExpression(TimeExpression newTimeExpression) {
+		if (newTimeExpression != timeExpression) {
+			NotificationChain msgs = null;
+			if (timeExpression != null)
+				msgs = ((InternalEObject)timeExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION, null, msgs);
+			if (newTimeExpression != null)
+				msgs = ((InternalEObject)newTimeExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION, null, msgs);
+			msgs = basicSetTimeExpression(newTimeExpression, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION, newTimeExpression, newTimeExpression));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isIsTimeExecute() {
+		return isTimeExecute;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsTimeExecute(boolean newIsTimeExecute) {
+		boolean oldIsTimeExecute = isTimeExecute;
+		isTimeExecute = newIsTimeExecute;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__IS_TIME_EXECUTE, oldIsTimeExecute, isTimeExecute));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimeSkipExpression getTimeSkipExpression() {
+		return timeSkipExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetTimeSkipExpression(TimeSkipExpression newTimeSkipExpression, NotificationChain msgs) {
+		TimeSkipExpression oldTimeSkipExpression = timeSkipExpression;
+		timeSkipExpression = newTimeSkipExpression;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION, oldTimeSkipExpression, newTimeSkipExpression);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTimeSkipExpression(TimeSkipExpression newTimeSkipExpression) {
+		if (newTimeSkipExpression != timeSkipExpression) {
+			NotificationChain msgs = null;
+			if (timeSkipExpression != null)
+				msgs = ((InternalEObject)timeSkipExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION, null, msgs);
+			if (newTimeSkipExpression != null)
+				msgs = ((InternalEObject)newTimeSkipExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION, null, msgs);
+			msgs = basicSetTimeSkipExpression(newTimeSkipExpression, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION, newTimeSkipExpression, newTimeSkipExpression));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -593,6 +745,10 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				return ((InternalEList<?>)getConnectorParameterOutputsDef()).basicRemove(otherEnd, msgs);
 			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
 				return basicSetSkipComment(null, msgs);
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION:
+				return basicSetTimeExpression(null, msgs);
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION:
+				return basicSetTimeSkipExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -631,6 +787,12 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				return getConnectorParameterOutputsDef();
 			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
 				return getSkipComment();
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION:
+				return getTimeExpression();
+			case FixFlowPackage.CONNECTOR_INSTANCE__IS_TIME_EXECUTE:
+				return isIsTimeExecute();
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION:
+				return getTimeSkipExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -686,6 +848,15 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
 				setSkipComment((SkipComment)newValue);
 				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION:
+				setTimeExpression((TimeExpression)newValue);
+				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__IS_TIME_EXECUTE:
+				setIsTimeExecute((Boolean)newValue);
+				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION:
+				setTimeSkipExpression((TimeSkipExpression)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -737,6 +908,15 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
 				setSkipComment((SkipComment)null);
 				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION:
+				setTimeExpression((TimeExpression)null);
+				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__IS_TIME_EXECUTE:
+				setIsTimeExecute(IS_TIME_EXECUTE_EDEFAULT);
+				return;
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION:
+				setTimeSkipExpression((TimeSkipExpression)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -775,6 +955,12 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 				return connectorParameterOutputsDef != null && !connectorParameterOutputsDef.isEmpty();
 			case FixFlowPackage.CONNECTOR_INSTANCE__SKIP_COMMENT:
 				return skipComment != null;
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_EXPRESSION:
+				return timeExpression != null;
+			case FixFlowPackage.CONNECTOR_INSTANCE__IS_TIME_EXECUTE:
+				return isTimeExecute != IS_TIME_EXECUTE_EDEFAULT;
+			case FixFlowPackage.CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION:
+				return timeSkipExpression != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -805,6 +991,8 @@ public class ConnectorInstanceImpl extends EObjectImpl implements ConnectorInsta
 		result.append(errorHandling);
 		result.append(", errorCode: ");
 		result.append(errorCode);
+		result.append(", isTimeExecute: ");
+		result.append(isTimeExecute);
 		result.append(')');
 		return result.toString();
 	}

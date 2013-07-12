@@ -31,6 +31,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getConnectorParameterOutputs <em>Connector Parameter Outputs</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getConnectorParameterOutputsDef <em>Connector Parameter Outputs Def</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getSkipComment <em>Skip Comment</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeExpression <em>Time Expression</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#isIsTimeExecute <em>Is Time Execute</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeSkipExpression <em>Time Skip Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -358,5 +361,87 @@ public interface ConnectorInstance extends EObject {
 	 * @generated
 	 */
 	void setSkipComment(SkipComment value);
+
+	/**
+	 * Returns the value of the '<em><b>Time Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Time Expression</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Time Expression</em>' containment reference.
+	 * @see #setTimeExpression(TimeExpression)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getConnectorInstance_TimeExpression()
+	 * @model containment="true"
+	 *        extendedMetaData="name='timeExpression' kind='element' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	TimeExpression getTimeExpression();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeExpression <em>Time Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Time Expression</em>' containment reference.
+	 * @see #getTimeExpression()
+	 * @generated
+	 */
+	void setTimeExpression(TimeExpression value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Time Execute</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Time Execute</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Time Execute</em>' attribute.
+	 * @see #setIsTimeExecute(boolean)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getConnectorInstance_IsTimeExecute()
+	 * @model default="false" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute'"
+	 * @generated
+	 */
+	boolean isIsTimeExecute();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#isIsTimeExecute <em>Is Time Execute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Time Execute</em>' attribute.
+	 * @see #isIsTimeExecute()
+	 * @generated
+	 */
+	void setIsTimeExecute(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Time Skip Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Time Skip Expression</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Time Skip Expression</em>' containment reference.
+	 * @see #setTimeSkipExpression(TimeSkipExpression)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getConnectorInstance_TimeSkipExpression()
+	 * @model containment="true"
+	 *        extendedMetaData="name='timeSkipExpression' kind='element' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	TimeSkipExpression getTimeSkipExpression();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeSkipExpression <em>Time Skip Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Time Skip Expression</em>' containment reference.
+	 * @see #getTimeSkipExpression()
+	 * @generated
+	 */
+	void setTimeSkipExpression(TimeSkipExpression value);
 
 } // ConnectorInstance
