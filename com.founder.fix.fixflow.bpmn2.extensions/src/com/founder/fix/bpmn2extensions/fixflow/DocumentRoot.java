@@ -67,6 +67,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getTaskType <em>Task Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getValidationLevel <em>Validation Level</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getLanguageType <em>Language Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getConnectorInstanceElements <em>Connector Instance Elements</em>}</li>
  * </ul>
  * </p>
  *
@@ -1239,5 +1240,22 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setLanguageType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Connector Instance Elements</b></em>' containment reference list.
+	 * The list contents are of type {@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Connector Instance Elements</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Connector Instance Elements</em>' containment reference list.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getDocumentRoot_ConnectorInstanceElements()
+	 * @model containment="true"
+	 *        extendedMetaData="name='connectorInstanceElements' kind='element' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	EList<ConnectorInstanceElements> getConnectorInstanceElements();
 
 } // DocumentRoot

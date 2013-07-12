@@ -121,7 +121,7 @@ public interface ReceiveMessage extends EObject {
 	 * @see #setTokenVariable(TokenVariable)
 	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getReceiveMessage_TokenVariable()
 	 * @model containment="true"
-	 *        extendedMetaData="name='tokenVariable' kind='element' namespace='##targetNamespace'"
+	 *        extendedMetaData="name='' kind='element' namespace='##targetNamespace' wildcards=''"
 	 * @generated
 	 */
 	TokenVariable getTokenVariable();

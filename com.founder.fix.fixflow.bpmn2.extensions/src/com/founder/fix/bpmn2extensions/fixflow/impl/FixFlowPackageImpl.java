@@ -8,6 +8,7 @@ package com.founder.fix.bpmn2extensions.fixflow.impl;
 
 import com.founder.fix.bpmn2extensions.fixflow.AssignPolicyType;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputs;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputsDef;
@@ -38,6 +39,8 @@ import com.founder.fix.bpmn2extensions.fixflow.SubProcessToDataSourceMapping;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
 import com.founder.fix.bpmn2extensions.fixflow.TaskPriority;
 import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
+import com.founder.fix.bpmn2extensions.fixflow.TimeExpression;
+import com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression;
 import com.founder.fix.bpmn2extensions.fixflow.TokenVariable;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -266,6 +269,27 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * @generated
 	 */
 	private EClass skipCommentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass connectorInstanceElementsEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass timeExpressionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass timeSkipExpressionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -766,6 +790,15 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDocumentRoot_ConnectorInstanceElements() {
+		return (EReference)documentRootEClass.getEStructuralFeatures().get(46);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getExpression() {
 		return expressionEClass;
 	}
@@ -1200,6 +1233,33 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 */
 	public EReference getConnectorInstance_SkipComment() {
 		return (EReference)connectorInstanceEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConnectorInstance_TimeExpression() {
+		return (EReference)connectorInstanceEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectorInstance_IsTimeExecute() {
+		return (EAttribute)connectorInstanceEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConnectorInstance_TimeSkipExpression() {
+		return (EReference)connectorInstanceEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -1837,6 +1897,78 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getConnectorInstanceElements() {
+		return connectorInstanceElementsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectorInstanceElements_Id() {
+		return (EAttribute)connectorInstanceElementsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnectorInstanceElements_Type() {
+		return (EAttribute)connectorInstanceElementsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConnectorInstanceElements_ConnectorInstance() {
+		return (EReference)connectorInstanceElementsEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTimeExpression() {
+		return timeExpressionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTimeExpression_Expression() {
+		return (EReference)timeExpressionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTimeSkipExpression() {
+		return timeSkipExpressionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTimeSkipExpression_Expression() {
+		return (EReference)timeSkipExpressionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getProcessValidationLevel() {
 		return processValidationLevelEEnum;
 	}
@@ -1916,6 +2048,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__TASK_TYPE);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__VALIDATION_LEVEL);
 		createEAttribute(documentRootEClass, DOCUMENT_ROOT__LANGUAGE_TYPE);
+		createEReference(documentRootEClass, DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS);
 
 		expressionEClass = createEClass(EXPRESSION);
 		createEAttribute(expressionEClass, EXPRESSION__VALUE);
@@ -1972,6 +2105,9 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS);
 		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__CONNECTOR_PARAMETER_OUTPUTS_DEF);
 		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__SKIP_COMMENT);
+		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__TIME_EXPRESSION);
+		createEAttribute(connectorInstanceEClass, CONNECTOR_INSTANCE__IS_TIME_EXECUTE);
+		createEReference(connectorInstanceEClass, CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION);
 
 		connectorParameterInputsEClass = createEClass(CONNECTOR_PARAMETER_INPUTS);
 		createEAttribute(connectorParameterInputsEClass, CONNECTOR_PARAMETER_INPUTS__ID);
@@ -2065,6 +2201,17 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		skipCommentEClass = createEClass(SKIP_COMMENT);
 		createEReference(skipCommentEClass, SKIP_COMMENT__EXPRESSION);
 
+		connectorInstanceElementsEClass = createEClass(CONNECTOR_INSTANCE_ELEMENTS);
+		createEAttribute(connectorInstanceElementsEClass, CONNECTOR_INSTANCE_ELEMENTS__ID);
+		createEAttribute(connectorInstanceElementsEClass, CONNECTOR_INSTANCE_ELEMENTS__TYPE);
+		createEReference(connectorInstanceElementsEClass, CONNECTOR_INSTANCE_ELEMENTS__CONNECTOR_INSTANCE);
+
+		timeExpressionEClass = createEClass(TIME_EXPRESSION);
+		createEReference(timeExpressionEClass, TIME_EXPRESSION__EXPRESSION);
+
+		timeSkipExpressionEClass = createEClass(TIME_SKIP_EXPRESSION);
+		createEReference(timeSkipExpressionEClass, TIME_SKIP_EXPRESSION__EXPRESSION);
+
 		// Create enums
 		processValidationLevelEEnum = createEEnum(PROCESS_VALIDATION_LEVEL);
 	}
@@ -2149,6 +2296,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEAttribute(getDocumentRoot_TaskType(), theXMLTypePackage.getString(), "taskType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDocumentRoot_ValidationLevel(), this.getProcessValidationLevel(), "validationLevel", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDocumentRoot_LanguageType(), theXMLTypePackage.getString(), "languageType", null, 0, 1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDocumentRoot_ConnectorInstanceElements(), this.getConnectorInstanceElements(), null, "connectorInstanceElements", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExpression_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2205,6 +2353,9 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEReference(getConnectorInstance_ConnectorParameterOutputs(), this.getConnectorParameterOutputs(), null, "connectorParameterOutputs", null, 0, -1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConnectorInstance_ConnectorParameterOutputsDef(), this.getConnectorParameterOutputsDef(), null, "connectorParameterOutputsDef", null, 0, -1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConnectorInstance_SkipComment(), this.getSkipComment(), null, "skipComment", null, 0, 1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnectorInstance_TimeExpression(), this.getTimeExpression(), null, "timeExpression", null, 0, 1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConnectorInstance_IsTimeExecute(), theXMLTypePackage.getBoolean(), "isTimeExecute", "false", 0, 1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnectorInstance_TimeSkipExpression(), this.getTimeSkipExpression(), null, "TimeSkipExpression", null, 0, 1, ConnectorInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(connectorParameterInputsEClass, ConnectorParameterInputs.class, "ConnectorParameterInputs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getConnectorParameterInputs_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, ConnectorParameterInputs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2297,6 +2448,17 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 
 		initEClass(skipCommentEClass, SkipComment.class, "SkipComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSkipComment_Expression(), this.getExpression(), null, "expression", null, 0, 1, SkipComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(connectorInstanceElementsEClass, ConnectorInstanceElements.class, "ConnectorInstanceElements", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConnectorInstanceElements_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, ConnectorInstanceElements.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConnectorInstanceElements_Type(), theXMLTypePackage.getString(), "type", null, 1, 1, ConnectorInstanceElements.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnectorInstanceElements_ConnectorInstance(), this.getConnectorInstance(), null, "connectorInstance", null, 0, -1, ConnectorInstanceElements.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(timeExpressionEClass, TimeExpression.class, "TimeExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTimeExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, TimeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(timeSkipExpressionEClass, TimeSkipExpression.class, "TimeSkipExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTimeSkipExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, TimeSkipExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(processValidationLevelEEnum, ProcessValidationLevel.class, "ProcessValidationLevel");
@@ -2667,6 +2829,14 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
+		  (getDocumentRoot_ConnectorInstanceElements(), 
+		   source, 
+		   new String[] {
+			 "name", "connectorInstanceElements",
+			 "kind", "element",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
 		  (expressionEClass, 
 		   source, 
 		   new String[] {
@@ -2906,6 +3076,28 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 			 "kind", "element"
 		   });		
 		addAnnotation
+		  (getConnectorInstance_TimeExpression(), 
+		   source, 
+		   new String[] {
+			 "name", "timeExpression",
+			 "kind", "element",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getConnectorInstance_IsTimeExecute(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getConnectorInstance_TimeSkipExpression(), 
+		   source, 
+		   new String[] {
+			 "name", "timeSkipExpression",
+			 "kind", "element",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
 		  (connectorParameterInputsEClass, 
 		   source, 
 		   new String[] {
@@ -3130,7 +3322,9 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		   source, 
 		   new String[] {
 			 "namespace", "##targetNamespace",
-			 "kind", "element"
+			 "kind", "element",
+			 "wildcards", "",
+			 "name", ""
 		   });		
 		addAnnotation
 		  (receiveMessageEClass, 
@@ -3165,9 +3359,10 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		  (getReceiveMessage_TokenVariable(), 
 		   source, 
 		   new String[] {
-			 "name", "tokenVariable",
+			 "name", "",
 			 "kind", "element",
-			 "namespace", "##targetNamespace"
+			 "namespace", "##targetNamespace",
+			 "wildcards", ""
 		   });		
 		addAnnotation
 		  (tokenVariableEClass, 
@@ -3315,7 +3510,62 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 			 "name", "expression",
 			 "kind", "element",
 			 "namespace", "##targetNamespace"
-		   });					
+		   });							
+		addAnnotation
+		  (connectorInstanceElementsEClass, 
+		   source, 
+		   new String[] {
+			 "name", "connectorInstanceElements"
+		   });		
+		addAnnotation
+		  (getConnectorInstanceElements_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getConnectorInstanceElements_Type(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getConnectorInstanceElements_ConnectorInstance(), 
+		   source, 
+		   new String[] {
+			 "namespace", "##targetNamespace",
+			 "wildcards", "",
+			 "name", ""
+		   });		
+		addAnnotation
+		  (timeExpressionEClass, 
+		   source, 
+		   new String[] {
+			 "name", "timeExpression"
+		   });		
+		addAnnotation
+		  (getTimeExpression_Expression(), 
+		   source, 
+		   new String[] {
+			 "name", "expression",
+			 "kind", "element",
+			 "namespace", "##targetNamespace",
+			 "wildcards", ""
+		   });		
+		addAnnotation
+		  (timeSkipExpressionEClass, 
+		   source, 
+		   new String[] {
+			 "name", "timeSkipExpression"
+		   });		
+		addAnnotation
+		  (getTimeSkipExpression_Expression(), 
+		   source, 
+		   new String[] {
+			 "namespace", "##targetNamespace",
+			 "name", "expression",
+			 "kind", "element"
+		   });
 	}
 
 } //FixFlowPackageImpl

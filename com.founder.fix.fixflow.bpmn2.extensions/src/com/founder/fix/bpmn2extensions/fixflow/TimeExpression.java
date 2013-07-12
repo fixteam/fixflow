@@ -10,21 +10,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Filter Conditions</b></em>'.
+ * A representation of the model object '<em><b>Time Expression</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.FilterConditions#getExpression <em>Expression</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TimeExpression#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
- * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getFilterConditions()
- * @model extendedMetaData="name='filterConditions'"
+ * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getTimeExpression()
+ * @model extendedMetaData="name='timeExpression'"
  * @generated
  */
-public interface FilterConditions extends EObject {
+public interface TimeExpression extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -35,15 +35,15 @@ public interface FilterConditions extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Expression</em>' containment reference.
 	 * @see #setExpression(Expression)
-	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getFilterConditions_Expression()
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getTimeExpression_Expression()
 	 * @model containment="true"
-	 *        extendedMetaData="namespace='##targetNamespace' kind='element' wildcards='' name=''"
+	 *        extendedMetaData="name='expression' kind='element' namespace='##targetNamespace' wildcards=''"
 	 * @generated
 	 */
 	Expression getExpression();
 
 	/**
-	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.FilterConditions#getExpression <em>Expression</em>}' containment reference.
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.TimeExpression#getExpression <em>Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Expression</em>' containment reference.
@@ -52,4 +52,4 @@ public interface FilterConditions extends EObject {
 	 */
 	void setExpression(Expression value);
 
-} // FilterConditions
+} // TimeExpression

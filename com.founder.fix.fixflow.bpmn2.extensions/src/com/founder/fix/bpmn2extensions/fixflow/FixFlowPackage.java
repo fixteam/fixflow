@@ -489,13 +489,22 @@ public interface FixFlowPackage extends EPackage {
 	int DOCUMENT_ROOT__LANGUAGE_TYPE = 45;
 
 	/**
+	 * The feature id for the '<em><b>Connector Instance Elements</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS = 46;
+
+	/**
 	 * The number of structural features of the '<em>Document Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 46;
+	int DOCUMENT_ROOT_FEATURE_COUNT = 47;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ExpressionImpl <em>Expression</em>}' class.
@@ -1000,13 +1009,40 @@ public interface FixFlowPackage extends EPackage {
 	int CONNECTOR_INSTANCE__SKIP_COMMENT = 12;
 
 	/**
+	 * The feature id for the '<em><b>Time Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE__TIME_EXPRESSION = 13;
+
+	/**
+	 * The feature id for the '<em><b>Is Time Execute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE__IS_TIME_EXECUTE = 14;
+
+	/**
+	 * The feature id for the '<em><b>Time Skip Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION = 15;
+
+	/**
 	 * The number of structural features of the '<em>Connector Instance</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTOR_INSTANCE_FEATURE_COUNT = 13;
+	int CONNECTOR_INSTANCE_FEATURE_COUNT = 16;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorParameterInputsImpl <em>Connector Parameter Inputs</em>}' class.
@@ -1866,6 +1902,108 @@ public interface FixFlowPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceElementsImpl <em>Connector Instance Elements</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceElementsImpl
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getConnectorInstanceElements()
+	 * @generated
+	 */
+	int CONNECTOR_INSTANCE_ELEMENTS = 30;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE_ELEMENTS__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE_ELEMENTS__TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Connector Instance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE_ELEMENTS__CONNECTOR_INSTANCE = 2;
+
+	/**
+	 * The number of structural features of the '<em>Connector Instance Elements</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR_INSTANCE_ELEMENTS_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.TimeExpressionImpl <em>Time Expression</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.TimeExpressionImpl
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getTimeExpression()
+	 * @generated
+	 */
+	int TIME_EXPRESSION = 31;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_EXPRESSION__EXPRESSION = 0;
+
+	/**
+	 * The number of structural features of the '<em>Time Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_EXPRESSION_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.TimeSkipExpressionImpl <em>Time Skip Expression</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.TimeSkipExpressionImpl
+	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getTimeSkipExpression()
+	 * @generated
+	 */
+	int TIME_SKIP_EXPRESSION = 32;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_SKIP_EXPRESSION__EXPRESSION = 0;
+
+	/**
+	 * The number of structural features of the '<em>Time Skip Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_SKIP_EXPRESSION_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel <em>Process Validation Level</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1873,7 +2011,7 @@ public interface FixFlowPackage extends EPackage {
 	 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getProcessValidationLevel()
 	 * @generated
 	 */
-	int PROCESS_VALIDATION_LEVEL = 30;
+	int PROCESS_VALIDATION_LEVEL = 33;
 
 
 	/**
@@ -2391,6 +2529,17 @@ public interface FixFlowPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDocumentRoot_LanguageType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getConnectorInstanceElements <em>Connector Instance Elements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Connector Instance Elements</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.DocumentRoot#getConnectorInstanceElements()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EReference getDocumentRoot_ConnectorInstanceElements();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.Expression <em>Expression</em>}'.
@@ -2923,6 +3072,39 @@ public interface FixFlowPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getConnectorInstance_SkipComment();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeExpression <em>Time Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Time Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeExpression()
+	 * @see #getConnectorInstance()
+	 * @generated
+	 */
+	EReference getConnectorInstance_TimeExpression();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#isIsTimeExecute <em>Is Time Execute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Time Execute</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#isIsTimeExecute()
+	 * @see #getConnectorInstance()
+	 * @generated
+	 */
+	EAttribute getConnectorInstance_IsTimeExecute();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeSkipExpression <em>Time Skip Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Time Skip Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance#getTimeSkipExpression()
+	 * @see #getConnectorInstance()
+	 * @generated
+	 */
+	EReference getConnectorInstance_TimeSkipExpression();
 
 	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs <em>Connector Parameter Inputs</em>}'.
@@ -3673,6 +3855,91 @@ public interface FixFlowPackage extends EPackage {
 	EReference getSkipComment_Expression();
 
 	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements <em>Connector Instance Elements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Connector Instance Elements</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements
+	 * @generated
+	 */
+	EClass getConnectorInstanceElements();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements#getId()
+	 * @see #getConnectorInstanceElements()
+	 * @generated
+	 */
+	EAttribute getConnectorInstanceElements_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements#getType()
+	 * @see #getConnectorInstanceElements()
+	 * @generated
+	 */
+	EAttribute getConnectorInstanceElements_Type();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements#getConnectorInstance <em>Connector Instance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Connector Instance</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements#getConnectorInstance()
+	 * @see #getConnectorInstanceElements()
+	 * @generated
+	 */
+	EReference getConnectorInstanceElements_ConnectorInstance();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.TimeExpression <em>Time Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Time Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TimeExpression
+	 * @generated
+	 */
+	EClass getTimeExpression();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.fixflow.TimeExpression#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TimeExpression#getExpression()
+	 * @see #getTimeExpression()
+	 * @generated
+	 */
+	EReference getTimeExpression_Expression();
+
+	/**
+	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression <em>Time Skip Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Time Skip Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression
+	 * @generated
+	 */
+	EClass getTimeSkipExpression();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression#getExpression()
+	 * @see #getTimeSkipExpression()
+	 * @generated
+	 */
+	EReference getTimeSkipExpression_Expression();
+
+	/**
 	 * Returns the meta object for enum '{@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel <em>Process Validation Level</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4083,6 +4350,14 @@ public interface FixFlowPackage extends EPackage {
 		EAttribute DOCUMENT_ROOT__LANGUAGE_TYPE = eINSTANCE.getDocumentRoot_LanguageType();
 
 		/**
+		 * The meta object literal for the '<em><b>Connector Instance Elements</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS = eINSTANCE.getDocumentRoot_ConnectorInstanceElements();
+
+		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ExpressionImpl <em>Expression</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4487,6 +4762,30 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONNECTOR_INSTANCE__SKIP_COMMENT = eINSTANCE.getConnectorInstance_SkipComment();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONNECTOR_INSTANCE__TIME_EXPRESSION = eINSTANCE.getConnectorInstance_TimeExpression();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Time Execute</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTOR_INSTANCE__IS_TIME_EXECUTE = eINSTANCE.getConnectorInstance_IsTimeExecute();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Skip Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONNECTOR_INSTANCE__TIME_SKIP_EXPRESSION = eINSTANCE.getConnectorInstance_TimeSkipExpression();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorParameterInputsImpl <em>Connector Parameter Inputs</em>}' class.
@@ -5091,6 +5390,76 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SKIP_COMMENT__EXPRESSION = eINSTANCE.getSkipComment_Expression();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceElementsImpl <em>Connector Instance Elements</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.ConnectorInstanceElementsImpl
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getConnectorInstanceElements()
+		 * @generated
+		 */
+		EClass CONNECTOR_INSTANCE_ELEMENTS = eINSTANCE.getConnectorInstanceElements();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTOR_INSTANCE_ELEMENTS__ID = eINSTANCE.getConnectorInstanceElements_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTOR_INSTANCE_ELEMENTS__TYPE = eINSTANCE.getConnectorInstanceElements_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Connector Instance</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONNECTOR_INSTANCE_ELEMENTS__CONNECTOR_INSTANCE = eINSTANCE.getConnectorInstanceElements_ConnectorInstance();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.TimeExpressionImpl <em>Time Expression</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.TimeExpressionImpl
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getTimeExpression()
+		 * @generated
+		 */
+		EClass TIME_EXPRESSION = eINSTANCE.getTimeExpression();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TIME_EXPRESSION__EXPRESSION = eINSTANCE.getTimeExpression_Expression();
+
+		/**
+		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.TimeSkipExpressionImpl <em>Time Skip Expression</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.TimeSkipExpressionImpl
+		 * @see com.founder.fix.bpmn2extensions.fixflow.impl.FixFlowPackageImpl#getTimeSkipExpression()
+		 * @generated
+		 */
+		EClass TIME_SKIP_EXPRESSION = eINSTANCE.getTimeSkipExpression();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TIME_SKIP_EXPRESSION__EXPRESSION = eINSTANCE.getTimeSkipExpression_Expression();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.ProcessValidationLevel <em>Process Validation Level</em>}' enum.

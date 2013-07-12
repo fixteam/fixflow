@@ -192,6 +192,18 @@ public class FixFlowAdapterFactory extends AdapterFactoryImpl {
 				return createSkipCommentAdapter();
 			}
 			@Override
+			public Adapter caseConnectorInstanceElements(ConnectorInstanceElements object) {
+				return createConnectorInstanceElementsAdapter();
+			}
+			@Override
+			public Adapter caseTimeExpression(TimeExpression object) {
+				return createTimeExpressionAdapter();
+			}
+			@Override
+			public Adapter caseTimeSkipExpression(TimeSkipExpression object) {
+				return createTimeSkipExpressionAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -628,6 +640,48 @@ public class FixFlowAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSkipCommentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements <em>Connector Instance Elements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements
+	 * @generated
+	 */
+	public Adapter createConnectorInstanceElementsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.fixflow.TimeExpression <em>Time Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TimeExpression
+	 * @generated
+	 */
+	public Adapter createTimeExpressionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression <em>Time Skip Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TimeSkipExpression
+	 * @generated
+	 */
+	public Adapter createTimeSkipExpressionAdapter() {
 		return null;
 	}
 

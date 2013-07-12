@@ -8,6 +8,7 @@ package com.founder.fix.bpmn2extensions.fixflow.impl;
 
 import com.founder.fix.bpmn2extensions.fixflow.AssignPolicyType;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstanceElements;
 import com.founder.fix.bpmn2extensions.fixflow.DataSourceToSubProcessMapping;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.DocumentRoot;
@@ -104,6 +105,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getTaskType <em>Task Type</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getValidationLevel <em>Validation Level</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getLanguageType <em>Language Type</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.DocumentRootImpl#getConnectorInstanceElements <em>Connector Instance Elements</em>}</li>
  * </ul>
  * </p>
  *
@@ -769,6 +771,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @ordered
 	 */
 	protected String languageType = LANGUAGE_TYPE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getConnectorInstanceElements() <em>Connector Instance Elements</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConnectorInstanceElements()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ConnectorInstanceElements> connectorInstanceElements;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1946,6 +1958,18 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<ConnectorInstanceElements> getConnectorInstanceElements() {
+		if (connectorInstanceElements == null) {
+			connectorInstanceElements = new EObjectContainmentEList<ConnectorInstanceElements>(ConnectorInstanceElements.class, this, FixFlowPackage.DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS);
+		}
+		return connectorInstanceElements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1991,6 +2015,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return basicSetTaskPriority(null, msgs);
 			case FixFlowPackage.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE:
 				return basicSetAssignPolicyType(null, msgs);
+			case FixFlowPackage.DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS:
+				return ((InternalEList<?>)getConnectorInstanceElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -2098,6 +2124,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return getValidationLevel();
 			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
 				return getLanguageType();
+			case FixFlowPackage.DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS:
+				return getConnectorInstanceElements();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2254,6 +2282,10 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
 				setLanguageType((String)newValue);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS:
+				getConnectorInstanceElements().clear();
+				getConnectorInstanceElements().addAll((Collection<? extends ConnectorInstanceElements>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2404,6 +2436,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
 				setLanguageType(LANGUAGE_TYPE_EDEFAULT);
 				return;
+			case FixFlowPackage.DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS:
+				getConnectorInstanceElements().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2508,6 +2543,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return validationLevel != VALIDATION_LEVEL_EDEFAULT;
 			case FixFlowPackage.DOCUMENT_ROOT__LANGUAGE_TYPE:
 				return LANGUAGE_TYPE_EDEFAULT == null ? languageType != null : !LANGUAGE_TYPE_EDEFAULT.equals(languageType);
+			case FixFlowPackage.DOCUMENT_ROOT__CONNECTOR_INSTANCE_ELEMENTS:
+				return connectorInstanceElements != null && !connectorInstanceElements.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

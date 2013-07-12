@@ -296,6 +296,33 @@ public interface FixFlowFactory extends EFactory {
 	SkipComment createSkipComment();
 
 	/**
+	 * Returns a new object of class '<em>Connector Instance Elements</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Connector Instance Elements</em>'.
+	 * @generated
+	 */
+	ConnectorInstanceElements createConnectorInstanceElements();
+
+	/**
+	 * Returns a new object of class '<em>Time Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Time Expression</em>'.
+	 * @generated
+	 */
+	TimeExpression createTimeExpression();
+
+	/**
+	 * Returns a new object of class '<em>Time Skip Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Time Skip Expression</em>'.
+	 * @generated
+	 */
+	TimeSkipExpression createTimeSkipExpression();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
