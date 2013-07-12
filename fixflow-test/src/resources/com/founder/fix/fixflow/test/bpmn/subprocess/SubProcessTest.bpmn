@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fix="http://www.founderfix.com/BPMN/fix" id="_XknUQdOrEeCFP6kuJqC8Tw" name="子流程测试">
+  <collaboration id="_Xkn7UNOrEeCFP6kuJqC8Tw">
+    <participant id="_Xkn7UdOrEeCFP6kuJqC8Tw" name="Internal" processRef="_XlI4sNOrEeCFP6kuJqC8Tw"/>
+  </collaboration>
+  <process id="_XlI4sNOrEeCFP6kuJqC8Tw" name="子流程测试">
+    <extensionElements>
+      <fix:processSubject xsi:type="tFormalExpression" id="_D9vrcNPkEeCKL6LgDS5WgA" fix:actuatorName="fixedValueActuator">子流程测试</fix:processSubject>
+    </extensionElements>
+    <startEvent id="StartEvent1" name="开始" fix:formUri="forms/simple/WFTEST/add.html">
+      <outgoing>SequenceFlow1</outgoing>
+    </startEvent>
+    <sequenceFlow id="SequenceFlow1" name="" sourceRef="StartEvent1" targetRef="UserTask1"/>
+    <userTask id="UserTask2" name="人工处理2" fix:formUri="forms/simple/WFTEST/add.html">
+      <extensionElements>
+        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
+      </extensionElements>
+      <incoming>SequenceFlow2</incoming>
+      <outgoing>SequenceFlow3</outgoing>
+      <humanPerformer id="resource1" name="处理1" fix:resourceType="User">
+        <resourceAssignmentExpression id="_D9vrcdPkEeCKL6LgDS5WgA">
+          <formalExpression id="_D9vrctPkEeCKL6LgDS5WgA" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
+        </resourceAssignmentExpression>
+      </humanPerformer>
+    </userTask>
+    <sequenceFlow id="SequenceFlow3" name="" sourceRef="UserTask2" targetRef="SubProcess1"/>
+    <userTask id="UserTask1" name="人工处理1" fix:formUri="forms/simple/WFTEST/add.html">
+      <extensionElements>
+        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="提交"/>
+      </extensionElements>
+      <incoming>SequenceFlow1</incoming>
+      <outgoing>SequenceFlow2</outgoing>
+      <humanPerformer id="resource1" name="提交人" fix:resourceType="User">
+        <resourceAssignmentExpression id="_D9vrc9PkEeCKL6LgDS5WgA">
+          <formalExpression id="_D9vrdNPkEeCKL6LgDS5WgA" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
+        </resourceAssignmentExpression>
+      </humanPerformer>
+    </userTask>
+    <sequenceFlow id="SequenceFlow2" name="" sourceRef="UserTask1" targetRef="UserTask2"/>
+    <subProcess id="SubProcess1" name="子流程1">
+      <incoming>SequenceFlow3</incoming>
+      <outgoing>SequenceFlow4</outgoing>
+      <startEvent id="StartEvent2" name="开始" fix:formUri="forms/simple/WFTEST/add.html">
+        <outgoing>SequenceFlow6</outgoing>
+      </startEvent>
+      <endEvent id="EndEvent2" name="结束">
+        <incoming>SequenceFlow8</incoming>
+      </endEvent>
+      <userTask id="UserTask5" name="人工处理5" fix:formUri="forms/simple/WFTEST/add.html">
+        <extensionElements>
+          <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
+        </extensionElements>
+        <incoming>SequenceFlow7</incoming>
+        <outgoing>SequenceFlow8</outgoing>
+        <humanPerformer id="resource1" name="处理1" fix:resourceType="User">
+          <resourceAssignmentExpression id="_KCuFoNPkEeCKL6LgDS5WgA">
+            <formalExpression id="_KCuFodPkEeCKL6LgDS5WgA" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
+          </resourceAssignmentExpression>
+        </humanPerformer>
+      </userTask>
+      <sequenceFlow id="SequenceFlow6" name="" sourceRef="StartEvent2" targetRef="UserTask4"/>
+      <sequenceFlow id="SequenceFlow8" name="" sourceRef="UserTask5" targetRef="EndEvent2"/>
+      <userTask id="UserTask4" name="人工处理4" fix:formUri="forms/simple/WFTEST/add.html">
+        <extensionElements>
+          <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
+        </extensionElements>
+        <incoming>SequenceFlow6</incoming>
+        <outgoing>SequenceFlow7</outgoing>
+        <humanPerformer id="resource1" name="处理1" fix:resourceType="User">
+          <resourceAssignmentExpression id="_KCuFotPkEeCKL6LgDS5WgA">
+            <formalExpression id="_KCuFo9PkEeCKL6LgDS5WgA" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
+          </resourceAssignmentExpression>
+        </humanPerformer>
+      </userTask>
+      <sequenceFlow id="SequenceFlow7" name="" sourceRef="UserTask4" targetRef="UserTask5"/>
+    </subProcess>
+    <sequenceFlow id="SequenceFlow4" name="" sourceRef="SubProcess1" targetRef="UserTask3"/>
+    <userTask id="UserTask3" name="人工处理3" fix:formUri="forms/simple/WFTEST/add.html">
+      <extensionElements>
+        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
+        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general2" fix:type="general" fix:name="不同意"/>
+      </extensionElements>
+      <incoming>SequenceFlow4</incoming>
+      <outgoing>SequenceFlow5</outgoing>
+      <humanPerformer id="resource1" name="处理1" fix:resourceType="User">
+        <resourceAssignmentExpression id="_KCuFpNPkEeCKL6LgDS5WgA">
+          <formalExpression id="_KCuFpdPkEeCKL6LgDS5WgA" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
+        </resourceAssignmentExpression>
+      </humanPerformer>
+    </userTask>
+    <sequenceFlow id="SequenceFlow5" name="" sourceRef="UserTask3" targetRef="EndEvent1"/>
+    <endEvent id="EndEvent1" name="结束">
+      <incoming>SequenceFlow5</incoming>
+    </endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="_uGu2UNOrEeCFP6kuJqC8Tw">
+    <bpmndi:BPMNPlane id="_uGu2UdOrEeCFP6kuJqC8Tw" bpmnElement="_XlI4sNOrEeCFP6kuJqC8Tw">
+      <bpmndi:BPMNShape id="_hXWZoNOrEeCFP6kuJqC8Tw" bpmnElement="SubProcess1">
+        <dc:Bounds height="300.0" width="300.0" x="60.0" y="180.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_ik1gcNOrEeCFP6kuJqC8Tw" bpmnElement="StartEvent1">
+        <dc:Bounds height="51.0" width="36.0" x="50.0" y="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_jLkwUNOrEeCFP6kuJqC8Tw" bpmnElement="EndEvent1">
+        <dc:Bounds height="51.0" width="36.0" x="670.0" y="288.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_j-NuMNOrEeCFP6kuJqC8Tw" bpmnElement="UserTask1">
+        <dc:Bounds height="50.0" width="110.0" x="165.0" y="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_lXCiUNOrEeCFP6kuJqC8Tw" bpmnElement="UserTask2">
+        <dc:Bounds height="50.0" width="110.0" x="330.0" y="90.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_mTcgMNOrEeCFP6kuJqC8Tw" bpmnElement="UserTask3">
+        <dc:Bounds height="50.0" width="110.0" x="490.0" y="263.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_oyxpYNOrEeCFP6kuJqC8Tw" bpmnElement="StartEvent2">
+        <dc:Bounds height="51.0" width="36.0" x="90.0" y="220.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_p93jgNOrEeCFP6kuJqC8Tw" bpmnElement="EndEvent2">
+        <dc:Bounds height="51.0" width="36.0" x="300.0" y="410.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_qoWq8NOrEeCFP6kuJqC8Tw" bpmnElement="UserTask4">
+        <dc:Bounds height="50.0" width="110.0" x="180.0" y="213.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_rVjvMNOrEeCFP6kuJqC8Tw" bpmnElement="UserTask5">
+        <dc:Bounds height="50.0" width="110.0" x="156.0" y="380.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="_nLI9MdOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow1" sourceElement="_ik1gcNOrEeCFP6kuJqC8Tw" targetElement="_j-NuMNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="86.0" y="98.0"/>
+        <di:waypoint xsi:type="dc:Point" x="165.0" y="105.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_nRzl4NOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow2" sourceElement="_j-NuMNOrEeCFP6kuJqC8Tw" targetElement="_lXCiUNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="275.0" y="105.0"/>
+        <di:waypoint xsi:type="dc:Point" x="330.0" y="115.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_nZFSkNOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow3" sourceElement="_lXCiUNOrEeCFP6kuJqC8Tw" targetElement="_hXWZoNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="385.0" y="140.0"/>
+        <di:waypoint xsi:type="dc:Point" x="210.0" y="180.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_nlGVUtOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow4" sourceElement="_hXWZoNOrEeCFP6kuJqC8Tw" targetElement="_mTcgMNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="360.0" y="330.0"/>
+        <di:waypoint xsi:type="dc:Point" x="490.0" y="288.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_nu-DANOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow5" sourceElement="_mTcgMNOrEeCFP6kuJqC8Tw" targetElement="_jLkwUNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="600.0" y="288.0"/>
+        <di:waypoint xsi:type="dc:Point" x="670.0" y="306.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_r2CmENOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow6" sourceElement="_oyxpYNOrEeCFP6kuJqC8Tw" targetElement="_qoWq8NOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="126.0" y="238.0"/>
+        <di:waypoint xsi:type="dc:Point" x="180.0" y="238.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_sSQoAdOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow7" sourceElement="_qoWq8NOrEeCFP6kuJqC8Tw" targetElement="_rVjvMNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="235.0" y="263.0"/>
+        <di:waypoint xsi:type="dc:Point" x="211.0" y="380.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_sccewtOrEeCFP6kuJqC8Tw" bpmnElement="SequenceFlow8" sourceElement="_rVjvMNOrEeCFP6kuJqC8Tw" targetElement="_p93jgNOrEeCFP6kuJqC8Tw">
+        <di:waypoint xsi:type="dc:Point" x="266.0" y="405.0"/>
+        <di:waypoint xsi:type="dc:Point" x="300.0" y="428.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
