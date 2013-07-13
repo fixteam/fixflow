@@ -82,24 +82,6 @@ public interface TaskService extends ProcessService {
 	void deleteTasks(Collection<String> taskIds, boolean cascade);
 
 
-	/**
-	 * 完成任务 当任务执行成功时调用
-	 * 
-	 * @param 需要完成的任务编号
-	 *            ,不能为空。
-	 */
-	void complete(String taskId);
-
-	/**
-	 * 完成任务 当任务执行成功时调用
-	 * 
-	 * @param taskId
-	 *            需要完成的任务编号,不能为空。
-	 * @param variables
-	 *            流程实例变量
-	 */
-	void complete(String taskId, Map<String, Object> variables);
-
 
 	//任务常用处理
 	

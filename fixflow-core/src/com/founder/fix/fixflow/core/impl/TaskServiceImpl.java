@@ -126,17 +126,6 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 		return commandExecutor.execute(new GetSubTaskUserCommandCmd<TaskCommandInst>(processDefinitionKey));
 	}
 
-
-
-	public void complete(String taskId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void complete(String taskId, Map<String, Object> variables) {
-		// TODO Auto-generated method stub
-
-	}
 	
 	public void claim(String taskId, String claimUserId) {
 		// TODO 自动生成的方法存根
