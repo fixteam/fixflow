@@ -73,6 +73,10 @@ public class RollBackTaskCmd extends AbstractExpandTaskCmd<RollBackTaskCommand,V
 			taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 		}
 		
+		if(taskCommand==null){
+			throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
+		}
+		
 		ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
 
 		

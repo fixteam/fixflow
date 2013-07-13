@@ -66,6 +66,10 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 			} else {
 				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 			}
+			
+			if(taskCommand==null){
+				throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
+			}
 
 			
 			if(this.agent!=null&&!this.agent.equals("")){

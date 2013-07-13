@@ -142,6 +142,8 @@ public class RollBackTaskPreviousStepCmd extends AbstractExpandTaskCmd<RollBackT
 					throw new FixFlowException("任务: " + taskId + " 退回失败!", e);
 				}
 
+			}else{
+				throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
 			}
 
 			try {

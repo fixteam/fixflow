@@ -22,6 +22,9 @@ public class ContinueProcessInstanceCmd extends AbstractExpandTaskCmd<ContinuePr
 		if (taskId == null || taskId.equals("")) {
 			throw new FixFlowException("任务编号为空！");
 		}
+		if(this.userCommandId==null||this.userCommandId.equals("")){
+			throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
+		}
 
 		TaskInstanceEntity task = Context.getCommandContext().getTaskManager().findTaskById(taskId);
 		String processInstanceId=task.getProcessInstanceId();

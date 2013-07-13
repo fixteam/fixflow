@@ -92,7 +92,9 @@ public class RollBackTaskByTaskIdCmd extends AbstractExpandTaskCmd<RollBackTaskB
 				throw new FixFlowException("用户命令表达式执行异常!", e);
 			}
 		}
-		
+		if(taskCommand==null){
+			throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
+		}
 		
 		String taskId = this.taskId;
 		String taskComment = this.taskComment;

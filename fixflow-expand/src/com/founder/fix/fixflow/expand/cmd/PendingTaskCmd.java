@@ -90,7 +90,9 @@ public class PendingTaskCmd extends AbstractExpandTaskCmd<PendingTaskCommand, Vo
 				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 			}
 		
-			
+			if(taskCommand==null){
+				throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
+			}
 			task.customEnd(taskCommand, taskComment, this.agent, this.admin);
 
 			
