@@ -30,9 +30,12 @@ public class GetFlowGraphicsImgPathCmd implements Command<String>{
 		
 		ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
 		
-	
+		String nowLanguage="defauld";
 		//当前语言
-		String nowLanguage=commandContext.getProcessEngineConfigurationImpl().getFixFlowResources().getNowLanguage();
+		if(commandContext.getProcessEngineConfigurationImpl().getFixFlowResources()!=null){
+			nowLanguage=commandContext.getProcessEngineConfigurationImpl().getFixFlowResources().getNowLanguage();
+		}
+		
 		String pathString="fixflowdiagram/"+nowLanguage+"/"+processDefinition.getProcessDefinitionKey()+"/"+processDefinition.getProcessDefinitionId().replace(":","_")+".PNG";
 		
 		return pathString;
