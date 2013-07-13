@@ -65,25 +65,28 @@ public class BpmnDeployer implements Deployer {
 					
 					ProcessDefinitionBehavior process = null;
 					for (RootElement rootElement : definitions.getRootElements()) {
+						System.out.println(rootElement.getClass());
 						if (rootElement instanceof ProcessDefinitionBehavior) {
+							
 							ProcessDefinitionBehavior processObj=(ProcessDefinitionBehavior)rootElement;
-							if(processObj.getProcessDefinitionKey().equals("")){
+							System.out.println(processObj.getProcessDefinitionKey());
+							//if(processObj.getProcessDefinitionKey().equals("")){
 								process = (ProcessDefinitionBehavior) rootElement;
 								break;
-							}
+							//}
 							
 							
 						}
 					}
 				
-				
+				System.out.println(process);
 				process.setDefinitions(definitions);
 
 				process.setResourceName(resourceName);
 				process.setResourceId(resource.getId());
 				processDefinitions.add(process);
 				
-				throw new FixFlowException("没有完成！！");
+				//throw new FixFlowException("没有完成！！");
 			}
 
 		}
