@@ -59,6 +59,7 @@ public abstract class AbstractFixFlowTestCase extends TestCase {
 
 		ExternalContent externalContent=new ExternalContent();
 		externalContent.setAuthenticatedUserId(Authentication.getSystemId());
+		
 		processEngine.setExternalContent(externalContent);
 		processEngine.getProcessEngineConfiguration().setConnectionManagement("General");
 	}
