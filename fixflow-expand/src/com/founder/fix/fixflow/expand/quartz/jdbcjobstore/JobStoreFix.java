@@ -14,41 +14,35 @@ public class JobStoreFix extends JobStoreTX {
 	@Override
 	protected Connection getConnection() throws JobPersistenceException {
 
-		if (Context.getProcessEngineConfiguration() == null) {
+		if (Context.isQuartzTransactionAuto()) {
 			return super.getConnection();
 		} else {
-			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration()
-					.getQuartzConfig();
+			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration().getQuartzConfig();
 			if (quartzConfig == null) {
 				return null;
 			}
+
 			if (StringUtil.getBoolean(quartzConfig.getIsDefaultConfig())) {
-				if (Context.getDbConnection() == null) {
-					return super.getConnection();
-				} else {
-					return Context.getDbConnection();
-				}
+
+				return Context.getDbConnection();
+
 			} else {
-				if (Context.getDbConnection(quartzConfig.getDataBaseId()) == null) {
-					return super.getConnection();
-				} else {
-					return Context.getDbConnection(quartzConfig
-							.getIsDefaultConfig());
-				}
+
+				return Context.getDbConnection(quartzConfig.getIsDefaultConfig());
+
 			}
 		}
 
 	}
 
 	@Override
-	protected void closeConnection(Connection arg0) {
+	protected void closeConnection(Connection connection) {
 
-		if (Context.getProcessEngineConfiguration() == null) {
-			super.closeConnection(arg0);
+		if (Context.isQuartzTransactionAuto()) {
+			super.closeConnection(connection);
 
 		} else {
-			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration()
-					.getQuartzConfig();
+			/*QuartzConfig quartzConfig = Context.getProcessEngineConfiguration().getQuartzConfig();
 			if (quartzConfig == null) {
 				return;
 			}
@@ -60,21 +54,19 @@ public class JobStoreFix extends JobStoreTX {
 				if (Context.getDbConnection(quartzConfig.getDataBaseId()) == null) {
 					super.closeConnection(arg0);
 				}
-			}
+			}*/
 		}
 
 	}
 
 	@Override
-	protected void commitConnection(Connection arg0)
-			throws JobPersistenceException {
+	protected void commitConnection(Connection connection) throws JobPersistenceException {
 
-		if (Context.getProcessEngineConfiguration() == null) {
-			super.commitConnection(arg0);
+		if (Context.isQuartzTransactionAuto()) {
+			super.commitConnection(connection);
 		} else {
 
-			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration()
-					.getQuartzConfig();
+			/*QuartzConfig quartzConfig = Context.getProcessEngineConfiguration().getQuartzConfig();
 			if (quartzConfig == null) {
 				return;
 			}
@@ -86,19 +78,18 @@ public class JobStoreFix extends JobStoreTX {
 				if (Context.getDbConnection(quartzConfig.getDataBaseId()) == null) {
 					super.commitConnection(arg0);
 				}
-			}
+			}*/
 		}
 
 	}
 
 	@Override
-	protected void rollbackConnection(Connection arg0) {
+	protected void rollbackConnection(Connection connection) {
 
-		if (Context.getProcessEngineConfiguration() == null) {
-			super.rollbackConnection(arg0);
+		if (Context.isQuartzTransactionAuto()) {
+			super.rollbackConnection(connection);
 		} else {
-			QuartzConfig quartzConfig = Context.getProcessEngineConfiguration()
-					.getQuartzConfig();
+			/*QuartzConfig quartzConfig = Context.getProcessEngineConfiguration().getQuartzConfig();
 			if (quartzConfig == null) {
 				return;
 			}
@@ -110,7 +101,7 @@ public class JobStoreFix extends JobStoreTX {
 				if (Context.getDbConnection(quartzConfig.getDataBaseId()) == null) {
 					super.rollbackConnection(arg0);
 				}
-			}
+			}*/
 		}
 
 	}

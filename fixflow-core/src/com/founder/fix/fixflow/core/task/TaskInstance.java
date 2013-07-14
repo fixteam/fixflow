@@ -354,8 +354,17 @@ public interface TaskInstance extends PersistentObject{
 	 * @return
 	 */
 	String getFormUri();
+	/**
+	 * 获取浏览表单
+	 * @return
+	 */
+	String getFormUriView();
 	
-	
+	/**
+	 * 设置浏览表单
+	 * @param formUriView
+	 */
+	void setFormUriView(String formUriView);
 	/**
 	 * 设置表单地址
 	 * @return
@@ -436,5 +445,8 @@ public interface TaskInstance extends PersistentObject{
 	 * @return
 	 */
 	String getAgent();
+	
+	
+	
 
 }

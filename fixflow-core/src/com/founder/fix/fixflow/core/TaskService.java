@@ -82,13 +82,12 @@ public interface TaskService extends ProcessService {
 	void deleteTasks(Collection<String> taskIds, boolean cascade);
 
 
-
 	//任务常用处理
 	
 	/**
-	 * 领取任务
+	 * 接收任务
 	 * @param taskId 任务编号
-	 * @param claimUserId 领取人(不传的话将会去线程副本中获取)
+	 * @param claimUserId 接收(不传的话将会去线程副本中获取)
 	 */
 	void claim(String taskId,String claimUserId);
 
@@ -98,17 +97,20 @@ public interface TaskService extends ProcessService {
 	 * @param taskId 任务编号
 	 */
 	void release(String taskId);
+	
+	
+	
+	
+	
 
+
+	
 
 	/**
-	 * 自定义扩展方式完成任务 类型为 type="expand" 的处理命令调用的方法
-	 * 
-	 * @param taskId
-	 *            任务编号
-	 * @param userCommandId
-	 *            用户操作命令
-	 * @param variables
-	 *            流程实例变量
+	 * 自定义扩展方式完成任务的处理命令调用的方法
+	 * @param expandTaskCommand
+	 * @param classReturn
+	 * @return
 	 */
 	<T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn);
 
