@@ -34,20 +34,11 @@ import com.founder.fix.fixflow.expand.command.SaveTaskDraftCommand;
 
 public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand,Void>  {
 
-	
-
-	protected String formUri;
-	
-
 
 	public SaveTaskDraftCmd(SaveTaskDraftCommand saveTaskDraftCommand) {
 		
 		super(saveTaskDraftCommand);
-		
-		
-		this.formUri=saveTaskDraftCommand.getFormUri();
 
-		
 	}
 
 	
