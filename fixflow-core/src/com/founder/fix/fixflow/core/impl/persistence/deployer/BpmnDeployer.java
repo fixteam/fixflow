@@ -65,11 +65,9 @@ public class BpmnDeployer implements Deployer {
 					
 					ProcessDefinitionBehavior process = null;
 					for (RootElement rootElement : definitions.getRootElements()) {
-						System.out.println(rootElement.getClass());
 						if (rootElement instanceof ProcessDefinitionBehavior) {
 							
 							ProcessDefinitionBehavior processObj=(ProcessDefinitionBehavior)rootElement;
-							System.out.println(processObj.getProcessDefinitionKey());
 							//if(processObj.getProcessDefinitionKey().equals("")){
 								process = (ProcessDefinitionBehavior) rootElement;
 								break;
@@ -79,7 +77,6 @@ public class BpmnDeployer implements Deployer {
 						}
 					}
 				
-				System.out.println(process);
 				process.setDefinitions(definitions);
 
 				process.setResourceName(resourceName);
