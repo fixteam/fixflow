@@ -3,14 +3,17 @@
   <bpmn2:collaboration id="Collaboration_1">
     <bpmn2:participant id="Participant_1" name="Internal" processRef="Process_TaskServiceTest"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_TaskServiceTest" fixflow:category="测试" name="TaskServiceTest">
+  <bpmn2:process id="Process_TaskServiceTest" fixflow:category="测试" fixflow:verification="true" name="TaskServiceTest">
     <bpmn2:extensionElements>
-      <fixflow:taskSubject>
-        <fixflow:expression xsi:type="fixflow:Expression" name="&quot;TaskServiceTest任务&quot;">&quot;TaskServiceTest任务&quot;</fixflow:expression>
+      <fixflow:taskSubject id="TaskSubject_1">
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;TaskServiceTest任务&quot;">&quot;TaskServiceTest任务&quot;</fixflow:expression>
       </fixflow:taskSubject>
       <fixflow:formUri>
-        <fixflow:expression xsi:type="fixflow:Expression" name="&quot;aaa.html&quot;">&quot;aaa.html&quot;</fixflow:expression>
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;aaa.html&quot;">&quot;aaa.html&quot;</fixflow:expression>
       </fixflow:formUri>
+      <fixflow:DataVariable id="amount" dataType="int" bizType="customVariable">
+        <fixflow:documentation xsi:type="fixflow:Documentation" id="Documentation_1"></fixflow:documentation>
+      </fixflow:DataVariable>
     </bpmn2:extensionElements>
     <bpmn2:startEvent id="StartEvent_1" name="开   始">
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
@@ -18,6 +21,7 @@
     <bpmn2:userTask id="UserTask_1" name="提交任务">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_1" name="提交" commandType="submit"/>
+        <fixflow:taskCommand id="HandleCommand_2" name="启动并提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
@@ -41,12 +45,13 @@
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
     <bpmn2:endEvent id="EndEvent_1" name="结   束">
-      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:userTask id="UserTask_4" name="独占任务">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Normal_1" name="同意" commandType="general"/>
+        <fixflow:assignPolicyType id="humanPerformer"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
@@ -57,7 +62,7 @@
       </bpmn2:humanPerformer>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="UserTask_4" targetRef="EndEvent_1"/>
-    <bpmn2:userTask id="UserTask_3" name="共享任务">
+    <bpmn2:userTask id="UserTask_3" fixflow:taskType="FIXFLOWTASK" name="共享任务">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Normal_1" name="同意" commandType="general"/>
         <fixflow:taskCommand id="Advance_1" name="退回" commandType="rollBack"/>
@@ -65,8 +70,12 @@
         <fixflow:taskCommand id="Advance_3" name="退回上一步" commandType="rollBackTaskPreviousStep"/>
         <fixflow:taskCommand id="Advance_4" name="退回到任务" commandType="rollBackTaskByTaskId"/>
         <fixflow:taskCommand id="Advance_5" name="退回指定步骤" commandType="rollBackTaskByExpression">
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&quot;UserTask_1&quot;">&quot;UserTask_1&quot;</fixflow:expression>
+        </fixflow:taskCommand>
+        <fixflow:taskCommand id="HandleCommand_7" name="追回" commandType="recover" isVerification="true" isSaveData="true" isSimulationRun="false">
           <fixflow:expression xsi:type="fixflow:Expression" name="&quot;UserTask_1&quot;">&quot;UserTask_1&quot;</fixflow:expression>
         </fixflow:taskCommand>
+        <fixflow:expectedExecutionTime/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
@@ -89,7 +98,7 @@
       <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
         <dc:Bounds height="50.0" width="110.0" x="140.0" y="114.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1">
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
         <dc:Bounds height="65.0" width="50.0" x="290.0" y="114.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_3" bpmnElement="UserTask_3">
