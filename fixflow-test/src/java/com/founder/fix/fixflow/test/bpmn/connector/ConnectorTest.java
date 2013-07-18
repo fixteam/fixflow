@@ -104,6 +104,8 @@ public class ConnectorTest extends AbstractFixFlowTestCase {
 		expandTaskCommand.setInitiator("1200119390");
 		// 设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
 		expandTaskCommand.setUserCommandId("HandleCommand_2");
+		
+		expandTaskCommand.setTaskId(taskInstance.getId());
 
 		// 执行这个启动并提交的命令，返回启动的流程实例
 		processInstance = (ProcessInstance) taskService.expandTaskComplete(expandTaskCommand, null);
