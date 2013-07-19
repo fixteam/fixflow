@@ -31,7 +31,7 @@ public class UtilTest extends AbstractFixFlowTestCase{
 	 */
 	public void testReflectUtil()
 	{
-		Pagination pagination=(Pagination)ReflectUtil.instantiate("com.founder.fix.fixflow.core.impl.db.pagination.OraclePaginationImpl");
+		Pagination pagination=(Pagination)ReflectUtil.instantiate("com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl");
 		assertNotNull(pagination);
 	}
 
