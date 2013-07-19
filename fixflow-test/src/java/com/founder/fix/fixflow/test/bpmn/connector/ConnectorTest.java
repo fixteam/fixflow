@@ -10,10 +10,10 @@ import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
-import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
+import com.founder.fix.fixflow.test.AbstractFixFlowConnectorTestCase;
 import com.founder.fix.fixflow.test.Deployment;
 
-public class ConnectorTest extends AbstractFixFlowTestCase {
+public class ConnectorTest extends AbstractFixFlowConnectorTestCase {
 	@Deployment(resources = { "com/founder/fix/fixflow/test/bpmn/connector/ConnectorTest.bpmn" })
 	public void testConnector() {
 		// 拿到流程定义
@@ -91,6 +91,8 @@ public class ConnectorTest extends AbstractFixFlowTestCase {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+/*		
 
 		// 创建一个启动并提交命令
 		expandTaskCommand = new ExpandTaskCommand();
@@ -124,6 +126,6 @@ public class ConnectorTest extends AbstractFixFlowTestCase {
 
 		nodeId = taskInstance.getNodeId();
 		// 验证当前任务是否在第二个节点
-		assertEquals(nodeId, "UserTask_3");
+		assertEquals(nodeId, "UserTask_3");*/
 	}
 }
