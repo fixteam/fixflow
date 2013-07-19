@@ -18,7 +18,7 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
 import com.founder.fix.fixflow.test.Deployment;
 
-public class TaskServiceNewTest extends AbstractFixFlowTestCase {
+public class TaskServiceTest extends AbstractFixFlowTestCase {
 	
 	/**
 	 * 测试启动并提交，手工启动流程。
@@ -148,7 +148,7 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		TaskInstance taskInstance = taskInstances.get(0);
 		//创建通用命令
 		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		//设置命令未领取任务
+		//设置命令为领取任务
 		expandTaskCommandClaim.setCommandType("claim");
 		//设置命令的ID，需和节点上配置的按钮编号对应，会执行其中脚本
 		expandTaskCommandClaim.setUserCommandId("HandleCommand_3");
@@ -290,13 +290,16 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
 		//验证此时的独占任务为1
 		assertEquals(taskInstances.size(), 1);
+		//取得当前任务
 		TaskInstance taskInstance = taskInstances.get(0);
+		//取得当前任务节点
 		String nodeId = taskInstance.getNodeId();
+		//验证是否在第二个节点
 		assertEquals(nodeId, "UserTask_2");
 		
 		//创建通用命令
 		ExpandTaskCommand expandTaskCommandRollBack=new ExpandTaskCommand();
-		//设置命令为退回上一步
+		//设置命令为退回制定步骤
 		expandTaskCommandRollBack.setCommandType("rollBackTaskByExpression");
 		//设置命令按钮的iD,与节点上处理命令设置一致
 		expandTaskCommandRollBack.setUserCommandId("HandleCommand_4");
@@ -343,8 +346,11 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
 		//验证此时的独占任务为1
 		assertEquals(taskInstances.size(), 1);
+		//获得当前任务
 		TaskInstance taskInstance = taskInstances.get(0);
+		//获得任务节点
 		String nodeId = taskInstance.getNodeId();
+		//验证是否在第二个节点
 		assertEquals(nodeId, "UserTask_2");
 		
 		//创建通用命令
@@ -401,8 +407,11 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
 		//验证此时的独占任务为1
 		assertEquals(taskInstances.size(), 1);
+		//获得当前任务
 		TaskInstance taskInstance = taskInstances.get(0);
+		//获得当前任务节点
 		String nodeId = taskInstance.getNodeId();
+		//验证是否在第二个节点
 		assertEquals(nodeId, "UserTask_2");
 		
 		//重置任务查询
@@ -465,9 +474,11 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		TaskQuery taskQuery = taskService.createTaskQuery();
 		// 查找 1200119390 的这个流程实例的当前独占任务
 		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
-
+		//获得任务实例
 		TaskInstance taskInstance = taskInstances.get(0);
+		//获得当前任务节点
 		String nodeId = taskInstance.getNodeId();
+		//验证是否在第二个节点
 		assertEquals(nodeId, "UserTask_2");
 			
 		//保存草稿操作前，验证任务为非草稿状态
@@ -535,6 +546,7 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		taskQuery = taskService.createTaskQuery();
 		//获取此任务实例的任务数
 		int taskCount = taskQuery.processInstanceId(processInstanceId).list().size();
+		//验证实例相关任务被删除
 		assertEquals(taskCount,0);
 	}
 	/**
@@ -1077,12 +1089,13 @@ public class TaskServiceNewTest extends AbstractFixFlowTestCase {
 		assertEquals(50, taskAssigneeAndCandidate.size());
 		//重置任务查询
 		taskQuery = taskService.createTaskQuery();
-		//查询1200119390 的这个流程定义的已办任务（此流程的待办事项）
+		//查询1200119390 的这个流程定义的已办任务
 		List<TaskInstance> taskEnd = taskQuery.processDefinitionKey("Process_TaskServiceTest").taskAssignee("1200119390").taskIsEnd().addTaskType(TaskInstanceType.FIXFLOWTASK).list();
 		//验证已办任务是否为50
 		assertEquals(50, taskEnd.size());
-		
+		//测试分页 取1-9条
 		taskEnd = taskQuery.listPage(1, 9);
+		//验证取到9条任务
 		assertEquals(9, taskEnd.size());
 		//获取流程追踪 
 		//创建一个流程实例查询
