@@ -752,6 +752,27 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		}
 		//验证存在追回命令
 		assertEquals(isHaveRecoverCommand,true);
+		
+		//创建通用命令
+		ExpandTaskCommand expandTaskCommandRecover=new ExpandTaskCommand();
+		//设置命令为暂停实例
+		expandTaskCommandRecover.setCommandType("recover");
+		//设置命令按钮的iD,与节点上处理命令设置一致
+		expandTaskCommandRecover.setUserCommandId("HandleCommand_13");
+		//设置命令的处理任务号
+		expandTaskCommandRecover.setTaskId(taskInstance.getId());
+		//设置追回命令必须的参数recoverNodeId
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("recoverNodeId", "UserTask_1");
+		expandTaskCommandRecover.setParamMap(map);
+		//执行这个追回的命令
+		taskService.expandTaskComplete(expandTaskCommandRecover, null);
+		//重置任务查询
+		taskQuery = taskService.createTaskQuery();
+		// 查找当前流程实例的当前处理任务
+		taskInstance = taskQuery.processInstanceId(processInstanceId).taskNotEnd().list().get(0);
+		//验证任务是否被追回到UserTask_1节点
+		assertEquals("UserTask_1", taskInstance.getNodeId());
 	}
 	
 	/**
@@ -1223,7 +1244,7 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		//重置任务查询
 		taskQuery = taskService.createTaskQuery();
 		//查询未完成的任务，（当前处理）
-		List<TaskInstance> taskNotEnd = taskQuery.taskNotEnd().list();
+		List<TaskInstance> taskNotEnd = taskQuery.processInstanceId(processInstanceId).taskNotEnd().list();
 		//验证当前处理任务是否为1
 		assertEquals(1, taskNotEnd.size());
 	}

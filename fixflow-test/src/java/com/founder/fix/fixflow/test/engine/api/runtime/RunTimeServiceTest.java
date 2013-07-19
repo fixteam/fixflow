@@ -248,7 +248,7 @@ public class RunTimeServiceTest extends AbstractFixFlowTestCase {
 		assertNotNull(processInstanceQuery);
 	}
 	/**
-	 * 测试更新流程关联键,此方法暂未实现
+	 * 测试更新流程关联键,----此方法暂未实现
 	 */
 	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/runtime/StartProcessInstanceTest.bpmn" })
 	public void testUpdateProcessInstanceBusinessKey(){
