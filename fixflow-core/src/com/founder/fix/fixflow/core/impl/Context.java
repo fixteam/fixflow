@@ -54,6 +54,7 @@ public class Context {
 			return "defauld";
 		}else{
 			return stack.peek();
+			
 		}
 		
 	}
@@ -62,6 +63,12 @@ public class Context {
 	public static void removeLanguageType() {
 
 		getStack(languageTypeThreadLocal).clear();
+	}
+	
+	
+	public static void removeQuartzTransactionAutoThreadLocal() {
+
+		getStack(isQuartzTransactionAutoThreadLocal).clear();
 	}
 	
 	public static AbstractScriptLanguageMgmt getAbstractScriptLanguageMgmt() {
@@ -105,6 +112,8 @@ public class Context {
 	
 
 	public static void setQuartzTransactionAuto(boolean isAuto) {
+		
+		
 		getStack(isQuartzTransactionAutoThreadLocal).push(isAuto);
 	}
 	public static boolean isQuartzTransactionAuto() {

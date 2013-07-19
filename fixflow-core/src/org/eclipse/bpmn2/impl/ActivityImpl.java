@@ -1168,15 +1168,17 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			try {
 				//Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
 				//scheduler.deleteJob(JobKey.jobKey(tokenEntity.getParent().getId(), "FixTimeOutTask_" + parentTokenId));
-				
-				Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
-				Set<JobKey> jobKeys=new HashSet<JobKey>();
-				jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(parentTokenId));
-				if(jobKeys.size()>0){
-					List<JobKey> jobKeysList=new ArrayList<JobKey>();
-					jobKeysList.addAll(jobKeys);
-					scheduler.deleteJobs(jobKeysList);
+				if(StringUtil.getBoolean(Context.getProcessEngineConfiguration().getQuartzConfig().getIsEnable())){
+					Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
+					Set<JobKey> jobKeys=new HashSet<JobKey>();
+					jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(parentTokenId));
+					if(jobKeys.size()>0){
+						List<JobKey> jobKeysList=new ArrayList<JobKey>();
+						jobKeysList.addAll(jobKeys);
+						scheduler.deleteJobs(jobKeysList);
+					}
 				}
+				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1187,6 +1189,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		
 		
 		try {
+			
+			if(StringUtil.getBoolean(Context.getProcessEngineConfiguration().getQuartzConfig().getIsEnable())){
 			Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
 			Set<JobKey> jobKeys=new HashSet<JobKey>();
 			jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(tokenEntity.getId()));
@@ -1194,7 +1198,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 				List<JobKey> jobKeysList=new ArrayList<JobKey>();
 				jobKeysList.addAll(jobKeys);
 				scheduler.deleteJobs(jobKeysList);
-			}
+			}}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
