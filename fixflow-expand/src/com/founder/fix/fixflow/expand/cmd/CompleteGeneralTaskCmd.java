@@ -26,6 +26,10 @@ import com.founder.fix.fixflow.expand.command.GeneralTaskCommand;
 
 public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCommand, Void>{
 	
+	
+	
+	
+	
 	public CompleteGeneralTaskCmd(GeneralTaskCommand abstractCustomExpandTaskCommand) {
 		super(abstractCustomExpandTaskCommand);
 		// TODO Auto-generated constructor stub
@@ -38,27 +42,39 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 			throw new FixFlowException("任务编号为空！");
 		}
 
+		//获取任务管理器
 		TaskManager taskManager = commandContext.getTaskManager();
 
+		//根据指定id查询出任务的TO  不能做改变操作
 		TaskInstance taskInstanceQuery = taskManager.findTaskById(taskId);
 		
 		if(taskInstanceQuery.hasEnded()){
 			throw new FixFlowBizException("当前的任务已经结束,无法继续处理!");
 		}
 
+		
+		//获取需要的参数
 		String tokenId = taskInstanceQuery.getTokenId();
 		String nodeId = taskInstanceQuery.getNodeId();
 		String processDefinitionId = taskInstanceQuery.getProcessDefinitionId();
+		String processInstanceId = taskInstanceQuery.getProcessInstanceId();
+		
+		
+		//创建流程实例管理器
 		ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
 
-		String processInstanceId = taskInstanceQuery.getProcessInstanceId();
-
+		//查询出一个流程对象
 		ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
-
 		ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
 
+		
+		
+		
+		//获取任务所在节点对象
 		UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
 		
+		
+		//创建任务命令对象
 		TaskCommandInst taskCommand=null;
 		
 		if(this.admin!=null&&!this.admin.equals("")){
@@ -73,30 +89,38 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 			taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 		}
 		
+		
+		
+		
+		
 		if(taskCommand==null){
 			throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
 		}
 
 
-
+		//获取流程实例
 		ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
 
 		
-		
+		//放置当前点击的按钮ID
 		processInstanceImpl.getContextInstance().addTransientVariable("fixVariable_userCommand", userCommandId);
-
+		//放置持久化变量
 		processInstanceImpl.getContextInstance().setVariableMap(variables);
 		
 		//processInstanceImpl.setBizKey(this.businessKey);
 
+		//获取当前任务所在令牌
 		TokenEntity token = processInstanceImpl.getTokenMap().get(tokenId);
 		
+		//放置瞬态变量
 		processInstanceImpl.getContextInstance().setTransientVariableMap(transientVariables);
 
 		
-
+		//获取任务管理器
 		List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
 
+		
+		//获取正在操作的任务的实体
 		TaskInstanceEntity taskInstanceImpl=null;
 		
 		for (TaskInstanceEntity taskInstance : taskInstances) {
@@ -108,6 +132,8 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 			}
 		}
 		
+		
+		//执行按钮表达式
 		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
 		executionContext.setTaskInstance(taskInstanceImpl);
 		if (taskCommand != null && taskCommand.getExpression() != null) {
@@ -120,14 +146,21 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 		}
 		
 		if(taskInstanceImpl!=null){
+			//判断是否是自动处理
 			if(AbstractCommandFilter.isAutoClaim()){
 				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
 			}
+			//调用任务的完成方法
 			taskInstanceImpl.end();
+			//设置是否为草稿
 			taskInstanceImpl.setDraft(false);
+			//设置任务上点击的处理命令
 			taskInstanceImpl.setCommandId(taskCommand.getId());
+			//设置任务上点击的处理命令类型
 			taskInstanceImpl.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
+			//设置任务上点击的处理命令文本
 			taskInstanceImpl.setCommandMessage(taskCommand.getName());
+			//处理意见
 			taskInstanceImpl.setTaskComment(this.taskComment);
 			
 			if(this.admin!=null&&!this.admin.equals("")){
