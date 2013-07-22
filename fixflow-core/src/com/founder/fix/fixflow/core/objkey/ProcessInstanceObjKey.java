@@ -537,5 +537,70 @@ public class ProcessInstanceObjKey {
 
 	}
 	
+	/**
+	 * 实例状态
+	 * @return
+	 */
+	public static FlowKeyInstanceType InstanceType(){
+		return new ProcessInstanceObjKey().new FlowKeyInstanceType();
+	}
+	
+	public class FlowKeyInstanceType implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "instanceType";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "INSTANCE_TYPE";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "instanceType";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "实例状态";
+		}
+
+	}
+	
+	/**
+	 * 更新时间
+	 * @return
+	 */
+	public static FlowKeyUpdateTime UpdateTime(){
+		return new ProcessInstanceObjKey().new FlowKeyUpdateTime();
+	}
+	
+	public class FlowKeyUpdateTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "updateTime";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "UPDATE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "updateTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "更新时间";
+		}
+
+	}
 	
 }

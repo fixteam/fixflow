@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.core.impl.persistence;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +97,9 @@ public class ProcessInstanceManager extends AbstractManager {
 				}
 			}
 		}
-
+		//添加更新时间的操作
+		processInstance.setUpdateTime(new Date());
 		processInstance.setProcessLocation(processLocation);
-		
 		
 		getDbSqlSession().save("saveProcessInstance", processInstance);
 		

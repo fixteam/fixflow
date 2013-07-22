@@ -38,6 +38,7 @@ import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
@@ -152,6 +153,18 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	 * 流程的启动人
 	 */
 	protected String startAuthor;
+	
+	/**
+	 * 更新时间
+	 */
+	protected Date updateTime;
+	
+	/**
+	 * 实例状态
+	 */
+	protected ProcessInstanceType instanceType;
+	
+
 
 	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
 	
@@ -438,9 +451,10 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				
 
 			}
-			
-
+			//更新实例状态为正常完成
+			this.instanceType = ProcessInstanceType.COMPLETE;
 		}
+		
 
 	}
 	
@@ -696,6 +710,23 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	public Date getStartTime() {
 		return startTime;
 	}
+	
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+	
+
+	public ProcessInstanceType getInstanceType() {
+		return instanceType;
+	}
+
+	public void setInstanceType(ProcessInstanceType instanceType) {
+		this.instanceType = instanceType;
+	}
 
 	public TaskMgmtInstance getTaskMgmtInstance() {
 
@@ -848,9 +879,11 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		mapPersistentState.put(ProcessInstanceObjKey.ParentProcessInstanceTokenId().FullKey(), this.parentProcessInstanceTokenId);
 
 		mapPersistentState.put(ProcessInstanceObjKey.ProcessLocation().FullKey(), this.processLocation);
+		
+		mapPersistentState.put(ProcessInstanceObjKey.UpdateTime().FullKey(), this.updateTime);
+		
+		mapPersistentState.put(ProcessInstanceObjKey.InstanceType().FullKey(), this.instanceType);
 
-		
-		
 		for (String key : extensionFields.keySet()) {
 			mapPersistentState.put(key, extensionFields.get(key));	
 		}
@@ -1046,7 +1079,15 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				continue;
 			}
 			
+			if (dataKey.equals(ProcessInstanceObjKey.UpdateTime().DataBaseKey())) {
+				this.updateTime =  StringUtil.getDate(entityMap.get(dataKey));
+				continue;
+			}
 			
+			if (dataKey.equals(ProcessInstanceObjKey.InstanceType().DataBaseKey())) {
+				this.instanceType = ProcessInstanceType.valueOf(StringUtil.getString(entityMap.get(dataKey)));
+				continue;
+			}
 
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
 
@@ -1086,7 +1127,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				// 父流程实例号
 				objectParam.put(ProcessInstanceObjKey.ParentProcessInstanceId().DataBaseKey(), this.getParentProcessInstanceId());
 
-				// 父流程实例号
+				// 父流程令牌号
 				objectParam.put(ProcessInstanceObjKey.ParentProcessInstanceTokenId().DataBaseKey(), this.getParentProcessInstanceTokenId());
 
 				// 父流程实例号
@@ -1094,6 +1135,12 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				
 				// 父流程实例号
 				objectParam.put(ProcessInstanceObjKey.ProcessLocation().DataBaseKey(), this.getProcessLocation());
+				
+				// 实例状态
+				objectParam.put(ProcessInstanceObjKey.InstanceType().DataBaseKey(), this.getInstanceType().toString());
+				
+				// 更新时间
+				objectParam.put(ProcessInstanceObjKey.UpdateTime().DataBaseKey(), this.getUpdateTime());
 				
 				for (String key : persistenceExtensionFields.keySet()) {
 					objectParam.put(key, persistenceExtensionFields.get(key));	

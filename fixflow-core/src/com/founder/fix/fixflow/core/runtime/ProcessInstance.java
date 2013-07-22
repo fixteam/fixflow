@@ -130,7 +130,18 @@ public interface ProcessInstance extends PersistentObject,Serializable {
 	  */
 	 String getStartAuthor();
 
-	
+	 /**
+	  * 获取更新时间
+	  * @return
+	  */
+	 Date getUpdateTime();
+	 
+	 /**
+	  * 获取实例状态
+	  * @return
+	  */
+	 ProcessInstanceType getInstanceType();
+
 	 ProcessDefinitionBehavior getProcessDefinition();
 
 }

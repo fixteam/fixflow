@@ -16,6 +16,7 @@ import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
@@ -51,6 +52,7 @@ public class StartEventBehavior extends StartEventImpl {
 		// 设置令牌进入节点的时间
 		token.setNodeEnterTime(new Date());
 		
+		token.getProcessInstance().setInstanceType(ProcessInstanceType.RUNNING);
 		
 		if(this.isPersistence()){
 			//插入流程启动记录

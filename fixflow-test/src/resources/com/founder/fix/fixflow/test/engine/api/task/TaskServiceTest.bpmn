@@ -52,6 +52,7 @@
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Normal_1" name="同意" commandType="general"/>
         <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:taskCommand id="HandleCommand_2" name="终止流程" commandType="terminationTask" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
@@ -73,7 +74,7 @@
           <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&quot;UserTask_1&quot;">&quot;UserTask_1&quot;</fixflow:expression>
         </fixflow:taskCommand>
         <fixflow:taskCommand id="HandleCommand_7" name="追回" commandType="recover" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:expression xsi:type="fixflow:Expression" name="&quot;UserTask_1&quot;">&quot;UserTask_1&quot;</fixflow:expression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="&quot;UserTask_1&quot;">&quot;UserTask_1&quot;</fixflow:expression>
         </fixflow:taskCommand>
         <fixflow:expectedExecutionTime/>
       </bpmn2:extensionElements>

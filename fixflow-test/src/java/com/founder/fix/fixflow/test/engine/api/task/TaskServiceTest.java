@@ -12,6 +12,7 @@ import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskQuery;
@@ -834,6 +835,67 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		assertEquals(processInstance.isSuspended(),false);
 
 	}
+	
+	/**
+	 * 测试暂停和恢复流程实例
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/task/TaskServiceTest.bpmn"})
+	public void testTermination(){
+		//创建一个通用命令
+		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+		//设置流程名
+		expandTaskCommand.setProcessDefinitionKey("Process_TaskServiceTest");
+		//设置流程的业务关联键
+		expandTaskCommand.setBusinessKey("BK_testStartProcessInstanceByKey");
+		//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+		expandTaskCommand.setCommandType("startandsubmit");
+		//设置提交人
+		expandTaskCommand.setInitiator("1200119390");
+		//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+		expandTaskCommand.setUserCommandId("HandleCommand_2");
+		Map<String, Object> mapVariables = new HashMap<String, Object>();
+		//设置变量，流程线条上用到，amount<300时走独占任务，否则都共享任务
+		mapVariables.put("amount", 280);
+		expandTaskCommand.setTransientVariables(mapVariables);
+		//执行这个启动并提交的命令，返回启动的流程实例
+		ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+		String processInstanceId = processInstance.getId();
+		//验证是否成功启动
+		assertNotNull(processInstanceId);
+		//验证流程启动后实例状态为running(运行中)
+		assertEquals(ProcessInstanceType.RUNNING, processInstance.getInstanceType());
+		// 创建任务查询
+		TaskQuery taskQuery = taskService.createTaskQuery();
+		// 查找 1200119390 的这个流程实例的当前独占任务
+		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+		//验证更新时间不为空
+		assertNotNull(processInstance.getUpdateTime());
+		TaskInstance taskInstance = taskInstances.get(0);
+		//创建通用命令
+		ExpandTaskCommand expandTaskCommandSuspendProcessInstance=new ExpandTaskCommand();
+		//设置命令为暂停实例
+		expandTaskCommandSuspendProcessInstance.setCommandType("terminationTask");
+		//设置命令按钮的iD,与节点上处理命令设置一致
+		expandTaskCommandSuspendProcessInstance.setUserCommandId("HandleCommand_2");
+		//设置命令的处理任务号
+		expandTaskCommandSuspendProcessInstance.setTaskId(taskInstance.getId());
+		//执行这个暂停实例的命令
+		taskService.expandTaskComplete(expandTaskCommandSuspendProcessInstance, null);
+		//根据实例号得到流程实例
+		processInstance = runtimeService.getProcessInstance(processInstanceId);
+		//验证实例状态为TERMINATION（终止）
+		assertEquals(ProcessInstanceType.TERMINATION, processInstance.getInstanceType());
+		//验证更新时间不为空
+		assertNotNull(processInstance.getUpdateTime());
+		//验证流程实例已经结束
+		assertTrue(processInstance.hasEnded());
+		//重置任务查询
+		taskQuery = taskService.createTaskQuery();
+		// 查找 1200119390 的这个流程实例的当前独占任务
+		taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+		//验证任务已经被结束
+		assertEquals(0, taskInstances.size());
+	}
 	/**
 	 * 测试接收任务和释放任务的taskService中的现有方法，不 以命令的形式，TaskServiceCandidateTest流程中的任务分配类型为共享模式
 	 */
@@ -1063,7 +1125,6 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		
 		TaskQuery taskQuery = taskService.createTaskQuery();
 		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processDefinitionKey("Process_TaskServiceTest").taskNotEnd().list();
-		System.out.println("************"+taskInstances.size());
 		for(int i = 0;i<50;i++){
 			//创建一个通用命令
 			ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();

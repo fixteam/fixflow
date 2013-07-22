@@ -71,7 +71,7 @@ public class RunTimeServiceTest extends AbstractFixFlowTestCase {
 	}
 	
 	/**
-	 * 测试手工启动流程
+	 * 测试获取流程实例
 	 */
 	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/runtime/StartProcessInstanceTest.bpmn" })
 	public void testGetProcessInstance(){
