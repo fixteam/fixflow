@@ -226,7 +226,7 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		label = new Label(group, SWT.NONE);
 		label.setText("时间表达式");
 
-		timeExpressionComboViewer = new ExpressionComboViewer(proGroup);
+		timeExpressionComboViewer = new ExpressionComboViewer(group);
 		timecombo = timeExpressionComboViewer.getCombo();
 		timecombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		timecombo.setEnabled(false);
@@ -234,7 +234,7 @@ public class ModifyRenameConnectorWizardPage extends WizardPage {
 		label = new Label(group, SWT.NONE);
 		label.setText("定时器跳过策略");
 		
-		skipExpressionComboViewer = new ExpressionComboViewer(proGroup);
+		skipExpressionComboViewer = new ExpressionComboViewer(group);
 		skipcombo = skipExpressionComboViewer.getCombo();
 		skipcombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		skipcombo.setEnabled(false);
