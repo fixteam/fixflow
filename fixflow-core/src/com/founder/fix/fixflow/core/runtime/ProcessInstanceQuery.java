@@ -84,5 +84,7 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	ProcessInstanceQuery orderByProcessDefinitionKey();
 
 	ProcessInstanceQuery orderByProcessDefinitionId();
+	
+	ProcessInstanceQuery orderByUpdateTime();
 
 }

@@ -3,7 +3,7 @@ package com.founder.fix.fixflow.expand.filter;
 import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
-public class TerminationTaskFilter extends AbstractCommandFilter {
+public class TerminationProcessFilter extends AbstractCommandFilter {
 
 	@Override
 	public boolean accept(TaskInstance taskInstance) {

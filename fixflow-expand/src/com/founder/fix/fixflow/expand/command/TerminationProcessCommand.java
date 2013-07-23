@@ -9,8 +9,8 @@ import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
  * @author YCH
  *
  */
-public class TerminationTaskCommand extends AbstractCustomExpandTaskCommand {
-	public TerminationTaskCommand(ExpandTaskCommand expandTaskCommand) {
+public class TerminationProcessCommand extends AbstractCustomExpandTaskCommand {
+	public TerminationProcessCommand(ExpandTaskCommand expandTaskCommand) {
 		// TODO 自动生成的构造函数存根
 		super(expandTaskCommand);
 	}

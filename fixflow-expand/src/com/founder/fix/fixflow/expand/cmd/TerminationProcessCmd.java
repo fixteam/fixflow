@@ -22,11 +22,11 @@ import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
-import com.founder.fix.fixflow.expand.command.TerminationTaskCommand;
+import com.founder.fix.fixflow.expand.command.TerminationProcessCommand;
 
-public class TerminationTaskCmd extends AbstractExpandTaskCmd<TerminationTaskCommand, Void> {
+public class TerminationProcessCmd extends AbstractExpandTaskCmd<TerminationProcessCommand, Void> {
 
-	public TerminationTaskCmd(TerminationTaskCommand abstractCustomExpandTaskCommand) {
+	public TerminationProcessCmd(TerminationProcessCommand abstractCustomExpandTaskCommand) {
 		// TODO 自动生成的构造函数存根
 		super(abstractCustomExpandTaskCommand);
 	}

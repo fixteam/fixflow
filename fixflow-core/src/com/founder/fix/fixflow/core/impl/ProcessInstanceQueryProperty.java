@@ -20,6 +20,7 @@ public class ProcessInstanceQueryProperty  implements QueryProperty {
   public static final ProcessInstanceQueryProperty PROCESS_DEFINITION_KEY = new ProcessInstanceQueryProperty("E.PROCESSDEFINITION_KEY");
   public static final ProcessInstanceQueryProperty PROCESS_DEFINITION_ID = new ProcessInstanceQueryProperty("E.RROCESSDEFINITION_ID");
   public static final ProcessInstanceQueryProperty START_TIME = new ProcessInstanceQueryProperty("E.START_TIME");
+  public static final ProcessInstanceQueryProperty UPDATE_TIME = new ProcessInstanceQueryProperty("E.UPDATE_TIME");
   private String name;
 
   public ProcessInstanceQueryProperty(String name) {

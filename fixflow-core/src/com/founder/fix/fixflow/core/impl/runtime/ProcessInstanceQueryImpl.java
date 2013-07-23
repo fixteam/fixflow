@@ -25,7 +25,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected String subProcessInstanceId;
 	protected String initiator;
 	protected String taskParticipants;
-
+	protected Date updateTime;
 	protected String isSuspended;
 	protected List<String> processDefinitionKeyList=new ArrayList<String>();
 
@@ -196,6 +196,11 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 
 	public ProcessInstanceQuery orderByProcessDefinitionKey() {
 		this.orderProperty = ProcessInstanceQueryProperty.PROCESS_DEFINITION_KEY;
+		return this;
+	}
+	//按更新时间排序--by ych 2013-07-23
+	public ProcessInstanceQuery orderByUpdateTime() {
+		this.orderProperty = ProcessInstanceQueryProperty.UPDATE_TIME;
 		return this;
 	}
 
