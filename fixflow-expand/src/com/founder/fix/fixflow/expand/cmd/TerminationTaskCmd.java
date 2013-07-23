@@ -97,7 +97,7 @@ public class TerminationTaskCmd extends AbstractExpandTaskCmd<TerminationTaskCom
 		}
 		if(taskInstanceImpl!=null){
 			//结束任务
-			taskInstanceImpl.customEnd(taskCommand, nodeId, processDefinitionId, processInstanceId);
+			taskInstanceImpl.customEnd(taskCommand, this.taskComment, processDefinitionId, processInstanceId);
 			if(this.agent!=null&&!this.agent.equals("")){
 				taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
 				taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
