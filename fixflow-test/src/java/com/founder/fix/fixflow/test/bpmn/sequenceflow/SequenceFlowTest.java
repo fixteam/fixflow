@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
-import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
@@ -29,31 +28,6 @@ public class SequenceFlowTest extends AbstractFixFlowTestCase {
 
 		transientVariables.put("test", "123");
 
-		// 设置流程实例参数
-		StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
-		// 设置流程ID
-		startProcessInstanceCommand.setProcessDefinitionKey("SequenceFlowTest");
-		// 设置流程业务关联键
-		startProcessInstanceCommand.setBusinessKey("1234567890");
-		// 设置启动提交人
-		startProcessInstanceCommand.setStartAuthor("1200119390");
-		// 设置数据变量
-		startProcessInstanceCommand.setTransientVariables(transientVariables);
-
-		// 启动流程，只启动流程 ，流程停在第一步
-		ProcessInstance processInstanceQueryTo = runtimeService.noneStartProcessInstance(startProcessInstanceCommand);
-		String processInstanceId = processInstanceQueryTo.getId();
-		// 验证是否成功启动
-		assertNotNull(processInstanceId);
-		TaskQuery taskQuery = taskService.createTaskQuery();
-		// 查找 1200119390 的这个流程实例的当前独占任务
-		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
-		// 获取一条任务
-		TaskInstance taskInstance = taskInstances.get(0);
-		String nodeId = taskInstance.getNodeId();
-		// 验证流程实例是否在第一个节点
-		assertEquals(nodeId, "UserTask_1");
-
 		// 创建一个启动并提交命令
 		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 		// 设置流程名
@@ -66,25 +40,29 @@ public class SequenceFlowTest extends AbstractFixFlowTestCase {
 		expandTaskCommand.setInitiator("1200119390");
 		// 设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
 		expandTaskCommand.setUserCommandId("HandleCommand_2");
-		
-		//执行这个启动并提交的命令，返回启动的流程实例
-		ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
-		processInstanceId = processInstance.getId();
-		//验证是否成功启动
-		assertNotNull(processInstanceId);
-		
-		taskQuery = taskService.createTaskQuery();
-		// 查找 1200119390 的这个流程实例的当前独占任务
-		taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
-		
-		assertEquals(0, taskInstances.size());
-		
+		// 设置数据变量
+		expandTaskCommand.setTransientVariables(transientVariables);
+
+		// 执行这个启动并提交的命令，返回启动的流程实例
+		ProcessInstance processInstance = (ProcessInstance) taskService.expandTaskComplete(expandTaskCommand, null);
+		// 拿到流程实例ID
+		String processInstanceId = processInstance.getId();
 		// 验证是否成功启动
-//		taskInstance = taskInstances.get(0);
-		
-//		nodeId = taskInstance.getNodeId();
+		assertNotNull(processInstanceId);
+
+		TaskQuery taskQuery = taskService.createTaskQuery();
+		// 查找 1200119390 的这个流程实例的当前独占任务
+		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+		//当变量是123时应该结束任务了，任务数为0
+		assertEquals(0, taskInstances.size());
+
+		//下面是变量不为123时的判断
+		// 验证是否成功启动
+		// taskInstance = taskInstances.get(0);
+
+		// nodeId = taskInstance.getNodeId();
 		// 验证当前任务是否在第二个节点
-//		assertEquals(nodeId, "UserTask_2");
-		
+		// assertEquals(nodeId, "UserTask_2");
+
 	}
 }
