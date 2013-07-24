@@ -1,137 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fix="http://www.founderfix.com/BPMN/fix" id="_6BMNwcsGEeC_WdPnWoGv2A" name="并行网关测试">
-  <collaboration id="_6BNb4MsGEeC_WdPnWoGv2A">
-    <participant id="_6BOqAMsGEeC_WdPnWoGv2A" name="Internal" processRef="_FA5VMcsKEeCsbvsXukarWQ"/>
-  </collaboration>
-  <process id="ParallelGatewayTest" name="并行网关测试">
-    <extensionElements>
-      <fix:processSubject xsi:type="tFormalExpression" id="_IjPJgcyJEeCMvvdIUeHZSQ" fix:actuatorName="fixedValueActuator">分支测试流程</fix:processSubject>
-    </extensionElements>
-    <documentation id="_IjPJgsyJEeCMvvdIUeHZSQ"></documentation>
-    <startEvent id="StartEvent1" name="开始">
-      <outgoing>SequenceFlow1</outgoing>
-    </startEvent>
-    <sequenceFlow id="SequenceFlow1" name="" sourceRef="StartEvent1" targetRef="UserTask_Sub"/>
-    <userTask id="UserTask_Sub" name="提交流程">
-      <extensionElements>
-        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="提交"/>
-      </extensionElements>
-      <documentation id="_nsJTUcxqEeCgArzhS86m7Q"/>
-      <incoming>SequenceFlow1</incoming>
-      <outgoing>SequenceFlow2</outgoing>
-      <outgoing>SequenceFlow3</outgoing>
-      <humanPerformer id="resource1" name="提交人" fix:resourceType="User">
-        <resourceAssignmentExpression id="_nsJTUsxqEeCgArzhS86m7Q">
-          <formalExpression id="_nsJTU8xqEeCgArzhS86m7Q" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
-        </resourceAssignmentExpression>
-      </humanPerformer>
-    </userTask>
-    <sequenceFlow id="SequenceFlow2" name="" sourceRef="UserTask_Sub" targetRef="UserTask_2"/>
-    <sequenceFlow id="SequenceFlow3" name="" sourceRef="UserTask_Sub" targetRef="UserTask_3"/>
-    <userTask id="UserTask_2" name="分支_上">
-      <extensionElements>
-        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
-      </extensionElements>
-      <documentation id="_lk19tMxsEeCgArzhS86m7Q"/>
-      <incoming>SequenceFlow2</incoming>
-      <outgoing>SequenceFlow4</outgoing>
-      <humanPerformer id="resource1" name="提交人" fix:resourceType="User">
-        <resourceAssignmentExpression id="_BWUygcxrEeCgArzhS86m7Q">
-          <formalExpression id="_BWUygsxrEeCgArzhS86m7Q" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
-        </resourceAssignmentExpression>
-      </humanPerformer>
-    </userTask>
-    <sequenceFlow id="SequenceFlow4" name="" sourceRef="UserTask_2" targetRef="ParallelGateway_1"/>
-    <userTask id="UserTask_3" name="分支_下">
-      <extensionElements>
-        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
-      </extensionElements>
-      <documentation id="_lk19tcxsEeCgArzhS86m7Q"/>
-      <incoming>SequenceFlow3</incoming>
-      <outgoing>SequenceFlow5</outgoing>
-      <humanPerformer id="resource1" name="提交人" fix:resourceType="User">
-        <resourceAssignmentExpression id="_nsJTVcxqEeCgArzhS86m7Q">
-          <formalExpression id="_nsJTVsxqEeCgArzhS86m7Q" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
-        </resourceAssignmentExpression>
-      </humanPerformer>
-    </userTask>
-    <sequenceFlow id="SequenceFlow5" name="" sourceRef="UserTask_3" targetRef="ParallelGateway_1"/>
-    <parallelGateway id="ParallelGateway_1" name="并行网关_合并" gatewayDirection="Converging">
-      <documentation id="_lk19sMxsEeCgArzhS86m7Q"/>
-      <incoming>SequenceFlow4</incoming>
-      <incoming>SequenceFlow5</incoming>
-      <outgoing>SequenceFlow6</outgoing>
-    </parallelGateway>
-    <sequenceFlow id="SequenceFlow6" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_4"/>
-    <userTask id="UserTask_4" name="分支后节点">
-      <extensionElements>
-        <fix:userCommand xsi:type="tResourceAssignmentExpression" id="general1" fix:type="general" fix:name="同意"/>
-      </extensionElements>
-      <documentation id="_wygI8MxsEeCgArzhS86m7Q"/>
-      <incoming>SequenceFlow6</incoming>
-      <outgoing>SequenceFlow7</outgoing>
-      <humanPerformer id="resource1" name="提交人" fix:resourceType="User">
-        <resourceAssignmentExpression id="_lk19ssxsEeCgArzhS86m7Q">
-          <formalExpression id="_lk19s8xsEeCgArzhS86m7Q" fix:actuatorName="simpleScriptActuator">processInfo.initiator</formalExpression>
-        </resourceAssignmentExpression>
-      </humanPerformer>
-    </userTask>
-    <sequenceFlow id="SequenceFlow7" name="" sourceRef="UserTask_4" targetRef="EndEvent1"/>
-    <endEvent id="EndEvent1" name="结束">
-      <incoming>SequenceFlow7</incoming>
-    </endEvent>
-  </process>
-  <bpmndi:BPMNDiagram id="_RqHpEcsWEeCsbvsXukarWQ">
-    <bpmndi:BPMNPlane id="_RqIQIMsWEeCsbvsXukarWQ" bpmnElement="_FA5VMcsKEeCsbvsXukarWQ">
-      <bpmndi:BPMNShape id="_mtKbgMsKEeCsbvsXukarWQ" bpmnElement="StartEvent1">
-        <dc:Bounds height="51.0" width="36.0" x="40.0" y="214.0"/>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
+  <bpmn2:process id="ParallelGatewayTest" fixflow:verification="true" fixflow:dbid="" name="并行网关测试流程">
+    <bpmn2:extensionElements>
+      <fixflow:taskSubject>
+        <fixflow:expression xsi:type="fixflow:Expression" name="&quot;并行网关测试流程&quot;">&quot;并行网关测试流程&quot;</fixflow:expression>
+      </fixflow:taskSubject>
+      <fixflow:formUri>
+        <fixflow:expression xsi:type="fixflow:Expression" name="&quot;add&quot;">&quot;add&quot;</fixflow:expression>
+      </fixflow:formUri>
+    </bpmn2:extensionElements>
+    <bpmn2:startEvent id="StartEvent_1" name="开始">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="人工任务">
+      <bpmn2:extensionElements>
+        <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:skipStrategy/>
+        <fixflow:taskCommand id="HandleCommand_3" name="提交" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:expectedExecutionTime/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+      <bpmn2:potentialOwner fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="启动人">
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression id="processInfo.getStartAuthor()">processInfo.getStartAuthor()</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="结束">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ParallelGateway_1"/>
+    <bpmn2:parallelGateway id="ParallelGateway_1" name="Parallel Gateway 1">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:userTask id="UserTask_2" name="User Task 2">
+      <bpmn2:extensionElements>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:skipStrategy/>
+        <fixflow:taskCommand id="HandleCommand_2" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:potentialOwner fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="启动人">
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression id="processInfo.getStartAuthor()">processInfo.getStartAuthor()</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="UserTask_3" fixflow:taskType="FIXFLOWTASK" name="User Task 3">
+      <bpmn2:extensionElements>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:skipStrategy/>
+        <fixflow:expectedExecutionTime/>
+        <fixflow:taskCommand id="HandleCommand_2" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+      <bpmn2:potentialOwner fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="启动人">
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression id="processInfo.getStartAuthor()">processInfo.getStartAuthor()</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:parallelGateway id="ParallelGateway_2" name="Parallel Gateway 2" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="UserTask_2" targetRef="ParallelGateway_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_3"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="UserTask_3" targetRef="ParallelGateway_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ParallelGateway_2" targetRef="UserTask_4"/>
+    <bpmn2:userTask id="UserTask_4" name="User Task 4">
+      <bpmn2:extensionElements>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:skipStrategy/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+      <bpmn2:potentialOwner fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="启动人">
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression id="processInfo.getStartAuthor()">processInfo.getStartAuthor()</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_4" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default 流程定义">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ParallelGatewayTest">
+      <bpmndi:BPMNShape id="BPMNShape_1">
+        <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_nMnXoMsKEeCsbvsXukarWQ" bpmnElement="EndEvent1">
-        <dc:Bounds height="51.0" width="36.0" x="670.0" y="204.0"/>
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="32.0" y="152.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_n5edoMsKEeCsbvsXukarWQ" bpmnElement="UserTask_Sub">
-        <dc:Bounds height="50.0" width="110.0" x="100.0" y="207.0"/>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
+        <dc:Bounds height="50.0" width="110.0" x="110.0" y="145.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_pYfZUMsKEeCsbvsXukarWQ" bpmnElement="UserTask_2">
-        <dc:Bounds height="50.0" width="110.0" x="260.0" y="158.0"/>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="590.0" y="247.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_prrbEMsKEeCsbvsXukarWQ" bpmnElement="UserTask_3">
-        <dc:Bounds height="50.0" width="110.0" x="260.0" y="249.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_rvcCkMsKEeCsbvsXukarWQ" bpmnElement="ParallelGateway_1">
-        <dc:Bounds height="65.0" width="55.0" x="426.0" y="196.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_tqKp4MsKEeCsbvsXukarWQ" bpmnElement="UserTask_4">
-        <dc:Bounds height="50.0" width="110.0" x="520.0" y="197.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="_on8GIMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow1" sourceElement="_mtKbgMsKEeCsbvsXukarWQ" targetElement="_n5edoMsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="76.0" y="232.0"/>
-        <di:waypoint xsi:type="dc:Point" x="100.0" y="232.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
+        <di:waypoint xsi:type="dc:Point" x="68.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="86.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="86.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="110.0" y="170.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="_qKWUEMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow2" sourceElement="_n5edoMsKEeCsbvsXukarWQ" targetElement="_pYfZUMsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="210.0" y="232.0"/>
-        <di:waypoint xsi:type="dc:Point" x="260.0" y="183.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_ParallelGateway_1">
+        <di:waypoint xsi:type="dc:Point" x="220.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="235.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="235.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="254.0" y="170.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="_qa-KAMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow3" sourceElement="_n5edoMsKEeCsbvsXukarWQ" targetElement="_prrbEMsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="210.0" y="232.0"/>
-        <di:waypoint xsi:type="dc:Point" x="260.0" y="274.0"/>
+      <bpmndi:BPMNShape id="BPMNShape_ParallelGateway_1" bpmnElement="ParallelGateway_1">
+        <dc:Bounds height="50.0" width="50.0" x="254.0" y="145.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2">
+        <dc:Bounds height="50.0" width="110.0" x="335.0" y="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_3" bpmnElement="UserTask_3">
+        <dc:Bounds height="50.0" width="110.0" x="335.0" y="250.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ParallelGateway_2" bpmnElement="ParallelGateway_2">
+        <dc:Bounds height="50.0" width="50.0" x="472.0" y="145.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_ParallelGateway_1" targetElement="BPMNShape_UserTask_2">
+        <di:waypoint xsi:type="dc:Point" x="279.0" y="145.0"/>
+        <di:waypoint xsi:type="dc:Point" x="279.0" y="65.0"/>
+        <di:waypoint xsi:type="dc:Point" x="335.0" y="65.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="_sapiwMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow4" sourceElement="_pYfZUMsKEeCsbvsXukarWQ" targetElement="_rvcCkMsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="370.0" y="183.0"/>
-        <di:waypoint xsi:type="dc:Point" x="426.0" y="221.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_UserTask_2" targetElement="BPMNShape_ParallelGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="445.0" y="65.0"/>
+        <di:waypoint xsi:type="dc:Point" x="497.0" y="65.0"/>
+        <di:waypoint xsi:type="dc:Point" x="497.0" y="145.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="_sqvNMMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow5" sourceElement="_prrbEMsKEeCsbvsXukarWQ" targetElement="_rvcCkMsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="370.0" y="274.0"/>
-        <di:waypoint xsi:type="dc:Point" x="426.0" y="221.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_ParallelGateway_1" targetElement="BPMNShape_UserTask_3">
+        <di:waypoint xsi:type="dc:Point" x="279.0" y="196.0"/>
+        <di:waypoint xsi:type="dc:Point" x="279.0" y="275.0"/>
+        <di:waypoint xsi:type="dc:Point" x="335.0" y="275.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="_uiCtEMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow6" sourceElement="_rvcCkMsKEeCsbvsXukarWQ" targetElement="_tqKp4MsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="477.0" y="221.0"/>
-        <di:waypoint xsi:type="dc:Point" x="520.0" y="222.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_UserTask_3" targetElement="BPMNShape_ParallelGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="445.0" y="275.0"/>
+        <di:waypoint xsi:type="dc:Point" x="497.0" y="275.0"/>
+        <di:waypoint xsi:type="dc:Point" x="497.0" y="196.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="_us-xwMsKEeCsbvsXukarWQ" bpmnElement="SequenceFlow7" sourceElement="_tqKp4MsKEeCsbvsXukarWQ" targetElement="_nMnXoMsKEeCsbvsXukarWQ">
-        <di:waypoint xsi:type="dc:Point" x="630.0" y="222.0"/>
-        <di:waypoint xsi:type="dc:Point" x="670.0" y="222.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_ParallelGateway_2" targetElement="BPMNShape_UserTask_4">
+        <di:waypoint xsi:type="dc:Point" x="523.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="536.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="536.0" y="170.0"/>
+        <di:waypoint xsi:type="dc:Point" x="553.0" y="170.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_4" bpmnElement="UserTask_4">
+        <dc:Bounds height="50.0" width="110.0" x="553.0" y="145.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_UserTask_4" targetElement="BPMNShape_EndEvent_1">
+        <di:waypoint xsi:type="dc:Point" x="608.0" y="195.0"/>
+        <di:waypoint xsi:type="dc:Point" x="608.0" y="218.0"/>
+        <di:waypoint xsi:type="dc:Point" x="608.0" y="218.0"/>
+        <di:waypoint xsi:type="dc:Point" x="608.0" y="247.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-</definitions>
+</bpmn2:definitions>
