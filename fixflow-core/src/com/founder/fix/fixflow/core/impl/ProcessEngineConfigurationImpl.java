@@ -560,7 +560,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		
 		props.put("org.quartz.jobStore.misfireThreshold", "60000");
 		
-		props.put("org.quartz.scheduler.jmx.export", "true");
+		//props.put("org.quartz.scheduler.jmx.export", "true");
 
 		// JobStoreTX
 		props.put("org.quartz.jobStore.class", "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.JobStoreFix");
