@@ -30,8 +30,8 @@ public class DateUtil {
 	 * @author fy.zhang 
 	 */  
 	public static String formatDuring(long mss) {  
-
-		
+		//传过来的是毫秒，转换成秒级     by ych  2013-07-23
+		mss /= 1000;
 	    long days = mss / (24*3600);  
 	    long hours = (mss % (60 * 60 * 24)) / ( 60 * 60);  
 	    long minutes = (mss % (60 * 60)) / (60);  
@@ -73,7 +73,7 @@ public class DateUtil {
 	 * @return  输入的两个Date类型数据之间的时间间格用* days * hours * minutes * seconds的格式展示 
 	 * @author fy.zhang 
 	 */  
-	public static String formatDuring(Date begin, Date end) {  
+	public static String formatDuring(Date begin, Date end) { 
 	    return formatDuring(end.getTime() - begin.getTime());  
 	}  
 
