@@ -874,7 +874,7 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		//创建通用命令
 		ExpandTaskCommand expandTaskCommandSuspendProcessInstance=new ExpandTaskCommand();
 		//设置命令为暂停实例
-		expandTaskCommandSuspendProcessInstance.setCommandType("terminationTask");
+		expandTaskCommandSuspendProcessInstance.setCommandType("terminationProcess");
 		//设置命令按钮的iD,与节点上处理命令设置一致
 		expandTaskCommandSuspendProcessInstance.setUserCommandId("HandleCommand_2");
 		//设置命令的处理任务号
@@ -1175,6 +1175,10 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		List<TaskInstance> taskEnd = taskQuery.processDefinitionKey("Process_TaskServiceTest").taskAssignee("1200119390").taskIsEnd().addTaskType(TaskInstanceType.FIXFLOWTASK).list();
 		//验证已办任务是否为50
 		assertEquals(50, taskEnd.size());
+		//取得第一条任务
+		TaskInstance taskInstance = taskEnd.get(0);
+		//验证任务中的流程定义名称不为空
+		assertNotNull(taskInstance.getProcessDefinitionName());
 		//测试分页 取1-9条
 		taskEnd = taskQuery.listPage(1, 9);
 		//验证取到9条任务
@@ -1216,7 +1220,7 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		ProcessDefinitionBehavior processDefinitionBehavior  = processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest").singleResult();
 		//获取此流程的开始节点可显示的命令
 		List<TaskCommandInst> commands = taskService.getTaskCommandById(processDefinitionBehavior.getProcessDefinitionId(), "UserTask_3");
-		//验证是否为6个命令，详见流程定义
+		//验证是否为7个命令，详见流程定义
 		assertEquals(7, commands.size());
 	}
 	
