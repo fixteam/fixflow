@@ -56,7 +56,7 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 				if (diagramElement instanceof BPMNShape) {
 					BPMNShape bpmnShape = (BPMNShape) diagramElement;
 					Map<String, Object>  positionMap=new HashMap<String, Object>();
-					BaseElement bpmnElement=getBaseElement(bpmnShape.getBpmnElement());
+					BaseElement bpmnElement=bpmnShape.getBpmnElement();
 					if(bpmnElement==null){
 						continue;
 					}
@@ -86,6 +86,7 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 		
 		//return CommonNodeToSVG(bpmnShape, new SvgCallActivityTo());
 	}
+	@SuppressWarnings("unused")
 	private  BaseElement getBaseElement(BaseElement baseElement)
 	{
 		
