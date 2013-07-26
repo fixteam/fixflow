@@ -206,7 +206,7 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//重置查询
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		//查询某人发起的流程实例
-		processInstances = processInstanceQuery.processDefinitionKey("BK_testStartProcessInstanceByKey").initiator("1200119390").list();
+		processInstances = processInstanceQuery.processDefinitionKey("Process_TaskServiceTest").initiator("1200119390").list();
 		//验证是否有10个
 		assertEquals(10, processInstances.size());
 		
