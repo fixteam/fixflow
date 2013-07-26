@@ -131,6 +131,9 @@ public class BpmnDeployer implements Deployer {
 
 				processDefinition.setProcessDefinitionId(processDefinitionId);
 
+				
+				
+				
 				dbSqlSession.insert("insertProcessDefinition", processDefinition);
 				//deploymentCache.addProcessDefinition(processDefinition);
 

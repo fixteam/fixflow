@@ -284,7 +284,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		persistentState.put("processDefinitionId", this.processDefinitionId);
 		persistentState.put("processDefinitionName", this.name);
 		persistentState.put("processDefinitionKey", this.id);
-		persistentState.put("category", this.category);
+		persistentState.put("category", getCategory());
 		persistentState.put("version", this.version);
 		persistentState.put("resourceName", this.resourceName);
 		persistentState.put("resourceId", this.resourceId);
@@ -326,13 +326,15 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	protected String category;
 
 	public String getCategory() {
-		// TODO Auto-generated method stub
+		
+		if(this.category==null){
+
+			this.category=StringUtil.getString(this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY));
+		}
 		return this.category;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+
 
 	public String getStartFormKey() {
 

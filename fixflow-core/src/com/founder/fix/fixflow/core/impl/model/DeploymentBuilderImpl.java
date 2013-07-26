@@ -105,7 +105,6 @@ public class DeploymentBuilderImpl implements DeploymentBuilder {
 
 	public DeploymentBuilder updateResource(String resourceId,
 			InputStream inputStream) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new FixFlowException("该方法暂未实现,请调用modelService里的更新方法");
 	}
 }
