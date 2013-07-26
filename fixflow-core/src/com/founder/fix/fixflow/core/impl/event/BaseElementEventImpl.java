@@ -7,14 +7,15 @@ import org.eclipse.bpmn2.BaseElement;
 
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
+
 
 public class BaseElementEventImpl implements BaseElementEvent {
 
 	String id;
 	protected String eventType;
 	protected BaseElement baseElement;
-	protected List<ConnectorDefinition> connectors;
+	protected List<ConnectorInstanceBehavior> connectors;
 	
 
 	public BaseElementEventImpl() {
@@ -29,7 +30,7 @@ public class BaseElementEventImpl implements BaseElementEvent {
 		this.eventType = eventType;
 	}
 
-	public List<ConnectorDefinition> getConnectors() {
+	public List<ConnectorInstanceBehavior> getConnectors() {
 		return this.connectors;
 	}
 
@@ -37,17 +38,17 @@ public class BaseElementEventImpl implements BaseElementEvent {
 		return ((connectors != null) && (connectors.size() > 0));
 	}
 
-	public ConnectorDefinition addConnector(ConnectorDefinition connector) {
+	public ConnectorInstanceBehavior addConnector(ConnectorInstanceBehavior connector) {
 		if (connector == null)
 			throw new FixFlowException("不能在Event中添加一个null的action");
 		if (connectors == null)
-			connectors = new ArrayList<ConnectorDefinition>();
+			connectors = new ArrayList<ConnectorInstanceBehavior>();
 
 		connectors.add(connector);
 		return connector;
 	}
 
-	public void removeConnector(ConnectorDefinition connector) {
+	public void removeConnector(ConnectorInstanceBehavior connector) {
 		if (connector == null)
 			throw new FixFlowException("不能在Event中移除一个null的action");
 		if (connectors != null) {

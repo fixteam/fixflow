@@ -1,25 +1,11 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.jms.Session;
 
 import org.eclipse.bpmn2.impl.SendTaskImpl;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 
 
 import com.founder.fix.bpmn2extensions.fixflow.MessageObj;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
-import com.founder.fix.fixflow.core.impl.jms.MessageSender;
-import com.founder.fix.fixflow.core.impl.message.FlowMessage;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.subscription.EventSubscriptionType;
 
@@ -32,7 +18,7 @@ public class SendTaskbehavior extends SendTaskImpl {
 		// TODO Auto-generated method stub
 
 		
-		
+		/*
 		FlowMessage flowMessage =null;
 		List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "messageObj");
 		if (entryList.size() > 0) {
@@ -119,7 +105,7 @@ public class SendTaskbehavior extends SendTaskImpl {
 				throw new FixFlowException("消息发送失败!", e);
 			}
 			
-		} 
+		} */
 		
 		super.execute(executionContext);
 		

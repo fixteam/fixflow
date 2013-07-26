@@ -9,12 +9,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpmn2.impl.UserTaskImpl;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.fixflow.AssignPolicyType;
+import com.founder.fix.bpmn2extensions.fixflow.ExpectedExecutionTime;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.bpmn2extensions.fixflow.FormUri;
+import com.founder.fix.bpmn2extensions.fixflow.FormUriView;
 import com.founder.fix.bpmn2extensions.fixflow.SkipAssignee;
 import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
+import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
+import com.founder.fix.bpmn2extensions.fixflow.TaskPriority;
+import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -25,7 +32,7 @@ import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
+import com.founder.fix.fixflow.core.impl.util.EMFUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -35,88 +42,111 @@ import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class UserTaskBehavior extends UserTaskImpl {
-	
+
 	protected String formUri;
-	
+
 	protected String formUriView;
-	
-	
-	protected TaskSubject taskSubject;
-	
-	protected List<TaskCommandInst>  taskCommands;
-	
+
+	protected TaskSubjectBehavior taskSubject;
+
+	protected List<TaskCommandInst> taskCommands;
+
 	protected String taskPriority;
 
+	protected TaskInstanceType taskInstanceType;
 
+	protected ExpectedExecutionTime expectedExecutionTime;
 
+	protected AssignPolicyType assignPolicyType;
 
-	
+	public AssignPolicyType getAssignPolicyType() {
+
+		if (this.assignPolicyType == null) {
+
+			this.assignPolicyType =EMFUtil.getExtensionElementOne(AssignPolicyType.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE);
+		}
+
+		return assignPolicyType;
+	}
+
+	public TaskInstanceType getTaskInstanceType() {
+		if (this.taskInstanceType == null) {
+			Object taskType = this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_TYPE);
+			if (taskType != null && !taskType.equals("")) {
+				String taskTypeString = StringUtil.getString(taskType);
+				this.taskInstanceType = TaskInstanceType.valueOf(taskTypeString);
+			}else{
+				this.taskInstanceType=TaskInstanceType.FIXFLOWTASK;
+			}
+		}
+
+		return this.taskInstanceType;
+
+	}
+
+	public ExpectedExecutionTime getExpectedExecutionTime() {
+
+		if (this.expectedExecutionTime == null) {
+			this.expectedExecutionTime =EMFUtil.getExtensionElementOne(ExpectedExecutionTime.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__EXPECTED_EXECUTION_TIME);
+		}
+
+		return this.expectedExecutionTime;
+
+	}
 
 	public String getFormUri() {
-		
-		if(this.formUri==null){
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "formUri");
-			if (entryList.size() > 0) {
 
-				FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entryList.get(0), "expression").get(0);
-				String expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
-
-				this.formUri = expressionValue;
-
+		if (this.formUri == null) {
+			FormUri formUriObj  =EMFUtil.getExtensionElementOne(FormUri.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI);
+			if (formUriObj!=null&&formUriObj.getExpression() != null) {
+				this.formUri = formUriObj.getExpression().getValue();
 			}
 
-			
 		}
 		return this.formUri;
 
 	}
-	
+
 	public String getFormUriView() {
-		
-		
-		if(this.formUriView==null){
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "formUriView");
-			if (entryList.size() > 0) {
-	
-				FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entryList.get(0), "expression").get(0);
-				String expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
-	
-				this.formUriView = expressionValue;
-	
+
+		if (this.formUriView == null) {
+			FormUriView formUriViewObj  =EMFUtil.getExtensionElementOne(FormUriView.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI_VIEW);
+			
+			if (formUriViewObj!=null&&formUriViewObj.getExpression() != null) {
+				this.formUriView = formUriViewObj.getExpression().getValue();
 			}
+
 		}
-		return formUriView;
+		return this.formUriView;
+
 	}
 
-	public TaskSubject getTaskSubject() {
-		
-		
-		if(this.taskSubject==null){
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "taskSubject");
-			if (entryList.size() > 0) {
-				this.taskSubject= new TaskSubject(entryList.get(0));
-			} 
+	public TaskSubjectBehavior getTaskSubject() {
+
+		if (this.taskSubject == null) {
+			TaskSubject taskSubjectObj  =EMFUtil.getExtensionElementOne(TaskSubject.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT);
+			if (taskSubjectObj!=null&&taskSubjectObj.getExpression() != null) {
+				this.taskSubject =new TaskSubjectBehavior(taskSubjectObj);
+			}
+			
+			
 		}
-		
+
 		return this.taskSubject;
 	}
-	
+
 	public String getTaskPriority() {
-		
-		if(this.taskPriority==null){
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "taskPriority");
-			if (entryList.size() > 0) {
-	
-				FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entryList.get(0), "expression").get(0);
-				String expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
-	
-				this.taskPriority = expressionValue;
-	
+
+		if (this.taskPriority == null) {
+			
+			
+			TaskPriority taskPriorityObj  =EMFUtil.getExtensionElementOne(TaskPriority.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_PRIORITY);
+			
+			if (taskPriorityObj!=null&&taskPriorityObj.getExpression() != null) {
+				this.taskPriority =taskPriorityObj.getExpression().getValue();
 			}
 		}
 		return taskPriority;
-		
-	
 
 	}
 
@@ -137,16 +167,23 @@ public class UserTaskBehavior extends UserTaskImpl {
 	protected Map<String, TaskCommandInst> taskCommandsMap;
 
 	public List<TaskCommandInst> getTaskCommands() {
-		
-		if(taskCommands==null){
-			taskCommands =new ArrayList<TaskCommandInst>();
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "taskCommand");
-			for (FeatureMap.Entry entry : entryList) {
-				taskCommands.add(new TaskCommandInst(entry,this));
+
+		if (taskCommands == null) {
+			taskCommands = new ArrayList<TaskCommandInst>();
+			
+			
+			List<TaskCommand> taskCommandsObj  =EMFUtil.getExtensionElementList(TaskCommand.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND);
+			
+			if(taskCommandsObj!=null){
+				for (TaskCommand taskCommand : taskCommandsObj) {
+					taskCommands.add(new TaskCommandInst(taskCommand, this));
+				}
 			}
+			
+			
+			
 		}
-		
-		
+
 		return taskCommands;
 
 	}
@@ -171,7 +208,9 @@ public class UserTaskBehavior extends UserTaskImpl {
 	public String getAssignmentActionClassName() {
 
 		if (assignmentActionClassName == null) {
-			this.assignmentActionClassName = EMFExtensionUtil.getAnyAttributeValue(this, "assignAction");
+			
+			
+			this.assignmentActionClassName =StringUtil.getString(this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__ASSIGN_ACTION));
 		}
 
 		return assignmentActionClassName;
@@ -196,22 +235,14 @@ public class UserTaskBehavior extends UserTaskImpl {
 		this.taskDefinition = taskDefinition;
 	}
 
-
-
 	// 覆写父类的节点执行方法
 	public void execute(ExecutionContext executionContext) {
-		
-		
-		
-		
-		
-		
 
 		TaskMgmtInstance tmi = getTaskMgmtInstance(executionContext.getToken());
 
 		// 是否启用验证
 		if (executionContext.getProcessDefinition().isVerification()) {
-			//这里是验证的设计阶段有没有配置处理者
+			// 这里是验证的设计阶段有没有配置处理者
 			if (!checkResources()) {
 				throw new FixFlowException("节点: " + this.getId() + " 没有定义处理者,请重新检查节点定义!");
 			}
@@ -219,16 +250,16 @@ public class UserTaskBehavior extends UserTaskImpl {
 
 		// 创建并分配任务
 		TaskInstanceEntity taskInstance = null;
-		
-		if(executionContext.getGroupID()!=null) {
+
+		if (executionContext.getGroupID() != null) {
 			taskInstance = tmi.createTaskInstanceEntity(getTaskDefinition(), executionContext, executionContext.getGroupID());
-		}else {
+		} else {
 			taskInstance = tmi.createTaskInstanceEntity(getTaskDefinition(), executionContext);
 		}
 
 		// 是否启用验证
-		//if (!executionContext.getProcessDefinition().isVerification()) {
-		//	return;
+		// if (!executionContext.getProcessDefinition().isVerification()) {
+		// return;
 		//
 
 		// 当独占任务和候选任务都没有的时候则直接弹出异常消息.
@@ -239,7 +270,7 @@ public class UserTaskBehavior extends UserTaskImpl {
 			if (taskInstance.getAssignee() != null) {
 				if (taskInstance.getAssignee().equals("fixflow_allusers")) {
 					throw new FixFlowException("独占处理者不能是所有人");
-					//return;
+					// return;
 				}
 				UserTo userTo = Authentication.findUserInfoByUserId(taskInstance.getAssignee());
 				if (userTo == null) {
@@ -269,9 +300,9 @@ public class UserTaskBehavior extends UserTaskImpl {
 						if (groupTo == null) {
 
 						} else {
-							
-							//这里是否需要验证一下组里边是否还有人？
-							
+
+							// 这里是否需要验证一下组里边是否还有人？
+
 							return;
 						}
 						// identityLink.getGroupId()
@@ -286,12 +317,11 @@ public class UserTaskBehavior extends UserTaskImpl {
 		}
 
 	}
-	
-	//覆写父类的跳过执行方法
-	protected void skipExecute(ExecutionContext executionContext){
-		
-		
-		SkipStrategy skipStrategy=executionContext.getSkipStrategy();
+
+	// 覆写父类的跳过执行方法
+	protected void skipExecute(ExecutionContext executionContext) {
+
+		SkipStrategy skipStrategy = executionContext.getSkipStrategy();
 		SkipAssignee skipAssignee = skipStrategy.getSkipAssignee();
 		SkipComment skipComment = skipStrategy.getSkipComment();
 
@@ -323,34 +353,32 @@ public class UserTaskBehavior extends UserTaskImpl {
 				}
 			}
 		}
-		
-		TokenEntity token=executionContext.getToken();
-		
+
+		TokenEntity token = executionContext.getToken();
+
 		TaskInstanceEntity newTask = TaskInstanceEntity.create();
 		newTask.setId(GuidUtil.CreateGuid());
 		newTask.setCreateTime(new Date());
 		newTask.setNodeId(this.getId());
-		
-		if(skipAssigneeString!=null&&!skipAssigneeString.equals("")){
+
+		if (skipAssigneeString != null && !skipAssigneeString.equals("")) {
 			newTask.setAssignee(skipAssigneeString);
 		}
 
 		newTask.setDraft(false);
-		
-		Date date=new Date();
-		
-		
-		Calendar cal=Calendar.getInstance();
-	    cal.setTime(date);
-	    cal.add(Calendar.MILLISECOND,1);
-	    date=cal.getTime();
-		
-		
+
+		Date date = new Date();
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MILLISECOND, 1);
+		date = cal.getTime();
+
 		newTask.setEndTime(date);
 		newTask.setPriority(50);
-		
-		ProcessDefinitionBehavior processDefinition=token.getProcessInstance().getProcessDefinition();
-		String processDefinitionId=processDefinition.getProcessDefinitionId();
+
+		ProcessDefinitionBehavior processDefinition = token.getProcessInstance().getProcessDefinition();
+		String processDefinitionId = processDefinition.getProcessDefinitionId();
 		newTask.setProcessDefinitionId(processDefinitionId);
 		newTask.setProcessDefinitionKeyWithoutCascade(processDefinition.getProcessDefinitionKey());
 		newTask.setName(this.getName());
@@ -359,34 +387,24 @@ public class UserTaskBehavior extends UserTaskImpl {
 		newTask.setTokenId(token.getId());
 		newTask.setProcessDefinitionName(processDefinition.getName());
 		newTask.setTaskInstanceType(TaskInstanceType.FIXBPMTASK);
-		String bizKey=token.getProcessInstance().getBizKey();
+		String bizKey = token.getProcessInstance().getBizKey();
 		newTask.setBizKey(bizKey);
 		newTask.setCommandId(TaskCommandType.SKIPNODE);
 		newTask.setCommandType(TaskCommandType.SKIPNODE);
-		
-		
-		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get("skipNode");
-		
-		
-		
-		
-		
-		if(taskCommandDef.getName()!=null){
+
+		TaskCommandDef taskCommandDef = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get("skipNode");
+
+		if (taskCommandDef.getName() != null) {
 			newTask.setCommandMessage(taskCommandDef.getName());
 		}
-		
-		if(skipCommentString!=null&&!skipCommentString.equals("")){
+
+		if (skipCommentString != null && !skipCommentString.equals("")) {
 			newTask.setTaskComment(skipCommentString);
 		}
-		
-		
-	
-		
+
 		Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(newTask);
-		
 
 	}
-
 
 	private boolean checkResources() {
 		if (this.getResources().size() == 0 && this.getAssignmentActionClassName() == null) {
@@ -394,8 +412,7 @@ public class UserTaskBehavior extends UserTaskImpl {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * 离开节点的时候需要清理的数据. 每个子类需要自己实现.
 	 */
@@ -405,13 +422,12 @@ public class UserTaskBehavior extends UserTaskImpl {
 		super.leaveClearData(executionContext);
 	}
 
-
 	private void removeTaskInstanceSynchronization(TokenEntity token) {
 		// TODO Auto-generated method stub
 		TaskMgmtInstance tmi = getTaskMgmtInstance(token);
 		for (TaskInstanceEntity taskInstance : tmi.getTaskInstanceEntitys(token)) {
 			if (!taskInstance.hasEnded()) {
-				taskInstance.customEnd(null,null,null,null);
+				taskInstance.customEnd(null, null, null, null);
 			}
 		}
 	}

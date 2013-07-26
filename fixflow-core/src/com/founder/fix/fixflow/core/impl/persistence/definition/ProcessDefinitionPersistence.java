@@ -25,8 +25,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl.Delegator;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputs;
+import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -34,9 +38,7 @@ import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorParameterInputs;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorParameterOutputs;
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtDefinition;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
@@ -126,8 +128,7 @@ public class ProcessDefinitionPersistence {
 	public ProcessDefinitionBehavior selectProcessDefinitionById(String processDefinitionId) {
 
 		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
-		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(
-				processDefinitionId);
+		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processDefinitionId);
 		if (processDefinition == null) {
 
 			String sqlText = "select * " + "from FIXFLOW_DEF_PROCESSDEFINITION " + "where PROCESS_ID = ?";
@@ -170,8 +171,7 @@ public class ProcessDefinitionPersistence {
 
 	}
 
-	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(
-			ProcessDefinitionQueryImpl processDefinitionQuery) {
+	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery) {
 
 		List<Object> objectParamWhere = new ArrayList<Object>();
 
@@ -180,14 +180,12 @@ public class ProcessDefinitionPersistence {
 		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " WHERE 1=1";
 
 		if (processDefinitionQuery.getId() != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.PROCESS_ID=? ";
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_ID=? ";
 			objectParamWhere.add(processDefinitionQuery.getId());
 		}
 
 		if (processDefinitionQuery.getKey() != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.PROCESS_KEY=? ";
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_KEY=? ";
 			objectParamWhere.add(processDefinitionQuery.getKey());
 		}
 
@@ -205,8 +203,7 @@ public class ProcessDefinitionPersistence {
 					+ processDefinitionQuery.getOrderBy().toString();
 		}
 
-		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectProcessDefinitionsByQueryCriteriaSql,
-				objectParamWhere);
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
 
 		List<ProcessDefinitionBehavior> processDefinitionList = new ArrayList<ProcessDefinitionBehavior>();
 
@@ -247,8 +244,12 @@ public class ProcessDefinitionPersistence {
 
 	}
 
-	private ProcessDefinitionBehavior getProcessDefinition(String deploymentId, String resourceName, String processKey,
-			String processId) {
+	private ProcessDefinitionBehavior getProcessDefinition(String deploymentId, String resourceName, String processKey, String processId) {
+
+		
+		
+		
+		
 
 		String sqlText = "SELECT BYTES FROM FIXFLOW_DEF_BYTEARRAY WHERE NAME=? and DEPLOYMENT_ID=?";
 
@@ -264,27 +265,40 @@ public class ProcessDefinitionPersistence {
 		Object bytesObject = dataMap.get("BYTES");
 		
 		
+		
+		
 		if (bytesObject != null) {
 			byte[] bytes = (byte[]) bytesObject;
-
-			Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
-			String filePath=this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
+			
+			ResourceSet resourceSet=Context.getProcessEngineConfiguration().getResourceSet();
+			
+			
+			
+			String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn")
+					.toString();
 			Resource ddddResource = null;
-			if(!filePath.startsWith("jar")){
+			if (!filePath.startsWith("jar")) {
 				try {
-					filePath= java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile(),"utf-8");
+					filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn")
+							.getFile(), "utf-8");
 				} catch (UnsupportedEncodingException e) {
 					// TODO 自动生成的 catch 块
 					e.printStackTrace();
-					throw new FixFlowException("流程定义文件加载失败！",e);
+					throw new FixFlowException("流程定义文件加载失败！", e);
 				}
-				ddddResource = ddd.createResource(URI.createFileURI(filePath));
-			}else{
-				ddddResource = ddd.createResource(URI.createURI(filePath));
+				ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+			} else {
+				ddddResource = resourceSet.createResource(URI.createURI(filePath));
 			}
-			//Resource ddddResource = ddd.createResource(URI.createFileURI(ReflectUtil.getResource(
-					//"com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile()));
-
+			
+			
+			//rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMLResourceFactoryImpl());
+			// Resource ddddResource =
+			// ddd.createResource(URI.createFileURI(ReflectUtil.getResource(
+			// "com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile()));
+			
+			
+		
 			try {
 				ddddResource.load(new ByteArrayInputStream(bytes), null);
 			} catch (UnsupportedEncodingException e) {
@@ -295,8 +309,7 @@ public class ProcessDefinitionPersistence {
 				throw new FixFlowException("定义文件加载失败!", e);
 			}
 
-			DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents()
-					.get(0);
+			DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
 			definitions.setProcessId(processId);
 			ProcessDefinitionBehavior process = null;
 			for (RootElement rootElement : definitions.getRootElements()) {
@@ -325,8 +338,7 @@ public class ProcessDefinitionPersistence {
 	}
 
 	@SuppressWarnings("unused")
-	private ProcessDefinitionBehavior getProcessDefinitionNew(String deploymentId, String resourceName,
-			String processKey) {
+	private ProcessDefinitionBehavior getProcessDefinitionNew(String deploymentId, String resourceName, String processKey) {
 
 		String sqlText = "SELECT BYTES FROM FIXFLOW_DEF_BYTEARRAY WHERE NAME=? and DEPLOYMENT_ID=?";
 
@@ -342,19 +354,22 @@ public class ProcessDefinitionPersistence {
 		Object bytesObject = dataMap.get("BYTES");
 		if (bytesObject != null) {
 			byte[] bytes = (byte[]) bytesObject;
-
-			Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
-			Resource ddddResource = ddd.createResource(URI.createFileURI(ReflectUtil.getResource(
-					"com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile()));
-
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL",
-					Bpmn2Package.eINSTANCE);
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
+			
+		
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com", FixFlowPackage.eINSTANCE);
 			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
 			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DC", DcPackage.eINSTANCE);
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI",
-					BpmnDiPackage.eINSTANCE);
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI", BpmnDiPackage.eINSTANCE);
 
+			Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
+			
+			
+		
+			Resource ddddResource = ddd.createResource(URI.createFileURI(ReflectUtil.getResource(
+					"com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile()));
+			
+			
 			try {
 				ddddResource.load(new ByteArrayInputStream(bytes), null);
 			} catch (UnsupportedEncodingException e) {
@@ -365,8 +380,7 @@ public class ProcessDefinitionPersistence {
 				throw new FixFlowException("定义文件加载失败!", e);
 			}
 
-			DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents()
-					.get(0);
+			DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
 
 			ProcessDefinitionBehavior process = null;
 			for (RootElement rootElement : definitions.getRootElements()) {
@@ -437,13 +451,15 @@ public class ProcessDefinitionPersistence {
 	}
 
 	private void addVariable(BaseElement baseElement, ProcessDefinitionBehavior process, boolean isPubilc) {
-		List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(baseElement, "dataVariable");
-		if (entryList == null) {
+
+		List<DataVariable> dataVariables = EMFExtensionUtil.getDataVariables(baseElement);
+
+		if (dataVariables == null) {
 			return;
 		}
-		for (FeatureMap.Entry entry : entryList) {
+		for (DataVariable dataVariable : dataVariables) {
 			process.getDataVariableMgmtDefinition().addDataVariableBehavior(
-					new DataVariableBehavior(entry, baseElement.getId(), isPubilc));
+					new DataVariableBehavior(dataVariable, baseElement.getId(), isPubilc));
 		}
 	}
 
@@ -478,11 +494,10 @@ public class ProcessDefinitionPersistence {
 
 	private void loadEventObj(BaseElement baseElement) {
 		BaseElementImpl baseElementImpl = (BaseElementImpl) baseElement;
-		
-		
-		if(baseElement instanceof SubProcess){
-			SubProcess subProcess=(SubProcess)baseElement;
-			List<FlowElement> flowElements=subProcess.getFlowElements();
+
+		if (baseElement instanceof SubProcess) {
+			SubProcess subProcess = (SubProcess) baseElement;
+			List<FlowElement> flowElements = subProcess.getFlowElements();
 			for (FlowElement flowElement : flowElements) {
 				if (flowElement instanceof Activity) {
 
@@ -490,108 +505,76 @@ public class ProcessDefinitionPersistence {
 
 				}
 			}
-	
-		}
-
-		List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(baseElementImpl, "connectorInstance");
-		for (FeatureMap.Entry entry : entryList) {
-
-			String packageNamesString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "packageName");
-			String classNameString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "className");
-			String eventTypeString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "eventType");
-			String connectorIdString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "connectorId");
-			String connectorInstanceIdString = EMFExtensionUtil.getExtensionElementAttributeValue(entry,
-					"connectorInstanceId");
-			String connectorInstanceNameString = EMFExtensionUtil.getExtensionElementAttributeValue(entry,
-					"connectorInstanceName");
-			String errorHandlingString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "errorHandling");
-			String errorCodeString = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "errorCode");
-			String isTimeExecute = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isTimeExecute");
-			String documentationString = EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil
-					.getExtensionElementsInEntry(entry, "documentation").get(0));
-			
-			String skipExpression=null;
-			List<FeatureMap.Entry> skipExpressionObj=EMFExtensionUtil.getExtensionElementsInEntry(entry, "skipComment");
-			if(skipExpressionObj.size()>0){
-				skipExpression=EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil.getExtensionElementsInEntry(skipExpressionObj.get(0), "expression").get(0));
-				//skipExpression=EMFExtensionUtil.getExtensionElementValue(skipExpressionObj.get(0));
-			}
-			
-			String timeExpression=null;
-			List<FeatureMap.Entry> timeExpressionObj=EMFExtensionUtil.getExtensionElementsInEntry(entry, "timeExpression");
-			if(timeExpressionObj.size()>0){
-				timeExpression=EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil.getExtensionElementsInEntry(timeExpressionObj.get(0), "expression").get(0));
-				//skipExpression=EMFExtensionUtil.getExtensionElementValue(skipExpressionObj.get(0));
-			}
-			
-			ConnectorDefinition connectorDefinition = new ConnectorDefinition();
-			
-			connectorDefinition.setConnectorId(connectorIdString);
-			connectorDefinition.setConnectorInstanceId(connectorInstanceIdString);
-			connectorDefinition.setClassName(classNameString);
-			connectorDefinition.setConnectorInstanceName(connectorInstanceNameString);
-			connectorDefinition.setDocumentation(documentationString);
-			connectorDefinition.setErrorCode(errorCodeString);
-			connectorDefinition.setErrorHandling(errorHandlingString);
-			connectorDefinition.setEventType(eventTypeString);
-			connectorDefinition.setPackageName(packageNamesString);
-			connectorDefinition.setSkipExpression(skipExpression);
-			
-			if(isTimeExecute!=null&&!isTimeExecute.equals("")&&isTimeExecute.equals("true")){
-				connectorDefinition.setTimeExecute(true);
-				connectorDefinition.setTimeExpression(timeExpression);
-			}
-			
-			
-			
-			
-			if (baseElementImpl.getEvents().get(eventTypeString) == null) {
-				BaseElementEventImpl flowNodeEventImpl = new BaseElementEventImpl(eventTypeString);
-				flowNodeEventImpl.addConnector(connectorDefinition);
-
-				baseElementImpl.addEvent(flowNodeEventImpl);
-			} else {
-				baseElementImpl.getEvents().get(eventTypeString).addConnector(connectorDefinition);
-			}
-
-			List<FeatureMap.Entry> entryListCPI = EMFExtensionUtil.getExtensionElementsInEntry(entry,
-					"connectorParameterInputs");
-
-			for (FeatureMap.Entry entryCPIObj : entryListCPI) {
-
-				String idCPIString = EMFExtensionUtil.getExtensionElementAttributeValue(entryCPIObj, "id");
-				String nameCPIString = EMFExtensionUtil.getExtensionElementAttributeValue(entryCPIObj, "name");
-				String dataTypeCPIString = EMFExtensionUtil.getExtensionElementAttributeValue(entryCPIObj, "dataType");
-				String expressionCPIString = EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil
-						.getExtensionElementsInEntry(entryCPIObj, "expression").get(0));
-				ConnectorParameterInputs connectorParameterInputs = new ConnectorParameterInputs();
-				connectorParameterInputs.setId(idCPIString);
-				connectorParameterInputs.setName(nameCPIString);
-				connectorParameterInputs.setDataType(dataTypeCPIString);
-				connectorParameterInputs.setExpressionText(expressionCPIString);
-				connectorDefinition.getConnectorParameterInputs().add(connectorParameterInputs);
-
-			}
-
-			List<FeatureMap.Entry> entryListCPO = EMFExtensionUtil.getExtensionElementsInEntry(entry,
-					"connectorParameterOutputs");
-
-			for (FeatureMap.Entry entryCPOObj : entryListCPO) {
-
-				String variableTargetCPIString = EMFExtensionUtil.getExtensionElementAttributeValue(entryCPOObj,
-						"variableTarget");
-				String expressionCPIString = EMFExtensionUtil.getExtensionElementValue(EMFExtensionUtil
-						.getExtensionElementsInEntry(entryCPOObj, "expression").get(0));
-				ConnectorParameterOutputs connectorParameterOutputs = new ConnectorParameterOutputs();
-
-				connectorParameterOutputs.setVariableTarget(variableTargetCPIString);
-
-				connectorParameterOutputs.setExpressionText(expressionCPIString);
-				connectorDefinition.getConnectorParameterOutputs().add(connectorParameterOutputs);
-
-			}
 
 		}
+		List<ConnectorInstance> connectorInstances = baseElementImpl.getConnectorInstances();
+		if (connectorInstances != null) {
+			for (ConnectorInstance connectorInstance : connectorInstances) {
+				String packageNamesString = connectorInstance.getPackageName();
+				String classNameString = connectorInstance.getClassName();
+				String eventTypeString = connectorInstance.getEventType();
+				String connectorIdString = connectorInstance.getConnectorId();
+				String connectorInstanceIdString = connectorInstance.getConnectorInstanceId();
+				String connectorInstanceNameString = connectorInstance.getConnectorInstanceName();
+				String errorHandlingString = connectorInstance.getErrorHandling();
+				String errorCodeString = connectorInstance.getErrorCode();
+				boolean isTimeExecute = connectorInstance.isIsTimeExecute();
+				String documentationString = connectorInstance.getDocumentation().getValue();
+
+				String skipExpression = null;
+
+				if (connectorInstance.getSkipComment() != null) {
+					skipExpression = connectorInstance.getSkipComment().getExpression().getValue();
+				}
+
+				String timeExpression = null;
+
+				if (connectorInstance.getTimeExpression() != null) {
+					timeExpression = connectorInstance.getTimeExpression().getExpression().getValue();
+				}
+
+				ConnectorInstanceBehavior connectorInstanceBehavior = new ConnectorInstanceBehavior();
+
+				connectorInstanceBehavior.setConnectorId(connectorIdString);
+				connectorInstanceBehavior.setConnectorInstanceId(connectorInstanceIdString);
+				connectorInstanceBehavior.setClassName(classNameString);
+				connectorInstanceBehavior.setConnectorInstanceName(connectorInstanceNameString);
+				connectorInstanceBehavior.setDocumentation(documentationString);
+				connectorInstanceBehavior.setErrorCode(errorCodeString);
+				connectorInstanceBehavior.setErrorHandling(errorHandlingString);
+				connectorInstanceBehavior.setEventType(eventTypeString);
+				connectorInstanceBehavior.setPackageName(packageNamesString);
+				connectorInstanceBehavior.setSkipExpression(skipExpression);
+
+				if (isTimeExecute) {
+					connectorInstanceBehavior.setTimeExecute(true);
+					connectorInstanceBehavior.setTimeExpression(timeExpression);
+				} else {
+					connectorInstanceBehavior.setTimeExecute(false);
+				}
+
+				if (baseElementImpl.getEvents().get(eventTypeString) == null) {
+					BaseElementEventImpl flowNodeEventImpl = new BaseElementEventImpl(eventTypeString);
+					flowNodeEventImpl.addConnector(connectorInstanceBehavior);
+
+					baseElementImpl.addEvent(flowNodeEventImpl);
+				} else {
+					baseElementImpl.getEvents().get(eventTypeString).addConnector(connectorInstanceBehavior);
+				}
+
+				List<ConnectorParameterInputs> connectorParameterInputs = connectorInstance.getConnectorParameterInputs();
+
+				connectorInstanceBehavior.getConnectorParameterInputs().clear();
+				connectorInstanceBehavior.getConnectorParameterInputs().addAll(connectorParameterInputs);
+
+				List<ConnectorParameterOutputs> connectorParameterOutputs = connectorInstance.getConnectorParameterOutputs();
+
+				connectorInstanceBehavior.getConnectorParameterOutputs().clear();
+				connectorInstanceBehavior.getConnectorParameterOutputs().addAll(connectorParameterOutputs);
+
+			}
+		}
+
 	}
 
 	public void deleteProcessDefinitionsByDeploymentId(String deploymentId) {

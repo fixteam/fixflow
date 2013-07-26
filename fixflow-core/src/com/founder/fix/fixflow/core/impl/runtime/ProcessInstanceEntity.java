@@ -9,11 +9,9 @@ import java.util.Map;
 import org.eclipse.bpmn2.CallActivity;
 import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.StartEvent;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariableMapping;
-import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.context.ContextInstance;
@@ -30,7 +28,6 @@ import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
@@ -542,32 +539,11 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		//String bizKey=StringUtil.getString(ExpressionMgmt.execute(bizKeyTemp, executionContext));
 		
 		
-		
-		List<DataVariableMapping> sDataVariableMapping=new ArrayList<DataVariableMapping>();
-		//SubProcessToDataSourceMapping
 	
-		
-		List<Entry> entries=EMFExtensionUtil.getExtensionElements(callActivityBehavior, "SubProcessToDataSourceMapping");
-		for (Entry entry : entries) {
-			
-			List<Entry> cEntries= EMFExtensionUtil.getExtensionElementsInEntry(entry, "DataVariableMapping");
-			for (Entry entry2 : cEntries) {
-				String dataSourceId=EMFExtensionUtil.getExtensionElementAttributeValue(entry2, "dataSourceId");
-				String subProcesId=EMFExtensionUtil.getExtensionElementAttributeValue(entry2, "subProcesId");
-				DataVariableMapping dataVariableMapping=FixFlowFactory.eINSTANCE.createDataVariableMapping();
-				dataVariableMapping.setDataSourceId(dataSourceId);
-				dataVariableMapping.setSubProcesId(subProcesId);
-				sDataVariableMapping.add(dataVariableMapping);
-				
-				
-			}
-			
-		}
-		
 		
 		Map<String, Object> dataVarMap=new HashMap<String, Object>();
 		
-		for (DataVariableMapping dataVariableMapping : sDataVariableMapping) {
+		for (DataVariableMapping dataVariableMapping : callActivityBehavior.getSubProcessToDataSourceMapping().getDataVariableMapping()) {
 			 
 			 //String dataSourceId="${"+dataVariableMapping.getDataSourceId()+"}";
 			 String subProcesId="${"+dataVariableMapping.getSubProcesId()+"}";

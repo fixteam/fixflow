@@ -1,20 +1,9 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
-import java.util.List;
-
-import org.eclipse.bpmn2.Artifact;
 import org.eclipse.bpmn2.BaseElement;
-import org.eclipse.bpmn2.Bpmn2Package;
-import org.eclipse.bpmn2.Collaboration;
-import org.eclipse.bpmn2.DataInput;
-import org.eclipse.bpmn2.DataOutput;
+
 import org.eclipse.bpmn2.FlowElement;
-import org.eclipse.bpmn2.InputOutputSpecification;
-import org.eclipse.bpmn2.Lane;
-import org.eclipse.bpmn2.LaneSet;
-import org.eclipse.bpmn2.MessageFlow;
-import org.eclipse.bpmn2.Participant;
-import org.eclipse.bpmn2.RootElement;
+
 import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.impl.DefinitionsImpl;
 

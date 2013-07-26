@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.EventDefinition;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.FlowNode;
@@ -15,14 +14,15 @@ import org.eclipse.bpmn2.UserTask;
 import org.eclipse.bpmn2.impl.ProcessImpl;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.bpmn2extensions.fixflow.FormUri;
+import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtDefinition;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
@@ -149,14 +149,14 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 				List<EventDefinition> eventDefinitions = startEventBehavior.getEventDefinitions();
 				for (EventDefinition eventDefinition : eventDefinitions) {
 					if (eventDefinition instanceof TimerEventDefinition) {
-						if(nodeId==null||nodeId.equals("")){
+						if (nodeId == null || nodeId.equals("")) {
 							return timeStartEvent;
-						}else{
-							if(timeStartEvent.getId().equals(nodeId)){
+						} else {
+							if (timeStartEvent.getId().equals(nodeId)) {
 								return timeStartEvent;
 							}
 						}
-						
+
 					}
 				}
 			}
@@ -210,27 +210,24 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 */
 	public Map<String, FlowElement> getFlowElementsMap() {
 
-			Map<String, FlowElement> flowElementsMap_tmp;
-			flowElementsMap_tmp = new HashMap<String, FlowElement>();
-			if ((flowElements != null)) {
-				
-				List<FlowElement> flowElementsObj=EMFUtil.getAllFlowElement(this);
-				
-				for (FlowElement rootElementObj : flowElementsObj) {
-					flowElementsMap_tmp.put(rootElementObj.getId(), rootElementObj);
-				}
-			}
-			return flowElementsMap_tmp;
+		Map<String, FlowElement> flowElementsMap_tmp;
+		flowElementsMap_tmp = new HashMap<String, FlowElement>();
+		if ((flowElements != null)) {
 
+			List<FlowElement> flowElementsObj = EMFUtil.getAllFlowElement(this);
+
+			for (FlowElement rootElementObj : flowElementsObj) {
+				flowElementsMap_tmp.put(rootElementObj.getId(), rootElementObj);
+			}
+		}
+		return flowElementsMap_tmp;
 
 	}
-	
 
-	
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getAll(final Class<T> class1) {
 		ArrayList<T> l = new ArrayList<T>();
-		
+
 		TreeIterator<EObject> contents = this.eResource().getAllContents();
 		for (; contents.hasNext();) {
 			Object t = contents.next();
@@ -240,7 +237,6 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		}
 		return l;
 	}
-
 
 	/**
 	 * 返回 '<em><b>FlowElement</b></em>' 元素. 该对象类型为
@@ -256,11 +252,10 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 * @generated
 	 */
 	public FlowElement getFlowElement(String flowElementId) {
-		
-		
+
 		return EMFUtil.findFlowElement(flowElementId, this);
-		
-		//return getFlowElementsMap().get(flowElementId);
+
+		// return getFlowElementsMap().get(flowElementId);
 	}
 
 	protected String resourceId;
@@ -370,59 +365,56 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 
 	protected String defaultFormUri;
 
+	protected FormUri formUri;
+
+	public FormUri getFormUriObj() {
+
+		if (this.formUri == null) {
+			this.formUri =EMFUtil.getExtensionElementOne(FormUri.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI);
+		}
+		return this.formUri;
+	}
+
 	public String getDefaultFormUri() {
 
-		if (defaultFormUri == null) {
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "formUri");
-			if (entryList.size() > 0) {
-
-				FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entryList.get(0), "expression").get(0);
-				String expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
-
-				if (expressionValue != null && !expressionValue.equals("")) {
-
-					Object returnObject = ExpressionMgmt.execute(expressionValue, this);
-					if (returnObject != null) {
-						this.defaultFormUri = returnObject.toString();
-						return defaultFormUri;
-					} else {
-						return null;
-					}
-
-				} else {
-					return null;
-				}
-
-			}
-			return null;
+		String expressionValue = "";
+		if (getFormUriObj() != null && getFormUriObj().getExpression() != null) {
+			expressionValue = getFormUriObj().getExpression().getValue();
 		} else {
-			return this.defaultFormUri;
+			return null;
+		}
+
+		if (expressionValue != null && !expressionValue.equals("")) {
+
+			Object returnObject = ExpressionMgmt.execute(expressionValue, this);
+			if (returnObject != null) {
+				this.defaultFormUri = returnObject.toString();
+				return defaultFormUri;
+			} else {
+				return null;
+			}
+
+		} else {
+			return null;
 		}
 
 	}
 
 	public UserTask getSubTask() {
 
-		UserTask subTask;
-
 		FlowNode flowNode = getStartElement().getOutgoing().get(0).getTargetRef();
 		if (flowNode instanceof UserTask) {
 			UserTaskBehavior userTask = (UserTaskBehavior) flowNode;
 			return userTask;
 		}
-
-		String subTaskString = EMFExtensionUtil.getAnyAttributeValue(this, "subTask");
-		if (subTaskString != null && !subTaskString.equals("")) {
-			BaseElement baseElement = definitions.getElement(subTaskString);
-			if (baseElement != null) {
-				subTask = (UserTask) baseElement;
-				return subTask;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
+		/*
+		 * String subTaskString = EMFExtensionUtil.getAnyAttributeValue(this,
+		 * "subTask"); if (subTaskString != null && !subTaskString.equals("")) {
+		 * BaseElement baseElement = definitions.getElement(subTaskString); if
+		 * (baseElement != null) { subTask = (UserTask) baseElement; return
+		 * subTask; } else { return null; } } else { return null; }
+		 */
+		return null;
 
 	}
 
@@ -459,40 +451,37 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		return definitions;
 	}
 
-	protected TaskSubject taskSubject;
+	protected TaskSubjectBehavior taskSubject;
 
-	public TaskSubject getTaskSubject() {
-		if (taskSubject == null) {
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(this, "taskSubject");
-			if (entryList.size() > 0) {
-				taskSubject = new TaskSubject(entryList.get(0));
-				return taskSubject;
-			} else {
-				return null;
+	public TaskSubjectBehavior getTaskSubject() {
+
+		if (this.taskSubject == null) {
+
+			TaskSubject taskSubjectObj = EMFUtil.getExtensionElementOne(TaskSubject.class, this, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT);
+
+			if(taskSubjectObj!=null){
+				this.taskSubject = new TaskSubjectBehavior(taskSubjectObj);
 			}
-		} else {
-			return taskSubject;
+			
+
 		}
 
+		return this.taskSubject;
 	}
 
 	public boolean verification = true;
 
 	public boolean isVerification() {
 
-		String verificationString = EMFExtensionUtil.getAnyAttributeValue(this, "verification");
-		if (verificationString == null) {
-			verification = true;
+		Object verificationObject = this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__VERIFICATION);
+		if (verificationObject == null || verificationObject.equals("")) {
+			return true;
 		} else {
-			if (StringUtil.getBoolean(verificationString)) {
-				verification = true;
-			} else {
-				verification = false;
-			}
+			this.verification = StringUtil.getBoolean(verificationObject);
 
 		}
+		return this.verification;
 
-		return verification;
 	}
 
 	protected DataVariableMgmtDefinition dataVariableMgmtDefinition;

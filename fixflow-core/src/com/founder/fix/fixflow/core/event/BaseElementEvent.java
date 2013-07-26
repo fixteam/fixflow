@@ -3,7 +3,8 @@ package com.founder.fix.fixflow.core.event;
 import java.util.List;
 
 import org.eclipse.bpmn2.BaseElement;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
+
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
 
 
 public interface BaseElementEvent {
@@ -31,13 +32,13 @@ public interface BaseElementEvent {
 	  
 	  
 	  
-	  List<ConnectorDefinition> getConnectors();
+	  List<ConnectorInstanceBehavior> getConnectors();
 	  
 	  boolean hasConnectors();
 	  
-	  ConnectorDefinition addConnector(ConnectorDefinition connector);
+	  ConnectorInstanceBehavior addConnector(ConnectorInstanceBehavior connector);
 	  
-	  void removeConnector(ConnectorDefinition connector);
+	  void removeConnector(ConnectorInstanceBehavior connector);
 	  
 	  String getEventType();
 	  

@@ -12,7 +12,7 @@ import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
@@ -47,7 +47,7 @@ public class ExecutionContextImpl implements ExecutionContext {
 
 	protected ProcessInstance subProcessInstance;
 
-	protected ConnectorDefinition connector;
+	protected ConnectorInstanceBehavior connector;
 
 	protected BaseElementEvent baseElementEvent;
 
@@ -213,7 +213,7 @@ public class ExecutionContextImpl implements ExecutionContext {
 		return this.eventSource;
 	}
 
-	public void setConnector(ConnectorDefinition connector) {
+	public void setConnector(ConnectorInstanceBehavior connector) {
 		this.connector = connector;
 	}
 
@@ -225,7 +225,7 @@ public class ExecutionContextImpl implements ExecutionContext {
 		this.baseElementEvent = baseElementEvent;
 	}
 
-	public ConnectorDefinition getConnector() {
+	public ConnectorInstanceBehavior getConnector() {
 		return this.connector;
 	}
 

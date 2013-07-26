@@ -5,6 +5,7 @@ import java.util.Date;
 import org.eclipse.bpmn2.impl.StartEventImpl;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
@@ -12,7 +13,6 @@ import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskCommandType;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -26,7 +26,7 @@ public class StartEventBehavior extends StartEventImpl {
 	
 	public boolean isPersistence() {
 		
-		Object isPersistenceObj=EMFExtensionUtil.getAnyAttributeValue(this, "isPersistence");
+		Object isPersistenceObj=this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__IS_PERSISTENCE);
 		if(isPersistenceObj==null||isPersistenceObj.equals("")){
 			return true;
 		}else{

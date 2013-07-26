@@ -1,11 +1,8 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
-import java.util.List;
 
-import org.eclipse.emf.ecore.util.FeatureMap;
+import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public class DataVariableBehavior {
 
@@ -27,23 +24,23 @@ public class DataVariableBehavior {
 
 	protected boolean isPubilc;
 
-	public DataVariableBehavior(FeatureMap.Entry entry,String nodeId,boolean isPubilc) {
+	public DataVariableBehavior(DataVariable dataVariable,String nodeId,boolean isPubilc) {
 		
 		this.nodeId=nodeId;
 		this.isPubilc=isPubilc;
 		
-		List<FeatureMap.Entry> entries = EMFExtensionUtil.getExtensionElementsInEntry(entry, "expression");
 		String expressionValue = null;
-		if (entries != null&&entries.size()>0) {
-			FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entry, "expression").get(0);
-			expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
+		if(dataVariable.getExpression()!=null){
+			expressionValue=dataVariable.getExpression().getValue();
 		}
+		
+		
 
 		this.expression = expressionValue;
-		this.id = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "id");
-		this.dataType = EMFExtensionUtil.getExtensionElementAttributeValue(entry, "dataType");
-		this.isList = StringUtil.getBoolean(EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isList"));
-		this.isPersistence = StringUtil.getBoolean(EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isPersistence"));
+		this.id = dataVariable.getId();
+		this.dataType =dataVariable.getDataType();
+		this.isList = dataVariable.isIsList();
+		this.isPersistence = dataVariable.isIsPersistence();
 
 	}
 

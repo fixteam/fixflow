@@ -9,7 +9,7 @@ import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
@@ -70,9 +70,9 @@ public class ExecuteConnectorTimeJobCmd implements Command<Void> {
 			
 			FlowNodeImpl flowNode=(FlowNodeImpl)processInstance.getProcessDefinition().getDefinitions().getElement(this.nodeId);
 			BaseElementEvent baseElementEvent=flowNode.getEvent(this.eventType);
-			List<ConnectorDefinition> connectors=baseElementEvent.getConnectors();
-			ConnectorDefinition connectorDefinition=null;
-			for (ConnectorDefinition connectorDefinitionObj : connectors) {
+			List<ConnectorInstanceBehavior> connectors=baseElementEvent.getConnectors();
+			ConnectorInstanceBehavior connectorDefinition=null;
+			for (ConnectorInstanceBehavior connectorDefinitionObj : connectors) {
 				if(connectorDefinitionObj.getConnectorInstanceId().equals(this.connectorInstanceId)){
 					connectorDefinition=connectorDefinitionObj;
 					break;

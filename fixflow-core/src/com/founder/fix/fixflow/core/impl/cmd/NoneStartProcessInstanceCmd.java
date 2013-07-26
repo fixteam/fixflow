@@ -122,7 +122,6 @@ public class NoneStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 
 			}*/
 			processInstanceEntity =  processDefinition.createProcessInstance(businessKey);
-
 			
 			processInstanceEntity.setStartAuthor(startAuthor);
 			processInstanceEntity.getContextInstance().setTransientVariableMap(transientVariables);

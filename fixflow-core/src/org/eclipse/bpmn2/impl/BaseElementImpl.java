@@ -41,13 +41,16 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
 
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.job.ConnectorTimeJob;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.impl.util.EMFUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -460,10 +463,10 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 		// }
 	}
 
-	void executeConnectors(List<ConnectorDefinition> connectors, ExecutionContext executionContext, boolean isPropagated) {
+	void executeConnectors(List<ConnectorInstanceBehavior> connectors, ExecutionContext executionContext, boolean isPropagated) {
 		if (connectors != null) {
 
-			for (ConnectorDefinition connector : connectors) {
+			for (ConnectorInstanceBehavior connector : connectors) {
 
 				if ((!isPropagated)) {
 
@@ -475,7 +478,7 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 		}
 	}
 
-	public void executeConnector(ConnectorDefinition connector, ExecutionContext executionContext) {
+	public void executeConnector(ConnectorInstanceBehavior connector, ExecutionContext executionContext) {
 		TokenEntity token = executionContext.getToken();
 
 		// create action log
@@ -558,7 +561,7 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean timeExecute(ExecutionContext executionContext, ConnectorDefinition connectorDefinition) {
+	private boolean timeExecute(ExecutionContext executionContext, ConnectorInstanceBehavior connectorDefinition) {
 
 		String expressionText = connectorDefinition.getTimeExpression();
 
@@ -712,6 +715,28 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 		}
 
 		return false;
+	}
+	
+	protected List<ConnectorInstance> connectorInstances;
+
+	/**
+	 * 获取对象的连接器
+	 * @param baseElement
+	 * @return
+	 */
+	public  List<ConnectorInstance> getConnectorInstances() {
+
+		
+		if(connectorInstances==null){
+			
+			
+			this.connectorInstances=  EMFUtil.getExtensionElementList(ConnectorInstance.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE);
+			
+		}
+		
+		
+
+		return this.connectorInstances;
 	}
 
 } // BaseElementImpl

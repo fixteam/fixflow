@@ -4,16 +4,13 @@ package com.founder.fix.fixflow.core.factory;
 
 import java.sql.Connection;
 
-import org.eclipse.bpmn2.UserTask;
-
-import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
 import com.founder.fix.fixflow.core.action.AssignmentHandler;
 import com.founder.fix.fixflow.core.action.CommandHandler;
 import com.founder.fix.fixflow.core.context.ContextInstance;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.factory.ProcessObjectFactoryImpl;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
-import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 
 
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -37,7 +34,7 @@ public interface ProcessObjectFactory {
 	
 
 	
-	TaskDefinition createTaskDefinition(UserTask userTask);
+	TaskDefinition createTaskDefinition(UserTaskBehavior userTask);
 	
 	AssignmentHandler createAssignmentHandler(String className);
 	

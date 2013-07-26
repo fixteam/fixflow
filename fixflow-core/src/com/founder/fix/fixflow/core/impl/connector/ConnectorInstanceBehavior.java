@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputs;
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowConnectorException;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -11,7 +13,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
 
-public class ConnectorDefinition {
+public class ConnectorInstanceBehavior {
 
 	protected String connectorId;
 	protected String packageName;
@@ -188,13 +190,15 @@ public class ConnectorDefinition {
 				String methodString="set"+parameterInputsId.substring(0, 1).toUpperCase()+parameterInputsId.substring(1, parameterInputsId.length());
 				Method m = connectorHandlerClass.getMethod(methodString, ptypes);
 				
-				
-				String scriptString=connectorParameterInputs.getExpressionText();
-				if(scriptString!=null){
-					Object arg[] = new Object[1];
-					arg[0] =ExpressionMgmt.execute(scriptString, executionContext);
-					m.invoke(connectorInstance, arg);
+				if(connectorParameterInputs.getExpression()!=null){
+					String scriptString=connectorParameterInputs.getExpression().getValue();
+					if(scriptString!=null){
+						Object arg[] = new Object[1];
+						arg[0] =ExpressionMgmt.execute(scriptString, executionContext);
+						m.invoke(connectorInstance, arg);
+					}
 				}
+				
 				
 				
 			}
@@ -205,26 +209,28 @@ public class ConnectorDefinition {
 			
 			for (ConnectorParameterOutputs connectorParameterOutputs : this.getConnectorParameterOutputs()) {
 						
-				
-				String parameterOutputsId=connectorParameterOutputs.getExpressionText();
-				
-				String methodString="get"+parameterOutputsId.substring(0, 1).toUpperCase()+parameterOutputsId.substring(1, parameterOutputsId.length());
-				Method m = connectorHandlerClass.getMethod(methodString);
-				
-				
-				String variableTarget=connectorParameterOutputs.getVariableTarget();
-				//Object arg[] = new Object[1];
-				//arg[0] =Context.getBshInterpreter().eval(scriptString);
-				
-				
-				
-				
-				Object objectValue=m.invoke(connectorInstance);
-				
+				if(connectorParameterOutputs.getExpression()!=null){
+					String parameterOutputsId=connectorParameterOutputs.getExpression().getValue();
+					
+					String methodString="get"+parameterOutputsId.substring(0, 1).toUpperCase()+parameterOutputsId.substring(1, parameterOutputsId.length());
+					Method m = connectorHandlerClass.getMethod(methodString);
+					
+					
+					String variableTarget=connectorParameterOutputs.getVariableTarget();
+					//Object arg[] = new Object[1];
+					//arg[0] =Context.getBshInterpreter().eval(scriptString);
+					
+					
+					
+					
+					Object objectValue=m.invoke(connectorInstance);
+					
+					
 				
 			
-		
-				ExpressionMgmt.setVariable(variableTarget, objectValue,executionContext);
+					ExpressionMgmt.setVariable(variableTarget, objectValue,executionContext);
+				}
+				
 				
 			}
 			

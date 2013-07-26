@@ -25,9 +25,13 @@ import java.util.List;
 import org.eclipse.bpmn2.Activity;
 import org.eclipse.bpmn2.BoundaryEvent;
 
+import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.DataInput;
 import org.eclipse.bpmn2.DataInputAssociation;
+import org.eclipse.bpmn2.DataOutput;
 import org.eclipse.bpmn2.DataOutputAssociation;
+import org.eclipse.bpmn2.ExtensionAttributeValue;
 import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 import org.eclipse.bpmn2.StandardLoopCharacteristics;
@@ -47,11 +51,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.impl.matchers.GroupMatcher;
 
+import com.founder.fix.bpmn2extensions.fixflow.Expression;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.bpmn2extensions.fixflow.LoopDataInputCollection;
+import com.founder.fix.bpmn2extensions.fixflow.LoopDataOutputCollection;
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -59,7 +68,7 @@ import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
+import com.founder.fix.fixflow.core.impl.util.EMFUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -97,6 +106,8 @@ import com.founder.fix.fixflow.core.runtime.ExecutionContext;
  * @generated
  */
 public class ActivityImpl extends FlowNodeImpl implements Activity {
+	
+
 	/**
 	 * The cached value of the '{@link #getIoSpecification()
 	 * <em>Io Specification</em>}' containment reference. <!-- begin-user-doc
@@ -741,6 +752,11 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	}
 
 	// 非BPMN2.0
+	
+	
+	
+	
+	protected SkipStrategy skipStrategy;
 
 	/**
 	 * 获取节点的跳过策略
@@ -748,7 +764,16 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	 * @return
 	 */
 	public SkipStrategy getSkipStrategy() {
-		SkipStrategy skipStrategy = EMFExtensionUtil.getSkipStrategy(this);
+		
+
+		
+		if(skipStrategy==null){
+
+			this.skipStrategy  =EMFUtil.getExtensionElementOne(SkipStrategy.class,loopCharacteristics,FixFlowPackage.Literals.DOCUMENT_ROOT__SKIP_STRATEGY);
+	
+		}
+		
+		
 		return skipStrategy;
 	}
 
@@ -948,18 +973,13 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 		if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics) {
 			// 并行多实例处理
+			
+			
+			
 
 			// 解决多实例处理退回BUG
-			List<FeatureMap.Entry> dataOutputentryList = EMFExtensionUtil.getExtensionElements(loopCharacteristics, "loopDataOutputCollection");
-
-			if (dataOutputentryList == null || dataOutputentryList.size() == 0) {
-
-			} else {
-				dataOutputentryList.get(0);
-				// loopDataOutputCollection outputDataItem completionCondition
-				FeatureMap.Entry dataOutputexpressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(dataOutputentryList.get(0), "expression")
-						.get(0);
-				String dataOutputexpressionValue = EMFExtensionUtil.getExtensionElementValue(dataOutputexpressionEntry);
+			
+				String dataOutputexpressionValue = getLoopDataOutputCollectionExpression();
 
 				if (dataOutputexpressionValue != null && !dataOutputexpressionValue.equals("")) {
 
@@ -977,13 +997,10 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 						}
 					}
 				}
-			}
+			
 
-			List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(loopCharacteristics, "LoopDataInputCollection");
-			// entryList.get(0);
-
-			FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entryList.get(0), "expression").get(0);
-			String expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
+			
+			String expressionValue =getLoopDataInputCollectionExpression();
 
 			if (expressionValue != null && !expressionValue.equals("")) {
 
@@ -1004,12 +1021,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 						for (Object object : valueObjCollection) {
 
-							MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
-
-							FeatureMap.Entry expressionEntryTemp = EMFExtensionUtil.getExtensionElements(
-									multiInstanceLoopCharacteristics.getInputDataItem(), "expression").get(0);
-
-							String expressionValueTemp = EMFExtensionUtil.getExtensionElementValue(expressionEntryTemp);
+						
+							String expressionValueTemp = getInputDataItemExpression();
 
 							ExpressionMgmt.setVariable(expressionValueTemp, object, executionContext);
 
@@ -1020,12 +1033,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 							String[] valueObjString = (String[]) valueObj;
 							for (int i = 0; i < valueObjString.length; i++) {
 
-								MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
+								
 
-								FeatureMap.Entry expressionEntryTemp = EMFExtensionUtil.getExtensionElements(
-										multiInstanceLoopCharacteristics.getInputDataItem(), "expression").get(0);
-
-								String expressionValueTemp = EMFExtensionUtil.getExtensionElementValue(expressionEntryTemp);
+								String expressionValueTemp =  getInputDataItemExpression();
 
 								ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
 
@@ -1039,12 +1049,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 								if (valueObjString.length > 0) {
 									for (int i = 0; i < valueObjString.length; i++) {
 
-										MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
 
-										FeatureMap.Entry expressionEntryTemp = EMFExtensionUtil.getExtensionElements(
-												multiInstanceLoopCharacteristics.getInputDataItem(), "expression").get(0);
-
-										String expressionValueTemp = EMFExtensionUtil.getExtensionElementValue(expressionEntryTemp);
+										String expressionValueTemp =  getInputDataItemExpression();
 
 										ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
 
@@ -1094,15 +1100,15 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 			if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics) {
 				// 并行多实例处理
+				
 
-				List<FeatureMap.Entry> entryList = EMFExtensionUtil.getExtensionElements(loopCharacteristics, "loopDataOutputCollection");
-
-				if (entryList != null && entryList.size() > 0) {
-					entryList.get(0);
-					// loopDataOutputCollection outputDataItem
-					// completionCondition
-					FeatureMap.Entry expressionEntry = EMFExtensionUtil.getExtensionElementsInEntry(entryList.get(0), "expression").get(0);
-					String expressionValue = EMFExtensionUtil.getExtensionElementValue(expressionEntry);
+				
+				
+				
+				
+					
+					String expressionValue = getLoopDataOutputCollectionExpression();
+					
 
 					if (expressionValue != null && !expressionValue.equals("")) {
 
@@ -1111,23 +1117,25 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 						if (valueObj != null) {
 
 							if (valueObj instanceof Collection) {
-								MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
+							
+								
+								
 
-								FeatureMap.Entry expressionEntryTemp = EMFExtensionUtil.getExtensionElements(
-										multiInstanceLoopCharacteristics.getOutputDataItem(), "expression").get(0);
-
-								String expressionValueTemp = EMFExtensionUtil.getExtensionElementValue(expressionEntryTemp);
+								String expressionValueTemp =getOutputDataItemExpression();
 
 								@SuppressWarnings("rawtypes")
 								Collection collection = (Collection) valueObj;
 								collection.add(ExpressionMgmt.execute(expressionValueTemp, executionContext));
 
+							}else{
+								
 							}
 						}
+						else{
+							
+						}
 					}
-				} else {
-
-				}
+				
 
 				MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
 
@@ -1210,6 +1218,111 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	}
 
 	public void boundaryEventExecute() {
+
+	}
+	
+	
+	
+	public String loopDataInputCollectionExpression;
+	
+	public String inputDataItemExpression;
+	
+	public String loopDataOutputCollectionExpression;
+	
+	public String outputDataItemExpression;
+	
+	
+	public String getLoopDataInputCollectionExpression() {
+		
+		
+		if(this.loopDataInputCollectionExpression==null){
+			
+			LoopDataInputCollection loopDataInputCollection  =EMFUtil.getExtensionElementOne(LoopDataInputCollection.class,loopCharacteristics,FixFlowPackage.Literals.DOCUMENT_ROOT__LOOP_DATA_INPUT_COLLECTION);
+			
+			if(loopDataInputCollection!=null){
+				this.loopDataInputCollectionExpression=loopDataInputCollection.getExpression()!=null?loopDataInputCollection.getExpression().getValue():null;
+				
+
+			}
+		}
+		
+		return loopDataInputCollectionExpression;
+		
+		
+	}
+
+	public String getInputDataItemExpression() {
+		
+		
+		
+		if(this.inputDataItemExpression==null){
+			MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics=(MultiInstanceLoopCharacteristics)loopCharacteristics;
+			DataInput dataInput =multiInstanceLoopCharacteristics.getInputDataItem();
+			Expression expression=getExtensionExpression(dataInput);
+			if(expression!=null){
+				this.inputDataItemExpression=expression.getValue();
+			}
+
+		}
+		return inputDataItemExpression;
+	}
+
+	public String getLoopDataOutputCollectionExpression() {
+		
+		
+		
+		
+		if(this.loopDataOutputCollectionExpression==null){
+			
+				LoopDataOutputCollection loopDataOutputCollection  =EMFUtil.getExtensionElementOne(LoopDataOutputCollection.class,loopCharacteristics,FixFlowPackage.Literals.DOCUMENT_ROOT__LOOP_DATA_OUTPUT_COLLECTION);
+				if(loopDataOutputCollection!=null){
+					this.loopDataOutputCollectionExpression=loopDataOutputCollection.getExpression()!=null?loopDataOutputCollection.getExpression().getValue():null;
+					
+				}
+				
+			
+		}
+		
+		return loopDataOutputCollectionExpression;
+	}
+
+	public String getOutputDataItemExpression() {
+		
+		if(this.outputDataItemExpression==null){
+			MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics=(MultiInstanceLoopCharacteristics)loopCharacteristics;
+			DataOutput dataOutput =multiInstanceLoopCharacteristics.getOutputDataItem();
+			Expression expression=getExtensionExpression(dataOutput);
+			if(expression!=null){
+				this.outputDataItemExpression=expression.getValue();
+			}
+
+		}
+		return outputDataItemExpression;
+	
+	}
+	
+	
+	private Expression getExtensionExpression(BaseElement baseElement) {
+
+		if (baseElement.getExtensionValues().size() > 0) {
+
+			for (ExtensionAttributeValue extensionAttributeValue : baseElement.getExtensionValues()) {
+
+				FeatureMap extensionElements = extensionAttributeValue.getValue();
+
+				for (Entry entry : extensionElements) {
+					if (entry.getValue() instanceof Expression) {
+						Expression expression= (Expression) entry.getValue();
+						return expression;
+
+					}
+
+				}
+
+			}
+
+		}
+		return null;
 
 	}
 

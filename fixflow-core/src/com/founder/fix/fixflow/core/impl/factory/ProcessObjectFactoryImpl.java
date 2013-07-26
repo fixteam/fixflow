@@ -3,7 +3,6 @@ package com.founder.fix.fixflow.core.impl.factory;
 import java.sql.Connection;
 import java.util.List;
 
-import org.eclipse.bpmn2.UserTask;
 
 
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClass;
@@ -14,6 +13,7 @@ import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.context.ContextInstanceImpl;
 
 
@@ -42,7 +42,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 
 	
 
-	public TaskDefinition createTaskDefinition(UserTask userTask) {
+	public TaskDefinition createTaskDefinition(UserTaskBehavior userTask) {
 		TaskDefinitionImpl taskDefinitionImpl = new TaskDefinitionImpl(userTask);
 		return taskDefinitionImpl;
 	}

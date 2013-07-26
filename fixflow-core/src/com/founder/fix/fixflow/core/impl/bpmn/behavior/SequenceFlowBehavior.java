@@ -5,10 +5,10 @@ import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 import org.eclipse.bpmn2.impl.SequenceFlowImpl;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.action.DecisionHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
@@ -25,7 +25,7 @@ public class SequenceFlowBehavior extends SequenceFlowImpl {
 	public int getOrderId() {
 		
 	
-		Object orderIdObj =EMFExtensionUtil.getAnyAttributeValue(this, "orderId");
+		Object orderIdObj =this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__ORDER_ID);
 		if(orderIdObj==null||orderIdObj.toString().equals("")){
 			return 0;
 		}

@@ -1,22 +1,21 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
-import org.eclipse.bpmn2.BoundaryEvent;
-import org.eclipse.bpmn2.CatchEvent;
 import org.eclipse.bpmn2.Event;
-import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.impl.ErrorEventDefinitionImpl;
 
-import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
-import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
 public class ErrorEventDefinitionBehavior extends ErrorEventDefinitionImpl {
 	
 	
+	protected String errorCode;
+	
+	
+	
+	
 	public boolean execute(ExecutionContext executionContext,Event event) {
 
-		
+		/*
 		if(event instanceof CatchEvent){
 			//捕获型事件处理	
 			if(event instanceof BoundaryEvent){
@@ -68,9 +67,10 @@ public class ErrorEventDefinitionBehavior extends ErrorEventDefinitionImpl {
 			}
 		}
 		
+		return false;*/
 		return false;
 	}
-	
+	/*
 	private TokenEntity getSubProcessToken(TokenEntity token,SubProcess subProcess){
 		
 		if(token.getNodeId().equals(subProcess.getId())){
@@ -81,6 +81,6 @@ public class ErrorEventDefinitionBehavior extends ErrorEventDefinitionImpl {
 		}
 		
 		
-	}
+	}*/
 
 }

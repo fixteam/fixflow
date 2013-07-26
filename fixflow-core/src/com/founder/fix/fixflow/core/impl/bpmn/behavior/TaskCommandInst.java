@@ -1,15 +1,13 @@
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpmn2.UserTask;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
 import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
@@ -56,27 +54,23 @@ public class TaskCommandInst implements UserCommandQueryTo{
 	}
 	
 
-	public TaskCommandInst(FeatureMap.Entry entry,UserTask userTask) {
-
+	public TaskCommandInst(TaskCommand taskCommand,UserTask userTask) {
 
 		
-		List<FeatureMap.Entry> expressionEntry=EMFExtensionUtil.getExtensionElementsInEntry(entry, "expression");
-		String expressionValue=null;
-		if(expressionEntry!=null&&expressionEntry.size()>0){
-			expressionValue=EMFExtensionUtil.getExtensionElementValue(expressionEntry.get(0));
-		}
-		
+
 		this.userTask=userTask;
 		
-
-		this.expression=expressionValue;
-		this.id=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "id");
-		this.name=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "name");
+		if(taskCommand.getExpression()!=null){
+			this.expression=taskCommand.getExpression().getValue();
+		}
+		
+		this.id=taskCommand.getId();
+		this.name=taskCommand.getName();
 		
 		
-		Object isVerificationObject=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isVerification");
-		Object isSaveDataObject=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isSaveData");
-		Object isSimulationRunObject=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "isSimulationRun");
+		Object isVerificationObject=taskCommand.getIsVerification();
+		Object isSaveDataObject=taskCommand.getIsSaveData();
+		Object isSimulationRunObject=taskCommand.getIsSimulationRun();
 		
 		
 		
@@ -102,7 +96,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		
 		
 		
-		this.taskCommandType=EMFExtensionUtil.getExtensionElementAttributeValue(entry, "commandType");
+		this.taskCommandType=taskCommand.getCommandType();
 		
 		booleanInternationalization=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
     	

@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 
 
 import org.eclipse.bpmn2.RootElement;
-import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -48,18 +48,37 @@ public class BpmnDeployer implements Deployer {
 			if (resourceName.endsWith(BPMN_RESOURCE_SUFFIX)) {
 				ResourceEntity resource = resources.get(resourceName);
 				byte[] bytes = resource.getBytes();
-				 Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
-				 Resource ddddResource = ddd.createResource(URI.createFileURI(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile()));
-				 
-			        try {
-						ddddResource.load(new ByteArrayInputStream(bytes),null);
+				ResourceSet resourceSet=Context.getProcessEngineConfiguration().getResourceSet();
+				
+				
+				
+				String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn")
+						.toString();
+				Resource ddddResource = null;
+				if (!filePath.startsWith("jar")) {
+					try {
+						filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn")
+								.getFile(), "utf-8");
 					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						throw new FixFlowException("定义文件加载失败!", e);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						throw new FixFlowException("定义文件加载失败!", e);
-					}   
+						// TODO 自动生成的 catch 块
+						e.printStackTrace();
+						throw new FixFlowException("流程定义文件加载失败！", e);
+					}
+					ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+				} else {
+					ddddResource = resourceSet.createResource(URI.createURI(filePath));
+				}
+	
+			
+				try {
+					ddddResource.load(new ByteArrayInputStream(bytes), null);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					throw new FixFlowException("定义文件加载失败!", e);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					throw new FixFlowException("定义文件加载失败!", e);
+				}
 					
 					DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
 					
@@ -67,7 +86,7 @@ public class BpmnDeployer implements Deployer {
 					for (RootElement rootElement : definitions.getRootElements()) {
 						if (rootElement instanceof ProcessDefinitionBehavior) {
 							
-							ProcessDefinitionBehavior processObj=(ProcessDefinitionBehavior)rootElement;
+							//ProcessDefinitionBehavior processObj=(ProcessDefinitionBehavior)rootElement;
 							//if(processObj.getProcessDefinitionKey().equals("")){
 								process = (ProcessDefinitionBehavior) rootElement;
 								break;
@@ -90,7 +109,7 @@ public class BpmnDeployer implements Deployer {
 
 		CommandContext commandContext = Context.getCommandContext();
 		ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
-		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
+		//DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
 		DbSqlSession dbSqlSession = commandContext.getDbSqlSession();
 		for (ProcessDefinitionBehavior processDefinition : processDefinitions) {
 			if (deployment.isNew()) {
@@ -113,7 +132,7 @@ public class BpmnDeployer implements Deployer {
 				processDefinition.setProcessDefinitionId(processDefinitionId);
 
 				dbSqlSession.insert("insertProcessDefinition", processDefinition);
-				deploymentCache.addProcessDefinition(processDefinition);
+				//deploymentCache.addProcessDefinition(processDefinition);
 
 			} else {
 				String deploymentId = deployment.getId();
@@ -123,7 +142,7 @@ public class BpmnDeployer implements Deployer {
 				processDefinition.setId(persistedProcessDefinition.getId());
 				processDefinition.setVersion(persistedProcessDefinition.getVersion());
 
-				deploymentCache.addProcessDefinition(processDefinition);
+				//deploymentCache.addProcessDefinition(processDefinition);
 			}
 
 			//Context.getProcessEngineConfiguration().getDeploymentCache().addProcessDefinition(processDefinition);

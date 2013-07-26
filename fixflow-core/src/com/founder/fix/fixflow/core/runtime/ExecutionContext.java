@@ -13,7 +13,7 @@ import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.connector.ConnectorDefinition;
+import com.founder.fix.fixflow.core.impl.connector.ConnectorInstanceBehavior;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
@@ -84,9 +84,9 @@ public interface ExecutionContext {
 
 	void setBaseElementEvent(BaseElementEvent baseElementEvent);
 	
-	ConnectorDefinition getConnector();
+	ConnectorInstanceBehavior getConnector();
 
-	void setConnector(ConnectorDefinition connector);
+	void setConnector(ConnectorInstanceBehavior connector);
 	
 	
 	SqlCommand getSqlCommand();
