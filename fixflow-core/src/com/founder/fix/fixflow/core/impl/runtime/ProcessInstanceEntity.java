@@ -12,6 +12,7 @@ import org.eclipse.bpmn2.StartEvent;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariableMapping;
+import com.founder.fix.bpmn2extensions.fixflow.SubProcessToDataSourceMapping;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.context.ContextInstance;
@@ -543,13 +544,18 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		
 		Map<String, Object> dataVarMap=new HashMap<String, Object>();
 		
-		for (DataVariableMapping dataVariableMapping : callActivityBehavior.getSubProcessToDataSourceMapping().getDataVariableMapping()) {
-			 
-			 //String dataSourceId="${"+dataVariableMapping.getDataSourceId()+"}";
-			 String subProcesId="${"+dataVariableMapping.getSubProcesId()+"}";
-			 
-			 dataVarMap.put(dataVariableMapping.getDataSourceId(),  ExpressionMgmt.execute(subProcesId,executionContext));
+		SubProcessToDataSourceMapping subProcessToDataSourceMapping=callActivityBehavior.getSubProcessToDataSourceMapping();
+		if(subProcessToDataSourceMapping!=null){
+			for (DataVariableMapping dataVariableMapping : subProcessToDataSourceMapping.getDataVariableMapping()) {
+				 
+				 //String dataSourceId="${"+dataVariableMapping.getDataSourceId()+"}";
+				 String subProcesId="${"+dataVariableMapping.getSubProcesId()+"}";
+				 
+				 dataVarMap.put(dataVariableMapping.getDataSourceId(),  ExpressionMgmt.execute(subProcesId,executionContext));
+			}
 		}
+		
+	
 		
 		
 		ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();

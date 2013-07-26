@@ -769,7 +769,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		
 		if(skipStrategy==null){
 
-			this.skipStrategy  =EMFUtil.getExtensionElementOne(SkipStrategy.class,loopCharacteristics,FixFlowPackage.Literals.DOCUMENT_ROOT__SKIP_STRATEGY);
+			this.skipStrategy  =EMFUtil.getExtensionElementOne(SkipStrategy.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__SKIP_STRATEGY);
 	
 		}
 		

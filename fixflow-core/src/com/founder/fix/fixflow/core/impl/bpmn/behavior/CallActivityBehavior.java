@@ -208,15 +208,20 @@ public class CallActivityBehavior extends CallActivityImpl {
 
 		subProcessInstance.setStartAuthor(Authentication.getAuthenticatedUserId());
 
-		for (DataVariableMapping dataVariableMapping :getDataSourceToSubProcessMapping().getDataVariableMapping()) {
+		DataSourceToSubProcessMapping dataSourceToSubProcessMapping=getDataSourceToSubProcessMapping();
+		if(dataSourceToSubProcessMapping!=null){
+			for (DataVariableMapping dataVariableMapping :dataSourceToSubProcessMapping.getDataVariableMapping()) {
 
-			String dataSourceId = "${" + dataVariableMapping.getDataSourceId() + "}";
+				String dataSourceId = "${" + dataVariableMapping.getDataSourceId() + "}";
 
-			subProcessInstance.getContextInstance().addDataVariable(dataVariableMapping.getSubProcesId(),
-					ExpressionMgmt.execute(dataSourceId, executionContext));
+				subProcessInstance.getContextInstance().addDataVariable(dataVariableMapping.getSubProcesId(),
+						ExpressionMgmt.execute(dataSourceId, executionContext));
+
+			}
 
 		}
-
+		
+		
 		try {
 
 			subProcessInstance.noneStart();
