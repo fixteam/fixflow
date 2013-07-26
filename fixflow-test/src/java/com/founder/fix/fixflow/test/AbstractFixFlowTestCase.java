@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 
 public abstract class AbstractFixFlowTestCase extends TestCase {
 
-	protected ProcessEngine processEngine;
+	public static ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
 	protected String deploymentId;
 
 	protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -34,10 +34,14 @@ public abstract class AbstractFixFlowTestCase extends TestCase {
 	protected HistoryService historyService;
 	protected IdentityService identityService;
 	protected ScheduleService scheduleService;
+	
+	
+	
+	
 
 	protected void initializeServices() {
 		processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
-		ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
+		
 
 		modelService = processEngine.getModelService();
 		runtimeService = processEngine.getRuntimeService();
@@ -52,10 +56,6 @@ public abstract class AbstractFixFlowTestCase extends TestCase {
 
 	protected void initializeProcessEngine() {
 
-		processEngine = ProcessEngineManagement.getDefaultProcessEngine();
-		if (processEngine == null) {
-			throw new FixFlowException("无法创建默认的流程引擎");
-		}
 
 		ExternalContent externalContent=new ExternalContent();
 		externalContent.setAuthenticatedUserId(Authentication.getSystemId());
