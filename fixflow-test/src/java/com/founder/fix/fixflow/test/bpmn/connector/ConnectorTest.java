@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -16,18 +16,15 @@ import com.founder.fix.fixflow.test.Deployment;
 public class ConnectorTest extends AbstractFixFlowConnectorTestCase {
 	@Deployment(resources = { "com/founder/fix/fixflow/test/bpmn/connector/ConnectorTest.bpmn" })
 	public void testConnector() {
-		// 拿到流程定义
-		ProcessDefinitionBehavior processDefinition = modelService.createProcessDefinitionQuery().processDefinitionKey("ConnectorTest").singleResult();
-		// 测试是否为空
-		assertNotNull(processDefinition);
-
 		// 流程数据变量
 		// 瞬态
 		Map<String, Object> transientVariables = new HashMap<String, Object>();
 		// 持久化
 		// Map<String, Object> Variables = new HashMap<String, Object>();
 
-		// transientVariables.put("test", "123");
+		transientVariables.put("连接器跳过策略条件", false);
+		transientVariables.put("测试变量", "我是测试变量");
+		transientVariables.put("输出变量", "");
 
 		// 设置流程实例参数
 		StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
@@ -53,7 +50,7 @@ public class ConnectorTest extends AbstractFixFlowConnectorTestCase {
 		String nodeId = taskInstance.getNodeId();
 		// 验证流程实例是否在第一个节点
 		assertEquals(nodeId, "UserTask_1");
-
+		
 		// 创建一个启动并提交命令
 		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 		// 设置流程名
@@ -66,32 +63,32 @@ public class ConnectorTest extends AbstractFixFlowConnectorTestCase {
 		expandTaskCommand.setInitiator("1200119390");
 		// 设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
 		expandTaskCommand.setUserCommandId("HandleCommand_2");
-
 		// 执行这个启动并提交的命令，返回启动的流程实例
 		ProcessInstance processInstance = (ProcessInstance) taskService.expandTaskComplete(expandTaskCommand, null);
 		processInstanceId = processInstance.getId();
+		
 		// 验证是否成功启动
 		assertNotNull(processInstanceId);
-
+		
+		//创建任务查询
 		taskQuery = taskService.createTaskQuery();
 		// 查找 1200119390 的这个流程实例的当前独占任务
 		taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
-
-//		assertEquals(0, taskInstances.size());
-
 		// 验证是否成功启动
 		taskInstance = taskInstances.get(0);
-
 		nodeId = taskInstance.getNodeId();
+		
 		// 验证当前任务是否在第二个节点
 		assertEquals(nodeId, "UserTask_2");
-		
-		try {
-			Thread.sleep(120000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
+
+		//如果没有跳过，测试变量的值会被赋值
+		assertEquals("我是赋值后的测试变量", Context.getAbstractScriptLanguageMgmt().getVariable("测试变量"));
+		//验证变量是否已经赋值到输出变量
+		assertEquals("我是赋值后的测试变量", Context.getAbstractScriptLanguageMgmt().getVariable("输出变量"));
+		//如果有跳过策略，测试变量的值应该不变
+//		assertEquals("我是测试变量", Context.getAbstractScriptLanguageMgmt().getVariable("测试变量"));
+		//验证变量是否已经赋值到输出变量
+//		assertEquals("", Context.getAbstractScriptLanguageMgmt().getVariable("输出变量"));
 /*		
 
 		// 创建一个启动并提交命令
