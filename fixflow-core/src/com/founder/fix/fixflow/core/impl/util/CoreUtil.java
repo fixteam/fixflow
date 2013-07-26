@@ -9,14 +9,17 @@ import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.SequenceFlow;
 import org.eclipse.bpmn2.UserTask;
 
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
@@ -53,6 +56,18 @@ public class CoreUtil {
 				
 			}
 		}
+		
+		
+		if(taskInstance!=null){
+			ProcessInstanceEntity processInstanceEntity=Context.getCommandContext().getProcessInstanceManager().findProcessInstanceById(taskInstance.getProcessInstanceId());
+			if(processInstanceEntity!=null){
+				ExecutionContext executionContext=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(processInstanceEntity.getRootToken());
+				for (TaskCommandInst taskCommandInstObj : taskCommandInstsNew) {
+					taskCommandInstObj.clearParamMap();
+					taskCommandInstObj.execExpressionParam(executionContext,null);
+				}
+			}
+		}
 
 		return taskCommandInstsNew;
 	}
@@ -74,6 +89,15 @@ public class CoreUtil {
 				taskCommandInstsNew.add(taskCommandInst);
 			}
 		}
+		
+		
+		for (TaskCommandInst taskCommandInstObj : taskCommandInstsNew) {
+					taskCommandInstObj.clearParamMap();
+					taskCommandInstObj.execExpressionParam(null,null);
+				}
+			
+		
+		taskCommandInstsNew.get(0).getParamMap();
 
 		return taskCommandInstsNew;
 	}

@@ -8,10 +8,14 @@ import org.eclipse.bpmn2.UserTask;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
 public class TaskCommandInst implements UserCommandQueryTo{
+
+	
 
 	/**
 	 * 
@@ -25,6 +29,8 @@ public class TaskCommandInst implements UserCommandQueryTo{
 	protected String name;
 
 	protected String expression;
+	
+	protected String expressionParam;
 	
 	protected String taskCommandType;
 	
@@ -53,6 +59,52 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		this.isAdmin=isAdmin;
 	}
 	
+	public String getExpressionParam() {
+		return expressionParam;
+	}
+	
+	
+	protected Map<String, Object> map=new HashMap<String, Object>();
+	/**
+	 * 获取处理命令参数表达式
+	 * @return
+	 */
+	public Map<String, Object> getParamMap(){
+		return map;
+	}
+	
+	public void clearParamMap(){
+		map.clear();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void execExpressionParam(ExecutionContext executionContext,ProcessDefinitionBehavior processDefinitionBehavior){
+		
+		
+		
+		if(getExpressionParam()!=null&&!getExpressionParam().equals("")){
+			
+			Map<String, Object> mapObj=null;
+			
+			
+			if(executionContext!=null){
+				mapObj= (Map<String, Object>)ExpressionMgmt.execute(this.getExpressionParam(),executionContext);
+			}else{
+				if(executionContext==null&&processDefinitionBehavior!=null){
+					mapObj= (Map<String, Object>)ExpressionMgmt.execute(this.getExpressionParam(),processDefinitionBehavior);
+				}else{
+					mapObj= (Map<String, Object>)ExpressionMgmt.execute(this.getExpressionParam());
+				}
+			}
+			
+		
+			if(mapObj!=null&&mapObj instanceof Map){
+				map=mapObj;
+			}
+		}
+		
+	}
+	
 
 	public TaskCommandInst(TaskCommand taskCommand,UserTask userTask) {
 
@@ -62,6 +114,9 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		
 		if(taskCommand.getExpression()!=null){
 			this.expression=taskCommand.getExpression().getValue();
+		}
+		if(taskCommand.getParameterExpression()!=null){
+			this.expressionParam=taskCommand.getParameterExpression().getValue();
 		}
 		
 		this.id=taskCommand.getId();

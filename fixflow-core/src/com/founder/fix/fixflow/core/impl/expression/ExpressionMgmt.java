@@ -10,7 +10,11 @@ import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 public class ExpressionMgmt {
 
 	
+	public static Object execute(String scriptText) {
 
+		return Context.getAbstractScriptLanguageMgmt().execute(scriptText);
+		
+	}
 
 	public static Object execute(String scriptText, ExecutionContext executionContext) {
 

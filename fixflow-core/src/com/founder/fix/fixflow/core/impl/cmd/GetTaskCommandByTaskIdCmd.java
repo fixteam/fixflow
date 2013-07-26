@@ -46,7 +46,8 @@ public class GetTaskCommandByTaskIdCmd implements Command<List<TaskCommandInst>>
 				
 			}
 		}
-
+		
+		
 		return taskCommandInsts;
 	}
 
