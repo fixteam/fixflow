@@ -99,7 +99,7 @@ public class ProcessDefinitionPersistence {
 		String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
 		String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
 		String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-		String category = StringUtil.getString(dataMap.get("CATEGORY"));
+		//String category = StringUtil.getString(dataMap.get("CATEGORY"));
 		int version = StringUtil.getInt(dataMap.get("VERSION"));
 		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
@@ -112,7 +112,7 @@ public class ProcessDefinitionPersistence {
 			processDefinition.setProcessDefinitionId(processId);
 			processDefinition.setDeploymentId(deploymentId);
 			processDefinition.setResourceName(resourceName);
-			processDefinition.setCategory(category);
+			//processDefinition.setCategory(category);
 			processDefinition.setVersion(version);
 			processDefinition.setResourceId(resourceId);
 			// processDefinition.setStartFormKey(startFormKey);
@@ -147,7 +147,7 @@ public class ProcessDefinitionPersistence {
 			String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
 			String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
 			String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-			String category = StringUtil.getString(dataMap.get("CATEGORY"));
+			//String category = StringUtil.getString(dataMap.get("CATEGORY"));
 			int version = StringUtil.getInt(dataMap.get("VERSION"));
 			String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 			String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
@@ -159,7 +159,7 @@ public class ProcessDefinitionPersistence {
 			processDefinition.setProcessDefinitionId(processId);
 			processDefinition.setDeploymentId(deploymentId);
 			processDefinition.setResourceName(resourceName);
-			processDefinition.setCategory(category);
+			//processDefinition.setCategory(category);
 			processDefinition.setVersion(version);
 			processDefinition.setResourceId(resourceId);
 
@@ -212,7 +212,7 @@ public class ProcessDefinitionPersistence {
 			String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
 			String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
 			String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-			String category = StringUtil.getString(dataMap.get("CATEGORY"));
+			//String category = StringUtil.getString(dataMap.get("CATEGORY"));
 			int version = StringUtil.getInt(dataMap.get("VERSION"));
 			String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 			String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
@@ -229,7 +229,7 @@ public class ProcessDefinitionPersistence {
 				processDefinition.setProcessDefinitionId(processId);
 				processDefinition.setDeploymentId(deploymentId);
 				processDefinition.setResourceName(resourceName);
-				processDefinition.setCategory(category);
+				//processDefinition.setCategory(category);
 				processDefinition.setVersion(version);
 
 				// processDefinition.setStartFormKey(startFormKey);
@@ -612,7 +612,7 @@ public class ProcessDefinitionPersistence {
 		String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
 		String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
 		String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-		String category = StringUtil.getString(dataMap.get("CATEGORY"));
+		//String category = StringUtil.getString(dataMap.get("CATEGORY"));
 		int version = StringUtil.getInt(dataMap.get("VERSION"));
 		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
@@ -627,7 +627,7 @@ public class ProcessDefinitionPersistence {
 			processDefinition.setProcessDefinitionId(processId);
 			processDefinition.setDeploymentId(deploymentId);
 			processDefinition.setResourceName(resourceName);
-			processDefinition.setCategory(category);
+			//processDefinition.setCategory(category);
 			processDefinition.setVersion(version);
 			processDefinition.setResourceId(resourceId);
 
