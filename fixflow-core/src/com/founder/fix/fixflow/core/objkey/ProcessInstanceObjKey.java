@@ -555,12 +555,12 @@ public class ProcessInstanceObjKey {
 
 		public String DataBaseKey() {
 			// TODO Auto-generated method stub
-			return "INSTANCE_TYPE";
+			return "INSTANCE_STATUS";
 		}
 		
 		public String FullKey() {
 			// TODO Auto-generated method stub
-			return "instanceType";
+			return "instanceStatus";
 		}
 
 		public String KeyName() {
