@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsVerification <em>Is Verification</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSaveData <em>Is Save Data</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getIsSimulationRun <em>Is Simulation Run</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getParameterExpression <em>Parameter Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -247,5 +248,32 @@ public interface TaskCommand extends EObject {
 	 * @generated
 	 */
 	void setIsSimulationRun(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Parameter Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parameter Expression</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parameter Expression</em>' containment reference.
+	 * @see #setParameterExpression(Expression)
+	 * @see com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage#getTaskCommand_ParameterExpression()
+	 * @model containment="true"
+	 *        extendedMetaData="namespace='##targetNamespace' kind='element'"
+	 * @generated
+	 */
+	Expression getParameterExpression();
+
+	/**
+	 * Sets the value of the '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getParameterExpression <em>Parameter Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parameter Expression</em>' containment reference.
+	 * @see #getParameterExpression()
+	 * @generated
+	 */
+	void setParameterExpression(Expression value);
 
 } // TaskCommand

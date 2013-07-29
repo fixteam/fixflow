@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.TaskCommandImpl#getIsVerification <em>Is Verification</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.TaskCommandImpl#getIsSaveData <em>Is Save Data</em>}</li>
  *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.TaskCommandImpl#getIsSimulationRun <em>Is Simulation Run</em>}</li>
+ *   <li>{@link com.founder.fix.bpmn2extensions.fixflow.impl.TaskCommandImpl#getParameterExpression <em>Parameter Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -189,6 +190,16 @@ public class TaskCommandImpl extends EObjectImpl implements TaskCommand {
 	 * @ordered
 	 */
 	protected String isSimulationRun = IS_SIMULATION_RUN_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getParameterExpression() <em>Parameter Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameterExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected Expression parameterExpression;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -404,11 +415,56 @@ public class TaskCommandImpl extends EObjectImpl implements TaskCommand {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Expression getParameterExpression() {
+		return parameterExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParameterExpression(Expression newParameterExpression, NotificationChain msgs) {
+		Expression oldParameterExpression = parameterExpression;
+		parameterExpression = newParameterExpression;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION, oldParameterExpression, newParameterExpression);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParameterExpression(Expression newParameterExpression) {
+		if (newParameterExpression != parameterExpression) {
+			NotificationChain msgs = null;
+			if (parameterExpression != null)
+				msgs = ((InternalEObject)parameterExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION, null, msgs);
+			if (newParameterExpression != null)
+				msgs = ((InternalEObject)newParameterExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION, null, msgs);
+			msgs = basicSetParameterExpression(newParameterExpression, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION, newParameterExpression, newParameterExpression));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case FixFlowPackage.TASK_COMMAND__EXPRESSION:
 				return basicSetExpression(null, msgs);
+			case FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION:
+				return basicSetParameterExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -437,6 +493,8 @@ public class TaskCommandImpl extends EObjectImpl implements TaskCommand {
 				return getIsSaveData();
 			case FixFlowPackage.TASK_COMMAND__IS_SIMULATION_RUN:
 				return getIsSimulationRun();
+			case FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION:
+				return getParameterExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -472,6 +530,9 @@ public class TaskCommandImpl extends EObjectImpl implements TaskCommand {
 				return;
 			case FixFlowPackage.TASK_COMMAND__IS_SIMULATION_RUN:
 				setIsSimulationRun((String)newValue);
+				return;
+			case FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION:
+				setParameterExpression((Expression)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -509,6 +570,9 @@ public class TaskCommandImpl extends EObjectImpl implements TaskCommand {
 			case FixFlowPackage.TASK_COMMAND__IS_SIMULATION_RUN:
 				setIsSimulationRun(IS_SIMULATION_RUN_EDEFAULT);
 				return;
+			case FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION:
+				setParameterExpression((Expression)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -537,6 +601,8 @@ public class TaskCommandImpl extends EObjectImpl implements TaskCommand {
 				return IS_SAVE_DATA_EDEFAULT == null ? isSaveData != null : !IS_SAVE_DATA_EDEFAULT.equals(isSaveData);
 			case FixFlowPackage.TASK_COMMAND__IS_SIMULATION_RUN:
 				return IS_SIMULATION_RUN_EDEFAULT == null ? isSimulationRun != null : !IS_SIMULATION_RUN_EDEFAULT.equals(isSimulationRun);
+			case FixFlowPackage.TASK_COMMAND__PARAMETER_EXPRESSION:
+				return parameterExpression != null;
 		}
 		return super.eIsSet(featureID);
 	}

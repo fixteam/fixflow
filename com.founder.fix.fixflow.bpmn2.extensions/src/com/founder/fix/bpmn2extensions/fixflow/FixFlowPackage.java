@@ -681,13 +681,22 @@ public interface FixFlowPackage extends EPackage {
 	int TASK_COMMAND__IS_SIMULATION_RUN = 7;
 
 	/**
+	 * The feature id for the '<em><b>Parameter Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_COMMAND__PARAMETER_EXPRESSION = 8;
+
+	/**
 	 * The number of structural features of the '<em>Task Command</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_COMMAND_FEATURE_COUNT = 8;
+	int TASK_COMMAND_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.
@@ -2726,6 +2735,17 @@ public interface FixFlowPackage extends EPackage {
 	EAttribute getTaskCommand_IsSimulationRun();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getParameterExpression <em>Parameter Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Parameter Expression</em>'.
+	 * @see com.founder.fix.bpmn2extensions.fixflow.TaskCommand#getParameterExpression()
+	 * @see #getTaskCommand()
+	 * @generated
+	 */
+	EReference getTaskCommand_ParameterExpression();
+
+	/**
 	 * Returns the meta object for class '{@link com.founder.fix.bpmn2extensions.fixflow.ResourceFilter <em>Resource Filter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4498,6 +4518,14 @@ public interface FixFlowPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK_COMMAND__IS_SIMULATION_RUN = eINSTANCE.getTaskCommand_IsSimulationRun();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameter Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_COMMAND__PARAMETER_EXPRESSION = eINSTANCE.getTaskCommand_ParameterExpression();
 
 		/**
 		 * The meta object literal for the '{@link com.founder.fix.bpmn2extensions.fixflow.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.

@@ -952,6 +952,15 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTaskCommand_ParameterExpression() {
+		return (EReference)taskCommandEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getResourceFilter() {
 		return resourceFilterEClass;
 	}
@@ -2069,6 +2078,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		createEAttribute(taskCommandEClass, TASK_COMMAND__IS_VERIFICATION);
 		createEAttribute(taskCommandEClass, TASK_COMMAND__IS_SAVE_DATA);
 		createEAttribute(taskCommandEClass, TASK_COMMAND__IS_SIMULATION_RUN);
+		createEReference(taskCommandEClass, TASK_COMMAND__PARAMETER_EXPRESSION);
 
 		resourceFilterEClass = createEClass(RESOURCE_FILTER);
 		createEAttribute(resourceFilterEClass, RESOURCE_FILTER__ID);
@@ -2317,6 +2327,7 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		initEAttribute(getTaskCommand_IsVerification(), theXMLTypePackage.getString(), "isVerification", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskCommand_IsSaveData(), theXMLTypePackage.getString(), "isSaveData", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskCommand_IsSimulationRun(), theXMLTypePackage.getString(), "isSimulationRun", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTaskCommand_ParameterExpression(), this.getExpression(), null, "parameterExpression", null, 0, 1, TaskCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resourceFilterEClass, ResourceFilter.class, "ResourceFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getResourceFilter_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2925,6 +2936,13 @@ public class FixFlowPackageImpl extends EPackageImpl implements FixFlowPackage {
 		   new String[] {
 			 "kind", "attribute"
 		   });			
+		addAnnotation
+		  (getTaskCommand_ParameterExpression(), 
+		   source, 
+		   new String[] {
+			 "namespace", "##targetNamespace",
+			 "kind", "element"
+		   });		
 		addAnnotation
 		  (getResourceFilter_Expression(), 
 		   source, 

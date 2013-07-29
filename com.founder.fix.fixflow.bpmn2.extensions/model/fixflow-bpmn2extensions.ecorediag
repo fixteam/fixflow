@@ -1745,4 +1745,18 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Wh-Ss-VMEeKxxdlz7iCGqQ" points="[-13, -20, 216, 326]$[-227, -311, 2, 35]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WiAu8OVMEeKxxdlz7iCGqQ" id="(0.803921568627451,0.5679012345679012)"/>
   </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_DKbJEPW8EeKF-NG-E23Lww" type="3002" source="_1bPsAAEtEeGYKayJr7w6IA" target="_FCvg9AEQEeGYKayJr7w6IA">
+    <children xmi:type="notation:Node" xmi:id="_DKcXMPW8EeKF-NG-E23Lww" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_DKcXMfW8EeKF-NG-E23Lww" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_DKc-QPW8EeKF-NG-E23Lww" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_DKc-QfW8EeKF-NG-E23Lww" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_DKbJEfW8EeKF-NG-E23Lww" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_DKbJEvW8EeKF-NG-E23Lww" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="fixflow-bpmn2extensions.ecore#//TaskCommand/parameterExpression"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DKbJE_W8EeKF-NG-E23Lww" points="[27, -2, -1421, 126]$[1449, -158, 1, -30]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DKgBkPW8EeKF-NG-E23Lww" id="(0.8163265306122449,0.1310344827586207)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DKgBkfW8EeKF-NG-E23Lww" id="(0.21568627450980393,0.38271604938271603)"/>
+  </edges>
 </notation:Diagram>
