@@ -1067,7 +1067,16 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 			}
 			
 			if (dataKey.equals(ProcessInstanceObjKey.InstanceType().DataBaseKey())) {
-				this.instanceType = ProcessInstanceType.valueOf(StringUtil.getString(entityMap.get(dataKey)));
+				//为了兼容老系统
+				if(entityMap.get(dataKey) == null){
+					if(entityMap.get(ProcessInstanceObjKey.EndTime().DataBaseKey()) == null){
+						this.instanceType = ProcessInstanceType.valueOf("RUNNING");
+					}else{
+						this.instanceType = ProcessInstanceType.valueOf("COMPLETE");
+					}
+				}else{
+					this.instanceType = ProcessInstanceType.valueOf(StringUtil.getString(entityMap.get(dataKey)));
+				}
 				continue;
 			}
 
