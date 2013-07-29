@@ -229,6 +229,14 @@ public class TaskCommandInst implements UserCommandQueryTo{
 			persistentState.put("nodeName", this.userTask.getName());
 		}
 		
+		if(map.keySet().size()>0){
+			for (String mapKey : map.keySet()) {
+				if(map.get(mapKey)!=null){ 
+					persistentState.put("fixParam_"+mapKey, map.get(mapKey));
+				}
+			}
+		}
+		
 		return persistentState;
 	}
 
