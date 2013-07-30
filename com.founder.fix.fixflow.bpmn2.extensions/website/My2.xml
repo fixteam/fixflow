@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/fixflow" connectorId="dd">
-  <Inputs>
-    <Parameter name="adasd" id="ddd"/>
-  </Inputs>
-</connector:Connector>
