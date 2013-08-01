@@ -1,0 +1,11 @@
+<!-- 第一章：产品介绍 -->
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <info>
+        <title>产品介绍</title>
+    </info>
+    <sect1>
+        <title>产品简单介绍</title>
+        <para>方正飞鸿产品简介，待补充...</para>
+    </sect1>
+</article>

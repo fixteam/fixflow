@@ -1,0 +1,10 @@
+<!-- 方正飞鸿BPM产品用户手册 -->
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <info>
+        <title>方正飞鸿BPM用户手册</title>
+        <author>
+            <orgname>方正国际BPM产品研发中心</orgname>
+        </author>
+    </info>
+	<xi:include href="chapters/ch01-Introduction.xml"/>
+</book>
