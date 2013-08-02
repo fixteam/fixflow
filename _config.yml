@@ -1,4 +1,4 @@
-baseurl: /fixtest
+baseurl: /fixflow
 name: FixFlow主页
 markdown: redcarpet
 safe: true
