@@ -33,4 +33,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>apisrc</name>
+			<type>2</type>
+			<location>D:/work/GIT/fixflow/fixflow-common-api/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>

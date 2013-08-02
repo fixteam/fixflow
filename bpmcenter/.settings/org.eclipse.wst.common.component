@@ -3,6 +3,8 @@
     <wb-module deploy-name="bpmcenter">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/conf"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/apisrc"/>
         <property name="context-root" value="bpmcenter"/>
         <property name="java-output-path" value="/bpmcenter/build/classes"/>
     </wb-module>
