@@ -37,7 +37,63 @@
 		<link>
 			<name>apisrc</name>
 			<type>2</type>
-			<location>D:/work/GIT/fixflow/fixflow-common-api/src</location>
+			<location>GIT_FIXFLOW_HOME/fixflow-common-api/src</location>
+		</link>
+		<link>
+			<name>apiconf</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-common-api/conf</location>
+		</link>
+		<link>
+			<name>restsrc</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-common-rest/src</location>
+		</link>
+		<link>
+			<name>servletsrc</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-common-servlet/src</location>
+		</link>
+		<link>
+			<name>wssrc</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-common-ws/src</location>
+		</link>
+		<link>
+			<name>internationalization</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/internationalization</locationURI>
+		</link>
+		<link>
+			<name>flowexpandsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/src</locationURI>
+		</link>
+		<link>
+			<name>fixflowdiagram</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/fixflowdiagram</locationURI>
+		</link>
+		<link>
+			<name>flowcoresrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/src</locationURI>
+		</link>
+		<link>
+			<name>fixflowcoreconf</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/conf</locationURI>
+		</link>
+
+		<link>
+			<name>flowmanagesrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-api/src</locationURI>
+		</link>
+		<link>
+			<name>flowmanageservletsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-servlet/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
