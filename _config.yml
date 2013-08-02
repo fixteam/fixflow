@@ -1,0 +1,9 @@
+baseurl: /fixtest
+name: FixTeam主页
+markdown: redcarpet
+safe: true
+lsi: false
+pygments: true
+permalink: pretty
+paginate: 16
+auto: true

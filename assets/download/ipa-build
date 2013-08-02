@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#--------------------------------------------
+# 功能：为xcode工程打ipa包
+# 作者：ccf
+# E-mail:ccf.developer@gmail.com
+# 创建日期：2012/09/24
+#--------------------------------------------
+
+
+#参数判断
+if [ $# != 2 ] && [ $# != 1 ];then
+	echo "Number of params error! Need one or two params!"
+	echo "1.path of project(necessary) 2.name of ipa file(optional)"
+	exit	
+elif [ ! -d $1 ];then
+	echo "Params Error!! The first param must be a dictionary."
+	exit	
+fi
+
+#工程绝对路径
+cd $1
+project_path=$(pwd)
+#build文件夹路径
+build_path=${project_path}/build
+
+#工程配置文件路径
+project_name=$(ls | grep xcodeproj | awk -F.xcodeproj '{print $1}')
+project_infoplist_path=${project_path}/${project_name}/${project_name}-Info.plist
+#取版本号
+bundleShortVersion=$(/usr/libexec/PlistBuddy -c "print CFBundleShortVersionString" ${project_infoplist_path})
+#取build值
+bundleVersion=$(/usr/libexec/PlistBuddy -c "print CFBundleVersion" ${project_infoplist_path})
+#取bundle Identifier前缀
+#bundlePrefix=$(/usr/libexec/PlistBuddy -c "print CFBundleIdentifier" `find . -name "*-Info.plist"` | awk -F$ '{print $1}')
+
+
+#IPA名称
+if [ $# = 2 ];then
+ipa_name=$2
+fi
+
+
+#编译工程
+cd $project_path
+xcodebuild || exit
+
+#打包
+cd $build_path
+target_name=$(basename ./Release-iphoneos/*.app | awk -F. '{print $1}')
+if [ $# = 1 ];then
+ipa_name="${target_name}_${bundleShortVersion}_build${bundleVersion}_$(date +"%Y%m%d")"
+fi
+
+if [ -d ./ipa-build ];then
+	rm -rf ipa-build
+fi
+mkdir -p ipa-build/Payload
+cp -r ./Release-iphoneos/*.app ./ipa-build/Payload/
+cd ipa-build
+zip -r ${ipa_name}.ipa *
+rm -rf Payload
+
