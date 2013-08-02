@@ -27,6 +27,7 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
@@ -35,39 +36,19 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>apisrc</name>
-			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-common-api/src</location>
-		</link>
-		<link>
 			<name>apiconf</name>
 			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-common-api/conf</location>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-api/conf</locationURI>
 		</link>
 		<link>
-			<name>restsrc</name>
+			<name>apisrc</name>
 			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-common-rest/src</location>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-api/src</locationURI>
 		</link>
 		<link>
-			<name>servletsrc</name>
+			<name>fixflowcoreconf</name>
 			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-common-servlet/src</location>
-		</link>
-		<link>
-			<name>wssrc</name>
-			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-common-ws/src</location>
-		</link>
-		<link>
-			<name>internationalization</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/internationalization</locationURI>
-		</link>
-		<link>
-			<name>flowexpandsrc</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/src</locationURI>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/conf</locationURI>
 		</link>
 		<link>
 			<name>fixflowdiagram</name>
@@ -80,20 +61,39 @@
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/src</locationURI>
 		</link>
 		<link>
-			<name>fixflowcoreconf</name>
+			<name>flowexpandsrc</name>
 			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/conf</locationURI>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/src</locationURI>
 		</link>
-
+		<link>
+			<name>flowmanageservletsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-servlet/src</locationURI>
+		</link>
 		<link>
 			<name>flowmanagesrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-api/src</locationURI>
 		</link>
 		<link>
-			<name>flowmanageservletsrc</name>
+			<name>internationalization</name>
 			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-servlet/src</locationURI>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/internationalization</locationURI>
+		</link>
+		<link>
+			<name>restsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-rest/src</locationURI>
+		</link>
+		<link>
+			<name>servletsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-servlet/src</locationURI>
+		</link>
+		<link>
+			<name>wssrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-ws/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
