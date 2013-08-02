@@ -5,18 +5,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/activation.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/apache-activemq-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/apputil.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/bsh-2.0b4.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/com.founder.fix.fixflow.bpmn2.extensions.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/cxf-2.6.1.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/db2jcc_license_cu.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/db2jcc4.jar"/>
-	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/dbcore.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/fixflow-api.jar"/>
-	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/fixflow-core.jar"/>
-	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/fl.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/jakarta-oro.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/javax.ws.rs.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/jaxb-api-2.2.6.jar"/>
