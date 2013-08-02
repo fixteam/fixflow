@@ -38,7 +38,7 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
 import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
-import com.founder.fix.fl.core.FixResourceCore;
+
 
 public class ProcessEngineImpl implements ProcessEngine {
 
@@ -146,7 +146,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 		if (languageType == null || languageType.equals("")) {
 
 		} else {
-			FixResourceCore.setNowLanguage(languageType);
+			processEngineConfiguration.getFixFlowResources().setNowLanguage(languageType);
 		}
 
 	}
@@ -156,7 +156,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 		if (languageType == null || languageType.equals("")) {
 			// Context.setLanguageType("defauld");
 		} else {
-			FixResourceCore.setNowLanguage(languageType);
+			processEngineConfiguration.getFixFlowResources().setNowLanguage(languageType);
 			// Context.setLanguageType(languageType);
 		}
 	}

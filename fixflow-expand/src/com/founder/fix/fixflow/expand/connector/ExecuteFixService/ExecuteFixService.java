@@ -20,8 +20,7 @@ package com.founder.fix.fixflow.expand.connector.ExecuteFixService;
 
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
-import com.founder.fix.webcore.DataView;
-import com.founder.fix.webcore.interfaceLayer.AdapterProxy;
+
 
 public class ExecuteFixService implements ConnectorHandler {
 
@@ -34,7 +33,7 @@ public class ExecuteFixService implements ConnectorHandler {
 	public void execute(ExecutionContext executionContext) throws Exception {
 
 
-		outputValue=AdapterProxy.executeForNoPermission(serviceName,DataView.buildDataView(),paramMap);
+		//outputValue=AdapterProxy.executeForNoPermission(serviceName,DataView.buildDataView(),paramMap);
 
 
 	}

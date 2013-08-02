@@ -42,7 +42,7 @@ public abstract class AbstactTimeJob implements Job {
 		ExternalContent externalContent=new ExternalContent();
 		externalContent.setAuthenticatedUserId(Authentication.getSystemId());
 		processEngine.setExternalContent(externalContent);
-		processEngine.getProcessEngineConfiguration().setConnectionManagement("General");
+		//processEngine.getProcessEngineConfiguration().setConnectionManagement("General");
 
 		
 		

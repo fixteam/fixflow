@@ -43,6 +43,8 @@ public interface FixFlowResources {
 	public void systemInit(Connection connection);
 	
 	public String getNowLanguage();
+	
+	public void setNowLanguage(String languageType);
 		
 
 }

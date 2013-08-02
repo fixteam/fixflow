@@ -17,8 +17,8 @@
  */
 package com.founder.fix.fixflow.expand.database.pagination;
 
-import com.founder.fix.apputil.util.StringUtil;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public class DB2PaginationImpl implements Pagination{
 	protected static final String SQL_END_DELIMITER = ";";

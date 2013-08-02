@@ -22,8 +22,7 @@ import java.util.HashMap;
 
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
-import com.founder.fix.webcore.DataView;
-import com.founder.fix.webcore.interfaceLayer.AdapterProxy;
+
 
 public class FixService implements ConnectorHandler {
 
@@ -34,9 +33,9 @@ public class FixService implements ConnectorHandler {
 	private java.util.HashMap context;
 
 	public void execute(ExecutionContext executionContext) throws Exception {
-		DataView dv = DataView.buildDataView();
-		Object obj  = AdapterProxy.executeForNoPermission(serviceID,dv,params);
-		context.putAll(dv.getReturnData());
+		//DataView dv = DataView.buildDataView();
+		//Object obj  = AdapterProxy.executeForNoPermission(serviceID,dv,params);
+		//context.putAll(dv.getReturnData());
 	}
 
 	public void  setServiceID(java.lang.String serviceID){

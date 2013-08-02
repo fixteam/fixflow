@@ -55,6 +55,10 @@ public class CompleteGeneralTaskCmd extends AbstractExpandTaskCmd<GeneralTaskCom
 	public Void execute(CommandContext commandContext) {
 
 		
+		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
+			throw new FixFlowException("登录用户不能!");
+		}
+		
 		if (taskId == null||taskId.equals("")) {
 			throw new FixFlowException("任务编号为空！");
 		}

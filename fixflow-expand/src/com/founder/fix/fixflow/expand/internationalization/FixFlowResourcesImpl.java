@@ -25,7 +25,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
-import com.founder.fix.fl.core.FixResourceCore;
+
 
 public class FixFlowResourcesImpl implements FixFlowResources {
 
@@ -105,6 +105,11 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 
 	public String getNowLanguage() {
 		return FixResourceCore.getNowLanguage();
+	}
+
+	public void setNowLanguage(String languageType) {
+		// TODO Auto-generated method stub
+		FixResourceCore.setNowLanguage(languageType);
 	}
 
 

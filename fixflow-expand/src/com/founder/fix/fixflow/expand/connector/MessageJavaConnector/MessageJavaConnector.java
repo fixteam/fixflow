@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.founder.fix.apputil.exception.ExceptionFactory;
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
@@ -86,7 +85,7 @@ public class MessageJavaConnector implements ConnectorHandler {
 			clazz = Class.forName(javaClass);
 			obj = clazz.newInstance();
 		}catch(ClassNotFoundException e){
-			throw ExceptionFactory.createSystemFixException("20017",javaClass);
+			//throw ExceptionFactory.createSystemFixException("20017",javaClass);
 		}
 		
 		int paramLength = args==null?0:args.length;
