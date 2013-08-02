@@ -6,6 +6,7 @@ import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.command.AbstractCustomExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
@@ -24,7 +25,9 @@ public class ExpandTaskComplete<A extends AbstractCustomExpandTaskCommand,T> imp
 	public T execute(CommandContext commandContext) {
 		// TODO Auto-generated method stub
 		Object[] obj = new Object[] {expandTaskCommand};  
-		
+		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
+			throw new FixFlowException("登录用户不能为空!");
+		}
 		
 		TaskCommandDef taskCommandDef= commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(this.expandTaskCommand.getCommandType());
 		if(taskCommandDef!=null){
