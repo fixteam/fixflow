@@ -5,10 +5,10 @@
     <meta name="author" content="{{ site.author }}" />
     <title>{{ page.title }} | {{ site.author }}</title>
     <link rel="shortcut icon" href="/favicon.ico">
-    <link href="/feed/" rel="alternate" title="{{ site.author }}" type="application/atom+xml" />
-    <link rel="stylesheet" href="/media/css/style.css">
-    <link rel="stylesheet" href="/media/css/highlight.css">
-    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <link href="{{ site.baseurl }}/feed/" rel="alternate" title="{{ site.author }}" type="application/atom+xml" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/media/css/style.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/media/css/highlight.css">
+    <script type="text/javascript" src="{{ site.baseurl }}/media/js/jquery-1.7.1.min.js"></script>
   </head>
   <script type="text/javascript">
     function setTimeSpan(){
@@ -43,13 +43,13 @@
         <h1>{{ page.title }}</h1>
         </header>
         <nav>
-        <span><a title="home page" class="" href="/">Home</a></span>
-        <span><a title="about" class="" href="/about/">About</a></span>
-        <span><a title="guestbook" class="" href="/guestbook/">Guestbook</a></span>
-        <span><a title="categories" class="" href="/categories/">Categories</a></span>
-        <span><a title="tags" class="" href="/tags/">Tags</a></span>
-        <span><a title="links" class="" href="/links/">Links</a></span>
-        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        <span><a title="home page" class="" href="{{ site.baseurl }}/">Home</a></span>
+        <span><a title="about" class="" href="{{ site.baseurl }}/about/">About</a></span>
+        <span><a title="guestbook" class="" href="{{ site.baseurl }}/guestbook/">Guestbook</a></span>
+        <span><a title="categories" class="" href="{{ site.baseurl }}/categories/">Categories</a></span>
+        <span><a title="tags" class="" href="{{ site.baseurl }}/tags/">Tags</a></span>
+        <span><a title="links" class="" href="{{ site.baseurl }}/links/">Links</a></span>
+        <span><a title="subscribe by RSS" class="" href="{{ site.baseurl }}/feed/">Subscribe</a></span>
         </nav>
         <article class="content">
         {{ content }}
