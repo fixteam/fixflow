@@ -1,7 +1,0 @@
-baseurl: /fixflow
-name: FixFlow主页
-markdown: redcarpet
-safe: true
-lsi: false
-pygments: true
-permalink: pretty
