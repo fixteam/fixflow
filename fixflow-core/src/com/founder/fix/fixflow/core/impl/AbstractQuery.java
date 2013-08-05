@@ -25,6 +25,7 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.query.Query;
 import com.founder.fix.fixflow.core.query.QueryProperty;
 
@@ -49,6 +50,8 @@ public abstract class AbstractQuery<T extends Query<?, ?>, U> implements Command
 	protected int firstResult;
 	protected int maxResults;
 	protected ResultType resultType;
+	
+	protected QueryExpandTo queryExpandTo;
 
 	protected QueryProperty orderProperty;
 
@@ -209,5 +212,20 @@ public abstract class AbstractQuery<T extends Query<?, ?>, U> implements Command
 
 	public String getOrderBy() {
 		return orderBy;
+	}
+	
+	
+	/**
+	 * 任务信息扩展查询
+	 * @param queryExpandTo
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public T queryExpandTo(QueryExpandTo queryExpandTo) {
+		if (queryExpandTo == null) {
+			throw new FixFlowException("queryExpandTo  is null");
+		}
+		this.queryExpandTo = queryExpandTo;
+		return (T) this;
 	}
 }

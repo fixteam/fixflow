@@ -98,7 +98,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	
 
-	protected QueryExpandTo queryExpandTo;
+	
 
 	
 
@@ -127,13 +127,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return this;
 	}
 	
-	public TaskQueryImpl queryExpandTo(QueryExpandTo queryExpandTo) {
-		if (queryExpandTo == null) {
-			throw new FixFlowException("queryExpandTo  is null");
-		}
-		this.queryExpandTo = queryExpandTo;
-		return this;
-	}
+	
 	
 	public TaskQueryImpl callActivityInstanceId(String callActivityInstanceId) {
 		if (callActivityInstanceId == null) {

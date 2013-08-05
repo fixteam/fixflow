@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.AbstractQuery;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.runtime.TokenQuery;
 
@@ -127,6 +128,8 @@ public class TokenQueryImpl extends AbstractQuery<TokenQuery, Token> implements 
 		return end;
 	}
 
-	
+	public QueryExpandTo getQueryExpandTo() {
+		return queryExpandTo;
+	}
 
 }
