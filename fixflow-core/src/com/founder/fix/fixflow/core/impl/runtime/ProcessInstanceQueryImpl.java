@@ -57,10 +57,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	
 	
 	
-	protected QueryExpandTo queryExpandTo;
-	
-	
-	
+
 
 	
 	public ProcessInstanceQueryImpl() {
@@ -89,15 +86,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.businessKey = businessKey;
 		return this;
 	}
-	
-	public ProcessInstanceQuery queryExpandTo(QueryExpandTo queryExpandTo) {
-		if (queryExpandTo == null) {
-			throw new FixFlowException("queryExpandTo  is null");
-		}
-		this.queryExpandTo = queryExpandTo;
-		return this;
-	}
-	
+
 	public ProcessInstanceQuery containsSubProcess() {
 		this.isContainsSubProcess=true;
 		return this;
