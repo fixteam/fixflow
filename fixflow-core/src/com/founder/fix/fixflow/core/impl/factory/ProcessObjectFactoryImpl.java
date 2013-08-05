@@ -34,6 +34,7 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.context.ContextInstanceImpl;
 
 
+import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.ExecutionContextImpl;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
@@ -91,9 +92,9 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 		
 	}
 	
-	
-	
-	
+	/**
+	 * 创建任务实例持久化对象
+	 */
 	public TaskInstancePersistence createTaskInstancePersistence(Connection connection) {
 		
 		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
@@ -107,6 +108,23 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 		}
 		throw new FixFlowException("流程引擎扩展配置里的TaskInstancePersistence实现类指定错误");
 		
+	}
+	
+	/**
+	 * 创建流程实例持久化对象
+	 */
+	public ProcessInstancePersistence createProcessInstancePersistence(
+			Connection connection) {
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("ProcessInstancePersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				ProcessInstancePersistence processInstancePersistence =(ProcessInstancePersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return processInstancePersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的ProcessInstancePersistence实现类指定错误");
 	}
 
 
