@@ -58,5 +58,6 @@
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/wsdl4j-1.6.2.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/org.springframework.jdbc-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/bpmcenter/WebContent/WEB-INF/lib/org.springframework.transaction-3.1.1.RELEASE.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fixflow-core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

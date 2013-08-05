@@ -17,17 +17,13 @@
  */
 package com.founder.fix.fixflow.util;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.springframework.jdbc.datasource.DataSourceUtils;
-
 import com.founder.fix.fixflow.shell.DBConnection;
-import com.founder.fix.fixflow.shell.FixFlowShellFactory;
+import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 
 
 public class CurrentThread {
@@ -62,7 +58,7 @@ public class CurrentThread {
 		currentItems.set(null);
 		timer.set(null);
 		
-		if(FixFlowShellFactory.isPoolConn()){
+		if(FixFlowShellProxy.isPoolConn()){
 			Map<String,DBConnection> dbconns = (CurrentThread.getThreadDBPool().get());
 			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
 				DBConnection td = tmp.getValue();
