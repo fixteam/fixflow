@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.7.1.20130617">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
-    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
+    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="DB_FIX_ACC" name="DB_FIX_ACC" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2数据库" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.OraclePaginationImpl" dbtype="db2"/>
     <dataBase id="mysql" name="mysql数据库" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/myDB?user=soft&amp;password=soft1234&amp;useUnicode=true&amp;characterEncoding=8859_1" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.SqlServerPaginationImpl" dbtype="mysql"/>
@@ -55,10 +55,11 @@
   <sysMailConfig selected=""/>
   <expandClassConfig>
     <expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>
-    <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
     <expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
     <expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
     <expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.CommonAuthenticationImpl" remarks="获取用户信息"/>
+    <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
+    <expandClass classId="ProcessInstancePersistence" className="流程实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" remarks="流程实例的数据库存储类"/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
   <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>

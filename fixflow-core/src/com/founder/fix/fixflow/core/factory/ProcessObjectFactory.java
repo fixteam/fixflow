@@ -26,6 +26,7 @@ import com.founder.fix.fixflow.core.action.CommandHandler;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.factory.ProcessObjectFactoryImpl;
+import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 
@@ -58,7 +59,18 @@ public interface ProcessObjectFactory {
 	CommandHandler createCommandHandler(String className);
 	
 	ContextInstance createContextInstance(ProcessInstance processInstance);
-	
+	/**
+	 * 创建任务实例持久化对象
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
 	TaskInstancePersistence createTaskInstancePersistence(Connection connection);
+	
+	/**
+	 * 创建流程实例持久化对象
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	ProcessInstancePersistence createProcessInstancePersistence(Connection connection);
 	
 }

@@ -22,6 +22,10 @@ package com.founder.fix.fixflow.core.objkey;
 public class ProcessInstanceObjKey {
 
 	
+	public static String ProcessInstanceTableName(){
+		return "FIXFLOW_RUN_PROCESSINSTANCE";
+	}
+	
 	/**
 	 * 编号
 	 * @return

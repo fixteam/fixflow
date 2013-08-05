@@ -1360,4 +1360,12 @@ public class TaskInstanceObjKey {
 		return new TaskInstanceObjKey().new FlowKeyPendingTaskId();
 	}
 	
+	/**
+	 * 任务实例表名
+	 * @return
+	 */
+	public static String TaskInstanceTableName(){
+		return "FIXFLOW_RUN_TAKSINSTANECE";
+	}
+	
 }

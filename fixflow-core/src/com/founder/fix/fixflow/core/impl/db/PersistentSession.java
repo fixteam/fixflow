@@ -99,7 +99,7 @@ public class PersistentSession {
 		}
 
 		if (deleteStatement.equals("deleteProcessInstanceByProcessInstanceId")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			processInstancePersistence.deleteProcessInstanceByProcessInstanceId(StringUtil.getString(parameter.toString()));
 		}
 		if (deleteStatement.equals("deleteTaskInstanceByProcessInstanceId")) {
@@ -159,7 +159,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessPerformance")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
@@ -168,7 +168,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessPerformanceInterface2")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
@@ -176,7 +176,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessPerformanceInterface1")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
@@ -184,7 +184,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessPerformanceInterface4")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, Object> strmap = (Map<String, Object>) parameter;
 			String[] processKey = (String[]) strmap.get("processKey");
 			String startTime = (String) strmap.get("startTime");
@@ -193,7 +193,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessPerformanceInterface3")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, Object> strmap = (Map<String, Object>) parameter;
 			String[] pid = (String[]) strmap.get("pid");
 			String startTime = (String) strmap.get("startTime");
@@ -202,7 +202,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessPerformanceInterface5")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
@@ -224,7 +224,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessInstanceByQueryCriteria")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			return processInstancePersistence.selectProcessInstanceByQueryCriteria((ProcessInstanceQueryImpl) parameter, page);
 		}
 
@@ -260,7 +260,7 @@ public class PersistentSession {
 	public Object selectOne(String statement, Object parameter) {
 
 		if (statement.equals("selectProcessPerformanceInterface22")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, String> strmap = (Map<String, String>) parameter;
 			String startTime = strmap.get("startTime");
 			String endTime = strmap.get("endTime");
@@ -270,7 +270,7 @@ public class PersistentSession {
 		if (statement.equals("selectProcessInstance")) {
 
 			Map<String, Object> parameters = (HashMap<String, Object>) parameter;
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			String processInstanceId = parameters.get("processInstanceId").toString();
 			ProcessDefinitionBehavior processDefinition = (ProcessDefinitionBehavior) parameters.get("processDefinition");
 			ProcessInstanceEntity processInstanceImpl;
@@ -286,7 +286,7 @@ public class PersistentSession {
 		if (statement.equals("selectProcessInstanceByDefKeyAndBusinessKey")) {
 
 			Map<String, Object> parameters = (HashMap<String, Object>) parameter;
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			String processDefinitionKey = StringUtil.getString(parameters.get("processDefinitionKey"));
 			String businessKey = StringUtil.getString(parameters.get("businessKey"));
 			ProcessInstanceEntity processInstanceQueryTo;
@@ -323,7 +323,7 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectProcessInstanceCountByQueryCriteria")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			return processInstancePersistence.selectProcessInstanceCountByQueryCriteria((ProcessInstanceQueryImpl) parameter);
 		}
 
@@ -360,7 +360,7 @@ public class PersistentSession {
 	public void save(String saveStatement, PersistentObject persistentObject) {
 
 		if (saveStatement.equals("saveProcessInstance")) {
-			ProcessInstancePersistence processInstancePersistence = new ProcessInstancePersistence(connection);
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			try {
 				processInstancePersistence.saveProcessInstance((ProcessInstance) persistentObject);
 			} catch (Exception e) {
