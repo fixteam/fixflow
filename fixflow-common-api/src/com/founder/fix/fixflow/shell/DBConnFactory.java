@@ -24,7 +24,6 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 
 /**
   * @ClassName: DBConnFactory
-  * @Description: TODO
   * @author shao
   *
   */
@@ -34,12 +33,10 @@ public class DBConnFactory
 	
 	private String transactionName;
 	
-
 	/**
-	  * createConnection(这里用一句话描述这个方法的作用)
+	  * createConnection
 	
 	  * @Title: createConnection
-	  * @Description: TODO
 	  * @param @return
 	  * @param @throws SQLException    设定文件
 	  * @return Connection    返回类型
@@ -49,19 +46,60 @@ public class DBConnFactory
 		Connection connection = DataSourceUtils.getConnection(dataSource);
 		return connection;
 	}
+	
+	public DBConnection createDBConnection() throws SQLException{
+		DBConnection dbconn = new DBConnection();
+		Connection connection = DataSourceUtils.getConnection(dataSource);
+		dbconn.setConnection(connection);
+		dbconn.setDataSource(dataSource);
+		return dbconn;
+	}
+	
 
+	/**
+	  * getDataSource
+	
+	  * @Title: getDataSource
+	  * @param @return    设定文件
+	  * @return DataSource    返回类型
+	  * @throws
+	  */
 	public DataSource getDataSource() {
 		return dataSource;
 	}
 
+	/**
+	  * setDataSource
+	
+	  * @Title: setDataSource
+	  * @param @param dataSource    设定文件
+	  * @return void    返回类型
+	  * @throws
+	  */
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
+	/**
+	  * getTransactionName
+	
+	  * @Title: getTransactionName
+	  * @param @return    设定文件
+	  * @return String    返回类型
+	  * @throws
+	  */
 	public String getTransactionName() {
 		return transactionName;
 	}
 
+	/**
+	  * setTransactionName
+	
+	  * @Title: setTransactionName
+	  * @param @param transactionName    设定文件
+	  * @return void    返回类型
+	  * @throws
+	  */
 	public void setTransactionName(String transactionName) {
 		this.transactionName = transactionName;
 	}
