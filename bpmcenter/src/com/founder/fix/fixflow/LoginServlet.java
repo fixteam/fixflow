@@ -92,7 +92,7 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("action", "getMyTask");
 				response.sendRedirect("FlowCenter?action=getMyProcess");
 			}else{
-				response.sendRedirect("/login.jsp");
+				response.sendRedirect("login.jsp");
 			}
 			
 		} catch (SQLException e) {
