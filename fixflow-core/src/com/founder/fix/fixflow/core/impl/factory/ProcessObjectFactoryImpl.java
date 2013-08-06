@@ -34,8 +34,15 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.context.ContextInstanceImpl;
 
 
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.ExecutionContextImpl;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskDefinitionImpl;
@@ -126,8 +133,120 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 		}
 		throw new FixFlowException("流程引擎扩展配置里的ProcessInstancePersistence实现类指定错误");
 	}
+	
+	/**
+	 * 创建任务候选人持久化
+	 */
+	public IdentityLinkPersistence createIdentityLinkPersistence(
+			Connection connection) {
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("IdentityLinkPersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				IdentityLinkPersistence identityLinkPersistence =(IdentityLinkPersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return identityLinkPersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的IdentityLinkPersistence实现类指定错误");
+	}
 
+	/**
+	 * 创建定时任务持久化
+	 */
+	public JobPersistence createJobPersistence(
+			Connection connection) {
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("JobPersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				JobPersistence jobPersistence =(JobPersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return jobPersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的JobPersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建令牌持久化
+	 */
+	public TokenPersistence createTokenPersistence(Connection connection){
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("TokenPersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				TokenPersistence tokenPersistence =(TokenPersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return tokenPersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的TokenPersistence实现类指定错误");
+	}
 
+	/**
+	 * 创建流程变量持久化
+	 */
+	public VariablePersistence createVariablePersistence(Connection connection){
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("VariablePersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				VariablePersistence variablePersistence =(VariablePersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return variablePersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的VariablePersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程发布持久化
+	 */
+	public DeploymentPersistence createDeploymentPersistence(Connection connection){
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("DeploymentPersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				DeploymentPersistence deploymentPersistence =(DeploymentPersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return deploymentPersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的DeploymentPersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建资源发布持久化
+	 */
+	public ResourcePersistence createResourcePersistence(Connection connection){
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("ResourcePersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				ResourcePersistence resourcePersistence =(ResourcePersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return resourcePersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的ResourcePersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程定义持久化
+	 */
+	public ProcessDefinitionPersistence createProcessDefinitionPersistence(Connection connection){
+		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("ProcessDefinitionPersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				ProcessDefinitionPersistence processDefinitionPersistence =(ProcessDefinitionPersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return processDefinitionPersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的ProcessDefinitionPersistence实现类指定错误");
+	}
 	public ContextInstance createContextInstance(ProcessInstance processInstance) {
 		ContextInstanceImpl contextInstanceImpl = new ContextInstanceImpl(processInstance);
 		return contextInstanceImpl;

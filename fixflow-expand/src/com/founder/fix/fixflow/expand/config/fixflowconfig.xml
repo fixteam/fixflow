@@ -60,6 +60,14 @@
     <expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.CommonAuthenticationImpl" remarks="获取用户信息"/>
     <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
     <expandClass classId="ProcessInstancePersistence" className="流程实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" remarks="流程实例的数据库存储类"/>
+    <expandClass classId="IdentityLinkPersistence" className="任务候选人持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence" remarks="任务候选人持久化"/>
+    <expandClass classId="JobPersistence" className="定时任务持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence" remarks="定时任务持久化"/>
+    <expandClass classId="TokenPersistence" className="令牌持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence" remarks="令牌持久化"/>
+    <expandClass classId="VariablePersistence" className="变量持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence" remarks="变量持久化"/>
+    <expandClass classId="DeploymentPersistence" className="流程发布持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence" remarks="流程发布持久化"/>
+    <expandClass classId="ResourcePersistence" className="资源持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence" remarks="资源持久化"/>
+    <expandClass classId="ProcessDefinitionPersistence" className="流程定义持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence" remarks="流程定义持久化"/>
+    
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
   <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>

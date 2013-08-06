@@ -63,7 +63,7 @@ public class PersistentSession {
 
 	public void update(String updateStatement, PersistentObject persistentObject) {
 		if (updateStatement.equals("updateResource")) {
-			ResourcePersistence resourceManager = new ResourcePersistence(connection);
+			ResourcePersistence resourceManager = ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
 			resourceManager.updateResource(persistentObject);
 		}
 	}
@@ -71,12 +71,12 @@ public class PersistentSession {
 	public void delete(String deleteStatement, Object parameter) {
 		if (deleteStatement.equals("deleteDeployment")) {
 
-			DeploymentPersistence deploymentPersistence = new DeploymentPersistence(connection);
+			DeploymentPersistence deploymentPersistence = ProcessObjectFactory.FACTORYINSTANCE.createDeploymentPersistence(connection);
 			deploymentPersistence.deleteDeployment(StringUtil.getString(parameter.toString()));
 		}
 
 		if (deleteStatement.equals("deleteJob")) {
-			JobPersistence jobPersistence = new JobPersistence(connection);
+			JobPersistence jobPersistence = ProcessObjectFactory.FACTORYINSTANCE.createJobPersistence(connection);
 			jobPersistence.deleteJob(parameter.toString());
 		}
 		if (deleteStatement.equals("deleteEventSubscriptionEntity")) {
@@ -89,11 +89,11 @@ public class PersistentSession {
 		}
 
 		if (deleteStatement.equals("deleteProcessDefinitionsByDeploymentId")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			processDefinitionPersistence.deleteProcessDefinitionsByDeploymentId(StringUtil.getString(parameter.toString()));
 		}
 		if (deleteStatement.equals("deleteResourcesByDeploymentId")) {
-			ResourcePersistence resourceManager = new ResourcePersistence(connection);
+			ResourcePersistence resourceManager = ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
 			resourceManager.deleteResourcesByDeploymentId(StringUtil.getString(parameter));
 
 		}
@@ -108,13 +108,13 @@ public class PersistentSession {
 			taskInstancePersistence.deleteTaskInstanceByProcessInstanceId(StringUtil.getString(parameter.toString()));
 		}
 		if (deleteStatement.equals("deleteTokenByProcessInstanceId")) {
-			TokenPersistence tokenPersistence = new TokenPersistence(connection);
+			TokenPersistence tokenPersistence = ProcessObjectFactory.FACTORYINSTANCE.createTokenPersistence(connection);
 			tokenPersistence.deleteTokenByProcessInstanceId(StringUtil.getString(parameter.toString()));
 
 		}
 
 		if (deleteStatement.equals("deleteIdentityLinkByProcessInstanceId")) {
-			IdentityLinkPersistence identityLinkPersistence = new IdentityLinkPersistence(connection);
+			IdentityLinkPersistence identityLinkPersistence = ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkPersistence(connection);
 			identityLinkPersistence.deleteIdentityLinkByProcessInstanceId(StringUtil.getString(parameter.toString()));
 
 		}
@@ -125,7 +125,7 @@ public class PersistentSession {
 		}
 
 		if (deleteStatement.equals("deleteVariable")) {
-			VariablePersistence variablePersistence = new VariablePersistence(connection);
+			VariablePersistence variablePersistence = ProcessObjectFactory.FACTORYINSTANCE.createVariablePersistence(connection);
 			variablePersistence.deleteVariable((VariableQueryEntity) parameter);
 		}
 
@@ -135,12 +135,12 @@ public class PersistentSession {
 	public List selectList(String statement, Object parameter, Page page) {
 
 		if (statement.equals("selectProcessDefinitionGroupKey")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			return processDefinitionPersistence.selectProcessDefinitionGroupKey();
 		}
 
 		if (statement.endsWith("findAgentUsers")) {
-			TaskInstancePersistence taskInstancePersistence = new TaskInstancePersistence(connection);
+			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);
 			return taskInstancePersistence.findAgentUsers(StringUtil.getString(parameter));
 		}
 
@@ -219,7 +219,7 @@ public class PersistentSession {
 			return taskInstancePersistence.findTasksByTokenIdList((List<String>) parameter);
 		}
 		if (statement.equals("selectProcessDefinitionsByQueryCriteria")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			return processDefinitionPersistence.selectProcessDefinitionsByQueryCriteria((ProcessDefinitionQueryImpl) parameter);
 		}
 
@@ -229,17 +229,17 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectTokenByQueryCriteria")) {
-			TokenPersistence tokenPersistence = new TokenPersistence(connection);
+			TokenPersistence tokenPersistence = ProcessObjectFactory.FACTORYINSTANCE.createTokenPersistence(connection);
 			return tokenPersistence.selectTokenByQueryCriteria((TokenQueryImpl) parameter, page);
 		}
 
 		if (statement.equals("selectIdentityLinkByQueryCriteria")) {
-			IdentityLinkPersistence identityLinkPersistence = new IdentityLinkPersistence(connection);
+			IdentityLinkPersistence identityLinkPersistence = ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkPersistence(connection);
 			return identityLinkPersistence.selectIdentityLinkByQueryCriteria((IdentityLinkQueryImpl) parameter, page);
 		}
 
 		if (statement.equals("selectIdentityLinksByTask")) {
-			IdentityLinkPersistence identityLinkPersistence = new IdentityLinkPersistence(connection);
+			IdentityLinkPersistence identityLinkPersistence = ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkPersistence(connection);
 			return identityLinkPersistence.selectIdentityLinksByTask(StringUtil.getString(parameter));
 		}
 
@@ -300,12 +300,12 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectLatestProcessDefinitionByKey")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			ProcessDefinitionBehavior processDefinition = processDefinitionPersistence.selectLatestProcessDefinitionByKey(parameter.toString());
 			return processDefinition;
 		}
 		if (statement.equals("selectProcessDefinitionById")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			ProcessDefinitionBehavior processDefinition = processDefinitionPersistence.selectProcessDefinitionById(parameter.toString());
 			return processDefinition;
 		}
@@ -328,28 +328,28 @@ public class PersistentSession {
 		}
 
 		if (statement.equals("selectTokenCountByQueryCriteria")) {
-			TokenPersistence tokenPersistence = new TokenPersistence(connection);
+			TokenPersistence tokenPersistence = ProcessObjectFactory.FACTORYINSTANCE.createTokenPersistence(connection);
 			return tokenPersistence.selectTokenCountByQueryCriteria((TokenQueryImpl) parameter);
 		}
 
 		if (statement.equals("selectIdentityLinkCountByQueryCriteria")) {
-			IdentityLinkPersistence identityLinkPersistence = new IdentityLinkPersistence(connection);
+			IdentityLinkPersistence identityLinkPersistence = ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkPersistence(connection);
 			return identityLinkPersistence.selectIdentityLinkCountByQueryCriteria((IdentityLinkQueryImpl) parameter);
 		}
 
 		if (statement.equals("selectResourceByResourceId")) {
-			ResourcePersistence resourcePersistence = new ResourcePersistence(connection);
+			ResourcePersistence resourcePersistence = ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
 			return resourcePersistence.getResourceInputStream(parameter.toString());
 		}
 
 		if (statement.equals("selectProcessDefinitionByKeyAndVersion")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			ProcessDefinitionBehavior processDefinition = processDefinitionPersistence.selectLatestProcessDefinitionByKeyAndVersion(parameter);
 			return processDefinition;
 		}
 
 		if (statement.equals("queryVariable")) {
-			VariablePersistence variablePersistence = new VariablePersistence(connection);
+			VariablePersistence variablePersistence = ProcessObjectFactory.FACTORYINSTANCE.createVariablePersistence(connection);
 			return variablePersistence.queryVariable(parameter);
 		}
 
@@ -369,7 +369,7 @@ public class PersistentSession {
 		}
 		if (saveStatement.equals("saveJob")) {
 			try {
-				JobPersistence jobPersistence = new JobPersistence(connection);
+				JobPersistence jobPersistence = ProcessObjectFactory.FACTORYINSTANCE.createJobPersistence(connection);
 				jobPersistence.saveJob((JobEntity) persistentObject);
 			} catch (Exception e) {
 				throw new FixFlowDbException("流程实例持久化出错! 错误信息:  " + e.getMessage(), e);
@@ -395,7 +395,7 @@ public class PersistentSession {
 		}
 
 		if (saveStatement.equals("saveVariable")) {
-			VariablePersistence variableInstancePersistence = new VariablePersistence(connection);
+			VariablePersistence variableInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createVariablePersistence(connection);
 			try {
 				variableInstancePersistence.saveVariable(persistentObject);
 			} catch (Exception e) {
@@ -404,7 +404,7 @@ public class PersistentSession {
 		}
 
 		if (saveStatement.equals("saveIdentityLink")) {
-			IdentityLinkPersistence identityLinkPersistence = new IdentityLinkPersistence(connection);
+			IdentityLinkPersistence identityLinkPersistence = ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkPersistence(connection);
 			try {
 				identityLinkPersistence.saveIdentityLink((IdentityLinkEntity) persistentObject);
 			} catch (Exception e) {
@@ -421,15 +421,15 @@ public class PersistentSession {
 			commentPersistence.insertComment(persistentObject);
 		}
 		if (insertStatement.equals("insertDeployment")) {
-			DeploymentPersistence deploymentPersistence = new DeploymentPersistence(connection);
+			DeploymentPersistence deploymentPersistence = ProcessObjectFactory.FACTORYINSTANCE.createDeploymentPersistence(connection);
 			deploymentPersistence.insertDeployment(persistentObject);
 		}
 		if (insertStatement.equals("insertResource")) {
-			ResourcePersistence resourceManager = new ResourcePersistence(connection);
+			ResourcePersistence resourceManager = ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
 			resourceManager.insertResource(persistentObject);
 		}
 		if (insertStatement.equals("insertProcessDefinition")) {
-			ProcessDefinitionPersistence processDefinitionPersistence = new ProcessDefinitionPersistence(connection);
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
 			processDefinitionPersistence.insertProcessDefinition(persistentObject);
 		}
 

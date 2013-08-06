@@ -26,8 +26,15 @@ import com.founder.fix.fixflow.core.action.CommandHandler;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.factory.ProcessObjectFactoryImpl;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 
 
@@ -72,5 +79,54 @@ public interface ProcessObjectFactory {
 	 * @return
 	 */
 	ProcessInstancePersistence createProcessInstancePersistence(Connection connection);
+	
+	/**
+	 * 创建任务候选人持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	IdentityLinkPersistence createIdentityLinkPersistence(Connection connection);
+	
+	/**
+	 * 创建定时任务持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	JobPersistence createJobPersistence(Connection connection);
+	
+	/**
+	 * 创建令牌持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	TokenPersistence createTokenPersistence(Connection connection);
+	
+	/**
+	 * 创建流程变量持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	VariablePersistence createVariablePersistence(Connection connection);
+	
+	/**
+	 * 创建流程发布持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	DeploymentPersistence createDeploymentPersistence(Connection connection);
+	
+	/**
+	 * 创建资源持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	ResourcePersistence createResourcePersistence(Connection connection);
+	
+	/**
+	 * 创建流程定义持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	ProcessDefinitionPersistence createProcessDefinitionPersistence(Connection connection);
 	
 }
