@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.shell.DBConnection;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 
@@ -68,6 +70,8 @@ public class CurrentThread {
 			}
 			getThreadDBPool().set(null);
 		}
+		ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
+		FixFlowShellProxy.closeProcessEngine(processEngine, false);
 	}
 	
 	/**通过线程副本取当前线程中对应的Items

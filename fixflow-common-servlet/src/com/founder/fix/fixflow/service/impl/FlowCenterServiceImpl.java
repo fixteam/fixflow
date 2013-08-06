@@ -34,16 +34,32 @@ import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 public class FlowCenterServiceImpl implements FlowCenterService {
 	public PageResultTo queryMyTask(Map<String,String> filter) throws SQLException{
 		PageResultTo result = new PageResultTo();
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter);
-		TaskQuery tq = engine.getTaskService().createTaskQuery();
-		tq.taskAssignee(filter.get("userId"));
-		tq.processDefinitionKey(filter.get("pdkey"));
-		tq.taskNotEnd();
-		List<TaskInstance> lts = tq.list();
-		long count = tq.count();
-		
-		result.setDataList(lts);
-		result.setPageNumber(count);
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter.get("userId"));
+		try{
+			TaskQuery tq = engine.getTaskService().createTaskQuery();
+			
+			tq.taskAssignee(filter.get("userId"));
+			tq.processDefinitionKey(filter.get("pdkey"));
+			tq.taskNotEnd();
+			List<TaskInstance> lts = tq.list();
+			long count = tq.count();
+			
+			result.setDataList(lts);
+			result.setPageNumber(count);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+		return result;
+	}
+	
+	public List<Map<String,String>> queryStartProcess(String userId) throws SQLException{
+		List<Map<String, String>> result = null;
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		try{
+			result =  engine.getModelService().getStartProcessByUserId(userId);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
 		
 		return result;
 	}

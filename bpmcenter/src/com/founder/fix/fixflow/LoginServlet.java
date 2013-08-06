@@ -1,3 +1,20 @@
+/**
+ *  Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author shao
+ */
 package com.founder.fix.fixflow;
 
 import java.io.IOException;
@@ -16,6 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.DBConnFactory;
 import com.founder.fix.fixflow.util.MD5;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
@@ -70,8 +88,13 @@ public class LoginServlet extends HttpServlet {
 			SqlCommand sqlcommand = new SqlCommand(connection);
 			List<Map<String, Object>> list2 = sqlcommand.queryForList(sb.toString(),list);
 			if(list2!=null && list2.size()>0){
-				
+				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
+				request.setAttribute("action", "getMyTask");
+				response.sendRedirect("FlowCenter?action=getMyProcess");
+			}else{
+				response.sendRedirect("/login.jsp");
 			}
+			
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
