@@ -85,7 +85,7 @@ public class VerificationStartUserCmd implements Command<Boolean> {
 						}
 
 						if (userIdString != null && !userIdString.equals("")) {
-							if (userIdString.equals(userId) || userIdString.equals("fixflow_allusers")) {
+							if (userIdString.equals(userId) || userIdString.equals("fixflow_allusers")||userIdString.equals("processInfo.getInitiator()")||userIdString.equals("processInfo.getStartAuthor()")||userIdString.equals("processInfo.getInitiator();")||userIdString.equals("processInfo.getStartAuthor();")) {
 								return true;
 							}
 						}
