@@ -16,15 +16,32 @@
  * @author kenshin
  */
 package com.founder.fix.fixflow.core.objkey;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 
 
 
 public class ProcessInstanceObjKey {
 
-	
+	/**
+	 * 获取流程实例表明
+	 * @return
+	 */
 	public static String ProcessInstanceTableName(){
-		return "FIXFLOW_RUN_PROCESSINSTANCE";
+		int flowVersion = ProcessEngineManagement.getDefaultProcessEngine().getVersion().getMajorVersionNumber();
+		if(flowVersion >4)
+			return "FIXFLOW_RUN_PROCESSINSTANCE";
+		else
+			return "FIXFLOW_RUN_PROCESSINSTANECE";
 	}
+	
+	/**
+	 * 获取流程实例归档表明
+	 * @return
+	 */
+	public static String ProcessInstanceHisTableName(){
+		return "FIXFLOW_HIS_PROCESSINSTANCE";
+	}
+	
 	
 	/**
 	 * 编号
@@ -620,6 +637,39 @@ public class ProcessInstanceObjKey {
 		public String KeyName() {
 			// TODO Auto-generated method stub
 			return "更新时间";
+		}
+
+	}
+	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new ProcessInstanceObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
 		}
 
 	}

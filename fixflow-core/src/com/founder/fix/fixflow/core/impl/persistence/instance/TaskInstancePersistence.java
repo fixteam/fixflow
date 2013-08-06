@@ -31,6 +31,9 @@ import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
+import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
+import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
 public class TaskInstancePersistence {
@@ -45,7 +48,7 @@ public class TaskInstancePersistence {
 
 	public TaskInstanceEntity findTaskById(String id) {
 
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE TASKINSTANCE_ID=?";
+		String sqlText = "SELECT * FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE TASKINSTANCE_ID=?";
 
 		// 构建查询参数
 
@@ -76,11 +79,11 @@ public class TaskInstancePersistence {
 	
 	protected String selectTaskByQueryCriteriaSql(String selectTaskByQueryCriteriaSql, TaskQueryImpl taskQuery, Page page, List<Object> objectParamWhere) {
 
-		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " FROM FIXFLOW_RUN_TAKSINSTANECE T ";
+		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" T ";
 
 		// inner join ACT_RU_IDENTITYLINK I on I.TASK_ID_ = T.ID_
 		if (taskQuery.getCandidateUser() != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " left join FIXFLOW_RUN_TASKIDENTITYLINK I on I.TASKINSTANCE_ID = T.TASKINSTANCE_ID ";
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " left join "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" I on I.TASKINSTANCE_ID = T.TASKINSTANCE_ID ";
 		}
 		
 		
@@ -104,7 +107,7 @@ public class TaskInstancePersistence {
 
 		// if (taskQuery.getProcessDefinitionKey() != null ||
 		// taskQuery.getProcessDefinitionName() != null) {
-		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "  LEFT JOIN  FIXFLOW_RUN_PROCESSINSTANECE P on T.PROCESSINSTANCE_ID = P.PROCESSINSTANCE_ID ";
+		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "  LEFT JOIN  "+ProcessInstanceObjKey.ProcessInstanceTableName()+" P on T.PROCESSINSTANCE_ID = P.PROCESSINSTANCE_ID ";
 		// }
 		
 		
@@ -273,7 +276,7 @@ public class TaskInstancePersistence {
 				
 				dataList.add(taskQuery.getProcessInstanceId());
 				StringBuffer  processInstanceIdList=new StringBuffer();
-				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
 				processInstanceIdList.append("'"+taskQuery.getProcessInstanceId()+"'");
 				if(dataListMaps.size()>0){
 					
@@ -299,7 +302,6 @@ public class TaskInstancePersistence {
 		}
 
 		if (taskQuery.getCandidateUser() != null || taskQuery.getCandidateGroup() != null) {
-			//String selectTaskByQueryCriteriaExclusionSql = " and T.taskinstance_id not in (select z.taskinstance_id from FIXFLOW_RUN_TASKIDENTITYLINK Z where Z.TYPE = 'candidate' and (";
 			List<GroupTo> candidateGroups = taskQuery.getCandidateGroups();
 
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and ((T.ASSIGNEE is null " + " and I.TYPE = 'candidate' " + " and ( ";
@@ -610,7 +612,6 @@ public class TaskInstancePersistence {
 	}
 
 	public List<TaskInstanceEntity> findTasksByParentTaskId(String parentTaskId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -620,7 +621,7 @@ public class TaskInstancePersistence {
 		objectParamWhere.add(taskInstanceEntity.getId());
 
 		// 设置查询字符串
-		String sqlText = "SELECT COUNT(1) FROM FIXFLOW_RUN_TAKSINSTANECE WHERE TASKINSTANCE_ID=?";
+		String sqlText = "SELECT COUNT(1) FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE TASKINSTANCE_ID=?";
 		// 执行查询Sql语句,判断任务是否存在于数据库中.
 		int rowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, objectParamWhere).toString());
 
@@ -639,7 +640,7 @@ public class TaskInstancePersistence {
 
 
 		// 执行插入语句
-		sqlCommand.insert("FIXFLOW_RUN_TAKSINSTANECE", objectParam);
+		sqlCommand.insert(TaskInstanceObjKey.TaskInstanceTableName(), objectParam);
 
 	}
 	
@@ -654,14 +655,14 @@ public class TaskInstancePersistence {
 		Object[] objectParamWhere = { taskInstanceEntity.getId() };
 
 		// 执行插入语句
-		sqlCommand.update("FIXFLOW_RUN_TAKSINSTANECE", objectParam, " TASKINSTANCE_ID=?", objectParamWhere);
+		sqlCommand.update(TaskInstanceObjKey.TaskInstanceTableName(), objectParam, " TASKINSTANCE_ID=?", objectParamWhere);
 
 	}
 
 	@SuppressWarnings("rawtypes")
 	public List findTasksByTokenIdList(List<String> tokenIdList) {
 
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
+		String sqlText = "SELECT * FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
 
 		for (int i = 0; i < tokenIdList.size(); i++) {
 
@@ -697,9 +698,8 @@ public class TaskInstancePersistence {
 
 		Object[] objectParamWhere = { processInstanceId };
 		// String
-		// sqlString="DELETE FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=?";
 
-		sqlCommand.delete("FIXFLOW_RUN_TAKSINSTANECE", " PROCESSINSTANCE_ID=?", objectParamWhere);
+		sqlCommand.delete(TaskInstanceObjKey.TaskInstanceTableName(), " PROCESSINSTANCE_ID=?", objectParamWhere);
 
 	}
 
@@ -713,9 +713,7 @@ public class TaskInstancePersistence {
 
 		Object[] objectParamWhere = { taskInstanceId };
 		// String
-		// sqlString="DELETE FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=?";
-
-		sqlCommand.delete("FIXFLOW_RUN_TAKSINSTANECE", " TASKINSTANCE_ID=?", objectParamWhere);
+		sqlCommand.delete(TaskInstanceObjKey.TaskInstanceTableName(), " TASKINSTANCE_ID=?", objectParamWhere);
 
 	}
 
@@ -732,8 +730,8 @@ public class TaskInstancePersistence {
 		}
 
 		String sqlText = "select x.*,y.END_TIME as PROCESSINSTANCE_ENDTIME  from (select a.*,b.ID,b.type,b.user_id"
-				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from FIXFLOW_RUN_TAKSINSTANECE where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
-				+ ")) a left join FIXFLOW_RUN_TASKIDENTITYLINK b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,FIXFLOW_RUN_PROCESSINSTANECE y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
+				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+TaskInstanceObjKey.TaskInstanceTableName()+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
+				+ ")) a left join "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+ProcessInstanceObjKey.ProcessInstanceTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
 
 		List<Map<String, Object>> returnList = sqlCommand.queryForList(sqlText);
 
@@ -778,7 +776,7 @@ public class TaskInstancePersistence {
 		
 		dataList.add(processInstanceId);
 		
-		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
 		if(dataListMaps.size()>0){
 			
 			for (Map<String, Object> map : dataListMaps) {

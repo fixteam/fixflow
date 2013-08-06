@@ -23,6 +23,22 @@ public class TokenObjKey {
 	
 	
 	/**
+	 * 令牌表名
+	 * @return
+	 */
+	public static String TokenTableName(){
+		return "FIXFLOW_RUN_TOKEN";
+	}
+	
+	/**
+	 * 令牌归档表名
+	 * @return
+	 */
+	public static String TokenHisTableName(){
+		return "FIXFLOW_HIS_TOKEN";
+	}
+	
+	/**
 	 * 编号
 	 * @return
 	 */
@@ -514,6 +530,39 @@ public class TokenObjKey {
 		public String KeyName() {
 			// TODO Auto-generated method stub
 			return "父自由令牌编号";
+		}
+
+	}
+	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new TokenObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
 		}
 
 	}

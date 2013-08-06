@@ -50,7 +50,9 @@ import com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
 import com.founder.fix.fixflow.core.impl.variable.VariableTransferEntity;
+import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
+import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
@@ -79,7 +81,7 @@ public class ProcessInstancePersistence {
 	 * @return
 	 */
 	public ProcessInstanceEntity getProcessInstance(String processInstanceId, ProcessDefinitionBehavior processDefinition) {
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PROCESSINSTANCE_ID=?";
+		String sqlText = "SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PROCESSINSTANCE_ID=?";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(processInstanceId);
@@ -109,7 +111,7 @@ public class ProcessInstancePersistence {
 	}
 
 	void readToken() {
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=? and PARENT_ID is null AND  FREETOKEN='false'";
+		String sqlText = "SELECT * FROM "+TokenObjKey.TokenTableName()+" WHERE PROCESSINSTANCE_ID=? and PARENT_ID is null AND  FREETOKEN='false'";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(this.processInstance.getId());
@@ -137,7 +139,7 @@ public class ProcessInstancePersistence {
 	}
 	
 	void readFreeToken() {
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=? and FREETOKEN='true'";
+		String sqlText = "SELECT * FROM "+TokenObjKey.TokenTableName()+" WHERE PROCESSINSTANCE_ID=? and FREETOKEN='true'";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(this.processInstance.getId());
@@ -171,7 +173,7 @@ public class ProcessInstancePersistence {
 	}
 
 	void readTokenChildren(TokenEntity tokenParent) {
-		String sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PARENT_ID=? AND PROCESSINSTANCE_ID=? AND END_TIME IS NULL";
+		String sqlText = "SELECT * FROM "+TokenObjKey.TokenTableName()+" WHERE PARENT_ID=? AND PROCESSINSTANCE_ID=? AND END_TIME IS NULL";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(tokenParent.getId());
@@ -199,7 +201,7 @@ public class ProcessInstancePersistence {
 			List<Object> objectParamWhereTemp = new ArrayList<Object>();
 			objectParamWhereTemp.add(tokenParent.getId());
 			// 设置查询字符串
-			String sqlTextTemp = "SELECT COUNT(1) FROM FIXFLOW_RUN_TOKEN WHERE PARENT_ID=?";
+			String sqlTextTemp = "SELECT COUNT(1) FROM "+TokenObjKey.TokenTableName()+" WHERE PARENT_ID=?";
 			// 执行查询流程是Sql语句,判断流程实例是否存在于数据库中.
 			int rowNum = Integer.parseInt(sqlCommand.queryForValue(sqlTextTemp, objectParamWhereTemp).toString());
 			if (rowNum > 0) {
@@ -242,7 +244,7 @@ public class ProcessInstancePersistence {
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(processInstanceId);
 		// 设置查询字符串
-		String sqlText = "SELECT count(1) FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PROCESSINSTANCE_ID=?";
+		String sqlText = "SELECT count(1) FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PROCESSINSTANCE_ID=?";
 		// 执行查询流程是Sql语句,判断流程实例是否存在于数据库中.
 		int rowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, objectParamWhere).toString());
 		// 数据库不存在这条流程实例,则执行创建新实例的方法.
@@ -272,7 +274,7 @@ public class ProcessInstancePersistence {
 	 */
 	void addProcessInstance(ProcessInstanceEntity processInstance) {
 		 Map<String, Object> objectParam=processInstance.getPersistentDbMap();
-		sqlCommand.insert("FIXFLOW_RUN_PROCESSINSTANECE", objectParam);
+		sqlCommand.insert(ProcessInstanceObjKey.ProcessInstanceTableName(), objectParam);
 	}
 
 	/**
@@ -283,7 +285,7 @@ public class ProcessInstancePersistence {
 		Map<String, Object> objectParam=processInstance.getPersistentDbMap();
 		// 构建Where查询参数
 		Object[] objectParamWhere = { processInstance.getId() };
-		sqlCommand.update("FIXFLOW_RUN_PROCESSINSTANECE", objectParam, " PROCESSINSTANCE_ID=?", objectParamWhere);
+		sqlCommand.update(ProcessInstanceObjKey.ProcessInstanceTableName(), objectParam, " PROCESSINSTANCE_ID=?", objectParamWhere);
 	}
 	
 	/**
@@ -297,7 +299,7 @@ public class ProcessInstancePersistence {
 				List<Object> tcObjectParamWhere = new ArrayList<Object>();
 				tcObjectParamWhere.add(token.getId());
 				// 设置查询字符串
-				String sqlText = "SELECT COUNT(1) FROM FIXFLOW_RUN_TOKEN WHERE TOKEN_ID=?";
+				String sqlText = "SELECT COUNT(1) FROM "+TokenObjKey.TokenTableName()+" WHERE TOKEN_ID=?";
 				// 执行查询Sql语句,判断子令牌是否存在于数据库中.
 				int tcRowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, tcObjectParamWhere).toString());
 				if (tcRowNum > 0) {
@@ -316,7 +318,7 @@ public class ProcessInstancePersistence {
 	void addToken(TokenEntity token) {
 		Map<String, Object> objectParam=token.getPersistentDbMap();
 		// 执行插入语句
-		sqlCommand.insert("FIXFLOW_RUN_TOKEN", objectParam);
+		sqlCommand.insert(TokenObjKey.TokenTableName(), objectParam);
 
 		if (token.getChildren() != null) {
 			for (String tokenKey : token.getChildren().keySet()) {
@@ -324,7 +326,7 @@ public class ProcessInstancePersistence {
 				List<Object> tcObjectParamWhere = new ArrayList<Object>();
 				tcObjectParamWhere.add(tokenChildren.getId());
 				// 设置查询字符串
-				String sqlText = "SELECT COUNT(1) FROM FIXFLOW_RUN_TOKEN WHERE TOKEN_ID=?";
+				String sqlText = "SELECT COUNT(1) FROM "+TokenObjKey.TokenTableName()+" WHERE TOKEN_ID=?";
 				// 执行查询Sql语句,判断子令牌是否存在于数据库中.
 				int tcRowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, tcObjectParamWhere).toString());
 				if (tcRowNum > 0) {
@@ -345,14 +347,14 @@ public class ProcessInstancePersistence {
 		// 构建Where查询参数
 		Object[] objectParamWhere = { token.getId() };
 		// 执行插入语句
-		sqlCommand.update("FIXFLOW_RUN_TOKEN", objectParam, " TOKEN_ID=?", objectParamWhere);
+		sqlCommand.update(TokenObjKey.TokenTableName(), objectParam, " TOKEN_ID=?", objectParamWhere);
 		if (token.getChildren() != null) {
 			for (String tokenKey : token.getChildren().keySet()) {
 				TokenEntity tokenChildren = token.getChildren().get(tokenKey);
 				List<Object> tcObjectParamWhere = new ArrayList<Object>();
 				tcObjectParamWhere.add(tokenChildren.getId());
 				// 设置查询字符串
-				String sqlText = "SELECT COUNT(1) FROM FIXFLOW_RUN_TOKEN WHERE TOKEN_ID=?";
+				String sqlText = "SELECT COUNT(1) FROM "+TokenObjKey.TokenTableName()+" WHERE TOKEN_ID=?";
 				// 执行查询Sql语句,判断子令牌是否存在于数据库中.
 				int tcRowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, tcObjectParamWhere).toString());
 				if (tcRowNum > 0) {
@@ -419,7 +421,7 @@ public class ProcessInstancePersistence {
 	 * @return
 	 */
 	private String selectProcessInstanceByQueryCriteriaSql(String sqlString, ProcessInstanceQueryImpl processInstanceQuery, Page page, List<Object> objectParamWhere) {
-		sqlString = sqlString + " FROM FIXFLOW_RUN_PROCESSINSTANECE E ";
+		sqlString = sqlString + " FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" E ";
 		//自定义扩展查询
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
 			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
@@ -458,7 +460,7 @@ public class ProcessInstancePersistence {
 				List<Object> dataList=new ArrayList<Object>();
 				dataList.add(processInstanceQuery.getProcessInstanceId());
 				StringBuffer  processInstanceIdList=new StringBuffer();
-				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
 				processInstanceIdList.append("'"+processInstanceQuery.getProcessInstanceId()+"'");
 				if(dataListMaps.size()>0){
 					getSubProcessId(processInstanceQuery.getProcessInstanceId(),processInstanceIdList);
@@ -540,7 +542,7 @@ public class ProcessInstancePersistence {
 		//这个地方需要用到递归去寻找所有的子流程
 		List<Object> dataList=new ArrayList<Object>();
 		dataList.add(processInstanceId);
-		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PARENT_INSTANCE_ID=?", dataList);
+		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
 		if(dataListMaps.size()>0){
 			for (Map<String, Object> map : dataListMaps) {
 				processInstanceIdList.append(",'"+StringUtil.getString(map.get("PROCESSINSTANCE_ID"))+"'");
@@ -637,30 +639,30 @@ public class ProcessInstancePersistence {
 		Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("select process_key,sum(sumwf) as SUMWF,sum(swf) as SWF,sum(ewf) as EWF,sum(wfcount) as WFCOUNT,sum(avgdate) as AVGDATE from ( " +
-				"SELECT b.process_key,count(a.processinstance_id) as sumwf,0 as swf,0 as ewf,0 as wfcount,0 as avgdate FROM FIXFLOW_RUN_PROCESSINSTANECE a,fixflow_def_processdefinition b  " +
+				"SELECT b.process_key,count(a.processinstance_id) as sumwf,0 as swf,0 as ewf,0 as wfcount,0 as avgdate FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a,fixflow_def_processdefinition b  " +
 				"where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" and b.process_key=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,count(a.processinstance_id) as swf,0,0,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,count(a.processinstance_id) as swf,0,0,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where end_time is null and a.processdefinition_id=b.process_id" +
 				" and a.start_time>=? and a.start_time<=? " +
 				" and b.process_key=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,0,count(a.processinstance_id) as ewf,0,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,0,count(a.processinstance_id) as ewf,0,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where end_time is not null and a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" and b.process_key=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,0,0,round(count(a.processinstance_id)/(?),2) as wfcount,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,0,0,round(count(a.processinstance_id)/(?),2) as wfcount,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key,0,0,0,0,round(avg("+pagination.getLocalismSql("processperformance", null)+"),2) from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key,0,0,0,0,round(avg("+pagination.getLocalismSql("processperformance", null)+"),2) from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
@@ -719,27 +721,27 @@ public class ProcessInstancePersistence {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("select w.pk as PK,w.sumwf as SUMWF,w.swf as SWF,w.ewf as EWF,(w.ewf/w.sumwf) as PER,w.wfcount as WFCOUNT,w.avgdate as AVGDATE from(" +
 				"select process_key as pk,sum(sumwf) as sumwf,sum(swf) as swf,sum(ewf) as ewf,sum(wfcount) as wfcount,sum(avgdate) as avgdate from ( " +
-				"SELECT b.process_key,count(a.processinstance_id) as sumwf,0 as swf,0 as ewf,0 as wfcount,0 as avgdate FROM FIXFLOW_RUN_PROCESSINSTANECE a,fixflow_def_processdefinition b  " +
+				"SELECT b.process_key,count(a.processinstance_id) as sumwf,0 as swf,0 as ewf,0 as wfcount,0 as avgdate FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a,fixflow_def_processdefinition b  " +
 				"where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,count(a.processinstance_id) as swf,0,0,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,count(a.processinstance_id) as swf,0,0,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where end_time is null and a.processdefinition_id=b.process_id" +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,0,count(a.processinstance_id) as ewf,0,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,0,count(a.processinstance_id) as ewf,0,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where end_time is not null and a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,0,0,round(count(a.processinstance_id)/(?),2) as wfcount,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,0,0,round(count(a.processinstance_id)/(?),2) as wfcount,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key,0,0,0,0,round(avg("+pagination.getLocalismSql("processperformance", null)+"),2) from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key,0,0,0,0,round(avg("+pagination.getLocalismSql("processperformance", null)+"),2) from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
@@ -792,27 +794,27 @@ public class ProcessInstancePersistence {
 		Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 		stringBuffer.append("select count(*) as COUNT from(" +
 				"select process_key,sum(sumwf) as sumwf,sum(swf) as swf,sum(ewf) as ewf,sum(wfcount) as wfcount,sum(avgdate) as avgdate from ( " +
-				"SELECT b.process_key,count(a.processinstance_id) as sumwf,0 as swf,0 as ewf,0 as wfcount,0 as avgdate FROM FIXFLOW_RUN_PROCESSINSTANECE a,fixflow_def_processdefinition b  " +
+				"SELECT b.process_key,count(a.processinstance_id) as sumwf,0 as swf,0 as ewf,0 as wfcount,0 as avgdate FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a,fixflow_def_processdefinition b  " +
 				"where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,count(a.processinstance_id) as swf,0,0,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,count(a.processinstance_id) as swf,0,0,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where end_time is null and a.processdefinition_id=b.process_id" +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,0,count(a.processinstance_id) as ewf,0,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,0,count(a.processinstance_id) as ewf,0,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where end_time is not null and a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key , 0,0,0,round(count(a.processinstance_id)/(?),2) as wfcount,0 from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key , 0,0,0,round(count(a.processinstance_id)/(?),2) as wfcount,0 from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
 				" union " +
-				" select b.process_key,0,0,0,0,round(avg("+pagination.getLocalismSql("processperformance", null)+"),2) from fixflow_run_processinstanece a, fixflow_def_processdefinition b " +
+				" select b.process_key,0,0,0,0,round(avg("+pagination.getLocalismSql("processperformance", null)+"),2) from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a, fixflow_def_processdefinition b " +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key " +
@@ -871,7 +873,7 @@ public class ProcessInstancePersistence {
 			cal3.setTime(startdate);
 			cal3.add(Calendar.DAY_OF_YEAR, i);
 			stringBuffer.append(
-					"SELECT b.process_key as PROCESS_KEY,count(a.processinstance_id) as SUMWF,'" + sdf.format(cal3.getTime()) + "' as WFDATE FROM FIXFLOW_RUN_PROCESSINSTANECE a,fixflow_def_processdefinition b  " +
+					"SELECT b.process_key as PROCESS_KEY,count(a.processinstance_id) as SUMWF,'" + sdf.format(cal3.getTime()) + "' as WFDATE FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a,fixflow_def_processdefinition b  " +
 					" where a.processdefinition_id=b.process_id " +
 					" and b.process_key in(");
 			
@@ -923,7 +925,7 @@ public class ProcessInstancePersistence {
 		} 
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(
-				"SELECT b.process_key as PROCESS_KEY,count(a.processinstance_id) as SUMWF FROM FIXFLOW_RUN_PROCESSINSTANECE a,fixflow_def_processdefinition b" +
+				"SELECT b.process_key as PROCESS_KEY,count(a.processinstance_id) as SUMWF FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" a,fixflow_def_processdefinition b" +
 				" where a.processdefinition_id=b.process_id " +
 				" and a.start_time>=? and a.start_time<=? " +
 				" group by b.process_key ");
@@ -1022,7 +1024,7 @@ public class ProcessInstancePersistence {
 	 * @return
 	 */
 	public ProcessInstanceEntity getProcessInstance(String processDefinitionKey, String businessKey) {
-		String sqlString = " SELECT * FROM FIXFLOW_RUN_PROCESSINSTANECE WHERE PROCESSDEFINITION_KEY=?  AND BIZ_KEY=? ";
+		String sqlString = " SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PROCESSDEFINITION_KEY=?  AND BIZ_KEY=? ";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(processDefinitionKey);
 		objectParamWhere.add(businessKey);
@@ -1040,6 +1042,6 @@ public class ProcessInstancePersistence {
 	 */
 	public void deleteProcessInstanceByProcessInstanceId(String processInstanceId){
 		Object[] objectParamWhere = { processInstanceId };
-		sqlCommand.delete("FIXFLOW_RUN_PROCESSINSTANECE", " PROCESSINSTANCE_ID=?",objectParamWhere);
+		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 	}
 }

@@ -28,6 +28,7 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
+import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 
 public class TokenPersistence {
 	protected Connection connection;
@@ -40,18 +41,9 @@ public class TokenPersistence {
 	
 	
 	
-	private String selectTokenByQueryCriteriaSql(String sqlString,TokenQueryImpl tokenQuery, Page page,List<Object> objectParamWhere)
-	{
-		sqlString = sqlString+" FROM FIXFLOW_RUN_TOKEN  ";
-
-
-
+	private String selectTokenByQueryCriteriaSql(String sqlString,TokenQueryImpl tokenQuery, Page page,List<Object> objectParamWhere){
+		sqlString = sqlString+" FROM "+TokenObjKey.TokenTableName()+" ";
 		sqlString = sqlString + " WHERE 1=1";
-		
-
-		
-		
-		
 		if (tokenQuery.getTokenId() != null) {
 			sqlString = sqlString + " and TOKEN_ID=? ";
 			objectParamWhere.add(tokenQuery.getTokenId());
@@ -128,9 +120,7 @@ public class TokenPersistence {
 	public void deleteTokenByProcessInstanceId(String processInstanceId){
 		
 		Object[] objectParamWhere = { processInstanceId };
-		//String sqlString="DELETE FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=?";
-		
-		sqlCommand.delete("FIXFLOW_RUN_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
+		sqlCommand.delete(TokenObjKey.TokenTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 		
 	}
 }

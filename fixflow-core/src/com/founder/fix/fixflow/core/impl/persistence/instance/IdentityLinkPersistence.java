@@ -28,6 +28,8 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
+import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
+import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 
 
 public class IdentityLinkPersistence {
@@ -45,7 +47,7 @@ public class IdentityLinkPersistence {
 	
 	private String selectIdentityLinkByQueryCriteriaSql(String sqlString,IdentityLinkQueryImpl identityLinkQuery, Page page,List<Object> objectParamWhere)
 	{
-		sqlString = sqlString+" FROM FIXFLOW_RUN_TASKIDENTITYLINK  ";
+		sqlString = sqlString+" FROM "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+"  ";
 
 
 
@@ -96,7 +98,7 @@ public class IdentityLinkPersistence {
 	
 	public List<IdentityLinkEntity> selectIdentityLinksByTask(String taskId)
 	{
-		String sqlString="SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE TASKINSTANCE_ID=?";
+		String sqlString="SELECT * FROM "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" WHERE TASKINSTANCE_ID=?";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(taskId);
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
@@ -166,9 +168,8 @@ public class IdentityLinkPersistence {
 	public void deleteIdentityLinkByProcessInstanceId(String processInstanceId){
 		
 		Object[] objectParamWhere = { processInstanceId };
-		//String sqlString="DELETE FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=?";
 		
-		sqlCommand.delete("FIXFLOW_RUN_TASKIDENTITYLINK", " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM FIXFLOW_RUN_TAKSINSTANECE WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+		sqlCommand.delete(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
 		
 	}
 	
@@ -178,7 +179,7 @@ public class IdentityLinkPersistence {
 		
 		Map<String, Object> objectParam=identityLink.getPersistentDbMap();
 		// 执行插入语句
-		sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam);
+		sqlCommand.insert(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), objectParam);
 
 	}
 
@@ -190,7 +191,7 @@ public class IdentityLinkPersistence {
 		Object[] objectParamWhere = { identityLink.getId() };
 
 		// 执行插入语句
-		sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam, " ID=?", objectParamWhere);
+		sqlCommand.update(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), objectParam, " ID=?", objectParamWhere);
 
 	}
 	
@@ -199,7 +200,7 @@ public class IdentityLinkPersistence {
 		objectParamWhere.add(identityLink.getId());
 
 		// 设置查询字符串
-		String sqlText = "SELECT COUNT(1) FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE ID=?";
+		String sqlText = "SELECT COUNT(1) FROM "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" WHERE ID=?";
 		// 执行查询Sql语句,判断身份链接是否存在于数据库中.
 		int rowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, objectParamWhere).toString());
 
