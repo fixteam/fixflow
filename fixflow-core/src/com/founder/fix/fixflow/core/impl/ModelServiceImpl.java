@@ -28,6 +28,7 @@ import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsElementPositionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgPathCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgStreamCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsSvgCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetModelInternationalizationResourcesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
@@ -142,13 +143,11 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 	}
 
 	public InputStream GetFlowGraphicsImgStreamByDefId(String processDefinitionId) {
-		// TODO Auto-generated method stub
-		return null;
+		return commandExecutor.execute(new GetFlowGraphicsImgStreamCmd(processDefinitionId,null));
 	}
 
 	public InputStream GetFlowGraphicsImgStreamByDefKey(String processDefinitionKey) {
-		// TODO Auto-generated method stub
-		return null;
+		return commandExecutor.execute(new GetFlowGraphicsImgStreamCmd(null,processDefinitionKey));
 	}
 
 }
