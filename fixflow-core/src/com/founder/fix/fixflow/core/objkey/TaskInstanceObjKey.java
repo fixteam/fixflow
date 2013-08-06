@@ -17,13 +17,34 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+
 
 
 public class TaskInstanceObjKey {
 	
-
+	/**
+	 * 任务实例表名
+	 * @return
+	 */
+	public static String TaskInstanceTableName(){
+		int flowVersion = ProcessEngineManagement.getDefaultProcessEngine().getVersion().getMajorVersionNumber();
+		if(flowVersion >4)
+			return "FIXFLOW_RUN_TASKINSTANCE";
+		else
+			return "FIXFLOW_RUN_TAKSINSTANECE";
+	}
+	
+	/**
+	 * 任务实例归档表名
+	 * @return
+	 */
+	public static String TaskInstanceHisTableName(){
+		return "FIXFLOW_HIS_TAKSINSTANECE";
+	}
+	
+	
 	public class FlowKeyTaskInstanceId implements ObjKeyInterface{
-
 
 		public String EntityKey() {
 			// TODO Auto-generated method stub
@@ -48,7 +69,30 @@ public class TaskInstanceObjKey {
 	}
 	
 	
-	
+	public class FlowKeyTaskInstanceArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
+		}
+
+	}
 	
 	
 	public class FlowKeyCategory implements ObjKeyInterface{
@@ -1361,11 +1405,14 @@ public class TaskInstanceObjKey {
 	}
 	
 	/**
-	 * 任务实例表名
+	 * 转办任务编号
 	 * @return
 	 */
-	public static String TaskInstanceTableName(){
-		return "FIXFLOW_RUN_TAKSINSTANECE";
+	public static FlowKeyTaskInstanceArchiveTime ArchiveTime(){
+		
+		return new TaskInstanceObjKey().new FlowKeyTaskInstanceArchiveTime();
 	}
+	
+	
 	
 }

@@ -19,7 +19,21 @@ package com.founder.fix.fixflow.core.objkey;
 
 public class TaskIdentityLinkObjKey {
 	
-
+	/**
+	 * 任务候选人表名
+	 * @return
+	 */
+	public static String TaskIdentityLinkTableName(){
+		return "FIXFLOW_RUN_TASKIDENTITYLINK";
+	}
+	
+	/**
+	 * 任务候选人归档表名
+	 * @return
+	 */
+	public static String TaskIdentityLinkHisTableName(){
+		return "FIXFLOW_HIS_TASKIDENTITYLINK";
+	}
 	/**
 	 * 编号
 	 * @return
@@ -263,6 +277,36 @@ public class TaskIdentityLinkObjKey {
 
 	}
 	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new TaskIdentityLinkObjKey().new FlowKeyArchiveTime();
+	}
 	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
+		}
+
+	}
 
 }
