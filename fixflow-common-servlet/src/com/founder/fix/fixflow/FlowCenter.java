@@ -54,7 +54,7 @@ public class FlowCenter extends HttpServlet {
 			if(action.equals("getMyProcess")){
 				List<Map<String,String>> result = getFlowCenter().queryStartProcess(userId);
 				request.setAttribute("result", result);
-				rd = request.getRequestDispatcher("index.jsp");
+				rd = request.getRequestDispatcher("startTask.jsp");
 			}else if(action.equals("getMyTask")){
 				Map<String,String> filter = new HashMap<String,String>();
 				filter.put("userId", userId);
