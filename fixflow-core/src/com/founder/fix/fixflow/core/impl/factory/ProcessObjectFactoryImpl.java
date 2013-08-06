@@ -24,14 +24,18 @@ import java.util.List;
 
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClass;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClassConfig;
+import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.action.AssignmentHandler;
 import com.founder.fix.fixflow.core.action.CommandHandler;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.context.ContextInstanceImpl;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 
 
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
@@ -47,14 +51,25 @@ import com.founder.fix.fixflow.core.impl.runtime.ExecutionContextImpl;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskDefinitionImpl;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
+import com.founder.fix.fixflow.core.model.DeploymentQuery;
+import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
+import com.founder.fix.fixflow.core.task.TaskQuery;
 
 
 public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
+	
+	ProcessEngineConfigurationImpl processEngineConfiguration=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+	public ProcessObjectFactoryImpl(){
+		
+	}
 
 	public static ProcessObjectFactory init() {
 		return new ProcessObjectFactoryImpl();
@@ -86,7 +101,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 
 	public TaskMgmtInstance createTaskMgmtInstance() {
 		
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig = processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("TaskMgmtInstance")){
@@ -104,7 +119,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 */
 	public TaskInstancePersistence createTaskInstancePersistence(Connection connection) {
 		
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig = processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("TaskInstancePersistence")){
@@ -122,7 +137,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 */
 	public ProcessInstancePersistence createProcessInstancePersistence(
 			Connection connection) {
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("ProcessInstancePersistence")){
@@ -139,7 +154,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 */
 	public IdentityLinkPersistence createIdentityLinkPersistence(
 			Connection connection) {
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("IdentityLinkPersistence")){
@@ -156,7 +171,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 */
 	public JobPersistence createJobPersistence(
 			Connection connection) {
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("JobPersistence")){
@@ -172,7 +187,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 * 创建令牌持久化
 	 */
 	public TokenPersistence createTokenPersistence(Connection connection){
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("TokenPersistence")){
@@ -188,7 +203,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 * 创建流程变量持久化
 	 */
 	public VariablePersistence createVariablePersistence(Connection connection){
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("VariablePersistence")){
@@ -204,7 +219,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 * 创建流程发布持久化
 	 */
 	public DeploymentPersistence createDeploymentPersistence(Connection connection){
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("DeploymentPersistence")){
@@ -236,7 +251,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	 * 创建流程定义持久化
 	 */
 	public ProcessDefinitionPersistence createProcessDefinitionPersistence(Connection connection){
-		ExpandClassConfig expandClassConfig=Context.getProcessEngineConfiguration().getExpandClassConfig();
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if(expandClass.getClassId().equals("ProcessDefinitionPersistence")){
@@ -246,6 +261,105 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 			}
 		}
 		throw new FixFlowException("流程引擎扩展配置里的ProcessDefinitionPersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程发布查询
+	 */
+	public DeploymentQuery createDeploymentQuery(CommandExecutor commandExecutor){
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("ProcessDefinitionPersistence")){
+				Object[] objTemp = new Object[] {commandExecutor};  
+				DeploymentQuery deploymentQuery =(DeploymentQuery) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return deploymentQuery;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的ProcessDefinitionPersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程实例查询
+	 */
+	public ProcessInstanceQuery createProcessInstanceQuery(CommandExecutor commandExecutor){
+		
+		
+
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("ProcessInstanceQuery")){
+				Object[] objTemp = new Object[] {commandExecutor};  
+				ProcessInstanceQuery processInstanceQuery =(ProcessInstanceQuery) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return processInstanceQuery;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的ProcessInstanceQuery实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程实例查询
+	 */
+	public IdentityLinkQuery createIdentityLinkQuery(CommandExecutor commandExecutor){
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("IdentityLinkQuery")){
+				Object[] objTemp = new Object[] {commandExecutor};  
+				IdentityLinkQuery identityLinkQuery =(IdentityLinkQuery) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return identityLinkQuery;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的IdentityLinkQuery实现类指定错误");
+	}
+	
+	/**
+	 * 创建任务查询
+	 */
+	public TaskQuery createTaskQuery(CommandExecutor commandExecutor){
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("TaskQuery")){
+				Object[] objTemp = new Object[] {commandExecutor};  
+				TaskQuery taskQuery =(TaskQuery) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return taskQuery;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的TaskQuery实现类指定错误");
+	}
+	
+	/**
+	 * 创建令牌查询
+	 */
+	public TokenQuery createTokenQuery(CommandExecutor commandExecutor){
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("TokenQuery")){
+				Object[] objTemp = new Object[] {commandExecutor};  
+				TokenQuery tokenQuery =(TokenQuery) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return tokenQuery;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的TokenQuery实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程定义查询
+	 */
+	public ProcessDefinitionQuery createProcessDefinitionQuery(CommandExecutor commandExecutor){
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("ProcessDefinitionQuery")){
+				Object[] objTemp = new Object[] {commandExecutor};  
+				ProcessDefinitionQuery processDefinitionQuery =(ProcessDefinitionQuery) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return processDefinitionQuery;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的ProcessDefinitionQuery实现类指定错误");
 	}
 	public ContextInstance createContextInstance(ProcessInstance processInstance) {
 		ContextInstanceImpl contextInstanceImpl = new ContextInstanceImpl(processInstance);

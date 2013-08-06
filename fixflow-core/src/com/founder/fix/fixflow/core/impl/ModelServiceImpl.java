@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.ModelService;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
@@ -73,7 +74,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public ProcessDefinitionQuery createProcessDefinitionQuery() {
 
-		return new ProcessDefinitionQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionQuery(commandExecutor);
 	}
 
 	public DeploymentQuery createDeploymentQuery() {

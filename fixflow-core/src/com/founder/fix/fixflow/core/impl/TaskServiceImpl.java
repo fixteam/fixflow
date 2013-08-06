@@ -25,6 +25,7 @@ import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.Priority;
 import com.founder.fix.fixflow.core.TaskService;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AddCommentCmd;
@@ -118,12 +119,12 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	}
 
 	public TaskQuery createTaskQuery() {
-		return new TaskQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createTaskQuery(commandExecutor);
 	}
 
 	public IdentityLinkQuery createIdentityLinkQuery() {
 
-		return new IdentityLinkQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkQuery(commandExecutor);
 	}
 
 	public List<UserCommandQueryTo> getSubTaskUserCommandByKey(String processDefinitionKey) {

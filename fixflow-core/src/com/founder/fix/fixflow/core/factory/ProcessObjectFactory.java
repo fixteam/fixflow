@@ -26,6 +26,7 @@ import com.founder.fix.fixflow.core.action.CommandHandler;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.factory.ProcessObjectFactoryImpl;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
@@ -36,12 +37,18 @@ import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersis
 import com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.model.DeploymentQuery;
+import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 
 
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
+import com.founder.fix.fixflow.core.task.TaskQuery;
 
 
 public interface ProcessObjectFactory {
@@ -128,5 +135,47 @@ public interface ProcessObjectFactory {
 	 * @return
 	 */
 	ProcessDefinitionPersistence createProcessDefinitionPersistence(Connection connection);
+	
+	/**
+	 * 创建流程发布查询
+	 * @param  commandExecutor
+	 * @return
+	 */
+	DeploymentQuery createDeploymentQuery(CommandExecutor commandExecutor);
+	
+	/**
+	 * 创建流程实例查询
+	 * @param  commandExecutor
+	 * @return
+	 */
+	ProcessInstanceQuery createProcessInstanceQuery(CommandExecutor commandExecutor);
+	
+	/**
+	 * 创建任务查询
+	 * @param  commandExecutor
+	 * @return
+	 */
+	TaskQuery createTaskQuery(CommandExecutor commandExecutor);
+	
+	/**
+	 * 创建任务候选人查询
+	 * @param  commandExecutor
+	 * @return
+	 */
+	IdentityLinkQuery createIdentityLinkQuery(CommandExecutor commandExecutor);
+	
+	/**
+	 * 创建令牌查询
+	 * @param  commandExecutor
+	 * @return
+	 */
+	TokenQuery createTokenQuery(CommandExecutor commandExecutor);
+	
+	/**
+	 * 创建流程定义查询
+	 * @param  commandExecutor
+	 * @return
+	 */
+	ProcessDefinitionQuery createProcessDefinitionQuery(CommandExecutor commandExecutor);
 	
 }

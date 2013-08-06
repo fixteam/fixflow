@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.RuntimeService;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExecuteRuleScriptCmd;
@@ -49,7 +50,6 @@ import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.SaveVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
 import com.founder.fix.fixflow.core.impl.subscription.EventSubscriptionQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
@@ -82,11 +82,11 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 	}
 
 	public ProcessInstanceQuery createProcessInstanceQuery() {
-		return new ProcessInstanceQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createProcessInstanceQuery(commandExecutor);
 	}
 
 	public TokenQuery createTokenQuery() {
-		return new TokenQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createTokenQuery(commandExecutor);
 	}
 
 	public void updateProcessInstanceBusinessKey(String processInstanceId, String businessKey) {
