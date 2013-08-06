@@ -33,6 +33,7 @@ import com.founder.fix.fixflow.core.impl.cmd.GetModelInternationalizationResourc
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionGroupKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetResourceAsStreamCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetStartProcessByUserIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateResourceCmd;
 import com.founder.fix.fixflow.core.impl.model.DeploymentBuilderImpl;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
@@ -134,6 +135,10 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public String getFlowNameInternationalizationResources(String resourceKey) {
 		return commandExecutor.execute(new GetModelInternationalizationResourcesCmd(FixFlowResources.FlowNameResource,resourceKey));
+	}
+
+	public List<Map<String, String>> getStartProcessByUserId(String userId) {
+		return commandExecutor.execute(new GetStartProcessByUserIdCmd(userId));
 	}
 
 }
