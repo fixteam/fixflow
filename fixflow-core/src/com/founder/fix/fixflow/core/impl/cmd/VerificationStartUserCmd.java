@@ -79,6 +79,11 @@ public class VerificationStartUserCmd implements Command<Boolean> {
 						String userIdString = null;
 						if (taskAssigneeDefinitionTo.getUserIdExpression() != null
 								&& !taskAssigneeDefinitionTo.getUserIdExpression().equals("")) {
+							
+							if (taskAssigneeDefinitionTo.getUserIdExpression().equals("processInfo.getInitiator()")||taskAssigneeDefinitionTo.getUserIdExpression().equals("processInfo.getStartAuthor()")||taskAssigneeDefinitionTo.getUserIdExpression().equals("processInfo.getInitiator();")||taskAssigneeDefinitionTo.getUserIdExpression().equals("processInfo.getStartAuthor();")) {
+								return true;
+							}
+							
 							userIdString = StringUtil.getString(ExpressionMgmt.execute(taskAssigneeDefinitionTo.getUserIdExpression(),
 									processDefinitionBehavior));
 
