@@ -18,11 +18,16 @@
 package com.founder.fix.fixflow.core.impl.persistence.definition;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.util.ClockUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public class DeploymentPersistence {
 	
@@ -63,5 +68,50 @@ public class DeploymentPersistence {
 		sqlCommand.delete("FIXFLOW_DEF_DEPLOYMENT", " ID=?",objectParamWhere);
 		
 	}
+	
+
+	public DeploymentEntity getDeployment(String deploymentId)
+	{
+		// 构建Where查询参数
+
+		List<Object> objectParamWhere=new ArrayList<Object>();
+		objectParamWhere.add(deploymentId);
+		
+		List<Map<String, Object>> queryData=sqlCommand.queryForList("SELECT * FROM FIXFLOW_DEF_DEPLOYMENT WHERE ID=?", objectParamWhere);
+		Map<String, Object> dataMap=queryData.get(0);
+		
+		DeploymentEntity deploymentEntity=new DeploymentEntity();
+		deploymentEntity.setId(deploymentId);
+		deploymentEntity.setDeploymentTime(StringUtil.getDate(dataMap.get("DEPLOY_TIME")));
+		deploymentEntity.setName(StringUtil.getString(dataMap.get("NAME")));
+		
+		
+		
+		ResourcePersistence resourcePersistence=ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
+		List<ResourceEntity> resourceEntities=resourcePersistence.getResourceEntityByDeploymentId(deploymentId);
+		for (ResourceEntity resourceEntity : resourceEntities) {
+			deploymentEntity.addResource(resourceEntity);
+		}
+		return deploymentEntity;
+
+	}
+
+	public void updateDeployment(DeploymentEntity deploymentEntity) {
+		
+		
+		// 构建查询参数
+		Map<String, Object> objectParam = new HashMap<String, Object>();
+		// 令牌编号 String
+		objectParam.put("DEPLOY_TIME", ClockUtil.getCurrentTime());
+		
+		// 构建Where查询参数
+		Object[] objectParamWhere = { deploymentEntity.getId() };
+
+		// 执行更新语句
+		sqlCommand.update("FIXFLOW_DEF_DEPLOYMENT", objectParam, " ID=?", objectParamWhere);
+		
+	}
+	
+	
 
 }

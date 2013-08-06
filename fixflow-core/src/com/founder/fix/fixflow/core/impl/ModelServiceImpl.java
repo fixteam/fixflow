@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.ModelService;
-import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
@@ -74,7 +73,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public ProcessDefinitionQuery createProcessDefinitionQuery() {
 
-		return ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionQuery(commandExecutor);
+		return new ProcessDefinitionQueryImpl(commandExecutor);
 	}
 
 	public DeploymentQuery createDeploymentQuery() {
@@ -140,6 +139,16 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public List<Map<String, String>> getStartProcessByUserId(String userId) {
 		return commandExecutor.execute(new GetStartProcessByUserIdCmd(userId));
+	}
+
+	public InputStream GetFlowGraphicsImgStreamByDefId(String processDefinitionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public InputStream GetFlowGraphicsImgStreamByDefKey(String processDefinitionKey) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

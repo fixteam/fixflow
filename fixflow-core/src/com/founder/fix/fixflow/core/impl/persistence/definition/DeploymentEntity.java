@@ -41,7 +41,10 @@ public class DeploymentEntity implements Serializable, Deployment , PersistentOb
 	protected Date deploymentTime;
 	protected boolean validatingSchema = true;
 	protected boolean isNew;
+	protected String updateDeploymentId;
 	
+	
+
 	public DeploymentEntity()
 	{
 		this.id=GuidUtil.CreateGuid();
@@ -129,5 +132,12 @@ public class DeploymentEntity implements Serializable, Deployment , PersistentOb
 
 	public void setNew(boolean isNew) {
 		this.isNew = isNew;
+	}
+	public String getUpdateDeploymentId() {
+		return updateDeploymentId;
+	}
+
+	public void setUpdateDeploymentId(String updateResourceId) {
+		this.updateDeploymentId = updateResourceId;
 	}
 }

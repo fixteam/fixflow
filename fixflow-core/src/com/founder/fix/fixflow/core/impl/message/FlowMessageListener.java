@@ -84,7 +84,7 @@ public class FlowMessageListener implements IListener {
 				messageStartProcessInstanceCommand.setTransientVariables(dataVariableMap);
 				
 				
-				runtimeService.startProcessInstanceByMessage(messageStartProcessInstanceCommand);
+				//runtimeService.startProcessInstanceByMessage(messageStartProcessInstanceCommand);
 				debugLog.debug("流程：" +processDefinitionId+" 接收到消息 "+messageId+" 开始启动!"); 
 			}
 			else{

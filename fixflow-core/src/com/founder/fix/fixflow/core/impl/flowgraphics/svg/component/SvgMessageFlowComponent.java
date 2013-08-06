@@ -29,7 +29,6 @@ import com.founder.fix.fixflow.core.impl.flowgraphics.svg.FlowSvgUtil;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.SvgBench;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.to.SvgBaseTo;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.to.SvgLineBaseTo.SvgPoint;
-import com.founder.fix.fixflow.core.impl.flowgraphics.svg.to.SvgLineTo.LineType;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.to.SvgMessageFlowTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.impl.util.XmlUtil;

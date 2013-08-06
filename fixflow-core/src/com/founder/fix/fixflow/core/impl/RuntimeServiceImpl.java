@@ -50,7 +50,6 @@ import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.SaveVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
 import com.founder.fix.fixflow.core.impl.subscription.EventSubscriptionQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;

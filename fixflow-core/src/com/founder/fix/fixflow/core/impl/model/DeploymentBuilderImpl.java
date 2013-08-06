@@ -39,6 +39,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder {
 	protected ModelServiceImpl modelService;
 	protected DeploymentEntity deployment = new DeploymentEntity();
 	protected boolean isDuplicateFilterEnabled = false;
+	protected String updateDeploymentId;
 
 	public DeploymentBuilderImpl(ModelServiceImpl modelService) {
 		this.modelService = modelService;
@@ -120,8 +121,11 @@ public class DeploymentBuilderImpl implements DeploymentBuilder {
 		return isDuplicateFilterEnabled;
 	}
 
-	public DeploymentBuilder updateResource(String resourceId,
-			InputStream inputStream) {
-		throw new FixFlowException("该方法暂未实现,请调用modelService里的更新方法");
+	public DeploymentBuilder updateDeploymentId(String updateDeploymentId) {
+		deployment.setId(updateDeploymentId);
+		deployment.setUpdateDeploymentId(updateDeploymentId);
+		this.updateDeploymentId=updateDeploymentId;
+		return this;
 	}
+
 }

@@ -20,11 +20,8 @@ package com.founder.fix.fixflow.core.impl.persistence.deployer;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
 
 import org.eclipse.bpmn2.RootElement;
 import org.eclipse.emf.common.util.URI;
@@ -42,7 +39,7 @@ import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
-
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author kenshins
@@ -52,152 +49,127 @@ public class BpmnDeployer implements Deployer {
 	private static final Logger LOG = Logger.getLogger(BpmnDeployer.class.getName());;
 
 	public static final String BPMN_RESOURCE_SUFFIX = "bpmn";
-	public static final String[] DIAGRAM_SUFFIXES = new String[] { "png", "jpg", "gif", "svg" };
 
+	public static final String DIAGRAM_SUFFIXES = "png";
 
 	public void deploy(DeploymentEntity deployment) {
-		List<ProcessDefinitionBehavior> processDefinitions = new ArrayList<ProcessDefinitionBehavior>();
+
 		Map<String, ResourceEntity> resources = deployment.getResources();
 
-		for (String resourceName : resources.keySet()) {
-
-			LOG.info("资源 " + resourceName +" 发布!");
-			if (resourceName.endsWith(BPMN_RESOURCE_SUFFIX)) {
-				ResourceEntity resource = resources.get(resourceName);
-				byte[] bytes = resource.getBytes();
-				ResourceSet resourceSet=Context.getProcessEngineConfiguration().getResourceSet();
-				
-				
-				
-				String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn")
-						.toString();
-				Resource ddddResource = null;
-				if (!filePath.startsWith("jar")) {
-					try {
-						filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn")
-								.getFile(), "utf-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO 自动生成的 catch 块
-						e.printStackTrace();
-						throw new FixFlowException("流程定义文件加载失败！", e);
-					}
-					ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
-				} else {
-					ddddResource = resourceSet.createResource(URI.createURI(filePath));
-				}
-	
-			
-				try {
-					ddddResource.load(new ByteArrayInputStream(bytes), null);
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					throw new FixFlowException("定义文件加载失败!", e);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					throw new FixFlowException("定义文件加载失败!", e);
-				}
-					
-					DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
-					
-					ProcessDefinitionBehavior process = null;
-					for (RootElement rootElement : definitions.getRootElements()) {
-						if (rootElement instanceof ProcessDefinitionBehavior) {
-							
-							//ProcessDefinitionBehavior processObj=(ProcessDefinitionBehavior)rootElement;
-							//if(processObj.getProcessDefinitionKey().equals("")){
-								process = (ProcessDefinitionBehavior) rootElement;
-								break;
-							//}
-							
-							
-						}
-					}
-				
-				process.setDefinitions(definitions);
-
-				process.setResourceName(resourceName);
-				process.setResourceId(resource.getId());
-				processDefinitions.add(process);
-				
-				//throw new FixFlowException("没有完成！！");
-			}
-
+		if (resources.keySet().size() != 2) {
+			throw new FixFlowException("发布的流程资源文件必须含有.bpmn和.png文件");
 		}
+		ResourceEntity resourceBpmn = null;
+		ResourceEntity resourcePng = null;
+
+		for (String resourceName : resources.keySet()) {
+			LOG.info("资源 " + resourceName + " 发布!");
+			if (resourceName.toLowerCase().endsWith(BPMN_RESOURCE_SUFFIX)) {
+				resourceBpmn = resources.get(resourceName);
+			} else {
+				if (resourceName.toLowerCase().endsWith(DIAGRAM_SUFFIXES)) {
+					resourcePng = resources.get(resourceName);
+				}
+			}
+		}
+
+		if (resourceBpmn == null || resourcePng == null) {
+			throw new FixFlowException("发布的流程资源文件必须含有.bpmn和.png文件");
+		}
+
+		byte[] bytes = resourceBpmn.getBytes();
+		ResourceSet resourceSet = Context.getProcessEngineConfiguration().getResourceSet();
+
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
+		Resource ddddResource = null;
+		if (!filePath.startsWith("jar")) {
+			try {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+				throw new FixFlowException("流程定义文件加载失败！", e);
+			}
+			ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+		} else {
+			ddddResource = resourceSet.createResource(URI.createURI(filePath));
+		}
+
+		try {
+			ddddResource.load(new ByteArrayInputStream(bytes), null);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			throw new FixFlowException("定义文件加载失败!", e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new FixFlowException("定义文件加载失败!", e);
+		}
+
+		DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
+
+		ProcessDefinitionBehavior process = null;
+		for (RootElement rootElement : definitions.getRootElements()) {
+			if (rootElement instanceof ProcessDefinitionBehavior) {
+
+				// ProcessDefinitionBehavior
+				// processObj=(ProcessDefinitionBehavior)rootElement;
+				// if(processObj.getProcessDefinitionKey().equals("")){
+				process = (ProcessDefinitionBehavior) rootElement;
+				break;
+				// }
+
+			}
+		}
+
+		process.setDefinitions(definitions);
+
+		process.setResourceName(resourceBpmn.getName());
+		process.setResourceId(resourceBpmn.getId());
+		String diagramResourceName = StringUtil.getString(resourcePng.getName());
+		process.setDiagramResourceName(diagramResourceName);
 
 		CommandContext commandContext = Context.getCommandContext();
 		ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
-		//DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
+
 		DbSqlSession dbSqlSession = commandContext.getDbSqlSession();
-		for (ProcessDefinitionBehavior processDefinition : processDefinitions) {
-			if (deployment.isNew()) {
-				int processDefinitionVersion;
 
-				ProcessDefinitionBehavior latestProcessDefinition = processDefinitionManager.findLatestProcessDefinitionByKey(processDefinition
-						.getProcessDefinitionKey());
-				if (latestProcessDefinition != null) {
-					processDefinitionVersion = latestProcessDefinition.getVersion() + 1;
-				} else {
-					processDefinitionVersion = 1;
-				}
+		int processDefinitionVersion;
 
-				processDefinition.setVersion(processDefinitionVersion);
-				processDefinition.setDeploymentId(deployment.getId());
-				
-				String processDefinitionId = processDefinition.getProcessDefinitionKey() + ":" + processDefinition.getVersion() + ":"
-						+ GuidUtil.CreateGuid(); // GUID
-
-				processDefinition.setProcessDefinitionId(processDefinitionId);
-
-				
-				
-				
-				dbSqlSession.insert("insertProcessDefinition", processDefinition);
-				//deploymentCache.addProcessDefinition(processDefinition);
-
-			} else {
-				String deploymentId = deployment.getId();
-				processDefinition.setDeploymentId(deploymentId);
-				ProcessDefinitionBehavior persistedProcessDefinition = processDefinitionManager.findProcessDefinitionByDeploymentAndKey(
-						deploymentId, processDefinition.getProcessDefinitionKey());
-				processDefinition.setId(persistedProcessDefinition.getId());
-				processDefinition.setVersion(persistedProcessDefinition.getVersion());
-
-				//deploymentCache.addProcessDefinition(processDefinition);
-			}
-
-			//Context.getProcessEngineConfiguration().getDeploymentCache().addProcessDefinition(processDefinition);
+		ProcessDefinitionBehavior latestProcessDefinition = processDefinitionManager.findLatestProcessDefinitionByKey(process.getProcessDefinitionKey());
+		if (latestProcessDefinition != null) {
+			processDefinitionVersion = latestProcessDefinition.getVersion() + 1;
+		} else {
+			processDefinitionVersion = 1;
 		}
-	}
+		
+		
+		if(deployment.getUpdateDeploymentId()!=null&&!deployment.getUpdateDeploymentId().equals("")){
+			
+			String deploymentId = deployment.getId();
+			process.setDeploymentId(deploymentId);
+			ProcessDefinitionBehavior persistedProcessDefinition = processDefinitionManager.findProcessDefinitionByDeploymentAndKey(
+					deploymentId, process.getProcessDefinitionKey());
+			process.setId(persistedProcessDefinition.getId());
+			process.setVersion(persistedProcessDefinition.getVersion());
+			process.setProcessDefinitionId(persistedProcessDefinition.getProcessDefinitionId());
+			
+		}else{
+			
 
-	protected String getDiagramResourceForProcess(String bpmnFileResource, String processKey, Map<String, ResourceEntity> resources) {
-		for (String diagramSuffix : DIAGRAM_SUFFIXES) {
-			String diagramForBpmnFileResource = getBpmnFileImageResourceName(bpmnFileResource, diagramSuffix);
-			String processDiagramResource = getProcessImageResourceName(bpmnFileResource, processKey, diagramSuffix);
-			if (resources.containsKey(processDiagramResource)) {
-				return processDiagramResource;
-			} else if (resources.containsKey(diagramForBpmnFileResource)) {
-				return diagramForBpmnFileResource;
-			}
+			process.setVersion(processDefinitionVersion);
+			process.setDeploymentId(deployment.getId());
+
+			String processDefinitionId = process.getProcessDefinitionKey() + ":" + process.getVersion() + ":" + GuidUtil.CreateGuid(); // GUID
+
+			process.setProcessDefinitionId(processDefinitionId);
+
+			dbSqlSession.insert("insertProcessDefinition", process);
 		}
-		return null;
-	}
+		
+		
 
-	protected String getBpmnFileImageResourceName(String bpmnFileResource, String diagramSuffix) {
-		String bpmnFileResourceBase = bpmnFileResource.substring(0, bpmnFileResource.length() - 10); // minus
-																										// 10
-																										// to
-																										// remove
-																										// 'bpmn20.xml'
-		return bpmnFileResourceBase + diagramSuffix;
-	}
+		Context.getProcessEngineConfiguration().getDeploymentCache().addProcessDefinition(process);
 
-	protected String getProcessImageResourceName(String bpmnFileResource, String processKey, String diagramSuffix) {
-		String bpmnFileResourceBase = bpmnFileResource.substring(0, bpmnFileResource.length() - 10); // minus
-																										// 10
-																										// to
-																										// remove
-																										// 'bpmn20.xml'
-		return bpmnFileResourceBase + processKey + "." + diagramSuffix;
 	}
 
 	protected void createResource(String name, byte[] bytes, DeploymentEntity deploymentEntity) {
