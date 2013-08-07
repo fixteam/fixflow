@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.NumberUtils;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -36,18 +36,29 @@ import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 
 @Service
 public class FlowCenterServiceImpl implements FlowCenterService {
-	public Map<String,Object> queryMyTaskNotEnd(Map<String, String> filter)
+	/*
+	  * <p>Title: queryMyTaskNotEnd</p>
+	  * <p>Description: </p>
+	  * @param filter
+	  * @return
+	  * @throws SQLException
+	  * @see com.founder.fix.fixflow.service.FlowCenterService#queryMyTaskNotEnd(java.util.Map)
+	  */
+	public Map<String,Object> queryMyTaskNotEnd(Map<String, Object> filter)
 			throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter
 				.get("userId"));
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
-
-			tq.taskAssignee(filter.get("userId"));
-			tq.processDefinitionKey(filter.get("pdkey"));
-			int pageIndex = Integer.valueOf(filter.get("pageIndex"));
-			int rowNum = Integer.valueOf(filter.get("rowNum"));
+			
+			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
+			
+			
+			int pageIndex = Integer.valueOf(StringUtil.getString(filter.get("pageIndex")));
+			int rowNum = Integer.valueOf(StringUtil.getString(filter.get("rowNum")));
 			
 			tq.taskNotEnd();
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
@@ -55,15 +66,15 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 
 			result.put("dataList", lts);
 			result.put("pageNumber", count);
-			result.put("agentUsers", getAgentUsers(engine,filter.get("userId")));
-			result.put("agentToUsers", getAgentToUsers(engine,filter.get("userId")));
+			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
+			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
 		} finally {
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
 		return result;
 	}
 	
-	public Map<String,Object> queryMyTaskEnded(Map<String, String> filter)
+	public Map<String,Object> queryMyTaskEnded(Map<String, Object> filter)
 			throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter
@@ -71,18 +82,22 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
 
-			tq.taskAssignee(filter.get("userId"));
-			tq.processDefinitionKey(filter.get("pdkey"));
-			int pageIndex = Integer.valueOf(filter.get("pageIndex"));
-			int rowNum = Integer.valueOf(filter.get("rowNum"));
+			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
+			
+			
+			int pageIndex = Integer.valueOf(StringUtil.getString(filter.get("pageIndex")));
+			int rowNum = Integer.valueOf(StringUtil.getString(filter.get("rowNum")));
 			tq.taskNotEnd();
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			long count = tq.count();
 
 			result.put("dataList", lts);
 			result.put("pageNumber", count);
-			result.put("agentUsers", getAgentUsers(engine,filter.get("userId")));
-			result.put("agentToUsers", getAgentToUsers(engine,filter.get("userId")));
+			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
+			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
+			result.putAll(filter);
 		} finally {
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
@@ -114,7 +129,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		return null;
 	}
 
-	public Map<String,Object> queryTaskParticipants(Map<String,String> filter) throws SQLException {
+	public Map<String,Object> queryTaskParticipants(Map<String,Object> filter) throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
@@ -125,7 +140,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		return result;
 	}
 
-	public Map<String,Object> queryTaskInitiator(Map<String,String> filter) throws SQLException {
+	public Map<String,Object> queryTaskInitiator(Map<String,Object> filter) throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);

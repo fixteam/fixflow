@@ -53,7 +53,7 @@ public interface FlowCenterService {
 	  * @return Map<String,Object>    返回类型
 	  * @throws
 	  */
-	public Map<String,Object> queryMyTaskNotEnd(Map<String,String> map)
+	public Map<String,Object> queryMyTaskNotEnd(Map<String,Object> map)
 		throws SQLException;
 
 	/**
@@ -84,7 +84,7 @@ public interface FlowCenterService {
 	  * @return Map<String,Object>    返回类型
 	  * @throws
 	  */
-	public Map<String,Object> queryMyTaskEnded(Map<String,String> map)
+	public Map<String,Object> queryMyTaskEnded(Map<String,Object> map)
 		throws SQLException;
 
 	/**
@@ -117,7 +117,7 @@ public interface FlowCenterService {
 	  * @return Map<String,Object>    返回类型
 	  * @throws
 	  */
-	public Map<String,Object> queryTaskParticipants(Map<String,String> map)
+	public Map<String,Object> queryTaskParticipants(Map<String,Object> map)
 		throws SQLException;
 
 	/**
@@ -132,6 +132,6 @@ public interface FlowCenterService {
 	  * @return Map<String,Object>    返回类型
 	  * @throws
 	  */
-	public Map<String,Object> queryTaskInitiator(Map<String,String> map)
+	public Map<String,Object> queryTaskInitiator(Map<String,Object> map)
 		throws SQLException;
 }

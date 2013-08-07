@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,28 @@ public class FlowCenter extends HttpServlet {
 		if(StringUtil.isEmpty(action)){
 			action = StringUtil.getString(request.getAttribute("action"));
 		}
+		Map<String, Object> filter = new HashMap<String, Object>();
+		Enumeration enums = request.getParameterNames();
+		while (enums.hasMoreElements()) {
+			String paramName = (String) enums.nextElement();
+
+			String paramValue = request.getParameter(paramName);
+
+			// 形成键值对应的map
+			filter.put(paramName, paramValue);
+
+		}
 		
+		Enumeration attenums = request.getAttributeNames();
+		while (attenums.hasMoreElements()) {
+			String paramName = (String) attenums.nextElement();
+
+			Object paramValue = request.getAttribute(paramName);
+
+			// 形成键值对应的map
+			filter.put(paramName, paramValue);
+
+		}
 		try{
 			RequestDispatcher rd = null;
 			String userId = StringUtil.getString(request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID));
@@ -55,24 +77,24 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", result);
 				rd = request.getRequestDispatcher("startTask.jsp");
 			}else if(action.equals("getMyTask")){
-				Map<String,String> filter = new HashMap<String,String>();
 				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryMyTaskNotEnd(filter);
-				request.setAttribute("result", pageResult);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/todoTask.jsp");
 			}else if(action.equals("getProcessImage")){
 				response.getOutputStream();
 			}else if(action.equals("getInitorTask")){
-				Map<String,String> filter = new HashMap<String,String>();
 				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskInitiator(filter);
-				request.setAttribute("result", pageResult);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/initorTask.jsp");
 			}else if(action.equals("getParticipantsTask")){
-				Map<String,String> filter = new HashMap<String,String>();
 				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
-				request.setAttribute("result", pageResult);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/initorTask.jsp");
 			}
 			
