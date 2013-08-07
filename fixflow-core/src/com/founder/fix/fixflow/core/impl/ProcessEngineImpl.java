@@ -149,6 +149,10 @@ public class ProcessEngineImpl implements ProcessEngine {
 			processEngineConfiguration.getFixFlowResources().setNowLanguage(languageType);
 		}
 
+		
+		if(externalContent.getConnectionManagement()!=null&&!externalContent.getConnectionManagement().equals("")){
+			Context.setConnectionManagementDefault(externalContent.getConnectionManagement());
+		}
 	}
 
 	public void setLanguageType(String languageType) {
