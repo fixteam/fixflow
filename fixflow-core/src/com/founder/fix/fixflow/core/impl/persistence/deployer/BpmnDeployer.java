@@ -56,9 +56,9 @@ public class BpmnDeployer implements Deployer {
 
 		Map<String, ResourceEntity> resources = deployment.getResources();
 
-		if (resources.keySet().size() != 2) {
-			throw new FixFlowException("发布的流程资源文件必须含有.bpmn和.png文件");
-		}
+		//if (resources.keySet().size() != 2) {
+		//	throw new FixFlowException("发布的流程资源文件必须含有.bpmn和.png文件");
+		//}
 		ResourceEntity resourceBpmn = null;
 		ResourceEntity resourcePng = null;
 
@@ -73,8 +73,8 @@ public class BpmnDeployer implements Deployer {
 			}
 		}
 
-		if (resourceBpmn == null || resourcePng == null) {
-			throw new FixFlowException("发布的流程资源文件必须含有.bpmn和.png文件");
+		if (resourceBpmn == null) {
+			throw new FixFlowException("发布的流程资源文件必须含有.bpmn");
 		}
 
 		byte[] bytes = resourceBpmn.getBytes();
@@ -125,8 +125,11 @@ public class BpmnDeployer implements Deployer {
 
 		process.setResourceName(resourceBpmn.getName());
 		process.setResourceId(resourceBpmn.getId());
-		String diagramResourceName = StringUtil.getString(resourcePng.getName());
-		process.setDiagramResourceName(diagramResourceName);
+		if(resourcePng!=null){
+			String diagramResourceName = StringUtil.getString(resourcePng.getName());
+			process.setDiagramResourceName(diagramResourceName);
+		}
+		
 
 		CommandContext commandContext = Context.getCommandContext();
 		ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();

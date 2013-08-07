@@ -331,7 +331,17 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 
 		return commandExecutor.execute(new GetAgentUsersAndCountCmd(userId));
 	}
+	
+	public List<UserTo> getAgentToUsers(String userId) {
 
+		return commandExecutor.execute(new GetAgentUsersCmd(userId));
+	}
+
+	public List<Map<String, Object>> getAgentToUsersAndCount(String userId) {
+
+		return commandExecutor.execute(new GetAgentUsersAndCountCmd(userId));
+	}
+	
 	public List<TaskCommandInst> getSystemTaskCommand(String commandType) {
 		
 		

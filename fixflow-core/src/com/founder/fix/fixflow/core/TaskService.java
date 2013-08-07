@@ -380,9 +380,24 @@ public interface TaskService extends ProcessService {
 	/**
 	 * 获取将任务代理给当前用户的人员列表
 	 * @param userId 用户编号
-	 * @return
+	 * @return  map的key{userid,username}
 	 */
 	List<Map<String, Object>> getAgentUsersAndCount(String userId);
+	
+	
+	/**
+	 * 获取当前用户设置的代码用户雷彪
+	 * @param userId
+	 * @return
+	 */
+	List<UserTo> getAgentToUsers(String userId);
+	
+	/**
+	 * 获取当前用户设置的代码用户雷彪
+	 * @param userId
+	 * @return map的key{userid,username}
+	 */
+	List<Map<String, Object>> getAgentToUsersAndCount(String userId);
 	
 	
 	List<UserTaskBehavior> getUserEndTaskNodesInProcessInstance(String processInstanceId);
