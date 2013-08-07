@@ -28,7 +28,9 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 
-
+/**
+ * 时间操作Util类
+ */
 public class DateUtil {
 	
 	private final static SimpleDateFormat dfYyyy = new SimpleDateFormat("yyyy");
@@ -50,9 +52,11 @@ public class DateUtil {
     private final static String twentyFourHourRegExp = "^(([0-1][0-9])|(2[0-3])):([0-5][0-9])$";
     private final static SimpleDateFormat dfyyyyMMddHHMMSSSSS = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     
-    private final static String timeFormat = "^(\\d{1,4})(-|\\/)(\\d{1,2})(-|\\/)(\\d{1,2})$";
+    @SuppressWarnings("unused")
+	private final static String timeFormat = "^(\\d{1,4})(-|\\/)(\\d{1,2})(-|\\/)(\\d{1,2})$";
     
-    private static boolean compare(String one,String sybmol,String two) throws ParseException{
+    @SuppressWarnings("unused")
+	private static boolean compare(String one,String sybmol,String two) throws ParseException{
     	boolean result = false;
     	Date date1 = yyyyMmDd.parse(one);
     	Date date2 = yyyyMmDd.parse(two);
