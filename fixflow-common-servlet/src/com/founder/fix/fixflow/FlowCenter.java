@@ -58,11 +58,23 @@ public class FlowCenter extends HttpServlet {
 			}else if(action.equals("getMyTask")){
 				Map<String,String> filter = new HashMap<String,String>();
 				filter.put("userId", userId);
-				PageResultTo pageResult = getFlowCenter().queryMyTask(filter);
+				Map<String,Object> pageResult = getFlowCenter().queryMyTaskNotEnd(filter);
 				request.setAttribute("result", pageResult);
 				rd = request.getRequestDispatcher("/index.jsp");
 			}else if(action.equals("getProcessImage")){
 				response.getOutputStream();
+			}else if(action.equals("getInitorTask")){
+				Map<String,String> filter = new HashMap<String,String>();
+				filter.put("userId", userId);
+				Map<String,Object> pageResult = getFlowCenter().queryTaskInitiator(filter);
+				request.setAttribute("result", pageResult);
+				rd = request.getRequestDispatcher("/initorTask.jsp");
+			}else if(action.equals("getParticipantsTask")){
+				Map<String,String> filter = new HashMap<String,String>();
+				filter.put("userId", userId);
+				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
+				request.setAttribute("result", pageResult);
+				rd = request.getRequestDispatcher("/initorTask.jsp");
 			}
 			
 			if(rd!=null)

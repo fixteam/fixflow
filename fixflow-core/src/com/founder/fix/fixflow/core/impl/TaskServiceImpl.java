@@ -34,6 +34,8 @@ import com.founder.fix.fixflow.core.impl.cmd.DeleteIdentityLinkCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandTaskComplete;
+import com.founder.fix.fixflow.core.impl.cmd.GetAgentToUsersAndCountCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetAgentToUsersCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentUsersAndCountCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentUsersCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetNextTaskCmd;
@@ -334,12 +336,12 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	
 	public List<UserTo> getAgentToUsers(String userId) {
 
-		return commandExecutor.execute(new GetAgentUsersCmd(userId));
+		return commandExecutor.execute(new GetAgentToUsersCmd(userId));
 	}
 
 	public List<Map<String, Object>> getAgentToUsersAndCount(String userId) {
 
-		return commandExecutor.execute(new GetAgentUsersAndCountCmd(userId));
+		return commandExecutor.execute(new GetAgentToUsersAndCountCmd(userId));
 	}
 	
 	public List<TaskCommandInst> getSystemTaskCommand(String commandType) {
