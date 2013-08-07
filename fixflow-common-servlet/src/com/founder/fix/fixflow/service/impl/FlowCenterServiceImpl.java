@@ -58,7 +58,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
 			String rowI = StringUtil.getString(filter.get("rowNum"));
 			int pageIndex=1;
-			int rowNum   =1;
+			int rowNum   =5;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageIndex);
 			}
