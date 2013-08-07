@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.service.impl;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
@@ -55,8 +57,25 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
 			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
+			
+			tq.taskDescriptionLike(StringUtil.getString(filter.get("title")));
+			tq.initiatorLike(StringUtil.getString(filter.get("initor")));
+			Date dates = null;
+			Date datee = null;
+			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
+			String dse = StringUtil.getString(filter.get("arrivalTimeE"));
+			if(StringUtil.isNotEmpty(dss)){
+				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
+			}
+			if(StringUtil.isNotEmpty(dse)){
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+			}
+			tq.taskCreatedAfter(dates);
+			tq.taskCreatedBefore(datee);
+			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
 			String rowI = StringUtil.getString(filter.get("rowNum"));
+			
 			int pageIndex=1;
 			int rowNum   =5;
 			if(StringUtil.isNotEmpty(pageI)){
@@ -66,7 +85,25 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				rowNum = Integer.valueOf(rowI);
 			}
 			
-			tq.taskNotEnd();
+			if(filter.get("ended")!=null)
+				tq.taskNotEnd();
+			
+			if(filter.get("agentUserId")!=null){
+				tq.isAgent(true);
+				if(filter.get("agentType").equals("1")){
+					tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+					tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+					tq.agentId(StringUtil.getString(filter.get("agentUserId")));
+				}else{
+					tq.taskAssignee(StringUtil.getString(filter.get("agentUserId")));
+					tq.taskCandidateUser(StringUtil.getString(filter.get("agentUserId")));
+					tq.agentId(StringUtil.getString(filter.get("userId")));
+				}
+			}else{
+				tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+			}
+			
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			long count = tq.count();
 
@@ -82,32 +119,8 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	
 	public Map<String,Object> queryMyTaskEnded(Map<String, Object> filter)
 			throws SQLException {
-		Map<String,Object> result = new HashMap<String,Object>();
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter
-				.get("userId"));
-		try {
-			TaskQuery tq = engine.getTaskService().createTaskQuery();
-
-			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
-			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
-			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
-			
-			
-			int pageIndex = Integer.valueOf(StringUtil.getString(filter.get("pageIndex")));
-			int rowNum = Integer.valueOf(StringUtil.getString(filter.get("rowNum")));
-			tq.taskNotEnd();
-			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
-			long count = tq.count();
-
-			result.put("dataList", lts);
-			result.put("pageNumber", count);
-			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
-			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
-			result.putAll(filter);
-		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, false);
-		}
-		return result;
+		filter.put("ended", "ended");
+		return queryMyTaskNotEnd(filter);
 	}
 
 	public List<Map<String, String>> queryStartProcess(String userId)
