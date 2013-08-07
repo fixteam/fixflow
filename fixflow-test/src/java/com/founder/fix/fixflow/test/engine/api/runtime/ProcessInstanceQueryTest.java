@@ -43,9 +43,7 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		for(int i = 0;i<10;i++){
 			
 			//取得第六个流程启动时的时间，用来验证大于或小于开始时间的查询
-			if(i == 6){
-				date = new Date();
-			}
+			
 			//创建一个通用命令
 			ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 			//设置流程名
@@ -68,6 +66,9 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 			//执行这个启动并提交的命令，返回启动的流程实例
 			ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
 			String processInstanceId = processInstance.getId();
+			if(i == 6){
+				date = processInstance.getStartTime();
+			}
 			//验证是否成功启动
 			assertNotNull(processInstanceId);
 			//暂停1000毫秒，用来验证order by 
@@ -191,7 +192,7 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//查询开始时间大于某个时间的流程实例（时间在方法开始时定义）
 		processInstances = processInstanceQuery.processDefinitionKey("Process_TaskServiceTest").startTimeAfter(date).list();
 		//验证是否有6个
-		assertEquals(6, processInstances.size());
+		assertEquals(7, processInstances.size());
 		
 		//重置查询
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
