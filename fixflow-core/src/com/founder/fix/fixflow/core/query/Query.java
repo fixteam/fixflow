@@ -19,6 +19,8 @@ package com.founder.fix.fixflow.core.query;
 
 import java.util.List;
 
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
+
 /**
  * Describes basic methods for querying.
  * 
@@ -74,4 +76,11 @@ public interface Query<T extends Query<?, ?>, U extends Object> {
 	 * @return 分页列表
 	 */
 	List<U> listPagination(int pageNum, int rowNum);
+	
+	/**
+	 * 扩展查询
+	 * @param queryExpandTo
+	 * @return
+	 */
+	T queryExpandTo(QueryExpandTo queryExpandTo);
 }
