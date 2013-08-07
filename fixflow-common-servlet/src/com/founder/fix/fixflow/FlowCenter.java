@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.pojo.PageResultTo;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
@@ -60,7 +59,7 @@ public class FlowCenter extends HttpServlet {
 				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryMyTaskNotEnd(filter);
 				request.setAttribute("result", pageResult);
-				rd = request.getRequestDispatcher("/index.jsp");
+				rd = request.getRequestDispatcher("/todoTask.jsp");
 			}else if(action.equals("getProcessImage")){
 				response.getOutputStream();
 			}else if(action.equals("getInitorTask")){
