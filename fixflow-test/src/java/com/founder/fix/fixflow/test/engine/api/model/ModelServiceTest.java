@@ -268,10 +268,10 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		String deploymentIdTemp = deploymentBuilder.deploy().getId();
 		assertNotNull(deploymentIdTemp);
 		//重置下流程发布，发布下一个流程
-		deploymentBuilder = processEngine.getModelService().createDeployment().name("测试发布");
-		deploymentBuilder.addClasspathResource("com/founder/fix/fixflow/test/engine/api/model/StartProcessInstanceTest.bpmn");
+		DeploymentBuilder deploymentBuilder2 = processEngine.getModelService().createDeployment().name("测试发布");
+		deploymentBuilder2.addClasspathResource("com/founder/fix/fixflow/test/engine/api/model/StartProcessInstanceTest.bpmn");
 		//发布
-		deploymentIdTemp = deploymentBuilder.deploy().getId();
+		deploymentIdTemp = deploymentBuilder2.deploy().getId();
 		assertNotNull(deploymentIdTemp);
 		
 		//取到用户可以启动的流程列表
