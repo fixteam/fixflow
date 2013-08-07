@@ -26,6 +26,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
@@ -107,21 +108,25 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		return null;
 	}
 
-	public List queryTaskParticipants(Map<String,Object> filter) throws SQLException {
+	public Map<String,Object> queryTaskParticipants(Map<String,String> filter) throws SQLException {
+		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
 		ProcessInstanceQuery query = engine.getRuntimeService()
 				.createProcessInstanceQuery();
-		List instances = query.taskParticipants(userId).list();
-		return instances;
+		List<ProcessInstance> instances = query.taskParticipants(userId).list();
+		result.put("dataList", instances);
+		return result;
 	}
 
-	public List queryTaskInitiator(Map<String,Object> filter) throws SQLException {
+	public Map<String,Object> queryTaskInitiator(Map<String,String> filter) throws SQLException {
+		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
 		ProcessInstanceQuery query = engine.getRuntimeService()
 				.createProcessInstanceQuery();
-		List instances = query.initiator(userId).list();
-		return instances;
+		List<ProcessInstance> instances = query.initiator(userId).list();
+		result.put("dataList", instances);
+		return result;
 	}
 }
