@@ -118,5 +118,80 @@ public class ResourcePersistence {
 		return resourceEntity;
 		
 	}
+	
+	public List<ResourceEntity> getResourceEntityByDeploymentId(String deploymentId)
+	{
+		
+		List<ResourceEntity> resourceEntitys=new ArrayList<ResourceEntity>();
+		
+		List<Object> objectParamWhere = new ArrayList<Object>();
 
+		String selectSql = "SELECT * FROM FIXFLOW_DEF_BYTEARRAY WHERE DEPLOYMENT_ID = ?";
+		
+		objectParamWhere.add(deploymentId.toString());
+
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectSql, objectParamWhere);
+
+		for (Map<String, Object> map : dataObj) {
+			String id=StringUtil.getString(map.get("ID"));
+			String name=StringUtil.getString(map.get("NAME"));
+			byte[] bytes=null;
+			Object bytesObject = map.get("BYTES");
+			if (bytesObject != null) {
+				bytes=(byte[])bytesObject;
+			}
+			
+			
+			
+			ResourceEntity resourceEntity=new ResourceEntity();
+			resourceEntity.setId(id);
+			resourceEntity.setName(name);
+			resourceEntity.setBytes(bytes);
+			resourceEntity.setDeploymentId(deploymentId);
+			resourceEntitys.add(resourceEntity);
+		}
+		
+		
+		
+		return resourceEntitys;
+		
+	}
+	
+	public ResourceEntity selectResourceByDeploymentIdAndResourceName(String deploymentId, String resourceName) {
+
+		
+		
+		
+		
+
+		String sqlText = "SELECT * FROM FIXFLOW_DEF_BYTEARRAY WHERE NAME=? and DEPLOYMENT_ID=?";
+
+		// 构建查询参数
+
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(resourceName);
+		objectParamWhere.add(deploymentId);
+
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
+		Map<String, Object> dataMap = dataObj.get(0);
+		
+		
+		String id=StringUtil.getString(dataMap.get("ID"));
+		Object bytesObject = dataMap.get("BYTES");
+		
+		
+		
+		ResourceEntity entity=new ResourceEntity();
+		entity.setId(id);
+		entity.setName(resourceName);
+		entity.setDeploymentId(deploymentId);
+		if (bytesObject != null) {
+			byte[] bytes = (byte[]) bytesObject;
+			entity.setBytes(bytes);
+		}
+		
+		return entity;
+		
+		
+	}
 }

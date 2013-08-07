@@ -21,6 +21,21 @@ package com.founder.fix.fixflow.core.objkey;
 public class JobObjKey {
 	
 	/**
+	 * 任务候选人表名
+	 * @return
+	 */
+	public static String TaskIdentityLinkTableName(){
+		return "FIXFLOW_RUN_TASKIDENTITYLINK";
+	}
+	
+	/**
+	 * 任务候选人归档表名
+	 * @return
+	 */
+	public static String TaskIdentityLinkHisTableName(){
+		return "FIXFLOW_HIS_TASKIDENTITYLINK";
+	}
+	/**
 	 * 编号
 	 * @return
 	 */

@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.ModelService;
-import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsElementPositionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgPathCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgStreamCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsSvgCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetModelInternationalizationResourcesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
@@ -74,7 +74,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public ProcessDefinitionQuery createProcessDefinitionQuery() {
 
-		return ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionQuery(commandExecutor);
+		return new ProcessDefinitionQueryImpl(commandExecutor);
 	}
 
 	public DeploymentQuery createDeploymentQuery() {
@@ -140,6 +140,14 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public List<Map<String, String>> getStartProcessByUserId(String userId) {
 		return commandExecutor.execute(new GetStartProcessByUserIdCmd(userId));
+	}
+
+	public InputStream GetFlowGraphicsImgStreamByDefId(String processDefinitionId) {
+		return commandExecutor.execute(new GetFlowGraphicsImgStreamCmd(processDefinitionId,null));
+	}
+
+	public InputStream GetFlowGraphicsImgStreamByDefKey(String processDefinitionKey) {
+		return commandExecutor.execute(new GetFlowGraphicsImgStreamCmd(null,processDefinitionKey));
 	}
 
 }

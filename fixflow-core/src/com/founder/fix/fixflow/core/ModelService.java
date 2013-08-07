@@ -89,6 +89,7 @@ public interface ModelService extends ProcessService{
 	 */
 	DeploymentQuery createDeploymentQuery();
 	
+	@Deprecated
 	/**
 	 * 获取流程图(SVG格式)
 	 */
@@ -117,6 +118,7 @@ public interface ModelService extends ProcessService{
 	 */
 	List<Map<String, Object>> selectProcessDefinitionGroupKey();
 	
+	@Deprecated
 	/**
 	 * 获取流程图图片地址
 	 * @param processDefinitionId 流程唯一编号
@@ -165,6 +167,22 @@ public interface ModelService extends ProcessService{
 	 * "diagramResourceName" 流程图名称;<br>
 	 */
 	List<Map<String, String>> getStartProcessByUserId(String userId);
+	
+	
+	
+	/**
+	 * 获取流程图图片Stream
+	 * @param processDefinitionId 流程唯一编号
+	 * @return 图片Stream
+	 */
+	InputStream GetFlowGraphicsImgStreamByDefId(String processDefinitionId);
+	
+	/**
+	 * 获取流程图图片Stream
+	 * @param processDefinitionKey 流程编号
+	 * @return 图片Stream
+	 */
+	InputStream GetFlowGraphicsImgStreamByDefKey(String processDefinitionKey);
 	
 }
   

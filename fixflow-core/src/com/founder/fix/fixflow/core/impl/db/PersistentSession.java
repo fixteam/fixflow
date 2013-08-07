@@ -29,6 +29,7 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.job.JobEntity;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
@@ -62,9 +63,18 @@ public class PersistentSession {
 	}
 
 	public void update(String updateStatement, PersistentObject persistentObject) {
+		
+		if (updateStatement.equals("updateDeployment")) {
+			DeploymentPersistence resourceManager = ProcessObjectFactory.FACTORYINSTANCE.createDeploymentPersistence(connection);
+			resourceManager.updateDeployment((DeploymentEntity)persistentObject);
+			return;
+		}
+		
+		
 		if (updateStatement.equals("updateResource")) {
 			ResourcePersistence resourceManager = ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
 			resourceManager.updateResource(persistentObject);
+			return;
 		}
 	}
 
@@ -258,7 +268,30 @@ public class PersistentSession {
 
 	@SuppressWarnings("unchecked")
 	public Object selectOne(String statement, Object parameter) {
+		
+		
+		if (statement.equals("selectResourceByDeploymentIdAndResourceName")) {
+			ResourcePersistence resourcePersistence = ProcessObjectFactory.FACTORYINSTANCE.createResourcePersistence(connection);
+			Map<String, String> strmap = (Map<String, String>) parameter;
+			String deploymentId = strmap.get("deploymentId");
+			String resourceName = strmap.get("resourceName");
+		
+			return resourcePersistence.selectResourceByDeploymentIdAndResourceName(deploymentId,resourceName);
+		}
+		
+		
+		
 
+		if (statement.equals("selectDeploymentById")) {
+			DeploymentPersistence deploymentPersistence = ProcessObjectFactory.FACTORYINSTANCE.createDeploymentPersistence(connection);
+			
+			String deploymentId = StringUtil.getString(parameter);
+
+			return deploymentPersistence.getDeployment(deploymentId);
+		}
+		
+		
+		
 		if (statement.equals("selectProcessPerformanceInterface22")) {
 			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			Map<String, String> strmap = (Map<String, String>) parameter;

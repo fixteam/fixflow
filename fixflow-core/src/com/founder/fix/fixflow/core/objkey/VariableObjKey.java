@@ -20,6 +20,23 @@ package com.founder.fix.fixflow.core.objkey;
 
 public class VariableObjKey {
 
+	
+	/**
+	 * 流程变量表名
+	 * @return
+	 */
+	public static String VariableTableName(){
+		return "FIXFLOW_RUN_VARIABLE";
+	}
+	
+	/**
+	 * 流程变量归档表名
+	 * @return
+	 */
+	public static String VariableHisTableName(){
+		return "FIXFLOW_HIS_VARIABLE";
+	}
+	
 	/**
 	 * 编号
 	 * @return
@@ -241,6 +258,36 @@ public class VariableObjKey {
 			return "任务编号";
 		}
 
+	}
+	
+	/**
+	 * 任务编号
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new VariableObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
+		}
 	}
 	
 }

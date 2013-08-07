@@ -36,13 +36,7 @@ public interface DeploymentBuilder {
   DeploymentBuilder name(String name);
   DeploymentBuilder enableDuplicateFiltering();
   
-  /**
-   * 更新资源
-   * @param resourceId 资源编号
-   * @param inputStream 流
-   * @return
-   */
-  DeploymentBuilder updateResource(String resourceId,InputStream inputStream);
-
+  DeploymentBuilder updateDeploymentId(String updateDeploymentId);
+  
   Deployment deploy();
 }

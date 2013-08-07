@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
@@ -140,19 +141,19 @@ public class DbSqlSession {
 	}
 
 	public DeploymentQueryImpl createDeploymentQuery() {
-		return new DeploymentQueryImpl();
+		return new DeploymentQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 	public ProcessDefinitionQueryImpl createProcessDefinitionQuery() {
-		return new ProcessDefinitionQueryImpl();
+		return new ProcessDefinitionQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 	public ProcessInstanceQueryImpl createProcessInstanceQuery() {
-		return new ProcessInstanceQueryImpl();
+		return new ProcessInstanceQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 	public TaskQueryImpl createTaskQuery() {
-		return new TaskQueryImpl();
+		return new TaskQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 }

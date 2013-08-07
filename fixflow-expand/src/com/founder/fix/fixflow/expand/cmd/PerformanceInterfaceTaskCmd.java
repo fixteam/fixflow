@@ -30,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractCommand;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 
 public class PerformanceInterfaceTaskCmd extends AbstractCommand<List<Map<String, Object>>> {
 	private String[] org;
@@ -67,7 +68,7 @@ public class PerformanceInterfaceTaskCmd extends AbstractCommand<List<Map<String
 		Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 		stringBuffer.append(
 				"SELECT orgid as ORGID, ROUND("+pagination.getLocalismSql("datediffconvert", null)+",2) AS AVGTIME FROM " +
-				" (select a.*,b.orgid from (SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE  assignee " +
+				" (select a.*,b.orgid from (SELECT * FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE  assignee " +
 				"IN (SELECT userid FROM au_orgmember WHERE orgid IN(");
 		
 			for(int j=0;j<org.length;j++) {

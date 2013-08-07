@@ -74,6 +74,11 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 * @ordered
 	 */
 	protected int version = VERSION_DEFAULT;
+	
+	protected String diagramResourceName;
+
+
+	
 
 	/**
 	 * 返回 '<em><b>Version</b></em>' 字段. <!-- 开始-用户-文档 -->
@@ -306,6 +311,8 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		persistentState.put("resourceName", this.resourceName);
 		persistentState.put("resourceId", this.resourceId);
 		persistentState.put("deploymentId", this.deploymentId);
+		persistentState.put("diagramResourceName", this.diagramResourceName);
+		
 		// persistentState.put("startForm", this.getStartFormKey());
 
 		return persistentState;
@@ -511,6 +518,14 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 
 	public void setDataVariableMgmtDefinition(DataVariableMgmtDefinition dataVariableMgmtDefinition) {
 		this.dataVariableMgmtDefinition = dataVariableMgmtDefinition;
+	}
+	
+	public String getDiagramResourceName() {
+		return diagramResourceName;
+	}
+
+	public void setDiagramResourceName(String diagramResourceName) {
+		this.diagramResourceName = diagramResourceName;
 	}
 
 }

@@ -107,7 +107,7 @@ public class VariablePersistence {
 		}
 
 		// 设置查询字符串
-		String sqlText = "SELECT VARIABLE_KEY,VARIABLE_VALUE FROM FIXFLOW_RUN_VARIABLE  WHERE " + sqlWhereQueryString;
+		String sqlText = "SELECT VARIABLE_KEY,VARIABLE_VALUE FROM "+VariableObjKey.VariableTableName()+"  WHERE " + sqlWhereQueryString;
 		
 
 		List<Map<String, Object>> listMaps=sqlCommand.queryForList(sqlText,objectParamWhere);
@@ -179,7 +179,7 @@ public class VariablePersistence {
 		}
 		       sqlWhereQueryString=sqlWhereQueryString+" AND VARIABLE_KEY=?";
 		// 设置查询字符串
-		String sqlText = "SELECT count(1) FROM FIXFLOW_RUN_VARIABLE  WHERE " + sqlWhereQueryString ;
+		String sqlText = "SELECT count(1) FROM "+VariableObjKey.VariableTableName()+"  WHERE " + sqlWhereQueryString ;
 		objectParamWhere.add(variableKey);
 		// 执行查询流程是Sql语句,判断流程实例是否存在于数据库中.
 		int rowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, objectParamWhere).toString());
@@ -231,7 +231,7 @@ public class VariablePersistence {
 		objectParam.put(VariableObjKey.NodeId().DataBaseKey(), nodeIdDb);
 
 		// 执行插入语句
-		sqlCommand.insert("FIXFLOW_RUN_VARIABLE", objectParam);
+		sqlCommand.insert(VariableObjKey.VariableTableName(), objectParam);
 
 	}
 
@@ -265,7 +265,7 @@ public class VariablePersistence {
 		}
 
 		// 执行插入语句
-		sqlCommand.update("FIXFLOW_RUN_VARIABLE", objectParam, updateWhereSql,objectParamObj);
+		sqlCommand.update(VariableObjKey.VariableTableName(), objectParam, updateWhereSql,objectParamObj);
 
 	}
 	
@@ -329,9 +329,7 @@ public class VariablePersistence {
 				for (int i = 0; i < objectParamWhere.size(); i++) {
 					objectParamObj[i]=objectParamWhere.get(i);
 				}
-		//String sqlString="DELETE FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID=?";
-		
-		sqlCommand.delete("FIXFLOW_RUN_VARIABLE",  sqlWhereQueryString,objectParamObj);
+		sqlCommand.delete(VariableObjKey.VariableTableName(),  sqlWhereQueryString,objectParamObj);
 		
 	}
 

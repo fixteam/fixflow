@@ -43,6 +43,19 @@ public class DeploymentManager extends AbstractManager {
 
 		Context.getProcessEngineConfiguration().getDeploymentCache().deploy(deployment);
 	}
+	
+	
+	public void updateDeployment(DeploymentEntity deployment) {
+		getDbSqlSession().update("updateDeployment",deployment);
+
+		for (ResourceEntity resource : deployment.getResources().values()) {
+			resource.setDeploymentId(deployment.getId());
+			
+			commandContext.getResourceManager().updateResource(resource);
+		}
+
+		Context.getProcessEngineConfiguration().getDeploymentCache().deploy(deployment);
+	}
 
 	public void deleteDeployment(String deploymentId, boolean cascade) {
 		if (cascade) {

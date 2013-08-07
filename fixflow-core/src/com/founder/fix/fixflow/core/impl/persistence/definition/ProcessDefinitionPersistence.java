@@ -89,6 +89,7 @@ public class ProcessDefinitionPersistence {
 		objectParam.put("VERSION", resourceMap.get("version"));
 		objectParam.put("RESOURCE_NAME", resourceMap.get("resourceName"));
 		objectParam.put("DEPLOYMENT_ID", resourceMap.get("deploymentId"));
+		objectParam.put("DIAGRAM_RESOURCE_NAME", resourceMap.get("diagramResourceName"));
 		// objectParam.put("START_FORM_KEY", resourceMap.get("startForm"));
 		objectParam.put("RESOURCE_ID", resourceMap.get("resourceId"));
 
@@ -120,6 +121,7 @@ public class ProcessDefinitionPersistence {
 		int version = StringUtil.getInt(dataMap.get("VERSION"));
 		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
+		String diagramResourceName=StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
 		// String startFormKey =
 		// StringUtil.getString(dataMap.get("START_FORM_KEY"));
 		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
@@ -132,6 +134,7 @@ public class ProcessDefinitionPersistence {
 			//processDefinition.setCategory(category);
 			processDefinition.setVersion(version);
 			processDefinition.setResourceId(resourceId);
+			processDefinition.setDiagramResourceName(diagramResourceName);
 			// processDefinition.setStartFormKey(startFormKey);
 			deploymentCache.addProcessDefinition(processDefinition);
 		}
@@ -170,7 +173,7 @@ public class ProcessDefinitionPersistence {
 			String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
 			// String startFormKey =
 			// StringUtil.getString(dataMap.get("START_FORM_KEY"));
-
+			String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
 			processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
 
 			processDefinition.setProcessDefinitionId(processId);
@@ -179,7 +182,7 @@ public class ProcessDefinitionPersistence {
 			//processDefinition.setCategory(category);
 			processDefinition.setVersion(version);
 			processDefinition.setResourceId(resourceId);
-
+			processDefinition.setDiagramResourceName(diagramResourceName);
 			// processDefinition.setStartFormKey(startFormKey);
 			deploymentCache.addProcessDefinition(processDefinition);
 		}
@@ -233,7 +236,7 @@ public class ProcessDefinitionPersistence {
 			int version = StringUtil.getInt(dataMap.get("VERSION"));
 			String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 			String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-
+			String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
 			// String startFormKey =
 			// StringUtil.getString(dataMap.get("START_FORM_KEY"));
 
@@ -248,7 +251,7 @@ public class ProcessDefinitionPersistence {
 				processDefinition.setResourceName(resourceName);
 				//processDefinition.setCategory(category);
 				processDefinition.setVersion(version);
-
+				processDefinition.setDiagramResourceName(diagramResourceName);
 				// processDefinition.setStartFormKey(startFormKey);
 
 				deploymentCache.addProcessDefinition(processDefinition);
@@ -633,7 +636,7 @@ public class ProcessDefinitionPersistence {
 		int version = StringUtil.getInt(dataMap.get("VERSION"));
 		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-
+		String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
 		// String startFormKey =
 		// StringUtil.getString(dataMap.get("START_FORM_KEY"));
 		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
@@ -647,7 +650,7 @@ public class ProcessDefinitionPersistence {
 			//processDefinition.setCategory(category);
 			processDefinition.setVersion(version);
 			processDefinition.setResourceId(resourceId);
-
+			processDefinition.setDiagramResourceName(diagramResourceName);
 			// processDefinition.setStartFormKey(startFormKey);
 			deploymentCache.addProcessDefinition(processDefinition);
 		}

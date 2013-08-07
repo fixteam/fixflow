@@ -34,7 +34,7 @@ public class SvgLaneComponent implements ISvgComponent {
 
 	private static String comPath = "/svgcomponent/lane.xml";
 	
-	@SuppressWarnings("unused")
+
 	private static String text_x="{text_x}";
 	
 	private static String text_y="{text_y}";

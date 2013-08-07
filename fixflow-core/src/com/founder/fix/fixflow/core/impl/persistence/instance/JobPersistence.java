@@ -25,6 +25,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.job.JobDetailEntity;
 import com.founder.fix.fixflow.core.impl.job.JobEntity;
+import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
 
 public class JobPersistence {
 	
@@ -92,7 +93,7 @@ public class JobPersistence {
 	public void insertJob(JobEntity jobEntity){
 		Map<String, Object> objectParam=jobEntity.getPersistentDbMap();
 		// 执行插入语句
-		sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam);
+		sqlCommand.insert(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), objectParam);
 	}
 	
 	public void updateJob(JobEntity jobEntity){
@@ -102,7 +103,7 @@ public class JobPersistence {
 		Object[] objectParamWhere = { jobEntity.getId() };
 
 		// 执行插入语句
-		sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam, " JOB_ID=?", objectParamWhere);
+		sqlCommand.update(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), objectParam, " JOB_ID=?", objectParamWhere);
 	}
 
 }

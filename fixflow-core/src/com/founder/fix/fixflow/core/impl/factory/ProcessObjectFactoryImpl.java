@@ -24,7 +24,6 @@ import java.util.List;
 
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClass;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClassConfig;
-import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.action.AssignmentHandler;
 import com.founder.fix.fixflow.core.action.CommandHandler;
