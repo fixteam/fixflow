@@ -55,10 +55,16 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
 			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
-			
-			
-			int pageIndex = Integer.valueOf(StringUtil.getString(filter.get("pageIndex")));
-			int rowNum = Integer.valueOf(StringUtil.getString(filter.get("rowNum")));
+			String pageI = StringUtil.getString(filter.get("pageIndex"));
+			String rowI = StringUtil.getString(filter.get("rowNum"));
+			int pageIndex=1;
+			int rowNum   =1;
+			if(StringUtil.isNotEmpty(pageI)){
+				pageIndex = Integer.valueOf(pageIndex);
+			}
+			if(StringUtil.isNotEmpty(rowI)){
+				rowNum = Integer.valueOf(rowI);
+			}
 			
 			tq.taskNotEnd();
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
