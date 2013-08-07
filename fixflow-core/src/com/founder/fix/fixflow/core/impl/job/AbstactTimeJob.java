@@ -41,6 +41,7 @@ public abstract class AbstactTimeJob implements Job {
 		
 		ExternalContent externalContent=new ExternalContent();
 		externalContent.setAuthenticatedUserId(Authentication.getSystemId());
+		externalContent.setConnectionManagement("General");
 		processEngine.setExternalContent(externalContent);
 		//processEngine.getProcessEngineConfiguration().setConnectionManagement("General");
 
@@ -60,8 +61,9 @@ public abstract class AbstactTimeJob implements Job {
 			processEngine.commitConnection();
 			System.out.println("=====定时任务启动成功! "+new Date()+ " =====");
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			processEngine.rollBackConnection();
+			e.printStackTrace();
 			System.out.println("=====定时任务启动失败! "+new Date()+ " =====");
 		}
 		finally{
