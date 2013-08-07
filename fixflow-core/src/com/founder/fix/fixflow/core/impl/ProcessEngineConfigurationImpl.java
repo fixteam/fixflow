@@ -166,7 +166,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	
 
-	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfig;
+	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfigDefault;
+	
+	protected List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs;
 
 	/**
 	 * 线程池
@@ -248,30 +250,33 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		this.importDataVariableConfig=this.fixFlowConfig.getImportDataVariableConfig();
 	}
 	
-	protected ConnectionManagement connectionManagement;
-
+	protected ConnectionManagement connectionManagementDefault;
+	protected Map<String, ConnectionManagement> connectionManagementMap;
 	
 
 	private void initConnectionManagementConfig() {
 		// TODO 自动生成的方法存根
 		
-		
-		List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
+		connectionManagementMap=new HashMap<String, ConnectionManagement>();
+		connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
 		String selectId=this.fixFlowConfig.getConnectionManagementConfig().getSelected();
 		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
 			if(connectionManagementInstanceConfigTemp.getId().equals(selectId)){
-				this.connectionManagementInstanceConfig=connectionManagementInstanceConfigTemp;
-				break;
+				this.connectionManagementInstanceConfigDefault=connectionManagementInstanceConfigTemp;
+				connectionManagementDefault=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfigDefault.getClassImpl());
+				if(this.connectionManagementDefault==null){
+					throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+				}
+				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementDefault);
+	
+			}
+			else{
+				ConnectionManagement connectionManagementOther=(ConnectionManagement)ReflectUtil.instantiate(connectionManagementInstanceConfigTemp.getClassImpl());
+				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementOther);
 			}
 		}
-		if(this.connectionManagementInstanceConfig==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
 		
-		connectionManagement=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfig.getClassImpl());
-		if(this.connectionManagement==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
+		
 	}
 
 	protected void initEmfFile() {
@@ -1027,12 +1032,16 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return importDataVariableConfig;
 	}
 
-	public ConnectionManagementInstanceConfig getConnectionManagementInstanceConfig() {
-		return connectionManagementInstanceConfig;
+	public ConnectionManagementInstanceConfig getConnectionManagementInstanceConfigDefault() {
+		return connectionManagementInstanceConfigDefault;
 	}
 	
-	public ConnectionManagement getConnectionManagement() {
-		return connectionManagement;
+	public ConnectionManagement getConnectionManagementDefault() {
+		return connectionManagementDefault;
+	}
+	
+	public ConnectionManagement getConnectionManagement(String cmId) {
+		return connectionManagementMap.get(cmId);
 	}
 	
 	public FixFlowConfig getFixFlowConfig() {
@@ -1048,31 +1057,5 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return authenticationInstance;
 	}
 	
-	public void setConnectionManagement(ConnectionManagement connectionManagement) {
-		this.connectionManagement = connectionManagement;
-	}
-	
-	public ProcessEngineConfigurationImpl setConnectionManagement(String cmId) {
-		
-		List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
-		String selectId=cmId;
-		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
-			if(connectionManagementInstanceConfigTemp.getId().equals(selectId)){
-				this.connectionManagementInstanceConfig=connectionManagementInstanceConfigTemp;
-				break;
-			}
-		}
-		if(this.connectionManagementInstanceConfig==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
-		
-		this.connectionManagement=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfig.getClassImpl());
-		if(this.connectionManagement==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
-		
-		return this;
-		//this.connectionManagement = connectionManagement;
-	}
 
 }

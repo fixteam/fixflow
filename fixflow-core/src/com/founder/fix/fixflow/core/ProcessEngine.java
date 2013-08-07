@@ -76,8 +76,8 @@ public interface ProcessEngine {
 	
 
 	/**
-	 * 设置引擎使用的外部数据库连接
-	 * @param connection
+	 * 设置引擎使用的外部数据资源
+	 * @param 
 	 */
 	void setExternalContent(ExternalContent externalContent);
 	

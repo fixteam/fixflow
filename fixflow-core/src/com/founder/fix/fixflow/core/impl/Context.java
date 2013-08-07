@@ -35,7 +35,8 @@ public class Context {
 	
 	protected static ThreadLocal<Stack<Boolean>> isQuartzTransactionAutoThreadLocal = new ThreadLocal<Stack<Boolean>>();
 
-	
+	protected static ThreadLocal<Stack<String>> connectionManagementDefault = new ThreadLocal<Stack<String>>();
+
 	
 	//protected static ThreadLocal<Stack<Interpreter>> bshInterpreterThreadLocal = new ThreadLocal<Stack<Interpreter>>();
 	public static void setLanguageType(String languageType) {
@@ -52,6 +53,27 @@ public class Context {
 		String languageTypeTemp=stack.peek();
 		if(languageTypeTemp==null||languageTypeTemp.equals("")){
 			return "defauld";
+		}else{
+			return stack.peek();
+			
+		}
+		
+	}
+	
+	public static void setConnectionManagementDefault(String cmId) {
+		getStack(connectionManagementDefault).push(cmId);
+	}
+	
+	public static String getConnectionManagementDefault() {
+
+		Stack<String> stack = getStack(connectionManagementDefault);
+		if (stack.isEmpty()) {
+			return null;
+		}
+	
+		String languageTypeTemp=stack.peek();
+		if(languageTypeTemp==null||languageTypeTemp.equals("")){
+			return null;
 		}else{
 			return stack.peek();
 			

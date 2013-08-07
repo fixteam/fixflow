@@ -131,6 +131,10 @@ public class ProcessEngineImpl implements ProcessEngine {
 		} else {
 			FixResourceCore.setNowLanguage(languageType);
 		}
+		if(externalContent.getConnectionManagement()!=null&&!externalContent.getConnectionManagement().equals("")){
+			Context.setConnectionManagementDefault(externalContent.getConnectionManagement());
+		}
+		
 
 	}
 

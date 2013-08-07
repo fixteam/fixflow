@@ -3,6 +3,7 @@ package com.founder.fix.fixflow.core;
 
 import java.sql.Connection;
 
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
 
 /**
@@ -21,7 +22,13 @@ public abstract class ConnectionManagement {
 	public static ConnectionManagement INSTANCE(){
 		
 		ProcessEngine processEngine =ProcessEngineManagement.getDefaultProcessEngine();
-		return processEngine.getProcessEngineConfiguration().getConnectionManagement();
+		String cmId=Context.getConnectionManagementDefault();
+		if(cmId==null){
+			return processEngine.getProcessEngineConfiguration().getConnectionManagementDefault();
+		}else{
+			return processEngine.getProcessEngineConfiguration().getConnectionManagement(cmId);
+		}
+		
 		
 	}
 	
