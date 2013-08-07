@@ -114,14 +114,6 @@ public interface TaskService extends ProcessService {
 	 * @param taskId 任务编号
 	 */
 	void release(String taskId);
-	
-	
-	
-	
-	
-
-
-	
 
 	/**
 	 * 自定义扩展方式完成任务的处理命令调用的方法
@@ -386,14 +378,14 @@ public interface TaskService extends ProcessService {
 	
 	
 	/**
-	 * 获取当前用户设置的代码用户雷彪
+	 * 获取当前用户设置的代理用户
 	 * @param userId
 	 * @return
 	 */
 	List<UserTo> getAgentToUsers(String userId);
 	
 	/**
-	 * 获取当前用户设置的代码用户雷彪
+	 * 获取当前用户设置的代理用户
 	 * @param userId
 	 * @return map的key{userid,username}
 	 */

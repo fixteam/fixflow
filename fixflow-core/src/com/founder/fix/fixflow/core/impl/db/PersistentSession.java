@@ -153,6 +153,11 @@ public class PersistentSession {
 			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);
 			return taskInstancePersistence.findAgentUsers(StringUtil.getString(parameter));
 		}
+		
+		if (statement.endsWith("findAgentToUsers")) {
+			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);
+			return taskInstancePersistence.findAgentUsers(StringUtil.getString(parameter));
+		}
 
 		if (statement.equals("selectTaskByQueryCriteria")) {
 			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);

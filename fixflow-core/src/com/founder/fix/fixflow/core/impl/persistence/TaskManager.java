@@ -60,6 +60,11 @@ public class TaskManager extends AbstractManager {
 		return getDbSqlSession().selectList(query,userId);
 	}
 
+	
+	public List<Map<String,Object>> findAgentToUsers(String userId){
+		String query = "findAgentToUsers";
+		return getDbSqlSession().selectList(query,userId);
+	}
 	// getTaskStatusByByProcessInstanceIdList
 
 	@SuppressWarnings("unchecked")

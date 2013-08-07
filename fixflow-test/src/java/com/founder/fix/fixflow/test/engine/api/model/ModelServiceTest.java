@@ -256,5 +256,46 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		assertTrue(map.containsKey("UserTask_4"));
 		assertTrue(map.containsKey("EndEvent_1"));
 	}
+	
+	/**
+	 * 测试获取用户有权限启动的流程。  startProcessByUser.bpmn设置为所有人启动，StartProcessInstanceTest.bpmn设置为1035555启动，结果中应含有前者，不含有后者。
+	 */
+	public void testGetStartProcessByUserId() {
+
+		DeploymentBuilder deploymentBuilder = processEngine.getModelService().createDeployment().name("测试名称");
+		//添加你要发布的定义
+		deploymentBuilder.addClasspathResource("com/founder/fix/fixflow/test/engine/api/model/startProcessByUser.bpmn");
+		String deploymentIdTemp = deploymentBuilder.deploy().getId();
+		assertNotNull(deploymentIdTemp);
+		//重置下流程发布，发布下一个流程
+		deploymentBuilder = processEngine.getModelService().createDeployment().name("测试发布");
+		deploymentBuilder.addClasspathResource("com/founder/fix/fixflow/test/engine/api/model/StartProcessInstanceTest.bpmn");
+		//发布
+		deploymentIdTemp = deploymentBuilder.deploy().getId();
+		assertNotNull(deploymentIdTemp);
+		
+		//取到用户可以启动的流程列表
+		List<Map<String,String>> processList = modelService.getStartProcessByUserId("10691103");
+		//判断含有startProcessByUser
+		boolean isHave = false;
+		//判断不含有Process_StartProcessInstanceTest
+		boolean isNotHave = true;
+		for(Map <String,String> processMap :processList){
+			//循环遍历取到的流程定义
+			String process_key = processMap.get("processDefinitionKey");
+			//如果含有startProcessByUser则测试通过
+			if("startProcessByUser".equals(process_key)){
+				isHave = true;
+			}
+			//如果含有Process_StartProcessInstanceTest则测试失败
+			if("Process_StartProcessInstanceTest".equals(process_key)){
+				isNotHave = false;
+			}
+		}
+		//如果含有startProcessByUser则测试通过
+		assertTrue(isHave);
+		//如果含有Process_StartProcessInstanceTest则测试失败
+		assertTrue(isNotHave);
+	}
 
 }
