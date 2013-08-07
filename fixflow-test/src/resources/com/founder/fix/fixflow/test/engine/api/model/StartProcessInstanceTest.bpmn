@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1">
+  <bpmn2:collaboration id="Collaboration_1">
+    <bpmn2:participant id="Participant_1" name="Internal" processRef="Process_StartProcessInstanceTest"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_StartProcessInstanceTest" fixflow:category="测试" fixflow:dbid="Process_StartProcessInstanceTest:1:ac456878-3743-4d35-8473-cb1fef1f3c21" fixflow:verification="true" name="StartProcessInstanceTest">
+    <bpmn2:extensionElements>
+      <fixflow:taskSubject id="TaskSubject_1">
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;StartProcessInstanceTest任务主题&quot;">&quot;StartProcessInstanceTest任务主题&quot;</fixflow:expression>
+      </fixflow:taskSubject>
+      <fixflow:formUri>
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;test.html&quot;">&quot;test.html&quot;</fixflow:expression>
+      </fixflow:formUri>
+    </bpmn2:extensionElements>
+    <bpmn2:startEvent id="StartEvent_1" name="开   始">
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="UserTask_2" fixflow:taskType="FIXFLOWTASK" name="人工任务">
+      <bpmn2:extensionElements>
+        <fixflow:taskCommand id="Advance_1" name="提交" commandType="submit"/>
+        <fixflow:expectedExecutionTime/>
+        <fixflow:skipStrategy/>
+        <fixflow:taskCommand id="HandleCommand_2" name="启动并提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+      <bpmn2:humanPerformer fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="指定用户">
+        <bpmn2:resourceAssignmentExpression>
+          <bpmn2:formalExpression id="&quot;1035555&quot;">&quot;1035555&quot;</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:humanPerformer>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="StartEvent_1" targetRef="UserTask_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="UserTask_2" targetRef="UserTask_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="结   束">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:userTask id="UserTask_1" name="人工任务">
+      <bpmn2:extensionElements>
+        <fixflow:taskCommand id="Normal_1" name="同意" commandType="general"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+      <bpmn2:humanPerformer id="_4Cid0IcFEeGNnv8OztBLJA" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="提交人">
+        <bpmn2:resourceAssignmentExpression id="_4CjE4IcFEeGNnv8OztBLJA">
+          <bpmn2:formalExpression id="processInfo.getInitiator()">processInfo.getInitiator()</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:humanPerformer>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_1" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="_8xmHUIUrEeG7Wdq-QdDkQA">
+    <bpmndi:BPMNPlane id="_8xmHUYUrEeG7Wdq-QdDkQA" bpmnElement="Process_StartProcessInstanceTest">
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
+        <dc:Bounds height="51.0" width="36.0" x="108.0" y="142.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="560.0" y="142.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2">
+        <dc:Bounds height="50.0" width="110.0" x="190.0" y="135.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
+        <dc:Bounds height="50.0" width="110.0" x="390.0" y="135.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_UserTask_2">
+        <di:waypoint xsi:type="dc:Point" x="144.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="190.0" y="160.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_UserTask_2" targetElement="BPMNShape_UserTask_1">
+        <di:waypoint xsi:type="dc:Point" x="300.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="340.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="340.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="390.0" y="160.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_EndEvent_1">
+        <di:waypoint xsi:type="dc:Point" x="500.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="527.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="527.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="560.0" y="160.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

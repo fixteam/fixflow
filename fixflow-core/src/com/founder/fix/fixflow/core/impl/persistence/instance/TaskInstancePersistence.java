@@ -769,6 +769,21 @@ public class TaskInstancePersistence {
 		return listMaps;
 	}
 	
+	/**
+	 * 查询当前用户设置的代理对象
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String, Object>> findAgentToUsers(String userId){
+		String sql="SELECT distinct(z.USERID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join" +
+				" FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1' " +
+				" and  a.AGENT_ID=?) z";
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(userId);
+		List<Map<String, Object>> listMaps=sqlCommand.queryForList(sql, objectParamWhere);
+		return listMaps;
+	}
+	
 	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList){
 		//这个地方需要用到递归去寻找所有的子流程
 		List<Object> dataList=new ArrayList<Object>();
