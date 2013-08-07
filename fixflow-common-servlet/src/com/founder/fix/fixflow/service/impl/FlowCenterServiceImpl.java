@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.NumberUtils;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -45,14 +46,17 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 
 			tq.taskAssignee(filter.get("userId"));
 			tq.processDefinitionKey(filter.get("pdkey"));
+			int pageIndex = Integer.valueOf(filter.get("pageIndex"));
+			int rowNum = Integer.valueOf(filter.get("rowNum"));
+			
 			tq.taskNotEnd();
-			List<TaskInstance> lts = tq.list();
+			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			long count = tq.count();
 
 			result.put("dataList", lts);
 			result.put("pageNumber", count);
-			result.put("pageNumber", getAgentUsers(engine,filter.get("userId")));
-			result.put("pageNumber", getAgentToUsers(engine,filter.get("userId")));
+			result.put("agentUsers", getAgentUsers(engine,filter.get("userId")));
+			result.put("agentToUsers", getAgentToUsers(engine,filter.get("userId")));
 		} finally {
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
@@ -69,8 +73,10 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 
 			tq.taskAssignee(filter.get("userId"));
 			tq.processDefinitionKey(filter.get("pdkey"));
+			int pageIndex = Integer.valueOf(filter.get("pageIndex"));
+			int rowNum = Integer.valueOf(filter.get("rowNum"));
 			tq.taskNotEnd();
-			List<TaskInstance> lts = tq.list();
+			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			long count = tq.count();
 
 			result.put("dataList", lts);

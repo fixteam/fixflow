@@ -32,7 +32,23 @@ public interface FlowCenterService {
 	  * @Description: 获取某人的所有的未完结的任务
 	  * @param @param map
 	  * "userId" 用户编号;<br>
+	  * "pdkey" 流程编号;<br>
+	  * "pageIndex" 第几页;<br>
+	  * "rowNum" 有几行;<br>
+	  * "agentUserId" 有几行;<br>
+	  * "agentType" 0我代理被人，1别人委托给我<br>
+	  * "title" 查询主题<br>
+	  * "processVeriy" 查询变量<br>
+	  * "arrivalTimeS" 到达时间开始<br>
+	  * "arrivalTimeE" 到达时间结束<br>
+	  * "initor" 发起人<br>
 	  * @param @return
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
+	  * "agentUsers" 代理用户<br>
+	  * "agentToUsers" 委托用户<br>
+	  * "pageIndex" 第几页;<br>
+	  * "rowNum" 有几行;<br>
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * @throws
@@ -41,13 +57,29 @@ public interface FlowCenterService {
 		throws SQLException;
 
 	/**
-	  * queryMyTaskEnded(这里用一句话描述这个方法的作用)
+	  * queryMyTaskNotEnd
 	
-	  * @Title: queryMyTaskEnded
-	  * @Description: 获取某人的所有已完结的任务
+	  * @Title: queryMyTaskNotEnd
+	  * @Description: 获取某人的所有的未完结的任务
 	  * @param @param map
 	  * "userId" 用户编号;<br>
+	  * "pdkey" 流程编号;<br>
+	  * "pageIndex" 第几页;<br>
+	  * "rowNum" 有几行;<br>
+	  * "agentUserId" 有几行;<br>
+	  * "agentType" 0我代理被人，1别人委托给我<br>
+	  * "title" 查询主题<br>
+	  * "processVeriy" 查询变量<br>
+	  * "arrivalTimeS" 到达时间开始<br>
+	  * "arrivalTimeE" 到达时间结束<br>
+	  * "initor" 发起人<br>
 	  * @param @return
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
+	  * "agentUsers" 代理用户<br>
+	  * "agentToUsers" 委托用户<br>
+	  * "pageIndex" 第几页;<br>
+	  * "rowNum" 有几行;<br>
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * @throws
