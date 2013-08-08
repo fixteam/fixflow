@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 	public void init(){
-		if(!isCreated){
+		if(!SpringConfigLoadHelper.isCreated()){
 			WebApplicationContext wac = WebApplicationContextUtils
 			.getRequiredWebApplicationContext(this.getServletContext());
 			SpringConfigLoadHelper.buildApplicationContext(wac);

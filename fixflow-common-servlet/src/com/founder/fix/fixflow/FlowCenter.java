@@ -77,7 +77,6 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", result);
 				rd = request.getRequestDispatcher("startTask.jsp");
 			}else if(action.equals("getMyTask")){
-				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryMyTaskNotEnd(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
@@ -85,7 +84,6 @@ public class FlowCenter extends HttpServlet {
 			}else if(action.equals("getProcessImage")){
 				response.getOutputStream();
 			}else if(action.equals("getInitorTask")){
-				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
