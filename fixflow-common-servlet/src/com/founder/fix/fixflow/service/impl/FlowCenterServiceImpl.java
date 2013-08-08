@@ -121,6 +121,8 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageNumber", count);
+			result.put("pageIndex", pageI);
+			result.put("rowNum", rowI);
 			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
 			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
 		} finally {
@@ -223,6 +225,8 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageNumber", count);
+			result.put("pageIndex", pageI);
+			result.put("rowNum", rowI);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
@@ -231,7 +235,6 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	
 	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter) throws SQLException{
 		String processInstanceId = StringUtil.getString(filter.get("processInstanceId"));
-//		String processId		 = StringUtil.getString(filter.get(""));
 		
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
