@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +45,7 @@ public class FlowCenter extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CurrentThread.init();
+		ServletOutputStream out = null;
 		String action = StringUtil.getString(request.getParameter("action"));
 		if(StringUtil.isEmpty(action)){
 			action = StringUtil.getString(request.getAttribute("action"));
@@ -72,12 +75,12 @@ public class FlowCenter extends HttpServlet {
 		try{
 			RequestDispatcher rd = null;
 			String userId = StringUtil.getString(request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID));
+			filter.put("userId", userId);
 			if(action.equals("getMyProcess")){
 				List<Map<String,String>> result = getFlowCenter().queryStartProcess(userId);
 				request.setAttribute("result", result);
 				rd = request.getRequestDispatcher("startTask.jsp");
 			}else if(action.equals("getMyTask")){
-				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryMyTaskNotEnd(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
@@ -85,17 +88,29 @@ public class FlowCenter extends HttpServlet {
 			}else if(action.equals("getProcessImage")){
 				response.getOutputStream();
 			}else if(action.equals("getInitorTask")){
-				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/initorTask.jsp");
+				rd = request.getRequestDispatcher("/queryTask.jsp");
 			}else if(action.equals("getParticipantsTask")){
-				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/initorTask.jsp");
+				rd = request.getRequestDispatcher("/queryTask.jsp");
+			}else if(action.equals("getTaskDetailInfo")){
+				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/queryTask.jsp");
+			}else if(action.equals("getFlowGraph")){
+				InputStream is = getFlowCenter().getFlowGraph(filter);
+				out = response.getOutputStream();
+				response.setContentType("application/octet-stream;charset=UTF-8");
+				byte[] buff = new byte[2048];
+				int size = 0;
+				while(is!=null && (size = is.read(buff))!=-1){
+					out.write(buff,0,size);
+				}
 			}
 			
 			if(rd!=null)
@@ -103,9 +118,12 @@ public class FlowCenter extends HttpServlet {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
+			if(out!=null){
+				out.flush();
+				out.close();
+			}
 			CurrentThread.clear();
 		}
-		
 	}
 	
 	public FlowCenterService getFlowCenter(){

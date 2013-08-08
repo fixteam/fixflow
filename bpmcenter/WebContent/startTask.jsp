@@ -14,7 +14,7 @@ a{text-decoration: none;}
 <div>
   <a id="b1" target="_self" href="FlowCenter?action=getMyProcess">发起流程</a>
   <a id="b2" target="_self" href="FlowCenter?action=getMyTask">待办任务</a>
-  <a id="b3" target="_self" href="login.jsp">流程查询</a>
+  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask">流程查询</a>
   <a id="b4" target="_self" href="login.jsp">归档任务</a>
   <a id="b5" target="_self" href="login.jsp">返回登陆</a>
 </div>

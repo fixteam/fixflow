@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>待办任务</title>
+<title>流程查询</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <style>
@@ -25,38 +25,9 @@ a{text-decoration: none;}
 <div style="margin-top:10px;">
 <!-- 左 -->
 	<div style="float:left;width:20%;">
-	  <div id="myTask">我的任务</div>
-	  <div>代理任务</div>
-	  <%
-	  Map<String,Object> result = (Map<String,Object>)request.getAttribute("result");
-	  List agentUsersList = (List)result.get("agentUsers");
-	  if(agentUsersList.size()!=0){ 
-	  %>
-	  <div>
-	    <ul>
-	    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-	      <li name="agentUsers">${agentUsers.name}</li>
-	    </c:forEach>
-	    </ul>
-	  </div>
-	  <%}else{%>
-	  <div><span style="color:gray;font-size:10px;">没有代理人</span></div>
-	  <%} %>
-	  <div>委托任务</div>
-	  <%
-	  List agentToUsersList = (List)result.get("agentToUsers");
-	  if(agentToUsersList.size()!=0){ 
-	  %>
-	  <div>
-	    <ul>
-	    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-	      <li name="agentToUsers">${agentToUsers.name}</li>
-	    </c:forEach>
-	    </ul>
-	  </div>
-	  <%}else{%>
-	  <div><span style="color:gray;font-size:10px;">没有委托人</span></div>
-	  <%} %>
+	  <a id="myTask" style="display:block;">全部流程</a>
+	  <a target="_self" href="FlowCenter?action=getInitorTask" style="display:block;">我参与的流程</a>
+	  <a target="_self" href="FlowCenter?action=getParticipantsTask" style="display:block;">我发起的流程</a>
 	</div>
 <!-- 右-->
 	<div style="float:right;width:79%;">
