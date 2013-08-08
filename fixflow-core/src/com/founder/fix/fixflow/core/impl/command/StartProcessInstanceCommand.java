@@ -58,7 +58,26 @@ public class StartProcessInstanceCommand extends CommandParams {
 	protected Token parentProcessInstanceToken;
 	
 
-	
+	/**
+	 * 提交人
+	 */
+	protected String initiator;
+
+	/**
+	 * 提交人
+	 * @return
+	 */
+	public String getInitiator() {
+		return initiator;
+	}
+
+	/**
+	 * 设置提交人
+	 * @param initiator
+	 */
+	public void setInitiator(String initiator) {
+		this.initiator = initiator;
+	}
 
 	/**
 	 * 流程定义id，唯一编号,不能为空。(数据库中的 id)
