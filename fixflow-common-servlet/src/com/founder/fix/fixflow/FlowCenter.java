@@ -88,13 +88,13 @@ public class FlowCenter extends HttpServlet {
 				Map<String,Object> pageResult = getFlowCenter().queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/initorTask.jsp");
+				rd = request.getRequestDispatcher("/queryTask.jsp");
 			}else if(action.equals("getParticipantsTask")){
 				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/initorTask.jsp");
+				rd = request.getRequestDispatcher("/queryTask.jsp");
 			}
 			
 			if(rd!=null)
