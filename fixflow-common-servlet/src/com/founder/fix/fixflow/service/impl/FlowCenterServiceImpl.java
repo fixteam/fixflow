@@ -242,8 +242,12 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			tq.processInstanceId(processInstanceId);
 			tq.taskIsEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
 			List<TaskInstance> instances = tq.list();
+			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			for(TaskInstance tmp:instances){
+				instanceMaps.add(tmp.getPersistentState());
+			}
 			
-			result.put("dataList", instances);
+			result.put("dataList", instanceMaps);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
