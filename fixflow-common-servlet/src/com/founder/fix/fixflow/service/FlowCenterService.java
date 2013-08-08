@@ -143,4 +143,17 @@ public interface FlowCenterService {
 	  */
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> map)
 		throws SQLException;
+	
+	/**
+	  * getTaskDetailInfo
+	
+	  * @Title: getTaskDetailInfo
+	  * @Description: TODO
+	  * @param @param filter
+	  * @param @return
+	  * @param @throws SQLException    设定文件
+	  * @return Map<String,Object>    返回类型
+	  * @throws
+	  */
+	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter) throws SQLException;
 }
