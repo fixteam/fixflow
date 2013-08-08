@@ -28,10 +28,10 @@ import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
-import com.founder.fix.fixflow.test.AbstractFixFlowConnectorTestCase;
+import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
 import com.founder.fix.fixflow.test.Deployment;
 
-public class ConnectorTest extends AbstractFixFlowConnectorTestCase {
+public class ConnectorTest extends AbstractFixFlowTestCase {
 	@Deployment(resources = { "com/founder/fix/fixflow/test/bpmn/connector/ConnectorTest.bpmn" })
 	public void testConnector() {
 		// 流程数据变量
