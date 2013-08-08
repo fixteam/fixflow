@@ -158,60 +158,8 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	}
 
 	public Map<String,Object> queryTaskParticipants(Map<String,Object> filter) throws SQLException {
-		Map<String,Object> result = new HashMap<String,Object>();
-		String userId = (String) filter.get("userId");
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
-		ProcessInstanceQuery tq = engine.getRuntimeService()
-				.createProcessInstanceQuery();
-		
-
-		String descritpion = StringUtil.getString(filter.get("title"));
-		if(StringUtil.isNotEmpty(descritpion))
-			tq.subjectLike(descritpion);
-		
-		String initor	   = StringUtil.getString(filter.get("initor"));
-		if(StringUtil.isNotEmpty(initor))
-			tq.initiatorLike(initor);
-		Date dates = null;
-		Date datee = null;
-		String dss = StringUtil.getString(filter.get("arrivalTimeS"));
-		String dse = StringUtil.getString(filter.get("arrivalTimeE"));
-		if(StringUtil.isNotEmpty(dss)){
-			dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
-		}
-		if(StringUtil.isNotEmpty(dse)){
-			datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
-		}
-		if(dates!=null)
-			tq.startTimeAfter(dates);
-		
-		if(datee!=null)
-			tq.startTimeBefore(datee);
-		
-		String pageI = StringUtil.getString(filter.get("pageIndex"));
-		String rowI = StringUtil.getString(filter.get("rowNum"));
-		
-		int pageIndex=1;
-		int rowNum   =5;
-		if(StringUtil.isNotEmpty(pageI)){
-			pageIndex = Integer.valueOf(pageIndex);
-		}
-		if(StringUtil.isNotEmpty(rowI)){
-			rowNum = Integer.valueOf(rowI);
-		}
-		
-		if(filter.get("ended")!=null)
-			tq.isEnd();
-		
-		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
-		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
-		for(ProcessInstance tmp:instances){
-			instanceMaps.add(tmp.getPersistentState());
-		}
-		long count = tq.count();
-		result.put("pageNumber", count);
-		result.put("dataList", instanceMaps);
-		return result;
+		filter.put("queryPart", "queryPart");
+		return queryTaskInitiator(filter);
 	}
 
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> filter) throws SQLException {
@@ -259,14 +207,25 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		if(filter.get("ended")!=null)
 			tq.isEnd();
 		
-		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
+		List<ProcessInstance> instances = null;
+		if(filter.get("queryPart")==null)
+			instances = tq.initiator(userId).listPagination(pageIndex, rowNum);
+		else
+			instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
 		long count = tq.count();
 		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 		for(ProcessInstance tmp:instances){
 			instanceMaps.add(tmp.getPersistentState());
 		}
 		result.put("pageNumber", count);
-		result.put("dataList", instances);
+		result.put("dataList", instanceMaps);
 		return result;
 	}
+	
+//	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter){
+//		String processInstanceId = StringUtil.getString(filter.get("processInstanceId"));
+//		String processId		 = StringUtil.getString(filter.get("processInstanceId"));
+//		
+//		
+//	}
 }
