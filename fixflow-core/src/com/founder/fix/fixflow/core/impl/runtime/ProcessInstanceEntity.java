@@ -881,7 +881,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		
 		mapPersistentState.put(ProcessInstanceObjKey.UpdateTime().FullKey(), this.updateTime);
 		
-		mapPersistentState.put(ProcessInstanceObjKey.InstanceType().FullKey(), this.instanceType);
+		mapPersistentState.put(ProcessInstanceObjKey.InstanceStatus().FullKey(), this.instanceType);
 
 		for (String key : extensionFields.keySet()) {
 			mapPersistentState.put(key, extensionFields.get(key));	
@@ -1083,7 +1083,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				continue;
 			}
 			
-			if (dataKey.equals(ProcessInstanceObjKey.InstanceType().DataBaseKey())) {
+			if (dataKey.equals(ProcessInstanceObjKey.InstanceStatus().DataBaseKey())) {
 				//为了兼容老系统
 				if(entityMap.get(dataKey) == null){
 					if(entityMap.get(ProcessInstanceObjKey.EndTime().DataBaseKey()) == null){
@@ -1145,7 +1145,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				objectParam.put(ProcessInstanceObjKey.ProcessLocation().DataBaseKey(), this.getProcessLocation());
 				
 				// 实例状态
-				objectParam.put(ProcessInstanceObjKey.InstanceType().DataBaseKey(), this.getInstanceType().toString());
+				objectParam.put(ProcessInstanceObjKey.InstanceStatus().DataBaseKey(), this.getInstanceType().toString());
 				
 				// 更新时间
 				objectParam.put(ProcessInstanceObjKey.UpdateTime().DataBaseKey(), this.getUpdateTime());

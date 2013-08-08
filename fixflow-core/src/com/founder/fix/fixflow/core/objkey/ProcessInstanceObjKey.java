@@ -579,16 +579,16 @@ public class ProcessInstanceObjKey {
 	 * 实例状态
 	 * @return
 	 */
-	public static FlowKeyInstanceType InstanceType(){
-		return new ProcessInstanceObjKey().new FlowKeyInstanceType();
+	public static FlowKeyInstanceStatus InstanceStatus(){
+		return new ProcessInstanceObjKey().new FlowKeyInstanceStatus();
 	}
 	
-	public class FlowKeyInstanceType implements ObjKeyInterface{
+	public class FlowKeyInstanceStatus implements ObjKeyInterface{
 
 
 		public String EntityKey() {
 			// TODO Auto-generated method stub
-			return "instanceType";
+			return "instanceStatus";
 		}
 
 		public String DataBaseKey() {
