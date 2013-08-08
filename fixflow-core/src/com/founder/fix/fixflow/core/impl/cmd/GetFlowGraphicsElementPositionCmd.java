@@ -74,6 +74,9 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 					BPMNShape bpmnShape = (BPMNShape) diagramElement;
 					Map<String, Object>  positionMap=new HashMap<String, Object>();
 					BaseElement bpmnElement=bpmnShape.getBpmnElement();
+					if(bpmnElement.getId()==null){
+						bpmnElement=getBaseElement(bpmnElement);
+					}
 					if(bpmnElement==null){
 						continue;
 					}

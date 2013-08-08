@@ -152,7 +152,7 @@ public class BpmnDeployer implements Deployer {
 			process.setDeploymentId(deploymentId);
 			ProcessDefinitionBehavior persistedProcessDefinition = processDefinitionManager.findProcessDefinitionByDeploymentAndKey(
 					deploymentId, process.getProcessDefinitionKey());
-			process.setId(persistedProcessDefinition.getId());
+			//process.setId(persistedProcessDefinition.getId());
 			process.setVersion(persistedProcessDefinition.getVersion());
 			process.setProcessDefinitionId(persistedProcessDefinition.getProcessDefinitionId());
 			
