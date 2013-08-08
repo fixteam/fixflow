@@ -45,6 +45,7 @@ public class FlowCenter extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CurrentThread.init();
+		ServletOutputStream out = null;
 		String action = StringUtil.getString(request.getParameter("action"));
 		if(StringUtil.isEmpty(action)){
 			action = StringUtil.getString(request.getAttribute("action"));
@@ -96,9 +97,14 @@ public class FlowCenter extends HttpServlet {
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/queryTask.jsp");
+			}else if(action.equals("getTaskDetailInfo")){
+				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/queryTask.jsp");
 			}else if(action.equals("getFlowGraph")){
 				InputStream is = getFlowCenter().getFlowGraph(filter);
-				ServletOutputStream out = response.getOutputStream();
+				out = response.getOutputStream();
 				response.setContentType("application/octet-stream;charset=UTF-8");
 				byte[] buff = new byte[2048];
 				int size = 0;
@@ -112,9 +118,12 @@ public class FlowCenter extends HttpServlet {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
+			if(out!=null){
+				out.flush();
+				out.close();
+			}
 			CurrentThread.clear();
 		}
-		
 	}
 	
 	public FlowCenterService getFlowCenter(){

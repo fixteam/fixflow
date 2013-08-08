@@ -190,8 +190,8 @@ public interface FlowCenterService {
 	  * @Description: 获取某流程的流程图信息
 	  * @param @param filter
 	  * "userId" 用户编号<br>
-	  * "processDefinitionId" 流程定义编号,与流程唯一标识传任意一个(可选)<br>
-	  * "processDefinitionKey" 流程定义唯一标识(可选)<br>
+	  * "processDefinitionId" 流程定义编号,与流程唯一标识任选一个(可选)<br>
+	  * "processDefinitionKey" 流程定义唯一标识,与流程定义编号任选一个(可选)<br>
 	  * @param @return
 	  * @param @throws SQLException    设定文件
 	  * @return InputStream    返回类型

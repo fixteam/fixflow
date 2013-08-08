@@ -115,7 +115,10 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			long count = tq.count();
-
+			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			for(TaskInstance tmp:lts){
+				instanceMaps.add(tmp.getPersistentState());
+			}
 			result.put("dataList", lts);
 			result.put("pageNumber", count);
 			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
@@ -218,8 +221,8 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			for(ProcessInstance tmp:instances){
 				instanceMaps.add(tmp.getPersistentState());
 			}
-			result.put("pageNumber", count);
 			result.put("dataList", instanceMaps);
+			result.put("pageNumber", count);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
