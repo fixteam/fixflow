@@ -6,64 +6,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>待办任务</title>
+<title>流程查询</title>
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <style>
 a{text-decoration: none;}
 </style>
 </head>
+
 <body>
 <div>
   <a id="b1" target="_self" href="FlowCenter?action=getMyProcess">发起流程</a>
   <a id="b2" target="_self" href="FlowCenter?action=getMyTask">待办任务</a>
-  <a id="b3" target="_self" href="login.jsp">流程查询</a>
+  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask">流程查询</a>
   <a id="b4" target="_self" href="login.jsp">归档任务</a>
   <a id="b5" target="_self" href="login.jsp">返回登陆</a>
 </div>
 <div style="margin-top:10px;">
 <!-- 左 -->
 	<div style="float:left;width:20%;">
-	  <div id="myTask">我的任务</div>
-	  <div>代理任务</div>
-	  <%
-	  Map<String,Object> result = (Map<String,Object>)request.getAttribute("result");
-	  List agentUsersList = (List)result.get("agentUsers");
-	  if(agentUsersList.size()!=0){ 
-	  %>
-	  <div>
-	    <ul>
-	    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-	      <li name="agentUsers">${agentUsers.name}</li>
-	    </c:forEach>
-	    </ul>
-	  </div>
-	  <%}else{%>
-	  <div><span style="color:gray;font-size:10px;">没有代理人</span></div>
-	  <%} %>
-	  <div>委托任务</div>
-	  <%
-	  List agentToUsersList = (List)result.get("agentToUsers");
-	  if(agentToUsersList.size()!=0){ 
-	  %>
-	  <div>
-	    <ul>
-	    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-	      <li name="agentToUsers">${agentToUsers.name}</li>
-	    </c:forEach>
-	    </ul>
-	  </div>
-	  <%}else{%>
-	  <div><span style="color:gray;font-size:10px;">没有委托人</span></div>
-	  <%} %>
+	  <a id="myTask" style="display:block;">全部流程</a>
+	  <a target="_self" href="FlowCenter?action=getInitorTask" style="display:block;">我参与的流程</a>
+	  <a target="_self" href="FlowCenter?action=getParticipantsTask" style="display:block;">我发起的流程</a>
 	</div>
 <!-- 右-->
 	<div style="float:right;width:79%;">
 <!-- 查 -->
 	  <div id="search">
 	  </div>
-	    任务主题：<input type="text" value="<%=result.get("title")%>"/>流程变量：<input type="text"/>单据号：<input type="text"/><br/>
-	    到达时间：<input type="text" value="<%=result.get("arrivalTimeS")%>"/>
-	    	—— <input type="text" value="<%=result.get("arrivalTimeE")%>"/>发起人：<input type="text" value="<%=result.get("initor")%>"/>
+	    任务主题：<input type="text" value="<c:out value="${result.title}"/>"/>
+	    流程变量：<input type="text"/>
+	        单据号：<input type="text"/><br/>
+	    到达时间：<input type="text" class="Wdate" onClick="WdatePicker()" value="<c:out value="${result.arrivalTimeS}"/>"/> 
+	    	—— <input type="text" class="Wdate" onClick="WdatePicker()" value="<c:out value="${result.arrivalTimeE}"/>"/>
+	        发起人：<input type="text" value="<c:out value="${result.initor}"/>"/>
 	  <div>
 <!-- 表 -->
 		<table>
@@ -95,10 +71,10 @@ a{text-decoration: none;}
 	</div>
 </div>
 <!-- 隐藏参数部分 -->
-<input type="hidden" name="userId" value="<%=result.get("userId")%>">
-<input type="hidden" name="pageIndex" value="<%=result.get("pageIndex")%>">
-<input type="hidden" name="rowNum" value="<%=result.get("rowNum")%>">
-<input type="hidden" name="agentType" value="<%=result.get("agentType")%>">
+<input type="hidden" name="userId" value="<c:out value="${result.userId}"/>">
+<input type="hidden" name="pageIndex" value="<c:out value="${result.pageIndex}"/>">
+<input type="hidden" name="rowNum" value="<c:out value="${result.rowNum}"/>">
+<input type="hidden" name="agentType" value="<c:out value="${result.agentType}"/>">
 </body>
 <script>
 /*
