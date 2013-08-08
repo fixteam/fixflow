@@ -119,7 +119,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			for(TaskInstance tmp:lts){
 				instanceMaps.add(tmp.getPersistentState());
 			}
-			result.put("dataList", lts);
+			result.put("dataList", instanceMaps);
 			result.put("pageNumber", count);
 			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
 			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
