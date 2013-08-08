@@ -34,6 +34,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -306,9 +307,11 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		
 		try{
 			user = engine.getIdentityService().getUserTo(userId);
+			List<GroupTo> groups = engine.getIdentityService().getUserInGroups(userId);
 			result.put("user", user);
+			result.put("groups", groups);
 		}finally{
-//			FixFlowShellProxy.closeProcessEngine(engine, false);
+			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
 		return result;
 	}
