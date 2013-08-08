@@ -31,6 +31,10 @@ public class SpringConfigLoadHelper {
 		if (_instance == null)
 			_instance = buildApplicationContext(urlPath);
 	}*/
+	
+	public static boolean isCreated(){
+		return (_wac != null || context!=null);
+	}
 
 	/**
 	 * 加载spring配置信息

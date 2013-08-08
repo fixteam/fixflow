@@ -56,10 +56,15 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			
 			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
 			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
-			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
+//			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
 			
-			tq.taskDescriptionLike(StringUtil.getString(filter.get("title")));
-			tq.initiatorLike(StringUtil.getString(filter.get("initor")));
+			String descritpion = StringUtil.getString(filter.get("title"));
+			if(StringUtil.isNotEmpty(descritpion))
+				tq.taskDescriptionLike(descritpion);
+			
+			String initor	   = StringUtil.getString(filter.get("initor"));
+			if(StringUtil.isNotEmpty(initor))
+				tq.initiatorLike(initor);
 			Date dates = null;
 			Date datee = null;
 			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
@@ -70,8 +75,11 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			if(StringUtil.isNotEmpty(dse)){
 				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
 			}
-			tq.taskCreatedAfter(dates);
-			tq.taskCreatedBefore(datee);
+			if(dates!=null)
+				tq.taskCreatedAfter(dates);
+			
+			if(datee!=null)
+				tq.taskCreatedBefore(datee);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
 			String rowI = StringUtil.getString(filter.get("rowNum"));
@@ -152,9 +160,39 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
-		ProcessInstanceQuery query = engine.getRuntimeService()
+		ProcessInstanceQuery tq = engine.getRuntimeService()
 				.createProcessInstanceQuery();
-		List<ProcessInstance> instances = query.taskParticipants(userId).list();
+		
+
+//		tq.taskDescriptionLike(StringUtil.getString(filter.get("title")));
+//		tq.initiatorLike(StringUtil.getString(filter.get("initor")));
+//		Date dates = null;
+//		Date datee = null;
+//		String dss = StringUtil.getString(filter.get("arrivalTimeS"));
+//		String dse = StringUtil.getString(filter.get("arrivalTimeE"));
+//		if(StringUtil.isNotEmpty(dss)){
+//			dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
+//		}
+//		if(StringUtil.isNotEmpty(dse)){
+//			datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+//		}
+//		tq.taskCreatedAfter(dates);
+//		tq.taskCreatedBefore(datee);
+//		
+//		String pageI = StringUtil.getString(filter.get("pageIndex"));
+//		String rowI = StringUtil.getString(filter.get("rowNum"));
+//		
+//		int pageIndex=1;
+//		int rowNum   =5;
+//		if(StringUtil.isNotEmpty(pageI)){
+//			pageIndex = Integer.valueOf(pageIndex);
+//		}
+//		if(StringUtil.isNotEmpty(rowI)){
+//			rowNum = Integer.valueOf(rowI);
+//		}
+		
+		
+		List<ProcessInstance> instances = tq.taskParticipants(userId).list();
 		result.put("dataList", instances);
 		return result;
 	}
