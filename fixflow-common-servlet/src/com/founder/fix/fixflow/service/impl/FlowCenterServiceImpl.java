@@ -93,7 +93,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				rowNum = Integer.valueOf(rowI);
 			}
 			
-			if(filter.get("ended")!=null)
+			if(filter.get("ended")==null)
 				tq.taskNotEnd();
 			
 			if(filter.get("agentUserId")!=null){
@@ -199,6 +199,9 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			rowNum = Integer.valueOf(rowI);
 		}
 		
+		if(filter.get("ended")!=null)
+			tq.isEnd();
+		
 		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
 		long count = tq.count();
 		result.put("pageNumber", count);
@@ -247,6 +250,9 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		if(StringUtil.isNotEmpty(rowI)){
 			rowNum = Integer.valueOf(rowI);
 		}
+		
+		if(filter.get("ended")!=null)
+			tq.isEnd();
 		
 		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
 		long count = tq.count();
