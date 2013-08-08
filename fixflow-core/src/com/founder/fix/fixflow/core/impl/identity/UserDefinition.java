@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.core.impl.identity;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -45,15 +46,25 @@ public abstract class UserDefinition {
 	 */
 	public SqlCommand getSqlCommand(){
 		
-		Connection connection = Context.getDbConnection();
+		String dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
+		
+
+		Connection connection = Context.getDbConnection(dataBaseId);// Context.getDbConnection();
 
 		SqlCommand sqlCommand = new SqlCommand(connection);
-		
+
 		return sqlCommand;
 		
 	}
 
 
 	public abstract UserTo findUserByUserId(String userId);
+	
+	/**
+	 * 获取用户所在的所有组
+	 * @param userId用户编号
+	 * @return
+	 */
+	public abstract List<GroupTo> getUserInGroups(String userId);
 
 }

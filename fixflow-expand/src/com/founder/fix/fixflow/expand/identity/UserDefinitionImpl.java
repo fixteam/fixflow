@@ -25,6 +25,8 @@ import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
+import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserDefinition;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -76,6 +78,22 @@ public class UserDefinitionImpl extends UserDefinition {
 			
 			return userTo;
 		}
+	}
+
+	@Override
+	public List<GroupTo> getUserInGroups(String userId) {
+		List<GroupDefinition> groupDefinitions = Context.getProcessEngineConfiguration().getGroupDefinitions();
+		List<GroupTo> groupTos=new ArrayList<GroupTo>();
+		for (GroupDefinition groupDefinition : groupDefinitions) {
+			List<GroupTo> groupTosTemp=groupDefinition.findGroupMembersByUser(userId);
+			
+			if(groupTosTemp!=null&&groupTosTemp.size()>0){
+				groupTos.addAll(groupTosTemp);
+			}
+			
+			
+		}
+		return groupTos;
 	}
 
 }

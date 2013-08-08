@@ -19,7 +19,7 @@ package com.founder.fix.fixflow.core.impl.identity;
 
 import java.util.Map;
 
-import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 
@@ -108,29 +108,33 @@ public class GroupTo {
 	 */
 	public String getGroupName() {
 		
-		
-		boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+		try {
+			boolean booleanTemp = StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
 
-		//用户名称国际化处理
-		if (booleanTemp) {
+			//用户名称国际化处理
+			if (booleanTemp) {
 
-			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
+				FixFlowResources fixFlowResources = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
 
-			String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_"+groupType+"_Name_Key");
-			if (nameTemp == null || nameTemp.equals("")) {
-				return groupName;
-			} else {
-				Object otherName = this.getPropertyValue(nameTemp);
-				if (otherName == null || otherName.equals("")) {
+				String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_"+groupType+"_Name_Key");
+				if (nameTemp == null || nameTemp.equals("")) {
 					return groupName;
 				} else {
-					return StringUtil.getString(otherName);
+					Object otherName = this.getPropertyValue(nameTemp);
+					if (otherName == null || otherName.equals("")) {
+						return groupName;
+					} else {
+						return StringUtil.getString(otherName);
+					}
 				}
-			}
 
-		} else {
+			} else {
+				return groupName;
+			}
+		} catch (Exception e) {
 			return groupName;
 		}
+		
 		
 		
 	
