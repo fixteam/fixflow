@@ -17,10 +17,14 @@
  */
 package com.founder.fix.fixflow.test.engine.api.model;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipInputStream;
+
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
+import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
@@ -297,5 +301,104 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		//如果含有Process_StartProcessInstanceTest则测试失败
 		assertTrue(isNotHave);
 	}
-
+	
+	/**
+	 * 测试通过zip文件发布流程，流程定义发布全部采用从设计器导出的.zip文件   发布.zip文件中包含xxx.bpmn、xxx.png
+	 */
+	public void testAddZipInputStream(){
+		//创建一个发布
+		DeploymentBuilder deploymentBuilder = processEngine.getModelService().createDeployment().name("测试名称");
+		//获取zip文件的inputStream流
+		InputStream inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+		//发布流程定义
+		deploymentBuilder.addZipInputStream(new ZipInputStream(inputStream));
+		String deploymentId = deploymentBuilder.deploy().getId();
+		//验证是否发布成功
+		assertNotNull(deploymentId);
+		//创建流程定义查询
+		ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
+		//查询刚发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		ProcessDefinitionBehavior processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证是否查询到
+		assertNotNull(processDefinitionBehavior);
+	}
+	
+	/**
+	 * 测试获取流程图
+	 */
+	public void testGetFlowGraphicsImgStream(){
+		//创建一个发布
+		DeploymentBuilder deploymentBuilder = processEngine.getModelService().createDeployment().name("测试名称");
+		//获取zip文件的inputStream流
+		InputStream inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+		//发布流程定义
+		deploymentBuilder.addZipInputStream(new ZipInputStream(inputStream));
+		String deploymentId = deploymentBuilder.deploy().getId();
+		//验证是否发布成功
+		assertNotNull(deploymentId);
+		//创建流程定义查询
+		ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
+		//查询刚发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		ProcessDefinitionBehavior processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证是否查询到
+		assertNotNull(processDefinitionBehavior);
+		
+		//获取流程定义编号
+		String processDefinitionId = processDefinitionBehavior.getProcessDefinitionId();
+		//获取流程定义key
+		String processDefinitionKey = processDefinitionBehavior.getProcessDefinitionKey();
+		//通过流程定义编号获取流程图的文件流
+		InputStream streamById = modelService.GetFlowGraphicsImgStreamByDefId(processDefinitionId);
+		//验证是否成功获取
+		assertNotNull(streamById);
+		//通过流程定义key获取流程图的文件流
+		InputStream streamByKey = modelService.GetFlowGraphicsImgStreamByDefKey(processDefinitionKey);
+		//验证是否成功获取
+		assertNotNull(streamByKey);
+	}
+	
+	/**
+	 * 测试更新流程定义
+	 */
+	public void testUpdateDeploymentId(){
+		//创建一个发布
+		DeploymentBuilder deploymentBuilder = processEngine.getModelService().createDeployment().name("测试名称");
+		//获取zip文件的inputStream流
+		InputStream inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+		//发布流程定义
+		deploymentBuilder.addZipInputStream(new ZipInputStream(inputStream));
+		String deploymentId = deploymentBuilder.deploy().getId();
+		//验证是否发布成功
+		assertNotNull(deploymentId);
+		//创建流程定义查询
+		ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
+		//查询刚发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		ProcessDefinitionBehavior processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证是否查询到
+		assertNotNull(processDefinitionBehavior);
+		
+		String deployId = processDefinitionBehavior.getDeploymentId();
+		deploymentBuilder = processEngine.getModelService().createDeployment().name("测试名称");
+		//获取zip文件的inputStream流
+		inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest_new.zip");
+		//发布流程定义
+		deploymentBuilder.addZipInputStream(new ZipInputStream(inputStream));
+		//设置需要更新的发布号
+		deploymentBuilder.updateDeploymentId(deployId);
+		//更新流程定义
+		deploymentId = deploymentBuilder.deploy().getId();
+		
+		//重置流程定义查询
+		processDefinitionQuery = modelService.createProcessDefinitionQuery();
+		//查询刚发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		//获取查询到的流程定义
+		processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证是否查询到
+		assertNotNull(processDefinitionBehavior);
+		
+	}
 }
