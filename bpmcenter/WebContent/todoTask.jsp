@@ -24,7 +24,7 @@ a{text-decoration: none;}
 </div>
 <div style="margin-top:10px;">
 <!-- 左 -->
-	<div style="float:left;width:20%;">
+	<div style="float:left;width:10%;">
 	  <div id="myTask">我的任务</div>
 	  <div>代理任务</div>
 	  <%
@@ -59,7 +59,7 @@ a{text-decoration: none;}
 	  <%} %>
 	</div>
 <!-- 右-->
-	<div style="float:right;width:79%;">
+	<div style="float:right;width:89%;">
 <!-- 查 -->
 	  <div id="search">
 	  </div>
@@ -79,22 +79,37 @@ a{text-decoration: none;}
 		    <th>任务主题</th>
 		    <th>发起人</th>
 		    <th>发起时间</th>
-		    <th>当前步骤</th>
-		    <th>到达时间</th>
+		    <th>查看流程图</th>
 		  </thead>
 		  <tbody>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		      <td>${dataList.name}</td>
+		      <td>${dataList.bizKey}|bizKey</td>
+		      <td>${dataList.processDefinitionName}|processDefinitionName</td>
+		      <td>${dataList.processDefinitionKey}|processDefinitionKey</td>
+		      <td>${dataList.startTime}|startTime</td>
+		      <td>${dataList.nodeName}|nodeName</td>
+		      <td>${dataList.nodeId}|nodeId</td>
+		      <td><button name="flowGraph" pdi="${dataList.processDefinitionId}">流程图</button></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>
 	    </table>
 <!-- 分页 -->	    
 	    <div id="page">
-	      <a name="page" href="javascript:void(0);">1</a>
-	      <a name="page" href="javascript:void(0);">2</a>
-	      <a name="page" href="javascript:void(0);">3</a>
+	      <%
+	      Map map = (Map)request.getAttribute("result");
+	      Object pageIndex = (Object)map.get("pageIndex");
+	      int pi = 1;
+	      if(pageIndex==null){
+	    	  pi=1;
+	      }else{
+	    	  pi = (Integer)pageIndex;
+	      }
+	      for(int m=0;m<pi;m++){ 
+	      %>
+	      <a name="page" href="javascript:void(0);"><%=m+1 %></a>
+	      <%} %>
 	    </div>
 	  </div>
 	</div>
@@ -140,6 +155,11 @@ $(function(){
   $("li[name=agentToUsers]").click(function(){
     var userId = $(this).attr("userId");
     window.location.href = "FlowCenter?action=getMyTask&agentType=1&userId="+userId;
+  });
+  $("button[name=flowGraph]").click(function(){
+    var pdi = $(this).attr("pdi");
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=getFlowGraph&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>
