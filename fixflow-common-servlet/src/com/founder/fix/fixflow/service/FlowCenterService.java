@@ -99,7 +99,7 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @return List<Map<String,String>>
+	  * @return List<Map<String,String>><br>
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * @throws SQLException
@@ -135,7 +135,7 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @return Map<String,Object>
+	  * @return Map<String,Object><br>
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * @throws SQLException
@@ -159,7 +159,7 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @return Map<String,Object>
+	  * @return Map<String,Object><br>
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * @throws SQLException
