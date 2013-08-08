@@ -30,10 +30,17 @@ public class SpringConfigLoadHelper {
 //	private static ApplicationContext _instance;
 	private static Object object = new Object();
 	private static ApplicationContext _wac =null;
-	public static ApplicationContext context;
+	private static ApplicationContext context;
 	static{
-		String[] sources = {"applicationContext*.xml"};
-		context = new ClassPathXmlApplicationContext(sources);
+
+	}
+	
+	public static ApplicationContext getLocalContext(){
+		if(context==null){
+			String[] sources = {"applicationContext*.xml"};
+			context = new ClassPathXmlApplicationContext(sources);
+		}
+		return context;
 	}
 //	private static final String path = "/applicationContext*.xml";
 
@@ -91,13 +98,13 @@ public class SpringConfigLoadHelper {
 	 */
 	public static Object getBean(String name) {
 		if(_wac==null)
-			return context.getBean(name);
+			return getLocalContext().getBean(name);
 		return _wac.getBean(name);
 	}
 	
 	public static ApplicationContext getContext() {
 		if(_wac==null)
-			return context;
+			return getLocalContext();
 		return _wac;
 	}
 	
