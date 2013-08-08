@@ -38,4 +38,8 @@ id="WebApp_ID"
     <servlet-name>FlowCenter</servlet-name>
     <url-pattern>/FlowCenter</url-pattern>
   </servlet-mapping>
+  	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+  
 </web-app>

@@ -17,6 +17,11 @@
  */
 package com.founder.fix.fixflow.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,9 +30,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -36,6 +43,7 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.fix.fixflow.util.FileUtil;
 
 @Service
 public class FlowCenterServiceImpl implements FlowCenterService {
@@ -278,4 +286,60 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		return result;
 	}
 	
+	public Map<String,Object> getUserInfo(Map<String,Object> filter) throws SQLException, IOException{
+		Map<String,Object> result= new HashMap<String,Object>();
+		UserTo user = null;
+		String userId = (String) filter.get("userId");
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		
+		String path = StringUtil.getString(filter.get("path"));
+		path = path+"/icon/";
+		File newFile = new File(path);
+		FileUtil.makeParent(new File(path+"ss.ss"));
+		
+		String[] icons = newFile.list();
+		for(String tmp:icons){
+			if(tmp.startsWith(userId)){
+				result.put("icon", "icon/"+tmp);
+			}
+		}
+		
+		try{
+			user = engine.getIdentityService().getUserTo(userId);
+			result.put("user", user);
+		}finally{
+//			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+		return result;
+	}
+	
+	public void saveUserIcon(Map<String,Object> filter) throws IOException{
+		FileItem is = (FileItem)filter.get("icon");
+		String userId = (String) filter.get("userId");
+		String path = StringUtil.getString(filter.get("path"));
+		String ex = FileUtil.getFileEx(is.getName());
+		path = path+"/icon/"+userId+"."+ex;
+		
+		File newFile = new File(path);
+		FileUtil.makeFile(newFile);
+	    BufferedInputStream bis = null;   
+	    FileOutputStream fos = null;
+	    int BUFFER_SIZE = 4096;
+	    byte[] buf = new byte[BUFFER_SIZE];   
+	    int size = 0;   
+	    InputStream file = is.getInputStream();
+	    bis = new BufferedInputStream(file);   
+	    fos = new FileOutputStream(newFile);
+
+	    try{
+		    while ( (size = bis.read(buf)) != -1)   { 
+		      fos.write(buf, 0, size);
+		      fos.flush();
+		    }
+	    }finally{
+	    	file.close();
+		    fos.close();
+		    bis.close();
+	    }
+	}
 }
