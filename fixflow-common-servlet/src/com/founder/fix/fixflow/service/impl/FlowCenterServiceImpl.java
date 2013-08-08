@@ -199,7 +199,9 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			rowNum = Integer.valueOf(rowI);
 		}
 		
-		List<ProcessInstance> instances = tq.taskParticipants(userId).list();
+		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
+		long count = tq.count();
+		result.put("pageNumber", count);
 		result.put("dataList", instances);
 		return result;
 	}
@@ -208,9 +210,47 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
-		ProcessInstanceQuery query = engine.getRuntimeService()
+		ProcessInstanceQuery tq = engine.getRuntimeService()
 				.createProcessInstanceQuery();
-		List<ProcessInstance> instances = query.initiator(userId).list();
+		
+		String descritpion = StringUtil.getString(filter.get("title"));
+		if(StringUtil.isNotEmpty(descritpion))
+			tq.subjectLike(descritpion);
+		
+		String initor	   = StringUtil.getString(filter.get("initor"));
+		if(StringUtil.isNotEmpty(initor))
+			tq.initiatorLike(initor);
+		Date dates = null;
+		Date datee = null;
+		String dss = StringUtil.getString(filter.get("arrivalTimeS"));
+		String dse = StringUtil.getString(filter.get("arrivalTimeE"));
+		if(StringUtil.isNotEmpty(dss)){
+			dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
+		}
+		if(StringUtil.isNotEmpty(dse)){
+			datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+		}
+		if(dates!=null)
+			tq.startTimeAfter(dates);
+		
+		if(datee!=null)
+			tq.startTimeBefore(datee);
+		
+		String pageI = StringUtil.getString(filter.get("pageIndex"));
+		String rowI = StringUtil.getString(filter.get("rowNum"));
+		
+		int pageIndex=1;
+		int rowNum   =5;
+		if(StringUtil.isNotEmpty(pageI)){
+			pageIndex = Integer.valueOf(pageIndex);
+		}
+		if(StringUtil.isNotEmpty(rowI)){
+			rowNum = Integer.valueOf(rowI);
+		}
+		
+		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
+		long count = tq.count();
+		result.put("pageNumber", count);
 		result.put("dataList", instances);
 		return result;
 	}
