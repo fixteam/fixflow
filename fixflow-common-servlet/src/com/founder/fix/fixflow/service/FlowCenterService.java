@@ -22,6 +22,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+/**
+  * @ClassName: FlowCenterService
+  * @Description: 流程任务中心处理类
+  * @author shao
+  *
+  */
 public interface FlowCenterService {
 	public static final String LOGIN_USER_ID = "LOGIN_USER_ID";
 
@@ -30,7 +36,7 @@ public interface FlowCenterService {
 	
 	  * @Title: queryMyTaskNotEnd
 	  * @Description: 获取某人的所有的未完结的任务
-	  * @param @param map
+	  * @param map
 	  * "userId" 用户编号<br>
 	  * "pdkey" 流程编号(可选)<br>
 	  * "pageIndex" 第几页(可选)<br>
@@ -42,14 +48,12 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * "agentUsers" 代理用户<br>
 	  * "agentToUsers" 委托用户<br>
-	  * @throws
 	  */
 	public Map<String,Object> queryMyTaskNotEnd(Map<String,Object> map)
 		throws SQLException;
@@ -59,7 +63,7 @@ public interface FlowCenterService {
 	
 	  * @Title: queryMyTaskNotEnd
 	  * @Description: 获取某人的所有的未完结的任务
-	  * @param @param map
+	  * @param map
 	  * "userId" 用户编号<br>
 	  * "pdkey" 流程编号(可选)<br>
 	  * "pageIndex" 第几页(可选)<br>
@@ -71,14 +75,12 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * "agentUsers" 代理用户<br>
 	  * "agentToUsers" 委托用户<br>
-	  * @throws
 	  */
 	public Map<String,Object> queryMyTaskEnded(Map<String,Object> map)
 		throws SQLException;
@@ -88,7 +90,7 @@ public interface FlowCenterService {
 	
 	  * @Title: queryStartProcess
 	  * @Description: 获取某人所有可发起的任务
-	  * @param @param s
+	  * @param s
 	  * "userId" 用户编号<br>
 	  * "pdkey" 流程编号(可选)<br>
 	  * "pageIndex" 第几页(可选)<br>
@@ -100,8 +102,7 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return List<Map<String,String>>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
@@ -110,6 +111,16 @@ public interface FlowCenterService {
 	public List<Map<String, String>> queryStartProcess(String s)
 		throws SQLException;
 
+
+	/**
+	  * queryStartProcessImage
+	
+	  * @Title: queryStartProcessImage
+	  * @Description: TODO
+	  * @param     设定文件
+	  * @return InputStream    返回类型
+	  * @throws
+	  */
 	public InputStream queryStartProcessImage(String s)
 		throws SQLException;
 
@@ -118,7 +129,7 @@ public interface FlowCenterService {
 	
 	  * @Title: queryTaskParticipants
 	  * @Description: 获取所有某人参与的任务
-	  * @param @param map
+	  * @param map
 	  * "userId" 用户编号<br>
 	  * "pdkey" 流程编号(可选)<br>
 	  * "pageIndex" 第几页(可选)<br>
@@ -130,12 +141,10 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
-	  * @throws
 	  */
 	public Map<String,Object> queryTaskParticipants(Map<String,Object> map)
 		throws SQLException;
@@ -145,7 +154,7 @@ public interface FlowCenterService {
 	
 	  * @Title: queryTaskInitiator
 	  * @Description: 获取所有某人发起的任务
-	  * @param @param map
+	  * @param map
 	  * "userId" 用户编号<br>
 	  * "pdkey" 流程编号(可选)<br>
 	  * "pageIndex" 第几页(可选)<br>
@@ -157,12 +166,10 @@ public interface FlowCenterService {
 	  * "arrivalTimeS" 到达时间开始(可选)<br>
 	  * "arrivalTimeE" 到达时间结束(可选)<br>
 	  * "initor" 发起人(可选)<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
-	  * @throws
 	  */
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> map)
 		throws SQLException;
@@ -172,14 +179,12 @@ public interface FlowCenterService {
 	
 	  * @Title: getTaskDetailInfo
 	  * @Description: 获取某流程的信息
-	  * @param @param filter
+	  * @param filter
 	  * "userId" 用户编号<br>
 	  * "processInstanceId" 流程实例编号<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
-	  * @throws
 	  */
 	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter) throws SQLException;
 
@@ -188,14 +193,12 @@ public interface FlowCenterService {
 	
 	  * @Title: getFlowGraph
 	  * @Description: 获取某流程的流程图信息
-	  * @param @param filter
+	  * @param filter
 	  * "userId" 用户编号<br>
 	  * "processDefinitionId" 流程定义编号,与流程唯一标识任选一个(可选)<br>
 	  * "processDefinitionKey" 流程定义唯一标识,与流程定义编号任选一个(可选)<br>
-	  * @param @return
-	  * @param @throws SQLException    设定文件
+	  * @throws SQLException    设定文件
 	  * @return InputStream    返回类型
-	  * @throws
 	  */
 	public InputStream getFlowGraph(Map<String,Object> filter) throws SQLException;
 }
