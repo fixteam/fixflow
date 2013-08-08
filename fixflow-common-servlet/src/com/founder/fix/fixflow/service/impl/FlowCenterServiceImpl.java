@@ -248,4 +248,12 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	}
 	
 	
+	public InputStream getFlowGraph(Map<String,Object> filter) throws SQLException{
+		String processInstanceId = StringUtil.getString(filter.get("processDefinitionId"));
+		String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));
+		
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine("");
+		return null;
+	}
+	
 }
