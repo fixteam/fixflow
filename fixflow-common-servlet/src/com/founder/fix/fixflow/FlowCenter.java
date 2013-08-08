@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,11 +92,19 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/queryTask.jsp");
 			}else if(action.equals("getParticipantsTask")){
-				filter.put("userId", userId);
 				Map<String,Object> pageResult = getFlowCenter().queryTaskParticipants(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/queryTask.jsp");
+			}else if(action.equals("getFlowGraph")){
+				InputStream is = getFlowCenter().getFlowGraph(filter);
+				ServletOutputStream out = response.getOutputStream();
+				response.setContentType("application/octet-stream;charset=UTF-8");
+				byte[] buff = new byte[2048];
+				int size = 0;
+				while(is!=null && (size = is.read(buff))!=-1){
+					out.write(buff,0,size);
+				}
 			}
 			
 			if(rd!=null)

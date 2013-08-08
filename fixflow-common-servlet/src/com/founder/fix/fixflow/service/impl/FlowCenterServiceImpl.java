@@ -251,9 +251,21 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	public InputStream getFlowGraph(Map<String,Object> filter) throws SQLException{
 		String processInstanceId = StringUtil.getString(filter.get("processDefinitionId"));
 		String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));
+		InputStream result = null;
 		
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine("");
-		return null;
+		String userId = (String) filter.get("userId");
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		
+		try{
+			if(StringUtil.isNotEmpty(processInstanceId))
+				result = engine.getModelService().GetFlowGraphicsImgStreamByDefId(processInstanceId);
+			else
+				result = engine.getModelService().GetFlowGraphicsImgStreamByDefKey(processDefinitionKey);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+		
+		return result;
 	}
 	
 }

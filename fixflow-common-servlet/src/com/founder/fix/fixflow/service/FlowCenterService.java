@@ -31,24 +31,24 @@ public interface FlowCenterService {
 	  * @Title: queryMyTaskNotEnd
 	  * @Description: 获取某人的所有的未完结的任务
 	  * @param @param map
-	  * "userId" 用户编号;<br>
-	  * "pdkey" 流程编号;<br>
-	  * "pageIndex" 第几页;<br>
-	  * "rowNum" 有几行;<br>
-	  * "agentUserId" 有几行;<br>
-	  * "agentType" 0我代理被人，1别人委托给我<br>
-	  * "title" 查询主题<br>
-	  * "processVeriy" 查询变量<br>
-	  * "arrivalTimeS" 到达时间开始<br>
-	  * "arrivalTimeE" 到达时间结束<br>
-	  * "initor" 发起人<br>
+	  * "userId" 用户编号<br>
+	  * "pdkey" 流程编号(可选)<br>
+	  * "pageIndex" 第几页(可选)<br>
+	  * "rowNum" 有几行(可选)<br>
+	  * "agentUserId" 有几行(可选)<br>
+	  * "agentType" 0我代理被人，1别人委托给我(可选)<br>
+	  * "title" 查询主题(可选)<br>
+	  * "processVeriy" 查询变量(可选)<br>
+	  * "arrivalTimeS" 到达时间开始(可选)<br>
+	  * "arrivalTimeE" 到达时间结束(可选)<br>
+	  * "initor" 发起人(可选)<br>
 	  * @param @return
+	  * @param @throws SQLException    设定文件
+	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * "agentUsers" 代理用户<br>
 	  * "agentToUsers" 委托用户<br>
-	  * @param @throws SQLException    设定文件
-	  * @return Map<String,Object>    返回类型
 	  * @throws
 	  */
 	public Map<String,Object> queryMyTaskNotEnd(Map<String,Object> map)
@@ -60,24 +60,24 @@ public interface FlowCenterService {
 	  * @Title: queryMyTaskNotEnd
 	  * @Description: 获取某人的所有的未完结的任务
 	  * @param @param map
-	  * "userId" 用户编号;<br>
-	  * "pdkey" 流程编号;<br>
-	  * "pageIndex" 第几页;<br>
-	  * "rowNum" 有几行;<br>
-	  * "agentUserId" 有几行;<br>
-	  * "agentType" 0我代理被人，1别人委托给我<br>
-	  * "title" 查询主题<br>
-	  * "processVeriy" 查询变量<br>
-	  * "arrivalTimeS" 到达时间开始<br>
-	  * "arrivalTimeE" 到达时间结束<br>
-	  * "initor" 发起人<br>
+	  * "userId" 用户编号<br>
+	  * "pdkey" 流程编号(可选)<br>
+	  * "pageIndex" 第几页(可选)<br>
+	  * "rowNum" 有几行(可选)<br>
+	  * "agentUserId" 代理人或委托人id(可选)<br>
+	  * "agentType" 0我代理被人，1别人委托给我(可选)<br>
+	  * "title" 查询主题(可选)<br>
+	  * "processVeriy" 查询变量(可选)<br>
+	  * "arrivalTimeS" 到达时间开始(可选)<br>
+	  * "arrivalTimeE" 到达时间结束(可选)<br>
+	  * "initor" 发起人(可选)<br>
 	  * @param @return
+	  * @param @throws SQLException    设定文件
+	  * @return Map<String,Object>    返回类型
 	  * "dataList" 数据列表<br>
 	  * "pageNumber" 总行数<br>
 	  * "agentUsers" 代理用户<br>
 	  * "agentToUsers" 委托用户<br>
-	  * @param @throws SQLException    设定文件
-	  * @return Map<String,Object>    返回类型
 	  * @throws
 	  */
 	public Map<String,Object> queryMyTaskEnded(Map<String,Object> map)
@@ -89,22 +89,22 @@ public interface FlowCenterService {
 	  * @Title: queryStartProcess
 	  * @Description: 获取某人所有可发起的任务
 	  * @param @param s
-	  * "userId" 用户编号;<br>
-	  * "pdkey" 流程编号;<br>
-	  * "pageIndex" 第几页;<br>
-	  * "rowNum" 有几行;<br>
-	  * "agentUserId" 有几行;<br>
-	  * "agentType" 0我代理被人，1别人委托给我<br>
-	  * "title" 查询主题<br>
-	  * "processVeriy" 查询变量<br>
-	  * "arrivalTimeS" 到达时间开始<br>
-	  * "arrivalTimeE" 到达时间结束<br>
-	  * "initor" 发起人<br>
+	  * "userId" 用户编号<br>
+	  * "pdkey" 流程编号(可选)<br>
+	  * "pageIndex" 第几页(可选)<br>
+	  * "rowNum" 有几行(可选)<br>
+	  * "agentUserId" 代理人或委托人id(可选)<br>
+	  * "agentType" 0我代理被人，1别人委托给我(可选)<br>
+	  * "title" 查询主题(可选)<br>
+	  * "processVeriy" 查询变量(可选)<br>
+	  * "arrivalTimeS" 到达时间开始(可选)<br>
+	  * "arrivalTimeE" 到达时间结束(可选)<br>
+	  * "initor" 发起人(可选)<br>
 	  * @param @return
-	  * "dataList" 数据列表<br>
-	  * "pageNumber" 总行数<br>
 	  * @param @throws SQLException    设定文件
 	  * @return List<Map<String,String>>    返回类型
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
 	  * @throws
 	  */
 	public List<Map<String, String>> queryStartProcess(String s)
@@ -119,10 +119,22 @@ public interface FlowCenterService {
 	  * @Title: queryTaskParticipants
 	  * @Description: 获取所有某人参与的任务
 	  * @param @param map
-	  * "userId" 用户编号;<br>
+	  * "userId" 用户编号<br>
+	  * "pdkey" 流程编号(可选)<br>
+	  * "pageIndex" 第几页(可选)<br>
+	  * "rowNum" 有几行(可选)<br>
+	  * "agentUserId" 代理人或委托人id(可选)<br>
+	  * "agentType" 0我代理被人，1别人委托给我(可选)<br>
+	  * "title" 查询主题(可选)<br>
+	  * "processVeriy" 查询变量(可选)<br>
+	  * "arrivalTimeS" 到达时间开始(可选)<br>
+	  * "arrivalTimeE" 到达时间结束(可选)<br>
+	  * "initor" 发起人(可选)<br>
 	  * @param @return
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
 	  * @throws
 	  */
 	public Map<String,Object> queryTaskParticipants(Map<String,Object> map)
@@ -134,11 +146,22 @@ public interface FlowCenterService {
 	  * @Title: queryTaskInitiator
 	  * @Description: 获取所有某人发起的任务
 	  * @param @param map
-	  * "dataList" 数据列表<br>
-	  * "pageNumber" 总行数<br>
+	  * "userId" 用户编号<br>
+	  * "pdkey" 流程编号(可选)<br>
+	  * "pageIndex" 第几页(可选)<br>
+	  * "rowNum" 有几行(可选)<br>
+	  * "agentUserId" 代理人或委托人id(可选)<br>
+	  * "agentType" 0我代理被人，1别人委托给我(可选)<br>
+	  * "title" 查询主题(可选)<br>
+	  * "processVeriy" 查询变量(可选)<br>
+	  * "arrivalTimeS" 到达时间开始(可选)<br>
+	  * "arrivalTimeE" 到达时间结束(可选)<br>
+	  * "initor" 发起人(可选)<br>
 	  * @param @return
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
 	  * @throws
 	  */
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> map)
@@ -148,12 +171,31 @@ public interface FlowCenterService {
 	  * getTaskDetailInfo
 	
 	  * @Title: getTaskDetailInfo
-	  * @Description: TODO
+	  * @Description: 获取某流程的信息
 	  * @param @param filter
+	  * "userId" 用户编号<br>
+	  * "processInstanceId" 流程实例编号<br>
 	  * @param @return
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
+	  * "dataList" 数据列表<br>
 	  * @throws
 	  */
 	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter) throws SQLException;
+
+	/**
+	  * getFlowGraph
+	
+	  * @Title: getFlowGraph
+	  * @Description: 获取某流程的流程图信息
+	  * @param @param filter
+	  * "userId" 用户编号<br>
+	  * "processDefinitionId" 流程定义编号,与流程唯一标识传任意一个(可选)<br>
+	  * "processDefinitionKey" 流程定义唯一标识(可选)<br>
+	  * @param @return
+	  * @param @throws SQLException    设定文件
+	  * @return InputStream    返回类型
+	  * @throws
+	  */
+	public InputStream getFlowGraph(Map<String,Object> filter) throws SQLException;
 }
