@@ -32,6 +32,7 @@ import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
 import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 /**
+ * 任务数据管理器
  * @author kenshin
  */
 public class TaskManager extends AbstractManager {
@@ -61,6 +62,7 @@ public class TaskManager extends AbstractManager {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> findAgentToUsers(String userId){
 		String query = "findAgentToUsers";
 		return getDbSqlSession().selectList(query,userId);

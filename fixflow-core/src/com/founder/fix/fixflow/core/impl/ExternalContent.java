@@ -139,5 +139,23 @@ public class ExternalContent {
 	public void setQuartzTransactionAuto(boolean isQuartzTransactionAuto) {
 		this.isQuartzTransactionAuto = isQuartzTransactionAuto;
 	}
+	
+	protected String cmId;
+	/**
+	 * 设置数据库连接管理器
+	 * @param cmId 管理器编号
+	 */
+	public void setConnectionManagement(String cmId) {
+		this.cmId = cmId;
+	}
+	
+
+	/**
+	 * 获取数据库连接管理器
+	 * @return 管理器编号
+	 */
+	public String getConnectionManagement() {
+		return this.cmId;
+	}
 
 }

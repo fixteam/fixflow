@@ -7,4 +7,8 @@
         </author>
     </info>
 	<xi:include href="chapters/ch01-Introduction.xml"/>
+    <xi:include href="chapters/ch02-GettingStarted.xml"/>
+    <xi:include href="chapters/ch03-Configuration.xml"/>
+    <xi:include href="chapters/ch04-API.xml"/>
+
 </book>

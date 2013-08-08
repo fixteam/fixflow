@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 
-
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.di.BpmnDiPackage;
 import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
@@ -112,10 +111,6 @@ import com.founder.fix.fixflow.core.variable.BizData;
 
 public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
-	
-
-	
-
 	protected CommandExecutor commandExecutor;
 	protected CommandContextFactory commandContextFactory;
 	protected CacheHandler cacheHandler;
@@ -135,13 +130,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected FixFlowConfig fixFlowConfig;
 
 	protected FixFlowVersion fixFlowVersion;
-	
-	
+
 	public AbstractAuthentication authenticationInstance;
 
-	
 	ResourceSet resourceSet;
-
 
 	protected DataBase selectedDatabase;
 	protected SysMailConfig sysMailConfig;
@@ -174,16 +166,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected SchedulerFactory schedulerFactory;
 
 	protected AssignPolicyConfig assignPolicyConfig;
-	
+
 	protected ImportDataVariableConfig importDataVariableConfig;
-	
-	protected QuartzConfig 	quartzConfig;
-	
-	
 
-	
+	protected QuartzConfig quartzConfig;
 
-	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfig;
+	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfigDefault;
+
+	protected List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs;
 
 	/**
 	 * 线程池
@@ -198,7 +188,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	protected void init() {
 		initEmfFile();
-		
+
 		initCommandContextFactory();
 		initCommandExecutors();
 		initConnectionManagementConfig();
@@ -210,11 +200,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initDbConfig();// dbType
 		// 任务命令配置加载
 		initTaskCommandConfig();
-		
-		
+
 		initImportDataVariableConfig();
-		
-		
+
 		initQuartz();
 		initUserDefinition();
 		initSysMailConfig();
@@ -234,61 +222,62 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initResourceSet();
 
 	}
-	
+
 	public ResourceSet getResourceSet() {
 		return resourceSet;
 	}
 
 	private void initResourceSet() {
 		// TODO Auto-generated method stub
-		 this.resourceSet= new ResourceSetImpl();
-		 ((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DC", DcPackage.eINSTANCE);
-			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI", BpmnDiPackage.eINSTANCE);
-			FixFlowPackage.eINSTANCE.eClass();
-			
-			FixFlowPackage xxxPackage = FixFlowPackage.eINSTANCE;
-			EPackage.Registry.INSTANCE.put(xxxPackage.getNsURI(), xxxPackage);
-			Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("fixflow", ddd);
+		this.resourceSet = new ResourceSetImpl();
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DC", DcPackage.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI", BpmnDiPackage.eINSTANCE);
+		FixFlowPackage.eINSTANCE.eClass();
 
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("bpmn", ddd);
-			
-			resourceSet.getPackageRegistry().put(xxxPackage.getNsURI(), xxxPackage);
-			
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("bpmn", ddd);
+		FixFlowPackage xxxPackage = FixFlowPackage.eINSTANCE;
+		EPackage.Registry.INSTANCE.put(xxxPackage.getNsURI(), xxxPackage);
+		Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("fixflow", ddd);
+
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("bpmn", ddd);
+
+		resourceSet.getPackageRegistry().put(xxxPackage.getNsURI(), xxxPackage);
+
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("bpmn", ddd);
 	}
 
 	private void initImportDataVariableConfig() {
-		this.importDataVariableConfig=this.fixFlowConfig.getImportDataVariableConfig();
+		this.importDataVariableConfig = this.fixFlowConfig.getImportDataVariableConfig();
 	}
-	
-	protected ConnectionManagement connectionManagement;
 
-	
+	protected ConnectionManagement connectionManagementDefault;
+	protected Map<String, ConnectionManagement> connectionManagementMap;
 
 	private void initConnectionManagementConfig() {
 		// TODO 自动生成的方法存根
-		
-		
-		List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
-		String selectId=this.fixFlowConfig.getConnectionManagementConfig().getSelected();
+
+		connectionManagementMap = new HashMap<String, ConnectionManagement>();
+		connectionManagementInstanceConfigs = this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
+		String selectId = this.fixFlowConfig.getConnectionManagementConfig().getSelected();
 		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
-			if(connectionManagementInstanceConfigTemp.getId().equals(selectId)){
-				this.connectionManagementInstanceConfig=connectionManagementInstanceConfigTemp;
-				break;
+			if (connectionManagementInstanceConfigTemp.getId().equals(selectId)) {
+				this.connectionManagementInstanceConfigDefault = connectionManagementInstanceConfigTemp;
+				connectionManagementDefault = (ConnectionManagement) ReflectUtil.instantiate(this.connectionManagementInstanceConfigDefault.getClassImpl());
+				if (this.connectionManagementDefault == null) {
+					throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+				}
+				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementDefault);
+
+			} else {
+				ConnectionManagement connectionManagementOther = (ConnectionManagement) ReflectUtil.instantiate(connectionManagementInstanceConfigTemp
+						.getClassImpl());
+				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementOther);
 			}
 		}
-		if(this.connectionManagementInstanceConfig==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
-		
-		connectionManagement=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfig.getClassImpl());
-		if(this.connectionManagement==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
+
 	}
 
 	protected void initEmfFile() {
@@ -301,8 +290,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		Resource resource = null;
 		try {
 			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile(),
-						"utf-8");
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile(), "utf-8");
 				resource = resourceSet.createResource(URI.createFileURI(filePath));
 			} else {
 				resource = resourceSet.createResource(URI.createURI(filePath));
@@ -325,10 +313,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 
 		fixFlowConfig = (FixFlowConfig) resource.getContents().get(0);
-		
-		String versionString=fixFlowConfig.getVersion();
-		
-		this.fixFlowVersion=new FixFlowVersion(versionString);
+
+		String versionString = fixFlowConfig.getVersion();
+
+		this.fixFlowVersion = new FixFlowVersion(versionString);
 	}
 
 	protected void initThreadPool() {
@@ -410,14 +398,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 
 		Connection connection = createConnection();
-		
+
 		try {
 
 			fixFlowResources.systemInit(connection);
-			
+
 		} catch (Exception e) {
-			
-				throw new FixFlowException("流程国际化处理文件加载失败!", e);
+
+			throw new FixFlowException("流程国际化处理文件加载失败!", e);
 
 		} finally {
 			try {
@@ -502,12 +490,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected void initExpandClassConfig() {
 		this.expandClassConfig = fixFlowConfig.getExpandClassConfig();
 		for (ExpandClass expandClass : expandClassConfig.getExpandClass()) {
-			if(expandClass.getClassId().equals("Authentication")){
-				this.authenticationInstance=(AbstractAuthentication)ReflectUtil.instantiate(expandClass.getClassImpl());
+			if (expandClass.getClassId().equals("Authentication")) {
+				this.authenticationInstance = (AbstractAuthentication) ReflectUtil.instantiate(expandClass.getClassImpl());
 			}
 		}
-		
-		
+
 	}
 
 	protected void initSysMailConfig() {
@@ -528,12 +515,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		for (DataBase dataBase : fixFlowConfig.getDataBaseConfig().getDataBase()) {
 			if (dataBase.getId().equals(selectedDB)) {
 				selectedDatabase = dataBase;
-				ConnectionManagement.defaultDataBaseId=selectedDatabase.getId();
+				ConnectionManagement.defaultDataBaseId = selectedDatabase.getId();
 			}
 		}
 
 	}
+
 	protected Scheduler scheduler;
+
 	public Scheduler getScheduler() {
 		return scheduler;
 	}
@@ -584,15 +573,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			// driverDelegateClass =
 			// "org.quartz.impl.jdbcjobstore.oracle.OracleDelegate";//org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 		} else {
-			
-			if(quartzDataBase.getDbtype().equals(DBType.SQLSERVER))
-			{
+
+			if (quartzDataBase.getDbtype().equals(DBType.SQLSERVER)) {
 				driverDelegateClass = "org.quartz.impl.jdbcjobstore.MSSQLDelegate";
-			}
-			else{
+			} else {
 				driverDelegateClass = "org.quartz.impl.jdbcjobstore.StdJDBCDelegate";
 			}
-			
+
 		}
 
 		/*
@@ -609,10 +596,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
 		props.put("org.quartz.threadPool.threadCount", "15");
 		props.put("org.quartz.threadPool.threadPriority", "5");
-		
+
 		props.put("org.quartz.jobStore.misfireThreshold", "60000");
-		
-		//props.put("org.quartz.scheduler.jmx.export", "true");
+
+		// props.put("org.quartz.scheduler.jmx.export", "true");
 
 		// JobStoreTX
 		props.put("org.quartz.jobStore.class", "com.founder.fix.fixflow.expand.quartz.jdbcjobstore.JobStoreFix");
@@ -633,7 +620,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		try {
 			scheduler = schedulerFactory.getScheduler();
 			scheduler.start();
-			
+
 			System.out.println("定时框架启动成功");
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
@@ -660,10 +647,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initDbConfig() {
-		//Element dataBaseConfigEle = getDataBaseConfigEle(getFixFlowConfigDoc());
-		
-		
-		DataBase dataBase=this.selectedDatabase;
+		// Element dataBaseConfigEle =
+		// getDataBaseConfigEle(getFixFlowConfigDoc());
+
+		DataBase dataBase = this.selectedDatabase;
 		if (dataBase != null) {
 			if (dataBase.getDbtype().toString().toLowerCase().equals(DbType.SQLSERVER.toString().toLowerCase())) {
 				initSqlServerDbConfig();
@@ -697,9 +684,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initSqlServerDbConfig() {
-		
-		DataBase dataBase=this.selectedDatabase;
-		
+
+		DataBase dataBase = this.selectedDatabase;
+
 		// OraclePaginationImpl
 		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
 		DbConfig dbConfig = new DbConfig();
@@ -714,10 +701,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		this.dbConfig = dbConfig;
 	}
-	
+
 	protected void initMySqlDbConfig() {
-		
-		DataBase dataBase=this.selectedDatabase;
+
+		DataBase dataBase = this.selectedDatabase;
 		// OraclePaginationImpl
 		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
 		DbConfig dbConfig = new DbConfig();
@@ -732,9 +719,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		this.dbConfig = dbConfig;
 	}
-	
+
 	protected void initDB2DbConfig() {
-		DataBase dataBase=this.selectedDatabase;
+		DataBase dataBase = this.selectedDatabase;
 		// OraclePaginationImpl
 		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
 		DbConfig dbConfig = new DbConfig();
@@ -751,7 +738,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initOracleDbConfig() {
-		DataBase dataBase=this.selectedDatabase;
+		DataBase dataBase = this.selectedDatabase;
 		// OraclePaginationImpl
 		Pagination pagination = (Pagination) ReflectUtil.instantiate(dataBase.getPaginationImpl());
 		DbConfig dbConfig = new DbConfig();
@@ -948,10 +935,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return threadPoolMap;
 	}
 
-
-
-	
-
 	public Map<String, AbstractCommandFilter> getAbstractCommandFilterMap() {
 		return abstractCommandFilterMap;
 	}
@@ -1039,57 +1022,37 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public AssignPolicyConfig getAssignPolicyConfig() {
 		return assignPolicyConfig;
 	}
-	
+
 	public ImportDataVariableConfig getImportDataVariableConfig() {
 		return importDataVariableConfig;
 	}
 
-	public ConnectionManagementInstanceConfig getConnectionManagementInstanceConfig() {
-		return connectionManagementInstanceConfig;
+	public ConnectionManagementInstanceConfig getConnectionManagementInstanceConfigDefault() {
+		return connectionManagementInstanceConfigDefault;
 	}
-	
-	public ConnectionManagement getConnectionManagement() {
-		return connectionManagement;
+
+	public ConnectionManagement getConnectionManagementDefault() {
+		return connectionManagementDefault;
 	}
-	
+
+	public ConnectionManagement getConnectionManagement(String cmId) {
+		return connectionManagementMap.get(cmId);
+	}
+
 	public FixFlowConfig getFixFlowConfig() {
 		return fixFlowConfig;
 	}
+
 	public FixFlowVersion getFixFlowVersion() {
 		return fixFlowVersion;
 	}
+
 	public QuartzConfig getQuartzConfig() {
 		return quartzConfig;
 	}
+
 	public AbstractAuthentication getAuthenticationInstance() {
 		return authenticationInstance;
-	}
-	
-	public void setConnectionManagement(ConnectionManagement connectionManagement) {
-		this.connectionManagement = connectionManagement;
-	}
-	
-	public ProcessEngineConfigurationImpl setConnectionManagement(String cmId) {
-		
-		List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs=this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
-		String selectId=cmId;
-		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
-			if(connectionManagementInstanceConfigTemp.getId().equals(selectId)){
-				this.connectionManagementInstanceConfig=connectionManagementInstanceConfigTemp;
-				break;
-			}
-		}
-		if(this.connectionManagementInstanceConfig==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
-		
-		this.connectionManagement=(ConnectionManagement)ReflectUtil.instantiate(this.connectionManagementInstanceConfig.getClassImpl());
-		if(this.connectionManagement==null){
-			throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
-		}
-		
-		return this;
-		//this.connectionManagement = connectionManagement;
 	}
 
 }
