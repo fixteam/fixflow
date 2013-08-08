@@ -47,8 +47,6 @@ public interface FlowCenterService {
 	  * "pageNumber" 总行数<br>
 	  * "agentUsers" 代理用户<br>
 	  * "agentToUsers" 委托用户<br>
-	  * "pageIndex" 第几页;<br>
-	  * "rowNum" 有几行;<br>
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * @throws
@@ -78,8 +76,6 @@ public interface FlowCenterService {
 	  * "pageNumber" 总行数<br>
 	  * "agentUsers" 代理用户<br>
 	  * "agentToUsers" 委托用户<br>
-	  * "pageIndex" 第几页;<br>
-	  * "rowNum" 有几行;<br>
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型
 	  * @throws
@@ -94,7 +90,19 @@ public interface FlowCenterService {
 	  * @Description: 获取某人所有可发起的任务
 	  * @param @param s
 	  * "userId" 用户编号;<br>
+	  * "pdkey" 流程编号;<br>
+	  * "pageIndex" 第几页;<br>
+	  * "rowNum" 有几行;<br>
+	  * "agentUserId" 有几行;<br>
+	  * "agentType" 0我代理被人，1别人委托给我<br>
+	  * "title" 查询主题<br>
+	  * "processVeriy" 查询变量<br>
+	  * "arrivalTimeS" 到达时间开始<br>
+	  * "arrivalTimeE" 到达时间结束<br>
+	  * "initor" 发起人<br>
 	  * @param @return
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
 	  * @param @throws SQLException    设定文件
 	  * @return List<Map<String,String>>    返回类型
 	  * @throws
@@ -126,7 +134,8 @@ public interface FlowCenterService {
 	  * @Title: queryTaskInitiator
 	  * @Description: 获取所有某人发起的任务
 	  * @param @param map
-	  * "userId" 用户编号;<br>
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
 	  * @param @return
 	  * @param @throws SQLException    设定文件
 	  * @return Map<String,Object>    返回类型

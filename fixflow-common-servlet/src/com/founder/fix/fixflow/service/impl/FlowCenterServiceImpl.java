@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.service.impl;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -203,9 +204,13 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			tq.isEnd();
 		
 		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
+		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+		for(ProcessInstance tmp:instances){
+			instanceMaps.add(tmp.getPersistentState());
+		}
 		long count = tq.count();
 		result.put("pageNumber", count);
-		result.put("dataList", instances);
+		result.put("dataList", instanceMaps);
 		return result;
 	}
 
@@ -256,6 +261,10 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		
 		List<ProcessInstance> instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
 		long count = tq.count();
+		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+		for(ProcessInstance tmp:instances){
+			instanceMaps.add(tmp.getPersistentState());
+		}
 		result.put("pageNumber", count);
 		result.put("dataList", instances);
 		return result;
