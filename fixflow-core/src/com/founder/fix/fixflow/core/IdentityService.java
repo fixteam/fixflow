@@ -50,6 +50,13 @@ public interface IdentityService extends ProcessService{
 	UserDefinition getUserDefinition();
 	
 	/**
+	 * 获取用户所在的所有组
+	 * @param userId用户编号
+	 * @return
+	 */
+	List<GroupTo> getUserInGroups(String userId);
+	
+	/**
 	 * 获取用户对象
 	 * @param userId 用户编号
 	 * @return 用户对象

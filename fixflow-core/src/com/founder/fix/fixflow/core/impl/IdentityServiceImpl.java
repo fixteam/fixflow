@@ -23,6 +23,7 @@ import java.util.List;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.impl.cmd.GetGroupInfoByGroupIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetUserInGroupCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetUserInGroupsCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GroupDefinitionInfoCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UserDefinitionInfoCmd;
 import com.founder.fix.fixflow.core.impl.cmd.VerificationStartUserCmd;
@@ -67,6 +68,11 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
 
 	public List<UserTo> getUserInGroup(String groupId, String groupType) {
 		return commandExecutor.execute(new GetUserInGroupCmd(groupId,groupType,false));
+	}
+
+	public List<GroupTo> getUserInGroups(String userId) {
+		
+		return commandExecutor.execute(new GetUserInGroupsCmd(userId));
 	}
 	
 	

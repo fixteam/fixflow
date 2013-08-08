@@ -17,10 +17,13 @@
  */
 package com.founder.fix.fixflow.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import com.founder.fix.fixflow.core.impl.identity.UserTo;
 
 /**
   * @ClassName: FlowCenterService
@@ -192,4 +195,32 @@ public interface FlowCenterService {
 	  * @throws SQLException
 	  */
 	public InputStream getFlowGraph(Map<String,Object> filter) throws SQLException;
+	
+	/**
+	  * getUserInfo
+	
+	  * @Title: getUserInfo
+	  * @Description: 获取某用户的信息
+	  * @param map<br>
+	  * "userId" 用户编号<br>
+	  * "path" 头像文件相对路径<br>
+	  * @return
+	  * "user" 用户信息<br>
+	  * "icon" 头像链接<br>
+	  * @throws SQLException
+	  * @throws IOException
+	  */
+	public Map<String,Object> getUserInfo(Map<String,Object> map) throws SQLException, IOException;
+	
+	/**
+	  * saveUserIcon
+	
+	  * @Title: saveUserIcon
+	  * @Description: 保存用户头像
+	  * @param filter
+	  * "userId" 用户编号<br>
+	  * "icon" 用户头像流<br>
+	  * @throws IOException
+	  */
+	public void saveUserIcon(Map<String,Object> filter) throws IOException;
 }
