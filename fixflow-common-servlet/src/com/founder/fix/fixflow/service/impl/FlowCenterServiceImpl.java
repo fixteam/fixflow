@@ -34,6 +34,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.TaskService;
+import com.founder.fix.fixflow.core.impl.TaskServiceImpl;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
@@ -344,5 +347,26 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		    fos.close();
 		    bis.close();
 	    }
+	}
+	
+	/**
+	 * 流程启动时获取按钮
+	 * @param processDefinitionKey
+	 * @return List<TaskCommandInst> 按钮集合
+	 * @throws SQLException 
+	 */
+	public List<TaskCommandInst> getSubTaskTaskCommandByKey(Map<String,Object> filter) throws SQLException{
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter.get("userId"));
+		String processDefinitionKey = (String)filter.get("processDefinitionKey");
+		List<TaskCommandInst> list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
+		return list;
+	}
+
+	@Override
+	public List<TaskCommandInst> GetTaskCommandByTaskId(Map<String,Object> filter) throws SQLException {
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter.get("userId"));
+		String taskId = (String)filter.get("taskId");
+		List<TaskCommandInst> list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
+		return list;
 	}
 }
