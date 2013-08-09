@@ -229,6 +229,7 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			startProcessInstanceCommand.setProcessDefinitionKey(processDefinitionKey);
 			startProcessInstanceCommand.setBusinessKey(businessKey);
 			startProcessInstanceCommand.setStartAuthor(Authentication.getAuthenticatedUserId());
+			startProcessInstanceCommand.setInitiator(Authentication.getAuthenticatedUserId());
 			startProcessInstanceCommand.setTransientVariables(transientVariables);
 			// startProcessInstanceCommand.setVariables(Variables);
 			ProcessInstance processInstanceQueryTo = runtimeService
