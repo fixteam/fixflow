@@ -25,6 +25,7 @@ import java.util.zip.ZipInputStream;
 import org.eclipse.bpmn2.FlowElement;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
@@ -458,6 +459,32 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		//验证是否查询到此节点
 		assertNotNull(flowElement);
 		
+	}
+	
+	/**
+	 * 测试获取发布实例
+	 */
+	public void testGetDeploymentEntity(){
+		//通过zip文件的path发布流程
+		String deploymentId = modelService.deploymentByZip("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+		//验证是否发布成功
+		assertNotNull(deploymentId);
+		//获取发布实例
+		DeploymentEntity deploymentEntity = modelService.getDeploymentEntity(deploymentId);
+		//验证是否获取成功
+		assertNotNull(deploymentEntity);
+		//获取发布的资源信息
+		Map<String,ResourceEntity> map = deploymentEntity.getResources();
+		//验证是否获取成功
+		assertNotNull(map);
+		//需要包含png文件和bpmn文件
+		assertEquals(2, map.keySet().size());
+		for(String key:map.keySet()){
+			//获取资源文件
+			ResourceEntity resourceEntity = map.get(key);
+			//验证资源文件的大字段不为空
+			assertNotNull(resourceEntity.getBytes());
+		}
 	}
 	
 }

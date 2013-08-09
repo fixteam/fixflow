@@ -24,6 +24,7 @@ import java.util.zip.ZipInputStream;
 
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
 import com.founder.fix.fixflow.core.model.DeploymentQuery;
@@ -215,7 +216,12 @@ public interface ModelService extends ProcessService{
 	 */
 	String updateDeploymentByZip(String pth,String deploymentId);
 	
-	
+	/**
+	 * 获取发布实体
+	 * @param deploymentId 发布号
+	 * @return 发布号
+	 */
+	DeploymentEntity getDeploymentEntity(String deploymentId);
 	
 }
   

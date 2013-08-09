@@ -28,6 +28,7 @@ import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeploymentByZipCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetDeploymentEntityCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsElementPositionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgPathCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgStreamCmd;
@@ -40,6 +41,7 @@ import com.founder.fix.fixflow.core.impl.cmd.GetStartProcessByUserIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateDeploymentByZipCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateResourceCmd;
 import com.founder.fix.fixflow.core.impl.model.DeploymentBuilderImpl;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
@@ -92,6 +94,11 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 		return commandExecutor.execute(new GetResourceAsStreamCmd<ResourceEntity>(resourceId));
 
 	}
+	
+	public DeploymentEntity getDeploymentEntity(String deploymentId) {
+		return commandExecutor.execute(new GetDeploymentEntityCmd(deploymentId));
+	}
+
 
 	public void updateResource(String resourceId, InputStream inputStream) {
 
@@ -99,6 +106,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	}
 
+	
 	public String getDefaultFromUri(String processDefinitionId) {
 
 		
