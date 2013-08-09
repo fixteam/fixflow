@@ -44,22 +44,22 @@ a{text-decoration: none;}
 <!-- 表 -->
 		<table>
 		  <thead>
-		    <th>优先级</th>
-		    <th>流程名称</th>
-		    <th>单据号</th>
-		    <th>任务主题</th>
-		    <th>发起人</th>
-		    <th>发起时间</th>
+		    <th>|bizKey</th>
+		    <th>|definitionId</th>
+		    <th>|processLocation</th>
+		    <th>|startAuthor</th>
+		    <th>|updateTime</th>
+		    <th>|subject</th>
 		  </thead>
 		  <tbody>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		      <td>${dataList.BIZ_KEY}|bizKey</td>
-		      <td>${dataList.definitionId}|definitionId</td>
-		      <td>${dataList.processLocation}|processLocation</td>
-		      <td>${dataList.startAuthor}|startAuthor</td>
-		      <td>${dataList.updateTime}|updateTime</td>
-		      <td>${dataList.subject}|subject</td>
+		      <td>${dataList.BIZ_KEY}</td>
+		      <td>${dataList.definitionId}</td>
+		      <td>${dataList.processLocation}</td>
+		      <td>${dataList.startAuthor}</td>
+		      <td>${dataList.updateTime}</td>
+		      <td>${dataList.subject}</td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>
