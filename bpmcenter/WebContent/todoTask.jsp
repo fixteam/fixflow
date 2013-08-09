@@ -159,7 +159,7 @@ $(function(){
   $("button[name=flowGraph]").click(function(){
     var pdi = $(this).attr("pdi");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getFlowGraph&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>
