@@ -143,7 +143,7 @@ public class TaskInstancePersistence {
 		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getWhereSql()!=null&&!taskQuery.getQueryExpandTo().getWhereSql().equals("")){
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +" and "+taskQuery.getQueryExpandTo().getWhereSql();
 			if(taskQuery.getQueryExpandTo().getWhereSqlObj()!=null&&taskQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
-				objectParamWhere.add(taskQuery.getQueryExpandTo().getWhereSqlObj());
+				objectParamWhere.addAll(taskQuery.getQueryExpandTo().getWhereSqlObj());
 			}
 			
 		}

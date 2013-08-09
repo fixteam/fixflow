@@ -431,7 +431,7 @@ public class ProcessInstancePersistence {
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSql()!=null&&!processInstanceQuery.getQueryExpandTo().getWhereSql().equals("")){
 			sqlString=sqlString+" and "+processInstanceQuery.getQueryExpandTo().getWhereSql();
 			if(processInstanceQuery.getQueryExpandTo().getWhereSqlObj()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
-				objectParamWhere.add(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
+				objectParamWhere.addAll(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
 			}
 		}
 		if (processInstanceQuery.getBusinessKey() != null) {
