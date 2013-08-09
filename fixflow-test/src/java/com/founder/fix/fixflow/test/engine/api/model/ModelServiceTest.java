@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
+import org.eclipse.bpmn2.FlowElement;
+
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
@@ -70,7 +72,7 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		
 	}
 	/**
-	 * 测试删除流程删除定义部署 ---方法未实现
+	 * 测试删除流程删除定义部署 
 	 */
 	public void testDeleteDeployment() {
 
@@ -80,21 +82,22 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		//发布
 		String deploymentIdTemp = deploymentBuilder.deploy().getId();
 		assertNotNull(deploymentIdTemp);
-		
-		//删除定义部署，并级联删除其下的所有流程定义
-		modelService.deleteDeployment(deploymentIdTemp, true);
-		
-//		//创建一个定义部署的查询 ----方法未实现
-//		DeploymentQuery deploymentQuery = modelService.createDeploymentQuery();
-//		//根据id找到定义部署
-//		com.founder.fix.fixflow.core.model.Deployment deployment = deploymentQuery.deploymentId(deploymentIdTemp).singleResult();
-//		//验证定义部署已经被删除
-//		assertNull(deployment);
 		//创建一个流程定义查询
 		ProcessDefinitionQuery processDefinitionQuery=modelService.createProcessDefinitionQuery();
 		//查询上面发布的流程定义
 		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		//获得刚发布的流程定义
 		ProcessDefinitionBehavior processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证流程定义存在
+		assertNotNull(processDefinitionBehavior);
+		//删除定义部署，并级联删除其下的所有流程定义
+		modelService.deleteDeployment(deploymentIdTemp, true);
+		//重置流程定义查询
+		processDefinitionQuery=modelService.createProcessDefinitionQuery();
+		//查询上面发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		//查找刚发布的流程定义
+		processDefinitionBehavior=processDefinitionQuery.singleResult();
 		//验证流程定义已经被删除
 		assertNull(processDefinitionBehavior);
 		
@@ -360,7 +363,7 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 	}
 	
 	/**
-	 * 测试更新流程定义
+	 * 测试通过zip文件发布流程，流程定义发布全部采用从设计器导出的.zip文件   发布.zip文件中包含xxx.bpmn、xxx.png
 	 */
 	public void testUpdateDeploymentId(){
 		//创建一个发布
@@ -390,7 +393,6 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		deploymentBuilder.updateDeploymentId(deployId);
 		//更新流程定义
 		deploymentId = deploymentBuilder.deploy().getId();
-		
 		//重置流程定义查询
 		processDefinitionQuery = modelService.createProcessDefinitionQuery();
 		//查询刚发布的流程定义
@@ -400,5 +402,64 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 		//验证是否查询到
 		assertNotNull(processDefinitionBehavior);
 		
+		//查询新的流程定义中有没有ScriptTask_1
+		FlowElement flowElement = processDefinitionBehavior.getFlowElement("ScriptTask_1");
+		//验证是否查询到此节点
+		assertNotNull(flowElement);
+		
 	}
+	
+	/**
+	 * 测试通过zip文件发布流程
+	 */
+	public void testDeploymentByZip(){
+		//通过zip文件的path发布流程
+		String deploymentId = modelService.deploymentByZip("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+		assertNotNull(deploymentId);
+		//获取ZIP文件流
+		ZipInputStream zipInputStream = new ZipInputStream(ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest_new.zip"));
+		//通过zip文件流发布流程
+		deploymentId = modelService.deploymentByZip(zipInputStream);
+		//验证是否发布成功
+		assertNotNull(deploymentId);
+	}
+	
+	/**
+	 * 测试通过zip文件更新流程
+	 */
+	public void testUpdateDeploymentByZip(){
+		//通过zip文件的path发布流程
+		String deploymentId = modelService.deploymentByZip("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+		assertNotNull(deploymentId);
+
+		//创建流程定义查询
+		ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
+		//查询刚发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		ProcessDefinitionBehavior processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证是否查询到
+		assertNotNull(processDefinitionBehavior);
+		
+		String deployId = processDefinitionBehavior.getDeploymentId();
+		
+		//更新流程定义
+		deploymentId = modelService.updateDeploymentByZip("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest_new.zip", deployId);
+		//重置流程定义查询
+		processDefinitionQuery = modelService.createProcessDefinitionQuery();
+		//查询刚发布的流程定义
+		processDefinitionQuery.processDefinitionKey("Process_TaskServiceTest");
+		//获取查询到的流程定义
+		processDefinitionBehavior=processDefinitionQuery.singleResult();
+		//验证是否查询到
+		assertNotNull(processDefinitionBehavior);
+		
+		//查询新的流程定义中有没有ScriptTask_1
+		FlowElement flowElement = processDefinitionBehavior.getFlowElement("ScriptTask_1");
+		//验证是否查询到此节点
+		assertNotNull(flowElement);
+		
+	}
+	
 }
+
+
