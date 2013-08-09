@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-
 import com.founder.fix.bpmn2extensions.coreconfig.Priority;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
@@ -98,31 +97,34 @@ public interface TaskService extends ProcessService {
 	 */
 	void deleteTasks(Collection<String> taskIds, boolean cascade);
 
+	// 任务常用处理
 
-	//任务常用处理
-	
 	/**
 	 * 接收任务
-	 * @param taskId 任务编号
-	 * @param claimUserId 接收(不传的话将会去线程副本中获取)
+	 * 
+	 * @param taskId
+	 *            任务编号
+	 * @param claimUserId
+	 *            接收(不传的话将会去线程副本中获取)
 	 */
-	void claim(String taskId,String claimUserId);
+	void claim(String taskId, String claimUserId);
 
 	/**
-	 * 释放任务
-	 * (和领取对应,领取过了之后可以释放)
-	 * @param taskId 任务编号
+	 * 释放任务 (和领取对应,领取过了之后可以释放)
+	 * 
+	 * @param taskId
+	 *            任务编号
 	 */
 	void release(String taskId);
 
 	/**
 	 * 自定义扩展方式完成任务的处理命令调用的方法
+	 * 
 	 * @param expandTaskCommand
 	 * @param classReturn
 	 * @return
 	 */
 	<T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn);
-
 
 	/**
 	 * 返回一个新 {@link TaskQuery}，可用于动态查询的任务。
@@ -131,31 +133,6 @@ public interface TaskService extends ProcessService {
 
 	IdentityLinkQuery createIdentityLinkQuery();
 
-	
-	 @Deprecated
-	/**
-	 * 获取用户自定义命令 {@link UserCommandQuery} 列表
-	 * 
-	 * @param processDefinitionId
-	 *            流程定义id，唯一编号,不能为空。(数据库中的 id)
-	 * @param nodeId
-	 *            任务节点编号
-	 * @return {@link UserCommandQuery} 列表
-	 */
-	List<UserCommandQueryTo> getUserCommandById(String processDefinitionId, String nodeId);
-
-	 @Deprecated 
-	/**
-	 * 获取提交节点用户自定义命令 {@link UserCommandQuery} 列表
-	 * 
-	 * @param processDefinitionKey
-	 *            流程定义编号
-	 * @return {@link UserCommandQuery} 列表
-	 */
-	List<UserCommandQueryTo> getSubTaskUserCommandByKey(String processDefinitionKey);
-
-	
-	
 	/**
 	 * 获取用户自定义命令 {@link TaskCommand} 列表
 	 * 
@@ -167,22 +144,17 @@ public interface TaskService extends ProcessService {
 	 */
 	List<TaskCommandInst> getTaskCommandById(String processDefinitionId, String nodeId);
 
-	/**
-	 * 获取提交节点用户自定义命令 {@link TaskCommand} 列表
-	 * 
-	 * @param processDefinitionKey
-	 *            流程定义编号
-	 * @return {@link TaskCommand} 列表
-	 */
-	List<TaskCommandInst> getSubTaskTaskCommandByKey(String processDefinitionKey);
 	
+
 	/**
 	 * 获取系统运维管理中,能够对指定类型任务操作的所有任务命令
-	 * @param commandType 命令类型  toDoTasks sharedTasks  processInstanceInfo all
+	 * 
+	 * @param commandType
+	 *            命令类型 toDoTasks sharedTasks processInstanceInfo all
 	 * @return {@link TaskCommandInst} 列表
 	 */
 	List<TaskCommandInst> getSystemTaskCommand(String commandType);
-	
+
 	/**
 	 * 设置任务代理人
 	 * 
@@ -220,8 +192,7 @@ public interface TaskService extends ProcessService {
 	 * @return 可退回的任务
 	 */
 	List<TaskInstance> getRollBackTask(String taskId);
-	
-	
+
 	/**
 	 * 获取可退回的任务(只包含前面的节点的任务,且剔除掉重复数据)
 	 * 
@@ -230,7 +201,6 @@ public interface TaskService extends ProcessService {
 	 * @return 可退回的任务
 	 */
 	List<TaskInstance> getRollBackScreeningTask(String taskId);
-	
 
 	/**
 	 * 获取可退回的节点
@@ -327,109 +297,171 @@ public interface TaskService extends ProcessService {
 	 * @return 变量Map
 	 */
 	Map<String, Object> getVariables(String taskId, Collection<String> variableNames);
-	
+
 	/**
 	 * 创建一个新的任务候选身份
+	 * 
 	 * @return
 	 */
 	IdentityLink newIdentityLink();
-	
+
 	/**
 	 * 创建一个新的任务候选身份
-	 * @param linkId 身份编号
+	 * 
+	 * @param linkId
+	 *            身份编号
 	 * @return
 	 */
 	IdentityLink newIdentityLink(String linkId);
-	
+
 	/**
 	 * 存储 任务候选身份 对象
+	 * 
 	 * @param identityLink
 	 */
 	void saveIdentityLink(IdentityLink identityLink);
-	
+
 	/**
 	 * 删除 任务候选身份 对象
-	 * @param linkId  任务候选身份编号
+	 * 
+	 * @param linkId
+	 *            任务候选身份编号
 	 */
 	void deleteIdentityLink(String linkId);
-	
+
 	/**
 	 * 删除 任务候选身份 对象
-	 * @param linkIds 任务候选身份编号集合
+	 * 
+	 * @param linkIds
+	 *            任务候选身份编号集合
 	 */
 	void deleteIdentityLink(Collection<String> linkIds);
-	
-	
+
 	List<Map<String, Object>> processPerformance(String[] pid, String startTime, String endTime, String type);
-	
+
 	/**
 	 * 获取将任务代理给当前用户的人员列表
-	 * @param userId 用户编号
+	 * 
+	 * @param userId
+	 *            用户编号
 	 * @return
 	 */
 	List<UserTo> getAgentUsers(String userId);
-	
+
 	/**
 	 * 获取将任务代理给当前用户的人员列表
-	 * @param userId 用户编号
-	 * @return  map的key{userid,username}
+	 * 
+	 * @param userId
+	 *            用户编号
+	 * @return map的key{userid,username}
 	 */
 	List<Map<String, Object>> getAgentUsersAndCount(String userId);
-	
-	
+
 	/**
 	 * 获取当前用户设置的代理用户
+	 * 
 	 * @param userId
 	 * @return
 	 */
 	List<UserTo> getAgentToUsers(String userId);
-	
+
 	/**
 	 * 获取当前用户设置的代理用户
+	 * 
 	 * @param userId
 	 * @return map的key{userid,username}
 	 */
 	List<Map<String, Object>> getAgentToUsersAndCount(String userId);
-	
-	
+
 	List<UserTaskBehavior> getUserEndTaskNodesInProcessInstance(String processInstanceId);
+
+	
+	/**
+	 * 获取提交节点用户自定义命令 {@link TaskCommand} 列表
+	 * 
+	 * @param processDefinitionKey
+	 *            流程定义编号
+	 * @return {@link TaskCommand} 列表
+	 */
+	List<TaskCommandInst> getSubTaskTaskCommandByKey(String processDefinitionKey);
+	
 	
 	/**
 	 * 获取任务的处理命令
-	 * @param taskId 任务编号
+	 * 
+	 * @param taskId
+	 *            任务编号
+	 * @param isProcessTracking
+	 *            是否为流程追踪查询
+	 * @return
+	 */
+	List<TaskCommandInst> GetTaskCommandByTaskId(String taskId, boolean isProcessTracking);
+
+	/**
+	 * 获取任务的处理命令
+	 * @param taskInstance 任务实例
 	 * @param isProcessTracking 是否为流程追踪查询
 	 * @return
 	 */
-	List<TaskCommandInst> GetTaskCommandByTaskId(String taskId,boolean isProcessTracking);
-	
-	List<TaskCommandInst> GetTaskCommandByTaskInstance(TaskInstance taskInstance,boolean isProcessTracking);
-	
-	
+	List<TaskCommandInst> GetTaskCommandByTaskInstance(TaskInstance taskInstance, boolean isProcessTracking);
+
 	List<UserTo> getTaskUsersByTaskId(String taskId);
-	
+
 	/**
 	 * 根据优先级的值获取所处的优先级定义
-	 * @param priorityValue 优先级值
+	 * 
+	 * @param priorityValue
+	 *            优先级值
 	 * @return
 	 */
 	Priority getPriority(int priorityValue);
 
 	/**
 	 * 获取模拟运行下一步产生的任务
-	 * @param taskId 任务编号
-	 * @param processInstanceId 流程实例号
+	 * 
+	 * @param taskId
+	 *            任务编号
+	 * @param processInstanceId
+	 *            流程实例号
 	 * @return
 	 */
-	List<TaskInstance> getNextTask(String taskId,String processInstanceId);
-	
-	
+	List<TaskInstance> getNextTask(String taskId, String processInstanceId);
+
 	/**
 	 * 获取可以追回到的任务
-	 * @param taskId 当前任务号
-	 * @param taskCommandId 点击处理命令编号
+	 * 
+	 * @param taskId
+	 *            当前任务号
+	 * @param taskCommandId
+	 *            点击处理命令编号
 	 * @return 可以追回的任务
 	 */
-	List<TaskInstance> GetRecoverTask(String taskId,String taskCommandId);
+	List<TaskInstance> GetRecoverTask(String taskId, String taskCommandId);
+	
+	
+	
+	/** * * * * * * * * * * * * * * *   已经过期的方法 * * * * * * * * * * * * * * * * * * *  */
 
+	@Deprecated
+	/**
+	 * 获取用户自定义命令 {@link UserCommandQuery} 列表
+	 * 
+	 * @param processDefinitionId
+	 *            流程定义id，唯一编号,不能为空。(数据库中的 id)
+	 * @param nodeId
+	 *            任务节点编号
+	 * @return {@link UserCommandQuery} 列表
+	 */
+	List<UserCommandQueryTo> getUserCommandById(String processDefinitionId, String nodeId);
+
+	@Deprecated
+	/**
+	 * 获取提交节点用户自定义命令 {@link UserCommandQuery} 列表
+	 * 
+	 * @param processDefinitionKey
+	 *            流程定义编号
+	 * @return {@link UserCommandQuery} 列表
+	 */
+	List<UserCommandQueryTo> getSubTaskUserCommandByKey(String processDefinitionKey);
 
 }

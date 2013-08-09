@@ -657,4 +657,50 @@ public class ProcessDefinitionPersistence {
 
 		return processDefinition;
 	}
+
+	public Object selectProcessDefinitionByDeploymentAndKey(Object parameter) {
+		@SuppressWarnings("unchecked")
+		Map<String, String> strmap = (Map<String, String>) parameter;
+		String deploymentIdTemp = strmap.get("deploymentId");
+		String processKeyTemp = strmap.get("processDefinitionKey");
+		
+		String sqlText = "select * " + "from FIXFLOW_DEF_PROCESSDEFINITION " + "where PROCESS_KEY = ? AND DEPLOYMENT_ID=? ";
+
+		// 构建查询参数
+
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(processKeyTemp);
+		objectParamWhere.add(deploymentIdTemp);
+
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
+		Map<String, Object> dataMap = dataObj.get(0);
+
+		String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
+		String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
+		String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
+		//String category = StringUtil.getString(dataMap.get("CATEGORY"));
+		int version = StringUtil.getInt(dataMap.get("VERSION"));
+		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
+		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
+		String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
+		// String startFormKey =
+		// StringUtil.getString(dataMap.get("START_FORM_KEY"));
+		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
+		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
+		if (processDefinition == null) {
+			processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
+
+			processDefinition.setProcessDefinitionId(processId);
+			processDefinition.setDeploymentId(deploymentId);
+			processDefinition.setResourceName(resourceName);
+			//processDefinition.setCategory(category);
+			processDefinition.setVersion(version);
+			processDefinition.setResourceId(resourceId);
+			processDefinition.setDiagramResourceName(diagramResourceName);
+			// processDefinition.setStartFormKey(startFormKey);
+			deploymentCache.addProcessDefinition(processDefinition);
+		}
+
+		return processDefinition;
+	}
 }

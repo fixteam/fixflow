@@ -284,6 +284,13 @@ public class PersistentSession {
 			return resourcePersistence.selectResourceByDeploymentIdAndResourceName(deploymentId,resourceName);
 		}
 		
+		if (statement.equals("selectProcessDefinitionByDeploymentAndKey")) {
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
+			
+		
+			return processDefinitionPersistence.selectProcessDefinitionByDeploymentAndKey(parameter);
+		}
+		
 		
 		
 
