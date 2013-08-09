@@ -20,6 +20,7 @@ package com.founder.fix.fixflow.core;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipInputStream;
 
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
@@ -183,6 +184,38 @@ public interface ModelService extends ProcessService{
 	 * @return 图片Stream
 	 */
 	InputStream GetFlowGraphicsImgStreamByDefKey(String processDefinitionKey);
+	
+	/**
+	 * 通过zip文件发布流程
+	 * @param path zip文件路径
+	 * @return 发布号
+	 */
+	String deploymentByZip(String path);
+	
+	/**
+	 * 通过zip文件发布流程
+	 * @param path zip文件路径
+	 * @return 发布号
+	 */
+	String deploymentByZip(ZipInputStream zipInputStream);
+	
+	/**
+	 * 通过zip文件发布流程
+	 * @param path zip文件路径
+	 * @param deploymentId 发布号
+	 * @return 发布号
+	 */
+	String updateDeploymentByZip(ZipInputStream zipInputStream,String deploymentId);
+	
+	/**
+	 * 通过zip文件发布流程
+	 * @param path zip文件路径
+	 * @param deploymentId 发布号
+	 * @return 发布号
+	 */
+	String updateDeploymentByZip(String pth,String deploymentId);
+	
+	
 	
 }
   
