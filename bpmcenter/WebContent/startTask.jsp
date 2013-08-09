@@ -28,9 +28,9 @@ a{text-decoration: none;}
 <script>
 $(function(){
   $("button[processDefinitionKey]").click(function(){
-     var processId = $(this).attr("processDefinitionKey");
+     var pdk = $(this).attr("processDefinitionKey");
     var obj = {};
-    window.showModalDialog("http://www.baidu.com",obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=startOneTask&userId=<%=request.getAttribute("userId")%>&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>

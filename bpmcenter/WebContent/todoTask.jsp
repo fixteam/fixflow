@@ -79,6 +79,7 @@ a{text-decoration: none;}
 		    <th>任务主题</th>
 		    <th>发起人</th>
 		    <th>发起时间</th>
+		    <th>操作</th>
 		    <th>查看流程图</th>
 		  </thead>
 		  <tbody>
@@ -90,6 +91,7 @@ a{text-decoration: none;}
 		      <td>${dataList.startTime}|startTime</td>
 		      <td>${dataList.nodeName}|nodeName</td>
 		      <td>${dataList.nodeId}|nodeId</td>
+		      <td><button name="doTask" tii="${dataList.taskInstanceId}">处理</button></td>
 		      <td><button name="flowGraph" pdi="${dataList.processDefinitionId}">流程图</button></td>
 		    </tr>
 		    </c:forEach>
@@ -160,6 +162,11 @@ $(function(){
     var pdi = $(this).attr("pdi");
     var obj = {};
     window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
+  });
+  $("button[name=doTask]").click(function(){
+    var tii = $(this).attr("tii");
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>
