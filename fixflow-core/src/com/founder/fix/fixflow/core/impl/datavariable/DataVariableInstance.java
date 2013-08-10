@@ -43,6 +43,10 @@ public class DataVariableInstance implements Serializable, PersistentObject {
 
 	protected DataVariableMgmtInstance dataVariableMgmtInstance;
 
+	/**
+	 * 是否为持久化便来那个
+	 * @return
+	 */
 	public boolean isPersistence() {
 		return dataVariableBehavior.isPersistence();
 	}
@@ -51,6 +55,14 @@ public class DataVariableInstance implements Serializable, PersistentObject {
 		this.dataVariableBehavior = dataVariableBehavior;
 		this.dataVariableMgmtInstance = dataVariableMgmtInstance;
 
+	}
+	
+	/**
+	 * 获取变量业务类型
+	 * @return
+	 */
+	public String getBizType(){
+		return dataVariableBehavior.getBizType();
 	}
 
 	public void executeExpression(ExecutionContext executionContext) {
@@ -115,10 +127,13 @@ public class DataVariableInstance implements Serializable, PersistentObject {
 		map.put("VARIABLE_KEY", this.dataVariableBehavior.getId());
 		map.put("VARIABLE_VALUE", getExpressionValue());
 		map.put("VARIABLE_CLASSNAME", this.dataVariableBehavior.getDataType());
-
+		map.put("VARIABLE_CLASSNAME", this.dataVariableBehavior.getDataType());
+		map.put("VARIABLE_TYPE", this.dataVariableBehavior.getDataType());
 		return map;
 	}
-
+	/**
+	 * 获取变量编号
+	 */
 	public String getId() {
 
 		return this.dataVariableBehavior.getId();
