@@ -18,7 +18,6 @@
 package com.founder.fix.fixflow.core.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +124,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		return map;
 	}
 
-	public Map<String, Object> getProcessInstanceVariables(String processInstanceId, Collection<String> variableNames) {
+	public Map<String, Object> getProcessInstanceVariables(String processInstanceId, List<String> variableNames) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
 		queryVariablesCommand.setProcessInstanceId(processInstanceId);
 		queryVariablesCommand.setVariableNames(variableNames);
@@ -166,7 +165,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		return map;
 	}
 
-	public Map<String, Object> getTokenVariables(String tokenId, Collection<String> variableNames) {
+	public Map<String, Object> getTokenVariables(String tokenId, List<String> variableNames) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
 		queryVariablesCommand.setTokenId(tokenId);
 		queryVariablesCommand.setVariableNames(variableNames);

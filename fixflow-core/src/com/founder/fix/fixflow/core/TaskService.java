@@ -296,7 +296,7 @@ public interface TaskService extends ProcessService {
 	 *            变量key集合
 	 * @return 变量Map
 	 */
-	Map<String, Object> getVariables(String taskId, Collection<String> variableNames);
+	Map<String, Object> getVariables(String taskId, List<String> variableNames);
 
 	/**
 	 * 创建一个新的任务候选身份

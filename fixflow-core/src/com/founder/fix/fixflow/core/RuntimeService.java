@@ -18,8 +18,6 @@
 package com.founder.fix.fixflow.core;
 
 
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -225,7 +223,7 @@ public interface RuntimeService extends ProcessService{
 	 *            变量key集合
 	 * @return 变量Map
 	 */
-	Map<String, Object> getProcessInstanceVariables(String processInstanceId, Collection<String> variableNames);
+	Map<String, Object> getProcessInstanceVariables(String processInstanceId, List<String> variableNames);
 
 	
 	
@@ -283,7 +281,7 @@ public interface RuntimeService extends ProcessService{
 	 *            变量key集合
 	 * @return 变量Map
 	 */
-	Map<String, Object> getTokenVariables(String tokenId, Collection<String> variableNames);
+	Map<String, Object> getTokenVariables(String tokenId, List<String> variableNames);
 	
 	/**
 	 * 插入流程归档数据

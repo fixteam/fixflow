@@ -39,6 +39,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
+import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -48,8 +49,6 @@ import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -57,7 +56,6 @@ import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class ProcessInstanceEntity extends AbstractPersistentObject implements ProcessInstance {
 
@@ -584,14 +582,12 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	public Map<String, Object> getDataVariable() {
 		// TODO Auto-generated method stub
 
-		VariableQueryEntity variableQueryEntity = new VariableQueryEntity();
+		QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(this.id);
+		
+	
 
-		if (this.id != null && !this.id.equals("")) {
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, this.id);
-			variableQueryEntity.addVariableFlowType(variableFlowTypeEntity);
-		}
-
-		return Context.getCommandContext().getVariableManager().queryVariable(variableQueryEntity);
+		return Context.getCommandContext().getVariableManager().queryVariable(queryVariablesCommand);
 
 	}
 

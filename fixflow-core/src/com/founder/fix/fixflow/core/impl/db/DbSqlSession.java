@@ -56,6 +56,11 @@ public class DbSqlSession {
 		persistentSession.delete(deleteStatement,persistentObjectId);
 	}
 	
+	public void delete(String deleteStatement, Object parameter) {
+
+		persistentSession.delete(deleteStatement,parameter);
+	}
+	
 	public void delete(String deleteStatement, PersistentObject persistentObject) {
 
 		persistentSession.delete(deleteStatement,persistentObject);

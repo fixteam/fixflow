@@ -30,15 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableTransferEntity;
 import com.founder.fix.fixflow.core.objkey.VariableObjKey;
-
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class VariablePersistence {
 
@@ -49,156 +46,178 @@ public class VariablePersistence {
 		this.connection = connection;
 		sqlCommand = new SqlCommand(connection);
 	}
-	
-	
-	public Map<String, Object> queryVariable(Object persistentObject){
-		
-		
-		VariableQueryEntity variableQueryEntity=(VariableQueryEntity)persistentObject;
-		
-		Map<String, Object> returnValue=new HashMap<String, Object>();
-		List<VariableFlowTypeEntity> variableFlowTypeEntities=variableQueryEntity.getVariableFlowTypeEntities();
-		List<String> variableNames=variableQueryEntity.getVariableNames();
-		if (variableFlowTypeEntities.size() == 0) {
+
+	public Map<String, Object> queryVariable(QueryVariablesCommand queryVariablesCommand) {
+
+		Map<String, Object> returnValue = new HashMap<String, Object>();
+
+		if (queryVariablesCommand == null) {
 			return returnValue;
 		}
+		List<String> variableNames = queryVariablesCommand.getVariableNames();
+
 		String sqlWhereQueryString = "";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
 
+		String processInstanceId = queryVariablesCommand.getProcessInstanceId();
+		String tokenId = queryVariablesCommand.getTokenId();
+		String taskInstanceId = queryVariablesCommand.getTaskInstanceId();
+		String nodeId = queryVariablesCommand.getNodeId();
 
-		for (int i = 0; i < variableFlowTypeEntities.size(); i++) {
+		if (processInstanceId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID=? AND ";
+			objectParamWhere.add(processInstanceId);
+		}
 
-			VariableFlowTypeEntity variableFlowTypeEntity = variableFlowTypeEntities.get(i);
-			VariableFlowType variableFlowType = variableFlowTypeEntity.getVariableFlowType();
-			String dbTypeColumnName = variableFlowType + "_ID";
-			String dbTypeValue = variableFlowTypeEntity.getTypeValue();
-			
+		if (tokenId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID=? AND";
+			objectParamWhere.add(tokenId);
+		}
 
-			if (i == variableFlowTypeEntities.size() - 1) {
-				sqlWhereQueryString = sqlWhereQueryString + " " + dbTypeColumnName + "=? ";
-			} else {
-				sqlWhereQueryString = sqlWhereQueryString + " " + dbTypeColumnName + "=? AND ";
+		if (taskInstanceId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID=? AND ";
+			objectParamWhere.add(taskInstanceId);
+		}
+
+		if (nodeId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID IS NULL ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID=? ";
+			objectParamWhere.add(nodeId);
+		}
+
+		/*
+		 * sqlWhereQueryString = sqlWhereQueryString + " AND VARIABLE_KEY=?";
+		 * 
+		 * 
+		 * List<VariableFlowTypeEntity> variableFlowTypeEntities =
+		 * variableQueryEntity.getVariableFlowTypeEntities(); if
+		 * (variableFlowTypeEntities.size() == 0) { return; }
+		 */
+
+		if (variableNames != null) {
+			if (variableNames.size() > 0) {
+				sqlWhereQueryString = sqlWhereQueryString + " AND (";
 			}
 
-			objectParamWhere.add(dbTypeValue);
+			for (int i = 0; i < variableNames.size(); i++) {
 
-		}
-		
-		if(variableNames.size()>0){
-			sqlWhereQueryString=sqlWhereQueryString+" AND (";
-		}
-		
-		for (int i = 0; i < variableNames.size(); i++) {
-			
-			String variableName=variableNames.get(i);
-			
-			if (i == variableNames.size() - 1) {
-				sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? ";
-			} else {
-				sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? OR ";
+				String variableName = variableNames.get(i);
+
+				if (i == variableNames.size() - 1) {
+					sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? ";
+				} else {
+					sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? OR ";
+				}
+
+				objectParamWhere.add(variableName);
 			}
 
-			objectParamWhere.add(variableName);
+			if (variableNames.size() > 0) {
+				sqlWhereQueryString = sqlWhereQueryString + " )";
+			}
 		}
-		
-		if(variableNames.size()>0){
-			sqlWhereQueryString=sqlWhereQueryString+" )";
+
+		// 构建Where查询参数
+		Object[] objectParamObj = new Object[objectParamWhere.size()];
+		for (int i = 0; i < objectParamWhere.size(); i++) {
+			objectParamObj[i] = objectParamWhere.get(i);
 		}
 
 		// 设置查询字符串
-		String sqlText = "SELECT VARIABLE_KEY,VARIABLE_VALUE FROM "+VariableObjKey.VariableTableName()+"  WHERE " + sqlWhereQueryString;
-		
+		String sqlText = "SELECT VARIABLE_KEY,VARIABLE_VALUE FROM " + VariableObjKey.VariableTableName() + "  WHERE " + sqlWhereQueryString;
 
-		List<Map<String, Object>> listMaps=sqlCommand.queryForList(sqlText,objectParamWhere);
-		
+		List<Map<String, Object>> listMaps = sqlCommand.queryForList(sqlText, objectParamWhere);
+
 		for (Map<String, Object> mapObj : listMaps) {
-			String keyObj=StringUtil.getString(mapObj.get("VARIABLE_KEY"));
-			
+			String keyObj = StringUtil.getString(mapObj.get("VARIABLE_KEY"));
+
 			byte[] bytes = (byte[]) mapObj.get("VARIABLE_VALUE");
-			Object valueObj=bytesToObject(bytes);
+			Object valueObj = bytesToObject(bytes);
 			returnValue.put(keyObj, valueObj);
 		}
-		return  returnValue;
+		return returnValue;
 	}
 
 	public void saveVariable(PersistentObject persistentObject) {
-		
-		VariableTransferEntity variableTransferEntity=(VariableTransferEntity)persistentObject;
-		
-		
-		Map<String, Object> variableMap = variableTransferEntity.getVariableMap();
-		List<VariableFlowTypeEntity> variableFlowTypeEntities = variableTransferEntity.getVariableFlowTypeEntities();
-		for (String variableKey : variableMap.keySet()) {
 
-			saveVariable(variableFlowTypeEntities, variableKey, variableMap.get(variableKey));
+		DataVariableEntity dataVariableEntity = (DataVariableEntity) persistentObject;
 
-		}
-	}
-
-	private void saveVariable(List<VariableFlowTypeEntity> variableFlowTypeEntities, String variableKey, Object variableValue) {
-		if (variableFlowTypeEntities.size() == 0) {
+		if (dataVariableEntity == null) {
 			return;
 		}
 		String sqlWhereQueryString = "";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
+		String variableKey = dataVariableEntity.getId();
+		String processInstanceId = dataVariableEntity.getProcessInstanceId();
+		String tokenId = dataVariableEntity.getTokenId();
+		String taskInstanceId = dataVariableEntity.getTaskInstanceId();
+		String nodeId = dataVariableEntity.getNodeId();
+		String variableType = dataVariableEntity.getVariableType();
 
-		String processInstanceId = null;
-		String tokenId = null;
-		String taskInstanceId = null;
-		String nodeId = null;
-
-		for (int i = 0; i < variableFlowTypeEntities.size(); i++) {
-
-			VariableFlowTypeEntity variableFlowTypeEntity = variableFlowTypeEntities.get(i);
-			VariableFlowType variableFlowType = variableFlowTypeEntity.getVariableFlowType();
-			String dbTypeColumnName = variableFlowType + "_ID";
-			String dbTypeValue = variableFlowTypeEntity.getTypeValue();
-			if (variableFlowType.equals(VariableFlowType.PROCESSINSTANCE)) {
-				processInstanceId = dbTypeValue;
-			}
-			if (variableFlowType.equals(VariableFlowType.TASKINSTANCE)) {
-				taskInstanceId = dbTypeValue;
-			}
-			if (variableFlowType.equals(VariableFlowType.NODE)) {
-				nodeId = dbTypeValue;
-			}
-			if (variableFlowType.equals(VariableFlowType.TOKEN)) {
-				tokenId = dbTypeValue;
-			}
-
-			if (i == variableFlowTypeEntities.size() - 1) {
-				sqlWhereQueryString = sqlWhereQueryString + " " + dbTypeColumnName + "=? ";
-			} else {
-				sqlWhereQueryString = sqlWhereQueryString + " " + dbTypeColumnName + "=? AND ";
-			}
-
-			objectParamWhere.add(dbTypeValue);
-
+		if (processInstanceId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID=? AND ";
+			objectParamWhere.add(processInstanceId);
 		}
-		       sqlWhereQueryString=sqlWhereQueryString+" AND VARIABLE_KEY=?";
-		// 设置查询字符串
-		String sqlText = "SELECT count(1) FROM "+VariableObjKey.VariableTableName()+"  WHERE " + sqlWhereQueryString ;
+
+		if (tokenId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID=? AND";
+			objectParamWhere.add(tokenId);
+		}
+
+		if (taskInstanceId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID=? AND ";
+			objectParamWhere.add(taskInstanceId);
+		}
+
+		if (nodeId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID IS NULL ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID=? ";
+			objectParamWhere.add(nodeId);
+		}
+
+		sqlWhereQueryString = sqlWhereQueryString + " AND VARIABLE_KEY=?";
+
 		objectParamWhere.add(variableKey);
+
+		// 设置查询字符串
+		String sqlText = "SELECT count(1) FROM " + VariableObjKey.VariableTableName() + "  WHERE " + sqlWhereQueryString;
+
 		// 执行查询流程是Sql语句,判断流程实例是否存在于数据库中.
 		int rowNum = Integer.parseInt(sqlCommand.queryForValue(sqlText, objectParamWhere).toString());
 
 		if (rowNum == 0) {
-			// 数据库不存在这条流程实例,则执行创建新实例的方法.
+			// 数据库不存在这个变量,则执行创建新变量的方法.
 
-			insertVariable(processInstanceId, tokenId, taskInstanceId, nodeId, variableKey, variableValue);
+			insertVariable(processInstanceId, tokenId, taskInstanceId, nodeId, variableKey, dataVariableEntity.getExpressionValue(), variableType);
 
 		} else {
-			// 当数据库中已经存在这个流程实例
+			// 当数据库中已经存在这个变量
 
-			updateVariable(processInstanceId, tokenId, taskInstanceId, nodeId, variableKey, variableValue,sqlWhereQueryString,objectParamWhere);
+			updateVariable(processInstanceId, tokenId, taskInstanceId, nodeId, variableKey, dataVariableEntity.getExpressionValue(), sqlWhereQueryString,
+					objectParamWhere, variableType);
 
 		}
 
 	}
 
-	private void insertVariable(String processInstanceId, String tokenId, String taskInstanceId, String nodeId, String variableKey, Object variableValue) {
+	private void insertVariable(String processInstanceId, String tokenId, String taskInstanceId, String nodeId, String variableKey, Object variableValue,
+			String variableType) {
 
 		String processInstanceIdDb = processInstanceId;
 		String tokenIdDb = tokenId;
@@ -207,11 +226,10 @@ public class VariablePersistence {
 
 		String variableKeyDb = variableKey;
 		byte[] variableValueDb = ObjectToBytes(variableValue);
-		String variableClassName=null;
-		if(variableValue!=null){
-			variableClassName= variableValue.getClass().getCanonicalName();
+		String variableClassName = null;
+		if (variableValue != null) {
+			variableClassName = variableValue.getClass().getCanonicalName();
 		}
-		 
 
 		// 构建查询参数
 		Map<String, Object> objectParam = new HashMap<String, Object>();
@@ -223,27 +241,32 @@ public class VariablePersistence {
 		objectParam.put(VariableObjKey.VariableValue().DataBaseKey(), variableValueDb);
 
 		objectParam.put(VariableObjKey.VariableClassName().DataBaseKey(), variableClassName);
-		
+
 		objectParam.put(VariableObjKey.TaskInstanceId().DataBaseKey(), taskInstanceIdDb);
 
 		objectParam.put(VariableObjKey.TokenId().DataBaseKey(), tokenIdDb);
-		
+
 		objectParam.put(VariableObjKey.NodeId().DataBaseKey(), nodeIdDb);
+
+		objectParam.put(VariableObjKey.VariableType().DataBaseKey(), variableType);
+
+		if (variableType != null && variableType.equals(DataVariableEntity.QUERY_DATA_KEY)) {
+			objectParam.put(VariableObjKey.BizData().DataBaseKey(), StringUtil.getString(variableValue));
+		}
 
 		// 执行插入语句
 		sqlCommand.insert(VariableObjKey.VariableTableName(), objectParam);
 
 	}
 
-	private void updateVariable(String processInstanceId, String tokenId, String taskInstanceId, String nodeId, String variableKey, Object variableValue,String updateWhereSql,List<Object> objectParamWhere) {
-
-
+	private void updateVariable(String processInstanceId, String tokenId, String taskInstanceId, String nodeId, String variableKey, Object variableValue,
+			String updateWhereSql, List<Object> objectParamWhere, String variableType) {
 
 		String variableKeyDb = variableKey;
 		byte[] variableValueDb = ObjectToBytes(variableValue);
-		String variableClassName=null;
-		if(variableValue!=null){
-			variableClassName= variableValue.getClass().getCanonicalName();
+		String variableClassName = null;
+		if (variableValue != null) {
+			variableClassName = variableValue.getClass().getCanonicalName();
 		}
 
 		// 构建查询参数
@@ -255,82 +278,106 @@ public class VariablePersistence {
 
 		objectParam.put(VariableObjKey.VariableClassName().DataBaseKey(), variableClassName);
 
+		objectParam.put(VariableObjKey.VariableType().DataBaseKey(), variableType);
 
-
+		if (variableType != null && variableType.equals(DataVariableEntity.QUERY_DATA_KEY)) {
+			objectParam.put(VariableObjKey.BizData().DataBaseKey(), StringUtil.getString(variableValue));
+		}
 
 		// 构建Where查询参数
-		Object[] objectParamObj=new Object[objectParamWhere.size()];
+		Object[] objectParamObj = new Object[objectParamWhere.size()];
 		for (int i = 0; i < objectParamWhere.size(); i++) {
-			objectParamObj[i]=objectParamWhere.get(i);
+			objectParamObj[i] = objectParamWhere.get(i);
 		}
 
 		// 执行插入语句
-		sqlCommand.update(VariableObjKey.VariableTableName(), objectParam, updateWhereSql,objectParamObj);
+		sqlCommand.update(VariableObjKey.VariableTableName(), objectParam, updateWhereSql, objectParamObj);
 
 	}
-	
-	
-	public void deleteVariable(VariableQueryEntity variableQueryEntity){
-		List<VariableFlowTypeEntity> variableFlowTypeEntities=variableQueryEntity.getVariableFlowTypeEntities();
-		if (variableFlowTypeEntities.size() == 0) {
+
+	public void deleteVariable(QueryVariablesCommand queryVariablesCommand) {
+
+		if (queryVariablesCommand == null) {
 			return;
 		}
-		
-		List<String> variableNames=variableQueryEntity.getVariableNames();
-		
+		List<String> variableNames = queryVariablesCommand.getVariableNames();
+
 		String sqlWhereQueryString = "";
 		// 构建查询参数
 		List<Object> objectParamWhere = new ArrayList<Object>();
 
+		String processInstanceId = queryVariablesCommand.getProcessInstanceId();
+		String tokenId = queryVariablesCommand.getTokenId();
+		String taskInstanceId = queryVariablesCommand.getTaskInstanceId();
+		String nodeId = queryVariablesCommand.getNodeId();
 
-		for (int i = 0; i < variableFlowTypeEntities.size(); i++) {
+		if (processInstanceId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID=? AND ";
+			objectParamWhere.add(processInstanceId);
+		}
 
-			VariableFlowTypeEntity variableFlowTypeEntity = variableFlowTypeEntities.get(i);
-			VariableFlowType variableFlowType = variableFlowTypeEntity.getVariableFlowType();
-			String dbTypeColumnName = variableFlowType + "_ID";
-			String dbTypeValue = variableFlowTypeEntity.getTypeValue();
-			
+		if (tokenId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID=? AND";
+			objectParamWhere.add(tokenId);
+		}
 
-			if (i == variableFlowTypeEntities.size() - 1) {
-				sqlWhereQueryString = sqlWhereQueryString + " " + dbTypeColumnName + "=? ";
-			} else {
-				sqlWhereQueryString = sqlWhereQueryString + " " + dbTypeColumnName + "=? AND ";
+		if (taskInstanceId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID IS NULL AND ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID=? AND ";
+			objectParamWhere.add(taskInstanceId);
+		}
+
+		if (nodeId == null) {
+			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID IS NULL ";
+		} else {
+			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID=? ";
+			objectParamWhere.add(nodeId);
+		}
+
+		/*
+		 * sqlWhereQueryString = sqlWhereQueryString + " AND VARIABLE_KEY=?";
+		 * 
+		 * 
+		 * List<VariableFlowTypeEntity> variableFlowTypeEntities =
+		 * variableQueryEntity.getVariableFlowTypeEntities(); if
+		 * (variableFlowTypeEntities.size() == 0) { return; }
+		 */
+
+		if (variableNames != null) {
+			if (variableNames.size() > 0) {
+				sqlWhereQueryString = sqlWhereQueryString + " AND (";
 			}
 
-			objectParamWhere.add(dbTypeValue);
+			for (int i = 0; i < variableNames.size(); i++) {
 
-		}
-		
-		if(variableNames.size()>0){
-			sqlWhereQueryString=sqlWhereQueryString+" AND (";
-		}
-		
-		for (int i = 0; i < variableNames.size(); i++) {
-			
-			String variableName=variableNames.get(i);
-			
-			if (i == variableNames.size() - 1) {
-				sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? ";
-			} else {
-				sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? OR ";
-			}
+				String variableName = variableNames.get(i);
 
-			objectParamWhere.add(variableName);
-		}
-		
-		if(variableNames.size()>0){
-			sqlWhereQueryString=sqlWhereQueryString+" )";
-		}
-
-		
-		
-		// 构建Where查询参数
-				Object[] objectParamObj=new Object[objectParamWhere.size()];
-				for (int i = 0; i < objectParamWhere.size(); i++) {
-					objectParamObj[i]=objectParamWhere.get(i);
+				if (i == variableNames.size() - 1) {
+					sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? ";
+				} else {
+					sqlWhereQueryString = sqlWhereQueryString + " VARIABLE_KEY=? OR ";
 				}
-		sqlCommand.delete(VariableObjKey.VariableTableName(),  sqlWhereQueryString,objectParamObj);
-		
+
+				objectParamWhere.add(variableName);
+			}
+
+			if (variableNames.size() > 0) {
+				sqlWhereQueryString = sqlWhereQueryString + " )";
+			}
+		}
+
+		// 构建Where查询参数
+		Object[] objectParamObj = new Object[objectParamWhere.size()];
+		for (int i = 0; i < objectParamWhere.size(); i++) {
+			objectParamObj[i] = objectParamWhere.get(i);
+		}
+		sqlCommand.delete(VariableObjKey.VariableTableName(), sqlWhereQueryString, objectParamObj);
+
 	}
 
 	public static byte[] ObjectToBytes(Object obj) {

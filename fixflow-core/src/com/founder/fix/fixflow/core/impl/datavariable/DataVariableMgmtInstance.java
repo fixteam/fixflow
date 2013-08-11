@@ -37,16 +37,16 @@ public class DataVariableMgmtInstance implements Serializable {
 	protected ProcessInstanceEntity processInstance;
 	
 	
-	protected List<DataVariableInstance> dataVariableInstances=new ArrayList<DataVariableInstance>();
+	protected List<DataVariableEntity> dataVariableEntities=new ArrayList<DataVariableEntity>();
 	
-	public List<DataVariableInstance> getDataVariableInstances() {
-		return dataVariableInstances;
+	public List<DataVariableEntity> getDataVariableEntities() {
+		return dataVariableEntities;
 	}
 	
 	
-	public DataVariableInstance getDataVariableById(String id){
+	public DataVariableEntity getDataVariableById(String id){
 		
-		for (DataVariableInstance dataVariableInstance : dataVariableInstances) {
+		for (DataVariableEntity dataVariableInstance : dataVariableEntities) {
 			if(dataVariableInstance.getId().equals(id)){
 				return dataVariableInstance;
 			}
@@ -55,8 +55,8 @@ public class DataVariableMgmtInstance implements Serializable {
 		
 	}
 	
-	public DataVariableInstance getDataVariableByExpressionId(String expressionId){
-		for (DataVariableInstance dataVariableInstance : dataVariableInstances) {
+	public DataVariableEntity getDataVariableByExpressionId(String expressionId){
+		for (DataVariableEntity dataVariableInstance : dataVariableEntities) {
 			if(dataVariableInstance.getId().equals(expressionId)){
 				return dataVariableInstance;
 			}
@@ -65,9 +65,9 @@ public class DataVariableMgmtInstance implements Serializable {
 	}
 
 
-	public DataVariableInstance createDataVariableInstance(DataVariableBehavior dataVariableBehavior){
-		DataVariableInstance dataVariableInstance=new DataVariableInstance(dataVariableBehavior,this);
-		dataVariableInstances.add(dataVariableInstance);
+	public DataVariableEntity createDataVariableInstance(DataVariableBehavior dataVariableBehavior){
+		DataVariableEntity dataVariableInstance=new DataVariableEntity(dataVariableBehavior,this);
+		dataVariableEntities.add(dataVariableInstance);
 		return dataVariableInstance;
 	}
 	

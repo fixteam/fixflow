@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.datavariable.DataVariableInstance;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
@@ -137,8 +137,8 @@ public abstract class AbstractScriptLanguageMgmt {
 
 					if (dataVariableBehavior.getId().equals(expressionId)) {
 
-						DataVariableInstance dataVariableInstance = dataVariableMgmtInstance.createDataVariableInstance(dataVariableBehavior);
-						dataVariableInstance.executeExpression(executionContext);
+						DataVariableEntity dataVariableEntity = dataVariableMgmtInstance.createDataVariableInstance(dataVariableBehavior);
+						dataVariableEntity.executeExpression(executionContext);
 
 					}
 
