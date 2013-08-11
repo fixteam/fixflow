@@ -49,6 +49,41 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	
 	TaskQuery callActivityInstanceId(String callActivityInstanceId);
 	
+	/**
+	 * 根据任务所有变量查询
+	 * @param variableValue 变量值
+	 * @param isLike 是否Like
+	 * @return
+	 */
+	TaskQuery variableData(String variableValue,boolean isLike);
+	
+	/**
+	 * 根据任务指定的变量查询
+	 * @param variableKey  变量Key
+	 * @param variableValue 变量值
+	 * @param isLike 是否Like
+	 * @return
+	 */
+	TaskQuery variableData(String variableKey,String variableValue,boolean isLike);
+	
+	/**
+	 * 根据任务的流程实例的所有变量查询
+	 * @param variableValue 变量值
+	 * @param isLike 是否Like
+	 * @return
+	 */
+	TaskQuery processInstanceVariableData(String variableValue,boolean isLike);
+	
+	/**
+	 * 根据任务的流程实例指定的变量查询
+	 * @param variableKey 变量Key
+	 * @param variableValue 变量值
+	 * @param isLike 是否Like
+	 * @return
+	 */
+	TaskQuery processInstanceVariableData(String variableKey,String variableValue,boolean isLike);
+
+	
 	
 	/**
 	 * 提交人

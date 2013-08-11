@@ -656,4 +656,24 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return isContainsSubProcess;
 	}
 
+	public TaskQuery variableData(String variableValue, boolean isLike) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TaskQuery variableData(String variableKey, String variableValue, boolean isLike) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TaskQuery processInstanceVariableData(String variableValue, boolean isLike) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TaskQuery processInstanceVariableData(String variableKey, String variableValue, boolean isLike) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
