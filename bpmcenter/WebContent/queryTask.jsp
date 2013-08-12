@@ -17,10 +17,11 @@ a{text-decoration: none;}
 <body>
 <div>
   <a id="b1" target="_self" href="FlowCenter?action=getMyProcess">发起流程</a>
-  <a id="b2" target="_self" href="FlowCenter?action=getMyTask">待办任务</a>
-  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask">流程查询</a>
+  <a id="b2" target="_self" href="FlowCenter?action=getMyTask&rowNum=15">待办任务</a>
+  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask&rowNum=15">流程查询</a>
   <a id="b4" target="_self" href="login.jsp">归档任务</a>
-  <a id="b5" target="_self" href="login.jsp">返回登陆</a>
+  <a id="b5" target="_self" href="FlowCenter?action=getUserInfo">修改我的信息</a>
+  <a id="b6" target="_self" href="login.jsp">返回登陆</a>
 </div>
 <div style="margin-top:10px;">
 <!-- 左 -->
@@ -31,7 +32,7 @@ a{text-decoration: none;}
 	</div>
 <!-- 右-->
 	<div style="float:right;width:89%;">
-<!-- 查 -->
+	  <!-- 查 -->
 	  <div id="search">
 	  </div>
 	    任务主题：<input type="text" value="<c:out value="${result.title}"/>"/>
@@ -41,30 +42,30 @@ a{text-decoration: none;}
 	    	—— <input type="text" class="Wdate" onClick="WdatePicker()" value="<c:out value="${result.arrivalTimeE}"/>"/>
 	        发起人：<input type="text" value="<c:out value="${result.initor}"/>"/>
 	  <div>
-<!-- 表 -->
-		<table>
+		<!-- 表 -->
+		<table style="width:100%;">
 		  <thead>
-		    <th>优先级</th>
-		    <th>流程名称</th>
-		    <th>单据号</th>
-		    <th>任务主题</th>
-		    <th>发起人</th>
-		    <th>发起时间</th>
+		    <th>bizKey</th>
+		    <th>definitionId</th>
+		    <th>processLocation</th>
+		    <th>startAuthor</th>
+		    <th>updateTime</th>
+		    <th>subject</th>
 		  </thead>
 		  <tbody>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		      <td>${dataList.BIZ_KEY}|bizKey</td>
-		      <td>${dataList.definitionId}|definitionId</td>
-		      <td>${dataList.processLocation}|processLocation</td>
-		      <td>${dataList.startAuthor}|startAuthor</td>
-		      <td>${dataList.updateTime}|updateTime</td>
-		      <td>${dataList.subject}|subject</td>
+		      <td>${dataList.BIZ_KEY}</td>
+		      <td>${dataList.definitionId}</td>
+		      <td>${dataList.processLocation}</td>
+		      <td>${dataList.startAuthor}</td>
+		      <td>${dataList.updateTime}</td>
+		      <td>${dataList.subject}</td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>
 	    </table>
-<!-- 分页 -->	    
+		<!-- 分页 -->	    
 	    <div id="page">
 	     <%
 	      Map map = (Map)request.getAttribute("result");

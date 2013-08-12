@@ -17,10 +17,7 @@
  */
 
 package com.founder.fix.fixflow.core.model;
-
 import com.founder.fix.fixflow.core.query.Query;
-
-
 
 /**
  * 定义部署查询器
@@ -28,23 +25,43 @@ import com.founder.fix.fixflow.core.query.Query;
  *
  */
 public interface DeploymentQuery extends Query<DeploymentQuery, Deployment>{
-  
 
-  DeploymentQuery deploymentId(String deploymentId);
-  
+	/**
+	 * 根据部署号
+	 * @param deploymentId
+	 * @return
+	 */
+	DeploymentQuery deploymentId(String deploymentId);
 
-  DeploymentQuery deploymentName(String name);
-  
+	/**
+	 * 部署名称
+	 * @param name
+	 * @return
+	 */
+	DeploymentQuery deploymentName(String name);
 
-  DeploymentQuery deploymentNameLike(String nameLike);
+	/**
+	 * 部署名称like匹配
+	 * @param nameLike
+	 * @return
+	 */
+	DeploymentQuery deploymentNameLike(String nameLike);
 
-  
+	/**
+	 * 根据发布号排序
+	 * @return
+	 */
+	DeploymentQuery orderByDeploymentId();
 
-  DeploymentQuery orderByDeploymentId();
-  
+	/**
+	 * 根据发布名称排序
+	 * @return
+	 */
+	DeploymentQuery orderByDeploymentName();
 
-  DeploymentQuery orderByDeploymentName();
-  
-
-  DeploymentQuery orderByDeploymenTime();
+	/**
+	 * 根据发布时间排序
+	 * @return
+	 */
+	DeploymentQuery orderByDeploymenTime();
 }

@@ -17,10 +17,11 @@ a{text-decoration: none;}
 <body>
 <div>
   <a id="b1" target="_self" href="FlowCenter?action=getMyProcess">发起流程</a>
-  <a id="b2" target="_self" href="FlowCenter?action=getMyTask">待办任务</a>
-  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask">流程查询</a>
+  <a id="b2" target="_self" href="FlowCenter?action=getMyTask&rowNum=15">待办任务</a>
+  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask&rowNum=15">流程查询</a>
   <a id="b4" target="_self" href="login.jsp">归档任务</a>
-  <a id="b5" target="_self" href="login.jsp">返回登陆</a>
+  <a id="b5" target="_self" href="FlowCenter?action=getUserInfo">修改我的信息</a>
+  <a id="b6" target="_self" href="login.jsp">返回登陆</a>
 </div>
 <div style="margin-top:10px;">
 <!-- 左 -->
@@ -71,25 +72,27 @@ a{text-decoration: none;}
 	        发起人：<input type="text" value="<c:out value="${result.initor}"/>"/>
 	  <div>
 <!-- 表 -->
-		<table>
+		<table style="width:100%;">
 		  <thead>
-		    <th>优先级</th>
-		    <th>流程名称</th>
-		    <th>单据号</th>
-		    <th>任务主题</th>
-		    <th>发起人</th>
-		    <th>发起时间</th>
+		    <th>bizKey</th>
+		    <th>processDefinitionName</th>
+		    <th>processDefinitionKey</th>
+		    <th>startTime</th>
+		    <th>nodeName</th>
+		    <th>nodeId</th>
+		    <th>操作</th>
 		    <th>查看流程图</th>
 		  </thead>
 		  <tbody>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		      <td>${dataList.bizKey}|bizKey</td>
-		      <td>${dataList.processDefinitionName}|processDefinitionName</td>
-		      <td>${dataList.processDefinitionKey}|processDefinitionKey</td>
-		      <td>${dataList.startTime}|startTime</td>
-		      <td>${dataList.nodeName}|nodeName</td>
-		      <td>${dataList.nodeId}|nodeId</td>
+		      <td>${dataList.bizKey}</td>
+		      <td>${dataList.processDefinitionName}</td>
+		      <td>${dataList.processDefinitionKey}</td>
+		      <td>${dataList.startTime}</td>
+		      <td>${dataList.nodeName}</td>
+		      <td>${dataList.nodeId}</td>
+		      <td><button name="doTask" tii="${dataList.taskInstanceId}">处理</button></td>
 		      <td><button name="flowGraph" pdi="${dataList.processDefinitionId}">流程图</button></td>
 		    </tr>
 		    </c:forEach>
@@ -159,7 +162,12 @@ $(function(){
   $("button[name=flowGraph]").click(function(){
     var pdi = $(this).attr("pdi");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getFlowGraph&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
+  });
+  $("button[name=doTask]").click(function(){
+    var tii = $(this).attr("tii");
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>

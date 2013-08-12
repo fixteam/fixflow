@@ -13,8 +13,8 @@ a{text-decoration: none;}
 <body>
 <div>
   <a id="b1" target="_self" href="FlowCenter?action=getMyProcess">发起流程</a>
-  <a id="b2" target="_self" href="FlowCenter?action=getMyTask">待办任务</a>
-  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask">流程查询</a>
+  <a id="b2" target="_self" href="FlowCenter?action=getMyTask&rowNum=15">待办任务</a>
+  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask&rowNum=15">流程查询</a>
   <a id="b4" target="_self" href="login.jsp">归档任务</a>
   <a id="b5" target="_self" href="FlowCenter?action=getUserInfo">修改我的信息</a>
   <a id="b6" target="_self" href="login.jsp">返回登陆</a>
@@ -28,9 +28,9 @@ a{text-decoration: none;}
 <script>
 $(function(){
   $("button[processDefinitionKey]").click(function(){
-     var processId = $(this).attr("processDefinitionKey");
+     var pdk = $(this).attr("processDefinitionKey");
     var obj = {};
-    window.showModalDialog("http://www.baidu.com",obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=startOneTask&userId=<%=request.getAttribute("userId")%>&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>

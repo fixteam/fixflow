@@ -155,6 +155,7 @@ public class BpmnDeployer implements Deployer {
 			//process.setId(persistedProcessDefinition.getId());
 			process.setVersion(persistedProcessDefinition.getVersion());
 			process.setProcessDefinitionId(persistedProcessDefinition.getProcessDefinitionId());
+			Context.getProcessEngineConfiguration().getDeploymentCache().removeProcessDefinition(process.getProcessDefinitionId());
 			
 		}else{
 			
@@ -170,8 +171,8 @@ public class BpmnDeployer implements Deployer {
 		}
 		
 		
-
-		Context.getProcessEngineConfiguration().getDeploymentCache().addProcessDefinition(process);
+		//Context.getProcessEngineConfiguration().getDeploymentCache().removeProcessDefinition(processDefinitionId);
+		//Context.getProcessEngineConfiguration().getDeploymentCache().addProcessDefinition(process);
 
 	}
 

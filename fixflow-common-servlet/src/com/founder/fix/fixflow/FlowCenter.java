@@ -35,6 +35,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.util.CurrentThread;
@@ -133,6 +134,7 @@ public class FlowCenter extends HttpServlet {
 				List<Map<String, String>> result = getFlowCenter()
 						.queryStartProcess(userId);
 				request.setAttribute("result", result);
+				request.setAttribute("userId", userId); //返回userId add Rex
 				rd = request.getRequestDispatcher("startTask.jsp");
 			} else if (action.equals("getMyTask")) {
 				Map<String, Object> pageResult = getFlowCenter()
@@ -159,7 +161,7 @@ public class FlowCenter extends HttpServlet {
 						.getTaskDetailInfo(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/queryTask.jsp");
+				rd = request.getRequestDispatcher("/flowGraphic.jsp");
 			} else if (action.equals("getFlowGraph")) {
 				InputStream is = getFlowCenter().getFlowGraph(filter);
 				out = response.getOutputStream();
@@ -179,6 +181,16 @@ public class FlowCenter extends HttpServlet {
 				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
 				getFlowCenter().saveUserIcon(filter);
 				rd = request.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+			} else if(action.equals("startOneTask")){  //仅实现获取按钮功能  add by Rex
+				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
+				List<TaskCommandInst> list = getFlowCenter().getSubTaskTaskCommandByKey(filter);
+				request.setAttribute("result", list);
+				rd = request.getRequestDispatcher("/startOneTask.jsp");
+			} else if(action.equals("doTask")){
+				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
+				List<TaskCommandInst> list = getFlowCenter().GetTaskCommandByTaskId(filter);
+				request.setAttribute("result", list);
+				rd = request.getRequestDispatcher("/doTask.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);

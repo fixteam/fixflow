@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 
 /**
@@ -223,4 +224,22 @@ public interface FlowCenterService {
 	  * @throws IOException
 	  */
 	public void saveUserIcon(Map<String,Object> filter) throws IOException;
+	
+	/**
+	 * getSubTaskTaskCommandByKey
+	 * @param processDefinitionKey
+	 * @return List<TaskCommandInst>
+	 * @throws SQLException 
+	 */
+	public List<TaskCommandInst> getSubTaskTaskCommandByKey(Map<String,Object> filter) throws SQLException;
+	
+	/**
+	 * GetTaskCommandByTaskId
+	 * @param taskId
+	 * @param isProcessTracking
+	 * @return List<TaskCommandInst>
+	 * @throws SQLException 
+	 */
+	public List<TaskCommandInst> GetTaskCommandByTaskId(Map<String,Object> filter) throws SQLException;
+
 }
