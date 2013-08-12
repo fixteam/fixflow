@@ -135,11 +135,17 @@ public abstract class AbstractScriptLanguageMgmt {
 						.getDataVariableBehaviorsByProcess();
 				for (DataVariableBehavior dataVariableBehavior : dataVariableBehaviors) {
 
+
 					if (dataVariableBehavior.getId().equals(expressionId)) {
 
 						DataVariableEntity dataVariableEntity = dataVariableMgmtInstance.createDataVariableInstance(dataVariableBehavior);
 						dataVariableEntity.executeExpression(executionContext);
 
+					}else{
+						if(dataVariableBehavior.getBizType()!=null&&!dataVariableBehavior.getBizType().equals("")&&dataVariableBehavior.getBizType().equals(DataVariableEntity.QUERY_DATA_KEY)){
+							DataVariableEntity dataVariableEntity = dataVariableMgmtInstance.createDataVariableInstance(dataVariableBehavior);
+							dataVariableEntity.executeExpression(executionContext);
+						}
 					}
 
 				}

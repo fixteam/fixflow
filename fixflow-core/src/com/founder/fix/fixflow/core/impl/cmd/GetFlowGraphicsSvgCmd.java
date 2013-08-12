@@ -188,6 +188,9 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 				
 					
 					
+					if(bpmnElement==null){
+						continue;
+					}
 					
 				
 					
@@ -509,15 +512,25 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 		
 		
 		
-		BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
-		if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
-			String elementId=basicEObjectImpl.eProxyURI().fragment();
-			BaseElement bpmnElement=definitions.getElement(elementId);
-			return bpmnElement;
-		}
-		else{
+		if(baseElement==null){
 			return null;
 		}
+		
+		if(baseElement.getId()==null){
+			BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
+			if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
+				String elementId=basicEObjectImpl.eProxyURI().fragment();
+				BaseElement bpmnElement=definitions.getElement(elementId);
+				return bpmnElement;
+			}
+			else{
+				return null;
+			}
+		}else{
+			return baseElement;
+		}
+		
+		
 		
 		
 		
