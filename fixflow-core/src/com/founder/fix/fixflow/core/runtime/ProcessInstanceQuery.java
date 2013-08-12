@@ -52,7 +52,7 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	 * @param isLike 是否Like
 	 * @return
 	 */
-	ProcessInstanceQuery variableData(String variableValue,boolean isLike);
+	ProcessInstanceQuery processInstanceVariableData(String variableValue,boolean isLike);
 	
 	/**
 	 * 根据流程实例指定的变量查询
@@ -61,7 +61,7 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	 * @param isLike 是否Like
 	 * @return
 	 */
-	ProcessInstanceQuery variableData(String variableKey,String variableValue,boolean isLike);
+	ProcessInstanceQuery processInstanceVariableData(String variableKey,String variableValue,boolean isLike);
 	
 
 	ProcessInstanceQuery notEnd();

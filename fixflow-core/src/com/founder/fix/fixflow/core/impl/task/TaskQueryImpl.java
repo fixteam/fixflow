@@ -655,25 +655,69 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 	public boolean isContainsSubProcess() {
 		return isContainsSubProcess;
 	}
+	
+	
+	
+	
+	
+	/* 变量查询 */
+	protected String taskVariableKey;
+	protected String taskVariableValue;
+	protected boolean taskVariableValueIsLike;
+	
+	protected String processInstanceVariableKey;
+	protected String processInstanceVariableValue;
+	protected boolean processInstanceVariableValueIsLike;
 
 	public TaskQuery variableData(String variableValue, boolean isLike) {
-		// TODO Auto-generated method stub
-		return null;
+		this.taskVariableValue=variableValue;
+		this.taskVariableValueIsLike=isLike;
+		return this;
 	}
 
 	public TaskQuery variableData(String variableKey, String variableValue, boolean isLike) {
-		// TODO Auto-generated method stub
-		return null;
+		this.taskVariableValue=variableValue;
+		this.taskVariableValueIsLike=isLike;
+		this.taskVariableKey=variableKey;
+		
+		return this;
 	}
 
 	public TaskQuery processInstanceVariableData(String variableValue, boolean isLike) {
-		// TODO Auto-generated method stub
-		return null;
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		return this;
 	}
 
 	public TaskQuery processInstanceVariableData(String variableKey, String variableValue, boolean isLike) {
-		// TODO Auto-generated method stub
-		return null;
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		this.processInstanceVariableKey=variableKey;
+		return this;
+	}
+	
+	public String getTaskVariableKey() {
+		return taskVariableKey;
+	}
+
+	public String getTaskVariableValue() {
+		return taskVariableValue;
+	}
+
+	public boolean isTaskVariableValueIsLike() {
+		return taskVariableValueIsLike;
+	}
+
+	public String getProcessInstanceVariableKey() {
+		return processInstanceVariableKey;
+	}
+
+	public String getProcessInstanceVariableValue() {
+		return processInstanceVariableValue;
+	}
+
+	public boolean isProcessInstanceVariableValueIsLike() {
+		return processInstanceVariableValueIsLike;
 	}
 
 }

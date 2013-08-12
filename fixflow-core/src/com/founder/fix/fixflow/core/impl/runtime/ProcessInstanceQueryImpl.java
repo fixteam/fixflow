@@ -406,15 +406,43 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	public boolean isContainsSubProcess() {
 		return isContainsSubProcess;
 	}
+	
+	
+	
+	
+	/* 变量查询 */
+	protected String processInstanceVariableKey;
+	protected String processInstanceVariableValue;
+	protected boolean processInstanceVariableValueIsLike;
 
-	public ProcessInstanceQuery variableData(String variableValue, boolean isLike) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcessInstanceQuery processInstanceVariableData(String variableValue, boolean isLike) {
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		return this;
 	}
 
-	public ProcessInstanceQuery variableData(String variableKey, String variableValue, boolean isLike) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProcessInstanceQuery processInstanceVariableData(String variableKey, String variableValue, boolean isLike) {
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		this.processInstanceVariableKey=variableKey;
+		return this;
 	}
+
+
+	
+	public String getProcessInstanceVariableKey() {
+		return processInstanceVariableKey;
+	}
+
+	public String getProcessInstanceVariableValue() {
+		return processInstanceVariableValue;
+	}
+
+	public boolean isProcessInstanceVariableValueIsLike() {
+		return processInstanceVariableValueIsLike;
+	}
+	
+	
+
 
 }
