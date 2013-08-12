@@ -168,11 +168,10 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 					}
 					
 					BaseElement bpmnElement=getBaseElement(bpmnShape.getBpmnElement());
-				
 					
-					
-					
-				
+					if(bpmnElement==null){
+						continue;
+					}
 					
 					if (bpmnElement instanceof StartEvent) {
 						
@@ -490,17 +489,23 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 	private  BaseElement getBaseElement(BaseElement baseElement)
 	{
 		
-		
-		
-		BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
-		if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
-			String elementId=basicEObjectImpl.eProxyURI().fragment();
-			BaseElement bpmnElement=definitions.getElement(elementId);
-			return bpmnElement;
-		}
-		else{
+		if(baseElement==null){
 			return null;
 		}
+		if(baseElement.getId()==null){
+			BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
+			if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
+				String elementId=basicEObjectImpl.eProxyURI().fragment();
+				BaseElement bpmnElement=definitions.getElement(elementId);
+				return bpmnElement;
+			}
+				return null;
+		}
+		else{
+			return baseElement;
+		}
+		
+		
 		
 		
 		
