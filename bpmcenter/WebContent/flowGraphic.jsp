@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%
-Map map = (Map)request.getAttribute("result");
-List<Map> list = (List<Map>)map.get("dataList");
-Map map1 = list.get(0);
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -20,6 +13,32 @@ a{text-decoration: none;}
 </head>
 
 <body>
-<img src="FlowCenter?action=getFlowGraph&processDefinitionId=<%=map1.get("processDefinitionId") %>"/>
+<img src="FlowCenter?action=getFlowGraph&processDefinitionKey=${result.processDefinitionKey}"/>
+<c:if test="${result.dataList!=null}">
+<table>
+	<tr>
+		<td>
+			执行人
+		<td>
+				<td>
+			执行时间
+		<td>
+				<td>
+			处理意见
+		<td>
+	<tr>
+	<c:forEach items="${result.dataList}" var="row" varStatus="status">
+		<tr>
+			<td>
+				${row.assignee}
+			</td>
+						<td>${row.endTime}
+			</td>
+						<td>${row.taskComment}
+			</td>
+		</tr>
+	</c:forEach>
+</table>
+</c:if>
 </body>
 </html>

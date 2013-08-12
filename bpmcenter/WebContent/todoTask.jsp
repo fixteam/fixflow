@@ -93,7 +93,7 @@ a{text-decoration: none;}
 		      <td>${dataList.nodeName}</td>
 		      <td>${dataList.nodeId}</td>
 		      <td><button name="doTask" tii="${dataList.taskInstanceId}">处理</button></td>
-		      <td><button name="flowGraph" pdi="${dataList.processDefinitionId}">流程图</button></td>
+		      <td><button name="flowGraph" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</button></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>
@@ -160,9 +160,10 @@ $(function(){
     window.location.href = "FlowCenter?action=getMyTask&agentType=1&userId="+userId;
   });
   $("button[name=flowGraph]").click(function(){
-    var pdi = $(this).attr("pdi");
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionId="+pdi,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
   });
   $("button[name=doTask]").click(function(){
     var tii = $(this).attr("tii");

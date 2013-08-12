@@ -25,6 +25,7 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 
 /**
   * @ClassName: FlowCenterService
@@ -225,21 +226,36 @@ public interface FlowCenterService {
 	  */
 	public void saveUserIcon(Map<String,Object> filter) throws IOException;
 	
+
 	/**
-	 * getSubTaskTaskCommandByKey
-	 * @param processDefinitionKey
-	 * @return List<TaskCommandInst>
-	 * @throws SQLException 
-	 */
-	public List<TaskCommandInst> getSubTaskTaskCommandByKey(Map<String,Object> filter) throws SQLException;
+	  * GetTaskCommand
+	
+	  * @Title: GetTaskCommand
+	  * @Description: TODO
+	  * @param filter<br>
+	  * "userId" 用户编号<br>
+	  * "taskId" 任务编号，当任务在非提交状态时，应该传这个参数(可选)<br>
+	  * "processDefinitionKey" 任务定义编号，当任务处于提交状态时应使用这个参数(可选)<br>
+	  * @return List<Map<String,Object>>
+	  * @throws SQLException
+	  */
+	public List<Map<String,Object>> GetTaskCommand(Map<String,Object> filter) throws SQLException;
 	
 	/**
-	 * GetTaskCommandByTaskId
-	 * @param taskId
-	 * @param isProcessTracking
-	 * @return List<TaskCommandInst>
-	 * @throws SQLException 
-	 */
-	public List<TaskCommandInst> GetTaskCommandByTaskId(Map<String,Object> filter) throws SQLException;
+	  * completeTask
+	
+	  * @Title: completeTask
+	  * @Description: 完成任务，任何步骤都可以调用这个api
+	  * @param params<br>
+	  * "userId" 用户编号<br>
+	  * "commandType" 命令类型<br>
+	  * "commandId" 命令编号<br>
+	  * "taskId" 任务编号，当任务在非提交状态时，应该传这个参数(可选)<br>
+	  * "processDefinitionKey" 任务定义编号，当任务处于提交状态时应使用这个参数(可选)<br>
+	  * "businessKey" 业务数据唯一主键，当任务处于提交状态时应使用这个参数(可选)<br>
+	  * @return ProcessInstance
+	  * @throws SQLException
+	  */
+	public ProcessInstance completeTask(Map<String,Object> params) throws SQLException;
 
 }

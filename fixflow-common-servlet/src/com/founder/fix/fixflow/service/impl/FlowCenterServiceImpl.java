@@ -37,6 +37,7 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.impl.TaskServiceImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
+import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
@@ -155,6 +156,12 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
 		try {
 			result = engine.getModelService().getStartProcessByUserId(userId);
+			for(Map<String,String> tmp:result){
+				String pdkey = tmp.get("processDefinitionKey");
+				String formUrl = engine.getFormService().getStartFormByKey(pdkey);
+				
+				tmp.put("formUrl", formUrl);
+			}
 		} finally {
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
@@ -249,22 +256,24 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		String processInstanceId = StringUtil.getString(filter.get("processInstanceId"));
 		
 		Map<String,Object> result = new HashMap<String,Object>();
-		String userId = (String) filter.get("userId");
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
-		try{
-			TaskQuery tq = engine.getTaskService().createTaskQuery();
-			
-			tq.processInstanceId(processInstanceId);
-			tq.taskIsEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
-			List<TaskInstance> instances = tq.list();
-			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
-			for(TaskInstance tmp:instances){
-				instanceMaps.add(tmp.getPersistentState());
+		if(StringUtil.isNotEmpty(processInstanceId)){
+			String userId = (String) filter.get("userId");
+			ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+			try{
+				TaskQuery tq = engine.getTaskService().createTaskQuery();
+				
+				tq.processInstanceId(processInstanceId);
+				tq.taskIsEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
+				List<TaskInstance> instances = tq.list();
+				List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+				for(TaskInstance tmp:instances){
+					instanceMaps.add(tmp.getPersistentState());
+				}
+				
+				result.put("dataList", instanceMaps);
+			}finally{
+				FixFlowShellProxy.closeProcessEngine(engine, false);
 			}
-			
-			result.put("dataList", instanceMaps);
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
 		return result;
 	}
@@ -349,24 +358,54 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	    }
 	}
 	
-	/**
-	 * 流程启动时获取按钮
-	 * @param processDefinitionKey
-	 * @return List<TaskCommandInst> 按钮集合
-	 * @throws SQLException 
-	 */
-	public List<TaskCommandInst> getSubTaskTaskCommandByKey(Map<String,Object> filter) throws SQLException{
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter.get("userId"));
-		String processDefinitionKey = (String)filter.get("processDefinitionKey");
-		List<TaskCommandInst> list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
-		return list;
-	}
 
 	@Override
-	public List<TaskCommandInst> GetTaskCommandByTaskId(Map<String,Object> filter) throws SQLException {
+	public List<Map<String,Object>> GetTaskCommand(Map<String,Object> filter) throws SQLException {
+		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
 		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter.get("userId"));
 		String taskId = (String)filter.get("taskId");
-		List<TaskCommandInst> list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
-		return list;
+		String processDefinitionKey = (String)filter.get("processDefinitionKey");
+		
+		List<TaskCommandInst> list = null;
+		if(StringUtil.isNotEmpty(processDefinitionKey)){
+			list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
+		}else{
+			list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
+		}
+		for(TaskCommandInst tmp:list){
+			result.add(tmp.getPersistentState());
+		}
+		return result;
+	}
+	
+	public ProcessInstance completeTask(Map<String,Object> params) throws SQLException{
+		String taskId = StringUtil.getString(params.get("taskId"));
+		String commandType = StringUtil.getString(params.get("commandType"));
+		String commandId = StringUtil.getString(params.get("commandId"));
+		String processDefinitionKey = StringUtil.getString(params.get("processDefinitionKey"));
+		String businessKey = StringUtil.getString(params.get("businessKey"));
+		String userId = StringUtil.getString(params.get("userId"));
+		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+		
+
+		//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+		expandTaskCommand.setCommandType(commandType);
+		//设置提交人
+		expandTaskCommand.setInitiator(userId);
+		//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+		expandTaskCommand.setUserCommandId(commandId);
+		
+		if(StringUtil.isNotEmpty(taskId)){
+			expandTaskCommand.setTaskId(taskId);
+		}else{
+			expandTaskCommand.setProcessDefinitionKey(processDefinitionKey);
+			//设置流程的业务关联键
+			expandTaskCommand.setBusinessKey(businessKey);
+		}
+
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessInstance processInstance = engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
+		
+		return processInstance;
 	}
 }

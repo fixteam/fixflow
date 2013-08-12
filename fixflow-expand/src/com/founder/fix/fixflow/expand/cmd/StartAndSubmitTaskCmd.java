@@ -54,8 +54,6 @@ public class StartAndSubmitTaskCmd extends AbstractExpandTaskCmd<StartAndSubmitT
 		// runtimeService.getCommandExecutor().setConnection(dbgr.getConnection());
 		TaskService taskService = processEngine.getTaskService();
 		if(this.taskId!=null&&!this.taskId.equals("")){
-			
-			
 			//TaskInstance taskInstance=commandContext.getTaskManager().findTaskById(this.taskId);
 			ExpandTaskCommand expandTaskCommand=new ExpandTaskCommand();
 			expandTaskCommand.setCommandType("submit");

@@ -21,7 +21,7 @@ a{text-decoration: none;}
 </div>
 <div style="margin-top:10px;">
 <c:forEach items="${result}" var="row" varStatus="status">
-<button id="btn_${status.index+1}" processDefinitionKey="${row.processDefinitionKey}">${row.processDefinitionName}</button>
+<button id="btn_${status.index+1}" formUrl="${row.formUrl}" processDefinitionKey="${row.processDefinitionKey}">${row.processDefinitionName}</button>
 </c:forEach>
 </div>
 </body>
@@ -29,8 +29,17 @@ a{text-decoration: none;}
 $(function(){
   $("button[processDefinitionKey]").click(function(){
      var pdk = $(this).attr("processDefinitionKey");
+     var formUrl = $(this).attr("formUrl");//"FlowCenter?action=startOneTask";
+     var url = formUrl;
+     if(formUrl.indexOf("?")!=-1){
+    	 url+="&";
+    	
+     }else{
+    	 url+="?";
+     }
+     url+="userId=<%=request.getAttribute("userId")%>&processDefinitionKey="+pdk;
     var obj = {};
-    window.showModalDialog("FlowCenter?action=startOneTask&userId=<%=request.getAttribute("userId")%>&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>

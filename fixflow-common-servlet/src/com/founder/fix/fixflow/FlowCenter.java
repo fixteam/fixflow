@@ -80,16 +80,7 @@ public class FlowCenter extends HttpServlet {
 		RequestDispatcher rd = null;
 		try {
 			Map<String, Object> filter = new HashMap<String, Object>();
-			// Enumeration enums = request.getParameterNames();
-			// while (enums.hasMoreElements()) {
-			// String paramName = (String) enums.nextElement();
-			//
-			// String paramValue = request.getParameter(paramName);
-			//
-			// // 形成键值对应的map
-			// filter.put(paramName, paramValue);
-			//
-			// }
+
 			if (ServletFileUpload.isMultipartContent(request)) {
 				ServletFileUpload Uploader = new ServletFileUpload(
 						new DiskFileItemFactory());
@@ -98,7 +89,7 @@ public class FlowCenter extends HttpServlet {
 				List<FileItem> fileItems = Uploader.parseRequest(request);
 				for (FileItem item : fileItems) {
 					filter.put(item.getFieldName(), item);
-					if(item.getFieldName().equals("action"))
+					if (item.getFieldName().equals("action"))
 						action = item.getString();
 				}
 			} else {
@@ -134,7 +125,7 @@ public class FlowCenter extends HttpServlet {
 				List<Map<String, String>> result = getFlowCenter()
 						.queryStartProcess(userId);
 				request.setAttribute("result", result);
-				request.setAttribute("userId", userId); //返回userId add Rex
+				request.setAttribute("userId", userId); // 返回userId add Rex
 				rd = request.getRequestDispatcher("startTask.jsp");
 			} else if (action.equals("getMyTask")) {
 				Map<String, Object> pageResult = getFlowCenter()
@@ -172,26 +163,39 @@ public class FlowCenter extends HttpServlet {
 					out.write(buff, 0, size);
 				}
 			} else if (action.equals("getUserInfo")) {
-				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
-				Map<String, Object> pageResult = getFlowCenter().getUserInfo(filter);
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				Map<String, Object> pageResult = getFlowCenter().getUserInfo(
+						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/userOperation.jsp");
 			} else if (action.equals("updateUserIcon")) {
-				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
 				getFlowCenter().saveUserIcon(filter);
-				rd = request.getRequestDispatcher("/FlowCenter?action=getMyProcess");
-			} else if(action.equals("startOneTask")){  //仅实现获取按钮功能  add by Rex
-				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
-				List<TaskCommandInst> list = getFlowCenter().getSubTaskTaskCommandByKey(filter);
-				request.setAttribute("result", list);
+				rd = request
+						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+			} else if (action.equals("startOneTask")) { // 仅实现获取按钮功能 add by Rex
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+
+				List<Map<String,Object>> list = getFlowCenter()
+						.GetTaskCommand(filter);
+				filter.put("commandList", list);
+				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/startOneTask.jsp");
-			} else if(action.equals("doTask")){
-				filter.put("path", request.getSession().getServletContext().getRealPath("/"));
-				List<TaskCommandInst> list = getFlowCenter().GetTaskCommandByTaskId(filter);
+			} else if (action.equals("doTask")) {
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				List<Map<String,Object>> list = getFlowCenter()
+						.GetTaskCommand(filter);
 				request.setAttribute("result", list);
 				rd = request.getRequestDispatcher("/doTask.jsp");
-			}
+			}  else if (action.equals("completeTask")) {
+				getFlowCenter().completeTask(filter);
+				rd = request.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+			} 
 			if (rd != null)
 				rd.forward(request, response);
 		} catch (Exception e) {
