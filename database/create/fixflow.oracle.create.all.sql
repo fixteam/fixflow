@@ -31,25 +31,6 @@ ALTER TABLE FIXFLOW_AGENT_AGENTINFO
   ADD CONSTRAINT PK_FIXFLOW_AGENT_AGENTINFO PRIMARY KEY (AGENT_ID)
 ;
 
-CREATE TABLE FIXFLOW_CONFIG_GROUPINFO
-(
-  TYPE_ID   VARCHAR2(64) NOT NULL,
-  TYPE_NAME VARCHAR2(64),
-  ORDER_ID  NUMBER(12),
-  ARCHIVE_TIME          TIMESTAMP(6)
-)
-;
-COMMENT ON COLUMN FIXFLOW_CONFIG_GROUPINFO.TYPE_ID
-  IS 'Î¨Ò»±àºÅ'
-;
-COMMENT ON COLUMN FIXFLOW_CONFIG_GROUPINFO.TYPE_NAME
-  IS '×éµÄÃû³Æ'
-;
-ALTER TABLE FIXFLOW_CONFIG_GROUPINFO
-  ADD CONSTRAINT FIXFLOW_CONFIG_GROUPINFO_PK PRIMARY KEY (TYPE_ID)
-;
-
-
 CREATE TABLE FIXFLOW_DEF_BYTEARRAY
 (
   ID            VARCHAR2(64) NOT NULL,
@@ -92,37 +73,37 @@ CREATE TABLE FIXFLOW_DEF_PROCESSDEFINITION
 )
 ;
 COMMENT ON TABLE FIXFLOW_DEF_PROCESSDEFINITION
-  IS 'Á÷³Ì¶¨ÒåÐÅÏ¢'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.DIFINITIONS_KEY
-  IS 'DIFINITIONSID:VERSION:×ÔÔö³¤ID×é³É'
+  IS 'DIFINITIONSID:VERSION:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.DIFINITIONS_ID
-  IS 'Á÷³ÌÎÄ¼þDEFINITIONSÔªËØµÄIDÊôÐÔÖµ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½DEFINITIONSÔªï¿½Øµï¿½IDï¿½ï¿½ï¿½ï¿½Öµ'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.PROCESS_KEY
-  IS 'PROCESSID:VERSION:×ÔÔö³¤ID×é³É'
+  IS 'PROCESSID:VERSION:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.PROCESS_ID
-  IS 'Á÷³ÌÎÄ¼þPROCESSÔªËØµÄIDÊôÐÔÖµ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½PROCESSÔªï¿½Øµï¿½IDï¿½ï¿½ï¿½ï¿½Öµ'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.CATEGORY
-  IS '¸Ã±àºÅ¾ÍÊÇÁ÷³ÌÎÄ¼þTARGETNAMESPACEµÄÊôÐÔÖµ'
+  IS 'ï¿½Ã±ï¿½Å¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½TARGETNAMESPACEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.PROCESS_NAME
-  IS 'Á÷³ÌÎÄ¼þPROCESSÔªËØµÄNAMEÊôÐÔÖµ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½PROCESSÔªï¿½Øµï¿½NAMEï¿½ï¿½ï¿½ï¿½Öµ'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.VERSION
-  IS 'Á÷³Ì°æ±¾ºÅ ·¢²¼Ê±¼Ó1'
+  IS 'ï¿½ï¿½ï¿½Ì°æ±¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½1'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.RESOURCE_NAME
-  IS '×ÊÔ´ÎÄ¼þÃû³Æ Ò»¸öXMLÎÄ¼þÃû'
+  IS 'ï¿½ï¿½Ô´ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ Ò»ï¿½ï¿½XMLï¿½Ä¼ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.DEPLOYMENT_ID
-  IS '·¢²¼±àºÅGUID'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GUID'
   ;
 COMMENT ON COLUMN FIXFLOW_DEF_PROCESSDEFINITION.SUB_TASK_ID
-  IS 'Ìá½»½Úµã±àºÅ'
+  IS 'ï¿½á½»ï¿½Úµï¿½ï¿½ï¿½'
   ;
 ALTER TABLE FIXFLOW_DEF_PROCESSDEFINITION
   ADD CONSTRAINT FIXFLOW_DEF_PROCESSDEFINI_PK PRIMARY KEY (PROCESS_ID)
@@ -149,42 +130,6 @@ CREATE TABLE FIXFLOW_MAIL
 
 ALTER TABLE FIXFLOW_MAIL
   ADD CONSTRAINT FIXFLOW_MAIL_PK PRIMARY KEY (MAIL_ID)
-;
-
-CREATE TABLE FIXFLOW_PIGEONHOLE
-(
-  PIGEONHOLE_ID VARCHAR2(64) NOT NULL, 
-  FIXFLOW_NAME VARCHAR2(64), 
-  FIXFLOW_VERSION VARCHAR2(64), 
-  BIZOBJ VARCHAR2(64), 
-  FIXFLOW_RELATION_ID VARCHAR2(64), 
-  FIXFLOW_RELATION_NAME VARCHAR2(200), 
-  FIXFLOW_STARTTIME VARCHAR2(64), 
-  FIXFLOW_ENDTIME VARCHAR2(64), 
-  HANDLE_TIME VARCHAR2(64), 
-  PIGEONHOLE_TIME VARCHAR2(64), 
-  PDF_PATH VARCHAR2(2000),
-  ARCHIVE_TIME          TIMESTAMP(6)
-)
-;
-ALTER TABLE FIXFLOW_PIGEONHOLE ADD CONSTRAINT FIXFLOW_PIGEONHOLE_PK PRIMARY KEY (PIGEONHOLE_ID)
-;
-  
-  
-CREATE TABLE FIXFLOW_RUN_EVENT_SUBSCRIPTION
-(
-  SUBSCRIPTION_ID       VARCHAR2(64) NOT NULL,
-  PROCESSDEFINITION_ID     VARCHAR2(512),
-  TOKEN_ID                  VARCHAR2(64),
-  SUBSCRIPTION_TYPE             VARCHAR2(64),
-  MESSAGE_ID                 VARCHAR2(64),
-  SIGNAL_ID            VARCHAR2(64),
-  NODE_ID             VARCHAR2(64),
-  ARCHIVE_TIME          TIMESTAMP(6)
-)
-;
-ALTER TABLE FIXFLOW_RUN_EVENT_SUBSCRIPTION
-  ADD CONSTRAINT FIXFLOW_RUN_ES_PK PRIMARY KEY (SUBSCRIPTION_ID)
 ;
 
 CREATE TABLE FIXFLOW_RUN_IDENTITYLINK
@@ -227,46 +172,46 @@ CREATE TABLE FIXFLOW_RUN_PROCESSINSTANCE
 )
 ;
 COMMENT ON TABLE FIXFLOW_RUN_PROCESSINSTANCE
-  IS 'ÔËÐÐÊ±Á÷³ÌÊµÀý'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.PROCESSDEFINITION_ID
-  IS 'Á÷³Ì¶¨ÒåÎ¨Ò»±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.SUBJECT
-  IS 'Á÷³ÌÊµÀýÖ÷Ìâ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.START_TIME
-  IS '¿ªÊ¼Ê±¼ä'
+  IS 'ï¿½ï¿½Ê¼Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.END_TIME
-  IS '½áÊøÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.DEFINITION_ID
-  IS 'ÒµÎñ¶¨Òå±àºÅ'
+  IS 'Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.ROOTTOKEN_ID
-  IS '¸ùÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.BIZ_KEY
-  IS 'ÒµÎñÊý¾ÝÖ÷¼üÖµ'
+  IS 'Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.INITIATOR
-  IS 'Ìá½»ÈË'
+  IS 'ï¿½á½»ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.ISSUSPENDED
-  IS 'ÊÇ·ñÔÝÍ£'
+  IS 'ï¿½Ç·ï¿½ï¿½ï¿½Í£'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.PROCESSDEFINITION_KEY
-  IS 'Á÷³Ì¶¨ÒåID'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ID'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.PARENT_INSTANCE_ID
-  IS '¸¸Á÷³ÌÊµÀýÎ¨Ò»±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_PROCESSINSTANCE.PARENT_INSTANCE_TOKEN_ID
-  IS '¸¸Á÷³ÌÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 ALTER TABLE FIXFLOW_RUN_PROCESSINSTANCE
   ADD CONSTRAINT FIXFLOW_RUN_PROCESSINSTAN_PK PRIMARY KEY (PROCESSINSTANCE_ID)
@@ -319,70 +264,70 @@ CREATE TABLE FIXFLOW_RUN_TASKINSTANCE
 )
 ;
 COMMENT ON TABLE FIXFLOW_RUN_TASKINSTANCE
-  IS 'ÔËÐÐÊ±ÈÎÎñÊµÀý'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.TASKINSTANCE_ID
-  IS 'ÈÎÎñÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.PROCESSDEFINITION_ID
-  IS 'Á÷³Ì¶¨Òå±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.VERSION
-  IS 'Á÷³Ì¶¨Òå°æ±¾ºÅ'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.TOKEN_ID
-  IS 'ÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.NODE_ID
-  IS '½Úµã±àºÅ'
+  IS 'ï¿½Úµï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.DESCRIPTION
-  IS 'ÈÎÎñÖ÷Ìâ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.PARENTTASK_ID
-  IS '¸¸ÈÎÎñ±àºÅ£¬²»Îª¿ÕËµÃ÷ÊÇ»áÇ©£¨¶àÊµÀý£©ÈÎÎñ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Îªï¿½ï¿½Ëµï¿½ï¿½ï¿½Ç»ï¿½Ç©ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.ASSIGNEE
-  IS 'ÈÎÎñ´úÀíÈË'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.CLAIM_TIME
-  IS 'ÁìÈ¡Ê±¼ä'
+  IS 'ï¿½ï¿½È¡Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.NAME
-  IS 'ÈÎÎñÃû³Æ  FLOWNODEµÄNAMEÊôÐÔ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  FLOWNODEï¿½ï¿½NAMEï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.CREATE_TIME
-  IS 'ÈÎÎñµ½´ï£¨´´½¨£©Ê±¼ä'
+  IS 'ï¿½ï¿½ï¿½ñµ½´ï£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.START_TIME
-  IS '¿ªÊ¼Ê±¼ä'
+  IS 'ï¿½ï¿½Ê¼Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.ISBLOCKING
-  IS 'ÊÇ·ñ×èÈû'
+  IS 'ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.END_TIME
-  IS '½áÊøÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.DUEDATE
-  IS '´¦ÀíÆÚÏÞ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.PRIORITY
-  IS 'ÓÅÏÈ¼¶±ð'
+  IS 'ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.CATEGORY
-  IS 'ÈÎÎñ·ÖÀà(×îÖÕÓÃ»§¾ö¶¨·ÖÀàµÄÒâÒå)'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.OWNER
-  IS 'ÈÎÎñËùÓÐÕß'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.DELEGATIONSTATESTRING
-  IS 'ÈÎÎñ´úÀí×´Ì¬'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKINSTANCE.FORMURI
-  IS '±íµ¥µØÖ·'
+  IS 'ï¿½?ï¿½ï¿½Ö·'
   ;
 ALTER TABLE FIXFLOW_RUN_TASKINSTANCE
   ADD CONSTRAINT FIXFLOW_RUN_TASKINSTANCE_PK PRIMARY KEY (TASKINSTANCE_ID)
@@ -409,22 +354,22 @@ CREATE TABLE FIXFLOW_RUN_TASKIDENTITYLINK
 )
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.ID
-  IS 'Î¨Ò»±àºÅ'
+  IS 'Î¨Ò»ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.TYPE
-  IS '·ÖÅäÀàÐÍ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.USER_ID
-  IS 'ÓÃ»§±àºÅ'
+  IS 'ï¿½Ã»ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.GROUP_ID
-  IS '×é±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.GROUP_TYPE
-  IS '×éµÄÀàÐÍ (1.²¿ÃÅ 2.½ÇÉ« 3.Ö°Îñ......)'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1.ï¿½ï¿½ï¿½ï¿½ 2.ï¿½ï¿½É« 3.Ö°ï¿½ï¿½......)'
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.TASKINSTANCE_ID
-  IS '¹ØÁªÈÎÎñ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_RUN_TASKIDENTITYLINK.INCLUDE_EXCLUSION
   IS 'INCLUDE EXCLUSION'
@@ -453,40 +398,40 @@ CREATE TABLE FIXFLOW_RUN_TOKEN
 )
 ;
 COMMENT ON TABLE FIXFLOW_RUN_TOKEN
-  IS 'ÔËÐÐÊ±ÁîÅÆ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.TOKEN_ID
-  IS 'ÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.NAME
-  IS 'ÁîÅÆÃû³Æ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.START_TIME
-  IS '¿ªÊ¼Ê±¼ä'
+  IS 'ï¿½ï¿½Ê¼Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.END_TIME
-  IS '½áÊøÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.NODEENTER_TIME
-  IS '½øÈë½ÚµãµÄÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.ISABLETOREACTIVATEPARENT
-  IS 'ÄÜ·ñÖØÐÂ¼¤»î¸¸ÁîÅÆ±êÖ¾'
+  IS 'ï¿½Ü·ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½î¸¸ï¿½ï¿½ï¿½Æ±ï¿½Ö¾'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.ISSUSPENDED
-  IS 'ÁîÅÆÊÇ·ñ´¦ÓÚÔÝÍ£×´Ì¬'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Í£×´Ì¬'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.TOKEN_LOCK
-  IS 'Ëø'
+  IS 'ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.NODE_ID
-  IS 'ÁîÅÆËùÔÚµÄµ±Ç°½Úµã±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½Ç°ï¿½Úµï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_TOKEN.PARENT_ID
-  IS '¸¸¼¶ÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 ALTER TABLE FIXFLOW_RUN_TOKEN
   ADD CONSTRAINT FIXFLOW_RUN_TOKEN_PK PRIMARY KEY (TOKEN_ID)
@@ -509,16 +454,16 @@ CREATE TABLE FIXFLOW_RUN_VARIABLE
 )
 ;
 COMMENT ON TABLE FIXFLOW_RUN_VARIABLE
-  IS 'ÔËÐÐÊ±±äÁ¿'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_VARIABLE.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_VARIABLE.VARIABLE_KEY
-  IS '±äÁ¿KEY'
+  IS 'ï¿½ï¿½ï¿½ï¿½KEY'
   ;
 COMMENT ON COLUMN FIXFLOW_RUN_VARIABLE.VARIABLE_VALUE
-  IS '±äÁ¿VALUE'
+  IS 'ï¿½ï¿½ï¿½ï¿½VALUE'
   ;
 CREATE INDEX INDEX30 ON FIXFLOW_RUN_VARIABLE (PROCESSINSTANCE_ID)
 ;
@@ -635,46 +580,46 @@ CREATE TABLE FIXFLOW_HIS_PROCESSINSTANCE
 )
 ;
 COMMENT ON TABLE FIXFLOW_HIS_PROCESSINSTANCE
-  IS 'ÔËÐÐÊ±Á÷³ÌÊµÀý'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.PROCESSDEFINITION_ID
-  IS 'Á÷³Ì¶¨ÒåÎ¨Ò»±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.SUBJECT
-  IS 'Á÷³ÌÊµÀýÖ÷Ìâ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.START_TIME
-  IS '¿ªÊ¼Ê±¼ä'
+  IS 'ï¿½ï¿½Ê¼Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.END_TIME
-  IS '½áÊøÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.DEFINITION_ID
-  IS 'ÒµÎñ¶¨Òå±àºÅ'
+  IS 'Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.ROOTTOKEN_ID
-  IS '¸ùÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.BIZ_KEY
-  IS 'ÒµÎñÊý¾ÝÖ÷¼üÖµ'
+  IS 'Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.INITIATOR
-  IS 'Ìá½»ÈË'
+  IS 'ï¿½á½»ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.ISSUSPENDED
-  IS 'ÊÇ·ñÔÝÍ£'
+  IS 'ï¿½Ç·ï¿½ï¿½ï¿½Í£'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.PROCESSDEFINITION_KEY
-  IS 'Á÷³Ì¶¨ÒåID'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ID'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.PARENT_INSTANCE_ID
-  IS '¸¸Á÷³ÌÊµÀýÎ¨Ò»±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_PROCESSINSTANCE.PARENT_INSTANCE_TOKEN_ID
-  IS '¸¸Á÷³ÌÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 ALTER TABLE FIXFLOW_HIS_PROCESSINSTANCE
   ADD CONSTRAINT FIXFLOW_RUN_PROCESSINSTAN_PK PRIMARY KEY (PROCESSINSTANCE_ID)
@@ -727,70 +672,70 @@ CREATE TABLE FIXFLOW_HIS_TASKINSTANCE
 )
 ;
 COMMENT ON TABLE FIXFLOW_HIS_TASKINSTANCE
-  IS 'ÔËÐÐÊ±ÈÎÎñÊµÀý'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.TASKINSTANCE_ID
-  IS 'ÈÎÎñÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.PROCESSDEFINITION_ID
-  IS 'Á÷³Ì¶¨Òå±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.VERSION
-  IS 'Á÷³Ì¶¨Òå°æ±¾ºÅ'
+  IS 'ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.TOKEN_ID
-  IS 'ÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.NODE_ID
-  IS '½Úµã±àºÅ'
+  IS 'ï¿½Úµï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.DESCRIPTION
-  IS 'ÈÎÎñÖ÷Ìâ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.PARENTTASK_ID
-  IS '¸¸ÈÎÎñ±àºÅ£¬²»Îª¿ÕËµÃ÷ÊÇ»áÇ©£¨¶àÊµÀý£©ÈÎÎñ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Îªï¿½ï¿½Ëµï¿½ï¿½ï¿½Ç»ï¿½Ç©ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.ASSIGNEE
-  IS 'ÈÎÎñ´úÀíÈË'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.CLAIM_TIME
-  IS 'ÁìÈ¡Ê±¼ä'
+  IS 'ï¿½ï¿½È¡Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.NAME
-  IS 'ÈÎÎñÃû³Æ  FLOWNODEµÄNAMEÊôÐÔ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  FLOWNODEï¿½ï¿½NAMEï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.CREATE_TIME
-  IS 'ÈÎÎñµ½´ï£¨´´½¨£©Ê±¼ä'
+  IS 'ï¿½ï¿½ï¿½ñµ½´ï£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.START_TIME
-  IS '¿ªÊ¼Ê±¼ä'
+  IS 'ï¿½ï¿½Ê¼Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.ISBLOCKING
-  IS 'ÊÇ·ñ×èÈû'
+  IS 'ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.END_TIME
-  IS '½áÊøÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.DUEDATE
-  IS '´¦ÀíÆÚÏÞ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.PRIORITY
-  IS 'ÓÅÏÈ¼¶±ð'
+  IS 'ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.CATEGORY
-  IS 'ÈÎÎñ·ÖÀà(×îÖÕÓÃ»§¾ö¶¨·ÖÀàµÄÒâÒå)'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.OWNER
-  IS 'ÈÎÎñËùÓÐÕß'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.DELEGATIONSTATESTRING
-  IS 'ÈÎÎñ´úÀí×´Ì¬'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKINSTANCE.FORMURI
-  IS '±íµ¥µØÖ·'
+  IS 'ï¿½?ï¿½ï¿½Ö·'
   ;
 ALTER TABLE FIXFLOW_HIS_TASKINSTANCE
   ADD CONSTRAINT FIXFLOW_HIS_TASKINSTANCE_PK PRIMARY KEY (TASKINSTANCE_ID)
@@ -817,22 +762,22 @@ CREATE TABLE FIXFLOW_HIS_TASKIDENTITYLINK
 )
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.ID
-  IS 'Î¨Ò»±àºÅ'
+  IS 'Î¨Ò»ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.TYPE
-  IS '·ÖÅäÀàÐÍ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.USER_ID
-  IS 'ÓÃ»§±àºÅ'
+  IS 'ï¿½Ã»ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.GROUP_ID
-  IS '×é±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.GROUP_TYPE
-  IS '×éµÄÀàÐÍ (1.²¿ÃÅ 2.½ÇÉ« 3.Ö°Îñ......)'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1.ï¿½ï¿½ï¿½ï¿½ 2.ï¿½ï¿½É« 3.Ö°ï¿½ï¿½......)'
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.TASKINSTANCE_ID
-  IS '¹ØÁªÈÎÎñ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
 ;
 COMMENT ON COLUMN FIXFLOW_HIS_TASKIDENTITYLINK.INCLUDE_EXCLUSION
   IS 'INCLUDE EXCLUSION'
@@ -861,40 +806,40 @@ CREATE TABLE FIXFLOW_HIS_TOKEN
 )
 ;
 COMMENT ON TABLE FIXFLOW_HIS_TOKEN
-  IS 'ÔËÐÐÊ±ÁîÅÆ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.TOKEN_ID
-  IS 'ÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.NAME
-  IS 'ÁîÅÆÃû³Æ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.START_TIME
-  IS '¿ªÊ¼Ê±¼ä'
+  IS 'ï¿½ï¿½Ê¼Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.END_TIME
-  IS '½áÊøÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.NODEENTER_TIME
-  IS '½øÈë½ÚµãµÄÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.ISABLETOREACTIVATEPARENT
-  IS 'ÄÜ·ñÖØÐÂ¼¤»î¸¸ÁîÅÆ±êÖ¾'
+  IS 'ï¿½Ü·ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½î¸¸ï¿½ï¿½ï¿½Æ±ï¿½Ö¾'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.ISSUSPENDED
-  IS 'ÁîÅÆÊÇ·ñ´¦ÓÚÔÝÍ£×´Ì¬'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Í£×´Ì¬'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.TOKEN_LOCK
-  IS 'Ëø'
+  IS 'ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.NODE_ID
-  IS 'ÁîÅÆËùÔÚµÄµ±Ç°½Úµã±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½Ç°ï¿½Úµï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_TOKEN.PARENT_ID
-  IS '¸¸¼¶ÁîÅÆ±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½'
   ;
 ALTER TABLE FIXFLOW_HIS_TOKEN
   ADD CONSTRAINT FIXFLOW_HIS_TOKEN_PK PRIMARY KEY (TOKEN_ID)
@@ -911,20 +856,22 @@ CREATE TABLE FIXFLOW_HIS_VARIABLE
   TASKINSTANCE_ID VARCHAR2(64),
   TOKEN_ID VARCHAR2(64),
   NODE_ID  VARCHAR2(512),
-  ARCHIVE_TIME          TIMESTAMP(6)
+  ARCHIVE_TIME          TIMESTAMP(6),
+  VARIABLE_TYPE VARCHAR2(45),
+  BIZ_DATA VARCHAR2(2048)
 )
 ;
 COMMENT ON TABLE FIXFLOW_HIS_VARIABLE
-  IS 'ÔËÐÐÊ±±äÁ¿'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_VARIABLE.PROCESSINSTANCE_ID
-  IS 'Á÷³ÌÊµÀý±àºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_VARIABLE.VARIABLE_KEY
-  IS '±äÁ¿KEY'
+  IS 'ï¿½ï¿½ï¿½ï¿½KEY'
   ;
 COMMENT ON COLUMN FIXFLOW_HIS_VARIABLE.VARIABLE_VALUE
-  IS '±äÁ¿VALUE'
+  IS 'ï¿½ï¿½ï¿½ï¿½VALUE'
   ;
 CREATE INDEX INDEX30 ON FIXFLOW_HIS_VARIABLE (PROCESSINSTANCE_ID)
 ;
@@ -950,25 +897,25 @@ CREATE TABLE AU_ROLEINFO
 )
 ;
 COMMENT ON TABLE AU_ROLEINFO
-  IS '½ÇÉ«ÐÅÏ¢±í'
+  IS 'ï¿½ï¿½É«ï¿½ï¿½Ï¢ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ROLEINFO.ROLEID
-  IS '½ÇÉ«±àºÅ'
+  IS 'ï¿½ï¿½É«ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ROLEINFO.NAME
-  IS '½ÇÉ«Ãû³Æ'
+  IS 'ï¿½ï¿½É«ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ROLEINFO.BIZTYPE
-  IS 'ËùÊôÒµÎñÀà±ð(1ÓªÏú¡¢2·þÎñ¡¢3Í¶¹Ë)'
+  IS 'ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½(1Óªï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½3Í¶ï¿½ï¿½)'
   ;
 COMMENT ON COLUMN AU_ROLEINFO.PRUGROUP
-  IS 'È¨ÏÞ·Ö×é(1¹¦ÄÜ½ÇÉ«¡¢2Êý¾Ý½ÇÉ«¡¢3¸³È¨½ÇÉ«)'
+  IS 'È¨ï¿½Þ·ï¿½ï¿½ï¿½(1ï¿½ï¿½ï¿½Ü½ï¿½É«ï¿½ï¿½2ï¿½ï¿½Ý½ï¿½É«ï¿½ï¿½3ï¿½ï¿½È¨ï¿½ï¿½É«)'
   ;
 COMMENT ON COLUMN AU_ROLEINFO.PLATFORM
-  IS 'ËùÊôÆ½Ì¨'
+  IS 'ï¿½ï¿½ï¿½ï¿½Æ½Ì¨'
   ;
 COMMENT ON COLUMN AU_ROLEINFO.MEMO
-  IS 'ÃèÊö'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
   ;
 ALTER TABLE AU_ROLEINFO
   ADD CONSTRAINT PK_AU_ROLEINFO PRIMARY KEY (ROLEID)
@@ -1004,58 +951,58 @@ CREATE TABLE AU_USERINFO
 )
 ;
 COMMENT ON TABLE AU_USERINFO
-  IS 'ÓÃ»§±í'
+  IS 'ï¿½Ã»ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.USERID
-  IS 'ÓÃ»§±àºÅ'
+  IS 'ï¿½Ã»ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.USERNAME
-  IS 'ÓÃ»§ÐÕÃû'
+  IS 'ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.LOGINID
-  IS 'µÇÂ¼ÕÊºÅ'
+  IS 'ï¿½ï¿½Â¼ï¿½Êºï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.JOBID
-  IS '¹¤ºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.PASSWORD
-  IS 'ÃÜÂë'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.CONF_PASSWORD
-  IS 'ÓÃÓÚÁ÷³Ì´¦Àí ÃÜÂëÈ·ÈÏ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.EMAIL
-  IS 'µç×ÓÓÊ¼þ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.TELEPHONE
-  IS 'µç»°'
+  IS 'ï¿½ç»°'
   ;
 COMMENT ON COLUMN AU_USERINFO.MOBILEPHONE
-  IS 'ÒÆ¶¯µç»°'
+  IS 'ï¿½Æ¶ï¿½ï¿½ç»°'
   ;
 COMMENT ON COLUMN AU_USERINFO.FAX
-  IS '´«Õæ'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.ISENABLE
-  IS 'ÊÇ·ñÓÐÐ§'
+  IS 'ï¿½Ç·ï¿½ï¿½ï¿½Ð§'
   ;
 COMMENT ON COLUMN AU_USERINFO.MEMO
-  IS '±¸×¢'
+  IS 'ï¿½ï¿½×¢'
   ;
 COMMENT ON COLUMN AU_USERINFO.CREATE_BY
-  IS '´´½¨ÈË'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.CREATE_DT
-  IS '´´½¨Ê±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.UPDATE_BY
-  IS '¸üÐÂÈË'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.UPDATE_DT
-  IS '¸üÐÂÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_USERINFO.SSOID
-  IS 'µ¥µãµÇÂ¼±êÊ¾ºÅ'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ê¾ï¿½ï¿½'
   ;
 ALTER TABLE AU_USERINFO
   ADD CONSTRAINT PK_AU_USERINFO PRIMARY KEY (USERID)
@@ -1099,31 +1046,31 @@ CREATE TABLE AU_ORGINFO
 )
 ;
 COMMENT ON TABLE AU_ORGINFO
-  IS '×éÖ¯½á¹¹±í'
+  IS 'ï¿½ï¿½Ö¯ï¿½á¹¹ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.ORGID
-  IS '×éÖ¯±àºÅ'
+  IS 'ï¿½ï¿½Ö¯ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.SUPORGID
-  IS 'ÉÏ¼¶×éÖ¯±àºÅ'
+  IS 'ï¿½Ï¼ï¿½ï¿½ï¿½Ö¯ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.ORGNAME
-  IS '×éÖ¯Ãû'
+  IS 'ï¿½ï¿½Ö¯ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.ORGLEVELID
-  IS '×éÖ¯¼¶±ð'
+  IS 'ï¿½ï¿½Ö¯ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.UPDATE_BY
-  IS '¸üÐÂÈË'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.UPDATE_DT
-  IS '¸üÐÂÊ±¼ä'
+  IS 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.CREATE_BY
-  IS '´´½¨ÈË'
+  IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   ;
 COMMENT ON COLUMN AU_ORGINFO.SORT_ORDER
-  IS 'ÅÅÐò'
+  IS 'ï¿½ï¿½ï¿½ï¿½'
   ;
 ALTER TABLE AU_ORGINFO
   ADD CONSTRAINT PK_AU_ORGINFO PRIMARY KEY (ORGID)
