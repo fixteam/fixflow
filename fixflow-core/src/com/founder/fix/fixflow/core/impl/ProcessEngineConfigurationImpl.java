@@ -220,10 +220,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	}
 	
-	public ResourceSet getResourceSet() {
-		return resourceSet;
-	}
-
+	
 	private void initResourceSet() {
 		// TODO Auto-generated method stub
 		 this.resourceSet= new ResourceSetImpl();

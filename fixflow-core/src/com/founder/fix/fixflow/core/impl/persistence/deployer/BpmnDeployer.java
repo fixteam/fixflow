@@ -9,11 +9,20 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 
+import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.RootElement;
+import org.eclipse.bpmn2.di.BpmnDiPackage;
+import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
+import org.eclipse.dd.dc.DcPackage;
+import org.eclipse.dd.di.DiPackage;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl.Delegator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
@@ -37,6 +46,31 @@ public class BpmnDeployer implements Deployer {
 	public static final String BPMN_RESOURCE_SUFFIX = "bpmn";
 	public static final String[] DIAGRAM_SUFFIXES = new String[] { "png", "jpg", "gif", "svg" };
 
+	
+
+	private ResourceSet getResourceSet() {
+		// TODO Auto-generated method stub
+		ResourceSet resourceSet= new ResourceSetImpl();
+		 ((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DC", DcPackage.eINSTANCE);
+			((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI", BpmnDiPackage.eINSTANCE);
+			FixFlowPackage.eINSTANCE.eClass();
+			
+			FixFlowPackage xxxPackage = FixFlowPackage.eINSTANCE;
+			EPackage.Registry.INSTANCE.put(xxxPackage.getNsURI(), xxxPackage);
+			Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("fixflow", ddd);
+
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("bpmn", ddd);
+			
+			resourceSet.getPackageRegistry().put(xxxPackage.getNsURI(), xxxPackage);
+			
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("bpmn", ddd);
+			
+			return resourceSet;
+	}
 
 	public void deploy(DeploymentEntity deployment) {
 		List<ProcessDefinitionBehavior> processDefinitions = new ArrayList<ProcessDefinitionBehavior>();
@@ -48,7 +82,7 @@ public class BpmnDeployer implements Deployer {
 			if (resourceName.endsWith(BPMN_RESOURCE_SUFFIX)) {
 				ResourceEntity resource = resources.get(resourceName);
 				byte[] bytes = resource.getBytes();
-				ResourceSet resourceSet=Context.getProcessEngineConfiguration().getResourceSet();
+				ResourceSet resourceSet=getResourceSet();
 				
 				
 				
