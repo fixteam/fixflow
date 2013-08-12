@@ -51,6 +51,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TokenObjKey;
+import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class ProcessInstancePersistence {
@@ -521,6 +522,37 @@ public class ProcessInstancePersistence {
 			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
 			objectParamWhere.add(processInstanceQuery.getTaskParticipants());
 		}
+		
+		
+		
+		if(processInstanceQuery.getProcessInstanceVariableValue()!=null&&!processInstanceQuery.getProcessInstanceVariableValue().equals("")){
+			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+
+					" WHERE PROCESSINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
+			
+			if(processInstanceQuery.getProcessInstanceVariableKey()!=null&&!processInstanceQuery.getProcessInstanceVariableKey().equals("")){
+				
+				sqlString = sqlString +"AND VARIABLE_KEY = ? ";
+				objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableKey());
+				
+			}else{
+				if(processInstanceQuery.isProcessInstanceVariableValueIsLike()){
+					
+					sqlString = sqlString +"AND BIZ_DATA LIKE '%"+processInstanceQuery.getProcessInstanceVariableValue()+"%') ";
+					
+				}else{
+					
+					sqlString = sqlString +"AND BIZ_DATA=?) ";
+					objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableValue());
+					
+				}
+
+			}
+		}
+		
+		
+		
+		
+		
 		return sqlString;
 	}
 	
