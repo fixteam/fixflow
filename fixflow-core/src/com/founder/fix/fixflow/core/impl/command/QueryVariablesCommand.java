@@ -17,18 +17,23 @@
  */
 package com.founder.fix.fixflow.core.impl.command;
 
-import java.util.Collection;
+import java.util.List;
+
+
 
 public class QueryVariablesCommand {
+	
+
 	
 	protected String processInstanceId;
 	protected String tokenId;
 	protected String taskInstanceId;
 	protected String nodeId;
+
 	
 
 
-	Collection<String> variableNames;
+	List<String> variableNames;
 	
 	
 	public QueryVariablesCommand(){
@@ -78,12 +83,16 @@ public class QueryVariablesCommand {
 	}
 
 
-	public Collection<String> getVariableNames() {
+	public List<String> getVariableNames() {
 		return variableNames;
 	}
 
 
-	public void setVariableNames(Collection<String> variableNames) {
+	public void setVariableNames(List<String> variableNames) {
 		this.variableNames = variableNames;
 	}
+
+
+
+
 }

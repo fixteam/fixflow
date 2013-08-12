@@ -407,4 +407,14 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return isContainsSubProcess;
 	}
 
+	public ProcessInstanceQuery variableData(String variableValue, boolean isLike) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ProcessInstanceQuery variableData(String variableKey, String variableValue, boolean isLike) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

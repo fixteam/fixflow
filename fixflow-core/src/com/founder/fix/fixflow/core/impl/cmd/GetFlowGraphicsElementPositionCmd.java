@@ -106,7 +106,7 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 		
 		//return CommonNodeToSVG(bpmnShape, new SvgCallActivityTo());
 	}
-	@SuppressWarnings("unused")
+
 	private  BaseElement getBaseElement(BaseElement baseElement)
 	{
 		

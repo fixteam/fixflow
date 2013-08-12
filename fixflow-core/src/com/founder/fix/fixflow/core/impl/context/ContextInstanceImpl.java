@@ -23,13 +23,11 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableTransferEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class ContextInstanceImpl implements ContextInstance {
 
@@ -123,16 +121,26 @@ public class ContextInstanceImpl implements ContextInstance {
 
 		}
 		String processInstanceId=processInstance.getId();
-		VariableTransferEntity variableTransferEntity = new VariableTransferEntity();
-		variableTransferEntity.setVariableMap(variableMap);
+		
+		
+		
+		
 
-		if (processInstanceId != null && !processInstanceId.equals("")) {
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, processInstanceId);
-			variableTransferEntity.addVariableFlowType(variableFlowTypeEntity);
+		for (String key : variableMap.keySet()) {
+			Object variableData=variableMap.get(key);
+			
+			DataVariableEntity dataVariableEntity=new DataVariableEntity();
+			dataVariableEntity.setVariableKey(key);
+			dataVariableEntity.setPersistence(true);
+			dataVariableEntity.setProcessInstanceId(processInstanceId);
+
+			dataVariableEntity.setExpressionValue(variableData);
+			//dataVariableEntity.setVariableType(this.variableType);
+			Context.getCommandContext().getVariableManager().saveVariable(dataVariableEntity);
+			
+			
 		}
 	
-		Context.getCommandContext().getVariableManager().saveVariable(variableTransferEntity);
-
 
 	
 		this.variableMap = variableMap;

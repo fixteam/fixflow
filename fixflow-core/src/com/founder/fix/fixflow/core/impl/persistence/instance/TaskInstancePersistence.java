@@ -40,6 +40,8 @@ public class TaskInstancePersistence {
 
 	protected Connection connection;
 	protected SqlCommand sqlCommand;
+	
+	Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 
 	public TaskInstancePersistence(Connection connection) {
 		this.connection = connection;
@@ -141,7 +143,7 @@ public class TaskInstancePersistence {
 		if(taskQuery.getQueryExpandTo()!=null&&taskQuery.getQueryExpandTo().getWhereSql()!=null&&!taskQuery.getQueryExpandTo().getWhereSql().equals("")){
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +" and "+taskQuery.getQueryExpandTo().getWhereSql();
 			if(taskQuery.getQueryExpandTo().getWhereSqlObj()!=null&&taskQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
-				objectParamWhere.add(taskQuery.getQueryExpandTo().getWhereSqlObj());
+				objectParamWhere.addAll(taskQuery.getQueryExpandTo().getWhereSqlObj());
 			}
 			
 		}
@@ -482,11 +484,11 @@ public class TaskInstancePersistence {
 			selectTaskByQueryCriteriaSql =selectTaskByQueryCriteriaSql+
 					" and ((SELECT count(1) FROM "+
 					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
-					"where ag1.AGENT_ID=ag2.AGENT_ID AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag2.STATUS='1' AND ag1.AUSER='"+agentOldAssignee+"' "+
+					"where ag1.AGENT_ID=ag2.AGENT_ID AND ag2.SDATE<="+pagination.getCurrentDateSql()+" AND ag2.EDATE>="+pagination.getCurrentDateSql()+" AND ag2.STATUS='1' AND ag1.AUSER='"+agentOldAssignee+"' "+
 					"AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"' and ag1.PROCESS_ID='_fix_flow_all_flow')>0 or "+
 					"(T.PROCESSDEFINITION_KEY in (SELECT ag.PROCESS_ID FROM (SELECT ag1.*,ag2.SDATE,ag2.EDATE FROM "+
 					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
-					"where ag1.AGENT_ID=ag2.AGENT_ID and ag2.STATUS='1' AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag1.AUSER='"+agentOldAssignee+"' AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"') ag)"+
+					"where ag1.AGENT_ID=ag2.AGENT_ID and ag2.STATUS='1' AND ag2.SDATE<="+pagination.getCurrentDateSql()+" AND ag2.EDATE>="+pagination.getCurrentDateSql()+" AND ag1.AUSER='"+agentOldAssignee+"' AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"') ag)"+
 					"))";
 			
 			
@@ -500,7 +502,7 @@ public class TaskInstancePersistence {
 		}
 
 		if (page != null) {
-			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
+			
 			selectTaskByQueryCriteriaSql = pagination.getPaginationSql(selectTaskByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(), "*");
 		}
 
@@ -577,11 +579,11 @@ public class TaskInstancePersistence {
 			selectTaskByQueryCriteriaSql =selectTaskByQueryCriteriaSql+
 					" and ((SELECT count(1) FROM "+
 					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
-					"where ag1.AGENT_ID=ag2.AGENT_ID  AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag1.AUSER='"+agentOldAssignee+"' "+
+					"where ag1.AGENT_ID=ag2.AGENT_ID  AND ag2.SDATE<="+pagination.getCurrentDateSql()+" AND ag2.EDATE>="+pagination.getCurrentDateSql()+" AND ag1.AUSER='"+agentOldAssignee+"' "+
 					"AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"' and ag1.PROCESS_ID='_fix_flow_all_flow')>0 or "+
 					"(T.PROCESSDEFINITION_KEY in (SELECT ag.PROCESS_ID FROM (SELECT ag1.*,ag2.SDATE,ag2.EDATE FROM "+
 					"FIXFLOW_AGENT_AGENTDETAILS ag1,FIXFLOW_AGENT_AGENTINFO ag2 "+
-					"where ag1.AGENT_ID=ag2.AGENT_ID and ag2.STATUS='1' AND ag2.SDATE<=sysdate AND ag2.EDATE>=sysdate AND ag1.AUSER='"+agentOldAssignee+"' AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"') ag)"+
+					"where ag1.AGENT_ID=ag2.AGENT_ID and ag2.STATUS='1' AND ag2.SDATE<="+pagination.getCurrentDateSql()+" AND ag2.EDATE>="+pagination.getCurrentDateSql()+" AND ag1.AUSER='"+agentOldAssignee+"' AND ag1.AGENT_ID='"+taskQuery.getAgentId()+"') ag)"+
 					"))";
 			
 			

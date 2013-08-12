@@ -71,6 +71,7 @@ public class NoneStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 	protected Token parentProcessInstanceToken;
 	
 
+	protected String initiator;
 	/**
 	 * 流程实例启动操作
 	 * @param processDefinitionKey
@@ -99,7 +100,7 @@ public class NoneStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 		this.variables = variables;
 		this.parentProcessInstance=startProcessInstanceCommand.getParentProcessInstance();
 		this.parentProcessInstanceToken=startProcessInstanceCommand.getParentProcessInstanceToken();
-		
+		this.initiator=startProcessInstanceCommand.getInitiator();
 	}
 
 	public ProcessInstance execute(CommandContext commandContext) {
@@ -141,6 +142,9 @@ public class NoneStartProcessInstanceCmd<T> implements Command<ProcessInstance> 
 			processInstanceEntity =  processDefinition.createProcessInstance(businessKey);
 			
 			processInstanceEntity.setStartAuthor(startAuthor);
+			if(this.initiator!=null&&!this.initiator.equals("")){
+				processInstanceEntity.setInitiatorWithoutCascade(this.initiator);
+			}
 			processInstanceEntity.getContextInstance().setTransientVariableMap(transientVariables);
 			processInstanceEntity.getContextInstance().setVariableMap(variables);
 	

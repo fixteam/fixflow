@@ -37,6 +37,8 @@ public class DataVariableBehavior {
 	
 	protected String nodeId;
 	
+	protected String bizType;
+
 	
 
 	protected boolean isPubilc;
@@ -51,7 +53,7 @@ public class DataVariableBehavior {
 			expressionValue=dataVariable.getExpression().getValue();
 		}
 		
-		
+		this.bizType=dataVariable.getBizType();
 
 		this.expression = expressionValue;
 		this.id = dataVariable.getId();
@@ -125,4 +127,12 @@ public class DataVariableBehavior {
 		this.isPubilc = isPubilc;
 	}
 
+	public String getBizType() {
+		return bizType;
+	}
+
+	public void setBizType(String bizType) {
+		this.bizType = bizType;
+	}
+	
 }

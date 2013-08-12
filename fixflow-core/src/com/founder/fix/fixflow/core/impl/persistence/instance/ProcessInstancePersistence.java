@@ -36,7 +36,7 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.context.ContextInstanceImpl;
-import com.founder.fix.fixflow.core.impl.datavariable.DataVariableInstance;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
@@ -48,13 +48,10 @@ import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableTransferEntity;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class ProcessInstancePersistence {
 	
@@ -396,20 +393,14 @@ public class ProcessInstancePersistence {
 	 * @param processInstance
 	 */
 	void saveVariableInstance(ProcessInstanceEntity processInstance) {
-		String processInstanceId=processInstance.getId();
-		VariableTransferEntity variableTransferEntity = new VariableTransferEntity();
-		for (DataVariableInstance dataVariableInstance : processInstance.getDataVariableMgmtInstance().getDataVariableInstances()) {
-			if (dataVariableInstance.isPersistence()) {
-				variableTransferEntity.addVariable(dataVariableInstance.getId(), dataVariableInstance.getExpressionValue());
+
+		VariablePersistence variablePersistence=new VariablePersistence(connection);
+		for (DataVariableEntity dataVariableEntity : processInstance.getDataVariableMgmtInstance().getDataVariableEntities()) {
+			if (dataVariableEntity.isPersistence()) {
+				variablePersistence.saveVariable(dataVariableEntity);
 			}
 		}
-		if (processInstanceId != null && !processInstanceId.equals("")) {
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, processInstanceId);
-			variableTransferEntity.addVariableFlowType(variableFlowTypeEntity);
-		}
-		
-		VariablePersistence variablePersistence=new VariablePersistence(connection);
-		variablePersistence.saveVariable(variableTransferEntity);
+
 	}
 
 	/**
@@ -431,7 +422,7 @@ public class ProcessInstancePersistence {
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSql()!=null&&!processInstanceQuery.getQueryExpandTo().getWhereSql().equals("")){
 			sqlString=sqlString+" and "+processInstanceQuery.getQueryExpandTo().getWhereSql();
 			if(processInstanceQuery.getQueryExpandTo().getWhereSqlObj()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
-				objectParamWhere.add(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
+				objectParamWhere.addAll(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
 			}
 		}
 		if (processInstanceQuery.getBusinessKey() != null) {

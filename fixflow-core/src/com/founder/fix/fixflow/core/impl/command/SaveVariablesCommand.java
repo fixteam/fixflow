@@ -27,6 +27,9 @@ public class SaveVariablesCommand {
 	protected String tokenId;
 	protected String taskInstanceId;
 	protected String nodeId;
+	protected String variableType;
+	
+	
 
 	protected Map<String, ? extends Object> variables;
 
@@ -75,6 +78,14 @@ public class SaveVariablesCommand {
 
 	public void setVariables(Map<String, ? extends Object> variables) {
 		this.variables = variables;
+	}
+	
+	public String getVariableType() {
+		return variableType;
+	}
+
+	public void setVariableType(String variableType) {
+		this.variableType = variableType;
 	}
 
 }

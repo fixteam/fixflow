@@ -107,10 +107,10 @@ public class ProcessInstanceManager extends AbstractManager {
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 			if(!taskInstanceEntity.hasEnded()){
 				if(processLocation.equals("")){
-					processLocation=processLocation+taskInstanceEntity.getNodeName();
+					processLocation=processLocation+taskInstanceEntity.getNodeId();
 				}
 				else{
-					processLocation=processLocation+","+taskInstanceEntity.getNodeName();
+					processLocation=processLocation+","+taskInstanceEntity.getNodeId();
 				}
 			}
 		}

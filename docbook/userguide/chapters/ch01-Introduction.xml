@@ -1,11 +1,11 @@
 <!-- 第一章：产品介绍 -->
 <article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0">
+    version="5.0" xlink:href="">
     <info>
         <title>产品简介</title>
     </info>
     <sect1>
         <title>协议</title>
-        <para>FixBPM 基于 <ulink url="../license.txt">Apache V2 license</ulink></para>
+        <para>FixBPM 基于 <link>Apache V2 license</link></para>
     </sect1>
 </article>
