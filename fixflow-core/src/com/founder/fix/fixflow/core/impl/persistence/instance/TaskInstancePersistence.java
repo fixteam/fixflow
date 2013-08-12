@@ -34,6 +34,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
+import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
 public class TaskInstancePersistence {
@@ -297,6 +298,54 @@ public class TaskInstancePersistence {
 				
 			}
 		}
+		
+		
+		if(taskQuery.getTaskVariableValue()!=null&&!taskQuery.getTaskVariableValue().equals("")){
+			
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.TASKINSTANCE_ID in ( SELECT TASKINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+
+					" WHERE TASKINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
+			
+			if(taskQuery.getTaskVariableKey()!=null&&!taskQuery.getTaskVariableKey().equals("")){
+				
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND VARIABLE_KEY = ? ";
+				objectParamWhere.add(taskQuery.getTaskVariableKey());
+			}else{
+				if(taskQuery.isTaskVariableValueIsLike()){
+					
+					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA LIKE '%"+taskQuery.getTaskVariableValue()+"%') ";
+					
+				}else{
+					
+					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA=?) ";
+					objectParamWhere.add(taskQuery.getTaskVariableValue());
+				}
+
+			}
+		}
+		
+		
+		if(taskQuery.getProcessInstanceVariableValue()!=null&&!taskQuery.getProcessInstanceVariableValue().equals("")){
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+
+					" WHERE PROCESSINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
+			
+			if(taskQuery.getProcessInstanceVariableKey()!=null&&!taskQuery.getProcessInstanceVariableKey().equals("")){
+				
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND VARIABLE_KEY = ? ";
+				objectParamWhere.add(taskQuery.getProcessInstanceVariableKey());
+			}else{
+				if(taskQuery.isProcessInstanceVariableValueIsLike()){
+					
+					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA LIKE '%"+taskQuery.getProcessInstanceVariableValue()+"%') ";
+					
+				}else{
+					
+					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA=?) ";
+					objectParamWhere.add(taskQuery.getProcessInstanceVariableValue());
+				}
+
+			}
+		}
+		
 
 		if (taskQuery.getEnd() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.END_TIME " + taskQuery.getEnd() + " ";

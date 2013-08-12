@@ -27,58 +27,102 @@ import com.founder.fix.fixflow.core.query.Query;
  */
 public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, ProcessDefinitionBehavior> {
   
+	/**
+	 * 根据流程定义编号查询
+	 * @param processDefinitionId 流程定义编号
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionId(String processDefinitionId);
 
-  ProcessDefinitionQuery processDefinitionId(String processDefinitionId);
-  
+	/**
+	 * 根据流程分类查询
+	 * @param processDefinitionCategory 流程分类
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionCategory(String processDefinitionCategory);
 
-  ProcessDefinitionQuery processDefinitionCategory(String processDefinitionCategory);
-  
+	/**
+	 * 根据流程分类like匹配
+	 * @param processDefinitionCategoryLike
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionCategoryLike(String processDefinitionCategoryLike);
 
-  ProcessDefinitionQuery processDefinitionCategoryLike(String processDefinitionCategoryLike);
+	/**
+	 * 根据流程名称查询
+	 * @param processDefinitionName
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionName(String processDefinitionName);
 
+	/**
+	 * 根据流程名称like匹配
+	 * @param processDefinitionNameLike
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionNameLike(String processDefinitionNameLike);
 
-  ProcessDefinitionQuery processDefinitionName(String processDefinitionName);
-  
+	/**
+	 * 根据发布号查询
+	 * @param deploymentId
+	 * @return
+	 */
+	ProcessDefinitionQuery deploymentId(String deploymentId);
 
-  ProcessDefinitionQuery processDefinitionNameLike(String processDefinitionNameLike);
+	/**
+	 * 根据流程定义key查询
+	 * @param processDefinitionKey
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionKey(String processDefinitionKey);
 
+	/**
+	 * 流程定义key like匹配
+	 * @param processDefinitionKeyLike
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionKeyLike(String processDefinitionKeyLike);
 
-  ProcessDefinitionQuery deploymentId(String deploymentId);
+	/**
+	 * 流程定义版本号
+	 * @param processDefinitionVersion
+	 * @return
+	 */
+	ProcessDefinitionQuery processDefinitionVersion(Integer processDefinitionVersion);
 
+	/**
+	 * 根据流程分类排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByProcessDefinitionCategory();
 
-  ProcessDefinitionQuery processDefinitionKey(String processDefinitionKey);
+	/**
+	 * 根据流程定义key排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByProcessDefinitionKey();
 
+	/**
+	 * 根据流程定义id排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByProcessDefinitionId();
 
-  ProcessDefinitionQuery processDefinitionKeyLike(String processDefinitionKeyLike);
-  
+	/**
+	 * 根据版本号排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByProcessDefinitionVersion();
 
-  ProcessDefinitionQuery processDefinitionVersion(Integer processDefinitionVersion);
-  
+	/**
+	 * 根据流程定义名称排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByProcessDefinitionName();
 
-  ProcessDefinitionQuery latestVersion();
-
-  
-  ProcessDefinitionQuery processDefinitionResourceName(String resourceName);
-
-
-  ProcessDefinitionQuery processDefinitionResourceNameLike(String resourceNameLike);
-
-  
-  
-  ProcessDefinitionQuery orderByProcessDefinitionCategory();
-  
-
-  ProcessDefinitionQuery orderByProcessDefinitionKey();
-
-
-  ProcessDefinitionQuery orderByProcessDefinitionId();
-  
-
-  ProcessDefinitionQuery orderByProcessDefinitionVersion();
-  
-
-  ProcessDefinitionQuery orderByProcessDefinitionName();
-  
-
-  ProcessDefinitionQuery orderByDeploymentId();
+	/**
+	 * 根据发布号排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByDeploymentId();
 }

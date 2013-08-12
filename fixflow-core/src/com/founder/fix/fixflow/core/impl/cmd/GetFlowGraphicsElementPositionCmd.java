@@ -73,13 +73,15 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 				if (diagramElement instanceof BPMNShape) {
 					BPMNShape bpmnShape = (BPMNShape) diagramElement;
 					Map<String, Object>  positionMap=new HashMap<String, Object>();
-					BaseElement bpmnElement=bpmnShape.getBpmnElement();
-					if(bpmnElement.getId()==null){
-						bpmnElement=getBaseElement(bpmnElement);
-					}
+					
+					BaseElement bpmnElement=getBaseElement(bpmnShape.getBpmnElement());
+				
+					
+					
 					if(bpmnElement==null){
 						continue;
 					}
+
 					float x=bpmnShape.getBounds().getX();
 					float y=bpmnShape.getBounds().getY();
 					float height=bpmnShape.getBounds().getHeight();
@@ -111,15 +113,22 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 	{
 		
 		
-		
-		BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
-		if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
-			String elementId=basicEObjectImpl.eProxyURI().fragment();
-			BaseElement bpmnElement=definitions.getElement(elementId);
-			return bpmnElement;
-		}
-		else{
+		if(baseElement==null){
 			return null;
+		}
+		
+		if(baseElement.getId()==null){
+			BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
+			if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
+				String elementId=basicEObjectImpl.eProxyURI().fragment();
+				BaseElement bpmnElement=definitions.getElement(elementId);
+				return bpmnElement;
+			}
+			else{
+				return null;
+			}
+		}else{
+			return baseElement;
 		}
 		
 		

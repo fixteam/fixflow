@@ -24,17 +24,52 @@ import com.founder.fix.fixflow.core.task.IncludeExclusion;
 
 public interface IdentityLinkQuery extends Query<IdentityLinkQuery, IdentityLink>{
 	
+	/**
+	 * 根据任务候选id查询
+	 * @param id
+	 * @return
+	 */
 	IdentityLinkQuery id(String id);
 	
+	/**
+	 * 根据任务号查询
+	 * @param taskId
+	 * @return
+	 */
 	IdentityLinkQuery taskId(String taskId);
 	
+	/**
+	 * 根据用户号查询
+	 * @param userId
+	 * @return
+	 */
 	IdentityLinkQuery userId(String userId);
 	
+	/**
+	 * 根据分组号查询
+	 * @param groupId
+	 * @return
+	 */
 	IdentityLinkQuery groupId(String groupId);
 	
+	/**
+	 * 根据分组类型查询
+	 * @param groupType
+	 * @return
+	 */
 	IdentityLinkQuery groupType(String groupType);
 	
+	/**
+	 * 包含（排除）
+	 * @param includeExclusion
+	 * @return
+	 */
 	IdentityLinkQuery includeExclusion(IncludeExclusion includeExclusion);
 	
+	/**
+	 * 候选人类型
+	 * @param type
+	 * @return
+	 */
 	IdentityLinkQuery type(IdentityLinkType type);
 }
