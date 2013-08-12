@@ -42,21 +42,19 @@ public class GetTaskFormByNodeId<T> implements Command<String> {
 		ProcessDefinitionBehavior processDefinition = processDefinitionManager
 				.findLatestProcessDefinitionById(processDefinitionId);
 		UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
-		
-		Object returnFormUri=ExpressionMgmt.execute(userTask.getFormUri(),processDefinition);
+		Object returnFormUri = null;
+		if(userTask.getFormUri()!=null && !userTask.getFormUri().equals(""))
+			returnFormUri=ExpressionMgmt.execute(userTask.getFormUri(),processDefinition);
 		if(returnFormUri!=null && !returnFormUri.equals("")){
 			return returnFormUri.toString();
 		}
 		else{
-			
 			String defaultFormUri=processDefinition.getDefaultFormUri();
 			if(defaultFormUri != null && !defaultFormUri.equals("")){
-				
 					return defaultFormUri.toString();
-				
 			}
 			
-	}
+		}
 		
 		return null;
 	}
