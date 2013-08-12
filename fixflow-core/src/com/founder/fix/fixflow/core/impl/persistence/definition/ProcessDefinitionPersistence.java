@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl.Delegator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
@@ -263,6 +264,30 @@ public class ProcessDefinitionPersistence {
 		return processDefinitionList;
 
 	}
+	
+	private ResourceSet getResourceSet() {
+		// TODO Auto-generated method stub
+		ResourceSet resourceSet = new ResourceSetImpl();
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DC", DcPackage.eINSTANCE);
+		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI", BpmnDiPackage.eINSTANCE);
+		FixFlowPackage.eINSTANCE.eClass();
+
+		FixFlowPackage xxxPackage = FixFlowPackage.eINSTANCE;
+		EPackage.Registry.INSTANCE.put(xxxPackage.getNsURI(), xxxPackage);
+		Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("fixflow", ddd);
+
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("bpmn", ddd);
+
+		resourceSet.getPackageRegistry().put(xxxPackage.getNsURI(), xxxPackage);
+
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("bpmn", ddd);
+		
+		return resourceSet;
+	}
 
 	private ProcessDefinitionBehavior getProcessDefinition(String deploymentId, String resourceName, String processKey, String processId) {
 
@@ -290,7 +315,7 @@ public class ProcessDefinitionPersistence {
 		if (bytesObject != null) {
 			byte[] bytes = (byte[]) bytesObject;
 			
-			ResourceSet resourceSet=Context.getProcessEngineConfiguration().getResourceSet();
+			ResourceSet resourceSet=getResourceSet();
 			
 			
 			

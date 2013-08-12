@@ -33,14 +33,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 
-import org.eclipse.bpmn2.Bpmn2Package;
-import org.eclipse.bpmn2.di.BpmnDiPackage;
-import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
-import org.eclipse.dd.dc.DcPackage;
-import org.eclipse.dd.di.DiPackage;
+
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EPackageRegistryImpl.Delegator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -71,7 +65,6 @@ import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
-import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
@@ -133,7 +126,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	public AbstractAuthentication authenticationInstance;
 
-	ResourceSet resourceSet;
+	
 
 	protected DataBase selectedDatabase;
 	protected SysMailConfig sysMailConfig;
@@ -219,35 +212,12 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initPriorityConfig();
 		initAssignPolicyConfig();
 		initThreadPool();
-		initResourceSet();
+	
 
 	}
 
-	public ResourceSet getResourceSet() {
-		return resourceSet;
-	}
 
-	private void initResourceSet() {
-		// TODO Auto-generated method stub
-		this.resourceSet = new ResourceSetImpl();
-		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
-		((Delegator) EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
-		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
-		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DC", DcPackage.eINSTANCE);
-		((Delegator) EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/DI", BpmnDiPackage.eINSTANCE);
-		FixFlowPackage.eINSTANCE.eClass();
-
-		FixFlowPackage xxxPackage = FixFlowPackage.eINSTANCE;
-		EPackage.Registry.INSTANCE.put(xxxPackage.getNsURI(), xxxPackage);
-		Bpmn2ResourceFactoryImpl ddd = new Bpmn2ResourceFactoryImpl();
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("fixflow", ddd);
-
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("bpmn", ddd);
-
-		resourceSet.getPackageRegistry().put(xxxPackage.getNsURI(), xxxPackage);
-
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("bpmn", ddd);
-	}
+	
 
 	private void initImportDataVariableConfig() {
 		this.importDataVariableConfig = this.fixFlowConfig.getImportDataVariableConfig();
