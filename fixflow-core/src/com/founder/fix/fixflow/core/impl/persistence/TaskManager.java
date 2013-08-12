@@ -24,12 +24,10 @@ import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
+import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.persistence.AbstractManager;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 /**
  * 任务数据管理器
@@ -102,13 +100,14 @@ public class TaskManager extends AbstractManager {
 		if (cascade) {
 
 			getCommandContext().getIdentityLinkManager().deleteIdentityLinksByTaskId(taskInstanceId);
+			
+			
+			QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
+			queryVariablesCommand.setTaskInstanceId(taskInstanceId);
+			
 
-			VariableQueryEntity variableQueryEntity = new VariableQueryEntity();
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.TASKINSTANCE, taskInstanceId);
 
-			variableQueryEntity.addVariableFlowType(variableFlowTypeEntity);
-
-			getCommandContext().getVariableManager().deleteVariable(variableQueryEntity);
+			getCommandContext().getVariableManager().deleteVariable(queryVariablesCommand);
 			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
 			
 

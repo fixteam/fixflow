@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.core.runtime;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
@@ -55,7 +56,21 @@ public interface Token  extends PersistentObject, Serializable {
 	boolean isAbleToReactivateParent();
 
 
-	
+	/**
+	 * 获取令牌扩展字段(大小写区分)
+	 * 
+	 * @return 任务扩展字段
+	 */
+	Map<String, Object> getExtensionFields();
+
+	/**
+	 * 获取令牌扩展字段值
+	 * 
+	 * @param fieldName
+	 *            字段名称(大小写区分)
+	 * @return 任务扩展字段值
+	 */
+	Object getExtensionField(String fieldName);
 
 
 }

@@ -20,12 +20,15 @@ package com.founder.fix.fixflow.core.impl;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipInputStream;
 
 import com.founder.fix.fixflow.core.ModelService;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
+import com.founder.fix.fixflow.core.impl.cmd.DeploymentByZipCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetDeploymentEntityCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsElementPositionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgPathCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetFlowGraphicsImgStreamCmd;
@@ -35,9 +38,12 @@ import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionGroupKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetResourceAsStreamCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetStartProcessByUserIdCmd;
+import com.founder.fix.fixflow.core.impl.cmd.UpdateDeploymentByZipCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateResourceCmd;
 import com.founder.fix.fixflow.core.impl.model.DeploymentBuilderImpl;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
+import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.model.Deployment;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
@@ -88,6 +94,11 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 		return commandExecutor.execute(new GetResourceAsStreamCmd<ResourceEntity>(resourceId));
 
 	}
+	
+	public DeploymentEntity getDeploymentEntity(String deploymentId) {
+		return commandExecutor.execute(new GetDeploymentEntityCmd(deploymentId));
+	}
+
 
 	public void updateResource(String resourceId, InputStream inputStream) {
 
@@ -95,6 +106,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	}
 
+	
 	public String getDefaultFromUri(String processDefinitionId) {
 
 		
@@ -149,5 +161,28 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 	public InputStream GetFlowGraphicsImgStreamByDefKey(String processDefinitionKey) {
 		return commandExecutor.execute(new GetFlowGraphicsImgStreamCmd(null,processDefinitionKey));
 	}
-
+	
+	public String deploymentByZip(String path){
+		InputStream inputStream = ReflectUtil.getResourceAsStream(path);
+		if(inputStream == null){
+			return null;
+		}
+		return deploymentByZip(new ZipInputStream(inputStream));
+	}
+	
+	public String deploymentByZip(ZipInputStream zipInputStream){
+		return commandExecutor.execute(new DeploymentByZipCmd(createDeployment(),zipInputStream));
+	}
+	
+	public String updateDeploymentByZip(ZipInputStream zipInputStream,String deploymentId){
+		return commandExecutor.execute(new UpdateDeploymentByZipCmd(createDeployment(),zipInputStream,deploymentId));
+	}
+	
+	public String updateDeploymentByZip(String path,String deploymentId){
+		InputStream inputStream = ReflectUtil.getResourceAsStream(path);
+		if(inputStream == null){
+			return null;
+		}
+		return updateDeploymentByZip(new ZipInputStream(inputStream),deploymentId);
+	}
 }

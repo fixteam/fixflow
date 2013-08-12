@@ -28,6 +28,7 @@ import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.job.JobEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
@@ -51,7 +52,6 @@ import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 
 public class PersistentSession {
@@ -136,7 +136,7 @@ public class PersistentSession {
 
 		if (deleteStatement.equals("deleteVariable")) {
 			VariablePersistence variablePersistence = ProcessObjectFactory.FACTORYINSTANCE.createVariablePersistence(connection);
-			variablePersistence.deleteVariable((VariableQueryEntity) parameter);
+			variablePersistence.deleteVariable((QueryVariablesCommand) parameter);
 		}
 
 	}
@@ -284,6 +284,13 @@ public class PersistentSession {
 			return resourcePersistence.selectResourceByDeploymentIdAndResourceName(deploymentId,resourceName);
 		}
 		
+		if (statement.equals("selectProcessDefinitionByDeploymentAndKey")) {
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
+			
+		
+			return processDefinitionPersistence.selectProcessDefinitionByDeploymentAndKey(parameter);
+		}
+		
 		
 		
 
@@ -388,7 +395,7 @@ public class PersistentSession {
 
 		if (statement.equals("queryVariable")) {
 			VariablePersistence variablePersistence = ProcessObjectFactory.FACTORYINSTANCE.createVariablePersistence(connection);
-			return variablePersistence.queryVariable(parameter);
+			return variablePersistence.queryVariable((QueryVariablesCommand)parameter);
 		}
 
 		return null;

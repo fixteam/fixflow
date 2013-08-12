@@ -46,6 +46,23 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	
 	ProcessInstanceQuery containsSubProcess();
 	
+	/**
+	 * 根据流程实例所有变量查询
+	 * @param variableValue 变量值
+	 * @param isLike 是否Like
+	 * @return
+	 */
+	ProcessInstanceQuery variableData(String variableValue,boolean isLike);
+	
+	/**
+	 * 根据流程实例指定的变量查询
+	 * @param variableKey  变量Key
+	 * @param variableValue 变量值
+	 * @param isLike 是否Like
+	 * @return
+	 */
+	ProcessInstanceQuery variableData(String variableKey,String variableValue,boolean isLike);
+	
 
 	ProcessInstanceQuery notEnd();
 	

@@ -272,7 +272,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 		return map;
 	}
 
-	public Map<String, Object> getVariables(String taskId, Collection<String> variableNames) {
+	public Map<String, Object> getVariables(String taskId, List<String> variableNames) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
 		queryVariablesCommand.setTaskInstanceId(taskId);
 		queryVariablesCommand.setVariableNames(variableNames);

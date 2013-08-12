@@ -260,33 +260,66 @@ public class VariableObjKey {
 
 	}
 	
+
 	/**
-	 * 任务编号
+	 * 变量业务类型
 	 * @return
 	 */
-	public static FlowKeyArchiveTime ArchiveTime(){
-		return new VariableObjKey().new FlowKeyArchiveTime();
+	public static FlowKeyVariableType VariableType(){
+		return new VariableObjKey().new FlowKeyVariableType();
 	}
 	
-	public class FlowKeyArchiveTime implements ObjKeyInterface{
+	public class FlowKeyVariableType implements ObjKeyInterface{
 		public String EntityKey() {
 			// TODO Auto-generated method stub
-			return "archive_time";
+			return "variableType";
 		}
 
 		public String DataBaseKey() {
 			// TODO Auto-generated method stub
-			return "ARCHIVE_TIME";
+			return "VARIABLE_TYPE";
 		}
 		
 		public String FullKey() {
 			// TODO Auto-generated method stub
-			return "archiveTime";
+			return "variableType";
 		}
 
 		public String KeyName() {
 			// TODO Auto-generated method stub
-			return "归档时间";
+			return "变量业务类型";
+		}
+	}
+	
+	
+	
+	/** 
+	 * 业务查询数据
+	 * @return
+	 */
+	public static FlowKeyBizData BizData(){
+		return new VariableObjKey().new FlowKeyBizData();
+	}
+	
+	public class FlowKeyBizData implements ObjKeyInterface{
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "bizData";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "BIZ_DATA";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "bizData";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "业务查询数据";
 		}
 	}
 	

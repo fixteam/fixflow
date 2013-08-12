@@ -13,35 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author shao
+ * @author yangchenhui
  */
-package com.founder.fix.fixflow.util;
+package com.founder.fix.fixflow.core.impl.cmd;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import com.founder.fix.fixflow.core.impl.interceptor.Command;
+import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 
+public class GetDeploymentEntityCmd implements Command<DeploymentEntity>{
 
-public class ConfFileLoader{
+	protected String deploymentId;
 	
-
-	/**
-	 * 根据文件的全路径获取资源
-	 * @param url
-	 * @return
-	 * @throws FileNotFoundException
-	 */
-	public static InputStream getInputStreamForFullPath(String url) throws FileNotFoundException{
-		InputStream in;
-		File file = new File(url);
-		try {
-			in = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			throw e;
-		}
-
-		return in;
+	public GetDeploymentEntityCmd(String deploymentId){
+		this.deploymentId = deploymentId;
+	}
+	public DeploymentEntity execute(CommandContext commandContext) {
+		return commandContext.getDeploymentManager().findDeploymentById(deploymentId);
 	}
 	
 
