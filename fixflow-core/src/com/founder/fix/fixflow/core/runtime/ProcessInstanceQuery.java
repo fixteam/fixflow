@@ -183,62 +183,6 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	 * @return
 	 */
 	ProcessInstanceQuery subProcessInstanceId(String subProcessInstanceId);
-
-	/**
-	 * 流程变量等于
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueEquals(String name, Object value);
-
-	/**
-	 * 流程变量不等于
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueNotEquals(String name, Object value);
-
-	/**
-	 * 流程变量大于
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueGreaterThan(String name, Object value);
-
-	/**
-	 * 流程变量大于等于
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueGreaterThanOrEqual(String name, Object value);
-
-	/**
-	 * 流程变量小于
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueLessThan(String name, Object value);
-
-	/**
-	 * 流程变量小于等于
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueLessThanOrEqual(String name, Object value);
-
-	/**
-	 * 流程变量like匹配
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	ProcessInstanceQuery variableValueLike(String name, String value);
 	
 	/**
 	 * 根据流程实例编号排序

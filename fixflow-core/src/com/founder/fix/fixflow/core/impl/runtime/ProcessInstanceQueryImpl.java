@@ -266,50 +266,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	public String getTaskParticipants() {
 		return taskParticipants;
 	}
-
-
-	public ProcessInstanceQuery variableValueEquals(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueNotEquals(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueGreaterThan(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueGreaterThanOrEqual(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueLessThan(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueLessThanOrEqual(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueLike(String name, String value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 	protected String initiatorLike;
-
-	
-
-
 
 	protected String subject;
 	
@@ -377,10 +335,6 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return startTimeAfter;
 	}
 
-	
-
-
-
 	public String getIsPigeonhole() {
 		return isPigeonhole;
 	}
@@ -406,9 +360,6 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	public boolean isContainsSubProcess() {
 		return isContainsSubProcess;
 	}
-	
-	
-	
 	
 	/* 变量查询 */
 	protected String processInstanceVariableKey;
