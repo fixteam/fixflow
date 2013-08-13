@@ -26,6 +26,7 @@ import com.founder.fix.fixflow.core.impl.db.DbSqlSession;
 import com.founder.fix.fixflow.core.impl.persistence.CommentManager;
 import com.founder.fix.fixflow.core.impl.persistence.DeploymentManager;
 import com.founder.fix.fixflow.core.impl.persistence.EventSubscriptionManager;
+import com.founder.fix.fixflow.core.impl.persistence.HistoryManager;
 import com.founder.fix.fixflow.core.impl.persistence.IdentityLinkManager;
 import com.founder.fix.fixflow.core.impl.persistence.JobManager;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
@@ -125,12 +126,18 @@ public class CommandContext {
 		return eventSubscriptionManager;
 	}
 	
-	
+	public HistoryManager getHistoryManager(){
+		HistoryManager historyManager = new HistoryManager();
+		historyManager.setCommandContext(this);
+		return historyManager;
+	}
 	public JobManager getJobManager() {
 		JobManager jobManager = new JobManager();
 		jobManager.setCommandContext(this);
 		return jobManager;
 	}
+	
+	
 	// getters and setters
 	// //////////////////////////////////////////////////////
 

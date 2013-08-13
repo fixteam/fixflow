@@ -40,6 +40,12 @@ public class DbSqlSession {
 		this.cacheObject = cacheObject;
 		persistentSession = new PersistentSession(connection);
 	}
+	
+	//execute
+	
+	public Object execute(String execStatement,Object parameter){
+		return persistentSession.execute(execStatement, parameter);
+	}
 
 	// insert
 

@@ -18,5 +18,18 @@
 package com.founder.fix.fixflow.core;
 
 public interface HistoryService extends ProcessService{
- 
+
+	/**
+	 *根据流程实例号归档
+	 * @param processinstanceId
+	 * @return 
+	 */
+	public boolean archiveByProcessInstanceId(String processinstanceId);
+	
+	/**
+	 * 根据流程定义key归档
+	 * @param processDefinitionKey
+	 * @return
+	 */
+	public boolean archiveByProcessDefinitionKey(String processDefinitionKey);
 }

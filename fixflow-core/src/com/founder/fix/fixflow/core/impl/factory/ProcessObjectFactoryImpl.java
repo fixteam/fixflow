@@ -40,6 +40,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
@@ -260,6 +261,22 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 			}
 		}
 		throw new FixFlowException("流程引擎扩展配置里的ProcessDefinitionPersistence实现类指定错误");
+	}
+	
+	/**
+	 * 创建流程归档持久化
+	 */
+	public HistoryPersistence createHistoryPersistence(Connection connection){
+		ExpandClassConfig expandClassConfig=processEngineConfiguration.getExpandClassConfig();
+		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
+		for (ExpandClass expandClass : expandClasses) {
+			if(expandClass.getClassId().equals("HistoryPersistence")){
+				Object[] objTemp = new Object[] {connection};  
+				HistoryPersistence historyPersistence =(HistoryPersistence) ReflectUtil.instantiate(expandClass.getClassImpl(),objTemp);
+				return historyPersistence;
+			}
+		}
+		throw new FixFlowException("流程引擎扩展配置里的HistoryPersistence实现类指定错误");
 	}
 	
 	/**

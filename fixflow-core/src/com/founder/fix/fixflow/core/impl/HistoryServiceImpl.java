@@ -17,11 +17,17 @@
  */
 package com.founder.fix.fixflow.core.impl;
 
-
 import com.founder.fix.fixflow.core.HistoryService;
+import com.founder.fix.fixflow.core.impl.cmd.ArchiveByProcessInstanceIdCmd;
 
 public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
-
+	public boolean archiveByProcessInstanceId(String processinstanceId) {
+		return commandExecutor.execute(new ArchiveByProcessInstanceIdCmd(processinstanceId));
+	}
+	
+	public boolean archiveByProcessDefinitionKey(String processDefinitionKey) {
+		return false;
+	}
 
 }

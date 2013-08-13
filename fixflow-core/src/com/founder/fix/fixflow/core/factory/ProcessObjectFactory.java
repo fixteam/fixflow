@@ -30,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence;
 import com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence;
@@ -135,6 +136,13 @@ public interface ProcessObjectFactory {
 	 * @return
 	 */
 	ProcessDefinitionPersistence createProcessDefinitionPersistence(Connection connection);
+	
+	/**
+	 * 创建流程归档持久化
+	 * @param connection 可用的数据库连接
+	 * @return
+	 */
+	HistoryPersistence createHistoryPersistence(Connection connection);
 	
 	/**
 	 * 创建流程发布查询
