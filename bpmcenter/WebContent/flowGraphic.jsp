@@ -14,27 +14,91 @@ a{text-decoration: none;}
 
 <body>
 <img src="FlowCenter?action=getFlowGraph&processDefinitionKey=${result.processDefinitionKey}"/>
+
 <c:if test="${result.dataList!=null}">
 <table>
 	<tr>
+		<td colspan="3">
+			已完成
 		<td>
-			执行人
+	</tr>
+	<tr>
 		<td>
+			步骤名称
+		</td>
 				<td>
-			执行时间
-		<td>
+			处理者
+		</td>
+				<td>
+			到达时间
+		</td>
+				<td>
+			完成时间
+		</td>
+				<td>
+			预计完成时间
+		</td>
+				<td>
+			处理结果
+		</td>
 				<td>
 			处理意见
-		<td>
-	<tr>
+		</td>
+	</tr>
 	<c:forEach items="${result.dataList}" var="row" varStatus="status">
 		<tr>
 			<td>
-				${row.assignee}
+				${row.nodeName}
 			</td>
-						<td>${row.endTime}
+						<td>${row.assignee}
+			</td>
+						<td>${row.createTime}
+			</td>
+						<td>
+				${row.endTime}
+			</td>
+						<td>${row.expectedExecutionTime}
 			</td>
 						<td>${row.taskComment}
+			</td>
+				<td>${row.taskComment}
+			</td>
+		</tr>
+	</c:forEach>
+</table>
+
+<table>
+	<tr>
+		<td colspan="3">
+			未完成
+		<td>
+	</tr>
+	<tr>
+		<td>
+			步骤名称
+		</td>
+				<td>
+			当前处理
+		</td>
+				<td>
+			到达时间
+		</td>
+
+				<td>
+			预计完成时间
+		</td>
+	</tr>
+	<c:forEach items="${result.notEnddataList}" var="row" varStatus="status">
+		<tr>
+			<td>
+				${row.nodeName}
+			</td>
+						<td>${row.assignee}
+			</td>
+						<td>${row.createTime}
+			</td>
+
+						<td>${row.expectedExecutionTime}
 			</td>
 		</tr>
 	</c:forEach>

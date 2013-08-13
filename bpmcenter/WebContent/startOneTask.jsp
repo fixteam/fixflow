@@ -14,9 +14,25 @@ a{text-decoration: none;}
 
 <body>
 <form id="form1" action="FlowCenter">
-<input type="text" name="businessKey"/>
+<table>
+<tr>
+<td>
+流程关联键：<input type="text" name="businessKey"/>
+</td>
+</tr>
+<tr>
+<td>
+信息：<input type="text" name="COL2"/>
+</td>
+</tr>
+<tr>
+<td>
+审批意见：<textarea rows="3" cols="20" name="_taskComment"></textarea>
+</td>
+</tr>
+</table>
 <input type="hidden" id="processDefinitionKey" name="processDefinitionKey" value="${result.processDefinitionKey}"/>
-<input type="hidden" name="action" value="completeTask"/>
+<input type="hidden" name="action" value="demoCompleteTask"/>
 <input type="hidden" id="commandId" name="commandId"/>
 <input type="hidden" id="commandType" name="commandType"/>
 <c:forEach items="${result.commandList}" var="row" varStatus="status">

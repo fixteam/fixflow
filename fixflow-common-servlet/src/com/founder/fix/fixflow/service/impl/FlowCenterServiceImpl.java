@@ -19,10 +19,10 @@ package com.founder.fix.fixflow.service.impl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,11 +31,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.fileupload.FileItem;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
-import com.founder.fix.fixflow.core.TaskService;
-import com.founder.fix.fixflow.core.impl.TaskServiceImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
@@ -49,9 +48,21 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.FileUtil;
-
+@Scope("prototype")
 @Service
 public class FlowCenterServiceImpl implements FlowCenterService {
+	
+	private Connection connection;
+	
+	
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
 	/*
 	  * <p>Title: queryMyTaskNotEnd</p>
 	  * <p>Description: </p>
@@ -63,7 +74,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	public Map<String,Object> queryMyTaskNotEnd(Map<String, Object> filter)
 			throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter
+		ProcessEngine engine = getProcessEngine(filter
 				.get("userId"));
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
@@ -99,7 +110,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			String rowI = StringUtil.getString(filter.get("rowNum"));
 			
 			int pageIndex=1;
-			int rowNum   =5;
+			int rowNum   =20;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageIndex);
 			}
@@ -153,7 +164,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	public List<Map<String, String>> queryStartProcess(String userId)
 			throws SQLException {
 		List<Map<String, String>> result = null;
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessEngine engine = getProcessEngine(userId);
 		try {
 			result = engine.getModelService().getStartProcessByUserId(userId);
 			for(Map<String,String> tmp:result){
@@ -189,7 +200,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> filter) throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessEngine engine = getProcessEngine(userId);
 		try{
 			ProcessInstanceQuery tq = engine.getRuntimeService()
 					.createProcessInstanceQuery();
@@ -221,7 +232,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			String rowI = StringUtil.getString(filter.get("rowNum"));
 			
 			int pageIndex=1;
-			int rowNum   =5;
+			int rowNum   =20;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageIndex);
 			}
@@ -258,7 +269,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		Map<String,Object> result = new HashMap<String,Object>();
 		if(StringUtil.isNotEmpty(processInstanceId)){
 			String userId = (String) filter.get("userId");
-			ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+			ProcessEngine engine = getProcessEngine(userId);
 			try{
 				TaskQuery tq = engine.getTaskService().createTaskQuery();
 				
@@ -269,8 +280,11 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				for(TaskInstance tmp:instances){
 					instanceMaps.add(tmp.getPersistentState());
 				}
-				
+				tq.taskNotEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
+				List<TaskInstance> instancesNotEnd = tq.list();
+				result.put("notEnddataList", instancesNotEnd);
 				result.put("dataList", instanceMaps);
+				
 			}finally{
 				FixFlowShellProxy.closeProcessEngine(engine, false);
 			}
@@ -285,7 +299,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		InputStream result = null;
 		
 		String userId = (String) filter.get("userId");
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessEngine engine = getProcessEngine(userId);
 		
 		try{
 			if(StringUtil.isNotEmpty(processInstanceId))
@@ -303,7 +317,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		Map<String,Object> result= new HashMap<String,Object>();
 		UserTo user = null;
 		String userId = (String) filter.get("userId");
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessEngine engine = getProcessEngine(userId);
 		
 		String path = StringUtil.getString(filter.get("path"));
 		path = path+"/icon/";
@@ -360,21 +374,24 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 	
 
 	@Override
-	public List<Map<String,Object>> GetTaskCommand(Map<String,Object> filter) throws SQLException {
-		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(filter.get("userId"));
+	public Map<String,Object> GetFlowRefInfo(Map<String,Object> filter) throws SQLException {
+		Map<String,Object> result = new HashMap<String,Object>();
+		List<Map<String,Object>> tmpres = new ArrayList<Map<String,Object>>();
+		ProcessEngine engine = getProcessEngine(filter.get("userId"));
 		String taskId = (String)filter.get("taskId");
 		String processDefinitionKey = (String)filter.get("processDefinitionKey");
-		
+//		taskId.replaceAll(regex, replacement)
 		List<TaskCommandInst> list = null;
-		if(StringUtil.isNotEmpty(processDefinitionKey)){
-			list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
-		}else{
+		if(StringUtil.isNotEmpty(taskId)){
 			list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
+		}else{
+			list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
 		}
 		for(TaskCommandInst tmp:list){
-			result.add(tmp.getPersistentState());
+			tmpres.add(tmp.getPersistentState());
 		}
+		result.put("commandList", tmpres);
+		
 		return result;
 	}
 	
@@ -385,6 +402,9 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		String processDefinitionKey = StringUtil.getString(params.get("processDefinitionKey"));
 		String businessKey = StringUtil.getString(params.get("businessKey"));
 		String userId = StringUtil.getString(params.get("userId"));
+		String taskComment = StringUtil.getString(params.get("_taskComment"));
+		Map<String,Object> taskParams = (Map<String,Object>)params.get("taskParams");
+		
 		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 		
 
@@ -394,7 +414,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		expandTaskCommand.setInitiator(userId);
 		//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
 		expandTaskCommand.setUserCommandId(commandId);
-		
+		expandTaskCommand.setTaskComment(taskComment);
 		if(StringUtil.isNotEmpty(taskId)){
 			expandTaskCommand.setTaskId(taskId);
 		}else{
@@ -402,10 +422,19 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			//设置流程的业务关联键
 			expandTaskCommand.setBusinessKey(businessKey);
 		}
+		expandTaskCommand.setParamMap(taskParams);
 
-		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessEngine engine = getProcessEngine(userId);
 		ProcessInstance processInstance = engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
 		
 		return processInstance;
+	}
+	
+	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
+		if(connection!=null){
+			return FixFlowShellProxy.createProcessEngine(userId,connection);
+		}else{
+			return FixFlowShellProxy.createProcessEngine(userId);
+		}
 	}
 }

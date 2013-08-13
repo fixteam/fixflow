@@ -19,12 +19,11 @@ package com.founder.fix.fixflow.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
-import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 
 /**
@@ -35,6 +34,11 @@ import com.founder.fix.fixflow.core.runtime.ProcessInstance;
   */
 public interface FlowCenterService {
 	public static final String LOGIN_USER_ID = "LOGIN_USER_ID";
+	
+	public void setConnection(Connection connection);
+	
+	public Connection getConnection();
+	
 
 	/**
 	  * queryMyTaskNotEnd
@@ -228,18 +232,20 @@ public interface FlowCenterService {
 	
 
 	/**
-	  * GetTaskCommand
+	  * GetFlowRefInfo
 	
-	  * @Title: GetTaskCommand
-	  * @Description: TODO
+	  * @Title: GetFlowRefInfo
+	  * @Description: 获取流程相关信息
 	  * @param filter<br>
 	  * "userId" 用户编号<br>
 	  * "taskId" 任务编号，当任务在非提交状态时，应该传这个参数(可选)<br>
 	  * "processDefinitionKey" 任务定义编号，当任务处于提交状态时应使用这个参数(可选)<br>
-	  * @return List<Map<String,Object>>
+	  * @return Map<String,Object><br>
+	  * "commandList" 流程命令按钮<br>
+	  * "processInstance" 流程实例对象<br>
 	  * @throws SQLException
 	  */
-	public List<Map<String,Object>> GetTaskCommand(Map<String,Object> filter) throws SQLException;
+	public Map<String,Object> GetFlowRefInfo(Map<String,Object> filter) throws SQLException;
 	
 	/**
 	  * completeTask

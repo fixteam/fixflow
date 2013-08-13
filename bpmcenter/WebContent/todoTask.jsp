@@ -92,7 +92,7 @@ a{text-decoration: none;}
 		      <td>${dataList.startTime}</td>
 		      <td>${dataList.nodeName}</td>
 		      <td>${dataList.nodeId}</td>
-		      <td><button name="doTask" tii="${dataList.taskInstanceId}">处理</button></td>
+		      <td><button name="doTask" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</button></td>
 		      <td><button name="flowGraph" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</button></td>
 		    </tr>
 		    </c:forEach>
@@ -167,8 +167,12 @@ $(function(){
   });
   $("button[name=doTask]").click(function(){
     var tii = $(this).attr("tii");
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
+    var bizKey = $(this).attr("bk");
+    
     var obj = {};
-    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>

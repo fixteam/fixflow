@@ -137,7 +137,7 @@ public class SqlCommand {
 			}
 			rs = pstmt.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
-			rs.close();
+			
 			if (rs.next()) {
 
 				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
