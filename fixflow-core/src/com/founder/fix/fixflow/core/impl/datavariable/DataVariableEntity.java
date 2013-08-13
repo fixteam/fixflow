@@ -83,6 +83,8 @@ public class DataVariableEntity extends AbstractPersistentObject{
 		this.variableKey=dataVariableBehavior.getId();
 		this.dataVariableMgmtInstance = dataVariableMgmtInstance;
 		this.processInstanceId=dataVariableMgmtInstance.getProcessInstance().getId();
+		this.variableType=dataVariableBehavior.getBizType();
+
 	}
 	
 	/**

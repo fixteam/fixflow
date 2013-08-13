@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
+import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -324,6 +325,94 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		assertEquals("com/founder/fix/fixflow/test/engine/api/task/TaskServiceNewTest.bpmn", RESOURCE_NAME);
 	}
 	
-	
+	/**
+	 * 测试根据流程变量查询流程实例
+	 * @throws InterruptedException 
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/runtime/ProcessVariablesTest.bpmn"})
+	public void testProcessInstanceVariableData(){
+		for(int i = 0;i<5;i++){
+			//创建一个通用命令
+			ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+			//设置流程名
+			expandTaskCommand.setProcessDefinitionKey("ProcessVariablesTest");
+			//设置流程的业务关联键
+			expandTaskCommand.setBusinessKey("BK_testStartProcessInstanceByKey");
+			//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+			expandTaskCommand.setCommandType("startandsubmit");
+			//设置提交人
+			expandTaskCommand.setInitiator("1200119390");
+			//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+			expandTaskCommand.setUserCommandId("HandleCommand_2");
+			Map<String,Object> variableMap = new HashMap<String,Object>();
+			if(i<3){
+				variableMap.put("queryVariable", "查询变量1");
+			}else{
+				variableMap.put("queryVariable", "查询变量2");
+			}
+			//expandTaskCommand.setVariables(variableMap);
+			//执行这个启动并提交的命令，返回启动的流程实例
+			ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+			String processInstanceId = processInstance.getId();
+			//验证是否成功启动
+			assertNotNull(processInstanceId);
+		}
+		
+		//重置流程实例查询
+		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询ProcessVariablesTest查询变量值等于"查询变量"的流程实例
+		List<ProcessInstance> processInstances = processInstanceQuery.processDefinitionKey("ProcessVariablesTest").processInstanceVariableData("查询变量", false).list();
+		//验证是否为0
+		assertEquals(0, processInstances.size());
+		
+		//重置流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询ProcessVariablesTest查询变量值等于"查询变量1"的流程实例
+		processInstances = processInstanceQuery.processDefinitionKey("ProcessVariablesTest").processInstanceVariableData("查询变量1", false).list();
+		//验证是否为5
+		assertEquals(5, processInstances.size());
+		
+		//重置流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询ProcessVariablesTest查询变量值 like "查询变量"的流程实例
+		processInstances = processInstanceQuery.processDefinitionKey("ProcessVariablesTest").processInstanceVariableData("查询变量", true).list();
+		//验证是否为5
+		assertEquals(5, processInstances.size());
+		
+		//重置流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询ProcessVariablesTest查询变量"queryVariable"值 like "查询变量"的流程实例
+		processInstances = processInstanceQuery.processDefinitionKey("ProcessVariablesTest").processInstanceVariableData("queryVariable","查询变量1",false).list();
+		//验证是否为5
+		assertEquals(5, processInstances.size());
+		
+		//重置流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询ProcessVariablesTest查询变量"queryVariable"值 like "查询变量"的流程实例
+		processInstances = processInstanceQuery.processDefinitionKey("ProcessVariablesTest").processInstanceVariableData("queryVariable","查询变量",true).list();
+		//验证是否为5
+		assertEquals(5, processInstances.size());
+		
+		/**********************本例子通过扩展查询的方法获取ProcessVariablesTest流程的查询变量queryVariable =查询变量1 的流程实例***************************/
+		//重置流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//创建扩展查询
+		QueryExpandTo queryExpandTo = new QueryExpandTo();
+		//常见扩展查询的参数列表
+		List<Object> whereSqlObj = new ArrayList<Object>();
+		//添加扩展wheresql语句    (本例子扩展方法查询正在运行的流程实例)
+		queryExpandTo.setWhereSql("PROCESSINSTANCE_ID  IN (SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+" WHERE VARIABLE_KEY = ? AND BIZ_DATA = ?)");
+		//增加扩展wheresql的参数
+		whereSqlObj.add("queryVariable");
+		whereSqlObj.add("查询变量1");
+		queryExpandTo.setWhereSqlObj(whereSqlObj);
+		//增加扩展查询
+		processInstanceQuery.queryExpandTo(queryExpandTo);
+		//查询TaskServiceNewTest经过扩展查询后的结果
+		processInstanceQuery.processDefinitionKey("ProcessVariablesTest");
+		processInstances = processInstanceQuery.list();
+		//验证是否为5个
+		assertEquals(5, processInstances.size());
+	}
 
 }

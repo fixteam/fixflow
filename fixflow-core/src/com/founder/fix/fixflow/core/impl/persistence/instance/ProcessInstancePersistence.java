@@ -522,30 +522,18 @@ public class ProcessInstancePersistence {
 			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
 			objectParamWhere.add(processInstanceQuery.getTaskParticipants());
 		}
-		
-		
-		
 		if(processInstanceQuery.getProcessInstanceVariableValue()!=null&&!processInstanceQuery.getProcessInstanceVariableValue().equals("")){
 			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+
 					" WHERE PROCESSINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
-			
 			if(processInstanceQuery.getProcessInstanceVariableKey()!=null&&!processInstanceQuery.getProcessInstanceVariableKey().equals("")){
-				
 				sqlString = sqlString +"AND VARIABLE_KEY = ? ";
 				objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableKey());
-				
+			}
+			if(processInstanceQuery.isProcessInstanceVariableValueIsLike()){
+				sqlString = sqlString +"AND BIZ_DATA LIKE '%"+processInstanceQuery.getProcessInstanceVariableValue()+"%') ";
 			}else{
-				if(processInstanceQuery.isProcessInstanceVariableValueIsLike()){
-					
-					sqlString = sqlString +"AND BIZ_DATA LIKE '%"+processInstanceQuery.getProcessInstanceVariableValue()+"%') ";
-					
-				}else{
-					
-					sqlString = sqlString +"AND BIZ_DATA=?) ";
-					objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableValue());
-					
-				}
-
+				sqlString = sqlString +"AND BIZ_DATA=?) ";
+				objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableValue());
 			}
 		}
 		
