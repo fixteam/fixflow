@@ -1,2 +1,3 @@
 eclipse.preferences.version=1
 groovy.compiler.level=21
+groovy.script.filters=scripts/**/*.groovy,y,src/main/resources/**/*.groovy,y,src/test/resources/**/*.groovy,y

@@ -73,7 +73,48 @@ a{text-decoration: none;}
 					var ss = JSON.stringify(params);
 					$("#taskParams").val(ss);
 				});
-
+		$("button[commandType=Pending]").click(
+				function() {
+					var params={
+						//转办的任务编号
+						pendingTaskId:""
+					};
+					var ss = JSON.stringify(params);
+					$("#taskParams").val(ss);
+				});
+		$("button[commandType=recover]").click(
+				function() {
+					var params={
+						//追回的任务编号
+						recoverNodeId:""
+					};
+					var ss = JSON.stringify(params);
+					$("#taskParams").val(ss);
+				});
+		$("button[commandType=reminders]").click(
+				function() {
+					var params={
+						//提醒某一个用户
+						usersInfo:"",
+						//提醒内容
+						content:"",
+						//提醒标题
+						title:""
+						
+					};
+					var ss = JSON.stringify(params);
+					$("#taskParams").val(ss);
+				});
+		$("button[commandType=rollBack]").click(
+				function() {
+					var params={
+						//退回到某个节点
+						rollBackNodeId:"",
+						
+					};
+					var ss = JSON.stringify(params);
+					$("#taskParams").val(ss);
+				});
 		$("button[commandType!=processStatus]").click(function() {
 			var id = $(this).attr("commandId");
 			var type = $(this).attr("commandType");
