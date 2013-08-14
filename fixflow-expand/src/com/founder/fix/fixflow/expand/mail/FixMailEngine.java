@@ -121,7 +121,9 @@ public class FixMailEngine {
 					if(userMailCCList.size()==0){
 						throw new FixFlowBizException("Mail ccaddress is null");
 					}
-					String[] userMailCCFinStrings=(String[])userMailCCList.toArray();
+					
+					String[] userMailCCFinStrings=(String[])userMailCCList.toArray(new String[userMailCCList.size()]);
+			
 					
 					
 					
