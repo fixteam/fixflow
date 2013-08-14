@@ -17,12 +17,18 @@
  */
 package com.founder.fix.fixflow.test.engine.api.runtime;
 
+import java.util.Date;
 import java.util.List;
 
+import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.Token;
+import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
@@ -35,6 +41,9 @@ import com.founder.fix.fixflow.test.Deployment;
  */
 public class HistoryServiceTest extends AbstractFixFlowTestCase {
 
+	/**
+	 * 测试根据流程实例ID归档
+	 */
 	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/task/TaskServiceNewTest.bpmn"})
 	public void testArchiveByProcessInstanceId(){
 		//创建一个通用命令
@@ -55,13 +64,14 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		//验证是否成功启动
 		assertNotNull(processInstanceId);
 		//测试归档未结束的流程实例
-		try{
-			historyService.archiveByProcessInstanceId(processInstanceId);
-			fail();
-		}catch(Exception ex){
-			//归档未结束流程实例时，抛出fixFlowException异常
-			assertTrue(ex instanceof FixFlowException);
-		}
+		historyService.archiveByProcessInstanceId(processInstanceId);
+		
+		//创建流程实例查询
+		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询刚才启动的流程
+		List<ProcessInstance> processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//验证运行表已经不存在这条流程
+		assertEquals(1, processInstances.size());
 		// 创建任务查询
 		TaskQuery taskQuery = taskService.createTaskQuery();
 		// 查找 1200119390 的这个流程实例的当前独占任务
@@ -78,13 +88,240 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		expandTaskCommandGeneral.setTaskId(taskInstance.getId());
 		//执行通用按钮
 		taskService.expandTaskComplete(expandTaskCommandGeneral, null);
+		
+		
 		//将上面结束的流程进行归档
 		historyService.archiveByProcessInstanceId(processInstanceId);
+		
+		//创建流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询刚才启动的流程
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//验证运行表已经不存在这条流程
+		assertEquals(0, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().list();
+		//验证运行表已经不存在这条流程
+		assertEquals(1, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").run().list();
+		//验证运行表已经不存在这条流程
+		assertEquals(0, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").run().his().list();
+		//验证运行表已经不存在这条流程
+		assertEquals(1, processInstances.size());
+		
+		//重置任务查询
+		taskQuery = taskService.createTaskQuery();
+		//查询刚才流程的任务
+		taskInstances = taskQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//验证任务已经不存在
+		assertEquals(0, taskInstances.size());
+		
+		//重置任务查询
+		taskQuery = taskService.createTaskQuery();
+		//查询归档表中的对应任务
+		taskInstances = taskQuery.processDefinitionKey("TaskServiceNewTest").his().list();
+		//验证归档表中可以到的任务个数不为0
+		assertEquals(4, taskInstances.size());
+		
+		//创建令牌查询
+		TokenQuery tokenQuery = runtimeService.createTokenQuery();
+		//查询run表的对应令牌
+		List<Token> tokens = tokenQuery.processInstanceId(processInstanceId).list();
+		//验证run表中令牌已经不存在
+		assertEquals(0, tokens.size());
+		
+		//重置令牌查询
+		tokenQuery = runtimeService.createTokenQuery();
+		//查his表中对应令牌
+		tokens = tokenQuery.processInstanceId(processInstanceId).his().list();
+		//验证令牌存在
+		assertEquals(1, tokens.size());
+		
+	}
+	
+	/**
+	 * 测试根据流程定义KEY归档
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/task/TaskServiceNewTest.bpmn"})
+	public void testArchiveByProcessDefinitionKey(){
+		//创建一个通用命令
+		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+		//设置流程名
+		expandTaskCommand.setProcessDefinitionKey("TaskServiceNewTest");
+		//设置流程的业务关联键
+		expandTaskCommand.setBusinessKey("BK_testStartProcessInstanceByKey");
+		//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+		expandTaskCommand.setCommandType("startandsubmit");
+		//设置提交人
+		expandTaskCommand.setInitiator("1200119390");
+		//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+		expandTaskCommand.setUserCommandId("HandleCommand_2");
+		//执行这个启动并提交的命令，返回启动的流程实例
+		ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+		String processInstanceId = processInstance.getId();
+		//验证是否成功启动
+		assertNotNull(processInstanceId);
+		//测试归档未结束的流程实例
+		historyService.archiveByProcessInstanceId(processInstanceId);
+		
 		//创建流程实例查询
 		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		//查询刚才启动的流程
 		List<ProcessInstance> processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//验证运行表还存在这条流程，说明未结束的流程是不会被归档的
+		assertEquals(1, processInstances.size());
+				
+		// 创建任务查询
+		TaskQuery taskQuery = taskService.createTaskQuery();
+		// 查找 1200119390 的这个流程实例的当前独占任务
+		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+		// 获取一条任务
+		TaskInstance taskInstance = taskInstances.get(0);
+		//创建通用命令
+		ExpandTaskCommand expandTaskCommandGeneral=new ExpandTaskCommand();
+		//设置命令为领取任务
+		expandTaskCommandGeneral.setCommandType("general");
+		//设置命令的ID，需和节点上配置的按钮编号对应，会执行其中脚本
+		expandTaskCommandGeneral.setUserCommandId("HandleCommand_2");
+		//设置命令的处理任务号
+		expandTaskCommandGeneral.setTaskId(taskInstance.getId());
+		//执行通用按钮
+		taskService.expandTaskComplete(expandTaskCommandGeneral, null);
+		
+		//将上面结束的流程进行归档
+		historyService.archiveByProcessDefinitionKey("TaskServiceNewTest");
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().list();
+		//验证运行表已经不存在这条流程
+		assertEquals(1, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").run().list();
 		//验证运行表已经不存在这条流程
 		assertEquals(0, processInstances.size());
+	}
+	
+	/**
+	 * 测试根据流程结束时间段归档
+	 * @throws InterruptedException 
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/task/TaskServiceNewTest.bpmn"})
+	public void testArchiveBetweenTime() throws InterruptedException{
+		
+		Date begin = null;
+		Date end = null;
+		Date middle = null;
+		for(int i = 0; i<5;i++){
+			//创建一个通用命令
+			ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+			//设置流程名
+			expandTaskCommand.setProcessDefinitionKey("TaskServiceNewTest");
+			//设置流程的业务关联键
+			expandTaskCommand.setBusinessKey("BK_testStartProcessInstanceByKey");
+			//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+			expandTaskCommand.setCommandType("startandsubmit");
+			//设置提交人
+			expandTaskCommand.setInitiator("1200119390");
+			//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+			expandTaskCommand.setUserCommandId("HandleCommand_2");
+			//执行这个启动并提交的命令，返回启动的流程实例
+			ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+			String processInstanceId = processInstance.getId();
+			//验证是否成功启动
+			assertNotNull(processInstanceId);
+			
+			// 创建任务查询
+			TaskQuery taskQuery = taskService.createTaskQuery();
+			// 查找 1200119390 的这个流程实例的当前独占任务
+			List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+			// 获取一条任务
+			TaskInstance taskInstance = taskInstances.get(0);
+			//创建通用命令
+			ExpandTaskCommand expandTaskCommandGeneral=new ExpandTaskCommand();
+			//设置命令为领取任务
+			expandTaskCommandGeneral.setCommandType("general");
+			//设置命令的ID，需和节点上配置的按钮编号对应，会执行其中脚本
+			expandTaskCommandGeneral.setUserCommandId("HandleCommand_2");
+			//设置命令的处理任务号
+			expandTaskCommandGeneral.setTaskId(taskInstance.getId());
+			//执行通用按钮
+			taskService.expandTaskComplete(expandTaskCommandGeneral, null);
+			
+			if(i == 1){
+				ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+				processInstance = processInstanceQuery.processInstanceId(processInstanceId).singleResult();
+				begin = processInstance.getEndTime();
+			}
+			
+			if(i == 3){
+				ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+				processInstance = processInstanceQuery.processInstanceId(processInstanceId).singleResult();
+				middle = processInstance.getEndTime();
+			}
+			
+			if(i == 4){
+				ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+				processInstance = processInstanceQuery.processInstanceId(processInstanceId).singleResult();
+				end = processInstance.getEndTime();
+			}
+			Thread.sleep(1000);
+		}
+		//将1和2归档
+		historyService.archiveBetweenTime(null, begin);
+		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		List<ProcessInstance> processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//run表剩3个
+		assertEquals(3, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().list();
+		//his表剩2个
+		assertEquals(2, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().run().list();
+		//run和his表共3个
+		assertEquals(5, processInstances.size());
+		
+		//将大于5归档
+		historyService.archiveBetweenTime(end, null);
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//run表剩2个
+		assertEquals(2, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().list();
+		//his表剩3个
+		assertEquals(3, processInstances.size());
+		
+		//将3、4、5归档
+		historyService.archiveBetweenTime(middle, end);
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
+		//run表剩1个
+		assertEquals(1, processInstances.size());
+		
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().list();
+		//his表剩4个
+		assertEquals(4, processInstances.size());
+	}
+	
+	/**
+	 * 测试归档已结束的流程
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/task/TaskServiceNewTest.bpmn"})
+	public void testArchiveEnd(){
+		
 	}
 }

@@ -1,5 +1,5 @@
 /**
-】 * Copyright 1996-2013 Founder International Co.,Ltd.
+ * Copyright 1996-2013 Founder International Co.,Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -366,6 +366,18 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	 * @return
 	 */
 	TaskQuery nodeId(String nodeId);
+	
+	/**
+	 * 查询归档数据
+	 * @return
+	 */
+	TaskQuery his();
+	
+	/**
+	 * 查询运行数据
+	 * @return
+	 */
+	TaskQuery run();
 	// ordering ////////////////////////////////////////////////////////////
 
 	/**

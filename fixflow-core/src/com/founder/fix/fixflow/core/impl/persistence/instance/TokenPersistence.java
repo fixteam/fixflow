@@ -30,6 +30,11 @@ import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
 import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 
+/**
+ * 流程令牌信息持久化
+ * @author kenshin
+ *
+ */
 public class TokenPersistence {
 	protected Connection connection;
 	protected SqlCommand sqlCommand;
@@ -39,84 +44,74 @@ public class TokenPersistence {
 		sqlCommand = new SqlCommand(connection);
 	}
 	
-	
-	
+	/**
+	 * 根据查询对象生成查询语句
+	 * @param sqlString sql语句
+	 * @param tokenQuery 查询对象
+	 * @param page 页数信息
+	 * @param objectParamWhere 生成where参数
+	 * @return
+	 */
 	private String selectTokenByQueryCriteriaSql(String sqlString,TokenQueryImpl tokenQuery, Page page,List<Object> objectParamWhere){
-		sqlString = sqlString+" FROM "+TokenObjKey.TokenTableName()+" ";
+		sqlString = sqlString+" FROM "+TokenObjKey.getTableName(tokenQuery.getQueryLocation())+" ";
 		sqlString = sqlString + " WHERE 1=1";
 		if (tokenQuery.getTokenId() != null) {
 			sqlString = sqlString + " and TOKEN_ID=? ";
 			objectParamWhere.add(tokenQuery.getTokenId());
 		}
-		
 		if (tokenQuery.getProcessInstanceId() != null) {
 			sqlString = sqlString + " and PROCESSINSTANCE_ID=? ";
 			objectParamWhere.add(tokenQuery.getProcessInstanceId());
 		}
-		
 		if (tokenQuery.getEnd() != null) {
 			sqlString = sqlString + " and END_TIME "+tokenQuery.getEnd() ;
 		}
-		
-
-		
-
-
-		
-		
 		return sqlString;
 	}
 	
-	
+	/**
+	 * 查询令牌实体
+	 * @param tokenQuery 令牌查询对象
+	 * @param page 页数信息
+	 * @return
+	 */
 	public List<TokenEntity> selectTokenByQueryCriteria(TokenQueryImpl tokenQuery, Page page) {
-
 		String sqlString="select "+Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy")+" * ";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		sqlString=selectTokenByQueryCriteriaSql(sqlString,tokenQuery,page,objectParamWhere);
-		
-		
 		if (tokenQuery.getOrderBy() != null) {
-
 			sqlString = sqlString + " order by "+tokenQuery.getOrderBy().toString();
 		}
-		
-		if(page!=null)
-		{
+		if(page!=null){
 			Pagination pagination=Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*");
 		}
-	
-		
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
-
 		List<TokenEntity> tokenPersistenceToList = new ArrayList<TokenEntity>();
-
 		for (Map<String, Object> dataMap : dataObj) {
-			
 			TokenEntity tokenPersistenceTo=new TokenEntity(dataMap);
-
 			tokenPersistenceToList.add(tokenPersistenceTo);
 		}
-		
 		return tokenPersistenceToList;
-		//select distinct T.* from
 	}
 
+	/**
+	 * 根据查询对象查询结果个数
+	 * @param tokenQuery
+	 * @return
+	 */
 	public long selectTokenCountByQueryCriteria(TokenQueryImpl tokenQuery) {
-		// select count(distinct T.ID_)
 		String sqlString="select count(*) ";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		sqlString=selectTokenByQueryCriteriaSql(sqlString,tokenQuery,null,objectParamWhere);
 		Object returnObj=sqlCommand.queryForValue(sqlString, objectParamWhere);
 		return Integer.parseInt(returnObj.toString());
 	}
-
 	
-	
-	
-	
-	
-	
+	/**
+	 * 根据流程实例ID删除令牌信息
+	 * @param processInstanceId 流程实例ID
+	 */
 	public void deleteTokenByProcessInstanceId(String processInstanceId){
 		
 		Object[] objectParamWhere = { processInstanceId };

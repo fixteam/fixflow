@@ -30,6 +30,8 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskQuery;
@@ -96,14 +98,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	protected boolean isContainsSubProcess=false;
 
-	
-
-	
-
-	
-
-	
-
+	protected QueryLocation queryLocation = null;
 	
 	protected List<TaskInstanceType> taskTypeList=new ArrayList<TaskInstanceType>();
 
@@ -127,7 +122,23 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return this;
 	}
 	
+	public TaskQuery his() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.HIS;
+		}
+		return this;
+	}
 	
+	public TaskQuery run() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.RUN;
+		}
+		return this;
+	}
 	
 	public TaskQueryImpl callActivityInstanceId(String callActivityInstanceId) {
 		if (callActivityInstanceId == null) {
@@ -718,6 +729,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public boolean isProcessInstanceVariableValueIsLike() {
 		return processInstanceVariableValueIsLike;
+	}
+
+	public QueryLocation getQueryLocation() {
+		return queryLocation;
 	}
 
 }

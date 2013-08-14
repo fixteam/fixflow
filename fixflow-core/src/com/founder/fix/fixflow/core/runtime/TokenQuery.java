@@ -21,23 +21,54 @@ import com.founder.fix.fixflow.core.query.Query;
 
 public interface TokenQuery extends Query<TokenQuery, Token>{
 	
+	/**
+	 * 根据流程实例ID查询
+	 * @param processInstanceId
+	 * @return
+	 */
 	TokenQuery processInstanceId(String processInstanceId);
 	
+	/**
+	 * 根据令牌ID查询
+	 * @param tokenId
+	 * @return
+	 */
 	TokenQuery tokenId(String tokenId);
 	
+	/**
+	 * 查询已结束的令牌
+	 * @return
+	 */
 	TokenQuery tokenIsEnd();
 	
+	/**
+	 * 查询未结束的令牌
+	 * @return
+	 */
 	TokenQuery tokenNotEnd();
 	
+	/**
+	 * 查询历史数据
+	 * @return
+	 */
+	TokenQuery his();
 	
+	/**
+	 * 查询运行数据
+	 * @return
+	 */
+	TokenQuery run();
 	
-	
-	
-	//排序
-	
-	
+	/**
+	 * 根据流程实例ID排序
+	 * @return
+	 */
 	TokenQuery orderByProcessInstanceId();
 
+	/**
+	 * 根据令牌ID排序
+	 * @return
+	 */
 	TokenQuery orderByTokenId();
 
 

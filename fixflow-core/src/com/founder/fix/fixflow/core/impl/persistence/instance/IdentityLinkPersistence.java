@@ -45,11 +45,9 @@ public class IdentityLinkPersistence {
 	
 	
 	
-	private String selectIdentityLinkByQueryCriteriaSql(String sqlString,IdentityLinkQueryImpl identityLinkQuery, Page page,List<Object> objectParamWhere)
-	{
-		sqlString = sqlString+" FROM "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+"  ";
-
-
+	private String selectIdentityLinkByQueryCriteriaSql(String sqlString,IdentityLinkQueryImpl identityLinkQuery, Page page,List<Object> objectParamWhere){
+		
+		sqlString = sqlString+" FROM "+TaskIdentityLinkObjKey.getTableName(identityLinkQuery.getQueryLocation())+"  ";
 
 		sqlString = sqlString + " WHERE 1=1";
 
@@ -85,13 +83,6 @@ public class IdentityLinkPersistence {
 			sqlString = sqlString + " and TASKINSTANCE_ID=? ";
 			objectParamWhere.add(identityLinkQuery.getTaskId());
 		}
-		
-
-		
-
-
-		
-		
 		return sqlString;
 	}
 	

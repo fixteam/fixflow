@@ -18,11 +18,28 @@
 package com.founder.fix.fixflow.core.objkey;
 
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 
 public class TaskInstanceObjKey {
 	
+	/**
+	 * 查询类型
+	 * @param queryLocation查询类型
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  TaskInstanceHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+TaskInstanceTableName()+" union all select * from "+TaskInstanceHisTableName()+")";
+		}else{
+			tableName = TaskInstanceTableName();
+		}
+		return tableName;
+	}
 	/**
 	 * 任务实例表名
 	 * @return
@@ -40,7 +57,7 @@ public class TaskInstanceObjKey {
 	 * @return
 	 */
 	public static String TaskInstanceHisTableName(){
-		return "FIXFLOW_HIS_TAKSINSTANECE";
+		return "FIXFLOW_HIS_TASKINSTANCE";
 	}
 	
 	
