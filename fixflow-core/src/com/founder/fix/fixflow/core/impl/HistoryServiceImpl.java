@@ -17,17 +17,27 @@
  */
 package com.founder.fix.fixflow.core.impl;
 
+import java.util.Date;
+
 import com.founder.fix.fixflow.core.HistoryService;
-import com.founder.fix.fixflow.core.impl.cmd.ArchiveByProcessInstanceIdCmd;
+import com.founder.fix.fixflow.core.impl.cmd.ArchiveCmd;
 
 public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
 	public boolean archiveByProcessInstanceId(String processinstanceId) {
-		return commandExecutor.execute(new ArchiveByProcessInstanceIdCmd(processinstanceId));
+		return commandExecutor.execute(new ArchiveCmd(processinstanceId, null, null, null, false));
 	}
 	
 	public boolean archiveByProcessDefinitionKey(String processDefinitionKey) {
-		return false;
+		return commandExecutor.execute(new ArchiveCmd(null, processDefinitionKey, null, null, false));
+	}
+	
+	public boolean archiveBetweenTime(Date begin, Date end) {
+		return commandExecutor.execute(new ArchiveCmd(null, null, begin, end, false));
+	}
+	
+	public boolean archiveEnd() {
+		return commandExecutor.execute(new ArchiveCmd(null, null, null, null, true));
 	}
 
 }

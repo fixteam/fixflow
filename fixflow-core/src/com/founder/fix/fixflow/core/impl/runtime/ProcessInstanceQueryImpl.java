@@ -30,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery {
@@ -279,6 +280,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	
 	protected Date startTimeAfter;
 	
+	protected QueryLocation queryLocation = null;
 
 	public ProcessInstanceQuery initiatorLike(String initiatorLike) {
 		this.initiatorLike=initiatorLike;
@@ -309,8 +311,25 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.startTimeAfter=startTimeAfter;
 		return this;
 	}
-
 	
+	public ProcessInstanceQuery his() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.HIS;
+		}
+		return this;
+	}
+	
+	public ProcessInstanceQuery run() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.RUN;
+		}
+		return this;
+	}
+
 	public String getInitiatorLike() {
 		return initiatorLike;
 	}
@@ -339,6 +358,9 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return isPigeonhole;
 	}
 
+	public QueryLocation getQueryLocation() {
+		return queryLocation;
+	}
 
 	public String getIsEnd() {
 		return isEnd;

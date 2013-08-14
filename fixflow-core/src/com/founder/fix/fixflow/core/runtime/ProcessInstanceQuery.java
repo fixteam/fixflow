@@ -185,6 +185,18 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	ProcessInstanceQuery subProcessInstanceId(String subProcessInstanceId);
 	
 	/**
+	 * 查询归档数据
+	 * @return
+	 */
+	ProcessInstanceQuery his();
+	
+	/**
+	 * 查询运行数据
+	 * @return
+	 */
+	ProcessInstanceQuery run();
+	
+	/**
 	 * 根据流程实例编号排序
 	 * @return
 	 */
@@ -213,5 +225,6 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	 * @return
 	 */
 	ProcessInstanceQuery orderByUpdateTime();
+	
 
 }

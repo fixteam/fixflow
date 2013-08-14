@@ -17,13 +17,31 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 
 public class ProcessInstanceObjKey {
 
 	/**
-	 * 获取流程实例表明
+	 * 查询类型
+	 * @param tableType 0或null查运行表，1查历史表 2查历史和run表
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  ProcessInstanceHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+ProcessInstanceTableName()+" union all select * from "+ProcessInstanceHisTableName()+")";
+		}else{
+			tableName = ProcessInstanceTableName();
+		}
+		return tableName;
+	}
+	
+	/**
+	 * 获取流程实例表名
 	 * @return
 	 */
 	public static String ProcessInstanceTableName(){

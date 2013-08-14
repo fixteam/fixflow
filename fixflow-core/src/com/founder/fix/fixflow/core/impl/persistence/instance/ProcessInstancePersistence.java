@@ -413,7 +413,7 @@ public class ProcessInstancePersistence {
 	 * @return
 	 */
 	private String selectProcessInstanceByQueryCriteriaSql(String sqlString, ProcessInstanceQueryImpl processInstanceQuery, Page page, List<Object> objectParamWhere) {
-		sqlString = sqlString + " FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" E ";
+		sqlString = sqlString + " FROM "+ProcessInstanceObjKey.getTableName(processInstanceQuery.getQueryLocation())+" E ";
 		//自定义扩展查询
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
 			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
@@ -519,11 +519,11 @@ public class ProcessInstancePersistence {
 			objectParamWhere.add(processInstanceQuery.getStartTimeAfter());
 		}
 		if(processInstanceQuery.getTaskParticipants() !=null ){
-			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
+			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+TaskInstanceObjKey.getTableName(processInstanceQuery.getQueryLocation())+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
 			objectParamWhere.add(processInstanceQuery.getTaskParticipants());
 		}
 		if(processInstanceQuery.getProcessInstanceVariableValue()!=null&&!processInstanceQuery.getProcessInstanceVariableValue().equals("")){
-			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+
+			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.getTableName(processInstanceQuery.getQueryLocation())+
 					" WHERE PROCESSINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
 			if(processInstanceQuery.getProcessInstanceVariableKey()!=null&&!processInstanceQuery.getProcessInstanceVariableKey().equals("")){
 				sqlString = sqlString +"AND VARIABLE_KEY = ? ";
@@ -536,11 +536,6 @@ public class ProcessInstancePersistence {
 				objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableValue());
 			}
 		}
-		
-		
-		
-		
-		
 		return sqlString;
 	}
 	

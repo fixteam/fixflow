@@ -72,4 +72,16 @@ public interface IdentityLinkQuery extends Query<IdentityLinkQuery, IdentityLink
 	 * @return
 	 */
 	IdentityLinkQuery type(IdentityLinkType type);
+	
+	/**
+	 * 查询历史数据
+	 * @return
+	 */
+	IdentityLinkQuery his();
+	
+	/**
+	 * 查询运行数据
+	 * @return
+	 */
+	IdentityLinkQuery run();
 }

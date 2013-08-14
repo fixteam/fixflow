@@ -17,6 +17,8 @@
  */
 package com.founder.fix.fixflow.core;
 
+import java.util.Date;
+
 public interface HistoryService extends ProcessService{
 
 	/**
@@ -32,4 +34,19 @@ public interface HistoryService extends ProcessService{
 	 * @return
 	 */
 	public boolean archiveByProcessDefinitionKey(String processDefinitionKey);
+	
+	/**
+	 * 归档两个时间段之间的流程实例
+	 * @param begin 开始时间，可为null
+	 * @param end 结束时间 可为null
+	 * @return
+	 */
+	public boolean archiveBetweenTime(Date begin,Date end);
+	
+	/**
+	 * 归档已经结束的所有流程
+	 * @return
+	 */
+	public boolean archiveEnd();
+	
 }

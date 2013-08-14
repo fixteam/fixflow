@@ -24,6 +24,8 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
 import com.founder.fix.fixflow.core.task.IncludeExclusion;
@@ -49,7 +51,7 @@ public class IdentityLinkQueryImpl extends AbstractQuery<IdentityLinkQuery, Iden
 	protected String groupType;
 	
 	
-	
+	protected QueryLocation queryLocation = null;
 	
 	
 	protected IncludeExclusion includeExclusion;
@@ -108,7 +110,24 @@ public class IdentityLinkQueryImpl extends AbstractQuery<IdentityLinkQuery, Iden
 		this.type=type;
 		return this;
 	}
-
+	
+	public IdentityLinkQuery his() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.HIS;
+		}
+		return this;
+	}
+	
+	public IdentityLinkQuery run() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.RUN;
+		}
+		return this;
+	}
 
 	public long executeCount(CommandContext commandContext) {
 		checkQueryOk();
@@ -123,10 +142,6 @@ public class IdentityLinkQueryImpl extends AbstractQuery<IdentityLinkQuery, Iden
 		// ensureVariablesInitialized();
 		return (List)commandContext.getIdentityLinkManager().findIdentityLinkByQueryCriteria(this, page);
 	}
-	
-	
-	
-	
 	
 	public String getId() {
 		return id;
@@ -160,5 +175,8 @@ public class IdentityLinkQueryImpl extends AbstractQuery<IdentityLinkQuery, Iden
 		return taskId;
 	}
 
+	public QueryLocation getQueryLocation() {
+		return queryLocation;
+	}
 
 }

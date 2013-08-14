@@ -17,8 +17,26 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
+
 public class TaskIdentityLinkObjKey {
 	
+	/**
+	 * 查询类型
+	 * @param queryLocation查询类型
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  TaskIdentityLinkHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+TaskIdentityLinkTableName()+" union all select * from "+TaskIdentityLinkHisTableName()+")";
+		}else{
+			tableName = TaskIdentityLinkTableName();
+		}
+		return tableName;
+	}
 	/**
 	 * 任务候选人表名
 	 * @return

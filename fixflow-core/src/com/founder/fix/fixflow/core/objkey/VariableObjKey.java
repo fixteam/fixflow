@@ -17,10 +17,27 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
+
 
 public class VariableObjKey {
 
-	
+	/**
+	 * 查询类型
+	 * @param tableType 0或null查运行表，1查历史表 2查历史和run表
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  VariableHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+VariableTableName()+" union all select * from "+VariableHisTableName()+")";
+		}else{
+			tableName = VariableTableName();
+		}
+		return tableName;
+	}
 	/**
 	 * 流程变量表名
 	 * @return
