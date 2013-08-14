@@ -14,7 +14,6 @@ a{text-decoration: none;}
 
 <body>
 <img src="FlowCenter?action=getFlowGraph&processDefinitionKey=${result.processDefinitionKey}"/>
-
 <c:if test="${result.dataList!=null}">
 <table>
 	<tr>

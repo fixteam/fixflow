@@ -9,20 +9,17 @@
 <title>流程查询</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link rel="stylesheet" type="text/css" href="css/global.css">
+<link rel="stylesheet" type="text/css" href="css/index.css">
 <style>
 a{text-decoration: none;}
 </style>
 </head>
 
 <body>
-<div>
-  <a id="b1" target="_self" href="FlowCenter?action=getMyProcess">发起流程</a>
-  <a id="b2" target="_self" href="FlowCenter?action=getMyTask&rowNum=15">待办任务</a>
-  <a id="b3" target="_self" href="FlowCenter?action=getInitorTask&rowNum=15">流程查询</a>
-  <a id="b4" target="_self" href="login.jsp">归档任务</a>
-  <a id="b5" target="_self" href="FlowCenter?action=getUserInfo">修改我的信息</a>
-  <a id="b6" target="_self" href="login.jsp">返回登陆</a>
-</div>
+<div class="main-panel">
+<jsp:include page="top.jsp" flush="true"/>
 <div style="margin-top:10px;">
 <!-- 左 -->
 	<div style="float:left;width:10%;">
@@ -83,6 +80,7 @@ a{text-decoration: none;}
 	    </div>
 	  </div>
 	</div>
+</div>
 </div>
 <!-- 隐藏参数部分 -->
 <input type="hidden" name="userId" value="<c:out value="${result.userId}"/>">

@@ -35,6 +35,8 @@ import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 public interface FlowCenterService {
 	public static final String LOGIN_USER_ID = "LOGIN_USER_ID";
 	
+	public static final String LOGIN_USER_NAME = "LOGIN_USER_NAME";
+	
 	public void setConnection(Connection connection);
 	
 	public Connection getConnection();

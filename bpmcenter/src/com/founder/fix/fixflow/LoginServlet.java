@@ -82,14 +82,15 @@ public class LoginServlet extends HttpServlet {
 			list.add(password);
 			
 			StringBuffer sb = new StringBuffer();
-			sb.append("select USERID from AU_USERINFO where LOGINID=? and PASSWORD=?");
+			sb.append("select USERID,USERNAME from AU_USERINFO where LOGINID=? and PASSWORD=?");
 			Connection connection = dbcf.createConnection();
 			SqlCommand sqlcommand = new SqlCommand(connection);
 			List<Map<String, Object>> list2 = sqlcommand.queryForList(sb.toString(),list);
 			if(list2!=null && list2.size()>0){
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
+				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, list2.get(0).get("USERNAME"));
 				request.setAttribute("action", "getMyTask");
-				response.sendRedirect("FlowCenter?action=getMyProcess");
+				response.sendRedirect("FlowCenter?action=getMyTask");
 			}else{
 				response.sendRedirect("login.jsp");
 			}

@@ -126,6 +126,7 @@ public class FlowCenter extends HttpServlet {
 			String userId = StringUtil.getString(request.getSession()
 					.getAttribute(FlowCenterService.LOGIN_USER_ID));
 			filter.put("userId", userId);
+			request.setAttribute("nowAction", action);
 			if (action.equals("getMyProcess")) {
 				List<Map<String, String>> result = getFlowCenter()
 						.queryStartProcess(userId);
