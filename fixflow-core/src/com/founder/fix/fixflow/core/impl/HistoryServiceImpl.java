@@ -17,7 +17,9 @@
  */
 package com.founder.fix.fixflow.core.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.impl.cmd.ArchiveCmd;
@@ -25,7 +27,13 @@ import com.founder.fix.fixflow.core.impl.cmd.ArchiveCmd;
 public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
 	public boolean archiveByProcessInstanceId(String processinstanceId) {
-		return commandExecutor.execute(new ArchiveCmd(processinstanceId, null, null, null, false));
+		List<String> processInstanceIds = new ArrayList<String>();
+		processInstanceIds.add(processinstanceId);
+		return commandExecutor.execute(new ArchiveCmd(processInstanceIds, null, null, null, false));
+	}
+	
+	public boolean archiveByProcessInstanceIds(List<String> processInstanceIds){
+		return commandExecutor.execute(new ArchiveCmd(processInstanceIds, null, null, null, false));
 	}
 	
 	public boolean archiveByProcessDefinitionKey(String processDefinitionKey) {
@@ -36,7 +44,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 		return commandExecutor.execute(new ArchiveCmd(null, null, begin, end, false));
 	}
 	
-	public boolean archiveEnd() {
+	public boolean archiveAll() {
 		return commandExecutor.execute(new ArchiveCmd(null, null, null, null, true));
 	}
 

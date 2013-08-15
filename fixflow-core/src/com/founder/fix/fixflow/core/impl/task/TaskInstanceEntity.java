@@ -149,12 +149,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	
 	protected String commandId;
 	
+	/**
+	 * 归档时间
+	 */
+	protected Date archiveTime;
 	
-	
-
-	
-
-
 	/**
 	 * 代理处理者
 	 */
@@ -341,6 +340,14 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	public void setTaskDefinition(TaskDefinition taskDefinition) {
 		this.taskDefinition = taskDefinition;
+	}
+	
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
 	}
 
 	public void setToken(TokenEntity token) {
@@ -1312,25 +1319,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setPendingTaskId(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
+			if (dataKey.equals(TaskInstanceObjKey.ArchiveTime().DataBaseKey())) {
+				this.setArchiveTime(StringUtil.getDate(entityMap.get(dataKey)));
+				continue;
+			}
 			
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
-			/*
-			 * if (dataKey.equals("PI_INITIATOR")) {
-			 * this.addExtensionField("PI_INITIATOR",
-			 * StringUtil.getString(entityMap.get(dataKey))); }
-			 * 
-			 * if (dataKey.equals("PI_START_AUTHOR")) {
-			 * this.addExtensionField("PI_START_AUTHOR",
-			 * StringUtil.getString(entityMap.get(dataKey))); }
-			 * 
-			 * if (dataKey.equals("PI_START_TIME")) {
-			 * this.addExtensionField("PI_START_TIME",
-			 * StringUtil.getDate(entityMap.get(dataKey))); }
-			 * 
-			 * if (dataKey.equals("PI_SUBJECT")) {
-			 * this.addExtensionField("PI_SUBJECT",
-			 * StringUtil.getString(entityMap.get(dataKey))); }
-			 */
 		}
 	}
 
@@ -1412,7 +1406,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		
 		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
 		objectParam.put(TaskInstanceObjKey.PendingTaskId().DataBaseKey(), this.pendingTaskId);
-		
+		objectParam.put(TaskInstanceObjKey.ArchiveTime().DataBaseKey(), this.archiveTime);
 		
 		for (String key : persistenceExtensionFields.keySet()) {
 			objectParam.put(key, persistenceExtensionFields.get(key));	
@@ -1468,7 +1462,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		persistentState.put(TaskInstanceObjKey.Admin().FullKey(), this.admin);
 		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
 		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
-		
+		persistentState.put(TaskInstanceObjKey.ArchiveTime().FullKey(), this.pendingTaskId);
 		
 		for (String key : extensionFields.keySet()) {
 			persistentState.put(key, extensionFields.get(key));	

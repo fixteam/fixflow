@@ -88,7 +88,6 @@ public class TaskInstanceObjKey {
 	
 	public class FlowKeyTaskInstanceArchiveTime implements ObjKeyInterface{
 
-
 		public String EntityKey() {
 			// TODO Auto-generated method stub
 			return "archive_time";

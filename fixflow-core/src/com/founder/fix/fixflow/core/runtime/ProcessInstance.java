@@ -145,6 +145,13 @@ public interface ProcessInstance extends PersistentObject, Serializable {
 	 * @return
 	 */
 	Date getUpdateTime();
+	
+	/**
+	 * 获取更新时间
+	 * 
+	 * @return
+	 */
+	Date getArchiveTime();
 
 	/**
 	 * 获取实例状态

@@ -93,15 +93,6 @@ public class VariablePersistence {
 			objectParamWhere.add(nodeId);
 		}
 
-		/*
-		 * sqlWhereQueryString = sqlWhereQueryString + " AND VARIABLE_KEY=?";
-		 * 
-		 * 
-		 * List<VariableFlowTypeEntity> variableFlowTypeEntities =
-		 * variableQueryEntity.getVariableFlowTypeEntities(); if
-		 * (variableFlowTypeEntities.size() == 0) { return; }
-		 */
-
 		if (variableNames != null) {
 			if (variableNames.size() > 0) {
 				sqlWhereQueryString = sqlWhereQueryString + " AND (";
