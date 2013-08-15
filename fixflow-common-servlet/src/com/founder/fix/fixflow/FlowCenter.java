@@ -142,12 +142,12 @@ public class FlowCenter extends HttpServlet {
 				rd = request.getRequestDispatcher("/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
-			} else if (action.equals("getInitorTask")) {
+			} else if (action.equals("getProcess")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/queryTask.jsp");
+				rd = request.getRequestDispatcher("/queryprocess.jsp");
 			} else if (action.equals("getParticipantsTask")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryTaskParticipants(filter);
