@@ -13,7 +13,7 @@ public class SqlServerPaginationImpl implements Pagination {
     		inFiled="A.*";
     	}
         StringBuffer sb = new StringBuffer(sql.length() + 20);
-        sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROW_NUMBER() OVER(order by tt_) as RN_ FROM ( select ts.*,'1' as tt_ from (");
+        sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROW_NUMBER() OVER(order by tt_ desc) as RN_ FROM ( select ts.*,ts.CREATE_TIME as tt_ from (");
         sb.append(sql);
         sb.append(" ) ts )A )b WHERE b.RN_ <=");
         sb.append(maxResults);
@@ -21,6 +21,7 @@ public class SqlServerPaginationImpl implements Pagination {
         if (firstResult >= 0) {
            sb.append(firstResult);
         } 
+//        sb.append("order by CREATE_TIME desc");
         return sb.toString();
 	}
 	
