@@ -726,18 +726,13 @@ public class ProcessInstancePersistence {
 			sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString();
 		}
 
-		if (page != null) {
-			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
-			sqlString = pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*");
-		}
 		
-		if (processInstanceQuery.getOrderBy() != null&&page != null) {
-			
-			
+		String orderByString="";
+		
+		if (processInstanceQuery.getOrderBy() != null && page != null) {
 			String orderBySql=processInstanceQuery.getOrderBy();
 			String orderBySqlFin="";
 			if(orderBySql.indexOf(",")>=0){
-				
 				String[] orderBySqlTemp=orderBySql.split(",");
 				for (String orderByObj : orderBySqlTemp) {
 					if(orderBySqlFin.equals("")){
@@ -746,16 +741,23 @@ public class ProcessInstancePersistence {
 					else{
 						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
 					}
-					
 				}
-				sqlString = sqlString + " order by " + orderBySqlFin;
+				orderByString = orderByString + " order by " + orderBySqlFin;
 				
 			}else{
-				sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
+				orderByString = orderByString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
 			}
+		}
+		
+		if (page != null) {
+			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
+			sqlString = pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
+		}
+		
+		if (processInstanceQuery.getOrderBy() != null&&page != null) {
 			
-			 
-			//sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
+			
+			sqlString=sqlString+orderByString;
 		}
 
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
@@ -858,7 +860,7 @@ public class ProcessInstancePersistence {
 		
 		//增加分页信息
 		String finalsql = "";
-		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*");
+		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*",null);
 
 		SqlCommand sqlCommand=new SqlCommand(Context.getDbConnection());
 		return sqlCommand.queryForList(finalsql,objectParamWhere);
@@ -933,7 +935,7 @@ public class ProcessInstancePersistence {
 		
 		//增加分页信息
 		String finalsql = "";
-		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*");
+		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*",null);
 
 		SqlCommand sqlCommand=new SqlCommand(Context.getDbConnection());
 		return sqlCommand.queryForList(finalsql,objectParamWhere);

@@ -108,10 +108,33 @@ public class IdentityLinkPersistence {
 			sqlString = sqlString + " order by "+identityLinkQuery.getOrderBy().toString();
 		}
 		
+		
+		String orderByString="";
+		
+		if (identityLinkQuery.getOrderBy() != null && page != null) {
+			String orderBySql=identityLinkQuery.getOrderBy();
+			String orderBySqlFin="";
+			if(orderBySql.indexOf(",")>=0){
+				String[] orderBySqlTemp=orderBySql.split(",");
+				for (String orderByObj : orderBySqlTemp) {
+					if(orderBySqlFin.equals("")){
+						orderBySqlFin=orderBySqlFin+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+					else{
+						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+				}
+				orderByString = orderByString + " order by " + orderBySqlFin;
+				
+			}else{
+				orderByString = orderByString + " order by " + identityLinkQuery.getOrderBy().toString().substring(2);
+			}
+		}
+		
 		if(page!=null)
 		{
 			Pagination pagination=Context.getProcessEngineConfiguration().getDbConfig().getPagination();
-			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*");
+			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
 		}
 	
 		

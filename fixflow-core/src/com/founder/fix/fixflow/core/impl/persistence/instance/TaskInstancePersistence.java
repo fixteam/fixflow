@@ -899,18 +899,13 @@ public class TaskInstancePersistence {
 
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString();
 		}
-
-		if (page != null) {
-			
-			selectTaskByQueryCriteriaSql = pagination.getPaginationSql(selectTaskByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(), "*");
-		}
-
+		
+		String orderByString="";
+		
 		if (taskQuery.getOrderBy() != null && page != null) {
-			//String sssString="T.END_TIME desc,T.CREATE_TIME desc";
 			String orderBySql=taskQuery.getOrderBy();
 			String orderBySqlFin="";
 			if(orderBySql.indexOf(",")>=0){
-				
 				String[] orderBySqlTemp=orderBySql.split(",");
 				for (String orderByObj : orderBySqlTemp) {
 					if(orderBySqlFin.equals("")){
@@ -919,13 +914,23 @@ public class TaskInstancePersistence {
 					else{
 						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
 					}
-					
 				}
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + orderBySqlFin;
+				orderByString = orderByString + " order by " + orderBySqlFin;
 				
 			}else{
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString().substring(2);
+				orderByString = orderByString + " order by " + taskQuery.getOrderBy().toString().substring(2);
 			}
+		}
+
+		if (page != null) {
+			
+			selectTaskByQueryCriteriaSql = pagination.getPaginationSql(selectTaskByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
+		}
+
+		if (taskQuery.getOrderBy() != null && page != null) {
+
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + orderByString;
+			
 			
 		}
 
