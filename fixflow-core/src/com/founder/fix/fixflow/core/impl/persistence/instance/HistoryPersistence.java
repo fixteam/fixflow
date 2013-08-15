@@ -127,14 +127,26 @@ public class HistoryPersistence {
 	 * @param whereObj
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public String getWhereSql(Map<String,Object> paraMap,List<Object> whereObj){
 		String whereSql = "select processinstance_id from " +ProcessInstanceObjKey.ProcessInstanceTableName() +" where 1=1 ";
 		//标志是否参数都不满足要求
 		boolean flag = false;
 		if(paraMap.containsKey("PROCESSINSTANCE_ID")){
-			whereSql += " and processinstance_id = ?";
-			whereObj.add(paraMap.get("PROCESSINSTANCE_ID").toString());
-			flag = true;
+			List<String> processInstanceIds = (List<String>)paraMap.get("PROCESSINSTANCE_ID");
+			if(processInstanceIds != null && processInstanceIds.size() > 0){
+				whereSql += " and processinstance_id in(";
+				for(int i = 0;i<processInstanceIds.size() ; i++){
+					if(i == 0){
+						whereSql += "? ";
+					}else{
+						whereSql += ",? ";
+					}
+					whereObj.add(processInstanceIds.get(i));
+				}
+				whereSql += ")";
+				flag = true;
+			}
 		}
 		if(paraMap.containsKey("PROCESSDEFINITION_KEY")){
 			whereSql += " and PROCESSDEFINITION_KEY = ?";

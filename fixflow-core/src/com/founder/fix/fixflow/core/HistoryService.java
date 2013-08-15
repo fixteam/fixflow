@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.core;
 
 import java.util.Date;
+import java.util.List;
 
 public interface HistoryService extends ProcessService{
 
@@ -27,6 +28,13 @@ public interface HistoryService extends ProcessService{
 	 * @return 
 	 */
 	public boolean archiveByProcessInstanceId(String processinstanceId);
+	
+	/**
+	 *根据流程实例号归档
+	 * @param processinstanceId
+	 * @return 
+	 */
+	public boolean archiveByProcessInstanceIds(List<String> processinstanceId);
 	
 	/**
 	 * 根据流程定义key归档
@@ -47,6 +55,6 @@ public interface HistoryService extends ProcessService{
 	 * 归档已经结束的所有流程
 	 * @return
 	 */
-	public boolean archiveEnd();
+	public boolean archiveAll();
 	
 }

@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.core.impl.cmd;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -11,13 +12,13 @@ import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 
 public class ArchiveCmd implements Command<Boolean> {
 
-	protected String  processInstanceId = null;
+	protected List<String>  processInstanceIds = null;
 	protected String processDefinitionKey = null;
 	protected boolean isAll = false;
 	protected Date begin;
 	protected Date end;
-	public ArchiveCmd(String processInstanceId,String processDefinitionKey,Date begin,Date end,boolean isAll) {
-		this.processInstanceId = processInstanceId;
+	public ArchiveCmd(List<String> processInstanceIds,String processDefinitionKey,Date begin,Date end,boolean isAll) {
+		this.processInstanceIds = processInstanceIds;
 		this.processDefinitionKey = processDefinitionKey;
 		this.begin = begin;
 		this.end = end;
@@ -30,8 +31,8 @@ public class ArchiveCmd implements Command<Boolean> {
 			paraMap.put("ALL", true);
 			return commandContext.getHistoryManager().archiveByProcessInstanceId(paraMap);
 		}
-		if(processInstanceId != null){
-			paraMap.put("PROCESSINSTANCE_ID", processInstanceId);
+		if(processInstanceIds != null){
+			paraMap.put("PROCESSINSTANCE_ID", processInstanceIds);
 			return commandContext.getHistoryManager().archiveByProcessInstanceId(paraMap);
 		}
 		if(processDefinitionKey != null){
