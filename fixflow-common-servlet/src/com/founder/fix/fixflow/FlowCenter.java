@@ -104,7 +104,7 @@ public class FlowCenter extends HttpServlet {
 					Object obj = request
 							.getParameter(StringUtil.getString(tmp));
 
-					if (request.getAttribute("ISGET") != null)
+//					if (request.getAttribute("ISGET") != null)
 						obj = new String(obj.toString().getBytes("ISO8859-1"),
 								"utf-8");
 

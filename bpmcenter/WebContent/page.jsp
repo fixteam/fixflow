@@ -40,7 +40,7 @@
 					.getPageCount()) {// 当页码为后5页时
 				sb.append(pagination.createHeader(2));
 				sb.append(pagination.createMiddle(0));
-				sb.append(pagination.createFooter());
+				sb.append(pagination.createFooter()); 
 			} else {
 				sb.append(pagination.createHeader(2));
 				sb.append(pagination.createMiddle(3));

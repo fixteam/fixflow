@@ -91,6 +91,11 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			String initor	   = StringUtil.getString(filter.get("initor"));
 			if(StringUtil.isNotEmpty(initor))
 				tq.initiatorLike(initor);
+			
+			String bizKey	   = StringUtil.getString(filter.get("bizKey"));
+			if(StringUtil.isNotEmpty(bizKey))
+				tq.businessKey(bizKey);
+			
 			Date dates = null;
 			Date datee = null;
 			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
@@ -102,16 +107,16 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
 			}
 			if(dates!=null)
-				tq.taskCreatedAfter(dates);
+				tq.taskCreatedAfter(datee);
 			
 			if(datee!=null)
-				tq.taskCreatedBefore(datee);
+				tq.taskCreatedBefore(dates);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =5;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -122,7 +127,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			if(filter.get("ended")==null)
 				tq.taskNotEnd();
 			
-			if(filter.get("agentUserId")!=null){
+			if(StringUtil.isNotEmpty(StringUtil.getString(filter.get("agentUserId")))){
 				tq.isAgent(true);
 				if(filter.get("agentType").equals("1")){
 					tq.taskAssignee(StringUtil.getString(filter.get("userId")));

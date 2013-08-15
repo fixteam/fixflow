@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -81,100 +81,108 @@ a{text-decoration: none;}
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
 
-<div style="margin-top:10px;">
+<div class="center-panel">
+<form id="subForm" method="post" action="FlowCenter">
 <!-- 左 -->
-	<div style="float:left;width:10%;">
-	  <div id="myTask">我的任务</div>
-	  <div>代理任务</div>
-	  <%
-	  Map<String,Object> result = (Map<String,Object>)request.getAttribute("result");
-	  List agentUsersList = (List)result.get("agentUsers");
-	  if(agentUsersList.size()!=0){ 
-	  %>
-	  <div>
-	    <ul>
-	    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-	      <li name="agentUsers">${agentUsers.name}</li>
-	    </c:forEach>
-	    </ul>
-	  </div>
-	  <%}else{%>
-	  <div><span style="color:gray;font-size:10px;">没有代理人</span></div>
-	  <%} %>
-	  <div>委托任务</div>
-	  <%
-	  List agentToUsersList = (List)result.get("agentToUsers");
-	  if(agentToUsersList.size()!=0){ 
-	  %>
-	  <div>
-	    <ul>
-	    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-	      <li name="agentToUsers">${agentToUsers.name}</li>
-	    </c:forEach>
-	    </ul>
-	  </div>
-	  <%}else{%>
-	  <div><span style="color:gray;font-size:10px;">没有委托人</span></div>
-	  <%} %>
-	</div>
-<!-- 右-->
-	<div style="float:right;width:89%;">
-	<form id="subForm" method="post" action="FlowCenter">
-	<input type="hidden" name="action" value="getMyTask"/> 
-<!-- 查 -->
-	  <div id="search">
-	  </div>
-	    任务主题：<input type="text" value="<c:out value="${result.title}"/>"/>
-	    流程变量：<input type="text"/>
-	        单据号：<input type="text"/><br/>
-	    到达时间：<input type="text" class="Wdate" onClick="WdatePicker()" value="<c:out value="${result.arrivalTimeS}"/>"/> 
-	    	—— <input type="text" class="Wdate" onClick="WdatePicker()" value="<c:out value="${result.arrivalTimeE}"/>"/>
-	        发起人：<input type="text" value="<c:out value="${result.initor}"/>"/>
-	  <div>
-<!-- 表 -->
-		<table style="width:100%;">
-		  <thead>
-		    <th>bizKey</th>
-		    <th>processDefinitionName</th>
-		    <th>processDefinitionKey</th>
-		    <th>startTime</th>
-		    <th>nodeName</th>
-		    <th>nodeId</th>
-		    <th>操作</th>
-		    <th>查看流程图</th>
-		  </thead>
-		  <tbody>
+	<div class="left">
+    	<div class="left-nav-box">
+        	<div class="left-nav"><a name="myTask" href="#">我的待办任务</a></div>
+            <div class="left-nav-orange-line">&nbsp;</div>
+            
+
+
+       	  <div class="left-nav m-top"><h1>代理人</h1></div>
+       	  	<c:if test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
+			    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
+			      <div class="left-nav-orange-line">&nbsp;</div>
+			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.id}" href="#"><img src="images/temp/user01.jpg" />${agentUsers.name}</a></div>
+			    </c:forEach>
+       	  	</c:if>
+
+       	  <div class="left-nav m-top"><h1>委托人</h1></div>
+       	  	<c:if test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
+			    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
+			      <div class="left-nav-orange-line">&nbsp;</div>
+			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.id}" href="#"><img src="images/temp/user01.jpg" />${agentToUsers.name}</a></div>
+			    </c:forEach>
+       	  	</c:if>
+        </div>
+        <div class="message">
+        	<div class="title"><a href="#"><em class="icon-message"></em>消息中心</a></div>
+        	<div class="message-content">
+            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
+             	<div class="msg"><img src="images/temp/user01.jpg" />曹操：煮酒论英雄！谁一起吃饭啊<div class="time">一小时前</div></div>
+            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
+            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
+            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
+       	</div>
+        </div> 
+    </div>
+    <div class="right">
+    <!-- 隐藏参数部分 -->
+		<input type="hidden" name="agentUserId" value="<c:out value="${result.agentUserId}"/>">
+		<input type="hidden" name="agentType" value="<c:out value="${result.agentType}"/>">
+    	<input type="hidden" name="action" value="getMyTask"/> 
+    	<div class="search">
+        	<table width="100%">
+              <tr>
+                <td class="title-r">任务主题：</td>
+                <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
+                <td class="title-r">流程变量：</td>
+                <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
+                <td class="title-r">单 据 号：</td>
+                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+              </tr>
+              <tr>
+                <td class="title-r">发 起 人：</td>
+                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+                <td class="title-r">到达时间：</td>
+                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}"/>
+                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}"/></td>
+                <td><input type="submit"/></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+        </div>
+        <div class="content">
+        	<table width="100%" class="fix-table">
+              <thead>
+                <th>&nbsp;</th>
+                <th width="70">发起人</th>
+                <th>任务</th>
+                <th width="300">单据号</th>
+                <th width="180">到达时间</th>
+                <th width="30">操作</th>
+                <th width="60">查看流程图</th>
+              </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
+		      <td><c:out value="${index.index+1}"/></td>
+		      <td>${dataList.PI_START_AUTHOR}</td>
+		      <td>${dataList.description}</td>
 		      <td>${dataList.bizKey}</td>
-		      <td>${dataList.processDefinitionName}</td>
-		      <td>${dataList.processDefinitionKey}</td>
-		      <td>${dataList.startTime}</td>
-		      <td>${dataList.nodeName}</td>
-		      <td>${dataList.nodeId}</td>
-		      <td><button name="doTask" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</button></td>
-		      <td><button name="flowGraph" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</button></td>
+		      <td><fmt:formatDate value="${dataList.createTime}" type="both"/></td>
+		      <td><a name="doTask" href="#" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</a></td>
+		      <td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</a></td>
+
 		    </tr>
 		    </c:forEach>
-		  </tbody>
-	    </table>
+            </table>
+
+        </div>
+    </div>
 <!-- 分页 -->	    
 	    <div id="page">
 	      <jsp:include page="page.jsp" flush="true"/>
 	    </div>
-	  </div>
-	  </form>
-	</div>
+
+	</form>
 </div>
 </div>
-<!-- 隐藏参数部分 -->
-<input type="hidden" name="userId" value="<c:out value="${result.userId}"/>">
-<input type="hidden" name="pageIndex" value="<c:out value="${result.pageIndex}"/>">
-<input type="hidden" name="rowNum" value="<c:out value="${result.rowNum}"/>">
-<input type="hidden" name="agentType" value="<c:out value="${result.agentType}"/>">
+
 </body>
 <script>
-/*
+/*  
  * "userId" 用户编号
  * "pdkey" 流程编号
  * "pageIndex" 第几页
@@ -197,25 +205,30 @@ a{text-decoration: none;}
 $(function(){
   var agentType = $("input[name=agentType]").val();
   var userId = $("input[name=userId]").val();
-  $("a[name=page]").click(function(){
-    var pageNo = $(this).html();
-    window.location.href = "FlowCenter?action=getMyTask&pageIndex="+pageNo+"&rowNum=15&agentType="+agentType+"&userId="+userId;
+  $("a[name=myTask]").click(function(){
+    $("#agentUserId").val();
+    $("#agentType").val();
+    $("#subForm").submit();
   });
-  $("li[name=agentUsers]").click(function(){
+  $("a[name=agentUsers]").click(function(){
     var userId = $(this).attr("userId");
-    window.location.href = "FlowCenter?action=getMyTask&agentType=0&userId="+userId;
+    $("#agentUserId").val(userId);
+    $("#agentType").val('1');
+    $("#subForm").submit();
   });
-  $("li[name=agentToUsers]").click(function(){
+  $("a[name=agentToUsers]").click(function(){
     var userId = $(this).attr("userId");
-    window.location.href = "FlowCenter?action=getMyTask&agentType=1&userId="+userId;
+    $("#agentUserId").val(userId);
+    $("#agentType").val('0');
+    $("#subForm").submit();
   });
-  $("button[name=flowGraph]").click(function(){
+  $("a[name=flowGraph]").click(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
     var obj = {};
     window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
   });
-  $("button[name=doTask]").click(function(){
+  $("a[name=doTask]").click(function(){
     var tii = $(this).attr("tii");
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
