@@ -39,7 +39,7 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	ProcessInstanceQuery processInstanceBusinessKey(String processInstanceBusinessKey);
 
 	/**
-	 * 
+	 * 根据业务关联键和流程定义key查询
 	 * @param processInstanceBusinessKey
 	 * @param processDefinitionKey
 	 * @return

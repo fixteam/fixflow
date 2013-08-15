@@ -238,14 +238,14 @@ public class TaskInstancePersistence {
 				
 				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND VARIABLE_KEY = ? ";
 				objectParamWhere.add(taskQuery.getProcessInstanceVariableKey());
-			}else{
-				if(taskQuery.isProcessInstanceVariableValueIsLike()){
-					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA LIKE '%"+taskQuery.getProcessInstanceVariableValue()+"%') ";
-				}else{
-					selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA=?) ";
-					objectParamWhere.add(taskQuery.getProcessInstanceVariableValue());
-				}
 			}
+			if(taskQuery.isProcessInstanceVariableValueIsLike()){
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA LIKE '%"+taskQuery.getProcessInstanceVariableValue()+"%') ";
+			}else{
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql +"AND BIZ_DATA=?) ";
+				objectParamWhere.add(taskQuery.getProcessInstanceVariableValue());
+			}
+			
 		}
 		if (taskQuery.getEnd() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.END_TIME " + taskQuery.getEnd() + " ";
