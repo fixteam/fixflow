@@ -1384,4 +1384,28 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		//验证当前处理任务是否为1
 		assertEquals(1, taskNotEnd.size());
 	}
+	
+	//给邵帅造数据用
+	
+//	public void testAdd(){
+//		for(int i=0;i<100;i++){
+//			//创建一个通用命令
+//			ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+//			//设置流程名
+//			expandTaskCommand.setProcessDefinitionKey("process_TestToolbar");
+//			//设置流程的业务关联键
+//			expandTaskCommand.setBusinessKey("BK_testStartProcessInstanceByKey"+i);
+//			//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+//			expandTaskCommand.setCommandType("startandsubmit");
+//			//设置提交人
+//			expandTaskCommand.setInitiator("1200119390");
+//			//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+//			expandTaskCommand.setUserCommandId("HandleCommand_2");
+//			ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+//			String processInstanceId = processInstance.getId();
+//			//验证是否成功启动
+//			assertNotNull(processInstanceId);
+//		}
+//		
+//	}
 }
