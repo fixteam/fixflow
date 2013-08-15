@@ -2,10 +2,11 @@ package com.founder.fix.fixflow.expand.database.pagination;
 
 
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 
 public class SqlServerPaginationImpl implements Pagination {
 
-	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields) {
+	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields, String orderBy) {
 		sql = trim(sql);
     	String inFiled = fields;
     	if(fields==null||fields.equals("")){
@@ -13,14 +14,27 @@ public class SqlServerPaginationImpl implements Pagination {
     		inFiled="A.*";
     	}
         StringBuffer sb = new StringBuffer(sql.length() + 20);
-        sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROW_NUMBER() OVER(order by tt_) as RN_ FROM ( select ts.*,'1' as tt_ from (");
-        sb.append(sql);
-        sb.append(" ) ts )A )b WHERE b.RN_ <=");
-        sb.append(maxResults);
-        sb.append(" and b.RN_ >=");
-        if (firstResult >= 0) {
-           sb.append(firstResult);
-        } 
+        
+        if(orderBy==null || orderBy.equals("")) {
+	    	sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROW_NUMBER() OVER(order by tt_) as RN_ FROM ( select ts.*,'1' as tt_ from (");
+	        sb.append(sql);
+	        sb.append(" ) ts )A )b WHERE b.RN_ <=");
+	        sb.append(maxResults);
+	        sb.append(" and b.RN_ >=");
+	        if (firstResult >= 0) {
+	           sb.append(firstResult);
+	        } 
+		}else{
+			sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROW_NUMBER() OVER( " + orderBy + " ) as RN_ FROM (");
+	        sb.append(sql);
+	        sb.append(" )A )b WHERE b.RN_ <=");
+	        sb.append(maxResults);
+	        sb.append(" and b.RN_ >=");
+	        if (firstResult >= 0) {
+	           sb.append(firstResult);
+	        } 
+		}
+       
         return sb.toString();
 	}
 	

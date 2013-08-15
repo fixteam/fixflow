@@ -21,7 +21,7 @@ public class OraclePaginationImpl implements Pagination {
 
 	
 	
-	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields) {
+	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields, String orderBy) {
 		sql = trim(sql);
     	String inFiled = fields;
     	if(StringUtil.isEmpty(fields)){

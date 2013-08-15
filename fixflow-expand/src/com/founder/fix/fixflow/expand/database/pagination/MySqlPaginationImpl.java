@@ -6,7 +6,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 public class MySqlPaginationImpl implements Pagination {
 	protected static final String SQL_END_DELIMITER = ";";
 
-	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields) {
+	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields, String orderBy) {
 		sql = trim(sql);
     	if(StringUtil.isEmpty(fields)){
     		fields="*";

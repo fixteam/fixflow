@@ -6,7 +6,7 @@ import com.founder.fix.fixflow.core.db.pagination.Pagination;
 public class DB2PaginationImpl implements Pagination{
 	protected static final String SQL_END_DELIMITER = ";";
 
-	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields) {
+	public String getPaginationSql(String sql, int firstResult, int maxResults, String fields, String orderBy) {
 		sql = trim(sql);
     	String inFiled = fields;
     	if(StringUtil.isNotEmpty(fields)){
