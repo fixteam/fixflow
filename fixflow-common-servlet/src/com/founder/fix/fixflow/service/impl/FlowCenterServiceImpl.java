@@ -108,12 +108,12 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				tq.taskCreatedBefore(datee);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
-			String rowI = StringUtil.getString(filter.get("rowNum"));
+			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
 			int rowNum   =5;
 			if(StringUtil.isNotEmpty(pageI)){
-				pageIndex = Integer.valueOf(pageIndex);
+				pageIndex = Integer.valueOf(pageI);
 			}
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
@@ -238,7 +238,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			int pageIndex=1;
 			int rowNum   =20;
 			if(StringUtil.isNotEmpty(pageI)){
-				pageIndex = Integer.valueOf(pageIndex);
+				pageIndex = Integer.valueOf(pageI);
 			}
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);

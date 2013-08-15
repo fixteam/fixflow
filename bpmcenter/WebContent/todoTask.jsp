@@ -119,7 +119,7 @@ a{text-decoration: none;}
 	</div>
 <!-- 右-->
 	<div style="float:right;width:89%;">
-	<form id="subForm" action="FlowCenter">
+	<form id="subForm" method="post" action="FlowCenter">
 	<input type="hidden" name="action" value="getMyTask"/> 
 <!-- 查 -->
 	  <div id="search">
