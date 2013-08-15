@@ -285,7 +285,6 @@ public interface TaskInstance extends PersistentObject{
 	void suspend();
 	
 	
-	
 	/**
 	 * 任务是否取消
 	 * @return
@@ -340,6 +339,12 @@ public interface TaskInstance extends PersistentObject{
 	 * @return
 	 */
 	String getNodeName();
+	
+	/**
+	 * 获取归档时间
+	 * @return
+	 */
+	Date getArchiveTime();
 	
 	/**
 	 * 获取任务的领取时间

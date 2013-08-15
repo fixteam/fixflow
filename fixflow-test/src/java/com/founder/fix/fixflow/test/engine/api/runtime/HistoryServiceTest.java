@@ -73,12 +73,17 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		List<ProcessInstance> processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").list();
 		//验证运行表已经不存在这条流程
 		assertEquals(1, processInstances.size());
+		//验证归档时间为null
+		assertNull(processInstances.get(0).getArchiveTime());
+		
 		// 创建任务查询
 		TaskQuery taskQuery = taskService.createTaskQuery();
 		// 查找 1200119390 的这个流程实例的当前独占任务
 		List<TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
 		// 获取一条任务
 		TaskInstance taskInstance = taskInstances.get(0);
+		//验证运行表中的归档时间不为空
+		assertNull(taskInstance.getArchiveTime());
 		//创建通用命令
 		ExpandTaskCommand expandTaskCommandGeneral=new ExpandTaskCommand();
 		//设置命令为领取任务
@@ -103,8 +108,10 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		//重置流程实例查询
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").his().list();
-		//验证运行表已经不存在这条流程
+		//验证历史表存在这条流程
 		assertEquals(1, processInstances.size());
+		//验证历史表查询出的实例归档时间不为空
+		assertNotNull(processInstances.get(0).getArchiveTime());
 		
 		//重置流程实例查询
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
@@ -115,7 +122,7 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		//重置流程实例查询
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		processInstances = processInstanceQuery.processDefinitionKey("TaskServiceNewTest").run().his().list();
-		//验证运行表已经不存在这条流程
+		//验证运行表和历史表集合中存在这条流程
 		assertEquals(1, processInstances.size());
 		
 		//重置任务查询
@@ -131,6 +138,8 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		taskInstances = taskQuery.processDefinitionKey("TaskServiceNewTest").his().list();
 		//验证归档表中可以到的任务个数不为0
 		assertEquals(4, taskInstances.size());
+		//验证历史表查询出来的数据归档时间不为空
+		assertNotNull(taskInstances.get(0).getArchiveTime());
 		
 		//重置任务查询
 		taskQuery = taskService.createTaskQuery();
@@ -159,6 +168,8 @@ public class HistoryServiceTest extends AbstractFixFlowTestCase {
 		tokens = tokenQuery.processInstanceId(processInstanceId).his().list();
 		//验证令牌存在
 		assertEquals(1, tokens.size());
+		//验证历史表中的数据归档时间不为空
+		assertNotNull(tokens.get(0).getArchiveTime());
 		
 		//重置令牌查询
 		tokenQuery = runtimeService.createTokenQuery();

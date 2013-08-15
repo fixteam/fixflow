@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.fixflow.core.objkey.TokenObjKey.FlowKeyArchiveTime;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -339,5 +340,39 @@ public class VariableObjKey {
 			return "业务查询数据";
 		}
 	}
+	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new VariableObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
+		}
+
+	}
+	
 	
 }

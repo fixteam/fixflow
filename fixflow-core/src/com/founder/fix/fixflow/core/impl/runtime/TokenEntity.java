@@ -134,9 +134,20 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	 */
 	boolean isSuspended = false;
 
+	/**
+	 * 流程实例ID
+	 */
 	protected String processInstanceId;
+	
+	/**
+	 * 父令牌ID
+	 */
 	protected String parentTokenId;
 
+	
+	protected Date archiveTime;
+	
+	
 	public TokenEntity() {
 
 	}
@@ -792,9 +803,9 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 		// 流程实例编号 String
 		objectParam.put(TokenObjKey.ProcessInstanceId().FullKey(), this.getProcessInstanceId());
 		// 父令牌编号 String
-
 		objectParam.put(TokenObjKey.ParentTokenId().FullKey(), this.getParentTokenId());
-
+		//归档时间
+		objectParam.put(TokenObjKey.ArchiveTime().FullKey(), this.getArchiveTime());
 		// 流程实例编号 String
 		objectParam.put(TokenObjKey.FreeToken().FullKey(), String.valueOf(this.isFreeToken()));
 		objectParam.put(TokenObjKey.ParentFreeTokenId().FullKey(), this.getParentFreeTokenId());
@@ -909,6 +920,14 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	public void setExtensionFields(Map<String, Object> extensionFields) {
 		this.extensionFields = extensionFields;
 	}
+	
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
+	}
 
 	public void addExtensionField(String fieldName, Object fieldValue) {
 		this.extensionFields.put(fieldName, fieldValue);
@@ -917,6 +936,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	public TokenEntity(Map<String, Object> entityMap){
 		persistentInit(entityMap);
 	}
+	
 
 
 	@Override
@@ -993,6 +1013,11 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 				this.parentFreeTokenId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
+			
+			if (dataKey.equals(TokenObjKey.ArchiveTime().DataBaseKey())) {
+				this.archiveTime = StringUtil.getDate(entityMap.get(dataKey));
+				continue;
+			}
 
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
 
@@ -1036,6 +1061,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 				// 流程实例编号 String
 				objectParam.put("FREETOKEN", String.valueOf(this.isFreeToken()));
 				objectParam.put("PARENT_FREETOKEN_ID", this.getParentFreeTokenId());
+				objectParam.put(TokenObjKey.ArchiveTime().DataBaseKey(), this.getArchiveTime());
 
 				return objectParam;
 	}

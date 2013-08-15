@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.core.task;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
@@ -25,8 +26,10 @@ import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 public interface IdentityLink extends PersistentObject, Serializable{
 
 	
-	
-String getId();
+	/**
+	 * 获取ID
+	 */
+	String getId();
 	
 	/**
 	 * 获取任务身份类型
@@ -35,7 +38,6 @@ String getId();
 	 */
 	IdentityLinkType getType();
 	
-	
 	/**
 	 * 返回用户编号
 	 * 如果身份链接涉及到一个用户，那么这将是一个非空的用户ID。
@@ -43,59 +45,50 @@ String getId();
 	 */
 	String getUserId();
 	
-	
-	
 	/**
 	 * 返回组
 	 * @return
 	 */
 	GroupTo getGroup();
 	
-	
+	/**
+	 * 获取组ID
+	 * @return
+	 */
 	String getGroupId();
 	
+	/**
+	 * 获取组类型
+	 * @return
+	 */
 	String getGroupType();
 	
-
-	
+	/**
+	 * 获取包含（排除）
+	 * @return
+	 */
 	IncludeExclusion getIncludeExclusion();
-	
 	
 	/**
 	 * 返回任务实例编号
 	 * @return
 	 */
 	String getTaskId();
+	
+	Date getArchiveTime();
 
-	
-	
 	void setType(IdentityLinkType identityLinkType);
 
-	
-	
 	void setUserId(String userId);
 
-	
-	
 	void setGroup(GroupTo group);
-
-
 
 	void setIncludeExclusion(IncludeExclusion includeExclusion);
 	
-
-
 	void setGroupId(String groupId);
 
-	
-
 	void setGroupType(String groupType);
-	
 
 	void setTaskId(String taskId);
-
-	
-	
-	
 	
 }

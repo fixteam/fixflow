@@ -24,38 +24,69 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 
-
-
 public interface Token  extends PersistentObject, Serializable {
 
-
-
-	
+	/**
+	 * 获取令牌名称
+	 * @return
+	 */
 	String getName();
 	
-	
+	/**
+	 * 获取令牌开始时间
+	 * @return
+	 */
 	Date getStartTime();
 
+	/**
+	 * 获取令牌结束时间
+	 * @return
+	 */
 	Date getEndTime();
 	
-	
-	
+	/**
+	 * 获取节点进入时间
+	 * @return
+	 */
 	Date getNodeEnterTime();
 	
+	/**
+	 * 是否暂停
+	 * @return
+	 */
 	boolean isSuspended();
 	
+	/**
+	 * 加锁
+	 * @return
+	 */
 	boolean getlock();
 	
+	/**
+	 * 获取令牌所在节点ID
+	 * @return
+	 */
 	String getNodeId();
 	
-	
+	/**
+	 * 获取流程实例ID
+	 * @return
+	 */
 	String getProcessInstanceId();
 	
+	/**
+	 * 获取父令牌ID
+	 * @return
+	 */
 	String getParentTokenId();
 	
 	boolean isAbleToReactivateParent();
 
-
+	/**
+	 * 获取归档时间
+	 * @return
+	 */
+	Date getArchiveTime();
 	/**
 	 * 获取令牌扩展字段(大小写区分)
 	 * 
@@ -71,6 +102,4 @@ public interface Token  extends PersistentObject, Serializable {
 	 * @return 任务扩展字段值
 	 */
 	Object getExtensionField(String fieldName);
-
-
 }
