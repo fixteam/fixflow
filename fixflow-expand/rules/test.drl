@@ -1,9 +1,0 @@
-package com.sample;
-import com.founder.fix.fixflow.expand.expression.DroolsUtil.Result;
-rule "CommonLogic" no-loop
-when 
- eval(1==1)
- $result:Result()
-then
-$result.setBoolValue(true);
-end

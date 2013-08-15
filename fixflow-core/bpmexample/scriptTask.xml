@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scriptTask xmlns:fix="c:/fix-bpmn-extens.xsd" scriptFormat="simpleScriptActuator">
-	<script>"abc"+"efg"</script>
-</scriptTask>
