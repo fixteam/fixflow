@@ -48,6 +48,7 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.FileUtil;
+import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
 public class FlowCenterServiceImpl implements FlowCenterService {
@@ -110,7 +111,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			String rowI = StringUtil.getString(filter.get("rowNum"));
 			
 			int pageIndex=1;
-			int rowNum   =20;
+			int rowNum   =5;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageIndex);
 			}
@@ -138,15 +139,18 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			}
 			
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
-			long count = tq.count();
+			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			
+			Pagination page = new Pagination(pageIndex,rowNum);
+			page.setTotal(count.intValue());
+			
 			for(TaskInstance tmp:lts){
 				instanceMaps.add(tmp.getPersistentState());
 			}
 			result.put("dataList", instanceMaps);
-			result.put("pageNumber", count);
-			result.put("pageIndex", pageI);
-			result.put("rowNum", rowI);
+			result.put("pageInfo", page);
+			
 			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
 			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
 		} finally {
@@ -248,15 +252,16 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				instances = tq.initiator(userId).listPagination(pageIndex, rowNum);
 			else
 				instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
-			long count = tq.count();
+			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			Pagination page = new Pagination(Integer.valueOf(pageI),Integer.valueOf(rowI));
+			page.setTotal(count.intValue());
+			
 			for(ProcessInstance tmp:instances){
 				instanceMaps.add(tmp.getPersistentState());
 			}
 			result.put("dataList", instanceMaps);
-			result.put("pageNumber", count);
-			result.put("pageIndex", pageI);
-			result.put("rowNum", rowI);
+			result.put("pageInfo", page);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}

@@ -138,6 +138,7 @@ public class FlowCenter extends HttpServlet {
 						.queryMyTaskNotEnd(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
