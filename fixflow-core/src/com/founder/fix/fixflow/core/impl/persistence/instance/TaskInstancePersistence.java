@@ -366,9 +366,9 @@ public class TaskInstancePersistence {
 		if (taskQuery.getOrderBy() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString();
 		}
-		if (page != null) {
-			selectTaskByQueryCriteriaSql = pagination.getPaginationSql(selectTaskByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(), "*");
-		}
+		
+		String orderByString="";
+		
 		if (taskQuery.getOrderBy() != null && page != null) {
 			String orderBySql=taskQuery.getOrderBy();
 			String orderBySqlFin="";
@@ -382,11 +382,21 @@ public class TaskInstancePersistence {
 						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
 					}
 				}
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + orderBySqlFin;
+				orderByString = orderByString + " order by " + orderBySqlFin;
 				
 			}else{
-				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString().substring(2);
+				orderByString = orderByString + " order by " + taskQuery.getOrderBy().toString().substring(2);
 			}
+		}
+		
+		if (page != null) {
+			selectTaskByQueryCriteriaSql = pagination.getPaginationSql(selectTaskByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
+		}
+		
+
+		
+		if (taskQuery.getOrderBy() != null && page != null) {
+			selectTaskByQueryCriteriaSql=selectTaskByQueryCriteriaSql+orderByString;
 		}
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectTaskByQueryCriteriaSql, objectParamWhere);
 		List<TaskInstanceEntity> taskInstanceImpls = new ArrayList<TaskInstanceEntity>();

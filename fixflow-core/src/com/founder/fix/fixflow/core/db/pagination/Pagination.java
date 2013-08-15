@@ -30,9 +30,10 @@ public interface Pagination {
 	 * @param firstResult 开始行
 	 * @param maxResults 结束行
 	 * @param fields 需要显示的字段
+	 * @param orderBy 分页排序
 	 * @return
 	 */
-	String getPaginationSql(String sql, int firstResult, int maxResults,String fields);
+	String getPaginationSql(String sql, int firstResult, int maxResults,String fields,String orderBy);
 	
 	/**
 	 * 获取判断空的数据库方言

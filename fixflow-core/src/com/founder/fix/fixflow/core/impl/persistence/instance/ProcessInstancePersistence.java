@@ -573,9 +573,34 @@ public class ProcessInstancePersistence {
 		if (processInstanceQuery.getOrderBy() != null) {
 			sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString();
 		}
+		
+		
+		String orderByString="";
+		
+		if (processInstanceQuery.getOrderBy() != null && page != null) {
+			String orderBySql=processInstanceQuery.getOrderBy();
+			String orderBySqlFin="";
+			if(orderBySql.indexOf(",")>=0){
+				String[] orderBySqlTemp=orderBySql.split(",");
+				for (String orderByObj : orderBySqlTemp) {
+					if(orderBySqlFin.equals("")){
+						orderBySqlFin=orderBySqlFin+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+					else{
+						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+				}
+				orderByString = orderByString + " order by " + orderBySqlFin;
+				
+			}else{
+				orderByString = orderByString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
+			}
+		}
+		
+		
 		if (page != null) {
 			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
-			sqlString = pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*");
+			sqlString = pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
 		}
 		if (processInstanceQuery.getOrderBy() != null&&page != null) {
 			String orderBySql=processInstanceQuery.getOrderBy();
@@ -693,7 +718,7 @@ public class ProcessInstancePersistence {
 		objectParamWhere.add(processKey);
 		//增加分页信息
 		String finalsql = "";
-		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*");
+		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*",null);
 		SqlCommand sqlCommand=new SqlCommand(Context.getDbConnection());
 		return sqlCommand.queryForList(finalsql,objectParamWhere);
 	}
@@ -767,7 +792,7 @@ public class ProcessInstancePersistence {
 		objectParamWhere.add(enddate);
 		//增加分页信息
 		String finalsql = "";
-		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*");
+		finalsql = pagination.getPaginationSql(stringBuffer.toString(), page.getFirstResult(), page.getMaxResults(), "*",null);
 		SqlCommand sqlCommand=new SqlCommand(Context.getDbConnection());
 		return sqlCommand.queryForList(finalsql,objectParamWhere);
 	}

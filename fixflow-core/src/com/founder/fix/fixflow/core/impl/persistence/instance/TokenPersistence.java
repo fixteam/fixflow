@@ -82,9 +82,34 @@ public class TokenPersistence {
 		if (tokenQuery.getOrderBy() != null) {
 			sqlString = sqlString + " order by "+tokenQuery.getOrderBy().toString();
 		}
+		
+		
+		
+		String orderByString="";
+		
+		if (tokenQuery.getOrderBy() != null && page != null) {
+			String orderBySql=tokenQuery.getOrderBy();
+			String orderBySqlFin="";
+			if(orderBySql.indexOf(",")>=0){
+				String[] orderBySqlTemp=orderBySql.split(",");
+				for (String orderByObj : orderBySqlTemp) {
+					if(orderBySqlFin.equals("")){
+						orderBySqlFin=orderBySqlFin+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+					else{
+						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+				}
+				orderByString = orderByString + " order by " + orderBySqlFin;
+				
+			}else{
+				orderByString = orderByString + " order by " + tokenQuery.getOrderBy().toString().substring(2);
+			}
+		}
+		
 		if(page!=null){
 			Pagination pagination=Context.getProcessEngineConfiguration().getDbConfig().getPagination();
-			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*");
+			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
 		}
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
 		List<TokenEntity> tokenPersistenceToList = new ArrayList<TokenEntity>();
