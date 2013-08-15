@@ -254,7 +254,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 				instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
-			Pagination page = new Pagination(Integer.valueOf(pageI),Integer.valueOf(rowI));
+			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
 			
 			for(ProcessInstance tmp:instances){
