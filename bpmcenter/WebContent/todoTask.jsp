@@ -151,17 +151,17 @@ a{text-decoration: none;}
                 <th width="70">发起人</th>
                 <th>任务</th>
                 <th width="300">单据号</th>
-                <th width="180">到达时间</th>
+                <th width="180">流程信息</th>
                 <th width="30">操作</th>
                 <th width="60">查看流程图</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		      <td><c:out value="${index.index+1}"/></td>
-		      <td>${dataList.PI_START_AUTHOR}</td>
-		      <td>${dataList.description}</td>
+		      <td><img src="" alt="头像"><br>${dataList.PI_START_AUTHOR}</td>
+		      <td>步骤名称 <br> ${dataList.description}</td>
 		      <td>${dataList.bizKey}</td>
-		      <td><fmt:formatDate value="${dataList.createTime}" type="both"/></td>
+		      <td>流程名称 <br> <fmt:formatDate value="${dataList.createTime}" type="both"/> <br> 到达时间 </td>
 		      <td><a name="doTask" href="#" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</a></td>
 		      <td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</a></td>
 

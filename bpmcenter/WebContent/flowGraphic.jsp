@@ -15,7 +15,7 @@ a{text-decoration: none;}
 <body>
 <img src="FlowCenter?action=getFlowGraph&processDefinitionKey=${result.processDefinitionKey}"/>
 <c:if test="${result.dataList!=null}">
-<table>
+<table class="fix-table">
 	<tr>
 		<td colspan="3">
 			已完成
@@ -66,7 +66,7 @@ a{text-decoration: none;}
 	</c:forEach>
 </table>
 
-<table>
+<table class="fix-table">
 	<tr>
 		<td colspan="3">
 			未完成
