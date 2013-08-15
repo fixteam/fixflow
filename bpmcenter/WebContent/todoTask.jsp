@@ -14,6 +14,66 @@
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <style>
 a{text-decoration: none;}
+
+.red_star{
+   color:red;
+}
+.pagearea{
+   margin-top:20px;
+   float:right;
+   text-align:right;
+   width:100%;
+   font-size:12px;
+   
+}
+.pagearea .qp{
+   border:#AAAADD solid 1px;
+   width:60px;
+   height:10px;
+   margin-right:3px;
+   margin-left:3px;
+   text-align:center;
+}
+.pagearea .disqp{
+   border:#EEEEEE solid 1px;
+   width:60px;
+   height:10px;
+   margin-right:3px;
+   margin-left:3px;
+   color:#EEEEEE;
+}
+.pagearea a {
+   border:#AAAADD solid 1px;
+   width:25px;
+   height:10px;
+   margin-right:3px;
+   margin-left:3px;
+   text-align:center;
+}
+.pagearea .point{
+   width:25px;
+   height:10px;
+   margin-right:3px;
+   margin-left:3px;
+}
+.pagearea .focuspage{
+  border:#FD6D01 solid 1px;
+  background-color:#FFEDE1;
+  color:#FD6D01;
+  width:25px;
+  height:10px;
+  margin-right:3px;
+  margin-left:3px;
+  font-weight:bold;
+  text-align:center;
+}
+.pagearea info{
+  color:#666666;
+}
+.pagearea a{
+  TEXT-DECORATION:none;
+  color:#3366CC;
+}
 </style>
 </head>
 
@@ -59,6 +119,8 @@ a{text-decoration: none;}
 	</div>
 <!-- 右-->
 	<div style="float:right;width:89%;">
+	<form id="subForm" method="post" action="FlowCenter">
+	<input type="hidden" name="action" value="getMyTask"/> 
 <!-- 查 -->
 	  <div id="search">
 	  </div>
@@ -98,21 +160,10 @@ a{text-decoration: none;}
 	    </table>
 <!-- 分页 -->	    
 	    <div id="page">
-	      <%
-	      Map map = (Map)request.getAttribute("result");
-	      Object pageIndex = (Object)map.get("pageIndex");
-	      int pi = 1;
-	      if(pageIndex==null){
-	    	  pi=1;
-	      }else{
-	    	  pi = (Integer)pageIndex;
-	      }
-	      for(int m=0;m<pi;m++){ 
-	      %>
-	      <a name="page" href="javascript:void(0);"><%=m+1 %></a>
-	      <%} %>
+	      <jsp:include page="page.jsp" flush="true"/>
 	    </div>
 	  </div>
+	  </form>
 	</div>
 </div>
 </div>
