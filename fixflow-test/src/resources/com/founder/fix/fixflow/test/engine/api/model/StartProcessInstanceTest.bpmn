@@ -3,7 +3,7 @@
   <bpmn2:collaboration id="Collaboration_1">
     <bpmn2:participant id="Participant_1" name="Internal" processRef="Process_StartProcessInstanceTest"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_StartProcessInstanceTest" fixflow:category="测试" fixflow:dbid="Process_StartProcessInstanceTest:1:ac456878-3743-4d35-8473-cb1fef1f3c21" fixflow:verification="true" name="StartProcessInstanceTest">
+  <bpmn2:process id="Process_StartProcessInstanceTest" fixflow:category="测试" fixflow:dbid="Process_StartProcessInstanceTest:1:ac456878-3743-4d35-8473-cb1fef1f3c21" fixflow:verification="true" name="StartProcessInstanceTest流程">
     <bpmn2:extensionElements>
       <fixflow:taskSubject id="TaskSubject_1">
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;StartProcessInstanceTest任务主题&quot;">&quot;StartProcessInstanceTest任务主题&quot;</fixflow:expression>
@@ -24,8 +24,8 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
-      <bpmn2:humanPerformer fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="指定用户">
-        <bpmn2:resourceAssignmentExpression>
+      <bpmn2:humanPerformer id="HumanPerformer_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="指定用户">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
           <bpmn2:formalExpression id="&quot;1035555&quot;">&quot;1035555&quot;</bpmn2:formalExpression>
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:humanPerformer>

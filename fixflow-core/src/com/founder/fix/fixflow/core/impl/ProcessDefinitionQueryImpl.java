@@ -177,29 +177,21 @@ public class ProcessDefinitionQueryImpl extends
 	  
 	  public long executeCount(CommandContext commandContext) {
 	    checkQueryOk();
-	    return commandContext
-	      .getProcessDefinitionManager()
-	      .findProcessDefinitionCountByQueryCriteria(this);
+	    return commandContext.getProcessDefinitionManager().findProcessDefinitionCountByQueryCriteria(this);
 	  }
 
 	  public List<ProcessDefinitionBehavior> executeList(CommandContext commandContext, Page page) {
 	    checkQueryOk();
-	    return commandContext
-	      .getProcessDefinitionManager()
-	      .findProcessDefinitionsByQueryCriteria(this, page);
+	    return commandContext.getProcessDefinitionManager().findProcessDefinitionsByQueryCriteria(this, page);
 	  }
 	  
 	  public void checkQueryOk() {
 	    super.checkQueryOk();
-	    
-	    // latest() makes only sense when used with key() or keyLike()
 	    if (latest && ( (id != null) || (name != null) || (nameLike != null) || (version != null) || (deploymentId != null) ) ){
 	      throw new FixFlowException("Calling latest() can only be used in combination with key(String) and keyLike(String)");
 	    }
 	  }
-	  
 	  //getters ////////////////////////////////////////////
-	  
 	  public String getDeploymentId() {
 	    return deploymentId;
 	  }
