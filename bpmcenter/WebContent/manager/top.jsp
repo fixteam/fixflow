@@ -10,7 +10,7 @@
     <div class="menu">
         <div class="logo"></div>
         <ul>
-        <li><a id="getMyProcess" href="FlowCenter?action=getMyProcess"><h1>定义管理</h1><h4>start flow</h4></a></li>
+        <li><a id="processDefinitionList" href="FlowCenter?action=getMyProcess"><h1>定义管理</h1><h4>start flow</h4></a></li>
         <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>实例管理</h1><h4>schedule</h4></a></li>
         <li><a id="getInitorTask" href="FlowCenter?action=getAllProcess"><h1>定时任务</h1><h4>flow query</h4></a></li>
         <li><a href="#"><h1>系统配置</h1><h4>place on file</h4></a></li>

@@ -87,7 +87,7 @@ a{text-decoration: none;}
     	
 </div>
 <!-- 右-->
-	<div class="right" style="width:99%;">
+	<div class="right" style="width:98%;">
 	  <!-- 查 -->
 	  <div id="search">
 	 	<table width="100%">
@@ -114,10 +114,10 @@ a{text-decoration: none;}
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
-		    <th>流程定义编号</th>
-		    <th>流程定义名称</th>
-		    <th>流程版本</th>
-		    <th>流程分类</th>
+		    <th width="30%">流程定义编号</th>
+		    <th >流程定义名称</th>
+		    <th width="5%">流程版本</th>
+		    <th width="10%">流程分类</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
