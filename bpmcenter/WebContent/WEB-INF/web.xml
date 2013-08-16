@@ -42,4 +42,18 @@ id="WebApp_ID"
 		<welcome-file>/center/login.jsp</welcome-file>
 	</welcome-file-list>
   
+  
+  <!-- manager-servlet 开始 -->
+	  <servlet>
+	    <description></description>
+	    <display-name>FlowManager</display-name>
+	    <servlet-name>FlowManager</servlet-name>
+	    <servlet-class>com.founder.fix.fixflow.FlowManager</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	    <servlet-name>FlowManager</servlet-name>
+	    <url-pattern>/FlowManager</url-pattern>
+	  </servlet-mapping>
+  <!-- manager-servlet 结束 -->
+  
 </web-app>

@@ -89,8 +89,16 @@ public class LoginServlet extends HttpServlet {
 			if(list2!=null && list2.size()>0){
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, list2.get(0).get("USERNAME"));
-				request.setAttribute("action", "getMyTask");
-				response.sendRedirect(context+"/FlowCenter?action=getMyTask");
+				
+				String loginType = request.getParameter("loginType");
+				if(loginType !=null && loginType.equals("on")){
+					request.setAttribute("action", "processDefinitionList");
+					response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
+				}else{
+					request.setAttribute("action", "getMyTask");
+					response.sendRedirect(context+"/FlowCenter?action=getMyTask");
+				}
+				
 			}else{
 				response.sendRedirect(context+"/center/login.jsp");
 			}
