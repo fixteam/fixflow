@@ -12,7 +12,7 @@
 
 		pagination.setBaseUrl((String)request.getAttribute("baseUrl"));
 		StringBuilder sb = new StringBuilder();
-
+		sb.append("<div class=\"page\"><ul>");
 		// 上一页
 		if (pagination.getPageCount() > 1) {
 			if (pagination.getPageIndex() == 1) {
@@ -56,6 +56,7 @@
 			}
 		}
 		sb.append(pagination.createPageInfo());
+		sb.append("</ul></div>");
 		out.print(sb.toString());
 %>
 <input type="hidden" id="pageIndex" name="pageIndex" value="${pageInfo.pageIndex}"/>

@@ -7,14 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>流程查询</title>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<style>
-a{text-decoration: none;}
-</style>
+<jsp:include page="head.jsp" flush="true"/>
 </head>
 <body>
 <div class="main-panel">

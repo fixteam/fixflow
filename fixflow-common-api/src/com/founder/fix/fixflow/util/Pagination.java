@@ -211,39 +211,40 @@ public class Pagination<T> implements Serializable {
 	public String createPrePage(int pageIndex, boolean distable) {
 		StringBuilder sb = new StringBuilder();
 		if (distable) {
-			sb.append("<span class='disqp'>上一页</span>");
+			sb.append("<li>上一页</li>");
 		} else {
-			sb.append("<a href='#' onclick='toIndex(\""+pageIndex+"\")' class='qp'>上一页</a>");
+			sb.append("<li><a href='#' onclick='toIndex(\""+pageIndex+"\")'>上一页</a></li>");
 		}
 		return sb.toString();
 	}
 	public String createNextPage(int pageIndex, boolean distable) {
 		StringBuilder sb = new StringBuilder();
 		if (distable) {
-			sb.append("<span class='disqp'>下一页 </span>");
+			sb.append("<li>下一页 </li>");
 		} else {
-			sb.append("<a href='#' onclick='toIndex(\""+pageIndex+"\")' class='qp'>下一页 </a>");
+			sb.append("<li><a href='#' onclick='toIndex(\""+pageIndex+"\")'>下一页 </a></li>");
 		}
 		return sb.toString();
 	}
 	public String createPageIndex(int pageIndex, boolean cur) {
 		StringBuilder sb = new StringBuilder();
 		if (!cur) {
-			sb.append("<a onclick='toIndex(\""+pageIndex+"\")' href='#'>");
+			sb.append("<li><a onclick='toIndex(\""+pageIndex+"\")' href='#'>");
 			sb.append(pageIndex);
-			sb.append("</a>");
+			sb.append("</a></li>");
 		} else {
-			sb.append("<span class='focuspage'>" + pageIndex + "</span>");
+			sb.append("<li><a class=\"select\">" + pageIndex + "</a></li>");
 		}
 		return sb.toString();
 	}
 	public String createPoint() {
-		return " <span class='point'>...</span>";
+		return " <li>...</li>";
 	}
 	public String createPageInfo() {
-		return "<span class='info'>共<font color=red>" + this.getTotal()
-				+ "</font>条&nbsp;&nbsp;共<font color=red>"
-				+ this.getPageCount() + "</font>页</span>";
+		return "<li>&emsp;共<span class=\"orange\">" + this.getTotal()
+				+ "</span></li>条</li>" +
+				"<li>&nbsp;共<span class=\"orange\">"+ this.getPageCount() 
+				+ "</span></li>页</li>";
 	}
 	
 	/**

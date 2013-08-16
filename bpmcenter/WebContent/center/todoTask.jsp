@@ -7,74 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待办任务</title>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<style>
-a{text-decoration: none;}
-
-.red_star{
-   color:red;
-}
-.pagearea{
-   margin-top:20px;
-   float:right;
-   text-align:right;
-   width:100%;
-   font-size:12px;
-   
-}
-.pagearea .qp{
-   border:#AAAADD solid 1px;
-   width:60px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-   text-align:center;
-}
-.pagearea .disqp{
-   border:#EEEEEE solid 1px;
-   width:60px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-   color:#EEEEEE;
-}
-.pagearea a {
-   border:#AAAADD solid 1px;
-   width:25px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-   text-align:center;
-}
-.pagearea .point{
-   width:25px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-}
-.pagearea .focuspage{
-  border:#FD6D01 solid 1px;
-  background-color:#FFEDE1;
-  color:#FD6D01;
-  width:25px;
-  height:10px;
-  margin-right:3px;
-  margin-left:3px;
-  font-weight:bold;
-  text-align:center;
-}
-.pagearea info{
-  color:#666666;
-}
-.pagearea a{
-  TEXT-DECORATION:none;
-  color:#3366CC;
-}
-</style>
+<jsp:include page="head.jsp" flush="true"/>
 </head>
 
 <body>
@@ -139,8 +72,8 @@ a{text-decoration: none;}
                 <td class="title-r">到达时间：</td>
                 <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}"/>
                  - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}"/></td>
-                <td><input type="submit"/></td>
-                <td>&nbsp;</td>
+                <td></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
         </div>
@@ -157,24 +90,20 @@ a{text-decoration: none;}
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		      <td><c:out value="${index.index+1}"/></td>
+		      <td class="num"><c:out value="${index.index+1}"/></td>
 		      <td><img src="${dataList.icon}" height="30" width="30" alt="头像"><br>${dataList.userName}</td>
 		      <td>步骤名称 <br> ${dataList.description}</td>
 		      <td>${dataList.bizKey}</td>
 		      <td>到达时间:<fmt:formatDate value="${dataList.createTime}" type="both"/></td>
 		      <td><a name="doTask" href="#" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</a></td>
-		      <td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</a></td>
+		      <td class="time"><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</a></td>
 		    </tr>
 		    </c:forEach>
             </table>
-
+			<jsp:include page="page.jsp" flush="true"/>
         </div>
     </div>
-<!-- 分页 -->	    
-	    <div id="page">
-	      <jsp:include page="page.jsp" flush="true"/>
-	    </div>
-
+<!-- 分页 -->
 	</form>
 </div>
 </div>
