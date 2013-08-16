@@ -181,7 +181,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			throws SQLException {
 		filter.put("ended", "ended");
 		return queryMyTaskNotEnd(filter);
-	}
+	} 
 
 	public List<Map<String, String>> queryStartProcess(String userId)
 			throws SQLException {
