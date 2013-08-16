@@ -147,7 +147,7 @@ a{text-decoration: none;}
         <div class="content">
         	<table width="100%" class="fix-table">
               <thead>
-                <th>&nbsp;</th>
+                <th width="30">&nbsp;</th>
                 <th width="70">发起人</th>
                 <th>任务</th>
                 <th width="300">单据号</th>
@@ -158,13 +158,12 @@ a{text-decoration: none;}
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		      <td><c:out value="${index.index+1}"/></td>
-		      <td><img src="${dataList.icon}" alt="头像"><br>${dataList.PI_START_AUTHOR}</td>
+		      <td><img src="${dataList.icon}" height="30" width="30" alt="头像"><br>${dataList.userName}</td>
 		      <td>步骤名称 <br> ${dataList.description}</td>
 		      <td>${dataList.bizKey}</td>
-		      <td>流程名称 <br> <fmt:formatDate value="${dataList.createTime}" type="both"/> <br> 到达时间 </td>
+		      <td>到达时间:<fmt:formatDate value="${dataList.createTime}" type="both"/></td>
 		      <td><a name="doTask" href="#" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</a></td>
 		      <td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</a></td>
-
 		    </tr>
 		    </c:forEach>
             </table>

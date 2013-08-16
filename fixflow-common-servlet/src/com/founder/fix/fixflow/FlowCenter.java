@@ -76,6 +76,13 @@ public class FlowCenter extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String userId = StringUtil.getString(request.getSession()
+				.getAttribute(FlowCenterService.LOGIN_USER_ID));
+		if(StringUtil.isEmpty(userId)){
+			String context = request.getContextPath();
+			response.sendRedirect(context+"/center/login.jsp");
+			return;
+		}
 		CurrentThread.init();
 		ServletOutputStream out = null;
 		String action = StringUtil.getString(request.getParameter("action"));
@@ -123,8 +130,7 @@ public class FlowCenter extends HttpServlet {
 
 			}
 
-			String userId = StringUtil.getString(request.getSession()
-					.getAttribute(FlowCenterService.LOGIN_USER_ID));
+
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if (action.equals("getMyProcess")) {
