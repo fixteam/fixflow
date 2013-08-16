@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean("DB_FIX_BIZ_BASE");
 		try {
-			
+			String context = request.getContextPath();
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
 			List<Object> list= new ArrayList<Object>();
@@ -90,9 +90,9 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, list2.get(0).get("USERNAME"));
 				request.setAttribute("action", "getMyTask");
-				response.sendRedirect("FlowCenter?action=getMyTask");
+				response.sendRedirect(context+"/FlowCenter?action=getMyTask");
 			}else{
-				response.sendRedirect("/center/login.jsp");
+				response.sendRedirect(context+"/center/login.jsp");
 			}
 			
 		} catch (SQLException e) {
