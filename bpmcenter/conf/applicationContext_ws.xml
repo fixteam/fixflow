@@ -17,7 +17,7 @@ xmlns:context="http://www.springframework.org/schema/context"
 	<bean id="inMessageInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
 	<bean id="outMessageInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 
-
+<!-- 
 	<jaxrs:server id="rest_HelloWorld" address="/">
 		<jaxrs:inInterceptors>
 			<ref bean="inMessageInterceptor" />
@@ -34,5 +34,5 @@ xmlns:context="http://www.springframework.org/schema/context"
 		</jaxrs:extensionMappings>
 	</jaxrs:server>
 
-
+ -->
 </beans>
