@@ -132,14 +132,14 @@ public class FlowCenter extends HttpServlet {
 						.queryStartProcess(userId);
 				request.setAttribute("result", result);
 				request.setAttribute("userId", userId); // 返回userId add Rex
-				rd = request.getRequestDispatcher("startTask.jsp");
+				rd = request.getRequestDispatcher("/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryMyTaskNotEnd(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/todoTask.jsp");
+				rd = request.getRequestDispatcher("/center/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
 			} else if (action.equals("getAllProcess")) {
@@ -147,25 +147,25 @@ public class FlowCenter extends HttpServlet {
 						.queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/queryprocess.jsp");
+				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getInitorProcess")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/queryprocess.jsp");
+				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getParticipantsProcess")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryTaskParticipants(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/queryprocess.jsp");
+				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getTaskDetailInfo")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.getTaskDetailInfo(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/flowGraphic.jsp");
+				rd = request.getRequestDispatcher("/center/flowGraphic.jsp");
 			} else if (action.equals("getFlowGraph")) {
 				InputStream is = getFlowCenter().getFlowGraph(filter);
 				out = response.getOutputStream();
@@ -182,7 +182,7 @@ public class FlowCenter extends HttpServlet {
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/userOperation.jsp");
+				rd = request.getRequestDispatcher("/center/userOperation.jsp");
 			} else if (action.equals("updateUserIcon")) {
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -198,7 +198,7 @@ public class FlowCenter extends HttpServlet {
 						.GetFlowRefInfo(filter);
 				filter.putAll(list);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/startOneTask.jsp");
+				rd = request.getRequestDispatcher("/center/startOneTask.jsp");
 			} else if (action.equals("doTask")) {//演示如何进入一个已发起的流程处理页面
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
