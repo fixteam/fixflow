@@ -10,6 +10,7 @@
 <form method=post action="${pageContext.request.contextPath}/LoginServlet">
 	<input type="text" id="userName" name="userName"/>
 	<input type="password" id="password" name="password"/>
+	<input type="checkbox" id="loginType" name = "loginType">manager
 	<input type="submit"/>
 </form>
 </body>
