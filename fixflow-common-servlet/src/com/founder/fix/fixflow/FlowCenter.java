@@ -134,6 +134,8 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("userId", userId); // 返回userId add Rex
 				rd = request.getRequestDispatcher("/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryMyTaskNotEnd(filter);
 				filter.putAll(pageResult);

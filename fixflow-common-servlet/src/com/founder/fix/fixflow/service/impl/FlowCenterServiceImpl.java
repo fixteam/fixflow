@@ -150,8 +150,21 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
 			
-			for(TaskInstance tmp:lts){
-				instanceMaps.add(tmp.getPersistentState());
+			for(TaskInstance tmp:lts){ 
+				Map<String,Object> instances = tmp.getPersistentState();
+				String path = StringUtil.getString(filter.get("path"));
+				path = path+"/icon/";
+				File newFile = new File(path);
+				FileUtil.makeParent(new File(path+"ss.ss"));
+				
+				String[] icons = newFile.list();
+				String userId = StringUtil.getString(instances.get("PI_START_AUTHOR"));
+				for(String tmp2:icons){
+					if(tmp2.startsWith(userId)){
+						instances.put("icon", "icon/"+tmp2);
+					}
+				}
+				instanceMaps.add(instances);
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);

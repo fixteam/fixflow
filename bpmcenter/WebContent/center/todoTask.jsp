@@ -158,7 +158,7 @@ a{text-decoration: none;}
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		      <td><c:out value="${index.index+1}"/></td>
-		      <td><img src="" alt="头像"><br>${dataList.PI_START_AUTHOR}</td>
+		      <td><img src="${dataList.icon}" alt="头像"><br>${dataList.PI_START_AUTHOR}</td>
 		      <td>步骤名称 <br> ${dataList.description}</td>
 		      <td>${dataList.bizKey}</td>
 		      <td>流程名称 <br> <fmt:formatDate value="${dataList.createTime}" type="both"/> <br> 到达时间 </td>

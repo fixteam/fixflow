@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 		if(!SpringConfigLoadHelper.isCreated()){
 			WebApplicationContext wac = (WebApplicationContext) this.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 			SpringConfigLoadHelper.buildApplicationContext(wac);
-		}
+		} 
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("action", "getMyTask");
 				response.sendRedirect("FlowCenter?action=getMyTask");
 			}else{
-				response.sendRedirect("login.jsp");
+				response.sendRedirect("/center/login.jsp");
 			}
 			
 		} catch (SQLException e) {
