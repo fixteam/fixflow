@@ -34,6 +34,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
@@ -116,7 +117,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =15;
+			int rowNum   =10;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -149,6 +150,7 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 			
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
+			IdentityService identsvz = engine.getIdentityService();
 			
 			for(TaskInstance tmp:lts){ 
 				Map<String,Object> instances = tmp.getPersistentState();
@@ -164,6 +166,9 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 						instances.put("icon", "icon/"+tmp2);
 					}
 				}
+				
+				UserTo user = identsvz.getUserTo(userId);
+				instances.put("userName", user.getUserName());
 				instanceMaps.add(instances);
 			}
 			result.put("dataList", instanceMaps);
