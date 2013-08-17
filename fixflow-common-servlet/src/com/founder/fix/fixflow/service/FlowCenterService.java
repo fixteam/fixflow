@@ -265,5 +265,6 @@ public interface FlowCenterService {
 	  * @throws SQLException
 	  */
 	public ProcessInstance completeTask(Map<String,Object> params) throws SQLException;
-
+	
+	public void cutUserIcon(Map<String,Object> params) throws IOException;
 }

@@ -49,6 +49,8 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.FileUtil;
+import com.founder.fix.fixflow.util.ImageCutUtil;
+import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
@@ -464,5 +466,30 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		}else{
 			return FixFlowShellProxy.createProcessEngine(userId);
 		}
+	}
+	
+	public void cutUserIcon(Map<String,Object> params) throws IOException{
+		String userId = (String) params.get("userId");
+		String path = StringUtil.getString(params.get("path"));
+		String scaled = StringUtil.getString(params.get("scaled"));
+		Map<String,Object> map = JSONUtil.parseJSON2Map(scaled);
+		int x = Integer.valueOf(StringUtil.getString(map.get("x")));
+		int y = Integer.valueOf(StringUtil.getString(map.get("y")));
+		int w = Integer.valueOf(StringUtil.getString(map.get("w")));
+		int h = Integer.valueOf(StringUtil.getString(map.get("h")));
+		path = path+"/icon/";
+		File newFile = new File(path);
+		FileUtil.makeParent(new File(path+"ss.ss"));
+		
+		String[] icons = newFile.list();
+		for(String tmp:icons){
+			if(tmp.startsWith(userId)){
+				path +=tmp;
+			}
+		}
+		
+		ImageCutUtil icu = new ImageCutUtil(path,x,y,w,h);
+		icu.setSubpath(path);
+		icu.cut();
 	}
 }

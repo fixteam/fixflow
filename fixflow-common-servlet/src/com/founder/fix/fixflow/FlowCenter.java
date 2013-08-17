@@ -196,8 +196,14 @@ public class FlowCenter extends HttpServlet {
 						.getRealPath("/"));
 				getFlowCenter().saveUserIcon(filter);
 				rd = request
-						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+						.getRequestDispatcher("/FlowCenter?action=getUserInfo");
 			//以下内容都是demo部分	
+			} else if (action.equals("cutUserIcon")){
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				getFlowCenter().cutUserIcon(filter);
+				rd = request
+						.getRequestDispatcher("/FlowCenter?action=getUserInfo");
 			} else if (action.equals("startOneTask")) { // 仅实现获取按钮功能 add by Rex
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
