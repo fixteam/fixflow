@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
 import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
-import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -41,7 +40,7 @@ public class GeneralConnectionResultImpl implements FixConnectionResult {
 			for (DataBase dataBase : fixFlowConfig.getDataBaseConfig().getDataBase()) {
 				if (dataBase.getId().equals(this.dbId)) {
 					selectedDatabase = dataBase;
-					ConnectionManagement.defaultDataBaseId = selectedDatabase.getId();
+					//ConnectionManagement.defaultDataBaseId = selectedDatabase.getId();
 				}
 			}
 

@@ -14,11 +14,11 @@ import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
 public abstract class ConnectionManagement {
 	
 	
-	//private static String FIXDATABASEID="DB_FIX_BIZ_BASE";
+	private static String FIXDATABASEID="DB_FIX_BIZ_BASE";
 	
-	//public static String defaultDataBaseId=FIXDATABASEID;
+	public static String defaultDataBaseId=FIXDATABASEID;
 	//默认的数据库连接
-	public static String defaultDataBaseId = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSelectedDatabase().getId();
+	//public static String defaultDataBaseId = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSelectedDatabase().getId();
 
 	
 	public static ConnectionManagement INSTANCE(){
