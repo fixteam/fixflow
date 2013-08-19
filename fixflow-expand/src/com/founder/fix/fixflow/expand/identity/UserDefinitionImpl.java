@@ -22,8 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.cache.CacheHandler;
+import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
@@ -94,6 +96,36 @@ public class UserDefinitionImpl extends UserDefinition {
 			
 		}
 		return groupTos;
+	}
+	
+	@Override
+	public List<UserTo> getUserTos(Page page,Map<String,Object> queryMap) {
+		
+		List<UserTo> resultList = new ArrayList<UserTo>();
+		String userIdField=getUserInfoConfig().getUserIdField();
+		String userNameField=getUserInfoConfig().getUserNameField();
+		String sqlText=getUserInfoConfig().getSqlText();
+		SqlCommand sqlCommand = getSqlCommand();
+		String sql = "SELECT USERTABLE.* FROM ("+sqlText+") USERTABLE WHERE 1=1";
+		if(queryMap != null && queryMap.containsKey("USERID")){
+			sql += "AND "+userIdField+" LIKE '%"+queryMap.get("USERID")+"%'";
+		}
+		if(queryMap != null && queryMap.containsKey("USERNAME")){
+			sql += "AND "+userNameField+" LIKE '%"+queryMap.get("USERNAME")+"%'";
+		}
+		if (page != null) {
+			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
+			sql = pagination.getPaginationSql(sql, page.getFirstResult(), page.getMaxResults(), "*",null);
+		}
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sql, null);
+		
+		for(int i= 0;i<dataObj.size();i++){
+			if (dataObj.get(i).get(userIdField) != null) {
+				UserTo userTo = new UserTo(StringUtil.getString(dataObj.get(i).get(userIdField)), StringUtil.getString(dataObj.get(i).get(userNameField)), dataObj.get(i));
+				resultList.add(userTo);
+			}
+		}
+		return resultList;
 	}
 
 }

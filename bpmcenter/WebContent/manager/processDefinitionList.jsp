@@ -12,67 +12,11 @@
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/global.css">
 <link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="css/page.css">
 <style>
 a{text-decoration: none;}
-
 .red_star{
    color:red;
-}
-.pagearea{
-   margin-top:20px;
-   float:right;
-   text-align:right;
-   width:100%;
-   font-size:12px;
-   
-}
-.pagearea .qp{
-   border:#AAAADD solid 1px;
-   width:60px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-   text-align:center;
-}
-.pagearea .disqp{
-   border:#EEEEEE solid 1px;
-   width:60px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-   color:#EEEEEE;
-}
-.pagearea a {
-   border:#AAAADD solid 1px;
-   width:25px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-   text-align:center;
-}
-.pagearea .point{
-   width:25px;
-   height:10px;
-   margin-right:3px;
-   margin-left:3px;
-}
-.pagearea .focuspage{
-  border:#FD6D01 solid 1px;
-  background-color:#FFEDE1;
-  color:#FD6D01;
-  width:25px;
-  height:10px;
-  margin-right:3px;
-  margin-left:3px;
-  font-weight:bold;
-  text-align:center;
-}
-.pagearea info{
-  color:#666666;
-}
-.pagearea a{
-  TEXT-DECORATION:none;
-  color:#3366CC;
 }
 </style>
 <title>流程定义列表</title>
@@ -124,6 +68,7 @@ a{text-decoration: none;}
 </head>
 
 <body>
+<form action="FlowManager" id="subForm">
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
 <div style="margin-top:1px;">
@@ -134,27 +79,19 @@ a{text-decoration: none;}
 <!-- 右-->
 	<div class="right" style="width:98%;">
 	  <!-- 查 -->
-	  <div id="search">
-	 	<table width="100%">
+	  <div class="search">
+        	<table width="100%">
               <tr>
-                <td class="title-r">任务主题：</td>
-                <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
-                <td class="title-r">流程变量：</td>
-                <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
-                <td class="title-r">单 据 号：</td>
-                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
-              </tr>
-              <tr>
-                <td class="title-r">发 起 人：</td>
-                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+                <td class="title-r">流程名称：</td>
+                <td><input type="text" id="text_3" name="processName" class="fix-input" style="width:160px;" value="${result.processName}"/></td>
                 <td class="title-r">到达时间：</td>
                 <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}"/>
                  - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}"/></td>
-                <td><input type="submit"/></td>
-                <td>&nbsp;</td>
+                <td></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
-         </div>
+        </div>
 	  <div>
 	  
 	  <input type="button" value="发布流程" onclick="deployment()" />
@@ -183,22 +120,74 @@ a{text-decoration: none;}
 		  </tbody>
 	    </table>
 		<!-- 分页 -->	    
-	    <div id="page">
+	   <jsp:include page="../center/page.jsp" flush="true"/>
 	    </div>
 	  </div>
 	</div>
 </div>
-</div>
 <!-- 隐藏参数部分 -->
-<input type="hidden" name="userId" value="<c:out value="${result.userId}"/>">
-<input type="hidden" name="pageIndex" value="<c:out value="${result.pageIndex}"/>">
-<input type="hidden" name="rowNum" value="<c:out value="${result.rowNum}"/>">
-<input type="hidden" name="type" value="<c:out value="${result.action}"/>">
-
-<form action="FlowManager">
 	<input type="hidden" name="deploymentId" id="deploymentId" value=""/>
-	<input type="hidden" name="action" id="action" value=""/>
+	<input type="hidden" name="action" id="action" value="processDefinitionList"/>
 	<input type="hidden" name="processDefinitionId" id="processDefinitionId" value=""/>
 </form>
 </body>
+
+<script>
+/*  
+ * "userId" 用户编号
+ * "pdkey" 流程编号
+ * "pageIndex" 第几页
+ * "rowNum" 有几行
+ * "agentUserId" 有几行
+ * "agentType" 0我代理别人，1别人委托给我
+ * "title" 查询主题
+ * "processVeriy" 查询变量
+ * "arrivalTimeS" 到达时间开始
+ * "arrivalTimeE" 到达时间结束
+ * "initor" 发起人
+ * @param @return
+ * "dataList" 数据列表
+ * "pageNumber" 总行数
+ * "agentUsers" 代理用户
+ * "agentToUsers" 委托用户
+ * "pageIndex" 第几页
+ * "rowNum" 有几行
+ */
+$(function(){
+  var agentType = $("input[name=agentType]").val();
+  var userId = $("input[name=userId]").val();
+  $("a[name=myTask]").click(function(){
+    $("#agentUserId").val();
+    $("#agentType").val();
+    $("#subForm").submit();
+  });
+  $("a[name=agentUsers]").click(function(){
+    var userId = $(this).attr("userId");
+    $("#agentUserId").val(userId);
+    $("#agentType").val('1');
+    $("#subForm").submit();
+  });
+  $("a[name=agentToUsers]").click(function(){
+    var userId = $(this).attr("userId");
+    $("#agentUserId").val(userId);
+    $("#agentType").val('0');
+    $("#subForm").submit();
+  });
+  $("a[name=flowGraph]").click(function(){
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
+  });
+  $("a[name=doTask]").click(function(){
+    var tii = $(this).attr("tii");
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
+    var bizKey = $(this).attr("bk");
+    
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
+  });
+});
+</script>
 </html>

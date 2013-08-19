@@ -19,22 +19,24 @@ package com.founder.fix.fixflow.core.impl.identity;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 
 public abstract class UserDefinition {
 	
 	protected AllUserInfo userInfoConfig;
 	
-	
-	
-	
+	/**
+	 * 获取流程引擎中配置的用户信息
+	 * @return
+	 */
 	public AllUserInfo getUserInfoConfig() {
 		return userInfoConfig;
 	}
-
 
 	public void setUserInfoConfig(AllUserInfo userInfoConfig) {
 		this.userInfoConfig = userInfoConfig;
@@ -45,19 +47,26 @@ public abstract class UserDefinition {
 	 * @return
 	 */
 	public SqlCommand getSqlCommand(){
-		
 		String dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
-		
-
 		Connection connection = Context.getDbConnection(dataBaseId);// Context.getDbConnection();
-
 		SqlCommand sqlCommand = new SqlCommand(connection);
-
 		return sqlCommand;
 		
 	}
 
-
+	/**
+	 * 根据分页和查询条件获取用户
+	 * @param page
+	 * @param queryMap key有 USERID,USERNAME
+	 * @return
+	 */
+	public abstract List<UserTo> getUserTos(Page page,Map<String,Object> queryMap);
+	
+	/**
+	 * 根据userid获取用户
+	 * @param userId
+	 * @return
+	 */
 	public abstract UserTo findUserByUserId(String userId);
 	
 	/**

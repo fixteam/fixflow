@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.core.impl;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.impl.cmd.GetGroupInfoByGroupIdCmd;
@@ -49,6 +50,10 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
 
 	public UserTo getUserTo(String userId) {
 		return commandExecutor.execute(new UserDefinitionInfoCmd()).findUserByUserId(userId);
+	}
+	
+	public List<UserTo> getUserTos(Page page, Map<String, Object> queryMap) {
+		return commandExecutor.execute(new UserDefinitionInfoCmd()).getUserTos(page, queryMap);
 	}
 
 	public boolean verificationStartUserByKey(String userId, String processDefinitionKey) {

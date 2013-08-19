@@ -18,7 +18,9 @@
 package com.founder.fix.fixflow.core;
 
 import java.util.List;
+import java.util.Map;
 
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserDefinition;
@@ -63,6 +65,13 @@ public interface IdentityService extends ProcessService{
 	 */
 	UserTo getUserTo(String userId);
 	
+	/**
+	 * 获取用户对象集合
+	 * @param page
+	 * @param queryMap key:USERID,USERNAME  (LIKE匹配)
+	 * @return
+	 */
+	List<UserTo> getUserTos(Page page,Map<String,Object> queryMap);
 	
 	boolean verificationStartUserByKey(String userId,String processDefinitionKey);
 
