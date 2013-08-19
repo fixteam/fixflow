@@ -39,6 +39,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
+import com.founder.fix.fixflow.service.UserGroupService;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
 
@@ -144,6 +145,14 @@ public class FlowManager extends HttpServlet {
 				outZip.flush();
 				outZip.close();
 			}
+			
+			if("getUserList".equals(action)){
+				Map<String, Object> result = getUserGroupService().getAllUsers(filter);
+				filter.putAll(result);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
+				rd = request.getRequestDispatcher("/manager/userList.jsp");
+			}
 			if (rd != null)
 				rd.forward(request, response);
 		}catch (Exception e) {
@@ -162,4 +171,7 @@ public class FlowManager extends HttpServlet {
 		return (ProcessDefinitionService) SpringConfigLoadHelper.getBean("processDefinitionServiceImpl");
 	}
 	
+	private UserGroupService getUserGroupService(){
+		return (UserGroupService) SpringConfigLoadHelper.getBean("userGroupServiceImpl");
+	}
 }

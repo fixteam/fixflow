@@ -44,7 +44,7 @@ import com.founder.fix.fixflow.util.Pagination;
 @Service
 public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 
-private Connection connection;
+	private Connection connection;
 	
 	public Connection getConnection() {
 		return connection;
@@ -61,6 +61,11 @@ private Connection connection;
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ProcessDefinitionQuery processDefinitionQuery = processEngine.getModelService().createProcessDefinitionQuery();
 		try{
+			
+			String processName = StringUtil.getString(params.get("processName"));
+			if(StringUtil.isNotEmpty(processName)){
+				processDefinitionQuery.processDefinitionNameLike(processName);
+			}
 			String pageI = StringUtil.getString(params.get("pageIndex"));
 			String rowI = StringUtil.getString(params.get("pageSize"));
 			

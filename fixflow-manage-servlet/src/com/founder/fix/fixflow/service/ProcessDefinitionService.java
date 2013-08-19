@@ -42,12 +42,31 @@ public interface ProcessDefinitionService {
 	 */
 	public Connection getConnection();
 	
+	/**
+	 * 查询流程定义
+	 * @param params
+	 * @return 流程定义的所有信息
+	 * @throws SQLException
+	 */
 	public Map<String, Object> getProcessDefitionList(Map<String,Object> params) throws SQLException;
 	
+	/**
+	 * 发布流程定义
+	 * @param params key：deploymentId发布号（更新用）ProcessFile：文件流
+	 */
 	public void deployByZip(Map<String,Object> params);
 	
+	/**
+	 * 删除流程定义
+	 * @param params key:deploymentId发布号
+	 */
 	public void deleteDeploy(Map<String,Object> params);
 	
+	/**
+	 * 获取流程定义文件流用于下载流程定义
+	 * @param params  key:deploymentId
+	 * @return key: FILENAME文件名，BYTES文件字节流
+	 */
 	public List<Map<String,Object>> getResources(Map<String,Object> params);
 	
 }
