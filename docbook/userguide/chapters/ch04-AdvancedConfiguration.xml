@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>高级配置</title>
+  
+  <section xml:id="config.taskCommsndConfig">
+    <title>任务命令配置</title>
+    <para>
+
+    </para>
+  </section>
+  
+  
+  <section xml:id="config.assignPolicyConfig">
+    <title>分配策略配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="config.expandClassConfig">
+    <title>引擎扩展配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="config.internationalizationConfig">
+    <title>国际化配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="config.threadConfig">
+    <title>线程池配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="config.dataVariablesConfig">
+    <title>数据变量配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+</chapter>
+
+
+

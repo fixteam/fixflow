@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>数据库说明</title>
+  
+  <section xml:id="dataBase.support">
+    <title>数据库支持</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="dataBase.table">
+    <title>数据表介绍</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="dataBase.extension">
+    <title>扩展数据库</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="dataBase.dataDictionary">
+    <title>数据字典</title>
+    <para>
+      
+    </para>
+  </section>
+
+  
+</chapter>

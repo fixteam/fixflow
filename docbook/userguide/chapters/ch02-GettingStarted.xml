@@ -10,14 +10,13 @@
     <para>
     </para>
   </section>
-  
   <section xml:id="gs.webConfig">
     <title>Web环境配置</title>
     <para>
     </para>
   </section>
   
-  <section xml:id="gs.dataBaseConfig">
+  <section xml:id="gs.dataBaseRun">
     <title>DataBase脚本安装</title>
     <para>
     </para>

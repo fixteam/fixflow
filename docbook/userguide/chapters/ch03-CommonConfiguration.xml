@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>常用配置</title>
+  
+  <section xml:id="config.createProcessEngine">
+    <title>创建一个ProcessEngine</title>
+    <para>
+
+    </para>
+  </section>
+  
+  
+  <section xml:id="config.dataBaseConfig">
+    <title>数据库配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="config.orgConfig">
+    <title>组织结构配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+ 
+  
+  <section xml:id="config.mailConfig">
+    <title>邮件服务配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="config.quartzConfig">
+    <title>定时任务配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="config.scriptConfig">
+    <title>脚本语言配置</title>
+    <para>
+      
+    </para>
+  </section>
+  
+ 
+</chapter>
+
+
+
