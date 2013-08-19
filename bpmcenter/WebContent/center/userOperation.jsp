@@ -6,51 +6,31 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<script type="text/javascript" src="js/jquery.js"></script>
-	<script src="js/Jcrop/jquery.min.js"></script>
-	<script src="js/Jcrop/jquery.Jcrop.js"></script>
-	<script type="text/javascript" src="center/userOperation.js"></script>
-	<link rel="stylesheet" href="js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
 	<title>用户信息</title>
-	
-	<style type="text/css">
-	#target{
-		max-width:300px;
-		max-height:300px;
-		min-width:150px;
-		min-height:150px;
-	}
-	
-	/* Apply these styles only when #preview-pane has
-	   been placed within the Jcrop widget */
-	.jcrop-holder #preview-pane {
-	  display: block;
-	  position: absolute;
-	  z-index: 2000;
-	  top: 10px;
-	  right: -280px;
-	  padding: 6px;
-	  border: 1px rgba(0,0,0,.4) solid;
-	  background-color: white;
-	
-	  -webkit-border-radius: 6px;
-	  -moz-border-radius: 6px;
-	  border-radius: 6px;
-	
-	  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
-	  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
-	  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
-	}
-	
-	/* The Javascript code will set the aspect ratio of the crop
-	   area based on the size of the thumbnail preview,
-	   specified here */
-	#preview-pane .preview-container {
-	  width: 250px;
-	  height: 250px;
-	  overflow: hidden;
-	}
-	
-	</style>
+	<style type="text/css" media="screen">
+  html, body { height:100%; background-color: #ffffff;}
+  #flashContent { width:100%; height:100%; }
+  	</style>
+  
+	<script type="text/javascript">
+   function uploadevent(status){
+	//alert(status);
+        status += '';
+     switch(status){
+     case '1':
+		var time = new Date().getTime();
+		document.getElementById('avatar_priview').innerHTML = "头像1 : <img src='1.png?" + time + "'/> <br/> 头像2: <img src='2.png?" + time + "'/><br/> 头像3: <img src='3.png?" + time + "'/>" ;
+		
+	break;
+     break;
+     case '-1':
+	  window.location.reload();
+     break;
+     default:
+     window.location.reload();
+    } 
+   }
+	</script>
 </head>
 <body>
 	<form action="FlowCenter" enctype="multipart/form-data" method="post">
@@ -96,11 +76,31 @@
 			<tr>
 				<td colspan="2">
 					<input id="btnconfirm" type="submit" value="保存图片"/>
-					<input id="fn_scaled" type="button" value="裁剪"/>
-					<input type="text" name="scaled" id="scaled">
 				</td>
 			</tr>
 		</table>
 	</form>
+	  <div id="altContent">
+
+
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
+WIDTH="650" HEIGHT="450" id="myMovieName">
+<PARAM NAME=movie VALUE="js/flash_avatar/avatar.swf">
+<PARAM NAME=quality VALUE=high>
+<PARAM NAME=bgcolor VALUE=#FFFFFF>
+<param name="flashvars" value="imgUrl=js/flash_avatar/default.jpg&uploadUrl=js/flash_avatar/upfile.jsp&uploadSrc=false" />
+<EMBED src="js/flash_avatar/avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=js/flash_avatar/default.jpg&uploadUrl=js/flash_avatar/upfile.jsp&uploadSrc=false"
+NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
+PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
+ 
+
+  </div>
+
+  <div id="avatar_priview"></div>
+	
+	
 </body>
 </html>
