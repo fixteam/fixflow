@@ -76,6 +76,37 @@ a{text-decoration: none;}
 }
 </style>
 <title>流程定义列表</title>
+
+
+<script type="text/javascript">
+	function deployment(){
+		window.open("manager/deployment.jsp");
+	}
+	
+	function deleteDeploy(){
+		var deploymentId = "";
+		var checkList = $("input:checked");
+		for(var i=0;i<checkList.length;i++){
+			if(i == 0){
+				deploymentId = $(checkList[i]).attr("deploymentId");
+			}else{
+				deploymentId = deploymentId+","+$(checkList[i]).attr("deploymentId");
+			}
+		}
+		$("#deploymentId").val(deploymentId);
+		$("#action").val("deleteDeploy");
+		document.forms[0].submit();
+	}
+	
+	function updateDeploy(){
+		var deploymentId = "";
+		var checkList = $("input:checked");
+		if(checkList.length >0){
+		 	deploymentId = $(checkList[0]).attr("deploymentId");
+		}
+		window.open("manager/deployment.jsp?deploymentId="+deploymentId);
+	}
+</script>
 </head>
 
 <body>
@@ -111,17 +142,23 @@ a{text-decoration: none;}
             </table>
          </div>
 	  <div>
+	  
+	  <input type="button" value="发布流程" onclick="deployment()" />
+	  <input type="button" value="删除定义" onclick="deleteDeploy()" />
+	  <input type="button" value="更新定义" onclick="updateDeploy()" />
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
+		   <th width="2%"></th>
 		    <th width="30%">流程定义编号</th>
 		    <th >流程定义名称</th>
 		    <th width="5%">流程版本</th>
-		    <th width="10%">流程分类</th>
+		    <th width="8%">流程分类</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
+		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" /></td>
 		      <td>${dataList.processDefinitionId}</td>
 		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.version}</td>
@@ -142,5 +179,10 @@ a{text-decoration: none;}
 <input type="hidden" name="pageIndex" value="<c:out value="${result.pageIndex}"/>">
 <input type="hidden" name="rowNum" value="<c:out value="${result.rowNum}"/>">
 <input type="hidden" name="type" value="<c:out value="${result.action}"/>">
+
+<form action="FlowManager">
+	<input type="hidden" name="deploymentId" id="deploymentId" value=""/>
+	<input type="hidden" name="action" id="action" value=""/>
+</form>
 </body>
 </html>
