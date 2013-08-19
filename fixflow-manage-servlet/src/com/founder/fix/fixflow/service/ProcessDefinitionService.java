@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.service;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -46,5 +47,7 @@ public interface ProcessDefinitionService {
 	public void deployByZip(Map<String,Object> params);
 	
 	public void deleteDeploy(Map<String,Object> params);
+	
+	public List<Map<String,Object>> getResources(Map<String,Object> params);
 	
 }

@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.service.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
+import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
@@ -123,6 +126,32 @@ private Connection connection;
 		finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
+	}
+	
+	public List<Map<String,Object>> getResources(Map<String,Object> params){
+		String userid = StringUtil.getString(params.get("userId"));
+		String deploymentId = StringUtil.getString(params.get("deploymentId"));
+		ProcessEngine processEngine = null;
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		try {
+			processEngine = getProcessEngine(userid);
+			DeploymentEntity deploymentEntity= processEngine.getModelService().getDeploymentEntity(deploymentId);
+			Map<String,ResourceEntity> map = deploymentEntity.getResources();
+			for(String key :map.keySet()){
+				Map<String,Object> resultMap = new HashMap<String,Object>();
+				ResourceEntity resourceEntity = map.get(key);
+				resultMap.put("FILENAME", resourceEntity.getName());
+				resultMap.put("BYTES", resourceEntity.getBytes());
+				resultList.add(resultMap);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		return resultList;
 	}
 	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{

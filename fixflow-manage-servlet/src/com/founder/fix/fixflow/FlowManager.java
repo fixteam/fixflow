@@ -22,6 +22,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -116,6 +118,31 @@ public class FlowManager extends HttpServlet {
 			if("deleteDeploy".equals(action)){
 				getProcessDefinitionService().deleteDeploy(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
+			}
+			if("download".equals(action)){
+				String processDefinitionId = StringUtil.getString(filter.get("processDefinitionId"));
+				response.reset();
+				request.setCharacterEncoding("gbk");
+				response.setContentType("applcation/octet-stream");
+				response.setHeader("Content-disposition","attachment; filename="+processDefinitionId+".zip");
+				response.setHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0,private, max-age=0");
+				response.setHeader("Content-Type", "application/octet-stream");
+				response.setHeader("Content-Type", "application/force-download");
+				response.setHeader("Pragma", "public");
+				response.setHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0");
+				
+				ZipOutputStream outZip = new ZipOutputStream(response.getOutputStream());
+				List<Map<String,Object>> fileList = getProcessDefinitionService().getResources(filter);
+				for (Map<String, Object> file : fileList) {
+					ZipEntry entry = new ZipEntry(file.get("FILENAME").toString());
+					entry.setSize(((byte[])file.get("BYTES")).length);
+					outZip.putNextEntry(entry);
+					outZip.write((byte[])file.get("BYTES"));
+					outZip.closeEntry();
+				}
+				outZip.close();
+				outZip.flush();
+				outZip.close();
 			}
 			if (rd != null)
 				rd.forward(request, response);
