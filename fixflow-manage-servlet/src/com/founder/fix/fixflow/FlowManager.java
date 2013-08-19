@@ -102,14 +102,15 @@ public class FlowManager extends HttpServlet {
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if (action.equals("processDefinitionList")) {
-				ProcessDefinitionService processDefinitionService = (ProcessDefinitionService) SpringConfigLoadHelper.getBean("processDefinitionServiceImpl");
-				Map<String, Object> result = processDefinitionService.getProcessDefitionList(filter);
+				Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
 			}
-			
+			if("deploy".equals(action)){
+				
+			}
 			if (rd != null)
 				rd.forward(request, response);
 		}catch (Exception e) {
@@ -122,6 +123,10 @@ public class FlowManager extends HttpServlet {
 			CurrentThread.clear();
 		}
 		
+	}
+	
+	private ProcessDefinitionService getProcessDefinitionService(){
+		return (ProcessDefinitionService) SpringConfigLoadHelper.getBean("processDefinitionServiceImpl");
 	}
 	
 }
