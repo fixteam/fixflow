@@ -12,5 +12,7 @@
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch02-GettingStarted.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch03-CommonConfiguration.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch04-AdvancedConfiguration.xml"/> 
-  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch05-DataBaseSupport.xml"/>  
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch05-DataBaseSupport.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch06-FixFlowApi.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch07-Deployment.xml"/>
 </book>
