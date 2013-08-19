@@ -108,6 +108,7 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
 			}
+			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
 				getProcessDefinitionService().deployByZip(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");

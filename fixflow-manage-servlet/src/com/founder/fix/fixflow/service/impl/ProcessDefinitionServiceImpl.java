@@ -93,7 +93,13 @@ private Connection connection;
 		ProcessEngine processEngine = null;
 		try {
 			processEngine = getProcessEngine(userid);
-			processEngine.getModelService().deploymentByZip(new ZipInputStream(file.getInputStream()));
+			String deploymentId = StringUtil.getString(params.get("deploymentId"));
+			//有deploymentID则为更新，否则为新增
+			if(deploymentId != null && !"".equals(deploymentId)){
+				processEngine.getModelService().updateDeploymentByZip(new ZipInputStream(file.getInputStream()),deploymentId);
+			}else{
+				processEngine.getModelService().deploymentByZip(new ZipInputStream(file.getInputStream()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
