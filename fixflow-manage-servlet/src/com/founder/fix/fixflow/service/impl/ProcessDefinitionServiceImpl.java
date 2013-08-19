@@ -17,13 +17,16 @@
  */
 package com.founder.fix.fixflow.service.impl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipInputStream;
 
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +85,38 @@ private Connection connection;
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
 		return resultMap;
+	}
+	
+	public void deployByZip(Map<String, Object> params) {
+		String userid = StringUtil.getString(params.get("userId"));
+		FileItem file = (FileItem)params.get("ProcessFile");
+		ProcessEngine processEngine = null;
+		try {
+			processEngine = getProcessEngine(userid);
+			processEngine.getModelService().deploymentByZip(new ZipInputStream(file.getInputStream()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+	}
+	
+	public void deleteDeploy(Map<String,Object> params) {
+		String userid = StringUtil.getString(params.get("userId"));
+		String []deploymentIds = StringUtil.getString(params.get("deploymentId")).split(",");
+		ProcessEngine processEngine = null;
+		try {
+			processEngine = getProcessEngine(userid);
+			for(int i = 0;i<deploymentIds.length;i++){
+				processEngine.getModelService().deleteDeployment(deploymentIds[i], true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
 	}
 	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{

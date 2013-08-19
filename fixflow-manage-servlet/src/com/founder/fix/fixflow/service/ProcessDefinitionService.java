@@ -41,6 +41,10 @@ public interface ProcessDefinitionService {
 	 */
 	public Connection getConnection();
 	
-	public Map<String, Object> getProcessDefitionList(Map<String,Object> param) throws SQLException;
+	public Map<String, Object> getProcessDefitionList(Map<String,Object> params) throws SQLException;
+	
+	public void deployByZip(Map<String,Object> params);
+	
+	public void deleteDeploy(Map<String,Object> params);
 	
 }

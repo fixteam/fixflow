@@ -101,7 +101,7 @@ public class FlowManager extends HttpServlet {
 					.getAttribute(FlowCenterService.LOGIN_USER_ID));
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
-			if (action.equals("processDefinitionList")) {
+			if ("processDefinitionList".endsWith(action)) {
 				Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
@@ -109,7 +109,12 @@ public class FlowManager extends HttpServlet {
 				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
 			}
 			if("deploy".equals(action)){
-				
+				getProcessDefinitionService().deployByZip(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
+			}
+			if("deleteDeploy".equals(action)){
+				getProcessDefinitionService().deleteDeploy(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
 			}
 			if (rd != null)
 				rd.forward(request, response);
