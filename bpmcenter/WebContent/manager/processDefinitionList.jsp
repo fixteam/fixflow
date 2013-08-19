@@ -106,6 +106,20 @@ a{text-decoration: none;}
 		}
 		window.open("manager/deployment.jsp?deploymentId="+deploymentId);
 	}
+	
+	function download(){
+		var deploymentId = "";
+		var processDefinitionId = "";
+		var checkList = $("input:checked");
+		if(checkList.length >0){
+		 	deploymentId = $(checkList[0]).attr("deploymentId");
+		 	processDefinitionId = $(checkList[0]).attr("processDefinitionId");
+		}
+		$("#deploymentId").val(deploymentId);
+		$("#action").val("download");
+		$("#processDefinitionId").val(processDefinitionId);
+		document.forms[0].submit();
+	}
 </script>
 </head>
 
@@ -146,6 +160,7 @@ a{text-decoration: none;}
 	  <input type="button" value="发布流程" onclick="deployment()" />
 	  <input type="button" value="删除定义" onclick="deleteDeploy()" />
 	  <input type="button" value="更新定义" onclick="updateDeploy()" />
+	   <input type="button" value="下载定义" onclick="download()" />
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
@@ -158,7 +173,7 @@ a{text-decoration: none;}
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" /></td>
+		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" processDefinitionId="${dataList.processDefinitionId}" /></td>
 		      <td>${dataList.processDefinitionId}</td>
 		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.version}</td>
@@ -183,6 +198,7 @@ a{text-decoration: none;}
 <form action="FlowManager">
 	<input type="hidden" name="deploymentId" id="deploymentId" value=""/>
 	<input type="hidden" name="action" id="action" value=""/>
+	<input type="hidden" name="processDefinitionId" id="processDefinitionId" value=""/>
 </form>
 </body>
 </html>
