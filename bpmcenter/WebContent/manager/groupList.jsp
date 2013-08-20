@@ -6,18 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<link rel="stylesheet" type="text/css" href="css/page.css">
-<style>
-a{text-decoration: none;}
-.red_star{
-   color:red;
-}
-</style>
+<jsp:include page="head.jsp" flush="true"/>
 <title>用户组查询</title>
 </head>
 <body>
@@ -30,7 +19,7 @@ a{text-decoration: none;}
     	<div class="left-nav-box">
     	<div class="left-nav"><a name="userList" href="FlowManager?action=getUserList">用户</a></div>
         <div class="left-nav-orange-line">&nbsp;</div>
-       	<div class="left-nav"><a name="myTask" href="#">组</a></div>
+       	<div class="left-nav"><a name="group" href="#">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
 			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="images/temp/user01.jpg" />${group.typeName}</a></div>
@@ -67,8 +56,8 @@ a{text-decoration: none;}
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
-		      <td>${dataList.ORGID}</td>
-		      <td>${dataList.ORGNAME}</td>
+		      <td>${dataList.groupId}</td>
+		      <td>${dataList.groupName}</td>
 		      <td></td>
 		      <td></td>
 		    </tr>
@@ -76,7 +65,7 @@ a{text-decoration: none;}
 		  </tbody>
 	    </table>
 		<!-- 分页 -->	    
-	   <jsp:include page="../center/page.jsp" flush="true"/>
+	   <jsp:include page="page.jsp" flush="true"/>
 	    </div>
 	  </div>
 	</div>
