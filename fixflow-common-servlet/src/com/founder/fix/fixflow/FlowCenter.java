@@ -170,18 +170,21 @@ public class FlowCenter extends HttpServlet {
 						.queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getInitorProcess")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryTaskInitiator(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getParticipantsProcess")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryTaskParticipants(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getTaskDetailInfo")) {
 				Map<String, Object> pageResult = getFlowCenter()

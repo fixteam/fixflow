@@ -111,23 +111,9 @@ $("a[name=flowGraph]").click(function(){
 							</tbody>
 						</table>
 						<!-- 分页 -->
-						<div id="page">
-							<%
-								Map map = (Map) request.getAttribute("result");
-								Object pageIndex = (Object) map.get("pageIndex");
-								int pi = 1;
-								if (pageIndex == null) {
-									pi = 1;
-								} else {
-									pi = (Integer) pageIndex;
-								}
-								for (int m = 0; m < pi; m++) {
-							%>
-							<a name="page" href="javascript:void(0);"><%=m + 1%></a>
-							<%
-								}
-							%>
-						</div>
+					    <div id="page">
+					      <jsp:include page="page.jsp" flush="true"/>
+					    </div>
 					</div>
 				</div>
 			</form>

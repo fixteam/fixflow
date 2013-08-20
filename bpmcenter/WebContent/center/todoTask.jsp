@@ -53,7 +53,7 @@ $(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj);
   });
   $("a[name=doTask]").click(function(){
     var tii = $(this).attr("tii");
