@@ -42,4 +42,6 @@ public interface UserGroupService {
 	
 	public List<Map<String, Object>> getAllGroupDefinition(Map<String,Object> params) throws SQLException;
 	
+	public Map<String,Object> getUserInfo(Map<String,Object> params) throws SQLException;
+	
 }

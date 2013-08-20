@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.service.impl;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 import com.founder.fix.fixflow.service.UserGroupService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.fix.fixflow.util.FileUtil;
 import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
@@ -159,6 +161,28 @@ private Connection connection;
 		}
 		return resultList;
 	}
+	
+	public Map<String, Object> getUserInfo(Map<String, Object> params) throws SQLException {
+		Map<String,Object> result= new HashMap<String,Object>();
+		UserTo user = null;
+		String userId = (String) params.get("userId");
+		ProcessEngine engine = getProcessEngine(userId);
+		
+		String path = StringUtil.getString(params.get("path"));
+		path = path+"/icon/";
+		FileUtil.makeParent(new File(path+"ss.ss"));
+		result.put("icon", "icon/"+userId+".png");
+		try{
+			user = engine.getIdentityService().getUserTo(userId);
+			List<GroupTo> groups = engine.getIdentityService().getUserInGroups(userId);
+			result.put("user", user);
+			result.put("groups", groups);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+		return result;
+	}
+	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
 		if(connection!=null){
 			return FixFlowShellProxy.createProcessEngine(userId,connection);

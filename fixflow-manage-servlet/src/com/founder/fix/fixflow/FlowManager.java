@@ -167,6 +167,13 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/groupList.jsp");
 			}
+			if("getUserInfo".equals(action)){
+				Map<String, Object> pageResult = getUserGroupService().getUserInfo(
+						filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/manager/userInfo.jsp");
+			}
 			if (rd != null)
 				rd.forward(request, response);
 		}catch (Exception e) {
