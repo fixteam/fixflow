@@ -349,15 +349,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		
 		String path = StringUtil.getString(filter.get("path"));
 		path = path+"/icon/";
-		File newFile = new File(path);
+//		File newFile = new File(path);
 		FileUtil.makeParent(new File(path+"ss.ss"));
-		
-		String[] icons = newFile.list();
-		for(String tmp:icons){
-			if(tmp.startsWith(userId)){
-				result.put("icon", "icon/"+tmp);
-			}
-		}
+		result.put("icon", "icon/"+userId+".png");
 		
 		try{
 			user = engine.getIdentityService().getUserTo(userId);
