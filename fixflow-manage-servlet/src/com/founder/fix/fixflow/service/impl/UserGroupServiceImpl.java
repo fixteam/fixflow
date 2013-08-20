@@ -125,7 +125,12 @@ private Connection connection;
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count);
 			for(GroupTo group : groupTos){
-				groupList.add(group.getPropertyMap());
+				
+				Map<String,Object> groupMap = new HashMap<String,Object>();
+				groupMap.put("groupId",group.getGroupId());
+				groupMap.put("groupName", group.getGroupName());
+				groupMap.putAll(group.getPropertyMap());
+				groupList.add(groupMap);
 			}
 			resultMap.put("dataList", groupList);
 			resultMap.put("pageInfo", page);
