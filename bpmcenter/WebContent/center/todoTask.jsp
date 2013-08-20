@@ -130,8 +130,8 @@ $(function(){
                 <td class="title-r">到达时间：</td>
                 <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}"/>
                  - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}"/></td>
-                <td>&nbsp;</td>
-                <td><input type="submit"/></td>
+                <td></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
         </div>
