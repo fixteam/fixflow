@@ -13,7 +13,6 @@ xmlns:context="http://www.springframework.org/schema/context"
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<context:annotation-config />
-	<context:component-scan base-package="com.test" />
 	<bean id="inMessageInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
 	<bean id="outMessageInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 
