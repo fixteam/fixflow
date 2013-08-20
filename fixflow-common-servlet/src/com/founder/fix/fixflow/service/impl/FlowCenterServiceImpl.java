@@ -36,6 +36,8 @@ import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
@@ -281,7 +283,17 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			page.setTotal(count.intValue());
 			
 			for(ProcessInstance tmp:instances){
-				instanceMaps.add(tmp.getPersistentState());
+				Map<String, Object> persistentState = tmp.getPersistentState();
+				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
+				String processDefinitionId = tmp.getProcessDefinitionId();
+				ProcessDefinitionBehavior processDefinitionBehavior = processEngine.getModelService().getProcessDefinition(processDefinitionId);
+				String processDefinitionName = processDefinitionBehavior.getName();
+				persistentState.put("processDefinitionName", processDefinitionName);
+				
+				instanceMaps.add(persistentState);
+				
+				
+				
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);

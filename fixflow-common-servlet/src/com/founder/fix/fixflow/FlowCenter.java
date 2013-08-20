@@ -76,11 +76,11 @@ public class FlowCenter extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String userId = StringUtil.getString(request.getSession()
-				.getAttribute(FlowCenterService.LOGIN_USER_ID));
-		if(StringUtil.isEmpty(userId)){
+		String userId = StringUtil.getString(request.getSession().getAttribute(
+				FlowCenterService.LOGIN_USER_ID));
+		if (StringUtil.isEmpty(userId)) {
 			String context = request.getContextPath();
-			response.sendRedirect(context+"/center/login.jsp");
+			response.sendRedirect(context + "/center/login.jsp");
 			return;
 		}
 		CurrentThread.init();
@@ -88,6 +88,9 @@ public class FlowCenter extends HttpServlet {
 		String action = StringUtil.getString(request.getParameter("action"));
 		if (StringUtil.isEmpty(action)) {
 			action = StringUtil.getString(request.getAttribute("action"));
+		}
+		if (StringUtil.isEmpty(action)) {
+			action = "getMyTask";
 		}
 		RequestDispatcher rd = null;
 		try {
@@ -111,9 +114,9 @@ public class FlowCenter extends HttpServlet {
 					Object obj = request
 							.getParameter(StringUtil.getString(tmp));
 
-//					if (request.getAttribute("ISGET") != null)
-						obj = new String(obj.toString().getBytes("ISO8859-1"),
-								"utf-8");
+					// if (request.getAttribute("ISGET") != null)
+					obj = new String(obj.toString().getBytes("ISO8859-1"),
+							"utf-8");
 
 					filter.put(StringUtil.getString(tmp), obj);
 				}
@@ -129,7 +132,6 @@ public class FlowCenter extends HttpServlet {
 				filter.put(paramName, paramValue);
 
 			}
-
 
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
@@ -196,6 +198,10 @@ public class FlowCenter extends HttpServlet {
 						.getRealPath("/"));
 				getFlowCenter().saveUserIcon(filter);
 				rd = request
+<<<<<<< HEAD
+						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+				// 以下内容都是demo部分
+=======
 						.getRequestDispatcher("/FlowCenter?action=getUserInfo");
 			//以下内容都是demo部分	
 			} else if (action.equals("cutUserIcon")){
@@ -204,65 +210,72 @@ public class FlowCenter extends HttpServlet {
 				getFlowCenter().cutUserIcon(filter);
 				rd = request
 						.getRequestDispatcher("/FlowCenter?action=getUserInfo");
+>>>>>>> branch 'develop' of https://github.com/fixteam/fixflow.git
 			} else if (action.equals("startOneTask")) { // 仅实现获取按钮功能 add by Rex
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
 
-				Map<String,Object> list = getFlowCenter()
-						.GetFlowRefInfo(filter);
+				Map<String, Object> list = getFlowCenter().GetFlowRefInfo(
+						filter);
 				filter.putAll(list);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/center/startOneTask.jsp");
-			} else if (action.equals("doTask")) {//演示如何进入一个已发起的流程处理页面
+			} else if (action.equals("doTask")) {// 演示如何进入一个已发起的流程处理页面
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
 
-				Connection connection =  FixFlowShellProxy.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
-				
-				try{
+				Connection connection = FixFlowShellProxy
+						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
+
+				try {
 					SqlCommand sc = new SqlCommand(connection);
 					List params = new ArrayList();
 					params.add(filter.get("bizKey"));
-					List<Map<String,Object>> res = sc.queryForList("select * from DEMOTABLE where COL1=?",params);
-					
+					List<Map<String, Object>> res = sc.queryForList(
+							"select * from DEMOTABLE where COL1=?", params);
+
 					filter.put("demoObject", res.get(0));
 
-				
 					FlowCenterService fcs = getFlowCenter();
-					Map<String,Object> list =  fcs
-							.GetFlowRefInfo(filter);
+					Map<String, Object> list = fcs.GetFlowRefInfo(filter);
 					filter.putAll(list);
 					request.setAttribute("result", filter);
 					rd = request.getRequestDispatcher("/doTask.jsp");
-				}finally{
-					connection.close();					
+				} finally {
+					connection.close();
 				}
-			}  else if (action.equals("demoCompleteTask")) {//演示如何完成下一步
-				Connection connection =  FixFlowShellProxy.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
+			} else if (action.equals("demoCompleteTask")) {// 演示如何完成下一步
+				Connection connection = FixFlowShellProxy
+						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
 				PreparedStatement ps = null;
 
-				try{
+				try {
 					connection.setAutoCommit(false);
-					ps = connection.prepareStatement("insert into DEMOTABLE(COL1,COL2) values(?,?)");
+					ps = connection
+							.prepareStatement("insert into DEMOTABLE(COL1,COL2) values(?,?)");
 					ps.setObject(1, filter.get("businessKey"));
 					ps.setObject(2, filter.get("COL2"));
 					ps.execute();
 					FlowCenterService fcs = getFlowCenter();
 					fcs.setConnection(connection);
 					fcs.completeTask(filter);
-					rd = request.getRequestDispatcher("/FlowCenter?action=getMyProcess");
-				}finally{
+					rd = request
+							.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+				} finally {
 					connection.commit();
-					if(ps!=null)
+					if (ps != null)
 						ps.close();
-					connection.close();					
+					connection.close();
 				}
-			} else if(action.equals("demoDoNext")){//演示如何在流程已经发起后继续往下运行
-				String taskParams = StringUtil.getString(filter.get("taskParams"));
-				Map<String,Object> flowMaps = JSONUtil.parseJSON2Map(taskParams);
+			} else if (action.equals("demoDoNext")) {// 演示如何在流程已经发起后继续往下运行
+				String taskParams = StringUtil.getString(filter
+						.get("taskParams"));
+				Map<String, Object> flowMaps = JSONUtil
+						.parseJSON2Map(taskParams);
 				filter.put("taskParams", flowMaps);
 				getFlowCenter().completeTask(filter);
-				rd = request.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+				rd = request
+						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
 			}
 			if (rd != null)
 				rd.forward(request, response);
