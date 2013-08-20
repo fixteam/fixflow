@@ -8,6 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <jsp:include page="head.jsp" flush="true"/>
 <title>用户查询</title>
+
+<script type="text/javascript">
+	function viewUser(userid){
+		var obj = {};
+		window.showModalDialog("FlowManager?action=getUserInfo&userId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
+	}
+</script>
 </head>
 <body>
 <form action="FlowManager" id="subForm">
@@ -57,7 +64,7 @@
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
-		      <td><a href="FlowManager?action=getUserInfo&userId=${dataList.USERID}">${dataList.USERID}</a></td>
+		      <td><a href="#" onclick="viewUser('${dataList.USERID}')">${dataList.USERID}</a></td>
 		      <td>${dataList.USERNAME}</td>
 		      <td>${dataList.LOGINID}</td>
 		      <td>${dataList.EMAIL}</td>
