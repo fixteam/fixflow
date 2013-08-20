@@ -19,7 +19,11 @@
     	<div class="left-nav-box">
     	<div class="left-nav"><a name="userList" href="#">用户</a></div>
         <div class="left-nav-orange-line">&nbsp;</div>
+<<<<<<< HEAD
+       	<div class="left-nav"><a name="myTask" href="#">组</a></div>
+=======
        	<div class="left-nav"><a name="group" href="#">组</a></div>
+>>>>>>> branch 'develop' of https://github.com/fixteam/fixflow.git
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
 			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="images/temp/user01.jpg" />${group.typeName}</a></div>
@@ -44,6 +48,7 @@
         </div>
 	  <div>
 		<!-- 表 -->
+		<a href="FlowManager?action=getGroupList&groupType=dept">组</a>
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>

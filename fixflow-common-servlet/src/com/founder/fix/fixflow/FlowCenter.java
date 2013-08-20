@@ -138,7 +138,20 @@ public class FlowCenter extends HttpServlet {
 			if (action.equals("getMyProcess")) {
 				List<Map<String, String>> result = getFlowCenter()
 						.queryStartProcess(userId);
-				request.setAttribute("result", result);
+				Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
+				for(Map<String,String> tmp:result){
+					String category = tmp.get("category");
+					if(StringUtil.isEmpty(category))
+						category = "默认分类";
+					
+					List<Map<String, String>> tlist = newResult.get(category);
+					if(tlist==null){
+						tlist= new ArrayList<Map<String, String>>();
+					}
+					tlist.add(tmp);
+					newResult.put(category, tlist);
+				}
+				request.setAttribute("result", newResult);
 				request.setAttribute("userId", userId); // 返回userId add Rex
 				rd = request.getRequestDispatcher("/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
@@ -197,20 +210,9 @@ public class FlowCenter extends HttpServlet {
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
 				getFlowCenter().saveUserIcon(filter);
-				rd = request
-<<<<<<< HEAD
-						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
-				// 以下内容都是demo部分
-=======
-						.getRequestDispatcher("/FlowCenter?action=getUserInfo");
+				rd = request.getRequestDispatcher("/FlowCenter?action=getUserInfo");
 			//以下内容都是demo部分	
-			} else if (action.equals("cutUserIcon")){
-				filter.put("path", request.getSession().getServletContext()
-						.getRealPath("/"));
-				getFlowCenter().cutUserIcon(filter);
-				rd = request
-						.getRequestDispatcher("/FlowCenter?action=getUserInfo");
->>>>>>> branch 'develop' of https://github.com/fixteam/fixflow.git
+
 			} else if (action.equals("startOneTask")) { // 仅实现获取按钮功能 add by Rex
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -240,9 +242,9 @@ public class FlowCenter extends HttpServlet {
 					Map<String, Object> list = fcs.GetFlowRefInfo(filter);
 					filter.putAll(list);
 					request.setAttribute("result", filter);
-					rd = request.getRequestDispatcher("/doTask.jsp");
-				} finally {
-					connection.close();
+					rd = request.getRequestDispatcher("/center/doTask.jsp");
+				}finally{
+					connection.close();					
 				}
 			} else if (action.equals("demoCompleteTask")) {// 演示如何完成下一步
 				Connection connection = FixFlowShellProxy

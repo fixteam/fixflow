@@ -3,12 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>发起流程</title>
-<script type="text/javascript" src="js/jquery.js"></script>
+<jsp:include page="head.jsp" flush="true"/>
 <style>
 a{text-decoration: none;}
 </style>
@@ -16,17 +13,23 @@ a{text-decoration: none;}
 <body>
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
-
-	<div style="margin-top:10px;">
-	<c:forEach items="${result}" var="row" varStatus="status">
-	<button id="btn_${status.index+1}" formUrl="${row.formUrl}" processDefinitionKey="${row.processDefinitionKey}">${row.processDefinitionName}</button>
-	</c:forEach>
-	</div>
+<div class="center-panel">
+	<div class="type-box">
+		<c:forEach items="${result}" var="row" varStatus="status">
+	    	<div class="type">
+	        	<h1>${row.key}</h1>
+	        	<c:forEach items="${row.value}" var="tmp" varStatus="status">
+	        		<a href="#" formUrl="${tmp.formUrl}" processDefinitionKey="${tmp.processDefinitionKey}"><img src="images/temp/type-01.jpg" />${tmp.processDefinitionName}</a>
+	        	</c:forEach>
+	    	</div>
+		</c:forEach>
+    </div>
+</div>
 </div>
 </body>
 <script>
 $(function(){
-  $("button[processDefinitionKey]").click(function(){
+  $("a[processDefinitionKey]").click(function(){
      var pdk = $(this).attr("processDefinitionKey");
      var formUrl = $(this).attr("formUrl");//"FlowCenter?action=startOneTask";
      var url = formUrl;

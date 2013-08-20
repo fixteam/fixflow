@@ -7,6 +7,67 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待办任务</title>
+<<<<<<< HEAD
+<jsp:include page="head.jsp" flush="true"/>
+<script type="text/javascript">
+/*  
+ * "userId" 用户编号
+ * "pdkey" 流程编号
+ * "pageIndex" 第几页
+ * "rowNum" 有几行
+ * "agentUserId" 有几行
+ * "agentType" 0我代理别人，1别人委托给我
+ * "title" 查询主题
+ * "processVeriy" 查询变量
+ * "arrivalTimeS" 到达时间开始
+ * "arrivalTimeE" 到达时间结束
+ * "initor" 发起人
+ * @param @return
+ * "dataList" 数据列表
+ * "pageNumber" 总行数
+ * "agentUsers" 代理用户
+ * "agentToUsers" 委托用户
+ * "pageIndex" 第几页
+ * "rowNum" 有几行
+ */
+$(function(){
+  var agentType = $("input[name=agentType]").val();
+  var userId = $("input[name=userId]").val();
+  $("a[name=myTask]").click(function(){
+    $("#agentUserId").val();
+    $("#agentType").val();
+    $("#subForm").submit();
+  });
+  $("a[name=agentUsers]").click(function(){
+    var userId = $(this).attr("userId");
+    $("#agentUserId").val(userId);
+    $("#agentType").val('1');
+    $("#subForm").submit();
+  });
+  $("a[name=agentToUsers]").click(function(){
+    var userId = $(this).attr("userId");
+    $("#agentUserId").val(userId);
+    $("#agentType").val('0');
+    $("#subForm").submit();
+  });
+  $("a[name=flowGraph]").click(function(){
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
+  });
+  $("a[name=doTask]").click(function(){
+    var tii = $(this).attr("tii");
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
+    var bizKey = $(this).attr("bk");
+    
+    var obj = {};
+    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
+  });
+});
+</script>
+=======
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="css/reset.css">
@@ -134,6 +195,7 @@ $(function(){
 });
 </script>
 
+>>>>>>> branch 'develop' of https://github.com/fixteam/fixflow.git
 </head>
 
 <body>
@@ -247,4 +309,8 @@ $(function(){
 </div>
  
 </body>
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'develop' of https://github.com/fixteam/fixflow.git
 </html>

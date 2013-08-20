@@ -156,18 +156,20 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			for(TaskInstance tmp:lts){ 
 				Map<String,Object> instances = tmp.getPersistentState();
-				String path = StringUtil.getString(filter.get("path"));
-				path = path+"/icon/";
-				File newFile = new File(path);
-				FileUtil.makeParent(new File(path+"ss.ss"));
-				
-				String[] icons = newFile.list();
+//				String path = StringUtil.getString(filter.get("path"));
+//				path = path+"/icon/";
+//				File newFile = new File(path);
+//				FileUtil.makeParent(new File(path+"ss.ss"));
+//				
+//				String[] icons = newFile.list();
 				String userId = StringUtil.getString(instances.get("PI_START_AUTHOR"));
-				for(String tmp2:icons){
-					if(tmp2.startsWith(userId)){
-						instances.put("icon", "icon/"+tmp2);
-					}
-				}
+//				for(String tmp2:icons){
+//					if(tmp2.startsWith(userId)){
+//						instances.put("icon", "icon/"+tmp2);
+//					}
+//				}
+				
+				instances.put("icon", "icon/"+userId+"_small.png");
 				
 				UserTo user = identsvz.getUserTo(userId);
 				instances.put("userName", user.getUserName());
