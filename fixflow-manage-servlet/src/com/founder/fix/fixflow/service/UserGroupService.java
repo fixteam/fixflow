@@ -38,6 +38,8 @@ public interface UserGroupService {
 	 */
 	public Map<String, Object> getAllUsers(Map<String,Object> filter) throws SQLException;
 	
-	public Map<String, Object> getAllGroup(Map<String,Object> filter);
+	public Map<String, Object> getAllGroup(Map<String,Object> filter) throws SQLException;
+	
+	public List<Map<String, Object>> getAllGroupDefinition(Map<String,Object> params) throws SQLException;
 	
 }

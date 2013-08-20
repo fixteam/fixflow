@@ -14,6 +14,8 @@ import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
+import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
@@ -85,11 +87,73 @@ private Connection connection;
 	}
 
 	@Override
-	public Map<String, Object> getAllGroup(Map<String, Object> filter) {
-		// TODO 自动生成的方法存根
-		return null;
+	public Map<String, Object> getAllGroup(Map<String, Object> params) throws SQLException {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String groupType = StringUtil.getString(params.get("groupType"));
+		if(StringUtil.isEmpty(groupType)){
+			return resultMap;
+		}
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		IdentityService identityService = processEngine.getIdentityService();
+		try{
+			String pageI = StringUtil.getString(params.get("pageIndex"));
+			String rowI = StringUtil.getString(params.get("pageSize"));
+			int pageIndex=1;
+			int rowNum   =15;
+			if(StringUtil.isNotEmpty(pageI)){
+				pageIndex = Integer.valueOf(pageI);
+			}
+			if(StringUtil.isNotEmpty(rowI)){
+				rowNum = Integer.valueOf(rowI);
+			}
+			
+			Map<String,Object> queryMap = new HashMap<String,Object>();
+			String queryGroupId = StringUtil.getString(params.get("queryGroupId"));
+			if(StringUtil.isNotEmpty(queryGroupId)){
+				queryMap.put("GROUPID", queryGroupId);
+			}
+			String queryGroupName = StringUtil.getString(params.get("queryGroupName"));
+			if(StringUtil.isNotEmpty(queryGroupName)){
+				queryMap.put("GROUPNAME", queryGroupName);
+			}
+			
+			GroupDefinition groupDefinition = identityService.getGroupDefinition(groupType);
+			List<GroupTo> groupTos = groupDefinition.findGroups(new Page(pageIndex,rowNum), queryMap);
+			List<Map<String,Object>> groupList = new ArrayList<Map<String,Object>>();
+			int count = groupList.size();
+			Pagination page = new Pagination(pageIndex,rowNum);
+			page.setTotal(count);
+			for(GroupTo group : groupTos){
+				groupList.add(group.getPropertyMap());
+			}
+			resultMap.put("dataList", groupList);
+			resultMap.put("pageInfo", page);
+		}
+		finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		return resultMap;
 	}
 	
+	public List<Map<String, Object>> getAllGroupDefinition(Map<String,Object> params) throws SQLException {
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		IdentityService identityService = processEngine.getIdentityService();
+		try{
+			List<GroupDefinition> list = identityService.getAllGroupDefinitions();
+			for(GroupDefinition group: list){
+				Map<String,Object> groupMap = new HashMap<String,Object>();
+				groupMap.put("typeId", group.getId());
+				groupMap.put("typeName", group.getName());
+				resultList.add(groupMap);
+			}
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		return resultList;
+	}
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
 		if(connection!=null){
 			return FixFlowShellProxy.createProcessEngine(userId,connection);
@@ -97,5 +161,4 @@ private Connection connection;
 			return FixFlowShellProxy.createProcessEngine(userId);
 		}
 	}
-
 }

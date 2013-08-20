@@ -147,11 +147,25 @@ public class FlowManager extends HttpServlet {
 			}
 			
 			if("getUserList".equals(action)){
+				request.setAttribute("nowAction", "UserGroup");
 				Map<String, Object> result = getUserGroupService().getAllUsers(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
+				
+				List<Map<String,Object>> groupList = getUserGroupService().getAllGroupDefinition(filter);
+				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/userList.jsp");
+			}
+			if("getGroupList".equals(action)){
+				request.setAttribute("nowAction", "UserGroup");
+				Map<String, Object> result = getUserGroupService().getAllGroup(filter);
+				filter.putAll(result);
+				request.setAttribute("result", filter);
+				List<Map<String,Object>> groupList = getUserGroupService().getAllGroupDefinition(filter);
+				request.setAttribute("groupList", groupList);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
+				rd = request.getRequestDispatcher("/manager/groupList.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);
