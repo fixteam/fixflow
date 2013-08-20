@@ -47,6 +47,7 @@ import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
+import com.founder.fix.fixflow.shell.CommonServiceImpl;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.FileUtil;
 import com.founder.fix.fixflow.util.ImageCutUtil;
@@ -54,10 +55,7 @@ import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
-public class FlowCenterServiceImpl implements FlowCenterService {
-	
-	private Connection connection;
-	
+public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCenterService {
 	
 	public Connection getConnection() {
 		return connection;
@@ -460,13 +458,6 @@ public class FlowCenterServiceImpl implements FlowCenterService {
 		return processInstance;
 	}
 	
-	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
-		if(connection!=null){
-			return FixFlowShellProxy.createProcessEngine(userId,connection);
-		}else{
-			return FixFlowShellProxy.createProcessEngine(userId);
-		}
-	}
 	
 	public void cutUserIcon(Map<String,Object> params) throws IOException{
 		String userId = (String) params.get("userId");

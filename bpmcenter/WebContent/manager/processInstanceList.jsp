@@ -8,38 +8,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待办任务</title>
 <jsp:include page="head.jsp" flush="true"/>
+
 </head>
 
 <body>
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
+<div class="center-panel">
+        <ul>
+        <li><a id="processInstanceList" href="FlowManager?action=processManageList&processAction=processInstanceList"><h1>定义管理</h1><h4>start flow</h4></a></li>
+        <li><a id="processManageList" href="FlowManager?action=processManageList&processAction=processInstanceList"><h1>实例管理</h1><h4>schedule</h4></a></li>
+        </ul>
+</div>
 
 <div class="center-panel">
-<form id="subForm" method="post" action="FlowCenter">
+<form id="subForm" method="post" action="FlowManager">
 <!-- 左 -->
 	<div class="left">
-    	<div class="left-nav-box">
-        	<div class="left-nav"><a name="myTask" href="#">我的待办任务</a></div>
-            <div class="left-nav-orange-line">&nbsp;</div>
-            
-
-
-       	  <div class="left-nav m-top"><h1>代理人</h1></div>
-       	  	<c:if test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
-			    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-			      <div class="left-nav-orange-line">&nbsp;</div>
-			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.id}" href="#"><img src="images/temp/user01.jpg" />${agentUsers.name}</a></div>
-			    </c:forEach>
-       	  	</c:if>
-
-       	  <div class="left-nav m-top"><h1>委托人</h1></div>
-       	  	<c:if test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
-			    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-			      <div class="left-nav-orange-line">&nbsp;</div>
-			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.id}" href="#"><img src="images/temp/user01.jpg" />${agentToUsers.name}</a></div>
-			    </c:forEach>
-       	  	</c:if>
-        </div>
         <div class="message">
         	<div class="title"><a href="#"><em class="icon-message"></em>消息中心</a></div>
         	<div class="message-content">
@@ -55,48 +40,69 @@
     <!-- 隐藏参数部分 -->
 		<input type="hidden" name="agentUserId" value="<c:out value="${result.agentUserId}"/>">
 		<input type="hidden" name="agentType" value="<c:out value="${result.agentType}"/>">
-    	<input type="hidden" name="action" value="getMyTask"/> 
+    	<input type="hidden" name="action" value="processManageList"/> 
+    	<input type="hidden" name="processAction" value="processInstanceList"/> 
     	<div class="search">
         	<table width="100%">
+        	<tr>
+        		<td colspan="6"><a href="#" onclick="stopProcess();">暂停</a><a href="#">恢复</a><a href="#">作废</a><a href="#">删除</a></td>
+        	</tr>
               <tr>
-                <td class="title-r">任务主题：</td>
-                <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
-                <td class="title-r">流程变量：</td>
-                <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
-                <td class="title-r">单 据 号：</td>
-                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td class="title-r">任务定义：</td>
+                <td><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
+                <td class="title-r">流程实例号：</td>
+                <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
+                <td class="title-r">主题：</td>
+                <td><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
               </tr>
               <tr>
-                <td class="title-r">发 起 人：</td>
-                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
-                <td class="title-r">到达时间：</td>
-                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}"/>
-                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}"/></td>
-                <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td class="title-r">业务数据：</td>
+                <td><input type="text" id="text_3" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td class="title-r">发起人：</td>
+                <td><input type="text" id="text_4" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+                <td class="title-r">状态：</td>
+                <td>
+                <input type="text" id="text_5" name="status" class="fix-input" style="width:160px;" value="${result.status}"/>
+                </td>
+              </tr>
+              <tr>
+              	<td></td>
+              	<td></td>
+              	<td></td>
+              	<td></td>
+              	<td></td>
+              	<td>
+              	<div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
+              	</td>
               </tr>
             </table>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
               <thead>
+              	<th width="30"><input type="checkbox" id="checkall" name="checkall"/></th>
                 <th width="30">&nbsp;</th>
-                <th width="70">发起人</th>
-                <th>任务</th>
-                <th width="300">单据号</th>
-                <th width="180">流程信息</th>
-                <th width="30">操作</th>
-                <th width="60">查看流程图</th>
+                <th width="">实例编号</th>
+                <th>流程定义</th>
+                <th width="">主题</th>
+                <th width="">启动时间</th>
+                <th width="">结束时间</th>
+                <th width="">业务数据</th>
+                <th width="">发起人</th>
+                <th width="">更新时间</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
+		    	<td class="num"><input type="checkbox" name="checked" value="${dataList.processInstanceId}"></td>
 		      <td class="num"><c:out value="${index.index+1}"/></td>
-		      <td><img src="${dataList.icon}" height="30" width="30" alt="头像"><br>${dataList.userName}</td>
-		      <td>步骤名称 <br> ${dataList.description}</td>
-		      <td>${dataList.bizKey}</td>
-		      <td>到达时间:<fmt:formatDate value="${dataList.createTime}" type="both"/></td>
-		      <td><a name="doTask" href="#" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">处理</a></td>
-		      <td class="time"><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">流程图</a></td>
+		      <td>${dataList.processInstanceId}</td>
+		      <td>${dataList.processDefinitionKey}</td>
+		      <td>${dataList.subject}</td>
+		      <td class="time"><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
+		      <td class="time"><fmt:formatDate value="${dataList.endTime}" type="both"/></td>
+		      <td>${dataList.BIZ_KEY}</td>
+		      <td>${dataList.initiator}</td>
+				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 		    </tr>
 		    </c:forEach>
             </table>
@@ -109,62 +115,51 @@
 </div>
 
 </body>
-<script>
-/*  
- * "userId" 用户编号
- * "pdkey" 流程编号
- * "pageIndex" 第几页
- * "rowNum" 有几行
- * "agentUserId" 有几行
- * "agentType" 0我代理别人，1别人委托给我
- * "title" 查询主题
- * "processVeriy" 查询变量
- * "arrivalTimeS" 到达时间开始
- * "arrivalTimeE" 到达时间结束
- * "initor" 发起人
- * @param @return
- * "dataList" 数据列表
- * "pageNumber" 总行数
- * "agentUsers" 代理用户
- * "agentToUsers" 委托用户
- * "pageIndex" 第几页
- * "rowNum" 有几行
- */
-$(function(){
-  var agentType = $("input[name=agentType]").val();
-  var userId = $("input[name=userId]").val();
-  $("a[name=myTask]").click(function(){
-    $("#agentUserId").val();
-    $("#agentType").val();
-    $("#subForm").submit();
-  });
-  $("a[name=agentUsers]").click(function(){
-    var userId = $(this).attr("userId");
-    $("#agentUserId").val(userId);
-    $("#agentType").val('1');
-    $("#subForm").submit();
-  });
-  $("a[name=agentToUsers]").click(function(){
-    var userId = $(this).attr("userId");
-    $("#agentUserId").val(userId);
-    $("#agentType").val('0');
-    $("#subForm").submit();
-  });
-  $("a[name=flowGraph]").click(function(){
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
-  });
-  $("a[name=doTask]").click(function(){
-    var tii = $(this).attr("tii");
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var bizKey = $(this).attr("bk");
-    
-    var obj = {};
-    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
-  });
-});
+<script type="text/javascript">
+	chooseInstanceSelect()
+	function chooseInstanceSelect(){
+		var now = '${nowProcessAction}';
+		$("#"+now).addClass("select");
+	}
+	
+	$('#checkall').click(function(){
+    	var tii = $(this).attr("checked");
+    	var checkboxs = $("input[name=checked]");
+    	if(tii=="checked"){
+    		for(var i=0;i<checkboxs.length;i++) 
+			{ 
+				$(checkboxs[i]).attr("checked",'true');
+			} 
+    	}else{
+    		for(var i=0;i<checkboxs.length;i++) 
+			{ 
+				$(checkboxs[i]).removeAttr("checked");
+			} 
+    	}
+  	});
+  	
+  	function stopProcess(){
+ 		var checkboxs = $("input[name=checked]");
+ 		var surl = "action=processManageList&processAction=stopProcess";
+ 		var id = "";
+   		for(var i=0;i<checkboxs.length;i++) 
+		{ 
+			if(i!=0){
+				id += ',';
+			}
+				
+			id += $(checkboxs[i]).val();
+		}
+		surl +="&ids=";
+		surl +=id;
+		$.ajax({ type: "POST", 
+		url: "FlowManager", 
+		data: surl, 
+		success: function(msg)
+		{ 
+			
+		}
+		});
+  	}
 </script>
 </html>
