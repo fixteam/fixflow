@@ -39,6 +39,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
+import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.service.UserGroupService;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
@@ -110,6 +111,16 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
+			}else if(action.equals("processManageList")){
+				String processAction = StringUtil.getString(filter.get("processAction"));
+				request.setAttribute("nowProcessAction", action);
+				if(StringUtil.isEmpty(processAction) || processAction.equals("processInstanceList")){
+					Map<String,Object> result = getFlowManager().getProcessInstances(filter);
+					request.setAttribute("result", result);
+					rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
+				}else if(processAction.equals("stopProcess")){
+					System.out.println();
+				}
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
@@ -188,6 +199,11 @@ public class FlowManager extends HttpServlet {
 		
 	}
 	
+	public ProcessInstanceService getFlowManager() {
+		return (ProcessInstanceService) SpringConfigLoadHelper
+				.getBean("processInstanceServiceImpl");
+	}
+
 	private ProcessDefinitionService getProcessDefinitionService(){
 		return (ProcessDefinitionService) SpringConfigLoadHelper.getBean("processDefinitionServiceImpl");
 	}
@@ -195,4 +211,5 @@ public class FlowManager extends HttpServlet {
 	private UserGroupService getUserGroupService(){
 		return (UserGroupService) SpringConfigLoadHelper.getBean("userGroupServiceImpl");
 	}
+	
 }

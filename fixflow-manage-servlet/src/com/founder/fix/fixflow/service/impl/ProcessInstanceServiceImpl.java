@@ -1,0 +1,124 @@
+/**
+ *  Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author shao
+ */
+package com.founder.fix.fixflow.service.impl;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.founder.fix.fixflow.core.RuntimeService;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.service.ProcessInstanceService;
+import com.founder.fix.fixflow.shell.CommonServiceImpl;
+import com.founder.fix.fixflow.util.Pagination;
+
+/**
+ * @ClassName: ProcessInstanceServiceImpl
+ * @Description: TODO
+ * @author shao
+ *
+ */
+@Scope("prototype")
+@Service
+public class ProcessInstanceServiceImpl extends CommonServiceImpl implements ProcessInstanceService {
+
+	/*
+	 * <p>Title: getProcessInstances</p>
+	 * <p>Description: </p>
+	 * @param param
+	 * @return
+	 * @throws SQLException
+	 * @see com.founder.fix.fixflow.service.ProcessInstanceService#getProcessInstances(java.util.Map)
+	 */
+	@Override
+	public Map<String,Object> getProcessInstances(Map<String,Object> params) throws SQLException{
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String userId = StringUtil.getString(params.get("userId"));
+		String processDefinitionKey = StringUtil.getString(params.get("processDefinitionKey"));
+		String processInstanceId    = StringUtil.getString(params.get("processInstanceId"));
+		String subject				= StringUtil.getString(params.get("subject"));
+		String bizKey				= StringUtil.getString(params.get("bizKey"));
+		String initor				= StringUtil.getString(params.get("initor"));
+		String status				= StringUtil.getString(params.get("status"));
+		
+		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		
+		String pageI = StringUtil.getString(params.get("pageIndex"));
+		String rowI = StringUtil.getString(params.get("pageSize"));
+		
+		int pageIndex=1;
+		int rowNum   =10;
+		if(StringUtil.isNotEmpty(pageI)){
+			pageIndex = Integer.valueOf(pageI);
+		}
+		if(StringUtil.isNotEmpty(rowI)){
+			rowNum = Integer.valueOf(rowI);
+		}
+		
+		
+		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		
+		
+		
+		
+		
+		if(StringUtil.isNotEmpty(processDefinitionKey))
+			processInstanceQuery.processDefinitionKey(processDefinitionKey);
+		if(StringUtil.isNotEmpty(processInstanceId))
+			processInstanceQuery.processInstanceId(processDefinitionKey);
+		if(StringUtil.isNotEmpty(subject))
+			processInstanceQuery.subjectLike(processDefinitionKey);
+//		if(StringUtil.isNotEmpty(bizKey))
+//			processInstanceQuery.(processDefinitionKey);
+		if(StringUtil.isNotEmpty(initor))
+			processInstanceQuery.initiatorLike(processDefinitionKey);
+		if(StringUtil.isNotEmpty(status)){
+			if(status.equals("0")){
+				processInstanceQuery.notEnd();
+			}else{
+				processInstanceQuery.isEnd();
+			}
+		}
+		//根据流程定义key查询
+		List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
+		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+		for(ProcessInstance tmp: processInstances){
+			instanceMaps.add(tmp.getPersistentState());
+		}
+		
+		
+		
+		Long count = processInstanceQuery.count();
+		Pagination page = new Pagination(pageIndex,rowNum);
+		page.setTotal(count.intValue());
+		
+		
+		
+		resultMap.put("dataList", instanceMaps);
+		resultMap.put("pageInfo", page);
+		
+		return resultMap;
+	}
+}

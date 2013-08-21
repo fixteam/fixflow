@@ -32,11 +32,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.Pagination;

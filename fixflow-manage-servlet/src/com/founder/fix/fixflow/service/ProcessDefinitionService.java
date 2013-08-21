@@ -17,7 +17,6 @@
  */
 package com.founder.fix.fixflow.service;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -68,5 +67,4 @@ public interface ProcessDefinitionService {
 	 * @return key: FILENAME文件名，BYTES文件字节流
 	 */
 	public List<Map<String,Object>> getResources(Map<String,Object> params);
-	
 }
