@@ -12,6 +12,106 @@
     </para>
   </section>
   
+  <section xml:id="bpmn.extensions">
+    <title>扩展元素</title>
+    <para>
+      
+    </para>
+  </section>
   
+  <section xml:id="bpmn.event">
+    <title>Events</title>
+    <para>
+      
+    </para>
+    
+    <section xml:id="bpmn.event.EventDefinitions">
+      <title>Event Definitions</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.TimerEventDefinitions">
+      <title>Timer Event Definitions</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.StartEvents">
+      <title>Start Events</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.NoneStartEvent">
+      <title>None Start Event</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.TimerStartEvent">
+      <title>Timer Start Event</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.EndEvents">
+      <title>End Events</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.NoneEndEvent">
+      <title>None End Event</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.TerminateEndEvent">
+      <title>Terminate End Event</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.BoundaryEvents">
+      <title>Boundary Events</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.TimerBoundaryEvent">
+      <title>Timer Boundary Event</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.IntermediateCatchingEventst">
+      <title>Intermediate Catching Eventst</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.event.TimerIntermediateCatchingEvent">
+      <title>Timer Intermediate Catching Event</title>
+      <para>
+        
+      </para>
+    </section>
+
+
+
+
+  </section>
   
 </chapter>
