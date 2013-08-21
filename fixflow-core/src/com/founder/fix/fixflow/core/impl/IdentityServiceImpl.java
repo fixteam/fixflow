@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.IdentityService;
+import com.founder.fix.fixflow.core.impl.cmd.GetAllGroupDefinitionsCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetGroupInfoByGroupIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetUserInGroupCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetUserInGroupsCmd;
@@ -38,6 +39,10 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
 
 	public GroupDefinition getGroupDefinition(String groupType) {
 		return commandExecutor.execute(new GroupDefinitionInfoCmd(groupType));
+	}
+	
+	public List<GroupDefinition> getAllGroupDefinitions() {
+		return commandExecutor.execute(new GetAllGroupDefinitionsCmd());
 	}
 
 	public GroupTo getGroup(String groupId, String groupType) {
@@ -80,6 +85,9 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
 		return commandExecutor.execute(new GetUserInGroupsCmd(userId));
 	}
 	
-	
+	public List<GroupTo> getGroupTos(String groupType, Page page, Map<String, Object> queryMap) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
 
 }

@@ -36,6 +36,8 @@ import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
@@ -154,18 +156,20 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			for(TaskInstance tmp:lts){ 
 				Map<String,Object> instances = tmp.getPersistentState();
-				String path = StringUtil.getString(filter.get("path"));
-				path = path+"/icon/";
-				File newFile = new File(path);
-				FileUtil.makeParent(new File(path+"ss.ss"));
-				
-				String[] icons = newFile.list();
+//				String path = StringUtil.getString(filter.get("path"));
+//				path = path+"/icon/";
+//				File newFile = new File(path);
+//				FileUtil.makeParent(new File(path+"ss.ss"));
+//				
+//				String[] icons = newFile.list();
 				String userId = StringUtil.getString(instances.get("PI_START_AUTHOR"));
-				for(String tmp2:icons){
-					if(tmp2.startsWith(userId)){
-						instances.put("icon", "icon/"+tmp2);
-					}
-				}
+//				for(String tmp2:icons){
+//					if(tmp2.startsWith(userId)){
+//						instances.put("icon", "icon/"+tmp2);
+//					}
+//				}
+				
+				instances.put("icon", "icon/"+userId+"_small.png");
 				
 				UserTo user = identsvz.getUserTo(userId);
 				instances.put("userName", user.getUserName());
@@ -281,7 +285,17 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			page.setTotal(count.intValue());
 			
 			for(ProcessInstance tmp:instances){
-				instanceMaps.add(tmp.getPersistentState());
+				Map<String, Object> persistentState = tmp.getPersistentState();
+				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
+				String processDefinitionId = tmp.getProcessDefinitionId();
+				ProcessDefinitionBehavior processDefinitionBehavior = processEngine.getModelService().getProcessDefinition(processDefinitionId);
+				String processDefinitionName = processDefinitionBehavior.getName();
+				persistentState.put("processDefinitionName", processDefinitionName);
+				
+				instanceMaps.add(persistentState);
+				
+				
+				
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);

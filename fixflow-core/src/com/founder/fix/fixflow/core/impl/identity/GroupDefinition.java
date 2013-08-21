@@ -19,9 +19,11 @@ package com.founder.fix.fixflow.core.impl.identity;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
@@ -52,23 +54,16 @@ public abstract class GroupDefinition {
 	}
 
 	public String getName() {
-
 		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-
 		// 用户名称国际化处理
 		if (booleanTemp) {
-
 			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
-
 			String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_"+id+"_Name");
 			if (nameTemp == null || nameTemp.equals("")) {
 				return name;
 			} else {
-
 				return StringUtil.getString(nameTemp);
-
 			}
-
 		} else {
 			return name;
 		}
@@ -89,83 +84,69 @@ public abstract class GroupDefinition {
 
 	/**
 	 * 通过组对象
-	 * 
-	 * @param groupId
-	 *            组编号
+	 * @param groupId组编号
 	 * @return 组对象
 	 */
 	public abstract GroupTo findGroupByGroupId(String groupId);
 
 	/**
 	 * 通过用户名获取用户所在的组
-	 * 
-	 * @param userId
-	 *            用户编号
+	 * @param userId用户编号
 	 * @return 用户所在的组集合
 	 */
 	public abstract List<GroupTo> findGroupMembersByUser(String userId);
 
 	/**
 	 * 通过组编号获取下面的子组(不包含父组)
-	 * 
-	 * @param groupId
-	 *            组编号
+	 * @param groupId 组编号
 	 * @return 子组的集合(不包含父组)
 	 */
 	public abstract List<GroupTo> findGroupChildMembersByGroupId(String groupId);
 
 	/**
 	 * 通过组编号获取下面的子组(包含父组)
-	 * 
-	 * @param groupId
-	 *            组编号
+	 * @param groupId 组编号
 	 * @return 子组的集合(包含父组)
 	 */
 	public abstract List<GroupTo> findGroupChildMembersIncludeByGroupId(String groupId);
 
 	/**
 	 * 获取组下面的用户(包含子组的用户)
-	 * 
-	 * @param groupId
-	 *            组编号
+	 * @param groupId组编号
 	 * @return
 	 */
 	public abstract List<UserTo> findUserChildMembersIncludeByGroupId(String groupId);
 
 	/**
 	 * 获取组下面的用户(不包含子组的用户)
-	 * 
-	 * @param groupId
-	 *            组编号
+	 * @param groupId组编号
 	 * @return
 	 */
 	public abstract List<UserTo> findUserByGroupId(String groupId);
 
 	/**
 	 * 获取父组
-	 * 
-	 * @param groupId
-	 *            组编号
+	 * @param groupId 组编号
 	 * @return
 	 */
 	public abstract GroupTo findParentGroupByGroupId(String groupId);
+	
+	/**
+	 * 查询组集合
+	 * @param page
+	 * @param queryMap
+	 * @return
+	 */
+	public abstract List<GroupTo> findGroups(Page page,Map<String,Object> queryMap);
 
 	/**
 	 * 获取数据库操作类
-	 * 
 	 * @return
 	 */
 	public SqlCommand getSqlCommand() {
-		
 		String dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
-		
-
 		Connection connection = Context.getDbConnection(dataBaseId);// Context.getDbConnection();
-
 		SqlCommand sqlCommand = new SqlCommand(connection);
-
 		return sqlCommand;
-
 	}
-
 }

@@ -38,6 +38,12 @@ public interface IdentityService extends ProcessService{
 	GroupDefinition getGroupDefinition(String groupType);
 
 	/**
+	 * 获取配置的用户组信息
+	 * @return
+	 */
+	List<GroupDefinition> getAllGroupDefinitions();
+	
+	/**
 	 * 获取组对象
 	 * @param groupId 组对象编号
 	 * @param groupType 组对象类型
@@ -92,6 +98,7 @@ public interface IdentityService extends ProcessService{
 	 * @return
 	 */
 	List<UserTo> getUserInGroup(String groupId,String groupType);
+	
 	
    
 }

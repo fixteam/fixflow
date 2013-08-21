@@ -6,19 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<link rel="stylesheet" type="text/css" href="css/page.css">
-<style>
-a{text-decoration: none;}
-.red_star{
-   color:red;
-}
-</style>
+<jsp:include page="head.jsp" flush="true"/>
 <title>用户查询</title>
+
+<script type="text/javascript">
+	function viewUser(userid){
+		var obj = {};
+		window.showModalDialog("FlowManager?action=getUserInfo&userId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
+	}
+</script>
 </head>
 <body>
 <form action="FlowManager" id="subForm">
@@ -26,11 +22,20 @@ a{text-decoration: none;}
 <jsp:include page="top.jsp" flush="true"/>
 <div style="margin-top:1px;">
 <!-- 左 -->
-<div class="left" style="width:0px;">
-    	
+<div class="left">
+    	<div class="left-nav-box">
+    	<div class="left-nav"><a name="userList" href="#">用户</a></div>
+        <div class="left-nav-orange-line">&nbsp;</div>
+       	<div class="left-nav"><a name="group" href="#">组</a></div>
+       	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
+			    <c:forEach items="${groupList}" var="group" varStatus="index">
+			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="images/temp/user01.jpg" />${group.typeName}</a></div>
+			    </c:forEach>
+       	  	</c:if>
+        </div>
 </div>
 <!-- 右-->
-	<div class="right" style="width:98%;">
+	<div class="right">
 	  <!-- 查 -->
 	  <div class="search">
         	<table width="100%">
@@ -46,6 +51,7 @@ a{text-decoration: none;}
         </div>
 	  <div>
 		<!-- 表 -->
+		<a href="FlowManager?action=getGroupList&groupType=dept">组</a>
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
@@ -58,7 +64,7 @@ a{text-decoration: none;}
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
-		      <td>${dataList.USERID}</td>
+		      <td><a href="#" onclick="viewUser('${dataList.USERID}')">${dataList.USERID}</a></td>
 		      <td>${dataList.USERNAME}</td>
 		      <td>${dataList.LOGINID}</td>
 		      <td>${dataList.EMAIL}</td>
@@ -67,7 +73,7 @@ a{text-decoration: none;}
 		  </tbody>
 	    </table>
 		<!-- 分页 -->	    
-	   <jsp:include page="../center/page.jsp" flush="true"/>
+	   <jsp:include page="page.jsp" flush="true"/>
 	    </div>
 	  </div>
 	</div>
