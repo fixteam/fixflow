@@ -38,21 +38,23 @@ $("a[name=flowGraph]").click(function(){
 				<div class="left">
 					<div class="left-nav-box">
 						<div class="left-nav">
-
 							<a id="getAllProcess" name="getAllProcess" target="_self"
-								href="FlowCenter?action=getAllProcess" style="display: block;">全部流程</a>
+								href="#" onclick="$('#processType').val('');$('#subForm').submit();"
+								 style="display: block;">全部流程</a>
 						</div>
+            			<div class="left-nav-orange-line">&nbsp;</div>
 						<div class="left-nav">
 							<a id="getInitorTask" name="getInitorTask" target="_self"
-								href="FlowCenter?action=getInitorProcess"
+								href="#" onclick="$('#processType').val('initor');$('#subForm').submit();"
 								style="display: block;">我发起的流程</a>
 						</div>
+            			<div class="left-nav-orange-line">&nbsp;</div>
 						<div class="left-nav">
 							<a id="getInitorTask" name="getParticipantsTask" target="_self"
-								href="FlowCenter?action=getParticipantsProcess"
+								href="#" onclick="$('#processType').val('participants');$('#subForm').submit();"
 								style="display: block;">我参与的流程</a>
 						</div>
-
+            			<div class="left-nav-orange-line">&nbsp;</div>
 					</div>
 				</div>
 				<!-- 右-->
@@ -60,7 +62,8 @@ $("a[name=flowGraph]").click(function(){
 					
 					<!-- 查 -->
 					<div id="search" class="search">
-					<input type="hidden" name="action" value="<%=request.getParameter("action") %>"/> 
+					<input type="hidden" name="action" value="getAllProcess"/> 
+					<input type="hidden" id="processType" name="processType" value="${result.processType}"/> 
 						<table width="100%">
 			              <tr>
 			                <td class="title-r">任务主题：</td>

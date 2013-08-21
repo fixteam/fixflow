@@ -231,6 +231,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> filter) throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
+		String processType = StringUtil.getString(filter.get("processType"));
+		
 		ProcessEngine engine = getProcessEngine(userId);
 		try{
 			ProcessInstanceQuery tq = engine.getRuntimeService()
@@ -275,10 +277,15 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.isEnd();
 			
 			List<ProcessInstance> instances = null;
-			if(filter.get("queryPart")==null)
-				instances = tq.initiator(userId).listPagination(pageIndex, rowNum);
-			else
-				instances = tq.taskParticipants(userId).listPagination(pageIndex, rowNum);
+			if(StringUtil.isNotEmpty(processType)){
+				if(processType.equals("initor"))
+					tq.initiator(userId);
+				else
+					tq.taskParticipants(userId);
+			}
+				
+			instances = tq.listPage(pageIndex, rowNum);
+
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);
