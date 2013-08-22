@@ -193,6 +193,26 @@ public interface RuntimeService extends ProcessService{
 	 *            变量Map
 	 */
 	void setProcessInstanceVariables(String processInstanceId, Map<String, ? extends Object> variables);
+	
+	/**
+	 * 删除流程实例持久变量
+	 * @param processInstanceId  流程实例编号
+	 * @param variableName 变量名称key
+	 */
+	void deleteProcessInstanceVariable(String processInstanceId,String variableName);
+	
+	/**
+	 * 删除流程实例持久变量
+	 * @param processInstanceId 流程实例编号
+	 * @param variableNames 变量名称集合
+	 */
+	void deleteProcessInstanceVariables(String processInstanceId,List<String> variableNames);
+	
+	/**
+	 * 删除流程实例持久变量
+	 * @param processInstnaceId 流程实例编号
+	 */
+	void deleteProcessInstanceVariables(String processInstanceId);
 
 	/**
 	 * 获取流程实例的持久变量

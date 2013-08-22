@@ -26,6 +26,7 @@ import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdCmd;
+import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceVaribalesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExecuteRuleScriptCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessCommand;
@@ -105,6 +106,28 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		saveVariablesCommand.setProcessInstanceId(processInstanceId);
 		saveVariablesCommand.setVariables(variables);
 		commandExecutor.execute(new SaveVariablesCmd(saveVariablesCommand));
+	}
+	
+	public void deleteProcessInstanceVariable(String processInstanceId, String variableName) {
+		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		List<String> variableNames = new ArrayList<String>();
+		variableNames.add(variableName);
+		queryVariablesCommand.setVariableNames(variableNames);
+		commandExecutor.execute(new DeleteProcessInstanceVaribalesCmd(queryVariablesCommand));
+	}
+	
+	public void deleteProcessInstanceVariables(String processInstanceId, List<String> variableNames) {
+		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		queryVariablesCommand.setVariableNames(variableNames);
+		commandExecutor.execute(new DeleteProcessInstanceVaribalesCmd(queryVariablesCommand));
+	}
+	
+	public void deleteProcessInstanceVariables(String processInstanceId) {
+		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		commandExecutor.execute(new DeleteProcessInstanceVaribalesCmd(queryVariablesCommand));
 	}
 
 	public Object getProcessInstanceVariable(String processInstanceId, String variableName) {
