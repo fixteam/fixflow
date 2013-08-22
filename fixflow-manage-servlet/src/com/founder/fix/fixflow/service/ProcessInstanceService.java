@@ -27,5 +27,16 @@ import java.util.Map;
  *
  */
 public interface ProcessInstanceService {
+	/**
+	  * getProcessInstances
+	
+	  * @Title: getProcessInstances
+	  * @Description: 获取所有的流程实例
+	  * @param param
+	  * @return
+	  * @throws SQLException
+	  */
 	public Map<String,Object> getProcessInstances(Map<String,Object> param) throws SQLException;
+
+	public Map<String,Object> getProcessTokens(Map<String,Object> param) throws SQLException;
 }

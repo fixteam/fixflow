@@ -38,7 +38,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
-import com.founder.fix.fixflow.service.JobService;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.service.UserGroupService;
@@ -121,6 +120,10 @@ public class FlowManager extends HttpServlet {
 					rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
 				}else if(processAction.equals("stopProcess")){
 					System.out.println();
+				}else if(processAction.equals("processTokenList")){
+					Map<String,Object> result = getFlowManager().getProcessTokens(filter);
+					request.setAttribute("result", result);
+					rd = request.getRequestDispatcher("/manager/processTokenList.jsp");
 				}
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
@@ -186,36 +189,6 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/manager/userInfo.jsp");
 			}
-			if("getJobList".equals(action)){
-				request.setAttribute("nowAction", "jobManager");
-				Map<String, Object> result = getJobService().getJobList(filter);
-				filter.putAll(result);
-				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobList.jsp");
-			}
-			if("viewJobInfo".equals(action)){
-				request.setAttribute("nowAction", "jobManager");
-				Map<String, Object> result = getJobService().getJobTrigger(filter);
-				filter.putAll(result);
-				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobInfo.jsp");
-			}
-			if("suspendJob".equals(action)){
-				request.setAttribute("nowAction", "jobManager");
-				getJobService().suspendJob(filter);
-				Map<String, Object> result = getJobService().getJobList(filter);
-				filter.putAll(result);
-				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobList.jsp");
-			}
-			if("continueJob".equals(action)){
-				getJobService().continueJob(filter);
-				request.setAttribute("nowAction", "jobManager");
-				Map<String, Object> result = getJobService().getJobList(filter);
-				filter.putAll(result);
-				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobList.jsp");
-			}
 			if (rd != null)
 				rd.forward(request, response);
 		}catch (Exception e) {
@@ -241,10 +214,6 @@ public class FlowManager extends HttpServlet {
 	
 	private UserGroupService getUserGroupService(){
 		return (UserGroupService) SpringConfigLoadHelper.getBean("userGroupServiceImpl");
-	}
-	
-	private JobService getJobService(){
-		return (JobService) SpringConfigLoadHelper.getBean("jobServiceImpl");
 	}
 	
 }

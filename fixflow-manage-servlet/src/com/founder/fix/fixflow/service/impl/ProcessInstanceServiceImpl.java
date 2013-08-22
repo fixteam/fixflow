@@ -30,6 +30,8 @@ import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.Token;
+import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
 import com.founder.fix.fixflow.util.Pagination;
@@ -117,6 +119,45 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		
 		
 		resultMap.put("dataList", instanceMaps);
+		resultMap.put("pageInfo", page);
+		
+		return resultMap;
+	}
+	
+	public Map<String,Object> getProcessTokens(Map<String,Object> params) throws SQLException{
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String userId = StringUtil.getString(params.get("userId"));
+		
+		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		TokenQuery tokenQuery = runtimeService.createTokenQuery();
+		
+		String processInstanceId = StringUtil.getString(params.get("processInstanceId"));
+		if(StringUtil.isNotEmpty(processInstanceId))
+			tokenQuery.processInstanceId(processInstanceId);
+		
+		String pageI = StringUtil.getString(params.get("pageIndex"));
+		String rowI = StringUtil.getString(params.get("pageSize"));
+		
+		int pageIndex=1;
+		int rowNum   =10;
+		if(StringUtil.isNotEmpty(pageI)){
+			pageIndex = Integer.valueOf(pageI);
+		}
+		if(StringUtil.isNotEmpty(rowI)){
+			rowNum = Integer.valueOf(rowI);
+		}
+		
+		List<Token> tokenList = tokenQuery.listPage(pageIndex, rowNum);
+		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+		for(Token tmp : tokenList){
+			result.add(tmp.getPersistentState());
+		}
+		
+		Long count = tokenQuery.count();
+		Pagination page = new Pagination(pageIndex,rowNum);
+		page.setTotal(count.intValue());
+		
+		resultMap.put("dataList", result);
 		resultMap.put("pageInfo", page);
 		
 		return resultMap;
