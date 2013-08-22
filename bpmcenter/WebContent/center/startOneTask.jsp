@@ -13,7 +13,7 @@ a{text-decoration: none;}
 </head>
 
 <body>
-<form id="form1" action="FlowCenter">
+<form id="form1" action="DemoServlet">
 <table>
 <tr>
 <td>

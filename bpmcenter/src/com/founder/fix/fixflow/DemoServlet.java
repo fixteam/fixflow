@@ -18,7 +18,6 @@
 package com.founder.fix.fixflow;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -34,10 +33,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
@@ -49,13 +44,13 @@ import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
 /**
  * Servlet implementation class FlowCenter
  */
-public class FlowCenter extends HttpServlet {
+public class DemoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FlowCenter() {
+	public DemoServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -89,38 +84,25 @@ public class FlowCenter extends HttpServlet {
 		if (StringUtil.isEmpty(action)) {
 			action = StringUtil.getString(request.getAttribute("action"));
 		}
-		if (StringUtil.isEmpty(action)) {
-			action = "getMyTask";
-		}
+
 		RequestDispatcher rd = null;
 		try {
 			Map<String, Object> filter = new HashMap<String, Object>();
 
-			if (ServletFileUpload.isMultipartContent(request)) {
-				ServletFileUpload Uploader = new ServletFileUpload(
-						new DiskFileItemFactory());
-				// Uploader.setSizeMax("); // 设置最大文件尺寸
-				Uploader.setHeaderEncoding("utf-8");
-				List<FileItem> fileItems = Uploader.parseRequest(request);
-				for (FileItem item : fileItems) {
-					filter.put(item.getFieldName(), item);
-					if (item.getFieldName().equals("action"))
-						action = item.getString();
-				}
-			} else {
-				Enumeration enu = request.getParameterNames();
-				while (enu.hasMoreElements()) {
-					Object tmp = enu.nextElement();
-					Object obj = request
-							.getParameter(StringUtil.getString(tmp));
 
-					// if (request.getAttribute("ISGET") != null)
-					obj = new String(obj.toString().getBytes("ISO8859-1"),
-							"utf-8");
+			Enumeration enu = request.getParameterNames();
+			while (enu.hasMoreElements()) {
+				Object tmp = enu.nextElement();
+				Object obj = request
+						.getParameter(StringUtil.getString(tmp));
 
-					filter.put(StringUtil.getString(tmp), obj);
-				}
+				// if (request.getAttribute("ISGET") != null)
+				obj = new String(obj.toString().getBytes("ISO8859-1"),
+						"utf-8");
+
+				filter.put(StringUtil.getString(tmp), obj);
 			}
+
 
 			Enumeration attenums = request.getAttributeNames();
 			while (attenums.hasMoreElements()) {
@@ -135,73 +117,71 @@ public class FlowCenter extends HttpServlet {
 
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
-			if (action.equals("getMyProcess")) {
-				List<Map<String, String>> result = getFlowCenter()
-						.queryStartProcess(userId);
-				Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
-				for(Map<String,String> tmp:result){
-					String category = tmp.get("category");
-					if(StringUtil.isEmpty(category))
-						category = "默认分类";
-					
-					List<Map<String, String>> tlist = newResult.get(category);
-					if(tlist==null){
-						tlist= new ArrayList<Map<String, String>>();
-					}
-					tlist.add(tmp);
-					newResult.put(category, tlist);
-				}
-				request.setAttribute("result", newResult);
-				request.setAttribute("userId", userId); // 返回userId add Rex
-				rd = request.getRequestDispatcher("/center/startTask.jsp");
-			} else if (action.equals("getMyTask")) {
+			if (action.equals("startOneTask")) { // 仅实现获取按钮功能 add by Rex
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
-				Map<String, Object> pageResult = getFlowCenter()
-						.queryMyTaskNotEnd(filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
-				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/center/todoTask.jsp");
-			} else if (action.equals("getProcessImage")) {
-				response.getOutputStream();
-			} else if (action.equals("getAllProcess")) {
-				Map<String, Object> pageResult = getFlowCenter()
-						.queryTaskInitiator(filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
-				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
-			}else if (action.equals("getTaskDetailInfo")) {
-				Map<String, Object> pageResult = getFlowCenter()
-						.getTaskDetailInfo(filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/center/flowGraphic.jsp");
-			} else if (action.equals("getFlowGraph")) {
-				InputStream is = getFlowCenter().getFlowGraph(filter);
-				out = response.getOutputStream();
-				response.setContentType("application/octet-stream;charset=UTF-8");
-				byte[] buff = new byte[2048];
-				int size = 0;
-				while (is != null && (size = is.read(buff)) != -1) {
-					out.write(buff, 0, size);
-				}
-			} else if (action.equals("getUserInfo")) {
-				filter.put("path", request.getSession().getServletContext()
-						.getRealPath("/"));
-				Map<String, Object> pageResult = getFlowCenter().getUserInfo(
-						filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/center/userOperation.jsp");
-			} else if (action.equals("updateUserIcon")) {
-				filter.put("path", request.getSession().getServletContext()
-						.getRealPath("/"));
-				getFlowCenter().saveUserIcon(filter);
-				rd = request.getRequestDispatcher("/FlowCenter?action=getUserInfo");
-			//以下内容都是demo部分	
 
+				Map<String, Object> list = getFlowCenter().GetFlowRefInfo(
+						filter);
+				filter.putAll(list);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/center/startOneTask.jsp");
+			} else if (action.equals("doTask")) {// 演示如何进入一个已发起的流程处理页面
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+
+				Connection connection = FixFlowShellProxy
+						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
+
+				try {
+					SqlCommand sc = new SqlCommand(connection);
+					List params = new ArrayList();
+					params.add(filter.get("bizKey"));
+					List<Map<String, Object>> res = sc.queryForList(
+							"select * from DEMOTABLE where COL1=?", params);
+
+					filter.put("demoObject", res.get(0));
+
+					FlowCenterService fcs = getFlowCenter();
+					Map<String, Object> list = fcs.GetFlowRefInfo(filter);
+					filter.putAll(list);
+					request.setAttribute("result", filter);
+					rd = request.getRequestDispatcher("/center/doTask.jsp");
+				}finally{
+					connection.close();					
+				}
+			} else if (action.equals("demoCompleteTask")) {// 演示如何完成下一步
+				Connection connection = FixFlowShellProxy
+						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
+				PreparedStatement ps = null;
+
+				try {
+					connection.setAutoCommit(false);
+					ps = connection
+							.prepareStatement("insert into DEMOTABLE(COL1,COL2) values(?,?)");
+					ps.setObject(1, filter.get("businessKey"));
+					ps.setObject(2, filter.get("COL2"));
+					ps.execute();
+					FlowCenterService fcs = getFlowCenter();
+					fcs.setConnection(connection);
+					fcs.completeTask(filter);
+					rd = request
+							.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+				} finally {
+					connection.commit();
+					if (ps != null)
+						ps.close();
+					connection.close();
+				}
+			} else if (action.equals("demoDoNext")) {// 演示如何在流程已经发起后继续往下运行
+				String taskParams = StringUtil.getString(filter
+						.get("taskParams"));
+				Map<String, Object> flowMaps = JSONUtil
+						.parseJSON2Map(taskParams);
+				filter.put("taskParams", flowMaps);
+				getFlowCenter().completeTask(filter);
+				rd = request
+						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
 			}
 			if (rd != null)
 				rd.forward(request, response);

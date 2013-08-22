@@ -56,4 +56,16 @@ id="WebApp_ID"
 	  </servlet-mapping>
   <!-- manager-servlet 结束 -->
   
+    <!-- demo-servlet 开始 -->
+	  <servlet>
+	    <description></description>
+	    <display-name>DemoServlet</display-name>
+	    <servlet-name>DemoServlet</servlet-name>
+	    <servlet-class>com.founder.fix.fixflow.DemoServlet</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	    <servlet-name>DemoServlet</servlet-name>
+	    <url-pattern>/DemoServlet</url-pattern>
+	  </servlet-mapping>
+  <!-- demo-servlet 结束 -->
 </web-app>
