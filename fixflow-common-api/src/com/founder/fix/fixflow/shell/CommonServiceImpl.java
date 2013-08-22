@@ -19,8 +19,10 @@ package com.founder.fix.fixflow.shell;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.query.Query;
 
 /**
  * @ClassName: CommonServiceImpl

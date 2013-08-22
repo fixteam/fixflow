@@ -15,37 +15,23 @@
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
 <div class="center-panel">
-        <ul>
-        <li><a id="processInstanceList" href="FlowManager?action=processManageList&processAction=processInstanceList"><h1>定义管理</h1><h4>start flow</h4></a></li>
-        <li><a id="processManageList" href="FlowManager?action=processManageList&processAction=processInstanceList"><h1>实例管理</h1><h4>schedule</h4></a></li>
-        </ul>
-</div>
-
-<div class="center-panel">
 <form id="subForm" method="post" action="FlowManager">
 <!-- 左 -->
-	<div class="left">
-        <div class="message">
-        	<div class="title"><a href="#"><em class="icon-message"></em>消息中心</a></div>
-        	<div class="message-content">
-            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-             	<div class="msg"><img src="images/temp/user01.jpg" />曹操：煮酒论英雄！谁一起吃饭啊<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" />张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-       	</div>
-        </div> 
-    </div>
     <div class="right">
     <!-- 隐藏参数部分 -->
-		<input type="hidden" name="agentUserId" value="<c:out value="${result.agentUserId}"/>">
-		<input type="hidden" name="agentType" value="<c:out value="${result.agentType}"/>">
-    	<input type="hidden" name="action" value="processManageList"/> 
-    	<input type="hidden" name="processAction" value="processInstanceList"/> 
+		<input type="hidden" id="operProcessInstanceId" name="operProcessInstanceId">
+    	<input type="hidden" id="action" name="action" value="processManageList"/>
     	<div class="search">
         	<table width="100%">
         	<tr>
-        		<td colspan="6"><a href="#" onclick="stopProcess();">暂停</a><a href="#">恢复</a><a href="#">作废</a><a href="#">删除</a></td>
+        		<td colspan="6">
+        		<a href="#" onclick="doSuspend();">暂停</a>
+        		<a href="#" onclick="doContinue();">恢复</a>
+        		<a href="#" onclick="doTerminat();">作废</a>
+        		<a href="#" onclick="doDelete();">删除</a>
+        		<a href="#" onclick="updateVariables();">变量管理</a>
+        		<a href="#" onclick="updateToken();">令牌管理</a>
+        		</td>
         	</tr>
               <tr>
                 <td class="title-r">任务定义：</td>
@@ -116,12 +102,6 @@
 
 </body>
 <script type="text/javascript">
-	chooseInstanceSelect()
-	function chooseInstanceSelect(){
-		var now = '${nowProcessAction}';
-		$("#"+now).addClass("select");
-	}
-	
 	$('#checkall').click(function(){
     	var tii = $(this).attr("checked");
     	var checkboxs = $("input[name=checked]");
@@ -137,10 +117,53 @@
 			} 
     	}
   	});
-  	
-  	function stopProcess(){
+  	function updateVariables(){
  		var checkboxs = $("input[name=checked]");
- 		var surl = "action=processManageList&processAction=stopProcess";
+ 		var id = "";
+ 		
+ 		for(var i=0;i<checkboxs.length;i++) 
+		{ 
+			if(checkboxs[i].checked==true){
+				id = $(checkboxs[i]).val();
+				break;
+			}
+		}
+		if(id!=""){
+			var obj = {};
+		    window.showModalDialog("FlowManager?action=toProcessVariable&processInstanceId="+id,obj,"dialogWidth=800px;dialogHeight=600px");
+	    }
+  	}
+  	
+  	function updateToken(){
+ 		var checkboxs = $("input[name=checked]");
+ 		var id = "";
+ 		
+ 		for(var i=0;i<checkboxs.length;i++) 
+		{ 
+			if(checkboxs[i].checked==true){
+				id = $(checkboxs[i]).val();
+				break;
+			}
+		}
+		if(id!=""){
+			var obj = {};
+		    window.showModalDialog("FlowManager?action=processTokenList&processInstanceId="+id,obj,"dialogWidth=800px;dialogHeight=600px");
+	    }
+  	}
+  	function doSuspend(){
+  		doProcess("suspendProcessInstance");
+  	}
+  	function doContinue(){
+  		doProcess("continueProcessInstance");
+  	}
+  	function doTerminat(){
+  		doProcess("terminatProcessInstance");
+  	}
+  	function doDelete(){
+  		doProcess("deleteProcessInstance");
+  	}
+  	function doProcess(action){
+ 		var checkboxs = $("input[name=checked]");
  		var id = "";
    		for(var i=0;i<checkboxs.length;i++) 
 		{ 
@@ -150,16 +173,9 @@
 				
 			id += $(checkboxs[i]).val();
 		}
-		surl +="&ids=";
-		surl +=id;
-		$.ajax({ type: "POST", 
-		url: "FlowManager", 
-		data: surl, 
-		success: function(msg)
-		{ 
-			
-		}
-		});
+		$("#action").val(action);
+		$("#operProcessInstanceId").val(id);
+		$("#subForm").submit();
   	}
 </script>
 </html>
