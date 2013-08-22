@@ -42,6 +42,7 @@ import com.founder.fix.fixflow.service.ProcessDefinitionService;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.service.UserGroupService;
 import com.founder.fix.fixflow.util.CurrentThread;
+import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
 
 public class FlowManager extends HttpServlet {
@@ -112,19 +113,42 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
 			}else if(action.equals("processManageList")){
-				String processAction = StringUtil.getString(filter.get("processAction"));
+//				String processAction = StringUtil.getString(filter.get("processAction"));
 				request.setAttribute("nowProcessAction", action);
-				if(StringUtil.isEmpty(processAction) || processAction.equals("processInstanceList")){
-					Map<String,Object> result = getFlowManager().getProcessInstances(filter);
-					request.setAttribute("result", result);
-					rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
-				}else if(processAction.equals("stopProcess")){
-					System.out.println();
-				}else if(processAction.equals("processTokenList")){
-					Map<String,Object> result = getFlowManager().getProcessTokens(filter);
-					request.setAttribute("result", result);
-					rd = request.getRequestDispatcher("/manager/processTokenList.jsp");
+				Map<String,Object> result = getFlowManager().getProcessInstances(filter);
+				request.setAttribute("result", result);
+				rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
+
+			}else if(action.equals("suspendProcessInstance")){
+				getFlowManager().suspendProcessInstance(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+			}else if(action.equals("continueProcessInstance")){
+				getFlowManager().continueProcessInstance(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+			}else if(action.equals("terminatProcessInstance")){
+				getFlowManager().terminatProcessInstance(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+			}else if(action.equals("deleteProcessInstance")){
+				getFlowManager().deleteProcessInstance(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+			}else if(action.equals("toProcessVariable")){
+				Map<String, Object> result = getFlowManager().getProcessVariables(filter);
+				filter.putAll(result);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/manager/processVariableList.jsp");
+			}else if(action.equals("saveProcessVariables")){
+				String tmp = (String)filter.get("insertAndUpdate");
+				if(StringUtil.isNotEmpty(tmp)){
+					Map<String,Object> tMap = JSONUtil.parseJSON2Map(tmp);
+					filter.put("insertAndUpdate", tMap);
 				}
+				getFlowManager().saveProcessVariables(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=toProcessVariable");
+			}else if(action.equals("processTokenList")){
+				Map<String,Object> result = getFlowManager().getProcessTokens(filter);
+				filter.putAll(result);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/manager/processTokenList.jsp");
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){

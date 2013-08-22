@@ -20,6 +20,9 @@ package com.founder.fix.fixflow.service;
 import java.sql.SQLException;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.RuntimeService;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
+
 /**
  * @ClassName: ProcessInstanceService
  * @Description: TODO
@@ -29,14 +32,67 @@ import java.util.Map;
 public interface ProcessInstanceService {
 	/**
 	  * getProcessInstances
-	
 	  * @Title: getProcessInstances
 	  * @Description: 获取所有的流程实例
-	  * @param param
+	  * @param param<br>
+	  * userId 用户编号<br>
+	  * processDefinitionKey 流程定义<br>
+	  * processInstanceId 流程实例编号<br>
+	  * subject 流程标题<br>
+	  * initor 发起人<br>
+	  * status 流程状态<br>
+	  * pageIndex 分页页序<br>
+	  * pageSize 页大小<br>
 	  * @return
 	  * @throws SQLException
 	  */
 	public Map<String,Object> getProcessInstances(Map<String,Object> param) throws SQLException;
 
+	/**
+	  * getProcessTokens
+	
+	  * @Title: getProcessTokens
+	  * @Description: 获取流程令牌
+	  * @param param<br>
+	  * userId 用户编号<br>
+	  * processInstanceId 流程实例编号<br>
+	  * @return
+	  * @throws SQLException
+	  */
 	public Map<String,Object> getProcessTokens(Map<String,Object> param) throws SQLException;
+	
+	/**
+	  * getProcessVariables
+	
+	  * @Title: getProcessVariables
+	  * @Description: 获取流程变量
+	  * @param params<br>
+	  * userId 用户编号<br>
+	  * processInstanceId 流程实例编号<br>
+	  * @return
+	  * @throws SQLException
+	  */
+	public Map<String,Object> getProcessVariables(Map<String,Object> params) throws SQLException;
+	
+	/**
+	  * saveProcessVariables
+	
+	  * @Title: saveProcessVariables
+	  * @Description: 修改流程变量
+	  * @param params<br>
+	  * userId 用户编号<br>
+	  * processInstanceId 流程实例编号<br>
+	  * deleteIndex 删除变量信息，多个逗号分隔
+	  * insertAndUpdate 新增或修改流程变量，以map存在
+	  * @throws SQLException
+	  */
+	public void saveProcessVariables(Map<String,Object> params) throws SQLException;
+	
+	public void suspendProcessInstance(Map<String,Object> params) throws SQLException;
+	
+	public void continueProcessInstance(Map<String,Object> params) throws SQLException;
+	
+	public void terminatProcessInstance(Map<String,Object> params) throws SQLException;
+	
+	public void deleteProcessInstance(Map<String,Object> params) throws SQLException;
 }
