@@ -157,10 +157,37 @@ public interface RuntimeService extends ProcessService{
 	 */
 	boolean deleteProcessInstance(String processDefinitionKey, String businessKey, boolean cascade);
 	
+	/**
+	 * 暂停流程实例
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	boolean suspendProcessInstance(String processInstanceId);
 	
+	/**
+	 * 恢复流程实例
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	boolean continueProcessInstance(String processInstanceId);
+	
+	/**
+	 * 终止流程实例
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	boolean terminatProcessInstance(String processInstanceId);
+	/**
+	 * 更新流程关联键
+	 * @param processInstanceId 流程实例号 
+	 * @param businessKey 关联键
+	 */
 	void updateProcessInstanceBusinessKey(String processInstanceId,String businessKey);
 	
-	
+	/**
+	 * 创建流程实例查询
+	 * @return
+	 */
 	ProcessInstanceQuery createProcessInstanceQuery();
 	
 	/**

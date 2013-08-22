@@ -79,7 +79,22 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 	public boolean deleteProcessInstance(String processDefinitionKey, String businessKey, boolean cascade) {
 		return commandExecutor.execute(new DeleteProcessInstanceByInstanceIdAndDefKeyCmd(processDefinitionKey, businessKey, cascade));
 	}
-
+	
+	public boolean continueProcessInstance(String processInstanceId) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
+	
+	public boolean suspendProcessInstance(String processInstanceId) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
+	
+	public boolean terminatProcessInstance(String processInstanceId) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
+	
 	public ProcessInstanceQuery createProcessInstanceQuery() {
 		return ProcessObjectFactory.FACTORYINSTANCE.createProcessInstanceQuery(commandExecutor);
 	}
