@@ -65,9 +65,17 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 		ProcessDefinitionQuery processDefinitionQuery = processEngine.getModelService().createProcessDefinitionQuery();
 		try{
 			
-			String processName = StringUtil.getString(params.get("processName"));
+			String processName = StringUtil.getString(params.get("queryProcessName"));
 			if(StringUtil.isNotEmpty(processName)){
 				processDefinitionQuery.processDefinitionNameLike(processName);
+			}
+			String processId = StringUtil.getString(params.get("queryProcessId"));
+			if(StringUtil.isNotEmpty(processId)){
+				processDefinitionQuery.processDefinitionKeyLike(processId);
+			}
+			String processCategory = StringUtil.getString(params.get("queryType"));
+			if(StringUtil.isNotEmpty(processCategory)){
+				processDefinitionQuery.processDefinitionCategory(processCategory);
 			}
 			String pageI = StringUtil.getString(params.get("pageIndex"));
 			String rowI = StringUtil.getString(params.get("pageSize"));
@@ -81,11 +89,10 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 				rowNum = Integer.valueOf(rowI);
 			}
 			List<ProcessDefinitionBehavior> processDefinitions = processDefinitionQuery.listPage(pageIndex, rowNum);
-			//取值错误，要更改 为了先测试
-			int count = processDefinitions.size();
+			Long count = processDefinitionQuery.count();
 			List<Map<String,Object>> processDefinitionList = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);
-			page.setTotal(count);
+			page.setTotal(count.intValue());
 			for(ProcessDefinitionBehavior processDefinition:processDefinitions){
 				Map<String,Object> processDefinitonMap = processDefinition.getPersistentState();
 				processDefinitionList.add(processDefinitonMap);

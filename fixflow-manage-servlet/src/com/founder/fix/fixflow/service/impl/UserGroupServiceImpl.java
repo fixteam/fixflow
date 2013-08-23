@@ -65,12 +65,9 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(queryUserName)){
 				queryMap.put("USERNAME", queryUserName);
 			}
-			List<UserTo> userTos = identityService.getUserTos(new Page(pageIndex,rowNum), queryMap);
-			//取值错误，要更改 为了先测试 应该有方法取总数!!!!!!!!!!!!!!!!!!
-			int count = 0;
-			if(userTos != null){
-				count = userTos.size();
-			}
+			Map<String,Object> userListMap = identityService.getUserTos(new Page(pageIndex,rowNum), queryMap);
+			List<UserTo> userTos = (List<UserTo>)userListMap.get("userList");
+			int count = (Integer)userListMap.get("count");
 			List<Map<String,Object>> userList = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count);
@@ -121,9 +118,10 @@ private Connection connection;
 			}
 			
 			GroupDefinition groupDefinition = identityService.getGroupDefinition(groupType);
-			List<GroupTo> groupTos = groupDefinition.findGroups(new Page(pageIndex,rowNum), queryMap);
+			Map<String,Object> map = groupDefinition.findGroups(new Page(pageIndex,rowNum), queryMap);
+			List<GroupTo> groupTos = (List<GroupTo>)map.get("groupList");
 			List<Map<String,Object>> groupList = new ArrayList<Map<String,Object>>();
-			int count = groupList.size();
+			int count = (Integer)map.get("count");
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count);
 			for(GroupTo group : groupTos){
@@ -165,7 +163,7 @@ private Connection connection;
 	public Map<String, Object> getUserInfo(Map<String, Object> params) throws SQLException {
 		Map<String,Object> result= new HashMap<String,Object>();
 		UserTo user = null;
-		String userId = (String) params.get("userId");
+		String userId = (String) params.get("viewUserId");
 		ProcessEngine engine = getProcessEngine(userId);
 		
 		String path = StringUtil.getString(params.get("path"));
