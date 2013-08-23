@@ -3,7 +3,7 @@
   <bpmn2:process id="process_TestToolbar" fixflow:verification="true" fixflow:dbid="process_TestToolbar:1:4e3dad49-4853-4d5c-a5f1-f2d13043ce54" fixflow:category="邵帅" name="ToolBar测试流程">
     <bpmn2:extensionElements>
       <fixflow:formUri>
-        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;FlowCenter?action=doTask&quot;">&quot;FlowCenter?action=doTask&quot;</fixflow:expression>
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;DemoServlet?action=doTask&quot;">&quot;DemoServlet?action=doTask&quot;</fixflow:expression>
       </fixflow:formUri>
       <fixflow:taskSubject id="TaskSubject_1">
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;默认任务主题&quot;">&quot;默认任务主题&quot;</fixflow:expression>
@@ -21,7 +21,7 @@
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
         <fixflow:expectedExecutionTime/>
         <fixflow:formUri>
-          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&quot;FlowCenter?action=startOneTask&quot;">&quot;FlowCenter?action=startOneTask&quot;</fixflow:expression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&quot;DemoServlet?action=startOneTask&quot;">&quot;DemoServlet?action=startOneTask&quot;</fixflow:expression>
         </fixflow:formUri>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>

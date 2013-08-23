@@ -6,7 +6,7 @@
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;任务主题&quot;">&quot;任务主题&quot;</fixflow:expression>
       </fixflow:taskSubject>
       <fixflow:formUri>
-        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;FlowCenter?action=startOneTask&quot;">&quot;FlowCenter?action=startOneTask&quot;</fixflow:expression>
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;DemoServlet?action=doTask&quot;">&quot;DemoServlet?action=doTask&quot;</fixflow:expression>
       </fixflow:formUri>
     </bpmn2:extensionElements>
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1"/>
@@ -31,6 +31,9 @@
           </fixflow:connectorParameterOutputs>
           <fixflow:connectorParameterOutputsDef xsi:type="fixflow:ConnectorParameterOutputsDef" id="outputObj" name="脚本返回值" dataType="java.lang.Object"/>
         </fixflow:connectorInstance>
+        <fixflow:formUri>
+          <fixflow:expression xsi:type="fixflow:Expression" name="&quot;DemoServlet?action=startOneTask&quot;">&quot;DemoServlet?action=startOneTask&quot;</fixflow:expression>
+        </fixflow:formUri>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
