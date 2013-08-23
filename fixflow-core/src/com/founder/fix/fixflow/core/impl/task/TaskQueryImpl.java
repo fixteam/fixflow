@@ -30,7 +30,6 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
-import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;

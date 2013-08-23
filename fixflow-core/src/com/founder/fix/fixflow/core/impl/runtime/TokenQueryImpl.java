@@ -27,7 +27,6 @@ import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.runtime.TokenQuery;
-import com.founder.fix.fixflow.core.task.TaskQuery;
 
 public class TokenQueryImpl extends AbstractQuery<TokenQuery, Token> implements TokenQuery {
 

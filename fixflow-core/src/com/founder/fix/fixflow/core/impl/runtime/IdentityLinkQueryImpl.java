@@ -24,7 +24,6 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
-import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;

@@ -481,6 +481,7 @@ public class PersistentSession {
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Object execute(String execStatement,Object parameter){
 		if("archive".equals(execStatement)){
 			HistoryPersistence historyPersistence = ProcessObjectFactory.FACTORYINSTANCE.createHistoryPersistence(connection);
