@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	function viewUser(userid){
 		var obj = {};
-		window.showModalDialog("FlowManager?action=getUserInfo&userId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
+		window.showModalDialog("FlowManager?action=getUserInfo&viewUserId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
 	}
 </script>
 </head>
@@ -51,7 +51,6 @@
         </div>
 	  <div>
 		<!-- 表 -->
-		<a href="FlowManager?action=getGroupList&groupType=dept">组</a>
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>

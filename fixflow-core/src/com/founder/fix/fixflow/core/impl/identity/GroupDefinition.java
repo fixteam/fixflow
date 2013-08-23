@@ -137,7 +137,7 @@ public abstract class GroupDefinition {
 	 * @param queryMap
 	 * @return
 	 */
-	public abstract List<GroupTo> findGroups(Page page,Map<String,Object> queryMap);
+	public abstract Map<String, Object> findGroups(Page page,Map<String,Object> queryMap);
 
 	/**
 	 * 获取数据库操作类
