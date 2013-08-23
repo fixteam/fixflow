@@ -82,12 +82,12 @@ a{text-decoration: none;}
 	  <div class="search">
         	<table width="100%">
               <tr>
+                <td class="title-r">流程编号：</td>
+                <td><input type="text" id="text_3" name="queryProcessId" class="fix-input" style="width:160px;" value="${result.queryProcessId}"/></td>
                 <td class="title-r">流程名称：</td>
-                <td><input type="text" id="text_3" name="processName" class="fix-input" style="width:160px;" value="${result.processName}"/></td>
-                <td class="title-r">到达时间：</td>
-                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}"/>
-                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}"/></td>
-                <td></td>
+                <td><input type="text" id="text_4" name="queryProcessName" class="fix-input" style="width:160px;" value="${result.queryProcessName}"/></td>
+                <td class="title-r">流程分类：</td>
+                <td><input type="text" id="text_4" name="queryType" class="fix-input" style="width:160px;" value="${result.queryType}"/></td>
                 <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
@@ -102,8 +102,9 @@ a{text-decoration: none;}
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
-		    <th width="30%">流程定义编号</th>
-		    <th >流程定义名称</th>
+		    <th width="12%">流程编号</th>
+		    <th width="28%">唯一编号</th>
+		    <th >流程名称</th>
 		    <th width="5%">流程版本</th>
 		    <th width="8%">流程分类</th>
 		  </thead>
@@ -111,6 +112,7 @@ a{text-decoration: none;}
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" processDefinitionId="${dataList.processDefinitionId}" /></td>
+		      <td>${dataList.processDefinitionKey}</td>
 		      <td>${dataList.processDefinitionId}</td>
 		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.version}</td>
