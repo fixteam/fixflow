@@ -176,7 +176,7 @@ public interface RuntimeService extends ProcessService{
 	 * @param processInstanceId 流程实例号
 	 * @return
 	 */
-	boolean terminatProcessInstance(String processInstanceId);
+	void terminatProcessInstance(String processInstanceId);
 	/**
 	 * 更新流程关联键
 	 * @param processInstanceId 流程实例号 

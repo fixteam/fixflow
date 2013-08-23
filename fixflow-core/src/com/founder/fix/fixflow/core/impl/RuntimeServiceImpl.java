@@ -43,6 +43,7 @@ import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface5Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.QueryVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SuspendProcessInstanceCmd;
+import com.founder.fix.fixflow.core.impl.cmd.TerminatProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TimeStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TokenSignalCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TokenTimeOutCmd;
@@ -92,9 +93,10 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		commandExecutor.execute(new SuspendProcessInstanceCmd(processInstanceId));
 	}
 	
-	public boolean terminatProcessInstance(String processInstanceId) {
-		// TODO 自动生成的方法存根
-		return false;
+	public void terminatProcessInstance(String processInstanceId) {
+		
+		commandExecutor.execute(new TerminatProcessInstanceCmd(processInstanceId));
+		
 	}
 	
 	public ProcessInstanceQuery createProcessInstanceQuery() {
