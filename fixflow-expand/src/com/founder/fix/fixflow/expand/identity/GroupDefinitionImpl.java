@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.expand.identity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,8 +72,8 @@ public class GroupDefinitionImpl extends GroupDefinition {
 		}
 	}
 	
-	@Override
-	public List<GroupTo> findGroups(Page page, Map<String, Object> queryMap) {
+	public Map<String,Object> findGroups(Page page, Map<String, Object> queryMap) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
 		List<GroupTo> resultList = new ArrayList<GroupTo>();
 		try {
 			String groupIdField = getGroupInfo().getGroupIdField();
@@ -80,28 +81,37 @@ public class GroupDefinitionImpl extends GroupDefinition {
 			String sqlText = getGroupInfo().getSqlText();
 			SqlCommand sqlCommand = getSqlCommand();
 			String sql = "SELECT USERTABLE.* FROM (" + sqlText + ") USERTABLE where 1=1";
+			String countSql = "SELECT count(*) FROM (" + sqlText + ") USERTABLE where 1=1";
+			String whereSql = "";
 			if(queryMap.containsKey("GROUPID")){
-				sql += " and " + groupIdField +" like '%"+queryMap.get("GROUPID")+"%'";
+				whereSql += " and " + groupIdField +" like '%"+queryMap.get("GROUPID")+"%'";
 			}
 			if(queryMap.containsKey("GROUPNAME")){
-				sql += " and " + groupNameField +" like '%"+queryMap.get("GROUPNAME")+"%'";
+				whereSql += " and " + groupNameField +" like '%"+queryMap.get("GROUPNAME")+"%'";
 			}
+			sql += whereSql;
+			countSql += whereSql;
+			
 			if (page != null) {
 				Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 				sql = pagination.getPaginationSql(sql, page.getFirstResult(), page.getMaxResults(), "*",null);
 			}
 			List<Map<String, Object>> dataObj = sqlCommand.queryForList(sql, null);
+			int count = Integer.parseInt(sqlCommand.queryForValue(countSql).toString());
 			for(int i = 0;i<dataObj.size();i++){
 				if (dataObj.get(0).get(groupIdField) != null) {
 					GroupTo groupTo = new GroupTo(StringUtil.getString(dataObj.get(i).get(groupIdField)), StringUtil.getString(dataObj.get(i).get(groupNameField)), getId(), dataObj.get(i));
 					resultList.add(groupTo);
 				}
 			}
+			resultMap.put("groupList", resultList);
+			resultMap.put("count", count);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FixFlowException("获取" + getGroupInfo().getGroupName() + "信息出错!", e);
 		}
-		return resultList;
+		
+		return resultMap;
 	}
 
 	@SuppressWarnings("unchecked")
