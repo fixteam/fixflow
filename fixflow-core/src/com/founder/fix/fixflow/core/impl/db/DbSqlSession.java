@@ -120,19 +120,20 @@ public class DbSqlSession {
 	}
 
 	public Object selectOne(String statement, Object parameter) {
-
+		/*
 		if (cacheObject != null) {
 			if (statement.equals("selectProcessInstance")) {
 				return selectProcessInstance(parameter);
 			}
 		}
-
+		 */
 		Object result = persistentSession.selectOne(statement, parameter);
 
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
+
+	@SuppressWarnings({ "unused", "unchecked" })
 	private Object selectProcessInstance(Object parameter) {
 		Map<String, Object> parameters = (HashMap<String, Object>) parameter;
 		String processInstanceId = parameters.get("processInstanceId").toString();
