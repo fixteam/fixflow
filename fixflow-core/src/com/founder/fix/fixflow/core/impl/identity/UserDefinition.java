@@ -57,10 +57,10 @@ public abstract class UserDefinition {
 	/**
 	 * 根据分页和查询条件获取用户
 	 * @param page
-	 * @param queryMap key有 USERID,USERNAME
+	 * @param queryMap key有 count,UserList
 	 * @return
 	 */
-	public abstract List<UserTo> getUserTos(Page page,Map<String,Object> queryMap);
+	public abstract Map<String, Object> getUserTos(Page page,Map<String,Object> queryMap);
 	
 	/**
 	 * 根据userid获取用户

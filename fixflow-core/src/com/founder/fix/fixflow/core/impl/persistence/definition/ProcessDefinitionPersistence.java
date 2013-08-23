@@ -237,6 +237,57 @@ public class ProcessDefinitionPersistence {
 		return processDefinitionList;
 	}
 	
+	public long selectProcessDefinitionsCountByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery){
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		String selectProcessDefinitionsByQueryCriteriaSql = " select count(*) from FIXFLOW_DEF_PROCESSDEFINITION PD ";
+		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " WHERE 1=1";
+		if (processDefinitionQuery.getId() != null) {
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_ID=? ";
+			objectParamWhere.add(processDefinitionQuery.getId());
+		}
+		if (processDefinitionQuery.getKey() != null) {
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_KEY=? ";
+			objectParamWhere.add(processDefinitionQuery.getKey());
+		}
+		if (processDefinitionQuery.getKeyLike() != null) {
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_KEY like '%"+processDefinitionQuery.getKeyLike()+"%' ";
+		}
+		if (processDefinitionQuery.isLatest()) {
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.VERSION = (select max(VERSION) from FIXFLOW_DEF_PROCESSDEFINITION where PROCESS_KEY = PD.PROCESS_KEY)";
+		}
+		if(processDefinitionQuery.getCategory() != null){
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.CATEGORY = ?";
+			objectParamWhere.add(processDefinitionQuery.getCategory());
+		}
+		if(processDefinitionQuery.getCategoryLike() !=null){
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.CATEGORY like '%"+processDefinitionQuery.getCategoryLike()+"%'";
+		}
+		if(processDefinitionQuery.getName() != null){
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.PROCESS_NAME =?";
+			objectParamWhere.add(processDefinitionQuery.getName());
+		}
+		if(processDefinitionQuery.getNameLike() !=null){
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.PROCESS_NAME like '%"+processDefinitionQuery.getNameLike()+"%'";
+		}
+		if(processDefinitionQuery.getVersion() != null){
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.VERSION =?";
+			objectParamWhere.add(processDefinitionQuery.getVersion());
+		}
+		if(processDefinitionQuery.getDeploymentId() != null){
+			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
+					+ " and PD.DEPLOYMENT_ID =?";
+			objectParamWhere.add(processDefinitionQuery.getDeploymentId());
+		}
+		Object returnObj = sqlCommand.queryForValue(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
+		return Integer.parseInt(returnObj.toString());
+	}
+	
 	private ResourceSet getResourceSet() {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		

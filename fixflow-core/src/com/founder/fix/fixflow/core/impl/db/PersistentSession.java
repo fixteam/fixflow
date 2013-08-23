@@ -398,6 +398,10 @@ public class PersistentSession {
 			VariablePersistence variablePersistence = ProcessObjectFactory.FACTORYINSTANCE.createVariablePersistence(connection);
 			return variablePersistence.queryVariable((QueryVariablesCommand)parameter);
 		}
+		if(statement.equals("selectProcessDefinitionCountByQueryCriteria")){
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
+			return processDefinitionPersistence.selectProcessDefinitionsCountByQueryCriteria((ProcessDefinitionQueryImpl)parameter);
+		}
 
 		return null;
 

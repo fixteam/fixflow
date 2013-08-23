@@ -57,7 +57,7 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
 		return commandExecutor.execute(new UserDefinitionInfoCmd()).findUserByUserId(userId);
 	}
 	
-	public List<UserTo> getUserTos(Page page, Map<String, Object> queryMap) {
+	public Map<String, Object> getUserTos(Page page, Map<String, Object> queryMap) {
 		return commandExecutor.execute(new UserDefinitionInfoCmd()).getUserTos(page, queryMap);
 	}
 

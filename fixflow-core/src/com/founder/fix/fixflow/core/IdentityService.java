@@ -75,9 +75,9 @@ public interface IdentityService extends ProcessService{
 	 * 获取用户对象集合
 	 * @param page
 	 * @param queryMap key:USERID,USERNAME  (LIKE匹配)
-	 * @return
+	 * @return 返回map的key ：count，userList
 	 */
-	List<UserTo> getUserTos(Page page,Map<String,Object> queryMap);
+	Map<String, Object> getUserTos(Page page,Map<String,Object> queryMap);
 	
 	boolean verificationStartUserByKey(String userId,String processDefinitionKey);
 

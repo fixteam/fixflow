@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.expand.identity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,20 +100,26 @@ public class UserDefinitionImpl extends UserDefinition {
 	}
 	
 	@Override
-	public List<UserTo> getUserTos(Page page,Map<String,Object> queryMap) {
-		
+	public Map<String,Object> getUserTos(Page page,Map<String,Object> queryMap) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
 		List<UserTo> resultList = new ArrayList<UserTo>();
 		String userIdField=getUserInfoConfig().getUserIdField();
 		String userNameField=getUserInfoConfig().getUserNameField();
 		String sqlText=getUserInfoConfig().getSqlText();
 		SqlCommand sqlCommand = getSqlCommand();
 		String sql = "SELECT USERTABLE.* FROM ("+sqlText+") USERTABLE WHERE 1=1";
+		String countSql = "SELECT count(*) FROM ("+sqlText+") USERTABLE WHERE 1=1";
+		String whereSql = "";
 		if(queryMap != null && queryMap.containsKey("USERID")){
-			sql += "AND "+userIdField+" LIKE '%"+queryMap.get("USERID")+"%'";
+			whereSql += "AND "+userIdField+" LIKE '%"+queryMap.get("USERID")+"%'";
 		}
 		if(queryMap != null && queryMap.containsKey("USERNAME")){
-			sql += "AND "+userNameField+" LIKE '%"+queryMap.get("USERNAME")+"%'";
+			whereSql += "AND "+userNameField+" LIKE '%"+queryMap.get("USERNAME")+"%'";
 		}
+		sql += whereSql;
+		countSql += whereSql;
+		
+		int count = Integer.parseInt(sqlCommand.queryForValue(countSql).toString());
 		if (page != null) {
 			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 			sql = pagination.getPaginationSql(sql, page.getFirstResult(), page.getMaxResults(), "*",null);
@@ -125,7 +132,9 @@ public class UserDefinitionImpl extends UserDefinition {
 				resultList.add(userTo);
 			}
 		}
-		return resultList;
+		resultMap.put("userList", resultList);
+		resultMap.put("count", count);
+		return resultMap;
 	}
 
 }
