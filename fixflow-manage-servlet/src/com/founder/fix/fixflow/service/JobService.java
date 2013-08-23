@@ -91,6 +91,38 @@ public interface JobService {
 	 */
 	public void continueTrigger(Map<String,Object> params) throws SchedulerException, SQLException;
 	
+	/**
+	 * 增加触发器
+	 * @param params
+	 * @throws SchedulerException
+	 * @throws SQLException
+	 */
+	public void addTrigger(Map<String,Object> params) throws SchedulerException, SQLException;
+	
+	/**
+	 * 删除触发器
+	 * @param params
+	 * @throws SchedulerException
+	 * @throws SQLException
+	 */
+	public void deleteTrigger(Map<String,Object> params) throws SchedulerException, SQLException;
+	
+	/**
+	 * 添加一个job
+	 * @param params
+	 * @throws SchedulerException
+	 * @throws SQLException
+	 */
+	public void addJob(Map<String,Object> params) throws SchedulerException, SQLException;
+	
+	/**
+	 * 删除一个job
+	 * @param params
+	 * @return
+	 * @throws SchedulerException
+	 * @throws SQLException
+	 */
+	public boolean deleteJob(Map<String,Object> params) throws SchedulerException, SQLException;
 	
 	
 }

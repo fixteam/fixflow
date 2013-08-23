@@ -177,18 +177,25 @@ public class JobServiceImpl implements JobService {
 			List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(new JobKey(jobKeyName,jobKeyGroup));
 			for(Trigger t : triggers){
 				Map<String,Object> triggerMap = new HashMap<String,Object>();
-				triggerMap.put("triggerName", t.getKey());
-				triggerMap.put("groupName", "aaa");
+				triggerMap.put("triggerName", t.getKey().getName());
+				triggerMap.put("triggerGroup", t.getKey().getGroup());
 				triggerMap.put("startTime", t.getStartTime());
 				triggerMap.put("endTime", t.getEndTime());
 				triggerMap.put("lastFireTime", t.getPreviousFireTime());
 				triggerMap.put("nextFireTime", t.getNextFireTime());
 				triggerMap.put("finalFireTime", t.getFinalFireTime());
+				TriggerState ts = scheduler.getTriggerState(t.getKey());
+				boolean isPaused = false;
+				if(ts.equals(TriggerState.PAUSED)){
+					isPaused = true;
+				}
+				triggerMap.put("isPaused", isPaused);
 				triggerList.add(triggerMap);
 			}
 			resultMap.put("dataList", triggerList);
 			Map<String,Object> jobMap = new HashMap<String,Object>();
-			jobMap.put("jobKey", jobKeyName);
+			jobMap.put("jobKeyName", jobKeyName);
+			jobMap.put("jobKeyGroup", jobKeyGroup);
 			resultMap.put("job", jobMap);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
@@ -202,12 +209,11 @@ public class JobServiceImpl implements JobService {
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
 		Scheduler scheduler = scheduleService.getScheduler();
-		String triggerKey = StringUtil.getString(params.get("triggerKey"));
-		if(StringUtil.isEmpty(triggerKey)){
-			return;
-		}
+		String triggerKeyName = StringUtil.getString(params.get("triggerKeyName"));
+		String triggerKeyGroup = StringUtil.getString(params.get("triggerKeyGroup"));
 		try{
-			scheduler.pauseTrigger(new TriggerKey(triggerKey));
+			TriggerKey tKey = new TriggerKey(triggerKeyName,triggerKeyGroup);
+			scheduler.pauseTrigger(tKey);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
@@ -219,17 +225,75 @@ public class JobServiceImpl implements JobService {
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
 		Scheduler scheduler = scheduleService.getScheduler();
-		String triggerKey = StringUtil.getString(params.get("triggerKey"));
-		if(StringUtil.isEmpty(triggerKey)){
-			return;
-		}
+		String triggerKeyName = StringUtil.getString(params.get("triggerKeyName"));
+		String triggerKeyGroup = StringUtil.getString(params.get("triggerKeyGroup"));
 		try{
-			scheduler.resumeTrigger(new TriggerKey(triggerKey));
+			scheduler.resumeTrigger(new TriggerKey(triggerKeyName,triggerKeyGroup));
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
 	}
 	
+	@Override
+	public void addJob(Map<String, Object> params) throws SchedulerException, SQLException {
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		ScheduleService scheduleService = processEngine.getScheduleService();
+		Scheduler scheduler = scheduleService.getScheduler();
+		try{
+			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
+			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
+			
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+	}
+	
+	@Override
+	public boolean deleteJob(Map<String, Object> params) throws SchedulerException, SQLException {
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		ScheduleService scheduleService = processEngine.getScheduleService();
+		Scheduler scheduler = scheduleService.getScheduler();
+		try{
+			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
+			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
+			return scheduler.deleteJob(new JobKey(jobKeyName,jobKeyGroup));
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+	}
+	
+	@Override
+	public void addTrigger(Map<String, Object> params) throws SchedulerException, SQLException {
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		ScheduleService scheduleService = processEngine.getScheduleService();
+		Scheduler scheduler = scheduleService.getScheduler();
+		try{
+			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
+			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
+			
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+	}
+	
+	@Override
+	public void deleteTrigger(Map<String, Object> params) throws SchedulerException, SQLException {
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		ScheduleService scheduleService = processEngine.getScheduleService();
+		Scheduler scheduler = scheduleService.getScheduler();
+		try{
+			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
+			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
+			
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		
+	}
 	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
 		if(connection!=null){
