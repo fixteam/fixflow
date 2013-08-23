@@ -125,7 +125,7 @@ public class DemoServlet extends HttpServlet {
 						filter);
 				filter.putAll(list);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/center/startOneTask.jsp");
+				rd = request.getRequestDispatcher("/demo/startOneTask.jsp");
 			} else if (action.equals("doTask")) {// 演示如何进入一个已发起的流程处理页面
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -146,7 +146,7 @@ public class DemoServlet extends HttpServlet {
 					Map<String, Object> list = fcs.GetFlowRefInfo(filter);
 					filter.putAll(list);
 					request.setAttribute("result", filter);
-					rd = request.getRequestDispatcher("/center/doTask.jsp");
+					rd = request.getRequestDispatcher("/demo/doTask.jsp");
 				}finally{
 					connection.close();					
 				}
