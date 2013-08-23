@@ -162,14 +162,14 @@ public interface RuntimeService extends ProcessService{
 	 * @param processInstanceId 流程实例号
 	 * @return
 	 */
-	boolean suspendProcessInstance(String processInstanceId);
+	void suspendProcessInstance(String processInstanceId);
 	
 	/**
 	 * 恢复流程实例
 	 * @param processInstanceId 流程实例号
 	 * @return
 	 */
-	boolean continueProcessInstance(String processInstanceId);
+	void continueProcessInstance(String processInstanceId);
 	
 	/**
 	 * 终止流程实例

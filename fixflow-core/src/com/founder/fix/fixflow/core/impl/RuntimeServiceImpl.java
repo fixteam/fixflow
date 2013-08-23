@@ -24,6 +24,7 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
+import com.founder.fix.fixflow.core.impl.cmd.ContinueProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceVaribalesCmd;
@@ -41,6 +42,7 @@ import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface4Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface5Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.QueryVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveVariablesCmd;
+import com.founder.fix.fixflow.core.impl.cmd.SuspendProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TimeStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TokenSignalCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TokenTimeOutCmd;
@@ -80,14 +82,14 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		return commandExecutor.execute(new DeleteProcessInstanceByInstanceIdAndDefKeyCmd(processDefinitionKey, businessKey, cascade));
 	}
 	
-	public boolean continueProcessInstance(String processInstanceId) {
-		// TODO 自动生成的方法存根
-		return false;
+	public void continueProcessInstance(String processInstanceId) {
+		
+		commandExecutor.execute(new ContinueProcessInstanceCmd(processInstanceId));
 	}
 	
-	public boolean suspendProcessInstance(String processInstanceId) {
-		// TODO 自动生成的方法存根
-		return false;
+	public void suspendProcessInstance(String processInstanceId) {
+		
+		commandExecutor.execute(new SuspendProcessInstanceCmd(processInstanceId));
 	}
 	
 	public boolean terminatProcessInstance(String processInstanceId) {
