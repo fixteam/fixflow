@@ -17,8 +17,11 @@
  */
 package com.founder.fix.fixflow.core.impl.cmd;
 
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 
 public class SuspendProcessInstanceCmd  implements Command<Void>{
 
@@ -30,7 +33,30 @@ public class SuspendProcessInstanceCmd  implements Command<Void>{
 	}
 	
 	public Void execute(CommandContext commandContext) {
-		// TODO Auto-generated method stub
+		if (processInstanceId == null || processInstanceId.equals("")) {
+			throw new FixFlowException("流程实例编号为空！");
+		}
+
+		// 创建流程实例管理器
+		ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
+
+		// 获取流程实例
+		ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId);
+
+		
+		if(processInstanceImpl.isSuspended()){
+			throw new FixFlowException("流程实例已经暂停,不能再次暂停");
+		}
+		
+		//暂停流程实例
+		processInstanceImpl.suspend();
+	
+		try {
+			// 持久化实例
+			processInstanceManager.saveProcessInstance(processInstanceImpl);
+		} catch (Exception e) {
+			throw new FixFlowException("流程实例持久化失败!", e);
+		}
 		return null;
 	}
 	

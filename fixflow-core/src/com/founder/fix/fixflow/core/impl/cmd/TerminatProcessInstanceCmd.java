@@ -17,20 +17,46 @@
  */
 package com.founder.fix.fixflow.core.impl.cmd;
 
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
+import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 
-public class TerminatProcessInstanceCmd implements Command<Void>{
+
+public class TerminatProcessInstanceCmd implements Command<Void> {
 
 	protected String processInstanceId;
 
-	public TerminatProcessInstanceCmd(String processInstanceId){
-		this.processInstanceId=processInstanceId;
+	public TerminatProcessInstanceCmd(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
 	}
-	
+
 	public Void execute(CommandContext commandContext) {
-		// TODO Auto-generated method stub
+
+		if (processInstanceId == null || processInstanceId.equals("")) {
+			throw new FixFlowException("流程实例编号为空！");
+		}
+
+		// 创建流程实例管理器
+		ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
+
+		// 获取流程实例
+		ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId);
+
+		// 结束流程实例
+		processInstanceImpl.end();
+		// 更新实例状态为终止
+		processInstanceImpl.setInstanceType(ProcessInstanceType.TERMINATION);
+		try {
+			// 持久化实例
+			processInstanceManager.saveProcessInstance(processInstanceImpl);
+		} catch (Exception e) {
+			throw new FixFlowException("流程实例持久化失败!", e);
+		}
 		return null;
+
 	}
 
 }
