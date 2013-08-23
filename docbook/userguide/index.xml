@@ -18,4 +18,7 @@
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch08-Integration.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch09-TenMinuteTutorial.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch10-Bpmn20.xml"/>
-</book>    
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch11-EclipseDesigner.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch12-TaskCenter.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch13-ManagementCenter.xml"/>
+</book>

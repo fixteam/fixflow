@@ -114,4 +114,201 @@
 
   </section>
   
+  <section xml:id="bpmn.SequenceFlow">
+    <title>Sequence Flow</title>
+    <para>
+      
+    </para>
+    
+    <section xml:id="bpmn.Description">
+      <title>描述</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.GraphicalNotation">
+      <title>图形符号</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.XMLRepresentation">
+      <title>XML描述</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    
+    <section xml:id="bpmn.ConditionalSequenceFlow">
+      <title>条件序列流</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    
+  </section>
+  
+  <section xml:id="bpmn.Gateways">
+    <title>Gateways</title>
+    <para>
+      
+    </para>
+    <section xml:id="bpmn.ExclusiveGateway">
+      <title>Exclusive Gateway</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.ParallelGateway">
+      <title>Parallel Gateway</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.InclusiveGateway">
+      <title>Parallel Gateway</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.ComplexGateway">
+      <title>Complex Gateway</title>
+      <para>
+        
+      </para>
+    </section>
+
+  </section>
+  
+  
+  <section xml:id="bpmn.Tasks">
+    <title>Tasks</title>
+    <para>
+      
+    </para>
+    
+    <section xml:id="bpmn.UserTask">
+      <title>User Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.ScriptTask">
+      <title>Script Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    
+    <section xml:id="bpmn.ServiceTask">
+      <title>Service Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.BusinessRuleTask">
+      <title>Business Rule Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.SendTask">
+      <title>Send Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.ReceiveTask">
+      <title>Receive Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.ManualTask">
+      <title>Manual Task</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.foreach">
+      <title>Multi-instance (for each)</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    
+    
+  </section>
+  
+  <section xml:id="bpmn.Sub-ProcessesAndCallActivities">
+    <title>Sub-Processes and Call Activities</title>
+    <para>
+      
+    </para>
+    
+    <section xml:id="bpmn.Sub-Process">
+      <title>Sub-Process</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    <section xml:id="bpmn.CallActivity">
+      <title>Call activity (subprocess)</title>
+      <para>
+        
+      </para>
+    </section>
+    
+    
+  </section>
+
+  <section xml:id="bpmn.Lane">
+    <title>Lane</title>
+    <para>
+      
+    </para>
+  
+  </section>
+  
+  <section xml:id="bpmn.Data">
+    <title>Data</title>
+    <para>
+      
+    </para>
+    
+  </section>
+  
+  
+  <section xml:id="bpmn.Artifacts">
+    <title>Artifacts</title>
+    <para>
+      
+    </para>
+    
+  </section>
+  
+  <section xml:id="bpmn.ExtensionElements">
+    <title>FixFlow extension elements</title>
+    <para>
+      
+    </para>
+    
+  </section>
+  
 </chapter>
