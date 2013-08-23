@@ -7,29 +7,77 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人信息</title>
 <jsp:include page="head.jsp" flush="true"/>
+<script type="text/javascript">
+$(function(){
+  //暂停
+   $("a[name=suspend]").click(function(){
+  	var triggerKeyGroup = $(this).attr("triggerKeyGroup");
+  	var triggerKeyName = $(this).attr("triggerKeyName");
+    $("#triggerKeyName").val(triggerKeyName);
+     $("#triggerKeyGroup").val(triggerKeyGroup);
+    $("#action").val("suspendTrigger");
+    $("#subForm").submit();
+  });
+  
+   $("a[name=continue]").click(function(){
+  	var triggerKeyGroup = $(this).attr("triggerKeyGroup");
+  	var triggerKeyName = $(this).attr("triggerKeyName");
+    $("#triggerKeyName").val(triggerKeyName);
+     $("#triggerKeyGroup").val(triggerKeyGroup);
+    $("#action").val("continueTrigger");
+    $("#subForm").submit();
+  });
+});
+</script>
 </head>
 <body>
+<form action="FlowManager" method="post" id="subForm">
 <div class="popup">
-    <div class="info">
-        <table width="660" border="0">
+    <div class="info" style="width:1060px;">
+        <table width="1000" border="0">
           <tr>
-            <td width="300">编号：${result.job.jobKey}</td>
-            <td></td>
+            <td width="100">编号：</td>
+            <td><input type="text" name="jobKeyName" value="${result.job.jobKeyName}"></td>
+             <td width="100">组名：</td>
+            <td><input type="text" name="jobKeyGroup" value="${result.job.jobKeyGroup}"></td>
           </tr>
         </table>
-        <table width="660" border="0">
+        <table width="1000" border="0">
           <tr>
             <td width="300">编号</td>
-            <td>下次执行时间</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>上次触发时间</td>
+            <td>下次触发时间</td>
+            <td>最后触发时间</td>
+            <td>操作</td>
           </tr>
 		<c:forEach items="${result.dataList}" var="row" varStatus="status">
 			<tr>
-				<td>${row.groupName}</td>
+				<td>${row.triggerName}</td>
+				<td>${row.startTime}</td>
+				<td>${row.endTime}</td>
+				<td>${row.lastFireTime}</td>
 				<td>${row.nextFireTime}</td>
+				<td>${row.finalFireTime}</td>
+				<td>
+					 <c:choose>
+				    <c:when test="${row.isPaused == true}">
+				        <a href="#" name="continue" triggerKeyGroup="${row.triggerGroup}" triggerKeyName="${row.triggerName}" >恢复</a>
+				    </c:when>
+				    <c:otherwise>
+				          <a href="#" name="suspend" triggerKeyGroup="${row.triggerGroup}" triggerKeyName="${row.triggerName}" >暂停</a>
+				    </c:otherwise>
+				</c:choose>
+				</td>
 			</tr>
 		</c:forEach>
         </table>
     </div>
 </div>
+<input type="hidden" name="action" id="action">
+<input type="hidden" name="triggerKeyGroup" id="triggerKeyGroup">
+<input type="hidden" name="triggerKeyName" id="triggerKeyName">
+</form>
 </body>
 </html>
