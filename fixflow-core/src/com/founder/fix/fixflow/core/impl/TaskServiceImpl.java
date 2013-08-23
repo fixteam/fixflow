@@ -82,6 +82,80 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
 public class TaskServiceImpl extends ServiceImpl implements TaskService {
+	
+	
+	/* ****************************************    任务处理接口  begin  ************************************************************ */
+
+	
+	
+	public void complete(String taskId, String taskComment, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void complete(String taskId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void claim(String taskId) {
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("claim");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
+	}
+
+	
+	public void claim(String taskId, String claimUserId) {
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("claim");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);		
+	}
+
+	
+	
+
+	public void release(String taskId){
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("releaseTask");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
+	}
+	
+	
+	
+
+	public void transfer(String taskId, String transferUserId, String taskComment, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void transfer(String taskId, String transferUserId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void rollBack(String taskId, String rollBackNodeId, String taskComment, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void rollBack(String taskId, String rollBackNodeId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	public <T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn) {
+
+		return (T) commandExecutor.execute(new ExpandTaskComplete<AbstractCustomExpandTaskCommand, T>(expandTaskCommand));
+
+	}
+	
+	
+	/* ****************************************    任务处理接口  end  ************************************************************ */
+	
 
 	public TaskInstance newTask() {
 
@@ -145,24 +219,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	}
 
 	
-	public void claim(String taskId, String claimUserId) {
-		// TODO 自动生成的方法存根
-		
-		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		expandTaskCommandClaim.setCommandType("claim");
-		expandTaskCommandClaim.setTaskId(taskId);
-		this.expandTaskComplete(expandTaskCommandClaim, null);
-		
-		
-	}
 
-
-	public void release(String taskId){
-		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		expandTaskCommandClaim.setCommandType("releaseTask");
-		expandTaskCommandClaim.setTaskId(taskId);
-		this.expandTaskComplete(expandTaskCommandClaim, null);
-	}
 
 	public void transferTask(TransferTaskCommand transferTaskCommand) {
 
@@ -171,11 +228,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 
 
 
-	public <T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn) {
-
-		return (T) commandExecutor.execute(new ExpandTaskComplete<AbstractCustomExpandTaskCommand, T>(expandTaskCommand));
-
-	}
+	
 
 	public void setAssignee(String taskId, String userId) {
 		// TODO Auto-generated method stub
@@ -395,6 +448,12 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	public List<TaskInstance> GetRecoverTask(String taskId, String taskCommandId) {
 		return commandExecutor.execute(new GetRecoverTaskCmd(taskId,taskCommandId));
 	}
+
+	
+
+	
+
+	
 
 	
 

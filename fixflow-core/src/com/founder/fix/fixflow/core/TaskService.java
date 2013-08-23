@@ -37,6 +37,109 @@ import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
 public interface TaskService extends ProcessService {
 
+	/* ****************************************    任务处理接口  begin  ************************************************************ */
+	
+	
+	/**
+	 * 完成任务
+	 * @param taskId 任务编号
+	 * @param taskComment 处理意见
+	 * @param transientVariables 瞬态变量
+	 */
+	void complete(String taskId,String taskComment,Map<String, Object> transientVariables);
+	
+	/**
+	 * 完成任务
+	 * @param taskId 任务编号
+	 * @param taskComment 处理意见
+	 * @param taskCommandId 任务命令编号
+	 * @param transientVariables 瞬态变量
+	 */
+	void complete(String taskId,String taskComment,String taskCommandId,Map<String, Object> transientVariables);
+	
+	
+	
+	/**
+	 * 接收任务
+	 * @param taskId 任务编号
+	 */
+	void claim(String taskId);
+	
+	
+	/**
+	 * 接收任务
+	 * @param taskId 任务编号
+	 * @param claimUserId 接收(不传的话将会去线程副本中获取)
+	 */
+	void claim(String taskId, String claimUserId);
+
+	/**
+	 * 释放任务 (和领取对应,领取过了之后可以释放)
+	 * @param taskId 任务编号
+	 */
+	void release(String taskId);
+	
+	
+
+	
+	/**
+	 * 转发任务
+	 * @param taskId 操作的任务号
+	 * @param transferUserId 转发给的用户编号
+	 * @param taskComment 处理意见
+	 * @param transientVariables 瞬态变量
+	 */
+	void transfer(String taskId,String transferUserId,String taskComment,Map<String, Object> transientVariables);
+	
+
+	/**
+	 * 转发任务
+	 * @param taskId 操作的任务号
+	 * @param transferUserId 转发给的用户编号
+	 * @param taskComment 处理意见
+	 * @param taskCommandId 任务命令编号
+	 * @param transientVariables 瞬态变量
+	 */
+	void transfer(String taskId,String transferUserId,String taskComment,String taskCommandId,Map<String, Object> transientVariables);
+	
+	
+	
+	
+
+	/**
+	 * 退回任务
+	 * @param taskId 操作的任务号
+	 * @param rollBackNodeId 退回的节点号
+	 * @param taskComment 处理意见
+	 * @param transientVariables 瞬态变量
+	 */
+	void rollBack(String taskId,String rollBackNodeId,String taskComment,Map<String, Object> transientVariables);
+	
+	
+	/**
+	 * 退回任务
+	 * @param taskId 操作的任务号
+	 * @param rollBackNodeId 退回的节点号
+	 * @param taskComment 处理意见
+	 * @param taskCommandId 任务命令编号
+	 * @param transientVariables 瞬态变量
+	 */
+	void rollBack(String taskId,String rollBackNodeId,String taskComment,String taskCommandId,Map<String, Object> transientVariables);
+	
+
+	/**
+	 * 自定义扩展方式完成任务的处理命令调用的方法
+	 * 
+	 * @param expandTaskCommand
+	 * @param classReturn
+	 * @return
+	 */
+	<T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn);
+	
+	
+	
+	/* ****************************************    任务处理接口  end  ************************************************************ */
+
 	/**
 	 * 创建一个新的任务
 	 * 
@@ -97,35 +200,6 @@ public interface TaskService extends ProcessService {
 	 */
 	void deleteTasks(Collection<String> taskIds, boolean cascade);
 
-	// 任务常用处理
-
-	/**
-	 * 接收任务
-	 * 
-	 * @param taskId
-	 *            任务编号
-	 * @param claimUserId
-	 *            接收(不传的话将会去线程副本中获取)
-	 */
-	void claim(String taskId, String claimUserId);
-
-	/**
-	 * 释放任务 (和领取对应,领取过了之后可以释放)
-	 * 
-	 * @param taskId
-	 *            任务编号
-	 */
-	void release(String taskId);
-
-	/**
-	 * 自定义扩展方式完成任务的处理命令调用的方法
-	 * 
-	 * @param expandTaskCommand
-	 * @param classReturn
-	 * @return
-	 */
-	<T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn);
-
 	/**
 	 * 返回一个新 {@link TaskQuery}，可用于动态查询的任务。
 	 */
@@ -143,8 +217,6 @@ public interface TaskService extends ProcessService {
 	 * @return {@link TaskCommand} 列表
 	 */
 	List<TaskCommandInst> getTaskCommandById(String processDefinitionId, String nodeId);
-
-	
 
 	/**
 	 * 获取系统运维管理中,能够对指定类型任务操作的所有任务命令
@@ -375,7 +447,6 @@ public interface TaskService extends ProcessService {
 
 	List<UserTaskBehavior> getUserEndTaskNodesInProcessInstance(String processInstanceId);
 
-	
 	/**
 	 * 获取提交节点用户自定义命令 {@link TaskCommand} 列表
 	 * 
@@ -384,8 +455,7 @@ public interface TaskService extends ProcessService {
 	 * @return {@link TaskCommand} 列表
 	 */
 	List<TaskCommandInst> getSubTaskTaskCommandByKey(String processDefinitionKey);
-	
-	
+
 	/**
 	 * 获取任务的处理命令
 	 * 
@@ -399,8 +469,11 @@ public interface TaskService extends ProcessService {
 
 	/**
 	 * 获取任务的处理命令
-	 * @param taskInstance 任务实例
-	 * @param isProcessTracking 是否为流程追踪查询
+	 * 
+	 * @param taskInstance
+	 *            任务实例
+	 * @param isProcessTracking
+	 *            是否为流程追踪查询
 	 * @return
 	 */
 	List<TaskCommandInst> GetTaskCommandByTaskInstance(TaskInstance taskInstance, boolean isProcessTracking);
@@ -437,10 +510,11 @@ public interface TaskService extends ProcessService {
 	 * @return 可以追回的任务
 	 */
 	List<TaskInstance> GetRecoverTask(String taskId, String taskCommandId);
-	
-	
-	
-	/** * * * * * * * * * * * * * * *   已经过期的方法 * * * * * * * * * * * * * * * * * * *  */
+
+	/**
+	 * * * * * * * * * * * * * * * * 已经过期的方法 * * * * * * * * * * * * * * * * * *
+	 * *
+	 */
 
 	@Deprecated
 	/**
