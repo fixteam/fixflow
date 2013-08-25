@@ -6,10 +6,17 @@
   <title>参考文献</title>
 
   <section xml:id="reference.info">
-    <title>定义管理</title>
-    <para>
-      
-    </para>
+    <para> 1. <link xlink:href="http://www.bpmn.org/">BPMN Information Home Page</link> OMG
+      information page for BPMN </para>
+    <para> 2. <link
+        xlink:href="http://bpt.hpi.uni-potsdam.de/pub/Public/BPMNCorner/BPMN1_1_Poster_EN.pdf">BPMN
+        1.1 Poster</link> - Poster showing all BPMN constructs </para>
+    <para> 3. <link xlink:href="http://www.omg.org/spec/BPMN/2.0/PDF/">BPMN 2.0 Poster</link> -
+      BPMN2.0 PDF </para>
   </section>
+  
+  
+  
+  
 
 </chapter>

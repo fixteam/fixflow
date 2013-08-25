@@ -12,6 +12,20 @@
     </para>
   </section>
   
+  <section xml:id="integration.org">
+    <title>组织结构</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="integration.transaction">
+    <title>数据库事务控制</title>
+    <para>
+      
+    </para>
+  </section>
+  
   
   <section xml:id="integration.web">
     <title>TaskCenter、ManagementCenter 集成</title>
