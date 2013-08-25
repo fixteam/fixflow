@@ -25,6 +25,7 @@ import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
+import com.founder.fix.fixflow.core.ManagementService;
 import com.founder.fix.fixflow.core.ModelService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
@@ -50,6 +51,10 @@ public class ProcessEngineImpl implements ProcessEngine {
 	protected TaskService taskService;
 	protected FormService formService;
 	protected ScheduleService scheduleService;
+	protected ManagementService managementService;
+	
+
+	
 
 	protected CommandExecutor commandExecutor;
 	protected CacheHandler cacheHandler;
@@ -67,6 +72,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 		this.taskService = processEngineConfiguration.getTaskService();
 		this.formService = processEngineConfiguration.getFormService();
 		this.scheduleService = processEngineConfiguration.getScheduleService();
+		this.managementService=processEngineConfiguration.getManagementService();
 		this.cacheHandler = processEngineConfiguration.getCacheHandler();
 		this.commandExecutor = processEngineConfiguration.getCommandExecutor();
 
@@ -114,6 +120,11 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 		return scheduleService;
 
+	}
+	
+	public ManagementService getManagementService() {
+		
+		return managementService;
 	}
 
 	public TaskService getTaskService() {

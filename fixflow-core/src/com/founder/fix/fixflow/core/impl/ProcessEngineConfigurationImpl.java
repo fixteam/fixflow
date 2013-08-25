@@ -69,6 +69,7 @@ import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
+import com.founder.fix.fixflow.core.ManagementService;
 import com.founder.fix.fixflow.core.ModelService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
@@ -120,6 +121,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected TaskService taskService = new TaskServiceImpl();
 	protected FormService formService = new FormServiceImpl();
 	protected ScheduleService scheduleService = new ScheduleServiceImpl();
+	protected ManagementService managementService = new ManagementServiceImpl();
 	protected FixFlowConfig fixFlowConfig;
 
 	protected FixFlowVersion fixFlowVersion;
@@ -747,6 +749,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initService(historyService);
 		initService(identityService);
 		initService(taskService);
+		initService(managementService);
 		initService(formService);
 		initService(scheduleService);
 	}
@@ -844,10 +847,21 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		this.identityService = identityService;
 		return this;
 	}
+	
+	public ManagementService getManagementService() {
+		return managementService;
+	}
+
+	public ProcessEngineConfigurationImpl setManagementService(ManagementService managementService) {
+		this.managementService = managementService;
+		return this;
+	}
 
 	public TaskService getTaskService() {
 		return taskService;
 	}
+	
+	
 
 	public List<GroupDefinition> getGroupDefinitions() {
 		return groupDefinitions;

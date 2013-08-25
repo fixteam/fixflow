@@ -36,18 +36,14 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
 public interface TaskService extends ProcessService {
+	
+	
+	
+	
+	
 
 	/* ****************************************    任务处理接口  begin  ************************************************************ */
-	
-	
-	/**
-	 * 完成任务
-	 * @param taskId 任务编号
-	 * @param taskComment 处理意见
-	 * @param transientVariables 瞬态变量
-	 */
-	void complete(String taskId,String taskComment,Map<String, Object> transientVariables);
-	
+
 	/**
 	 * 完成任务
 	 * @param taskId 任务编号
@@ -81,16 +77,7 @@ public interface TaskService extends ProcessService {
 	
 	
 
-	
-	/**
-	 * 转发任务
-	 * @param taskId 操作的任务号
-	 * @param transferUserId 转发给的用户编号
-	 * @param taskComment 处理意见
-	 * @param transientVariables 瞬态变量
-	 */
-	void transfer(String taskId,String transferUserId,String taskComment,Map<String, Object> transientVariables);
-	
+
 
 	/**
 	 * 转发任务
@@ -106,15 +93,6 @@ public interface TaskService extends ProcessService {
 	
 	
 
-	/**
-	 * 退回任务
-	 * @param taskId 操作的任务号
-	 * @param rollBackNodeId 退回的节点号
-	 * @param taskComment 处理意见
-	 * @param transientVariables 瞬态变量
-	 */
-	void rollBack(String taskId,String rollBackNodeId,String taskComment,Map<String, Object> transientVariables);
-	
 	
 	/**
 	 * 退回任务
@@ -139,6 +117,8 @@ public interface TaskService extends ProcessService {
 	
 	
 	/* ****************************************    任务处理接口  end  ************************************************************ */
+
+	
 
 	/**
 	 * 创建一个新的任务

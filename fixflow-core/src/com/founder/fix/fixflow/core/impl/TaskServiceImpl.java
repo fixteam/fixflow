@@ -87,15 +87,15 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	/* ****************************************    任务处理接口  begin  ************************************************************ */
 
 	
-	
-	public void complete(String taskId, String taskComment, Map<String, Object> transientVariables) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 	public void complete(String taskId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
-		// TODO Auto-generated method stub
-		
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("general");
+		expandTaskCommandClaim.setTaskId(taskId);
+		expandTaskCommandClaim.setTaskComment(taskComment);
+
+		expandTaskCommandClaim.setTransientVariables(transientVariables);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
 	}
 	
 	public void claim(String taskId) {
@@ -126,21 +126,13 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	
 	
 
-	public void transfer(String taskId, String transferUserId, String taskComment, Map<String, Object> transientVariables) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	public void transfer(String taskId, String transferUserId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void rollBack(String taskId, String rollBackNodeId, String taskComment, Map<String, Object> transientVariables) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public void rollBack(String taskId, String rollBackNodeId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
 		// TODO Auto-generated method stub
 		

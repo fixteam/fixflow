@@ -37,8 +37,6 @@ public class ExpandTaskComplete<A extends AbstractCustomExpandTaskCommand,T> imp
 	}
 	
 	
-
-	@SuppressWarnings("unchecked")
 	public T execute(CommandContext commandContext) {
 		
 		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
@@ -64,6 +62,7 @@ public class ExpandTaskComplete<A extends AbstractCustomExpandTaskCommand,T> imp
 			AbstractCustomExpandTaskCommand abstractCustomExpandTaskCommand=(AbstractCustomExpandTaskCommand)ReflectUtil.instantiate(commandClassNameString, obj);
 			
 			Object[] objTemp = new Object[] {abstractCustomExpandTaskCommand};  
+			@SuppressWarnings("unchecked")
 			AbstractExpandTaskCmd<A,T> abstractExpandTaskCmd=(AbstractExpandTaskCmd<A,T>)ReflectUtil.instantiate(classNameString, objTemp);
 			return (T) abstractExpandTaskCmd.execute(commandContext);
 			
