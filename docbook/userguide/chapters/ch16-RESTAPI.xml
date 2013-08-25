@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+               
+<chapter>
+  <title>REST API</title>
+  
+  <section xml:id="restAPI.info">
+    <title>REST API</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+</chapter>
