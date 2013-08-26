@@ -86,7 +86,9 @@ $(function(){
 	$("#login").click(function(){
 		var storage = window.sessionStorage;
 		storage.setItem("username",$("#userName").val());
-		storage.setItem("loginType",$("#loginType").val());
+		if($("#loginType").attr("checked")){
+			storage.setItem("loginType","on");
+		}
 		$("#loginF").submit();
 	});
 	$(".btn-login").click(function(){
@@ -98,7 +100,9 @@ $(function(){
 		$("#returnToLockScreen").hide();
 	}else{
 		$("#lastLoginUser").html(username);
-		$("#loginTypeS").val(window.sessionStorage.getItem("loginType"));
+		if(window.sessionStorage.getItem("loginType")){
+			$("#loginS").append('<input type="hidden" name="loginType" id="loginTypeS" value="'+window.sessionStorage.getItem("loginType")+'"/>');
+		}
 		$("#userNameS").val(username);
 		$("#lockScreen").show();
 		$("#loginForm").hide();
