@@ -65,8 +65,7 @@
             </form>
         </div>
     </div>
-    <div class="bottom-panel">
-    </div>
+    <div class="bottom-panel"> </div>
 </div>
 </body>
 </html>
