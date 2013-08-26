@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+/* 2013-8-13 */
+body { min-width:700px; background:#404040; margin:0; padding:0;}
+.main-panel { width:100%; height:100%; display:table; background:url(../images/login-bg.png) no-repeat }
+.center-panel { display:table-row; width:100%; height:70%; overflow:hidden; background:#ddd; opacity: 0.9;}
+.bottom-panel { display:table-row; width:100%; height:30%;}
+/*.login-bg { padding-top:40px; height:500px; overflow:hidden; background:#fff; filter:alpha(opacity=80); opacity:0.8;}*/
+.login { margin:200px auto 0 auto; width:450px; height:300px; overflow:hidden; text-align:center;}
+.login .logo { margin:0 auto; width:350px; height:70px; background:url(../images/logo-login.png) no-repeat center;}
+.login table { margin:0 auto; width:430px; display:block;}
+.login table.hide { display:none;}
+.login td { padding:25px 10px 0 10px; text-align:center;}
+.login td img { display:block; width:104px; height:104px; border:1px solid #999;}
+.login td.username { text-align:left; font-size:24px; font-family:"微软雅黑";}
+.login td.password { text-align:left; padding:15px 10px 0 10px;}
+.login td.change { padding:10px 10px 0 10px; text-align:left;}
+.login td.change_right { padding:10px 10px 0 10px; text-align:right;}
+.login td.change label { color:#848484; font-size:14px; font-family:"微软雅黑";}
+.login td.change_right a, .login td.change a { color:#848484; text-decoration: underline; font-size:14px; font-family:"微软雅黑";}
+.login td.change_right a:hover, .login td.change a:hover { color:#dc562e;}
+
+.login input[type=text], .login input[type=password] { padding:3px 5px;  width:230px; height:24px; line-height:24px; background:#FFF; border:none;; font-size:14px; font-family:"微软雅黑";}
+.login input[type=text]:focus, .login input[type=password]:focus { background-color:#dc562e; color:#FFF;}
+.login input[type=checkbox] {width:30px; }
+/* 按钮 */
+.login .btn-box { margin:0 auto; width:240px; height:auto; overflow:hidden;}
+.label-orange, .btn-orange a { float:left; display:inline-block; padding:4px 18px; border:2px solid #dc562e; background:#dc562e; font-size:16px; line-height:16px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
+.btn-orange a:hover { border:2px solid #dc562e; color:#dc562e; background:#fff;}
+.label-gray, .btn-gray a { float:right; display:inline-block; padding:4px 18px; border:2px solid #555; background:#555; font-size:16px; line-height:16px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
+.btn-gray a:hover { border:2px solid #555; color:#555; background:#fff;}
+
+.btn-login a { float:right; display:inline-block; padding:4px 6px; border:2px solid #dc562e; background:#dc562e; line-height:18px; text-decoration:none;}
+.btn-login a:hover { border:2px solid #dc562e; color:#dc562e; background:#fff;}
+.btn-login a .arrow-login { display:block; width:18px; height:18px; background:url(../images/arrow-login.png) no-repeat 0 0;}
+.btn-login a:hover .arrow-login { background-position:0 -18px;}
+
