@@ -167,14 +167,13 @@
   		doProcess("setHis");
   	}
   	function doProcess(action){
- 		var checkboxs = $("input[name=checked]");
+ 		var checkboxs = $("input:checked[name=checked]");
  		var id = "";
    		for(var i=0;i<checkboxs.length;i++) 
 		{ 
 			if(i!=0){
 				id += ',';
 			}
-				
 			id += $(checkboxs[i]).val();
 		}
 		$("#action").val(action);
