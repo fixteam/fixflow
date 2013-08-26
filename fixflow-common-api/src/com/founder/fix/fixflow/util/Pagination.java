@@ -242,9 +242,9 @@ public class Pagination<T> implements Serializable {
 	}
 	public String createPageInfo() {
 		return "<li>&emsp;共<span class=\"orange\">" + this.getTotal()
-				+ "</span></li>条</li>" +
+				+ "</span>条</li>" +
 				"<li>&nbsp;共<span class=\"orange\">"+ this.getPageCount() 
-				+ "</span></li>页</li>";
+				+ "</span>页</li>";
 	}
 	
 	/**

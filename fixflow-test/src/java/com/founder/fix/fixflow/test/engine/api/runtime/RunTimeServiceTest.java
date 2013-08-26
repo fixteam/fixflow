@@ -25,6 +25,7 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
 import com.founder.fix.fixflow.test.Deployment;
 
@@ -214,5 +215,82 @@ public class RunTimeServiceTest extends AbstractFixFlowTestCase {
 		assertEquals(2,returnMap.keySet().size());
 		assertEquals("变量1的值", returnMap.get("变量1"));
 		assertEquals("变量2的值", returnMap.get("变量2"));
+	}
+	
+	/**
+	 * 测试管理员暂停和恢复流程实例
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/runtime/StartProcessInstanceTest.bpmn" })
+	public void testSuspendAndContinueProces(){
+		//创建一个启动命令
+		StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
+		//设置需要启动的流程的KEY
+		startProcessInstanceCommand.setProcessDefinitionKey("Process_StartProcessInstanceTest");
+		//设置业务关联键
+		startProcessInstanceCommand.setBusinessKey("bk_StartProcessInstanceTest");
+		//设置流程的启动人
+		startProcessInstanceCommand.setStartAuthor("1200119390");
+		//启动流程，返回流程实例
+		ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startProcessInstanceCommand);
+		//验证流程是否启动成功
+		assertNotNull(processInstance);
+		
+		//获取流程实例号
+		String processInstanceId = processInstance.getId();
+		//暂停流程实例
+		runtimeService.suspendProcessInstance(processInstanceId);
+		
+		//创建流程实例查询
+		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询刚才暂停的流程实例
+		processInstanceQuery.processInstanceId(processInstanceId);
+		//获取流程实例
+		processInstance = processInstanceQuery.singleResult();
+		//验证流程实例已经暂停
+		assertTrue(processInstance.isSuspended());
+		
+		//恢复流程实例
+		runtimeService.continueProcessInstance(processInstanceId);
+		
+		//重置流程实例查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询刚才的流程实例
+		processInstanceQuery.processInstanceId(processInstanceId);
+		//获取流程实例
+		processInstance = processInstanceQuery.singleResult();
+		//验证不是暂停状态
+		assertFalse(processInstance.isSuspended());
+	}
+	
+	/**
+	 * 测试管理员暂停和恢复流程实例
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/runtime/StartProcessInstanceTest.bpmn" })
+	public void testTerminatProcessInstance(){
+		//创建一个启动命令
+		StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
+		//设置需要启动的流程的KEY
+		startProcessInstanceCommand.setProcessDefinitionKey("Process_StartProcessInstanceTest");
+		//设置业务关联键
+		startProcessInstanceCommand.setBusinessKey("bk_StartProcessInstanceTest");
+		//设置流程的启动人
+		startProcessInstanceCommand.setStartAuthor("1200119390");
+		//启动流程，返回流程实例
+		ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startProcessInstanceCommand);
+		//验证流程是否启动成功
+		assertNotNull(processInstance);
+		
+		//获取流程实例号
+		String processInstanceId = processInstance.getId();
+		runtimeService.terminatProcessInstance(processInstanceId);
+		
+		//创建流程实例查询
+		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询刚才暂停的流程实例
+		processInstanceQuery.processInstanceId(processInstanceId);
+		//获取流程实例
+		processInstance = processInstanceQuery.singleResult();
+		//验证流程实例为终止状态
+		assertEquals(ProcessInstanceType.TERMINATION, processInstance.getInstanceType());
 	}
 }

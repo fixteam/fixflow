@@ -518,6 +518,18 @@ public class ProcessInstancePersistence {
 			sqlString = sqlString + " and  E.START_TIME<=? ";
 			objectParamWhere.add(processInstanceQuery.getStartTimeAfter());
 		}
+		if (processInstanceQuery.getArchiveTime() != null) {
+			sqlString = sqlString + " and  (E.ARCHIVE_TIME =? OR ARCHIVE_TIME IS NULL)";
+			objectParamWhere.add(processInstanceQuery.getArchiveTime());
+		}
+		if (processInstanceQuery.getArchiveTimeAfter() != null) {
+			sqlString = sqlString + " and  (E.ARCHIVE_TIME<=? OR ARCHIVE_TIME IS NULL)";
+			objectParamWhere.add(processInstanceQuery.getArchiveTimeAfter());
+		}
+		if (processInstanceQuery.getArchiveTimeBefore() != null) {
+			sqlString = sqlString + " and (E.START_TIME>=? OR ARCHIVE_TIME IS NULL)";
+			objectParamWhere.add(processInstanceQuery.getArchiveTimeBefore());
+		}
 		if(processInstanceQuery.getTaskParticipants() !=null ){
 			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+TaskInstanceObjKey.getTableName(processInstanceQuery.getQueryLocation())+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
 			objectParamWhere.add(processInstanceQuery.getTaskParticipants());

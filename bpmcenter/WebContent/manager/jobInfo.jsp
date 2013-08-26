@@ -44,7 +44,6 @@ $(function(){
         </table>
         <table width="1000" border="0">
           <tr>
-            <td width="300">编号</td>
             <td>开始时间</td>
             <td>结束时间</td>
             <td>上次触发时间</td>
@@ -54,7 +53,6 @@ $(function(){
           </tr>
 		<c:forEach items="${result.dataList}" var="row" varStatus="status">
 			<tr>
-				<td>${row.triggerName}</td>
 				<td>${row.startTime}</td>
 				<td>${row.endTime}</td>
 				<td>${row.lastFireTime}</td>

@@ -283,7 +283,106 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				else
 					tq.taskParticipants(userId);
 			}
+			instances = tq.listPage(pageIndex, rowNum);
+
+			Long count = tq.count();
+			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			Pagination page = new Pagination(pageIndex,rowNum);
+			page.setTotal(count.intValue());
+			
+			for(ProcessInstance tmp:instances){
+				Map<String, Object> persistentState = tmp.getPersistentState();
+				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
+				String processDefinitionId = tmp.getProcessDefinitionId();
+				ProcessDefinitionBehavior processDefinitionBehavior = processEngine.getModelService().getProcessDefinition(processDefinitionId);
+				String processDefinitionName = processDefinitionBehavior.getName();
+				persistentState.put("processDefinitionName", processDefinitionName);
 				
+				instanceMaps.add(persistentState);
+				
+				
+				
+			}
+			result.put("dataList", instanceMaps);
+			result.put("pageInfo", page);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+		return result;
+	}
+	
+	/*
+	 * 归档任务
+	 * */
+	public Map<String,Object> queryPlaceOnFile(Map<String,Object> filter) throws SQLException {
+		Map<String,Object> result = new HashMap<String,Object>();
+		String userId = (String) filter.get("userId");
+		String processType = StringUtil.getString(filter.get("processType"));
+		
+		ProcessEngine engine = getProcessEngine(userId);
+		try{
+			ProcessInstanceQuery tq = engine.getRuntimeService()
+					.createProcessInstanceQuery();
+			
+			String bizKey = StringUtil.getString(filter.get("BIZ_KEY"));  //业务数据
+			if(StringUtil.isNotEmpty(bizKey))
+				tq.processInstanceBusinessKey(bizKey);
+			
+			String initor = StringUtil.getString(filter.get("initor"));	//发起人
+			if(StringUtil.isNotEmpty(initor))
+				tq.initiatorLike(initor);
+			
+			Date dates = null;
+			Date datee = null;
+			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
+			String dse = StringUtil.getString(filter.get("arrivalTimeE"));
+			if(StringUtil.isNotEmpty(dss)){
+				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
+			}
+			if(StringUtil.isNotEmpty(dse)){
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+			}
+			if(dates!=null)
+				tq.archiveTimeAfter(dates);
+			
+			if(datee!=null)
+				tq.archiveTimeBefore(datee);
+			
+			String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));  //流程定义
+			if(StringUtil.isNotEmpty(processDefinitionKey))
+				tq.processDefinitionKey(processDefinitionKey);
+			
+			String processInstanceId = StringUtil.getString(filter.get("processInstanceId"));	//流程实例号
+			if(StringUtil.isNotEmpty(processInstanceId))
+				tq.processInstanceId(processInstanceId);
+			
+			String subject = StringUtil.getString(filter.get("subject"));	//主题
+			if(StringUtil.isNotEmpty(subject))
+				tq.subjectLike(subject);
+			
+			String pageI = StringUtil.getString(filter.get("pageIndex"));
+			String rowI = StringUtil.getString(filter.get("rowNum"));
+			
+			int pageIndex=1;
+			int rowNum   =20;
+			if(StringUtil.isNotEmpty(pageI)){
+				pageIndex = Integer.valueOf(pageI);
+			}
+			if(StringUtil.isNotEmpty(rowI)){
+				rowNum = Integer.valueOf(rowI);
+			}
+			
+			if(filter.get("ended")!=null)
+				tq.isEnd();
+			
+			List<ProcessInstance> instances = null;
+			if(StringUtil.isNotEmpty(processType)){
+				if(processType.equals("initor"))
+					tq.initiator(userId);
+				else
+					tq.taskParticipants(userId);
+			}
+			tq.his();
 			instances = tq.listPage(pageIndex, rowNum);
 
 			Long count = tq.count();

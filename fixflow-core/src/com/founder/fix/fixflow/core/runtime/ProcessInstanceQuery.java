@@ -164,6 +164,27 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	ProcessInstanceQuery startTimeAfter(Date startTimeAfter);
 	
 	/**
+	 * 归档时间等于(会查询出archiveTime is null的数据)
+	 * @param startTime
+	 * @return
+	 */
+	ProcessInstanceQuery archiveTimeOn(Date archiveTime);
+
+	/**
+	 * 归档时间大于(会查询出archiveTime is null的数据)
+	 * @param startTimeBefore
+	 * @return
+	 */
+	ProcessInstanceQuery archiveTimeBefore(Date archiveTimeBefore);
+
+	/**
+	 * 归档时间小于(会查询出archiveTime is null的数据)
+	 * @param startTimeAfter
+	 * @return
+	 */
+	ProcessInstanceQuery archiveTimeAfter(Date archiveTimeAfter);
+	
+	/**
 	 * 根据任务主题
 	 * @param taskParticipants
 	 * @return

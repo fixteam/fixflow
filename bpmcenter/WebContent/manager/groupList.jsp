@@ -8,6 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <jsp:include page="head.jsp" flush="true"/>
 <title>用户组查询</title>
+<script type="text/javascript">
+function viewGroupInfo(groupId,groupType){
+	var obj = {};
+	window.showModalDialog("FlowManager?action=getGroupInfo&viewGroupId="+groupId+"&viewGroupType="+groupType,obj,"dialogWidth=800px;dialogHeight=600px");
+}
+</script>
 </head>
 <body>
 <form action="FlowManager" id="subForm">
@@ -48,18 +54,14 @@
 		  <thead>
 		   <th width="2%"></th>
 		    <th width="30%">组ID</th>
-		    <th >用户姓名</th>
-		    <th width="5%">登陆号</th>
-		    <th width="8%">邮箱</th>
+		    <th >组名称</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
-		      <td>${dataList.groupId}</td>
+		      <td><a href="#" onclick="viewGroupInfo('${dataList.groupId}','${result.groupType}')">${dataList.groupId}</a></td>
 		      <td>${dataList.groupName}</td>
-		      <td></td>
-		      <td></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>

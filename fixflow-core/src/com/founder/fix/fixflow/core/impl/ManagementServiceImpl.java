@@ -1,5 +1,6 @@
 package com.founder.fix.fixflow.core.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.ManagementService;
@@ -50,19 +51,25 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
 	}
 
 	public void transfer(String taskId, String transferUserId, String taskComment, Map<String, Object> transientVariables) {
-		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		expandTaskCommandClaim.setCommandType("transfer");
-		expandTaskCommandClaim.setTaskId(taskId);
-		expandTaskCommandClaim.setAdmin(Authentication.getAuthenticatedUserId());
-		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommandClaim, null);
+		ExpandTaskCommand expandTaskCommand=new ExpandTaskCommand();
+		expandTaskCommand.setCommandType("transfer");
+		expandTaskCommand.setTaskId(taskId);
+		expandTaskCommand.setAdmin(Authentication.getAuthenticatedUserId());
+		Map<String, Object> paramMap=new HashMap<String, Object>();
+		paramMap.put("transferUserId", transferUserId);
+		expandTaskCommand.setParamMap(paramMap);
+		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommand, null);
 	}
 
 	public void rollBack(String taskId, String rollBackNodeId, String taskComment, Map<String, Object> transientVariables) {
-		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		expandTaskCommandClaim.setCommandType("rollBack");
-		expandTaskCommandClaim.setTaskId(taskId);
-		expandTaskCommandClaim.setAdmin(Authentication.getAuthenticatedUserId());
-		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommandClaim, null);
+		ExpandTaskCommand expandTaskCommand=new ExpandTaskCommand();
+		expandTaskCommand.setCommandType("rollBack");
+		expandTaskCommand.setTaskId(taskId);
+		expandTaskCommand.setAdmin(Authentication.getAuthenticatedUserId());
+		Map<String, Object> paramMap=new HashMap<String, Object>();
+		paramMap.put("rollBackNodeId", rollBackNodeId);
+		expandTaskCommand.setParamMap(paramMap);
+		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommand, null);
 	}
 
 	

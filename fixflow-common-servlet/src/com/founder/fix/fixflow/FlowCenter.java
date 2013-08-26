@@ -172,6 +172,13 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
+			} else if (action.equals("getPlaceOnFile")) {
+				Map<String, Object> pageResult = getFlowCenter()
+						.queryPlaceOnFile(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
+				rd = request.getRequestDispatcher("/center/placeOnFile.jsp");
 			}else if (action.equals("getTaskDetailInfo")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.getTaskDetailInfo(filter);

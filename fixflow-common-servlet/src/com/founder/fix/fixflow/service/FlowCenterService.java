@@ -179,6 +179,30 @@ public interface FlowCenterService {
 		throws SQLException;
 	
 	/**
+	  * queryTaskInitiator
+	  * @Title: queryTaskInitiator
+	  * @Description: 获取所有某人发起的任务
+	  * @param map<br>
+	  * "userId" 用户编号<br>
+	  * "pdkey" 流程编号(可选)<br>
+	  * "pageIndex" 第几页(可选)<br>
+	  * "rowNum" 有几行(可选)<br>
+	  * "agentUserId" 代理人或委托人id(可选)<br>
+	  * "agentType" 0我代理被人，1别人委托给我(可选)<br>
+	  * "title" 查询主题(可选)<br>
+	  * "processVeriy" 查询变量(可选)<br>
+	  * "arrivalTimeS" 到达时间开始(可选)<br>
+	  * "arrivalTimeE" 到达时间结束(可选)<br>
+	  * "initor" 发起人(可选)<br>
+	  * @return Map<String,Object><br>
+	  * "dataList" 数据列表<br>
+	  * "pageNumber" 总行数<br>
+	  * @throws SQLException
+	  */
+	public Map<String,Object> queryPlaceOnFile(Map<String,Object> map)
+		throws SQLException;
+	
+	/**
 	  * getTaskDetailInfo
 	  * @Title: getTaskDetailInfo
 	  * @Description: 获取某流程的信息
