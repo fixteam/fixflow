@@ -115,11 +115,12 @@ public class FlowManager extends HttpServlet {
 				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
 			}else if(action.equals("processManageList")){
 //				String processAction = StringUtil.getString(filter.get("processAction"));
-				request.setAttribute("nowProcessAction", action);
+//				request.setAttribute("nowProcessAction", action);
 				Map<String,Object> result = getFlowManager().getProcessInstances(filter);
-				request.setAttribute("result", result);
+				filter.putAll(result);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
-
 			}else if(action.equals("suspendProcessInstance")){
 				getFlowManager().suspendProcessInstance(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
