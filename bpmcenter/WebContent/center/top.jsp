@@ -21,7 +21,7 @@
 	chooseSelect();
 	function updateMyself(){
 		var obj = {};
-		window.showModalDialog("FlowCenter?action=getUserInfo",obj,"dialogWidth=800px;dialogHeight=600px");
+		window.showModalDialog("FlowCenter?action=getUserInfo&isUpdate=true",obj,"dialogWidth=800px;dialogHeight=600px");
 	}
 	
 	function chooseSelect(){

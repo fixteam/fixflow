@@ -194,7 +194,15 @@ public class FlowCenter extends HttpServlet {
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/center/userOperation.jsp");
+				rd = request.getRequestDispatcher("/common/userInfo.jsp");
+			}else if (action.equals("getUserIcon")) {
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				Map<String, Object> pageResult = getFlowCenter().getUserInfo(
+						filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/common/userOperation.jsp");
 			} else if (action.equals("updateUserIcon")) {
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));

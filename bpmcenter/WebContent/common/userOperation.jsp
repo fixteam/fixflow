@@ -5,31 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>个人信息</title>
-<jsp:include page="head.jsp" flush="true"/>
+<title>头像修改</title>
+<jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
 <div class="popup">
-    <div class="info">
-        <table width="660" border="0">
-          <tr>
-            <td width="300">编号：${result.user.userId}</td>
-            <td>姓名：${result.user.userName}</td>
-          </tr>
-        </table>
-        <table width="660" border="0">
-          <tr>
-            <td width="300">组编号</td>
-            <td>组名称</td>
-          </tr>
-		<c:forEach items="${result.groups}" var="row" varStatus="status">
-			<tr>
-				<td>${row.groupId}</td>
-				<td>${row.groupName}</td>
-			</tr>
-		</c:forEach>
-        </table>
-    </div>
     <div class="upload">
 		<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 		codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"

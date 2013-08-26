@@ -1,14 +1,14 @@
 @charset "utf-8";
 
 /* 2013-8-13 */
-body { min-width:700px; background:#f2f2f2; margin:0; padding:0;}
+body { min-width:600px; background:#f2f2f2; margin:0; padding:0;}
 .popup { margin:0; height:auto; overflow:hidden;}
-.popup .info { margin:25px auto 0 auto; width:660px; height: auto; overflow:hidden;}
-.popup .info table { margin:4px 10px; color:#444;}
+.popup .info { margin:25px auto 0 auto; width:660px; height: auto; overflow:hidden; border:6px solid #eee; background:#fff;}
+.popup .info table { margin:4px auto; color:#444;}
 .popup .info td { padding:5px 0; font-family:"微软雅黑";}
 .popup .info td.title-r { text-align:right; color:#666; padding-right:15px; width:90px;}
 .popup .upload { margin:5px auto; width:660px; height:480px; background:#fff; border:6px solid #eee; text-align:center;}
-.popup table {  margin:0; color:#444; background:#fff;}
+.popup table {  margin:0 auto; color:#444; background:#fff;}
 .popup th { padding:4px 0; background:#f8ddd5; font-family:"微软雅黑"; border-right: 1px solid #fff; text-align:center;}
 .popup td { padding:3px 0; text-align:center;}
 .popup tr.gray { background:#f7f7f7;}
@@ -22,3 +22,17 @@ body { min-width:700px; background:#f2f2f2; margin:0; padding:0;}
 .btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
 .btn-normal a:hover .arrow-small { background-position:0 -12px;}
 
+/* 用户信息 */
+.userinfo { padding:20px; min-width:600px; height:auto; overflow:hidden; background:#fff;}
+.userinfo .head-info { height:auto; overflow:hidden;}
+.userinfo .head-info img { float:left; display:block; width:162px; height:162px; border:3px solid #eee;}
+.userinfo .head-info .name { float:left; margin-left:25px; height:auto; overflow:hidden;}
+.userinfo .head-info .name h1 { line-height:32px; padding:5px 10px; font-size:32px; font-family:"微软雅黑"; color:#333; text-align:left;}
+.userinfo .head-info .name h5 { padding:5px 10px; font-size:14px; font-family:"微软雅黑"; color:#666;}
+.userinfo .btn-normal { padding:60px 10px 0 10px;}
+.userinfo .btn-normal a { padding:3px 8px;}
+.userinfo h2 { margin-top:20px; padding:4px 10px; height:20px; line-height:20px; font-size:16px; font-family:"微软雅黑"; background:#EEE;}
+.userinfo h2 a { float:right; display:block; color:#dc562e;}
+.userinfo table { margin:10px; color:#444; font-family:"微软雅黑";}
+.userinfo td { padding:5px 0;}
+.userinfo td.title { padding-left:40px; color:#666; width:100px;}
