@@ -15,11 +15,17 @@ a{text-decoration: none;}
 <jsp:include page="top.jsp" flush="true"/>
 <div class="center-panel">
 	<div class="type-box">
+			
+			<div class="type">
+	        	<h1>最近使用的流程</h1>
+	        	
+	    	</div>
+	    	
 		<c:forEach items="${result}" var="row" varStatus="status">
 	    	<div class="type">
 	        	<h1>${row.key}</h1>
 	        	<c:forEach items="${row.value}" var="tmp" varStatus="status">
-	        		<a href="#" formUrl="${tmp.formUrl}" processDefinitionKey="${tmp.processDefinitionKey}"><img src="images/temp/type-01.jpg" />${tmp.processDefinitionName}</a>
+	        		<a href="#" formUrl="${tmp.formUrl}" processDefinitionKey="${tmp.processDefinitionKey}"><div>${tmp.processDefinitionName}</div></a>
 	        	</c:forEach>
 	    	</div>
 		</c:forEach>

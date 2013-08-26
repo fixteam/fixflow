@@ -93,14 +93,10 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 /* 分类 */
 .type-box { padding:20px; height:100%; text-align:center;}
-.type-box .type {  margin:0 auto 20px auto; width:85%; height:auto; overflow:hidden; min-height:150px; background:#bbb;}
+.type-box .type {  margin:0 auto 10px auto; padding-bottom:12px; width:85%; height:auto; overflow:hidden; background:#bbb;}
 .type-box .type h1 { display:block; padding:6px 10px; height:16px; line-height:16px; background:#999; color:#fff; font-family:"微软雅黑"; font-size:14px; font-weight:bold; text-align:left;}
-.type-box .type a { float:left; padding:15px 0 6px 20px; width:160px; height:140px; overflow:hidden; text-decoration:none; text-align:center; color:#fff; line-height:18px;}
-.type-box .type a img { display:block; margin-bottom:3px; width:140px; height:100px; border:6px solid #fff;
-	-webkit-box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);  
-    -moz-box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3); 
-    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
-}
-.type-box .type a:hover { color:#dc562e;}
-.type-box .type a:hover img { border:6px solid #dc562e;}
+.type-box .type a { float:left; margin:12px 0 0 15px; padding:15px 10px 15px 15px; display:block; width:100px; height:40px; overflow:hidden; text-decoration:none; color:#dc562e; line-height:16px; background:#eee ; border:3px solid #eee;}
+.type-box .type a div { font-size:14px; text-align:left; font-family:"微软雅黑";}
+.type-box .type a div:first-letter {font-size:200%;font-weight:bold;float:left;margin:0 5px;}
+.type-box .type a:hover { color:#dc562e; background:#eee ; border:3px solid #dc562e;}
 
