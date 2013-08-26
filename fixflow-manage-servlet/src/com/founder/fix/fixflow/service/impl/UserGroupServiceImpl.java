@@ -181,6 +181,25 @@ private Connection connection;
 		return result;
 	}
 	
+	@Override
+	public Map<String, Object> getGroupInfo(Map<String, Object> params) throws SQLException {
+		Map<String,Object> result= new HashMap<String,Object>();
+		String userId = StringUtil.getString(params.get("userId"));
+		GroupTo group = null;
+		String groupId = StringUtil.getString(params.get("viewGroupId"));
+		String groupType = StringUtil.getString(params.get("viewGroupType"));
+		ProcessEngine engine = getProcessEngine(userId);
+		try{
+			group = engine.getIdentityService().getGroup(groupId, groupType);
+			List<UserTo> users = engine.getIdentityService().getUserInGroupChildMembersInclude(groupId, groupType);
+			result.put("users", users);
+			result.put("group", group);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+		return result;
+	}
+	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
 		if(connection!=null){
 			return FixFlowShellProxy.createProcessEngine(userId,connection);

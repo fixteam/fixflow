@@ -88,11 +88,47 @@ public interface ProcessInstanceService {
 	  */
 	public void saveProcessVariables(Map<String,Object> params) throws SQLException;
 	
+	/**
+	 * 暂停流程实例
+	 * @param params
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
+	 * @throws SQLException
+	 */
 	public void suspendProcessInstance(Map<String,Object> params) throws SQLException;
 	
+	/**
+	 * 恢复流程实例
+	 * @param params
+	 * userId 用户编号
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
+	 * @throws SQLException
+	 */
 	public void continueProcessInstance(Map<String,Object> params) throws SQLException;
 	
+	/**
+	 * 终止流程实例
+	 * @param params
+	 * userId 用户编号
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
+	 * @throws SQLException
+	 */
 	public void terminatProcessInstance(Map<String,Object> params) throws SQLException;
 	
+	/**
+	 * 删除流程实例
+	 * @param params
+	 * userId 用户编号
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
+	 * @throws SQLException
+	 */
 	public void deleteProcessInstance(Map<String,Object> params) throws SQLException;
+	
+	/**
+	 * 归档流程实例
+	 * @param params
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
+	 * @throws SQLException
+	 */
+	public void setHistory(Map<String,Object> params) throws SQLException;
 }

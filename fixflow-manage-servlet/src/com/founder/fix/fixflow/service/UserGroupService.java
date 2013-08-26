@@ -33,15 +33,57 @@ public interface UserGroupService {
 	/**
 	 * 用户
 	 * @param page
+	 * pageIndex 页数
+	 * pageSize 页大小
+	 * queryUserId 查询userId
+	 * queryUserName 查询userName
 	 * @return
 	 * @throws SQLException 
 	 */
 	public Map<String, Object> getAllUsers(Map<String,Object> filter) throws SQLException;
 	
+	/**
+	 * 获取组列表
+	 * @param filter
+	 * pageIndex 页数
+	 * pageSize 页大小
+	 * groupType 组类型
+	 * queryGroupId 组ID
+	 * queryGroupName 组名称
+	 * @return
+	 * @throws SQLException
+	 */
 	public Map<String, Object> getAllGroup(Map<String,Object> filter) throws SQLException;
 	
+	/**
+	 * 获取组定义
+	 * @param params
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Map<String, Object>> getAllGroupDefinition(Map<String,Object> params) throws SQLException;
 	
+	/**
+	 * 获取用户信息
+	 * @param params
+	 * viewUserId 要查询的用户ID
+	 * @return
+	 * user 用户信息
+	 * groups 用户所在组信息
+	 * @throws SQLException
+	 */
 	public Map<String,Object> getUserInfo(Map<String,Object> params) throws SQLException;
+	
+	/**
+	 * 获取组信息
+	 * @param params
+	 * viewGroupId 组ID
+	 * viewGroupType组类型
+	 * @return 
+	 * users 组成员
+	 * group 组信息
+	 * @throws SQLException
+	 */
+	public Map<String,Object> getGroupInfo(Map<String,Object> params) throws SQLException;
 	
 }

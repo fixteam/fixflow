@@ -59,6 +59,13 @@ public class FlowManager extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CurrentThread.init();
+		String userId = StringUtil.getString(request.getSession().getAttribute(
+				FlowCenterService.LOGIN_USER_ID));
+		if (StringUtil.isEmpty(userId)) {
+			String context = request.getContextPath();
+			response.sendRedirect(context + "/");
+			return;
+		}
 		ServletOutputStream out = null;
 		String action = StringUtil.getString(request.getParameter("action"));
 		if (StringUtil.isEmpty(action)) {
@@ -102,9 +109,6 @@ public class FlowManager extends HttpServlet {
 				filter.put(paramName, paramValue);
 
 			}
-
-			String userId = StringUtil.getString(request.getSession()
-					.getAttribute(FlowCenterService.LOGIN_USER_ID));
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if ("processDefinitionList".endsWith(action)) {
@@ -215,6 +219,13 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/manager/userInfo.jsp");
 			}
+			if("getGroupInfo".equals(action)){
+				Map<String, Object> pageResult = getUserGroupService().getGroupInfo(
+						filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/manager/groupInfo.jsp");
+			}
 			if("getJobList".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobList(filter);
@@ -260,6 +271,10 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/manager/jobInfo.jsp");
+			}
+			if("setHis".equals(action)){
+				getFlowManager().setHistory(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}
 			if (rd != null)
 				rd.forward(request, response);

@@ -31,7 +31,7 @@ public interface JobService {
 
 	/**
 	 * 获取job集合
-	 * @param params
+	 * @param params userid 用来取引擎
 	 * @return
 	 * @throws SchedulerException
 	 * @throws SQLException
@@ -39,20 +39,23 @@ public interface JobService {
 	public Map<String,Object> getJobList(Map<String,Object> params) throws SchedulerException, SQLException;
 	
 	/**
-	 * 暂停调度
-	 * @throws SQLException 
+	 * 暂停调用
+	 * @param params userid 用来取引擎
+	 * @throws SQLException
 	 */
 	public void suspendScheduler(Map<String,Object> params) throws SQLException;
 	
 	/**
-	 * 恢复调度
+	 * 恢复调度 
 	 * @throws SQLException 
 	 */
 	public void continueScheduler(Map<String,Object> params) throws SQLException;
 	
 	/**
-	 * 暂停job
+	 * 暂停job 
 	 * @param params
+	 * jobKeyName 定时任务jobkeyname
+	 * jobKeyGroup 定时任务 Group
 	 * @throws SchedulerException 
 	 * @throws SQLException 
 	 */
@@ -60,6 +63,8 @@ public interface JobService {
 	
 	/**
 	 * 恢复job
+	 * jobKeyName 定时任务jobkeyname
+	 * jobKeyGroup 定时任务 Group
 	 * @param params
 	 * @throws SQLException 
 	 * @throws SchedulerException 
@@ -69,6 +74,8 @@ public interface JobService {
 	/**
 	 * 获取job的触发器
 	 * @param params
+	 * jobKeyName 定时任务jobkeyname
+	 * jobKeyGroup 定时任务 Group
 	 * @return
 	 * @throws SQLException 
 	 * @throws SchedulerException 
@@ -78,6 +85,8 @@ public interface JobService {
 	/**
 	 * 暂停触发器
 	 * @param params
+	 * triggerKeyName 触发器key
+	 * triggerKeyGroup 触发器group
 	 * @throws SchedulerException 
 	 * @throws SQLException 
 	 */
@@ -86,43 +95,11 @@ public interface JobService {
 	/**
 	 * 恢复触发器
 	 * @param params
+	 * triggerKeyName 触发器key
+	 * triggerKeyGroup 触发器group
 	 * @throws SQLException 
 	 * @throws SchedulerException 
 	 */
 	public void continueTrigger(Map<String,Object> params) throws SchedulerException, SQLException;
-	
-	/**
-	 * 增加触发器
-	 * @param params
-	 * @throws SchedulerException
-	 * @throws SQLException
-	 */
-	public void addTrigger(Map<String,Object> params) throws SchedulerException, SQLException;
-	
-	/**
-	 * 删除触发器
-	 * @param params
-	 * @throws SchedulerException
-	 * @throws SQLException
-	 */
-	public void deleteTrigger(Map<String,Object> params) throws SchedulerException, SQLException;
-	
-	/**
-	 * 添加一个job
-	 * @param params
-	 * @throws SchedulerException
-	 * @throws SQLException
-	 */
-	public void addJob(Map<String,Object> params) throws SchedulerException, SQLException;
-	
-	/**
-	 * 删除一个job
-	 * @param params
-	 * @return
-	 * @throws SchedulerException
-	 * @throws SQLException
-	 */
-	public boolean deleteJob(Map<String,Object> params) throws SchedulerException, SQLException;
-	
 	
 }
