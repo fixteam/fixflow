@@ -22,7 +22,8 @@
 	                <tr>
 	                  <td rowspan="3" width="110"><img src="images/temp/user-m.png" /></td>
 	                  <td class="username" width="330"><span id="lastLoginUser"></span>
-	                  	<input type="hidden" name="userName" id="userNameS"/></td>
+	                  	<input type="hidden" name="userName" id="userNameS"/>
+	                  	<input type="hidden" name="loginType" id="loginTypeS"/></td>
 	                </tr>
 	                <tr>
 	                  <td class="password"><div class="btn-login"><a href="#"><em class="arrow-login"></em></a></div>
@@ -85,6 +86,7 @@ $(function(){
 	$("#login").click(function(){
 		var storage = window.sessionStorage;
 		storage.setItem("username",$("#userName").val());
+		storage.setItem("loginType",$("#loginType").val());
 		$("#loginF").submit();
 	});
 	$(".btn-login").click(function(){
@@ -96,6 +98,7 @@ $(function(){
 		$("#returnToLockScreen").hide();
 	}else{
 		$("#lastLoginUser").html(username);
+		$("#loginTypeS").val(window.sessionStorage.getItem("loginType"));
 		$("#userNameS").val(username);
 		$("#lockScreen").show();
 		$("#loginForm").hide();
