@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/global.css">
 <link rel="stylesheet" type="text/css" href="../css/login.css">
-<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
 
 <title>Founder Fix BPM</title>
 </head>
