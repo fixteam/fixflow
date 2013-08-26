@@ -39,29 +39,32 @@ function viewGroupInfo(groupId,groupType){
 	  <div class="search">
         	<table width="100%">
               <tr>
-                <td class="title-r">组ID：</td>
+                <td class="title-r">组编号：</td>
                 <td><input type="text" id="text_3" name="queryGroupId" class="fix-input" style="width:160px;" value="${result.queryGroupId}"/></td>
                 <td class="title-r">组名称：</td>
-                <td><input type="text" id="text_4" name="queryGroupName" class="fix-input" style="width:69px;" value="${result.queryGroupName}"/>
-                <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td><input type="text" id="text_4" name="queryGroupName" class="fix-input" style="width:160px;" value="${result.queryGroupName}"/>
               </tr>
             </table>
         </div>
+      <div class="toolbar" style="padding-left:35px; padding-right:80px;">
+	  	<div class="btn-normal" style="float:right;"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
+	  </div>
 	  <div>
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
-		    <th width="30%">组ID</th>
+		    <th width="20%">组编号</th>
 		    <th >组名称</th>
+		    <th width="8%">操作</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
-		      <td><a href="#" onclick="viewGroupInfo('${dataList.groupId}','${result.groupType}')">${dataList.groupId}</a></td>
+		      <td>${dataList.groupId}</td>
 		      <td>${dataList.groupName}</td>
+		      <td><a href="#" onclick="viewGroupInfo('${dataList.groupId}','${result.groupType}')">查看</a></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>

@@ -53,15 +53,14 @@ $(function(){
 	  <div class="search">
         	<table width="100%">
               <tr>
-                <td class="title-r">用户ID：</td>
-                <td><input type="text" id="text_3" name="queryUserId" class="fix-input" style="width:160px;" value="${result.queryUserId}"/></td>
-                <td class="title-r">用户姓名：</td>
-                <td><input type="text" id="text_4" name="queryUserName" class="fix-input" style="width:69px;" value="${result.queryUserName}"/>
-                <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td class="title-r" style="width:200px;">流程编号/实例编号/令牌编号：</td>
+                <td><input type="text" id="text_3" name="queryId" class="fix-input" style="width:160px;" value="${result.queryId}"/></td>
               </tr>
             </table>
         </div>
+      <div class="toolbar" style="padding-left:35px; padding-right:80px;">
+	  	<div class="btn-normal" style="float:right;"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
+	  </div>
 	  <div>
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
@@ -69,7 +68,7 @@ $(function(){
 		   <th width="2%"></th>
 		    <th width="25%">流程编号</th>
 		    <th>实例编号</th>
-		    <th width="10%">节点</th>
+		    <th width="10%">节点编号</th>
 		    <th>节点名称</th>
 		     <th width="8%">任务类型</th>
 		    <th width="8%">任务状态</th>

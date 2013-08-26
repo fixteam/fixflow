@@ -40,33 +40,37 @@
 	  <div class="search">
         	<table width="100%">
               <tr>
-                <td class="title-r">用户ID：</td>
+                <td class="title-r">用户编号：</td>
                 <td><input type="text" id="text_3" name="queryUserId" class="fix-input" style="width:160px;" value="${result.queryUserId}"/></td>
                 <td class="title-r">用户姓名：</td>
                 <td><input type="text" id="text_4" name="queryUserName" class="fix-input" style="width:69px;" value="${result.queryUserName}"/>
                 <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
         </div>
+      <div class="toolbar" style="padding-left:35px; padding-right:80px;">
+	  	<div class="btn-normal" style="float:right;"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
+	  </div>
 	  <div>
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
-		    <th width="30%">用户ID</th>
+		    <th width="30%">用户编号</th>
 		    <th >用户姓名</th>
 		    <th width="5%">登陆号</th>
 		    <th width="8%">邮箱</th>
+		    <th width="8%">操作</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
-		      <td><a href="#" onclick="viewUser('${dataList.USERID}')">${dataList.USERID}</a></td>
+		      <td>${dataList.USERID}</td>
 		      <td>${dataList.USERNAME}</td>
 		      <td>${dataList.LOGINID}</td>
 		      <td>${dataList.EMAIL}</td>
+		       <td><a href="#" onclick="viewUser('${dataList.USERID}')">查看</a></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>

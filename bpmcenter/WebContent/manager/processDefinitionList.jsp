@@ -20,14 +20,16 @@ a{text-decoration: none;}
 }
 </style>
 <title>流程定义列表</title>
-
-
 <script type="text/javascript">
 	function deployment(){
 		window.open("manager/deployment.jsp");
 	}
 	
 	function deleteDeploy(){
+		if(!checkSelect()){
+			alert("请选择流程");
+			return;
+		}
 		var deploymentId = "";
 		var checkList = $("input:checked");
 		for(var i=0;i<checkList.length;i++){
@@ -43,6 +45,10 @@ a{text-decoration: none;}
 	}
 	
 	function updateDeploy(){
+		if(!checkSelect()){
+			alert("请选择流程");
+			return;
+		}
 		var deploymentId = "";
 		var checkList = $("input:checked");
 		if(checkList.length >0){
@@ -51,7 +57,11 @@ a{text-decoration: none;}
 		window.open("manager/deployment.jsp?deploymentId="+deploymentId);
 	}
 	
-	function download(){
+	function downloadProcess(){
+		if(!checkSelect()){
+			alert("请选择流程");
+			return;
+		}
 		var deploymentId = "";
 		var processDefinitionId = "";
 		var checkList = $("input:checked");
@@ -63,6 +73,14 @@ a{text-decoration: none;}
 		$("#action").val("download");
 		$("#processDefinitionId").val(processDefinitionId);
 		document.forms[0].submit();
+	}
+	
+	function checkSelect(){
+		var checkList = $("input:checked");
+		if(checkList.length >0){
+		 	return true;
+		}
+		return false;
 	}
 </script>
 </head>
@@ -88,17 +106,19 @@ a{text-decoration: none;}
                 <td><input type="text" id="text_4" name="queryProcessName" class="fix-input" style="width:160px;" value="${result.queryProcessName}"/></td>
                 <td class="title-r">流程分类：</td>
                 <td><input type="text" id="text_4" name="queryType" class="fix-input" style="width:160px;" value="${result.queryType}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td></td>
               </tr>
             </table>
         </div>
+       <div class="toolbar" style="padding-left:0px; padding-right:80px;">
+		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="deployment()">发布流程</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="deleteDeploy()">删除定义</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="updateDeploy()">更新定义</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="downloadProcess()">下载定义</a></div>
+	  	<div class="btn-normal" style="float:right;"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
+	  </div>
 	  <div>
-	  
-	  <input type="button" value="发布流程" onclick="deployment()" />
-	  <input type="button" value="删除定义" onclick="deleteDeploy()" />
-	  <input type="button" value="更新定义" onclick="updateDeploy()" />
-	   <input type="button" value="下载定义" onclick="download()" />
-		<!-- 表 -->
+	 
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
@@ -122,7 +142,7 @@ a{text-decoration: none;}
 		  </tbody>
 	    </table>
 		<!-- 分页 -->	    
-	   <jsp:include page="../center/page.jsp" flush="true"/>
+	   <jsp:include page="page.jsp" flush="true"/>
 	    </div>
 	  </div>
 	</div>
@@ -133,63 +153,4 @@ a{text-decoration: none;}
 	<input type="hidden" name="processDefinitionId" id="processDefinitionId" value=""/>
 </form>
 </body>
-
-<script>
-/*  
- * "userId" 用户编号
- * "pdkey" 流程编号
- * "pageIndex" 第几页
- * "rowNum" 有几行
- * "agentUserId" 有几行
- * "agentType" 0我代理别人，1别人委托给我
- * "title" 查询主题
- * "processVeriy" 查询变量
- * "arrivalTimeS" 到达时间开始
- * "arrivalTimeE" 到达时间结束
- * "initor" 发起人
- * @param @return
- * "dataList" 数据列表
- * "pageNumber" 总行数
- * "agentUsers" 代理用户
- * "agentToUsers" 委托用户
- * "pageIndex" 第几页
- * "rowNum" 有几行
- */
-$(function(){
-  var agentType = $("input[name=agentType]").val();
-  var userId = $("input[name=userId]").val();
-  $("a[name=myTask]").click(function(){
-    $("#agentUserId").val();
-    $("#agentType").val();
-    $("#subForm").submit();
-  });
-  $("a[name=agentUsers]").click(function(){
-    var userId = $(this).attr("userId");
-    $("#agentUserId").val(userId);
-    $("#agentType").val('1');
-    $("#subForm").submit();
-  });
-  $("a[name=agentToUsers]").click(function(){
-    var userId = $(this).attr("userId");
-    $("#agentUserId").val(userId);
-    $("#agentType").val('0');
-    $("#subForm").submit();
-  });
-  $("a[name=flowGraph]").click(function(){
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
-  });
-  $("a[name=doTask]").click(function(){
-    var tii = $(this).attr("tii");
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var bizKey = $(this).attr("bk");
-    
-    var obj = {};
-    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
-  });
-});
-</script>
 </html>
