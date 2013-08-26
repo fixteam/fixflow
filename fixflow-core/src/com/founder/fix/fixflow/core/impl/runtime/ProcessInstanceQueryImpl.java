@@ -57,11 +57,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected CommandExecutor commandExecutor;
 	
 	
-	
-
-
-	
 	public ProcessInstanceQueryImpl() {
+		
 	}
 
 	public ProcessInstanceQueryImpl(CommandContext commandContext) {
@@ -280,6 +277,12 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	
 	protected Date startTimeAfter;
 	
+	protected Date archiveTime;
+	
+	protected Date archiveTimeBefore;
+	
+	protected Date archiveTimeAfter;
+	
 	protected QueryLocation queryLocation = null;
 
 	public ProcessInstanceQuery initiatorLike(String initiatorLike) {
@@ -312,6 +315,21 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return this;
 	}
 	
+	public ProcessInstanceQuery archiveTimeOn(Date archiveTime) {
+		this.archiveTime = archiveTime;
+		return this;
+	}
+	
+	public ProcessInstanceQuery archiveTimeAfter(Date archiveTimeAfter) {
+		this.archiveTimeAfter = archiveTimeAfter;
+		return this;
+	}
+	
+	public ProcessInstanceQuery archiveTimeBefore(Date archiveTimeBefore) {
+		this.archiveTimeBefore = archiveTimeBefore;
+		return this;
+	}
+	
 	public ProcessInstanceQuery his() {
 		if(this.queryLocation != null){
 			this.queryLocation = QueryLocation.RUN_HIS;
@@ -328,6 +346,31 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 			this.queryLocation = QueryLocation.RUN;
 		}
 		return this;
+	}
+
+	
+	public String getExecutionId() {
+		return executionId;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public CommandExecutor getCommandExecutor() {
+		return commandExecutor;
+	}
+
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public Date getArchiveTimeBefore() {
+		return archiveTimeBefore;
+	}
+
+	public Date getArchiveTimeAfter() {
+		return archiveTimeAfter;
 	}
 
 	public String getInitiatorLike() {
