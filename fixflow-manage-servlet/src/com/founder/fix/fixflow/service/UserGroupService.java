@@ -44,4 +44,6 @@ public interface UserGroupService {
 	
 	public Map<String,Object> getUserInfo(Map<String,Object> params) throws SQLException;
 	
+	public Map<String,Object> getGroupInfo(Map<String,Object> params) throws SQLException;
+	
 }

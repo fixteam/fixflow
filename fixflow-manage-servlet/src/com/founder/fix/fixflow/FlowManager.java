@@ -214,6 +214,13 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/manager/userInfo.jsp");
 			}
+			if("getGroupInfo".equals(action)){
+				Map<String, Object> pageResult = getUserGroupService().getGroupInfo(
+						filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/manager/groupInfo.jsp");
+			}
 			if("getJobList".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobList(filter);
