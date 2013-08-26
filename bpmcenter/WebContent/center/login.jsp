@@ -52,7 +52,7 @@
 	                </tr>
 	                <tr>
 	                  <td colspan="2"><div class="btn-box">
-	                      <div class="btn-orange"><a href="#">登&emsp;录</a></div>
+	                      <div class="btn-orange"><a href="#" onclick="submit()">登&emsp;录</a></div>
 	                      <div class="btn-gray"><a href="#">返&emsp;回</a></div>
 	                  </div></td>
 	                </tr>
