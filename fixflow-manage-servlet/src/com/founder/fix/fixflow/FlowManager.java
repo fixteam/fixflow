@@ -126,16 +126,32 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
 			}else if(action.equals("suspendProcessInstance")){
-				getFlowManager().suspendProcessInstance(filter);
+				try{
+					getFlowManager().suspendProcessInstance(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("continueProcessInstance")){
-				getFlowManager().continueProcessInstance(filter);
+				try{
+					getFlowManager().continueProcessInstance(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("terminatProcessInstance")){
-				getFlowManager().terminatProcessInstance(filter);
+				try{
+					getFlowManager().terminatProcessInstance(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("deleteProcessInstance")){
-				getFlowManager().deleteProcessInstance(filter);
+				try{
+					getFlowManager().deleteProcessInstance(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("toProcessVariable")){
 				Map<String, Object> result = getFlowManager().getProcessVariables(filter);
