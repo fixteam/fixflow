@@ -59,6 +59,13 @@ public class FlowManager extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CurrentThread.init();
+		String userId = StringUtil.getString(request.getSession().getAttribute(
+				FlowCenterService.LOGIN_USER_ID));
+		if (StringUtil.isEmpty(userId)) {
+			String context = request.getContextPath();
+			response.sendRedirect(context + "/");
+			return;
+		}
 		ServletOutputStream out = null;
 		String action = StringUtil.getString(request.getParameter("action"));
 		if (StringUtil.isEmpty(action)) {
@@ -102,9 +109,6 @@ public class FlowManager extends HttpServlet {
 				filter.put(paramName, paramValue);
 
 			}
-
-			String userId = StringUtil.getString(request.getSession()
-					.getAttribute(FlowCenterService.LOGIN_USER_ID));
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if ("processDefinitionList".endsWith(action)) {
