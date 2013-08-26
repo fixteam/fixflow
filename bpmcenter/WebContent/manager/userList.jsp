@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	function viewUser(userid){
 		var obj = {};
-		window.showModalDialog("FlowManager?action=getUserInfo&viewUserId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
+		window.showModalDialog("FlowCenter?action=getUserInfo&targetUserId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
 	}
 </script>
 </head>

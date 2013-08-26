@@ -80,7 +80,7 @@ public class FlowCenter extends HttpServlet {
 				FlowCenterService.LOGIN_USER_ID));
 		if (StringUtil.isEmpty(userId)) {
 			String context = request.getContextPath();
-			response.sendRedirect(context + "/center/login.jsp");
+			response.sendRedirect(context + "/");
 			return;
 		}
 		CurrentThread.init();
