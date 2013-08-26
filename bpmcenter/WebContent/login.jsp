@@ -16,22 +16,25 @@
 	<div class="center-panel">
         <div class="login">
             <div class="logo">&nbsp;</div>
-            <form id="loginF" method=post action="${pageContext.request.contextPath}/LoginServlet">
+            <form id="loginS" method=post action="${pageContext.request.contextPath}/LoginServlet">
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
 	                  <td rowspan="3" width="110"><img src="images/temp/user-m.png" /></td>
-	                  <td class="username" width="330"><span id="lastLoginUser"></span></td>
+	                  <td class="username" width="330"><span id="lastLoginUser"></span>
+	                  	<input type="hidden" name="userName" id="userNameS"/></td>
 	                </tr>
 	                <tr>
 	                  <td class="password"><div class="btn-login"><a href="#"><em class="arrow-login"></em></a></div>
-	                  <input type="password" class="inputset" /></td>
+	                  <input type="password" name="password" class="inputset" /></td>
 	                </tr>
 	                <tr>
 	                  <td class="change"><a href="#" id="returnLoginForm">切换用户</a></td>
 	                </tr>
 	              </tbody>
 	            </table>
+	        </form>
+	        <form id="loginF" method=post action="${pageContext.request.contextPath}/LoginServlet">
 	            <table id="loginForm">
 	              <tbody>
 	                <tr>
@@ -84,5 +87,18 @@ $(function(){
 		storage.setItem("username",$("#userName").val());
 		$("#loginF").submit();
 	});
+	$(".btn-login").click(function(){
+		$("#loginS").submit();
+	});
+	
+	var username = window.sessionStorage.getItem("username");
+	if(username==undefined||username==""){
+		$("#returnToLockScreen").hide();
+	}else{
+		$("#lastLoginUser").html(username);
+		$("#userNameS").val(username);
+		$("#lockScreen").show();
+		$("#loginForm").hide();
+	}
 })
 </script>
