@@ -41,7 +41,7 @@ public class GetAgentToUsersAndCountCmd  implements  Command<List<Map<String, Ob
 	}
 	public List<Map<String, Object>> execute(CommandContext commandContext) {
 		List<Map<String, Object>> returnListMaps=new ArrayList<Map<String,Object>>();
-		List<Map<String, Object>> listmMaps=commandContext.getTaskManager().findAgentUsers(userId);
+		List<Map<String, Object>> listmMaps=commandContext.getTaskManager().findAgentToUsers(userId);
 		UserDefinition userDefinition=commandContext.getProcessEngineConfigurationImpl().getUserDefinition();
 		for (Map<String, Object> map : listmMaps) {
 			String userIdDataString=StringUtil.getString(map.get("EID"));

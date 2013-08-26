@@ -157,7 +157,7 @@ public class PersistentSession {
 		
 		if (statement.endsWith("findAgentToUsers")) {
 			TaskInstancePersistence taskInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createTaskInstancePersistence(connection);
-			return taskInstancePersistence.findAgentUsers(StringUtil.getString(parameter));
+			return taskInstancePersistence.findAgentToUsers(StringUtil.getString(parameter));
 		}
 
 		if (statement.equals("selectTaskByQueryCriteria")) {
