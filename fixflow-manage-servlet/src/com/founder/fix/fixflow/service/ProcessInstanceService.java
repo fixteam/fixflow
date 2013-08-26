@@ -126,7 +126,7 @@ public interface ProcessInstanceService {
 	/**
 	 * 归档流程实例
 	 * @param params
-	 * userId 用户编号
+	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
 	 * operProcessInstanceId操作的流程实例ID，多个 用逗号隔开
 	 * @throws SQLException
 	 */
