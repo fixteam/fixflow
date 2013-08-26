@@ -23,17 +23,6 @@
     	<input type="hidden" id="action" name="action" value="processManageList"/>
     	<div class="search">
         	<table width="100%">
-        	<tr>
-        		<td colspan="6">
-        		<a href="#" onclick="doSuspend();">暂停</a>
-        		<a href="#" onclick="doContinue();">恢复</a>
-        		<a href="#" onclick="doTerminat();">作废</a>
-        		<a href="#" onclick="doDelete();">删除</a>
-        		<a href="#" onclick="updateVariables();">变量管理</a>
-        		<a href="#" onclick="updateToken();">令牌管理</a>
-        		<a href="#" onclick="setHis();">归档</a>
-        		</td>
-        	</tr>
               <tr>
                 <td class="title-r">任务定义：</td>
                 <td><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
@@ -53,11 +42,19 @@
                 </td>
               </tr>
               <tr>
-              	<td></td>
-              	<td></td>
-              	<td></td>
-              	<td></td>
-              	<td></td>
+              	<td colspan="5">
+              	<table width="400px">
+              	<tr>
+              	<td><div class="btn-normal"><a href="#" onclick="doSuspend();">暂停</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="doContinue();">恢复</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="doTerminat();">作废</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="doDelete();">删除</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="updateVariables();">变量管理</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="updateToken();">令牌管理</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="setHis();">归档</a></div></td>
+              	</tr>
+              	</table>
+              	</td>
               	<td>
               	<div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
               	</td>
@@ -103,6 +100,11 @@
 
 </body>
 <script type="text/javascript">
+	var message = '${errorMsg}';
+	if(message!=''){
+		alert(message);
+	}
+	
 	$('#checkall').click(function(){
     	var tii = $(this).attr("checked");
     	var checkboxs = $("input[name=checked]");

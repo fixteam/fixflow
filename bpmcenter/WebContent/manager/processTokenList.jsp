@@ -12,8 +12,13 @@
 </head>
 
 <body>
+
+
+
 <div class="main-panel">
 <form method="post" id="form" action="FlowManager">
+
+
 	<table id="detailTable">
 		<tr>
 			<td colspan="6">任务实例：${result.processInstanceId}</td>
