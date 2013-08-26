@@ -16,12 +16,12 @@
 	<div class="center-panel">
         <div class="login">
             <div class="logo">&nbsp;</div>
-            <form id="loginForm" method=post action="${pageContext.request.contextPath}/LoginServlet">
+            <form id="loginF" method=post action="${pageContext.request.contextPath}/LoginServlet">
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
 	                  <td rowspan="3" width="110"><img src="images/temp/user-m.png" /></td>
-	                  <td class="username" width="330">Admin</td>
+	                  <td class="username" width="330"><span id="lastLoginUser"></span></td>
 	                </tr>
 	                <tr>
 	                  <td class="password"><div class="btn-login"><a href="#"><em class="arrow-login"></em></a></div>
@@ -70,6 +70,7 @@
 <script>
 $(function(){
 	$("#returnToLockScreen").click(function(){
+		$("#lastLoginUser").html(window.sessionStorage.getItem("username"));
 		$("#lockScreen").show("fast");
 		$("#loginForm").hide("fast");
 	});
@@ -79,7 +80,9 @@ $(function(){
 		$("#loginForm").show("fast");
 	});
 	$("#login").click(function(){
-		$("#loginForm").submit();
+		var storage = window.sessionStorage;
+		storage.setItem("username",$("#userName").val());
+		$("#loginF").submit();
 	});
 })
 </script>

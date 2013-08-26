@@ -16,12 +16,12 @@
 	<div class="center-panel">
         <div class="login">
             <div class="logo">&nbsp;</div>
-            <form method=post action="${pageContext.request.contextPath}/LoginServlet">
+            <form id="loginF" method=post action="${pageContext.request.contextPath}/LoginServlet">
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
 	                  <td rowspan="3" width="110"><img src="images/temp/user-m.png" /></td>
-	                  <td class="username" width="330">Admin</td>
+	                  <td class="username" width="330"><span id="lastLoginUser"></span></td>
 	                </tr>
 	                <tr>
 	                  <td class="password"><div class="btn-login"><a href="#"><em class="arrow-login"></em></a></div>
@@ -52,7 +52,7 @@
 	                </tr>
 	                <tr>
 	                  <td colspan="2"><div class="btn-box">
-	                      <div class="btn-orange"><a href="#" onclick="submit()">登&emsp;录</a></div>
+	                      <div class="btn-orange"><a href="#" id="login">登&emsp;录</a></div>
 	                      <div class="btn-gray"><a href="#">返&emsp;回</a></div>
 	                  </div></td>
 	                </tr>
@@ -70,6 +70,7 @@
 <script>
 $(function(){
 	$("#returnToLockScreen").click(function(){
+		$("#lastLoginUser").html(window.sessionStorage.getItem("username"));
 		$("#lockScreen").show("fast");
 		$("#loginForm").hide("fast");
 	});
@@ -77,6 +78,11 @@ $(function(){
 	$("#returnLoginForm").click(function(){
 		$("#lockScreen").hide("fast");
 		$("#loginForm").show("fast");
+	});
+	$("#login").click(function(){
+		var storage = window.sessionStorage;
+		storage.setItem("username",$("#userName").val());
+		$("#loginF").submit();
 	});
 })
 </script>
