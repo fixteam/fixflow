@@ -12,20 +12,17 @@
 </head>
 
 <body>
-<div class="main-panel">
 <form method="post" id="form" action="FlowManager">
-	<table id="detailTable">
-		<tr>
-			<td colspan="6">任务实例：${result.processInstanceId}<a href="#" onclick="saveData();">保存</a></td>
-		</tr>
-		<tr>
-			<td><input type="checkbox" id="checkall" name="checkall"/></td>
-			<td>变量编号</td>
-			<td>变量类名称</td>
-			<td>变量业务类型</td>
-			<td>任务实例</td>
-			<td>查询值</td>
-		</tr>	
+<div class="popup">
+    <table width="100%" class="fix-table" id="detailTable">
+		<thead>
+			<th><input type="checkbox" id="checkall" name="checkall"/></th>
+			<th>变量编号</th>
+			<th>变量类名称</th>
+			<th>变量业务类型</th>
+			<th>任务实例</th>
+			<th>查询值</th>
+		</thead>	
 		<c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		<tr id="row${index.index}">
 			<td><input type="checkbox" name="check" rowIndex="${index.index}"/></td>
@@ -37,20 +34,31 @@
 			<c:set var="nowIndex" value="${index.index}"/>
 		</tr>
 		</c:forEach>
-	</table>
-	<table>
-		<tr>
-			<td>
+
+      </table>
+
+			<table>
+				<tr>
+				<td>
 			<input type="hidden" id="nowIndex" value="${nowIndex+1}"/>
 			<input type="hidden" name="deleteIndex" id="deleteIndex"/>
 			<input type="hidden" name="action" value="saveProcessVariables"/>
 			<input type="hidden" name="insertAndUpdate" id="insertAndUpdate"/>
 			<input type="hidden" name="processInstanceId" value="${result.processInstanceId}"/>
-			<a href="#" onclick="addNew();">新增</a><a href="#" onclick="deleteRow();">删除</a></td>
-		</tr>
-	</table>
-	</form>
+			<div class="btn-normal"><a href="#" onclick="addNew();">新增</a></div>
+			</td>
+			<td>
+			<div class="btn-normal"><a href="#" onclick="deleteRow();">删除</a></div>
+			</td>
+			<td>
+			<div class="btn-normal"><a href="#" onclick="saveData();">保存</a></div>
+			</td>
+				</tr>
+			</table>
+
 </div>
+</form>
+
 </body>
 <script type="text/javascript">
 	function addNew(){

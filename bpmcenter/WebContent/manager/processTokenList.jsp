@@ -8,32 +8,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>流程令牌管理</title>
 <jsp:include page="head.jsp" flush="true"/>
-
 </head>
 
 <body>
-
-
-
-<div class="main-panel">
 <form method="post" id="form" action="FlowManager">
-
-
-	<table id="detailTable">
-		<tr>
-			<td colspan="6">任务实例：${result.processInstanceId}</td>
-		</tr>
-
-            <tr>
-                <td width="30">&nbsp;</td>
-                <td width="">令牌编号</td>
-                <td width="">令牌名称</td>
-                <td>开始时间</td>
-                <td width="">节点进入时间</td>
-                <td width="">节点编号</td>
-                <td width="">流程实例编号</td>
-                <td width="">父令牌编</td>
-             </tr>
+<div class="popup">
+    <table width="100%" class="fix-table">
+			<thead>
+                <th width="30">&nbsp;</th>
+                <th width="">令牌编号</th>
+                <th width="">令牌名称</th>
+                <th>开始时间</th>
+                <th width="">节点进入时间</th>
+                <th width="">节点编号</th>
+                <th width="">流程实例编号</th>
+                <th width="">父令牌编</th>
+             </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		      <td class="num"><c:out value="${index.index+1}"/></td>
@@ -45,10 +35,9 @@
 		      <td>${dataList.parentTokenId}</td>
 		    </tr>
 		    </c:forEach>
-	</table>
-	
-	</form>
-</div>
+      </table>
+      </div>
+</form>
 </body>
 <script type="text/javascript">
 
