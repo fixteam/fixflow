@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 
 <title>Founder Fix BPM</title>
-</head>
+</head>  
 
 <body>
 <div class="main-panel">
