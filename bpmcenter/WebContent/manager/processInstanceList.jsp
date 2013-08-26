@@ -31,6 +31,7 @@
         		<a href="#" onclick="doDelete();">删除</a>
         		<a href="#" onclick="updateVariables();">变量管理</a>
         		<a href="#" onclick="updateToken();">令牌管理</a>
+        		<a href="#" onclick="setHis();">归档</a>
         		</td>
         	</tr>
               <tr>
@@ -161,6 +162,9 @@
   	}
   	function doDelete(){
   		doProcess("deleteProcessInstance");
+  	}
+  	function setHis(){
+  		doProcess("setHis");
   	}
   	function doProcess(action){
  		var checkboxs = $("input[name=checked]");
