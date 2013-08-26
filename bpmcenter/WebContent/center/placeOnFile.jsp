@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -9,25 +8,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>流程查询</title>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<style>
-a {
-	text-decoration: none; 
-}
-</style>
-<script type="text/javascript">
-$("a[name=flowGraph]").click(function(){
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
-  });
-</script>
+<title>归档任务</title>
+<jsp:include page="head.jsp" flush="true"/>
 </head>
 <body>
 	<div class="main-panel">
