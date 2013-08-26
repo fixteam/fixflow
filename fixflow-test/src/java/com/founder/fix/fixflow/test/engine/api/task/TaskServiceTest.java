@@ -1385,10 +1385,10 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		assertEquals(1, taskNotEnd.size());
 	}
 	
-	//给邵帅造数据用
-	
+//	//给邵帅造数据用
+//	
 //	public void testAdd(){
-//		for(int i=0;i<100;i++){
+//		for(int i=0;i<5;i++){
 //			//创建一个通用命令
 //			ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 //			//设置流程名
@@ -1405,6 +1405,41 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 //			String processInstanceId = processInstance.getId();
 //			//验证是否成功启动
 //			assertNotNull(processInstanceId);
+//			
+//			/**************下面代码自动执行通用按钮，使流程结束,如果生成待办则下面不需要****************************/
+//			
+//			// 创建任务查询
+//			TaskQuery taskQuery = taskService.createTaskQuery();
+//			// 查找 1200119390 的这个流程实例的当前独占任务
+//			List<TaskInstance> taskInstances = taskQuery.taskCandidateUser("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+//			// 获取一条任务
+//			TaskInstance taskInstance = taskInstances.get(0);
+//			//验证这个待办是否为空
+//			assertNotNull(taskInstance);
+//			String nodeId = taskInstance.getNodeId();
+//			//验证流程实例是否在第二个节点
+//			assertEquals(nodeId, "UserTask_2");
+//			//创建一个通用命令
+//			expandTaskCommand = new ExpandTaskCommand();
+//			//设置流程名
+//			expandTaskCommand.setProcessDefinitionKey("process_TestToolbar");
+//			//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+//			expandTaskCommand.setCommandType("claim");
+//			expandTaskCommand.setTaskId(taskInstance.getId());
+//			//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+//			expandTaskCommand.setUserCommandId("HandleCommand_3");
+//			taskService.expandTaskComplete(expandTaskCommand, null);
+//			
+//			//创建一个通用命令
+//			expandTaskCommand = new ExpandTaskCommand();
+//			//设置流程名
+//			expandTaskCommand.setProcessDefinitionKey("process_TestToolbar");
+//			//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+//			expandTaskCommand.setCommandType("general");
+//			expandTaskCommand.setTaskId(taskInstance.getId());
+//			//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+//			expandTaskCommand.setUserCommandId("HandleCommand_2");
+//			taskService.expandTaskComplete(expandTaskCommand, null);
 //		}
 //		
 //	}
