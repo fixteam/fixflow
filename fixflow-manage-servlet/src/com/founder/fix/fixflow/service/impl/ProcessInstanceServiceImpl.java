@@ -26,6 +26,7 @@ import java.util.Map;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -221,6 +222,19 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		for(String tmp:pids){
 			runtimeService.deleteProcessInstance(tmp,true);
 		}
+	}
+	
+	@Override
+	public void setHistory(Map<String, Object> params) throws SQLException {
+		String userId = StringUtil.getString(params.get("userId"));
+		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
+		String[] pids = processInstanceId.split(",");
+		HistoryService historyService = getProcessEngine(userId).getHistoryService();
+		List<String> processInstanceIds = new ArrayList<String>();
+		for(String tmp:pids){
+			processInstanceIds.add(tmp);
+		}
+		historyService.archiveByProcessInstanceIds(processInstanceIds);
 	}
 	
 }

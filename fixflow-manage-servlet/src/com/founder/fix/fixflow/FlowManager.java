@@ -267,6 +267,10 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/manager/jobInfo.jsp");
 			}
+			if("setHis".equals(action)){
+				getFlowManager().setHistory(filter);
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+			}
 			if (rd != null)
 				rd.forward(request, response);
 		}catch (Exception e) {

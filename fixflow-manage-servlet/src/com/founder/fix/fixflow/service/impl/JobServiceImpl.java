@@ -234,67 +234,6 @@ public class JobServiceImpl implements JobService {
 		}
 	}
 	
-	@Override
-	public void addJob(Map<String, Object> params) throws SchedulerException, SQLException {
-		String userId = StringUtil.getString(params.get("userId"));
-		ProcessEngine processEngine = getProcessEngine(userId);
-		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
-		try{
-			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
-			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
-			
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
-		}
-	}
-	
-	@Override
-	public boolean deleteJob(Map<String, Object> params) throws SchedulerException, SQLException {
-		String userId = StringUtil.getString(params.get("userId"));
-		ProcessEngine processEngine = getProcessEngine(userId);
-		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
-		try{
-			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
-			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
-			return scheduler.deleteJob(new JobKey(jobKeyName,jobKeyGroup));
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
-		}
-	}
-	
-	@Override
-	public void addTrigger(Map<String, Object> params) throws SchedulerException, SQLException {
-		String userId = StringUtil.getString(params.get("userId"));
-		ProcessEngine processEngine = getProcessEngine(userId);
-		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
-		try{
-			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
-			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
-			
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
-		}
-	}
-	
-	@Override
-	public void deleteTrigger(Map<String, Object> params) throws SchedulerException, SQLException {
-		String userId = StringUtil.getString(params.get("userId"));
-		ProcessEngine processEngine = getProcessEngine(userId);
-		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
-		try{
-			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
-			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
-			
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
-		}
-		
-	}
-	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
 		if(connection!=null){
 			return FixFlowShellProxy.createProcessEngine(userId,connection);
