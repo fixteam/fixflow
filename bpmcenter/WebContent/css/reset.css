@@ -22,7 +22,7 @@ body {
 	height:100%;
 }
 div {
-	height:100%;
+	/*height:100%;*/
 }
 
 /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
