@@ -13,6 +13,7 @@
 <script type="text/javascript" src="js/select.js"></script>
 </head>
 <body>
+<form id="subForm" method="post" action="FlowCenter">
 	<div class="main-panel">
 		<jsp:include page="top.jsp" flush="true" />
 		<div class="center-panel">
@@ -24,7 +25,6 @@
 				<div class="right">
 					<!-- 查 -->
 					<div id="search" class="search">
-						<form id="subForm" method="post" action="FlowCenter">
 					 		<input type="hidden" name="action" value="getPlaceOnFile"/> 
 					  		<input type="hidden" id="processType" name="processType" value="${result.processType}"/>
 							<table width="100%">
@@ -50,7 +50,6 @@
 				                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
 				              </tr>
 				            </table>
-			            </form>
 					</div>
 					<!-- 表 -->
 					<div class="content">
@@ -97,6 +96,7 @@
 		value="<c:out value="${result.rowNum}"/>">
 	<input type="hidden" name="type"
 		value="<c:out value="${result.action}"/>">
+</form>
 </body>
 <script>
 $(function(){
