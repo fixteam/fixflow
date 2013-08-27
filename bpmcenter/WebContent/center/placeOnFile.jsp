@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>归档任务</title>
 <jsp:include page="head.jsp" flush="true"/>
+<script type="text/javascript" src="js/select.js"></script>
 </head>
 <body>
 	<div class="main-panel">
@@ -104,6 +105,12 @@ $(function(){
   $("a[name=page]").click(function(){
     var pageNo = $(this).html();
     window.location.href = "FlowCenter?action="+type+"&pageIndex="+pageNo+"&rowNum=15&userId="+userId;
+  });
+  $("input[name=initor]").click(function(){
+    var obj = {type:"user",taskId:"d4a1db01-c6b7-475f-bc9d-e720c6ec01fd"};
+  	var d = FixSelect(obj);
+  	if(d&&d.length>0)
+  		$(this).val(d[0].USERNAME);
   });
 }); 
 </script>
