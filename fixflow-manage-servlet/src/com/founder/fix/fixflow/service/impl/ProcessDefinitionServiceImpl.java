@@ -88,7 +88,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
 			}
-			List<ProcessDefinitionBehavior> processDefinitions = processDefinitionQuery.listPage(pageIndex, rowNum);
+			List<ProcessDefinitionBehavior> processDefinitions = processDefinitionQuery.listPagination(pageIndex, rowNum);
 			Long count = processDefinitionQuery.count();
 			List<Map<String,Object>> processDefinitionList = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);

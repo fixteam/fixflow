@@ -31,7 +31,9 @@ public interface JobService {
 
 	/**
 	 * 获取job集合
-	 * @param params userid 用来取引擎
+	 * @param params 
+	 * userid 用来取引擎
+	 * queryId 流程编号、实例编号、令牌编号
 	 * @return
 	 * @throws SchedulerException
 	 * @throws SQLException

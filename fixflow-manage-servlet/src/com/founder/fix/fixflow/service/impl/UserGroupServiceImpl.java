@@ -55,7 +55,8 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
 			}
-			
+			int firstResult = pageIndex*rowNum;//起始行
+			int maxResults = pageIndex*(rowNum+1);//结束行
 			Map<String,Object> queryMap = new HashMap<String,Object>();
 			String queryUserId = StringUtil.getString(params.get("queryUserId"));
 			if(StringUtil.isNotEmpty(queryUserId)){
@@ -65,7 +66,7 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(queryUserName)){
 				queryMap.put("USERNAME", queryUserName);
 			}
-			Map<String,Object> userListMap = identityService.getUserTos(new Page(pageIndex,rowNum), queryMap);
+			Map<String,Object> userListMap = identityService.getUserTos(new Page(firstResult,maxResults), queryMap);
 			List<UserTo> userTos = (List<UserTo>)userListMap.get("userList");
 			int count = (Integer)userListMap.get("count");
 			List<Map<String,Object>> userList = new ArrayList<Map<String,Object>>();
@@ -106,7 +107,8 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
 			}
-			
+			int firstResult = pageIndex*rowNum;//起始行
+			int maxResults = pageIndex*(rowNum+1);//结束行
 			Map<String,Object> queryMap = new HashMap<String,Object>();
 			String queryGroupId = StringUtil.getString(params.get("queryGroupId"));
 			if(StringUtil.isNotEmpty(queryGroupId)){
@@ -118,7 +120,7 @@ private Connection connection;
 			}
 			
 			GroupDefinition groupDefinition = identityService.getGroupDefinition(groupType);
-			Map<String,Object> map = groupDefinition.findGroups(new Page(pageIndex,rowNum), queryMap);
+			Map<String,Object> map = groupDefinition.findGroups(new Page(firstResult,maxResults), queryMap);
 			List<GroupTo> groupTos = (List<GroupTo>)map.get("groupList");
 			List<Map<String,Object>> groupList = new ArrayList<Map<String,Object>>();
 			int count = (Integer)map.get("count");

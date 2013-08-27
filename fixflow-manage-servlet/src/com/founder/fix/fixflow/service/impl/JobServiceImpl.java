@@ -62,6 +62,7 @@ public class JobServiceImpl implements JobService {
 	public Map<String, Object> getJobList(Map<String, Object> params) throws SchedulerException, SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
+		String queryId = StringUtil.getString(params.get("queryId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
 		Scheduler scheduler = scheduleService.getScheduler();
