@@ -315,7 +315,7 @@ public interface FlowCenterService {
 	 * nodeName 节点名称 
 	 * @throws SQLException
 	 */
-	public List<Map<String,Object>> getRollbackNode(Map<String,Object> params) throws SQLException;
+	public Map<String,Object> getRollbackNode(Map<String,Object> params) throws SQLException;
 	
 	/**
 	 * 获取可退回的任务
@@ -328,5 +328,5 @@ public interface FlowCenterService {
 	 * assignee 处理人
 	 * @throws SQLException
 	 */
-	public List<Map<String,Object>> getRollbackTask(Map<String,Object> params) throws SQLException;
+	public Map<String,Object> getRollbackTask(Map<String,Object> params) throws SQLException;
 }
