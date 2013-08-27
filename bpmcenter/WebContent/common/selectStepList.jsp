@@ -10,29 +10,23 @@
 <body>
 <div style="padding:8px;">
 <div id="search" class="search">
-	<form id="subForm" method="post" action="selectUserList">
- 		<input type="hidden" name="action" value="getPlaceOnFile"/> 
-		<table width="100%">
-			<tr>
-               	<td class="title-r">用户编号/姓名：</td>
-               	<td style="width:180px"><input type="text" id="text_0" name="idAndName" class="fix-input" style="width:160px;" value="${result.idAndName}"/></td>
-             	<td style="width:70px"><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
-             	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
-             </tr>
-		</table>
-	</form>
+	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
 		<thead>
-			<th>用户编号</th>
-			<th>用户姓名</th>
+			<th>任务编号</th>
+			<th>节点名称</th>
+			<th>assignee</th>
+			<th>结束时间</th>
 		</thead>
 		<tbody>
 			<c:forEach items="${result.dataList}" var="list" varStatus="index">
 				<tr data-rowData="${list}">
-					<td>${list.USERID}</td>
-					<td>${list.USERNAME}</td>
+					<td>${list.taskId}</td>
+					<td>${list.nodeName}</td>
+					<td>${list.assignee}</td>
+					<td>${list.endTime}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -46,18 +40,8 @@
 </body>
 <script>
 $(function(){
-	var isMulti = Fix.Util.GetQueryString("isMulti");
 	$("table#dataList tr").click(function(){
-		if(isMulti=="false"){
-			$("table#dataList tr.selected").removeClass("selected");
-			$(this).addClass("selected");
-		}else{
-			if($(this).hasClass("selected")){
-				$(this).removeClass("selected");
-			}else{
-				$(this).addClass("selected");
-			}
-		}
+		$(this).addClass("selected");
 	});
 	$("#ok").click(function(){
 		var rv = [];

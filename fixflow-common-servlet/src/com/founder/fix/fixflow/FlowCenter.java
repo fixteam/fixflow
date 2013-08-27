@@ -223,10 +223,19 @@ public class FlowCenter extends HttpServlet {
 				String isMulti = request.getParameter("isMulti");
 				request.setAttribute("result", filter);
 				request.setAttribute("isMulti", isMulti);
-				rd = request.getRequestDispatcher("/common/selectUserList.jsp");
+				//request.setAttribute("pageInfo", filter.get("pageInfo"));
+				rd = request.getRequestDispatcher("/common/selectUserList.jsp?isMulti="+isMulti);
 			} else if(action.equals("selectNodeList")){	//选择节点列表
+				Map<String, Object> pageResult = getFlowCenter().getRollbackNode(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				//request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/common/selectNodeList.jsp");
 			} else if(action.equals("selectStepList")){	//选择步骤列表
+				Map<String, Object> pageResult = getFlowCenter().getRollbackTask(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				//request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/common/selectStepList.jsp");
 			}
 			if (rd != null)
