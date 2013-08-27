@@ -20,7 +20,6 @@ package com.founder.fix.fixflow.core.impl;
 import java.sql.Connection;
 import java.util.Map;
 
-
 import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
@@ -40,7 +39,6 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
 import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
 
-
 public class ProcessEngineImpl implements ProcessEngine {
 
 	protected String name;
@@ -52,9 +50,6 @@ public class ProcessEngineImpl implements ProcessEngine {
 	protected FormService formService;
 	protected ScheduleService scheduleService;
 	protected ManagementService managementService;
-	
-
-	
 
 	protected CommandExecutor commandExecutor;
 	protected CacheHandler cacheHandler;
@@ -72,7 +67,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 		this.taskService = processEngineConfiguration.getTaskService();
 		this.formService = processEngineConfiguration.getFormService();
 		this.scheduleService = processEngineConfiguration.getScheduleService();
-		this.managementService=processEngineConfiguration.getManagementService();
+		this.managementService = processEngineConfiguration.getManagementService();
 		this.cacheHandler = processEngineConfiguration.getCacheHandler();
 		this.commandExecutor = processEngineConfiguration.getCommandExecutor();
 
@@ -121,9 +116,9 @@ public class ProcessEngineImpl implements ProcessEngine {
 		return scheduleService;
 
 	}
-	
+
 	public ManagementService getManagementService() {
-		
+
 		return managementService;
 	}
 
@@ -139,7 +134,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 	public void setExternalContent(ExternalContent externalContent) {
 
-		if( externalContent.getConnectionMap()!=null){
+		if (externalContent.getConnectionMap() != null) {
 			for (String connKey : externalContent.getConnectionMap().keySet()) {
 				Connection connection = externalContent.getConnectionMap().get(connKey);
 				if (connection != null) {
@@ -148,7 +143,6 @@ public class ProcessEngineImpl implements ProcessEngine {
 				}
 			}
 		}
-		
 
 		String authenticatedUserId = externalContent.getAuthenticatedUserId();
 		Authentication.setAuthenticatedUserId(authenticatedUserId);
@@ -160,8 +154,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 			processEngineConfiguration.getFixFlowResources().setNowLanguage(languageType);
 		}
 
-		
-		if(externalContent.getConnectionManagement()!=null&&!externalContent.getConnectionManagement().equals("")){
+		if (externalContent.getConnectionManagement() != null && !externalContent.getConnectionManagement().equals("")) {
 			Context.setConnectionManagementDefault(externalContent.getConnectionManagement());
 		}
 	}
@@ -357,9 +350,20 @@ public class ProcessEngineImpl implements ProcessEngine {
 			Context.removeLanguageType();
 			Context.removeQuartzTransactionAutoThreadLocal();
 
-			
+		}
+
+	}
+
+	public void cleanCache(boolean deploymentCache, boolean processDataCache) {
+		if (deploymentCache) {
+			processEngineConfiguration.getDeploymentCache().cleanProcessDefinitionCache();
+		}
+		if (processDataCache) {
+			processEngineConfiguration.getCacheHandler().cleanCacheData();
 		}
 		
 	}
+
+
 
 }
