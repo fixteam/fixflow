@@ -631,7 +631,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			if(StringUtil.isNotEmpty(queryUserName)){
 				queryMap.put("USERNAME", queryUserName);
 			}
-			int firstResult = pageIndex*(rowNum-1)+1;//起始行
+			int firstResult = rowNum*(pageIndex-1)+1;//起始行
 			int maxResults = pageIndex*rowNum;//结束行
 			Map<String,Object> userListMap = identityService.getUserTos(new Page(firstResult,maxResults), queryMap);
 			List<UserTo> userTos = (List<UserTo>)userListMap.get("userList");
