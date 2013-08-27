@@ -305,4 +305,28 @@ public interface FlowCenterService {
 	 * @throws SQLException 
 	 */
 	public Map<String,Object> getAllUsers(Map<String,Object> params) throws SQLException;
+	
+	/**
+	 * 获取可退回的节点信息
+	 * @param params
+	 * taskId 当前任务实例编号
+	 * @return
+	 * nodeId 节点编号
+	 * nodeName 节点名称 
+	 * @throws SQLException
+	 */
+	public List<Map<String,Object>> getRollbackNode(Map<String,Object> params) throws SQLException;
+	
+	/**
+	 * 获取可退回的任务
+	 * @param params
+	 * taskId 当前任务实例编号
+	 * @return
+	 * taskId 任务编号
+	 * nodeName 节点名称
+	 * endTime 处理时间
+	 * assignee 处理人
+	 * @throws SQLException
+	 */
+	public List<Map<String,Object>> getRollbackTask(Map<String,Object> params) throws SQLException;
 }
