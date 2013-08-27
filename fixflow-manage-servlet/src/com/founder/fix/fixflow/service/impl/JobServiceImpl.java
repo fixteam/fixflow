@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,11 +37,8 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ScheduleService;
-import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
-import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.JobService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
@@ -68,38 +66,44 @@ public class JobServiceImpl implements JobService {
 		Scheduler scheduler = scheduleService.getScheduler();
 		try{
 			List<Map<String,Object>> jobList = new ArrayList<Map<String,Object>>();
-			List<String> groupNames = scheduler.getJobGroupNames();
-			for(String groupName:groupNames){
-				Set<JobKey> set = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName));
-				for(JobKey key :set){
-					JobDetail job = scheduler.getJobDetail(key); 
-					Map<String,Object> jobMap = new HashMap<String,Object>();
-					jobMap.put("jobName", job.getKey().getName());
-					jobMap.put("groupName", groupName);
-					jobMap.put("processName", job.getJobDataMap().get("processName"));
-					jobMap.put("processId", job.getJobDataMap().get("processId"));
-					jobMap.put("processKey", job.getJobDataMap().get("processKey"));
-					jobMap.put("processInstanceId", job.getJobDataMap().get("processInstanceId"));
-					jobMap.put("nodeId", job.getJobDataMap().get("nodeId"));
-					jobMap.put("bizKey", job.getJobDataMap().get("bizKey"));
-					jobMap.put("jobType", job.getJobDataMap().get("jobType"));
-					jobMap.put("processId", job.getJobDataMap().get("processId"));
-					jobMap.put("nodeName", job.getJobDataMap().get("nodeName"));
-					jobMap.put("jobKeyGroup", job.getKey().getGroup());
-					jobMap.put("jobKeyName", job.getKey().getName());
-					//判断job下的trigger是否全为暂停状态
-					List<Trigger> triggerList = (List<Trigger>) scheduler.getTriggersOfJob(job.getKey());
-					boolean isPaused = false;
-					for(Trigger t:triggerList){
-						TriggerState ts = scheduler.getTriggerState(t.getKey());
-						if(ts.equals(TriggerState.PAUSED)){
-							isPaused = true;
-							break;
-						}
-					}
-					jobMap.put("isPaused", isPaused);
-					jobList.add(jobMap);
+			Set<JobKey> set = new HashSet<JobKey>();
+			//如果queryId不为空，则返回queryId对应的job,否则返回所有job
+			if(StringUtil.isNotEmpty(queryId)){
+				set = scheduler.getJobKeys(GroupMatcher.jobGroupContains(queryId));
+			}else{
+				List<String> groupNames = scheduler.getJobGroupNames();
+				for(String groupName:groupNames){
+					set.addAll(scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName)));
 				}
+			}
+			for(JobKey key :set){
+				JobDetail job = scheduler.getJobDetail(key); 
+				Map<String,Object> jobMap = new HashMap<String,Object>();
+				jobMap.put("jobName", job.getKey().getName());
+				jobMap.put("groupName", job.getKey().getGroup());
+				jobMap.put("processName", job.getJobDataMap().get("processName"));
+				jobMap.put("processId", job.getJobDataMap().get("processId"));
+				jobMap.put("processKey", job.getJobDataMap().get("processKey"));
+				jobMap.put("processInstanceId", job.getJobDataMap().get("processInstanceId"));
+				jobMap.put("nodeId", job.getJobDataMap().get("nodeId"));
+				jobMap.put("bizKey", job.getJobDataMap().get("bizKey"));
+				jobMap.put("jobType", job.getJobDataMap().get("jobType"));
+				jobMap.put("processId", job.getJobDataMap().get("processId"));
+				jobMap.put("nodeName", job.getJobDataMap().get("nodeName"));
+				jobMap.put("jobKeyGroup", job.getKey().getGroup());
+				jobMap.put("jobKeyName", job.getKey().getName());
+				//判断job下的trigger是否全为暂停状态
+				List<Trigger> triggerList = (List<Trigger>) scheduler.getTriggersOfJob(job.getKey());
+				boolean isPaused = false;
+				for(Trigger t:triggerList){
+					TriggerState ts = scheduler.getTriggerState(t.getKey());
+					if(ts.equals(TriggerState.PAUSED)){
+						isPaused = true;
+						break;
+					}
+				}
+				jobMap.put("isPaused", isPaused);
+				jobList.add(jobMap);
 			}
 			resultMap.put("dataList", jobList);
 		}finally{
@@ -186,6 +190,8 @@ public class JobServiceImpl implements JobService {
 				triggerMap.put("nextFireTime", t.getNextFireTime());
 				triggerMap.put("finalFireTime", t.getFinalFireTime());
 				TriggerState ts = scheduler.getTriggerState(t.getKey());
+				String triggerState = getTriggerStateByEmuType(ts);
+				triggerMap.put("triggerState", triggerState);
 				boolean isPaused = false;
 				if(ts.equals(TriggerState.PAUSED)){
 					isPaused = true;
@@ -234,6 +240,42 @@ public class JobServiceImpl implements JobService {
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
 	}
+	
+	/**
+	 * 根据枚举的触发器类型转成中文
+	 * @return
+	 */
+	public String getTriggerStateByEmuType(TriggerState triggerState) {
+		String type = "";
+		if(triggerState.toString().equals("BLOCKED")) {
+			type = "锁定";
+			return type;
+		}
+		if(triggerState.toString().equals("COMPLETE")) {
+			type = "完成";
+			return type;
+		}
+		if(triggerState.toString().equals("ERROR")) {
+			type = "错误";
+			return type;
+		}
+		if(triggerState.toString().equals("NONE")) {
+			type = "无";
+			return type;
+		}
+		if(triggerState.toString().equals("NORMAL")) {
+			type = "普通";
+			return type;
+		}
+		if(triggerState.toString().equals("PAUSED")) {
+			type = "暂停";
+			return type;
+		}
+		else {
+			return type;
+		}
+	}
+
 	
 	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
 		if(connection!=null){
