@@ -37,9 +37,11 @@ import org.springframework.stereotype.Service;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
@@ -651,5 +653,50 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
 		return resultMap;
+	}
+	
+	public List<Map<String,Object>> getRollbackNode(Map<String,Object> params) throws SQLException{
+		String userId = StringUtil.getString(params.get("userId"));
+		String taskId = StringUtil.getString(params.get("taskId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		TaskService taskService = processEngine.getTaskService();
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		try{
+			List<UserTaskBehavior> userTaskBehaviors = taskService.getRollBackNode(taskId);
+			for(UserTaskBehavior node :userTaskBehaviors){
+				Map<String,Object> nodeMap = new HashMap<String,Object>();
+				nodeMap.put("nodeId", node.getId());
+				nodeMap.put("nodeName", node.getName());
+				resultList.add(nodeMap);
+			}
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		
+		return resultList;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getRollbackTask(Map<String, Object> params) throws SQLException {
+		String userId = StringUtil.getString(params.get("userId"));
+		String taskId = StringUtil.getString(params.get("taskId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		TaskService taskService = processEngine.getTaskService();
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		try{
+			List<TaskInstance> taskInstances = taskService.getRollBackTask(taskId);
+			for(TaskInstance task :taskInstances){
+				Map<String,Object> taskMap = new HashMap<String,Object>();
+				taskMap.put("taskId", task.getId());
+				taskMap.put("nodeName", task.getNodeName());
+				taskMap.put("endTime", task.getEndTime());
+				taskMap.put("assignee", task.getAssignee());
+				resultList.add(taskMap);
+			}
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		
+		return resultList;
 	}
 }
