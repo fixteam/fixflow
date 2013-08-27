@@ -43,9 +43,6 @@
         <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_2" name="同意" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:taskCommand id="HandleCommand_3" name="接收任务" commandType="claim" isVerification="false" isSaveData="false" isSimulationRun="false"/>
-        <fixflow:formUri>
-          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="&quot;FlowCenter?action=startOneTask&quot;">&quot;FlowCenter?action=startOneTask&quot;</fixflow:expression>
-        </fixflow:formUri>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
