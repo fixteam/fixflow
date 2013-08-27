@@ -655,7 +655,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		return resultMap;
 	}
 	
-	public List<Map<String,Object>> getRollbackNode(Map<String,Object> params) throws SQLException{
+	public Map<String, Object> getRollbackNode(Map<String,Object> params) throws SQLException{
+		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
 		String taskId = StringUtil.getString(params.get("taskId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -672,12 +673,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
-		
-		return resultList;
+		resultMap.put("dataList", resultList);
+		return resultMap;
 	}
 	
 	@Override
-	public List<Map<String, Object>> getRollbackTask(Map<String, Object> params) throws SQLException {
+	public Map<String, Object> getRollbackTask(Map<String, Object> params) throws SQLException {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
 		String taskId = StringUtil.getString(params.get("taskId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -696,7 +698,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
-		
-		return resultList;
+		resultMap.put("dataList", resultList);
+		return resultMap;
 	}
 }
