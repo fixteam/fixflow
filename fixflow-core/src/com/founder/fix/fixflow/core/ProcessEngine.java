@@ -29,7 +29,7 @@ public interface ProcessEngine {
 	/**
 	 * fixflow引擎的版本号
 	 */
-	public static String VERSION = "4.7";
+	public static String VERSION = "5.0";
 
 	/** 
 	 * 默认名称为 'default' */
@@ -148,7 +148,13 @@ public interface ProcessEngine {
 	 */
 	FixFlowVersion getVersion();
 	
-
+	/**
+	 * 清楚流程引擎缓存
+	 * @param deploymentCache 定义缓存
+	 * @param processDataCache 流程对象缓存
+	 */
+	void cleanCache(boolean deploymentCache,boolean processDataCache);
+	
 
 
 }
