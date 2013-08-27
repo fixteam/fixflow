@@ -291,4 +291,18 @@ public interface FlowCenterService {
 	public ProcessInstance completeTask(Map<String,Object> params) throws SQLException;
 	
 	public void cutUserIcon(Map<String,Object> params) throws IOException;
+	
+	/**
+	 * 用户
+	 * @param page
+	 * pageIndex 页数
+	 * pageSize 页大小
+	 * queryUserId 查询userId
+	 * queryUserName 查询userName
+	 * @return
+	 * pageInfo Pagination分页类
+	 * dataList User表字段map的集合
+	 * @throws SQLException 
+	 */
+	public Map<String,Object> getAllUsers(Map<String,Object> params) throws SQLException;
 }

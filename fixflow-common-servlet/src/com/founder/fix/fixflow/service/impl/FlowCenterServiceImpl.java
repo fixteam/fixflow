@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
@@ -601,5 +602,54 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		ImageCutUtil icu = new ImageCutUtil(path,x,y,w,h);
 		icu.setSubpath(path);
 		icu.cut();
+	}
+	
+	@Override
+	public Map<String, Object> getAllUsers(Map<String, Object> params) throws SQLException {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine processEngine = getProcessEngine(userId);
+		IdentityService identityService = processEngine.getIdentityService();
+		try{
+			String pageI = StringUtil.getString(params.get("pageIndex"));
+			String rowI = StringUtil.getString(params.get("pageSize"));
+			int pageIndex=1;
+			int rowNum   =15;
+			if(StringUtil.isNotEmpty(pageI)){
+				pageIndex = Integer.valueOf(pageI);
+			}
+			if(StringUtil.isNotEmpty(rowI)){
+				rowNum = Integer.valueOf(rowI);
+			}
+			
+			Map<String,Object> queryMap = new HashMap<String,Object>();
+			String queryUserId = StringUtil.getString(params.get("queryUserId"));
+			if(StringUtil.isNotEmpty(queryUserId)){
+				queryMap.put("USERID", queryUserId);
+			}
+			String queryUserName = StringUtil.getString(params.get("queryUserName"));
+			if(StringUtil.isNotEmpty(queryUserName)){
+				queryMap.put("USERNAME", queryUserName);
+			}
+			int firstResult = pageIndex*rowNum;//起始行
+			int maxResults = pageIndex*(rowNum+1);//结束行
+			Map<String,Object> userListMap = identityService.getUserTos(new Page(firstResult,maxResults), queryMap);
+			List<UserTo> userTos = (List<UserTo>)userListMap.get("userList");
+			int count = (Integer)userListMap.get("count");
+			List<Map<String,Object>> userList = new ArrayList<Map<String,Object>>();
+			Pagination page = new Pagination(pageIndex,rowNum);
+			page.setTotal(count);
+			if(userTos!=null){
+				for(UserTo user:userTos){
+					Map<String,Object> userMap = user.getPropertyMap();
+					userList.add(userMap);
+				}
+			}
+			resultMap.put("dataList", userList);
+			resultMap.put("pageInfo", page);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		}
+		return resultMap;
 	}
 }
