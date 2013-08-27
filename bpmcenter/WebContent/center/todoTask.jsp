@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待办任务</title>
 <jsp:include page="head.jsp" flush="true"/>
+<script type="text/javascript" src="js/common.js">
+</script>
 <script type="text/javascript">
 /*  
  * "userId" 用户编号

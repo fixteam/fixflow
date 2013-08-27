@@ -3,7 +3,9 @@
 <div class="header">
     <div class="top-right">
         <ul>
-        <li>委托人：<a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
+        <li><a id="updateCache" href="#">更新缓存</a></li>
+        <li><a id="setAgent" href="#">委托授权</a></li>
+        <li><a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
         <li><a href="/bpmcenter" onclick="">退出</a></li>
         </ul>
     </div>
@@ -18,6 +20,19 @@
     </div>
 </div>
 <script>
+ 
+	$(function(){
+		$("#updateCache").click(function(){
+			alert(123);
+		});
+		
+		$("#setAgent").click(function(){
+			var url = "http://www.baidu.com";
+			Fix.OpenMethod.openWindow(url);
+		});
+		
+	})
+
 	chooseSelect();
 	function updateMyself(){
 		var obj = {};
