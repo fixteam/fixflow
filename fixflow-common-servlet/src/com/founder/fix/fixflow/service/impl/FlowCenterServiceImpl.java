@@ -610,6 +610,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 	public Map<String, Object> getAllUsers(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
+		String queryInfo = StringUtil.getString(params.get("queryInfo"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		IdentityService identityService = processEngine.getIdentityService();
 		try{
@@ -632,6 +633,10 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String queryUserName = StringUtil.getString(params.get("queryUserName"));
 			if(StringUtil.isNotEmpty(queryUserName)){
 				queryMap.put("USERNAME", queryUserName);
+			}
+			if(StringUtil.isNotEmpty(queryInfo)){
+				queryMap.put("USERID", queryInfo);
+				queryMap.put("USERNAME", queryInfo);
 			}
 			int firstResult = rowNum*(pageIndex-1)+1;//起始行
 			int maxResults = pageIndex*rowNum;//结束行

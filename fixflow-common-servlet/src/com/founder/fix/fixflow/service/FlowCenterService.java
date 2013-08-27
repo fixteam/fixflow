@@ -299,6 +299,7 @@ public interface FlowCenterService {
 	 * pageSize 页大小
 	 * queryUserId 查询userId
 	 * queryUserName 查询userName
+	 * queryInfo 查询userId或userName 优先级最高
 	 * @return
 	 * pageInfo Pagination分页类
 	 * dataList User表字段map的集合
