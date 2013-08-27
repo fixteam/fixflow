@@ -8,19 +8,18 @@
 <jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
+<form id="subForm" method="post" action="FlowCenter">
 <div style="padding:8px;">
 <div id="search" class="search">
-	<form id="subForm" method="post" action="selectUserList">
- 		<input type="hidden" name="action" value="getPlaceOnFile"/> 
+ 		<input type="hidden" name="action" value="selectUserList"/> 
 		<table width="100%">
 			<tr>
                	<td class="title-r">用户编号/姓名：</td>
-               	<td style="width:180px"><input type="text" id="text_0" name="idAndName" class="fix-input" style="width:160px;" value="${result.idAndName}"/></td>
+               	<td style="width:180px"><input type="text" id="text_0" name="queryInfo" class="fix-input" style="width:160px;" value="${result.queryInfo}"/></td>
              	<td style="width:70px"><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
              	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
              </tr>
 		</table>
-	</form>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
@@ -43,6 +42,7 @@
     </div>
 </div>
 </div>
+</form>
 </body>
 <script>
 $(function(){
