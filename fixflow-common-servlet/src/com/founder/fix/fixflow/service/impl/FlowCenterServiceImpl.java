@@ -284,7 +284,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				else
 					tq.taskParticipants(userId);
 			}
-			instances = tq.listPage(pageIndex, rowNum);
+			instances = tq.listPagination(pageIndex, rowNum);
 
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
@@ -384,7 +384,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 					tq.taskParticipants(userId);
 			}
 			tq.his();
-			instances = tq.listPage(pageIndex, rowNum);
+			instances = tq.listPagination(pageIndex, rowNum);
 
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
@@ -631,8 +631,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			if(StringUtil.isNotEmpty(queryUserName)){
 				queryMap.put("USERNAME", queryUserName);
 			}
-			int firstResult = pageIndex*rowNum;//起始行
-			int maxResults = pageIndex*(rowNum+1);//结束行
+			int firstResult = pageIndex*(rowNum-1)+1;//起始行
+			int maxResults = pageIndex*rowNum;//结束行
 			Map<String,Object> userListMap = identityService.getUserTos(new Page(firstResult,maxResults), queryMap);
 			List<UserTo> userTos = (List<UserTo>)userListMap.get("userList");
 			int count = (Integer)userListMap.get("count");
