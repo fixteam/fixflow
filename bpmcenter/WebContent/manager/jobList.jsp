@@ -83,18 +83,17 @@ $(function(){
 		      <td>${dataList.nodeId}</td>
 		       <td>${dataList.nodeName}</td>
 		        <td>${dataList.jobType}</td>
-		      <td></td>
-		      <td>
 		      <c:choose>
 				    <c:when test="${dataList.isPaused == true}">
-				        <a href="#" name="continue" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" >恢复</a>
+				    	<td>暂停</td>
+				        <td><a href="#" name="continue" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" >恢复</a>
 				    </c:when>
 				    <c:otherwise>
-				          <a href="#" name="suspend" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" >暂停</a>
+				    	<td>恢复</td>
+				          <td><a href="#" name="suspend" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" >暂停</a>
 				    </c:otherwise>
 				</c:choose>
-				<a name="viewInfo" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" href="#">查看Trigger</a>
-			</td>
+				<a name="viewInfo" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" href="#">查看Trigger</a></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>

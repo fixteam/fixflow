@@ -49,6 +49,7 @@ $(function(){
             <td>上次触发时间</td>
             <td>下次触发时间</td>
             <td>最后触发时间</td>
+            <td>状态</td>
             <td>操作</td>
           </tr>
 		<c:forEach items="${result.dataList}" var="row" varStatus="status">
@@ -58,6 +59,7 @@ $(function(){
 				<td>${row.lastFireTime}</td>
 				<td>${row.nextFireTime}</td>
 				<td>${row.finalFireTime}</td>
+				<td>${row.triggerState}</td>
 				<td>
 					 <c:choose>
 				    <c:when test="${row.isPaused == true}">
