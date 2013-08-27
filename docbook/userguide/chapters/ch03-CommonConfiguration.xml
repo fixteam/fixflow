@@ -8,7 +8,17 @@
   <section xml:id="config.createProcessEngine">
     <title>创建一个ProcessEngine</title>
     <para>
-
+      FixFlow的流程引擎是通过一个名称为fixflowconfig.xml的XML配置文件创建出来的。
+    </para>
+    <para>
+      最简单的方法来获得一个ProcessEngine,是使用FixFlow-Core中的ProcessEngineManagement类:
+    </para>
+    <para>
+      <programlisting language="java">
+//获取一个流程引擎服务,一般情况下我们会在web启动的时候先执行下这个方法。
+//引擎的创建方法会读取配置文件,初始化引擎.当第二次有人再次请求的时候拿到的是已经创建好的引擎。
+ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
+      </programlisting>
     </para>
   </section>
   
