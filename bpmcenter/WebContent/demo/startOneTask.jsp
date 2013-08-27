@@ -7,6 +7,8 @@
 <title>启动任务</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="js/flowcommand.js"></script>
+<script type="text/javascript" src="js/flowautoassemble.js"></script>
 <style>
 a{text-decoration: none;}
 </style>
@@ -31,10 +33,7 @@ a{text-decoration: none;}
 </td>
 </tr>
 </table>
-<input type="hidden" id="processDefinitionKey" name="processDefinitionKey" value="${result.processDefinitionKey}"/>
 <input type="hidden" name="action" value="demoCompleteTask"/>
-<input type="hidden" id="commandId" name="commandId"/>
-<input type="hidden" id="commandType" name="commandType"/>
 <c:forEach items="${result.commandList}" var="row" varStatus="status">
 <button id="btn_${status.index+1}" 
 	commandId="${row.id}" commandName="${row.name}" commandType="${row.type}"
@@ -43,26 +42,4 @@ a{text-decoration: none;}
 </c:forEach>
 </form>
 </body>
-<script>
-	$(function() {
-		$("button[commandType=processStatus]").click(
-				function() {
-					var pdk = $("#processDefinitionKey").val();
-					var obj = {};
-					window.showModalDialog(
-							"FlowCenter?action=getTaskDetailInfo&processDefinitionKey="
-									+ pdk, obj,
-							"dialogWidth=800px;dialogHeight=600px");
-					return false;
-				});
-		$("button[commandType!=processStatus]").click(function() {
-			var id = $(this).attr("commandId");
-			var type = $(this).attr("commandType");
-			$("#commandId").val(id);
-			$("#commandType").val(type);
-			$("#form1").submit();
-		});
-
-	});
-</script>
 </html>

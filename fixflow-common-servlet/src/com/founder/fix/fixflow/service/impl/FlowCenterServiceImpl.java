@@ -37,11 +37,9 @@ import org.springframework.stereotype.Service;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
@@ -553,7 +551,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		String businessKey = StringUtil.getString(params.get("businessKey"));
 		String userId = StringUtil.getString(params.get("userId"));
 		String taskComment = StringUtil.getString(params.get("_taskComment"));
-		Map<String,Object> taskParams = (Map<String,Object>)params.get("taskParams");
+		
+		Map<String,Object> taskParams = null;
+		Object tmpParams = params.get("taskParams");
+		if(tmpParams instanceof Map)
+			taskParams = (Map<String,Object>)tmpParams;
+		else
+			taskParams = new HashMap<String,Object>();
 		
 		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 		
@@ -610,7 +614,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 	public Map<String, Object> getAllUsers(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
-		String queryInfo = StringUtil.getString(params.get("queryInfo"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		IdentityService identityService = processEngine.getIdentityService();
 		try{
@@ -634,10 +637,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			if(StringUtil.isNotEmpty(queryUserName)){
 				queryMap.put("USERNAME", queryUserName);
 			}
-			if(StringUtil.isNotEmpty(queryInfo)){
-				queryMap.put("USERID", queryInfo);
-				queryMap.put("USERNAME", queryInfo);
-			}
 			int firstResult = rowNum*(pageIndex-1)+1;//起始行
 			int maxResults = pageIndex*rowNum;//结束行
 			Map<String,Object> userListMap = identityService.getUserTos(new Page(firstResult,maxResults), queryMap);
@@ -657,53 +656,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
-		return resultMap;
-	}
-	
-	public Map<String, Object> getRollbackNode(Map<String,Object> params) throws SQLException{
-		Map<String,Object> resultMap = new HashMap<String,Object>();
-		String userId = StringUtil.getString(params.get("userId"));
-		String taskId = StringUtil.getString(params.get("taskId"));
-		ProcessEngine processEngine = getProcessEngine(userId);
-		TaskService taskService = processEngine.getTaskService();
-		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
-		try{
-			List<UserTaskBehavior> userTaskBehaviors = taskService.getRollBackNode(taskId);
-			for(UserTaskBehavior node :userTaskBehaviors){
-				Map<String,Object> nodeMap = new HashMap<String,Object>();
-				nodeMap.put("nodeId", node.getId());
-				nodeMap.put("nodeName", node.getName());
-				resultList.add(nodeMap);
-			}
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
-		}
-		resultMap.put("dataList", resultList);
-		return resultMap;
-	}
-	
-	@Override
-	public Map<String, Object> getRollbackTask(Map<String, Object> params) throws SQLException {
-		Map<String,Object> resultMap = new HashMap<String,Object>();
-		String userId = StringUtil.getString(params.get("userId"));
-		String taskId = StringUtil.getString(params.get("taskId"));
-		ProcessEngine processEngine = getProcessEngine(userId);
-		TaskService taskService = processEngine.getTaskService();
-		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
-		try{
-			List<TaskInstance> taskInstances = taskService.getRollBackTask(taskId);
-			for(TaskInstance task :taskInstances){
-				Map<String,Object> taskMap = new HashMap<String,Object>();
-				taskMap.put("taskId", task.getId());
-				taskMap.put("nodeName", task.getNodeName());
-				taskMap.put("endTime", task.getEndTime());
-				taskMap.put("assignee", task.getAssignee());
-				resultList.add(taskMap);
-			}
-		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
-		}
-		resultMap.put("dataList", resultList);
 		return resultMap;
 	}
 }

@@ -299,35 +299,10 @@ public interface FlowCenterService {
 	 * pageSize 页大小
 	 * queryUserId 查询userId
 	 * queryUserName 查询userName
-	 * queryInfo 查询userId或userName 优先级最高
 	 * @return
 	 * pageInfo Pagination分页类
 	 * dataList User表字段map的集合
 	 * @throws SQLException 
 	 */
 	public Map<String,Object> getAllUsers(Map<String,Object> params) throws SQLException;
-	
-	/**
-	 * 获取可退回的节点信息
-	 * @param params
-	 * taskId 当前任务实例编号
-	 * @return
-	 * nodeId 节点编号
-	 * nodeName 节点名称 
-	 * @throws SQLException
-	 */
-	public Map<String,Object> getRollbackNode(Map<String,Object> params) throws SQLException;
-	
-	/**
-	 * 获取可退回的任务
-	 * @param params
-	 * taskId 当前任务实例编号
-	 * @return
-	 * taskId 任务编号
-	 * nodeName 节点名称
-	 * endTime 处理时间
-	 * assignee 处理人
-	 * @throws SQLException
-	 */
-	public Map<String,Object> getRollbackTask(Map<String,Object> params) throws SQLException;
 }

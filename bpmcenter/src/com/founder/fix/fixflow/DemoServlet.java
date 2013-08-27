@@ -166,7 +166,7 @@ public class DemoServlet extends HttpServlet {
 					fcs.setConnection(connection);
 					fcs.completeTask(filter);
 					rd = request
-							.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+							.getRequestDispatcher("/common/result.jsp");
 				} finally {
 					connection.commit();
 					if (ps != null)
@@ -181,7 +181,7 @@ public class DemoServlet extends HttpServlet {
 				filter.put("taskParams", flowMaps);
 				getFlowCenter().completeTask(filter);
 				rd = request
-						.getRequestDispatcher("/FlowCenter?action=getMyProcess");
+						.getRequestDispatcher("/common/result.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);

@@ -64,7 +64,16 @@ $(function(){
     var bizKey = $(this).attr("bk");
     
     var obj = {};
-    window.showModalDialog("FlowCenter?action=doTask&taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px");
+    var formUrl = $(this).attr("formUri");//"FlowCenter?action=startOneTask";
+    var url = formUrl;
+    if(formUrl.indexOf("?")!=-1){
+   	 url+="&";
+   	
+    }else{
+   	 url+="?";
+    }
+    url+="taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
+   	window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
 </script>
@@ -153,7 +162,7 @@ $(function(){
 		      <td><img src="${dataList.icon}" height="30" width="30" alt="头像"><br>${dataList.userName}</td>
 		      <td>
 		   		<div><span>流&nbsp;程：</span><span>${dataList.nodeName}&nbsp; --&nbsp; ${dataList.processDefinitionName}</span></div>
-		   		<div><span>主&nbsp;题：</span><span><a name="doTask" href="#" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">${dataList.description}</a></span></div>   
+		   		<div><span>主&nbsp;题：</span><span><a name="doTask" href="#" formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">${dataList.description}</a></span></div>   
 		    	</td>
 		      <td>${dataList.bizKey}</td>
 		      <td>
