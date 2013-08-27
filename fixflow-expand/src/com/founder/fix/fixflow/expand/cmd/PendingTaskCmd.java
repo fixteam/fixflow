@@ -37,6 +37,7 @@ import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.DelegationState;
 import com.founder.fix.fixflow.expand.command.PendingTaskCommand;
@@ -95,16 +96,16 @@ public class PendingTaskCmd extends AbstractExpandTaskCmd<PendingTaskCommand, Vo
 			
 			TaskCommandInst taskCommand=null;
 			
-			if(this.admin!=null&&!this.admin.equals("")){
-				
-				String taskCommandName=commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(userCommandId).getName();
-				
-				taskCommand=new TaskCommandInst(userCommandId, taskCommandName, null, userCommandId, true);
-				
-				
-			}
-			else{
-				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
+			String taskCommandType = expandTaskCommand.getCommandType();
+			
+			if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
+
+				String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
+
+				taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
+
+			} else {
+				taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
 			}
 		
 			if(taskCommand==null){

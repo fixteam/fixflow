@@ -51,11 +51,7 @@ public class DeleteProcessInstanceCmd extends AbstractExpandTaskCmd<DeleteProces
 		
 		processInstanceManager.deleteProcessInstance(processInstanceId, true);
 		
-		
 
-		
-		
-		
 		
 		throw new FixFlowException("未在删除流程实例(DeleteProcessInstanceCmd)方法内设置业务数据的清空方式!请检查该类,如不需要删除业务数据,请注释掉该句话。");
 		

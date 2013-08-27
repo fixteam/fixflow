@@ -17,19 +17,26 @@
  */
 package com.founder.fix.fixflow.core.impl.cmd;
 
+import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.AbstractCustomExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.persistence.TaskManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
@@ -95,9 +102,29 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 	}
 
 	/**
-	 * 加载流程执行上下文对象
+	 * 流程执行上下文对象
 	 */
-	protected ExecutionContext loadExecutionContext(CommandContext commandContext) {
+	protected ExecutionContext executionContext;
+
+	/**
+	 * 任务处理命名
+	 */
+	protected TaskCommandInst taskCommandInst;
+
+	/**
+	 * 正在操作的任务的实体
+	 */
+	protected TaskInstanceEntity taskInstanceEntity;
+	
+	/**
+	 * 流程实例
+	 */
+	protected ProcessInstanceEntity processInstance;
+
+	/**
+	 * 加载流程相关参数
+	 */
+	protected void loadProcessParameter(CommandContext commandContext) {
 
 		if (this.taskId == null || this.taskId.equals("")) {
 			throw new FixFlowException("任务编号为空！");
@@ -105,30 +132,109 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 
 		// 获取任务管理器
 		TaskManager taskManager = commandContext.getTaskManager();
-		
+
 		// 获取任务管理器
 		ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
 
 		// 根据指定id查询出任务的TO 不能做改变操作
 		TaskInstance taskInstanceQuery = taskManager.findTaskById(taskId);
 
-		if (taskInstanceQuery==null) {
+		if (taskInstanceQuery == null) {
 			throw new FixFlowBizException("未查询到指定的任务");
 		}
-		
-		String processInstanceId = taskInstanceQuery.getProcessInstanceId();
-		
-		String tokenId= taskInstanceQuery.getTokenId();
-		
-		ProcessInstanceEntity processInstance =processInstanceManager.findProcessInstanceById(processInstanceId);
-		
-		
-		TokenEntity tokenEntity=processInstance.getTokenMap().get(tokenId);
-		
-		//执行按钮表达式
-		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity);
-		
 
+		String processInstanceId = taskInstanceQuery.getProcessInstanceId();
+
+		String tokenId = taskInstanceQuery.getTokenId();
+
+		String nodeId = taskInstanceQuery.getNodeId();
+
+		this.processInstance = processInstanceManager.findProcessInstanceById(processInstanceId);
+
+		TokenEntity tokenEntity = this.processInstance.getTokenMap().get(tokenId);
+
+		this.executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity);
+
+		ProcessDefinitionBehavior processDefinition = this.processInstance.getProcessDefinition();
+
+		// 获取任务所在节点对象
+		UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
+
+		String taskCommandTypeString = expandTaskCommand.getCommandType();
+
+		if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandTypeString)) {
+
+			String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandTypeString).getName();
+
+			this.taskCommandInst = new TaskCommandInst(taskCommandTypeString, taskCommandName, null, taskCommandTypeString, true);
+
+		} else {
+			this.taskCommandInst = userTask.getTaskCommandsMap().get(this.userCommandId);
+		}
+
+		// 获取任务管理器
+		List<TaskInstanceEntity> taskInstances = this.processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
+
+		for (TaskInstanceEntity taskInstance : taskInstances) {
+			if (taskInstance.getId().equals(this.taskId)) {
+
+				this.taskInstanceEntity = taskInstance;
+
+				break;
+			}
+		}
+
+		this.executionContext.setTaskInstance(this.taskInstanceEntity);
+
+	}
+
+	protected void addVariable() {
+		// 放置当前点击的按钮ID
+		this.processInstance.getContextInstance().addTransientVariable("fixVariable_userCommand", this.userCommandId);
+		// 放置持久化变量
+		this.processInstance.getContextInstance().setVariableMap(this.variables);
+		// 放置瞬态变量
+		this.processInstance.getContextInstance().setTransientVariableMap(this.transientVariables);
+	}
+	
+	
+	protected void runCommandExpression(){
+
+		
+		this.executionContext.setTaskInstance(this.taskInstanceEntity);
+		if (this.taskCommandInst != null && this.taskCommandInst.getExpression() != null) {
+			try {
+				
+				ExpressionMgmt.execute(this.taskCommandInst.getExpression(), this.executionContext);
+			} catch (Exception e) {
+				throw new FixFlowException("用户命令表达式执行异常!", e);
+			}
+		}
+	}
+	
+	protected void saveProcessInstance(CommandContext commandContext){
+		try {
+			commandContext.getProcessInstanceManager().saveProcessInstance(getProcessInstance());
+		} catch (Exception e) {
+			throw new FixFlowException("流程实例持久化失败!", e);
+		}
+	}
+	
+	
+	public ExecutionContext getExecutionContext() {
 		return executionContext;
 	}
+
+	public TaskCommandInst getTaskCommandInst() {
+		return taskCommandInst;
+	}
+
+	public TaskInstanceEntity getTaskInstanceEntity() {
+		return taskInstanceEntity;
+	}
+
+	public ProcessInstanceEntity getProcessInstance() {
+		return processInstance;
+	}
+
 }

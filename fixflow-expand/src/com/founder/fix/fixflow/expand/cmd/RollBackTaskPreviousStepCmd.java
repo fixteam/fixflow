@@ -36,6 +36,7 @@ import com.founder.fix.fixflow.core.impl.persistence.TaskManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.expand.command.RollBackTaskPreviousStepCommand;
@@ -82,17 +83,18 @@ public class RollBackTaskPreviousStepCmd extends AbstractExpandTaskCmd<RollBackT
 
 		TaskCommandInst taskCommand=null;
 		
-		if(this.admin!=null&&!this.admin.equals("")){
-			
-			String taskCommandName=commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(userCommandId).getName();
-			
-			taskCommand=new TaskCommandInst(userCommandId, taskCommandName, null, userCommandId, true);
-			
-			
+		String taskCommandType = expandTaskCommand.getCommandType();
+		
+		if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
+
+			String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
+
+			taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
+
+		} else {
+			taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
 		}
-		else{
-			taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
-		}
+		
 		ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
 
 		processInstanceImpl.getContextInstance().setVariableMap(variables);

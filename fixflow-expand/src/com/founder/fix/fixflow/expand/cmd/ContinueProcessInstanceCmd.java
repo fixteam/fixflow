@@ -18,11 +18,9 @@
 package com.founder.fix.fixflow.expand.cmd;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.expand.command.ContinueProcessInstanceCommand;
 
 /**
@@ -36,24 +34,31 @@ public class ContinueProcessInstanceCmd extends AbstractExpandTaskCmd<ContinuePr
 	}
 
 	public Void execute(CommandContext commandContext) {
-		if (taskId == null || taskId.equals("")) {
-			throw new FixFlowException("任务编号为空！");
-		}
-		if(this.userCommandId==null||this.userCommandId.equals("")){
-			throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
-		}
 
-		TaskInstanceEntity task = Context.getCommandContext().getTaskManager().findTaskById(taskId);
-		String processInstanceId=task.getProcessInstanceId();
-		ProcessInstanceEntity  processInstance =Context.getCommandContext().getProcessInstanceManager().findProcessInstanceById(processInstanceId);
+		// 初始化任务命令执行所需要的常用对象
+		loadProcessParameter(commandContext);
+
+		// 将外部变量注册到流程实例运行环境中
+		addVariable();
+
+		// 执行处理命令中的开发人员设置的表达式
+		runCommandExpression();
+		
+		//获取流程实例
+		ProcessInstanceEntity processInstance=getProcessInstance();
+		
+		//恢复流程实例
 		processInstance.resume();
 		try {
-			Context.getCommandContext().getProcessInstanceManager().saveProcessInstance(processInstance);
+			
+			//保存流程实例
+			saveProcessInstance(commandContext);
+			
 		} catch (Exception e) {
-			// TODO 自动生成的 catch 块
+			
 			e.printStackTrace();
 			throw new FixFlowException("恢复流程时出现错误!", e);
-			
+
 		}
 		return null;
 	}
