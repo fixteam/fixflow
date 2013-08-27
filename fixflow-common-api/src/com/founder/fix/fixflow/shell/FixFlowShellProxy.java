@@ -76,8 +76,7 @@ public class FixFlowShellProxy {
 	
 	public static ProcessEngine createProcessEngine(Object operator,Connection connection){
 		Map<String,Connection> tmp = new HashMap<String,Connection>();
-		tmp.put(DB_FIX_BIZ_BASE, connection);
-		
+		tmp.put("null", connection);
 		return createProcessEngine(operator,tmp);
 	}
 	
@@ -85,7 +84,10 @@ public class FixFlowShellProxy {
 		ExternalContent externalContent=new ExternalContent();
 		externalContent.setAuthenticatedUserId(StringUtil.getString(operator));
 		for(Entry<String,Connection> tmp:connections.entrySet()){
-			externalContent.setConnection(tmp.getKey(), tmp.getValue());
+			if(tmp.getKey().equals("null"))
+				externalContent.setConnection(tmp.getValue());
+			else
+				externalContent.setConnection(tmp.getKey(), tmp.getValue());
 		}
 		
 		return createProcessEngine(externalContent);
