@@ -217,6 +217,17 @@ public class FlowCenter extends HttpServlet {
 				rd = request.getRequestDispatcher("/FlowCenter?action=getUserInfo");
 			//以下内容都是demo部分	
 
+			} else if(action.equals("selectUserList")){	//选择用户列表
+				Map<String, Object> pageResult = getFlowCenter().getAllUsers(filter);
+				filter.putAll(pageResult);
+				String isMulti = request.getParameter("isMulti");
+				request.setAttribute("result", filter);
+				request.setAttribute("isMulti", isMulti);
+				rd = request.getRequestDispatcher("/common/selectUserList.jsp");
+			} else if(action.equals("selectNodeList")){	//选择节点列表
+				rd = request.getRequestDispatcher("/common/selectNodeList.jsp");
+			} else if(action.equals("selectStepList")){	//选择步骤列表
+				rd = request.getRequestDispatcher("/common/selectStepList.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);
