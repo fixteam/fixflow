@@ -27,16 +27,13 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<!-- 分页 -->
-    <div id="page">
-      <jsp:include page="../center/page.jsp" flush="true"/>
-    </div>
 </div>
 </div>
 </body>
 <script>
 $(function(){
 	$("table#dataList tr").click(function(){
+		$("table#dataList tr.selected").removeClass("selected");
 		$(this).addClass("selected");
 	});
 	$("#ok").click(function(){
