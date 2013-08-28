@@ -260,13 +260,164 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
 ]]>        
       </programlisting>
     </para>
+    
+    <para>
+      设计器上如何配置
+    </para>
+    <para>
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" fileref="images/config.dataBaseConfig.1.png"/>
+    </imageobject></mediaobject>
+    <mediaobject><imageobject>
+      <imagedata align="center" fileref="images/config.dataBaseConfig.2.png"/>
+    </imageobject></mediaobject>
   </section>
   
   <section xml:id="config.orgConfig">
     <title>组织结构配置</title>
     <para>
-      
+      FixFlow 的组织结构配置记录在fixflowconfig.xml中,可以通过设计器修改,也可以直接修改XML文件,FixFlow自带了简易组织结构表,
+      开发人员可以通过更改配置文件,将组织结构表换成指定的表,也可以自己实现接口完全重新订制组织结构。
     </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="bold">designerOrgConfig</emphasis>: 组织结构配置的根元素。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">dataBaseId</emphasis>: 组织结构所使用的数据源。  <link linkend="config.dataBaseConfig">数据源配置</link>
+          </para>
+        </listitem>
+      </itemizedlist>
+      <itemizedlist>
+        <title>用户信息配置</title>
+        <listitem>
+          <para>
+            <emphasis role="bold">allUserInfo</emphasis>: 用户信息配置的根元素。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">isEnabled</emphasis>: 是否启用用户信息的显示,作用在设计器端,表达式编辑器的组织结构树上,默认是不显示状态。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">userIdField</emphasis>: 用户表的用户编号字段。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">userNameField</emphasis>: 用户表的用户名称字段。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">sqlText</emphasis>: 用户表的查询语句。
+          </para>
+        </listitem>
+        </itemizedlist>
+        <itemizedlist>
+          <title>组信息配置</title>
+        <listitem>
+          <para>
+            <emphasis role="bold">groupInfo</emphasis>: 数据库的 JDBC URL 。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">groupId</emphasis>: 连接数据库的用户名
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">groupName</emphasis>: 连接数据库的密码
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">isEnabled</emphasis>: 连接池的最大活动连接数。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">isDisplayUser</emphasis>: 连接池的空闲最大连接数。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">groupIdField</emphasis>: 连接池中获取连接等待时间。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">groupNameField</emphasis>: 数据库方言实现类,不同的数据库方言类实现不一样。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">supGroupIdField</emphasis>: 数据库类型
+          </para>
+        </listitem>
+          <listitem>
+            <para>
+              <emphasis role="bold">sqlText</emphasis>: 数据库类型
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="bold">groupDefinitionImpl</emphasis>: 数据库类型
+            </para>
+          </listitem>
+      </itemizedlist>
+    <itemizedlist>
+      <title>组关联用户信息配置</title>
+      <listitem>
+        <para>
+          <emphasis role="bold">userInfo</emphasis>: 数据库的 JDBC URL 。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">userIdField</emphasis>: 数据库的 JDBC URL 。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">userNameField</emphasis>: 数据库的 JDBC URL 。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">groupIdField</emphasis>: 数据库的 JDBC URL 。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">sqlText</emphasis>: 数据库的 JDBC URL 。
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      组织结构配置的例子：
+    </para>
+      <programlisting language="xml">   
+<![CDATA[       
+<designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
+  <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
+  <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="true" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
+    <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID from au_userinfo t1,  FIX_GROUP_RELATION t2 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org'"/>
+  </groupInfo>
+  <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
+    <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID from au_userinfo t1,  FIX_GROUP_RELATION t2 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role'"/>
+  </groupInfo>
+</designerOrgConfig>
+]]> 
+    </programlisting>
   </section>
   
  
