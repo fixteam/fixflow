@@ -8,7 +8,7 @@ body { min-width:1000px;}
 .top-right { float:right; padding:2px 0; text-align:right; color:#DDD; font-size:12px;}
 .top-right ul { padding-right:4px;}
 .top-right li { float:left; display:inline-block; padding:0 8px;}
-.top-right li a { color:#DDD;font-weight: bold;}
+.top-right li a { color:#DDD;}
 .menu { display:block; padding:3px; height:60px; background:#404040; border-bottom:4px solid #a8a9ad;}
 .menu .logo { float:left; margin:2px; width:320px; height:56px; background:url(../images/logo.jpg) no-repeat center;}
 .menu ul { margin:0; padding:0;}
@@ -83,7 +83,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
 .fix-table td.time { text-align:center;}
 .fix-table tr.selected { background-color: #fed4c7 }
-.fix-table tr:HOVER{ background-color: #fbf2ef }
+.fix-table tr:HOVER{ background-color: #fbf2ef;cursor:pointer; }
 
 /* 分页 */
 .page { padding:10px 15px; height:18px; overflow:hidden; text-align:right;}
@@ -93,6 +93,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .page li a:hover { background:#fff; border:1px solid #dc562e; color:#dc562e;}
 .page li a.select { background:#dc562e; border:1px solid #dc562e; color:#fff; font-weight:bold;}
 .page li .orange { color:#dc562e;}
+.page li.show a { display:inline-block; border:none;}
+.page li.show a.select {  background:#fff; border:1px solid #dc562e; color:#dc562e;}
 
 /* 分类 */
 .type-box { padding:20px; height:100%; text-align:center;}
