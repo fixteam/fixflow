@@ -13,10 +13,8 @@ $(function(){
   $("a[name=viewInfo]").click(function(){
   	var jobKeyGroup = $(this).attr("jobKeyGroup");
   	var jobKeyName = $(this).attr("jobKeyName");
-    $("#jobKeyName").val(jobKeyName);
-     $("#jobKeyGroup").val(jobKeyGroup);
-    $("#action").val("viewJobInfo");
-    $("#subForm").submit();
+	var obj = {};
+	window.showModalDialog("FlowManager?action=viewJobInfo&jobKeyName="+jobKeyName+"&jobKeyGroup="+jobKeyGroup,obj,"dialogWidth=920px;dialogHeight=600px");
   });
   //暂停
    $("a[name=suspend]").click(function(){
@@ -85,11 +83,11 @@ $(function(){
 		        <td>${dataList.jobType}</td>
 		      <c:choose>
 				    <c:when test="${dataList.isPaused == true}">
-				    	<td>暂停</td>
+				    	<td>暂停中</td>
 				        <td><a href="#" name="continue" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" >恢复</a>
 				    </c:when>
 				    <c:otherwise>
-				    	<td>恢复</td>
+				    	<td>运行中</td>
 				          <td><a href="#" name="suspend" jobKeyGroup="${dataList.jobKeyGroup}" jobKeyName="${dataList.jobKeyName}" >暂停</a>
 				    </c:otherwise>
 				</c:choose>
