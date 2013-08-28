@@ -55,8 +55,8 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
 			}
-			int firstResult = pageIndex*rowNum;//起始行
-			int maxResults = pageIndex*(rowNum+1);//结束行
+			int firstResult = rowNum*(pageIndex-1)+1;//起始行
+			int maxResults = pageIndex*rowNum;//结束行
 			Map<String,Object> queryMap = new HashMap<String,Object>();
 			String queryUserId = StringUtil.getString(params.get("queryUserId"));
 			if(StringUtil.isNotEmpty(queryUserId)){
@@ -107,8 +107,8 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
 			}
-			int firstResult = pageIndex*rowNum;//起始行
-			int maxResults = pageIndex*(rowNum+1);//结束行
+			int firstResult = rowNum*(pageIndex-1)+1;//起始行
+			int maxResults = pageIndex*rowNum;//结束行
 			Map<String,Object> queryMap = new HashMap<String,Object>();
 			String queryGroupId = StringUtil.getString(params.get("queryGroupId"));
 			if(StringUtil.isNotEmpty(queryGroupId)){
