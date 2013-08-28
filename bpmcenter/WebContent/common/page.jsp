@@ -56,6 +56,7 @@
 			}
 		}
 		sb.append(pagination.createPageInfo());
+		sb.append("<li>每页   <a href='#' onclick='toSize(10)'>10</a> <a href='#' onclick='toSize(20)'>20</a> <a href='#' onclick='toSize(30)'>30</a> 条</li>");
 		sb.append("</ul></div>");
 		out.print(sb.toString());
 %>
@@ -70,5 +71,9 @@
 	
 	function toIndex(index){
 		submit(index,$("#pageSize").val());
+	}
+	
+	function toSize(size){
+		submit($("#pageIndex").val(),size);
 	}
 </script>

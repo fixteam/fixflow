@@ -553,7 +553,12 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		String businessKey = StringUtil.getString(params.get("businessKey"));
 		String userId = StringUtil.getString(params.get("userId"));
 		String taskComment = StringUtil.getString(params.get("_taskComment"));
-		Map<String,Object> taskParams = (Map<String,Object>)params.get("taskParams");
+		Map<String,Object> taskParams = null;
+		Object tmpParams = params.get("taskParams");
+		if(tmpParams instanceof Map)
+			taskParams = (Map<String,Object>)tmpParams;
+		else
+			taskParams = new HashMap<String,Object>();
 		
 		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
 		
