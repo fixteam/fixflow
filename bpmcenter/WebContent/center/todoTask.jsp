@@ -96,7 +96,6 @@ $(function(){
        	  <div class="left-nav m-top"><h1>代理人</h1></div>
        	  	<c:if test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
 			    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-			      <div class="left-nav-orange-line">&nbsp;</div>
 			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.id}" href="#"><img src="images/temp/user01.jpg" />${agentUsers.name}</a></div>
 			    </c:forEach>
        	  	</c:if>
@@ -104,7 +103,6 @@ $(function(){
        	  <div class="left-nav m-top"><h1>委托人</h1></div>
        	  	<c:if test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
 			    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-			      <div class="left-nav-orange-line">&nbsp;</div>
 			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.id}" href="#"><img src="images/temp/user01.jpg" />${agentToUsers.name}</a></div>
 			    </c:forEach>
        	  	</c:if>
