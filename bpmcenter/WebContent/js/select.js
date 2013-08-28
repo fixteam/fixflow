@@ -9,9 +9,10 @@ function FixSelect(obj){
 	var rv = null;
 	var w = obj.width||"800px";
 	var h = obj.height||"600px";
+	var isMulti = obj.isMulti||"false";
 	switch(obj.type){
 		case "user":
-			rv = window.showModalDialog("FlowCenter?action=selectUserList&isMulti="+obj.isMulti,null,"dialogWidth="+w+";dialogHeight="+h);
+			rv = window.showModalDialog("FlowCenter?action=selectUserList&isMulti="+isMulti,null,"dialogWidth="+w+";dialogHeight="+h);
 			break;
 		case "node":
 			rv = window.showModalDialog("FlowCenter?action=selectNodeList&taskId="+obj.taskId,null,"dialogWidth="+w+";dialogHeight="+h);
