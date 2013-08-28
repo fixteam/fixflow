@@ -325,52 +325,52 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
           <title>组信息配置</title>
         <listitem>
           <para>
-            <emphasis role="bold">groupInfo</emphasis>: 数据库的 JDBC URL 。
+            <emphasis role="bold">groupInfo</emphasis>: 组信息配置根元素。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">groupId</emphasis>: 连接数据库的用户名
+            <emphasis role="bold">groupId</emphasis>: 组的编号。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">groupName</emphasis>: 连接数据库的密码
+            <emphasis role="bold">groupName</emphasis>: 组的名称(如：角色、部门、职务)。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">isEnabled</emphasis>: 连接池的最大活动连接数。
+            <emphasis role="bold">isEnabled</emphasis>: 是否启用。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">isDisplayUser</emphasis>: 连接池的空闲最大连接数。
+            <emphasis role="bold">isDisplayUser</emphasis>: 设计器组织结构树上是否展现下级用户信息。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">groupIdField</emphasis>: 连接池中获取连接等待时间。
+            <emphasis role="bold">groupIdField</emphasis>: 数据库组编号的字段。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">groupNameField</emphasis>: 数据库方言实现类,不同的数据库方言类实现不一样。
+            <emphasis role="bold">groupNameField</emphasis>: 数据库组名称的字段。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">supGroupIdField</emphasis>: 数据库类型
+            <emphasis role="bold">supGroupIdField</emphasis>: 上级关系字段,如果没有上级如：角色,则保持跟编号字段一致则可。
           </para>
         </listitem>
           <listitem>
             <para>
-              <emphasis role="bold">sqlText</emphasis>: 数据库类型
+              <emphasis role="bold">sqlText</emphasis>: 数据库组的表查询语句。
             </para>
           </listitem>
           <listitem>
             <para>
-              <emphasis role="bold">groupDefinitionImpl</emphasis>: 数据库类型
+              <emphasis role="bold">groupDefinitionImpl</emphasis>: 组定义的实现类。
             </para>
           </listitem>
       </itemizedlist>
@@ -378,27 +378,27 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
       <title>组关联用户信息配置</title>
       <listitem>
         <para>
-          <emphasis role="bold">userInfo</emphasis>: 数据库的 JDBC URL 。
+          <emphasis role="bold">userInfo</emphasis>: 关联用户信息的根元素,这个元素是组元素的子元素。
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis role="bold">userIdField</emphasis>: 数据库的 JDBC URL 。
+          <emphasis role="bold">userIdField</emphasis>: 关联查询中用来存放用户编号的字段。
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis role="bold">userNameField</emphasis>: 数据库的 JDBC URL 。
+          <emphasis role="bold">userNameField</emphasis>: 关联查询中用来存放用户名称的字段。
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis role="bold">groupIdField</emphasis>: 数据库的 JDBC URL 。
+          <emphasis role="bold">groupIdField</emphasis>: 关联查询中用来存放组编号的字段。
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis role="bold">sqlText</emphasis>: 数据库的 JDBC URL 。
+          <emphasis role="bold">sqlText</emphasis>: 关联信息查询语句。
         </para>
       </listitem>
     </itemizedlist>
@@ -418,6 +418,16 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
 </designerOrgConfig>
 ]]> 
     </programlisting>
+    <para>
+      设计器上如何配置
+    </para>
+    <para>
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" fileref="images/config.orgConfig.1.png"/>
+    </imageobject></mediaobject>
+    
   </section>
   
  
@@ -425,8 +435,65 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
   <section xml:id="config.mailConfig">
     <title>邮件服务配置</title>
     <para>
-      
+      邮件服务器配置是可选的。FixFlow支持在业务流程中发送电子邮件在,前提是必须要先配置一个发送服务器。如何发送邮件通知请参阅   <link   linkend="bpmn.SendTask">SendTask</link>。
     </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis role="bold">selected</emphasis>: 当前使用邮件配置,一个系统可以使用多个邮箱,其中一个为系统默认选中邮箱。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">mailAddress</emphasis>: 邮件地址。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">mailName</emphasis>: 邮件名称。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">smtpHost</emphasis>: 发送服务器的地址。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">smtpPort</emphasis>: 发送服务器端口。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">userName</emphasis>: 邮箱用户名。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">passWord</emphasis>: 邮箱密码。
+        </para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>
+      邮件服务器配置的例子：
+    </para>
+    <programlisting language="xml">   
+<![CDATA[       
+<sysMailConfig selected="方正国际邮箱">
+    <mailInfo 
+    mailAddress="jiang_nan@founder.com" 
+    mailName="方正国际邮箱" 
+    smtpHost="mail.founder.com.cn" 
+    smtpPort="25" 
+    userName="kenshin" 
+    passWord="*******"/>
+</sysMailConfig>
+]]> 
+    </programlisting>
+    
+    
+   
   </section>
   
   

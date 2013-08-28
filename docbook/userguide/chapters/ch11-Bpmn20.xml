@@ -2,7 +2,7 @@
 <!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
                '../dtd/docbook.dtd'> 
                
-<chapter>
+<chapter xml:id="bpmn_chapter">
   <title>BPMN2.0</title>
 
   <section xml:id="bpmn.info">
