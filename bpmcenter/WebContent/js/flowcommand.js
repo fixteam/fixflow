@@ -35,11 +35,17 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						transferUserId:""
 				};
 
-			}else if(type=="Pending"){
-				params={
-						//转办的任务编号
-					pendingTaskId:""
-				};
+			}else if(type=="Pending"){//转办
+				var obj = {type:"user"};
+			  	var d = FixSelect(obj);
+			  	if(d&&d.length>0){
+					params={
+							//转办的任务编号
+						pendingTaskId:d[0].USERID
+					};
+			  	}else{
+			  		return;
+			  	}
 			}else if(type=="recover"){
 				params={
 						//追回的任务编号
