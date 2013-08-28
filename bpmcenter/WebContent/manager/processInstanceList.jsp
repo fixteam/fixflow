@@ -90,7 +90,7 @@
 		    </tr>
 		    </c:forEach>
             </table>
-			<jsp:include page="page.jsp" flush="true"/>
+			<jsp:include page="../common/page.jsp" flush="true"/>
         </div>
     </div>
 <!-- 分页 -->
