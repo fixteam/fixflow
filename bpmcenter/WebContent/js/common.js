@@ -10,8 +10,12 @@ Fix = {
 				return unescape(r[2]); 
 			return null; 
 		},
-		CheckBtnStatus:function(table){
-			var selectedRow = $("table.fix-table tr.selected").length;
+		CheckBtnStatus:function($table){
+			var selectedRow;
+			if(!$table)
+				selectedRow = $("table.fix-table tr.selected").length;
+			else
+				selectedRow = $("tr.selected",$table).length;
 			if(selectedRow==0){
 				$("div[data-scope]").addClass("disable");
 				$("div[data-scope=all]").removeClass("disable");
