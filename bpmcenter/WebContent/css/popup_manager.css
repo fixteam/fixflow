@@ -14,11 +14,11 @@ body { min-width:600px; background:#f2f2f2; margin:0; padding:0;}
 .popup tr.gray { background:#f7f7f7;}
 .popup td.left { text-align:left; color:#666; padding-left:10px;}
 .popup a { color:#444;}
-.popup a:hover { color:#19bee7;}
+.popup a:hover { color:#10a7d9;}
 
 /* 按钮 */
-.btn-normal a { display:inline-block; padding:1px 8px; border:2px solid #19bee7; background:#19bee7; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
-.btn-normal a:hover { border:2px solid #19bee7; color:#19bee7; background:#fff;}
+.btn-normal a { display:inline-block; padding:1px 8px; border:2px solid #10a7d9; background:#10a7d9; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
+.btn-normal a:hover { border:2px solid #10a7d9; color:#10a7d9; background:#fff;}
 .btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
 .btn-normal a:hover .arrow-small { background-position:0 -12px;}
 
@@ -32,7 +32,7 @@ body { min-width:600px; background:#f2f2f2; margin:0; padding:0;}
 .userinfo .btn-normal { padding:60px 10px 0 10px;}
 .userinfo .btn-normal a { padding:3px 8px;}
 .userinfo h2 { margin-top:20px; padding:4px 10px; height:20px; line-height:20px; font-size:16px; font-family:"微软雅黑"; background:#EEE;}
-.userinfo h2 a { float:right; display:block; color:#19bee7;}
+.userinfo h2 a { float:right; display:block; color:#10a7d9;}
 .userinfo table { margin:10px; color:#444; font-family:"微软雅黑";}
 .userinfo td { padding:5px 0;}
 .userinfo td.title { padding-left:40px; color:#666; width:100px;}
