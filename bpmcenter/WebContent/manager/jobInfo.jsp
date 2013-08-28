@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -33,16 +34,16 @@ $(function(){
 <body>
 <form action="FlowManager" method="post" id="subForm">
 <div class="popup">
-    <div class="info" style="width:1060px;">
-        <table width="1000" border="0">
+    <div class="info" style="width:900px;">
+        <table width="900" border="0">
           <tr>
-            <td width="100">编号：</td>
-            <td><input type="text" name="jobKeyName" value="${result.job.jobKeyName}"></td>
-             <td width="100">组名：</td>
-            <td><input type="text" name="jobKeyGroup" value="${result.job.jobKeyGroup}"></td>
+            <td width="50">编号：</td>
+            <td width="200"><input type="text" name="jobKeyName" readOnly style="border:0px;width:100%" value="${result.job.jobKeyName}"></td>
+             <td width="50">组名：</td>
+            <td><input type="text" name="jobKeyGroup" readOnly style="border:0px;width:100%" value="${result.job.jobKeyGroup}"></td>
           </tr>
         </table>
-        <table width="1000" border="0">
+        <table width="900" border="1">
           <tr>
             <td>开始时间</td>
             <td>结束时间</td>
@@ -54,11 +55,11 @@ $(function(){
           </tr>
 		<c:forEach items="${result.dataList}" var="row" varStatus="status">
 			<tr>
-				<td>${row.startTime}</td>
-				<td>${row.endTime}</td>
-				<td>${row.lastFireTime}</td>
-				<td>${row.nextFireTime}</td>
-				<td>${row.finalFireTime}</td>
+				<td class="time"><fmt:formatDate value="${row.startTime}" type="both"/></td>
+				<td class="time"><fmt:formatDate value="${row.endTime}" type="both"/></td>
+				<td class="time"><fmt:formatDate value="${row.lastFireTime}" type="both"/></td>
+				<td class="time"><fmt:formatDate value="${row.nextFireTime}" type="both"/></td>
+				<td class="time"><fmt:formatDate value="${row.finalFireTime}" type="both"/></td>
 				<td>${row.triggerState}</td>
 				<td>
 					 <c:choose>
