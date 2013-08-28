@@ -38,7 +38,7 @@
 	</table>
 	<!-- 分页 -->
     <div id="page">
-      <jsp:include page="../center/page.jsp" flush="true"/>
+      <jsp:include page="page.jsp" flush="true"/>
     </div>
 </div>
 </div>
