@@ -20,7 +20,7 @@
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
-	                  <td rowspan="3" width="110"><img src="images/temp/user-m.png" /></td>
+	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" /></td>
 	                  <td class="username" width="330"><span id="lastLoginUser"></span>
 	                  	<input type="hidden" name="userName" id="userNameS"/>
 	                  	<input type="hidden" name="loginType" id="loginTypeS"/></td>
@@ -60,7 +60,7 @@
 	                      <div class="btn-gray"><a href="#">返&emsp;回</a></div>
 	                  </div></td>
 	                </tr>
-	              </tbody>
+	              </tbody> 
 	            </table>
             </form>
         </div>

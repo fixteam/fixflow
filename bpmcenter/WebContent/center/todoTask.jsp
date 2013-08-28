@@ -182,7 +182,7 @@ $(function(){
     </div>
 <!-- 分页 -->	    
 	    <div id="page">
-	      <jsp:include page="page.jsp" flush="true"/>
+	      <jsp:include page="../common/page.jsp" flush="true"/>
 	    </div>
 
 	</form>

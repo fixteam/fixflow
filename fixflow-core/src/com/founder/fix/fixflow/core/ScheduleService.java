@@ -17,11 +17,14 @@
  */
 package com.founder.fix.fixflow.core;
 
+import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
+import org.quartz.Trigger;
 
 import com.founder.fix.fixflow.core.job.Job;
 
@@ -51,6 +54,48 @@ public interface ScheduleService extends ProcessService{
 	 * 定时任务调度器关闭
 	 */
 	void schedulerShutdown();
+	
+	/**
+	 * 获取job集合
+	 * @param queryId group字段like匹配 可为null或“”(查询所有)
+	 * @return 
+	 */
+	List<JobDetail> getJobList(String queryId);
+	
+	/**
+	 * 暂停job
+	 * @param name jobName
+	 * @param group jobGroup
+	 */
+	void suspendJob(String name,String group);
+	
+	/**
+	 * 恢复job
+	 * @param name jobName
+	 * @param group jobGroup
+	 */
+	void continueJob(String name,String group);
+	
+	/**
+	 * 获取job下的所有trigger
+	 * @param jobName jobName
+	 * @param jobGroup jobGroup
+	 */
+	List<Trigger> getTriggerList(String jobName,String jobGroup);
+	
+	/**
+	 * 暂停trigger
+	 * @param triggerName
+	 * @param triggerGroup
+	 */
+	void suspendTrigger(String triggerName,String triggerGroup);
+	
+	/**
+	 * 恢复trigger
+	 * @param triggerName
+	 * @param triggerGroup
+	 */
+	void continueTrigger(String triggerName,String triggerGroup);
 	
 	/**
 	 * 执行定时连接器

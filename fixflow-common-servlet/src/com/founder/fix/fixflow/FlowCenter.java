@@ -136,41 +136,56 @@ public class FlowCenter extends HttpServlet {
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if (action.equals("getMyProcess")) {
-				List<Map<String, String>> result = getFlowCenter()
-						.queryStartProcess(userId);
-				Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
-				for(Map<String,String> tmp:result){
-					String category = tmp.get("category");
-					if(StringUtil.isEmpty(category))
-						category = "默认分类";
-					
-					List<Map<String, String>> tlist = newResult.get(category);
-					if(tlist==null){
-						tlist= new ArrayList<Map<String, String>>();
+				try{
+					List<Map<String, String>> result = getFlowCenter()
+							.queryStartProcess(userId);
+					Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
+					for(Map<String,String> tmp:result){
+						String category = tmp.get("category");
+						if(StringUtil.isEmpty(category))
+							category = "默认分类";
+						
+						List<Map<String, String>> tlist = newResult.get(category);
+						if(tlist==null){
+							tlist= new ArrayList<Map<String, String>>();
+						}
+						tlist.add(tmp);
+						newResult.put(category, tlist);
 					}
-					tlist.add(tmp);
-					newResult.put(category, tlist);
+					request.setAttribute("result", newResult);
+					request.setAttribute("userId", userId); // 返回userId add Rex
+				}catch(Exception e){
+					e.printStackTrace();
+					request.setAttribute("errorMsg", e.getMessage());
 				}
-				request.setAttribute("result", newResult);
-				request.setAttribute("userId", userId); // 返回userId add Rex
 				rd = request.getRequestDispatcher("/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
-				filter.put("path", request.getSession().getServletContext()
-						.getRealPath("/"));
-				Map<String, Object> pageResult = getFlowCenter()
-						.queryMyTaskNotEnd(filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
-				request.setAttribute("pageInfo", filter.get("pageInfo"));
+				try{
+					filter.put("path", request.getSession().getServletContext()
+							.getRealPath("/"));
+					Map<String, Object> pageResult = getFlowCenter()
+							.queryMyTaskNotEnd(filter);
+					filter.putAll(pageResult);
+					request.setAttribute("result", filter);
+					request.setAttribute("pageInfo", filter.get("pageInfo"));
+				}catch(Exception e){
+					e.printStackTrace();
+					request.setAttribute("errorMsg", e.getMessage());
+				}
 				rd = request.getRequestDispatcher("/center/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
 			} else if (action.equals("getAllProcess")) {
-				Map<String, Object> pageResult = getFlowCenter()
-						.queryTaskInitiator(filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
-				request.setAttribute("pageInfo", filter.get("pageInfo"));
+				try{
+					Map<String, Object> pageResult = getFlowCenter()
+							.queryTaskInitiator(filter);
+					filter.putAll(pageResult);
+					request.setAttribute("result", filter);
+					request.setAttribute("pageInfo", filter.get("pageInfo"));
+				}catch(Exception e){
+					e.printStackTrace();
+					request.setAttribute("errorMsg", e.getMessage());
+				}
 				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
 			} else if (action.equals("getPlaceOnFile")) {
 				Map<String, Object> pageResult = getFlowCenter()

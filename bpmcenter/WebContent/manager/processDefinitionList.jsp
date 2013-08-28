@@ -138,7 +138,7 @@ a{text-decoration: none;}
 		  </tbody>
 	    </table>
 		<!-- 分页 -->	    
-	   <jsp:include page="page.jsp" flush="true"/>
+	   <jsp:include page="../common/page.jsp" flush="true"/>
 	    </div>
 	  </div>
 	</div>
