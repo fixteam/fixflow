@@ -10,6 +10,7 @@
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="js/flowcommand.js"></script>
 <script type="text/javascript" src="js/flowautoassemble.js"></script>
+<script type="text/javascript" src="js/select.js"></script>
 <style>
 a{text-decoration: none;}
 </style>
@@ -41,8 +42,6 @@ a{text-decoration: none;}
 	isAdmin="${row.isAdmin}" isVerification="${row.isVerification}" isSaveData="${row.isSaveData}"
 	isSimulationRun="${row.isSimulationRun}" nodeId="${row.nodeId}" nodeName="${row.nodeName}"
 	>${row.name}</button>
-
-
 </c:forEach>
 </form>
 </body>

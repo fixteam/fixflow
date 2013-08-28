@@ -56,7 +56,23 @@
 			}
 		}
 		sb.append(pagination.createPageInfo());
-		sb.append("<li>每页   <a href='#' onclick='toSize(10)'>10</a> <a href='#' onclick='toSize(20)'>20</a> <a href='#' onclick='toSize(30)'>30</a> 条</li>");
+		sb.append("<li class='show'>&emsp;每页显示 ");
+		sb.append("<a ");
+		if(pagination.getPageSize()==10){
+			sb.append(" class='select' ");
+		}
+		sb.append("href='#' onclick='toSize(10)'>10</a> ");
+		sb.append("<a ");
+		if(pagination.getPageSize()==20){
+			sb.append(" class='select' ");
+		}
+		sb.append("href='#' onclick='toSize(20)'>20</a> ");
+		sb.append("<a ");
+		if(pagination.getPageSize()==30){
+			sb.append(" class='select' ");
+		}
+		sb.append("href='#' onclick='toSize(30)'>30</a> ");
+		sb.append(" 条</li>");
 		sb.append("</ul></div>");
 		out.print(sb.toString());
 %>
@@ -74,6 +90,6 @@
 	}
 	
 	function toSize(size){
-		submit($("#pageIndex").val(),size);
+		submit(1,size);
 	}
 </script>

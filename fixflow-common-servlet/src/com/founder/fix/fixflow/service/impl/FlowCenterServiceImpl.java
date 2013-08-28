@@ -172,7 +172,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 //					}
 //				}
 				
-				instances.put("icon", "icon/"+userId+"_small.png");
+//				instances.put("icon", "icon/"+userId+"_small.png");
 				
 				UserTo user = identsvz.getUserTo(userId);
 				instances.put("userName", user.getUserName());
