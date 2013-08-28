@@ -129,6 +129,7 @@ public class FlowManager extends HttpServlet {
 				try{
 					getFlowManager().suspendProcessInstance(filter);
 				}catch(Exception e){
+					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
@@ -136,6 +137,7 @@ public class FlowManager extends HttpServlet {
 				try{
 					getFlowManager().continueProcessInstance(filter);
 				}catch(Exception e){
+					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
@@ -143,6 +145,7 @@ public class FlowManager extends HttpServlet {
 				try{
 					getFlowManager().terminatProcessInstance(filter);
 				}catch(Exception e){
+					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
@@ -150,6 +153,7 @@ public class FlowManager extends HttpServlet {
 				try{
 					getFlowManager().deleteProcessInstance(filter);
 				}catch(Exception e){
+					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
