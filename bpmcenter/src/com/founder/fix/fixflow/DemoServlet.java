@@ -151,11 +151,13 @@ public class DemoServlet extends HttpServlet {
 					connection.close();					
 				}
 			} else if (action.equals("demoCompleteTask")) {// 演示如何完成下一步
+				//这里直接打开了DB_FIX_BIZ_BASE库
 				Connection connection = FixFlowShellProxy
 						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
 				PreparedStatement ps = null;
 
 				try {
+					//设置这里开始jdbc级别事务
 					connection.setAutoCommit(false);
 					ps = connection
 							.prepareStatement("insert into DEMOTABLE(COL1,COL2) values(?,?)");
@@ -167,7 +169,11 @@ public class DemoServlet extends HttpServlet {
 					fcs.completeTask(filter);
 					rd = request
 							.getRequestDispatcher("/common/result.jsp");
-				} finally {
+				} catch(Exception e){
+					//事务回滚
+					connection.rollback();
+				}finally {
+					//事务提交
 					connection.commit();
 					if (ps != null)
 						ps.close();

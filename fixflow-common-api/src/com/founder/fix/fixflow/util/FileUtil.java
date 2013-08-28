@@ -47,6 +47,9 @@ public class FileUtil
 	public static final String STORETYPE="Store";
 	
 
+	public static String getUserIcon(String userId){
+		return "icon/"+userId+".png";
+	}
 	/**
 	 * 删除一个文件，以路径作为参数。
 	 * @param filePath

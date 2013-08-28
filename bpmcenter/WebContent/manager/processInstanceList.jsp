@@ -100,15 +100,11 @@
 
 </body>
 <script type="text/javascript">
-	var message = '${errorMsg}';
-	if(message!=''){
-		alert(message);
-	}
-	
+
 	$('#checkall').click(function(){
     	var tii = $(this).attr("checked");
     	var checkboxs = $("input[name=checked]");
-    	if(tii=="checked"){
+    	if(tii=="checked"){	
     		for(var i=0;i<checkboxs.length;i++) 
 			{ 
 				$(checkboxs[i]).attr("checked",'true');
