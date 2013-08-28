@@ -23,7 +23,7 @@
  
 	$(function(){
 		$("#updateCache").click(function(){
-			alert(123);
+			window.open("FlowManager?action=updateCache")
 		});
 		
 		$("#setAgent").click(function(){
