@@ -68,6 +68,12 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
 	 * @return
 	 */
 	ProcessDefinitionQuery deploymentId(String deploymentId);
+	
+	/**
+	 * 查询最新版本
+	 * @return
+	 */
+	ProcessDefinitionQuery latestVersion();
 
 	/**
 	 * 根据流程定义key查询

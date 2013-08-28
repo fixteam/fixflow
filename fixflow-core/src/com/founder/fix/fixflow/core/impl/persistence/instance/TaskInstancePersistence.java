@@ -404,6 +404,20 @@ public class TaskInstancePersistence {
 			TaskInstanceEntity taskInstanceImpl = getTaskInstanceEntity(dataMap);
 			taskInstanceImpls.add(taskInstanceImpl);
 		}
+		
+		
+		if(taskQuery.getIsAgent()){
+			if(taskQuery.getAssignee()!=null&&!taskQuery.getAssignee().equals("")){
+
+				taskQuery.taskAssignee(agentOldAssignee);
+			}
+			if(taskQuery.getCandidateUser()!=null&&!taskQuery.getCandidateUser().equals("")){
+
+				taskQuery.taskCandidateUser(agentOldAssignee);
+			}
+		}
+		
+		
 		return taskInstanceImpls;
 	}
 
@@ -435,6 +449,18 @@ public class TaskInstancePersistence {
 					"))";
 		}
 		Object returnObj = sqlCommand.queryForValue(selectTaskByQueryCriteriaSql, objectParamWhere);
+		
+		if(taskQuery.getIsAgent()){
+			if(taskQuery.getAssignee()!=null&&!taskQuery.getAssignee().equals("")){
+
+				taskQuery.taskAssignee(agentOldAssignee);
+			}
+			if(taskQuery.getCandidateUser()!=null&&!taskQuery.getCandidateUser().equals("")){
+
+				taskQuery.taskCandidateUser(agentOldAssignee);
+			}
+		}
+		
 		return Integer.parseInt(returnObj.toString());
 	}
 
