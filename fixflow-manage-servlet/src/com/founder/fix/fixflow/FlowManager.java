@@ -36,6 +36,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.JobService;
@@ -295,6 +296,10 @@ public class FlowManager extends HttpServlet {
 			if("setHis".equals(action)){
 				getFlowManager().setHistory(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+			}
+			if("updateCache".equals(action)){
+				ProcessEngineManagement.getDefaultProcessEngine().cleanCache(true, true);
+				response.getOutputStream().print("update success!");
 			}
 			if (rd != null)
 				rd.forward(request, response);

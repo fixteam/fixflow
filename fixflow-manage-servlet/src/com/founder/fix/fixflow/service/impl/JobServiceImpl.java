@@ -66,18 +66,8 @@ public class JobServiceImpl implements JobService {
 		Scheduler scheduler = scheduleService.getScheduler();
 		try{
 			List<Map<String,Object>> jobList = new ArrayList<Map<String,Object>>();
-			Set<JobKey> set = new HashSet<JobKey>();
-			//如果queryId不为空，则返回queryId对应的job,否则返回所有job
-			if(StringUtil.isNotEmpty(queryId)){
-				set = scheduler.getJobKeys(GroupMatcher.jobGroupContains(queryId));
-			}else{
-				List<String> groupNames = scheduler.getJobGroupNames();
-				for(String groupName:groupNames){
-					set.addAll(scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName)));
-				}
-			}
-			for(JobKey key :set){
-				JobDetail job = scheduler.getJobDetail(key); 
+			List<JobDetail> list = scheduleService.getJobList(queryId);
+			for(JobDetail job :list){
 				Map<String,Object> jobMap = new HashMap<String,Object>();
 				jobMap.put("jobName", job.getKey().getName());
 				jobMap.put("groupName", job.getKey().getGroup());
@@ -141,11 +131,10 @@ public class JobServiceImpl implements JobService {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
 		String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
 		String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
 		try{
-			scheduler.pauseJob(new JobKey(jobKeyName,jobKeyGroup));
+			scheduleService.suspendJob(jobKeyName, jobKeyGroup);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
@@ -156,11 +145,10 @@ public class JobServiceImpl implements JobService {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
 		String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
 		String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
 		try{
-			scheduler.resumeJob(new JobKey(jobKeyName,jobKeyGroup));
+			scheduleService.continueJob(jobKeyName, jobKeyGroup);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
@@ -178,8 +166,7 @@ public class JobServiceImpl implements JobService {
 			String jobKeyName = StringUtil.getString(params.get("jobKeyName"));
 			String jobKeyGroup = StringUtil.getString(params.get("jobKeyGroup"));
 			List<Map<String,Object>> triggerList = new ArrayList<Map<String,Object>>();
-			
-			List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(new JobKey(jobKeyName,jobKeyGroup));
+			List<Trigger> triggers = scheduleService.getTriggerList(jobKeyName, jobKeyGroup);
 			for(Trigger t : triggers){
 				Map<String,Object> triggerMap = new HashMap<String,Object>();
 				triggerMap.put("triggerName", t.getKey().getName());
@@ -215,12 +202,10 @@ public class JobServiceImpl implements JobService {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
 		String triggerKeyName = StringUtil.getString(params.get("triggerKeyName"));
 		String triggerKeyGroup = StringUtil.getString(params.get("triggerKeyGroup"));
 		try{
-			TriggerKey tKey = new TriggerKey(triggerKeyName,triggerKeyGroup);
-			scheduler.pauseTrigger(tKey);
+			scheduleService.suspendTrigger(triggerKeyName, triggerKeyGroup);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
@@ -231,11 +216,10 @@ public class JobServiceImpl implements JobService {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		ScheduleService scheduleService = processEngine.getScheduleService();
-		Scheduler scheduler = scheduleService.getScheduler();
 		String triggerKeyName = StringUtil.getString(params.get("triggerKeyName"));
 		String triggerKeyGroup = StringUtil.getString(params.get("triggerKeyGroup"));
 		try{
-			scheduler.resumeTrigger(new TriggerKey(triggerKeyName,triggerKeyGroup));
+			scheduleService.continueTrigger(triggerKeyName, triggerKeyGroup);
 		}finally{
 			FixFlowShellProxy.closeProcessEngine(processEngine, false);
 		}
