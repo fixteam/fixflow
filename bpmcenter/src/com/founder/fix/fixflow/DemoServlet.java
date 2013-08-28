@@ -169,12 +169,14 @@ public class DemoServlet extends HttpServlet {
 					fcs.completeTask(filter);
 					rd = request
 							.getRequestDispatcher("/common/result.jsp");
+					//事务提交
+					connection.commit();
 				} catch(Exception e){
 					//事务回滚
 					connection.rollback();
+					throw e;
 				}finally {
-					//事务提交
-					connection.commit();
+
 					if (ps != null)
 						ps.close();
 					connection.close();
