@@ -6,7 +6,8 @@
         <li><a id="updateCache" href="#">更新缓存</a></li>
         <li><a id="setAgent" href="#">委托授权</a></li>
         <li><a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
-        <li><a href="/bpmcenter" onclick="">退出</a></li>
+        <li><a href="/bpmcenter">退出</a></li>
+        <li><a href="FlowManager?action=processDefinitionList" target='_blank'>管控中心</a></li>
         </ul>
     </div>
     <div class="menu">
@@ -23,7 +24,7 @@
  
 	$(function(){
 		$("#updateCache").click(function(){
-			alert(123);
+			window.open("FlowManager?action=updateCache")
 		});
 		
 		$("#setAgent").click(function(){

@@ -12,80 +12,64 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 		$("#"+formId).append(cprocessInstanceId);
 		$("#"+formId).append(cprocessDefinitionKey);
 		$("#"+formId).append(ctaskId);
-		$("button[commandType=processStatus]").click(
-				function() {
-					var pii = processInstanceId;
-					var pdk = processDefinitionKey;
-					var obj = {};
-					window.showModalDialog(
-							"FlowCenter?action=getTaskDetailInfo&processInstanceId="
-									+ pii+"&processDefinitionKey="
-									+ pdk+"", obj,
-							"dialogWidth=800px;dialogHeight=600px");
-					return false;
-				});
-		$("button[commandType=transfer]").click(
-				function() {
-					var params={
-						//被转发的UserId，这里设定了就是管理员
-						transferUserId:""
-					};
-					var ss = JSON.stringify(params);
-					$("#taskParams").val(ss);
-				});
-		$("button[commandType=Pending]").click(
-				function() {
-					var params={
-						//转办的任务编号
-						pendingTaskId:""
-					};
-					var ss = JSON.stringify(params);
-					$("#taskParams").val(ss);
-				});
-		$("button[commandType=recover]").click(
-				function() {
-					var params={
-						//追回的任务编号
-						recoverNodeId:""
-					};
-					var ss = JSON.stringify(params);
-					$("#taskParams").val(ss);
-				});
-		$("button[commandType=reminders]").click(
-				function() {
-					var params={
-						//提醒某一个用户
-						usersInfo:"",
-						//提醒内容
-						content:"",
-						//提醒标题
-						title:""
-						
-					};
-					var ss = JSON.stringify(params);
-					$("#taskParams").val(ss);
-				});
-		$("button[commandType=rollBack]").click(
-				function() {
-					var params={
-						//退回到某个节点
-						rollBackNodeId:"",
-						
-					};
-					var ss = JSON.stringify(params);
-					$("#taskParams").val(ss);
-				});
-		$("button[commandType!=processStatus]").click(function() {
+		
+		$("button[commandType]").click(function() {
 			var id = $(this).attr("commandId");
 			var type = $(this).attr("commandType");
 			$("#commandId").val(id);
 			$("#commandType").val(type);
+			var params={};
+			if(type=="processStatus"){
+				var pii = processInstanceId;
+				var pdk = processDefinitionKey;
+				var obj = {};
+				window.showModalDialog(
+						"FlowCenter?action=getTaskDetailInfo&processInstanceId="
+								+ pii+"&processDefinitionKey="
+								+ pdk+"", obj,
+						"dialogWidth=800px;dialogHeight=600px");
+				return false;
+			}else if(type=="transfer"){
+				params={
+						//被转发的UserId，这里设定了就是管理员
+						transferUserId:""
+				};
+
+			}else if(type=="Pending"){
+				params={
+						//转办的任务编号
+					pendingTaskId:""
+				};
+			}else if(type=="recover"){
+				params={
+						//追回的任务编号
+					recoverNodeId:""
+				};
+			}else if(type=="reminders"){
+				params={
+						//提醒某一个用户
+					usersInfo:"",
+						//提醒内容
+					content:"",
+						//提醒标题
+					title:""
+						
+				};
+			}else if(type=="rollBack"){
+				params={
+						//退回到某个节点
+					rollBackNodeId:"",
+						
+				};
+			}
+			
+			var ss = JSON.stringify(params);
+			$("#taskParams").val(ss);
 			$("#"+formId).submit();
 		});
-
 	}
 
-function request(paras)
+function requestUrlParam(paras)
 { 
     var url = location.href; 
     var paraString = url.substring(url.indexOf("?")+1,url.length).split("&"); 
