@@ -49,9 +49,15 @@
     </table>
     <h2>所属组<a href="#"></a></h2>
     <table>
+     	<tr>
+	        <td class="title">组类别</td>
+	        <td>组编号</td>
+	        <td>组名称</td>
+	      </tr>
       <c:forEach items="${result.groups}" var="dataList" varStatus="index">
 	      <tr>
-	        <td class="title">${dataList.groupType}：</td>
+	        <td class="title">${dataList.groupType}</td>
+	        <td>${dataList.groupId}</td>
 	        <td>${dataList.groupName}</td>
 	      </tr>
       </c:forEach>
