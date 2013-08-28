@@ -83,7 +83,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
 .fix-table td.time { text-align:center;}
 .fix-table tr.selected { background-color: #fed4c7 }
-.fix-table tr:HOVER{ background-color: #fbf2ef }
+.fix-table tr:HOVER{ background-color: #fbf2ef;cursor:pointer; }
 
 /* 分页 */
 .page { padding:10px 15px; height:18px; overflow:hidden; text-align:right;}
