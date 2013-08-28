@@ -8,7 +8,7 @@ body { min-width:1000px;}
 .top-right { float:right; padding:2px 0; text-align:right; color:#DDD; font-size:12px;}
 .top-right ul { padding-right:4px;}
 .top-right li { float:left; display:inline-block; padding:0 8px;}
-.top-right li a { color:#DDD;}
+.top-right li a { color:#DDD;font-weight: bold;}
 .menu { display:block; padding:3px; height:60px; background:#404040; border-bottom:4px solid #a8a9ad;}
 .menu .logo { float:left; margin:2px; width:320px; height:56px; background:url(../images/logo.jpg) no-repeat center;}
 .menu ul { margin:0; padding:0;}
