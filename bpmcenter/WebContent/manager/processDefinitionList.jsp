@@ -103,15 +103,16 @@ a{text-decoration: none;}
                 <td class="title-r">流程分类：</td>
                 <td><input type="text" id="text_4" name="queryType" class="fix-input" style="width:160px;" value="${result.queryType}"/></td>
                 <td></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
         </div>
        <div class="toolbar" style="padding-left:0px; padding-right:80px;">
-		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="deployment()">发布流程</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope="single"><a href="#" onclick="deployment()">发布流程</a></div>
 		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="deleteDeploy()">删除定义</a></div>
 		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="updateDeploy()">更新定义</a></div>
 		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="downloadProcess()">下载定义</a></div>
-	  	<div class="btn-normal" style="float:right;"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
+	  
 	  </div>
 	  <div>
 	 

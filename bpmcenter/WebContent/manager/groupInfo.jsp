@@ -37,11 +37,15 @@
       </tr>
     </table>
     <h2>成员列表<a href="#"></a></h2>
-    <table>
+    <table style="width:90%">
+     	<tr>
+	        <td width="20%" style="text-align:center">用户编号</td>
+	        <td style="text-align:center">用户姓名</td>
+	      </tr>
       <c:forEach items="${result.users}" var="dataList" varStatus="index">
 	      <tr>
-	        <td class="title">${dataList.userId}：</td>
-	        <td>${dataList.userName}</td>
+	        <td style="text-align:center">${dataList.userId}：</td>
+	        <td style="text-align:center">${dataList.userName}</td>
 	      </tr>
       </c:forEach>
     </table>

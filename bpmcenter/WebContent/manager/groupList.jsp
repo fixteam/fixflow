@@ -43,12 +43,11 @@ function viewGroupInfo(groupId,groupType){
                 <td><input type="text" id="text_3" name="queryGroupId" class="fix-input" style="width:160px;" value="${result.queryGroupId}"/></td>
                 <td class="title-r">组名称：</td>
                 <td><input type="text" id="text_4" name="queryGroupName" class="fix-input" style="width:160px;" value="${result.queryGroupName}"/>
+                <td ></td>
+                <td ><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
         </div>
-      <div class="toolbar" style="padding-left:35px; padding-right:80px;">
-	  	<div class="btn-normal" style="float:right;"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
-	  </div>
 	  <div>
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">

@@ -141,7 +141,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 					return groupTos;
 				}
 				for (Map<String, Object> roleTo : dataObj) {
-					GroupTo groupTo = new GroupTo(roleTo.get(groupIdField).toString(), StringUtil.getString(roleTo.get(userNameField)), getId(),
+					GroupTo groupTo = new GroupTo(roleTo.get(groupIdField).toString(), StringUtil.getString(roleTo.get(this.getGroupInfo().getGroupNameField())), getId(),
 							roleTo);
 					groupTos.add(groupTo);
 				}
