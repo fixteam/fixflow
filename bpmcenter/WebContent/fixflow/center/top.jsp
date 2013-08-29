@@ -28,7 +28,7 @@
 		});
 		
 		$("#setAgent").click(function(){
-			var url = "http://www.baidu.com";
+			var url = "FlowCenter?action=viewDelegation";
 			Fix.OpenMethod.openWindow(url);
 		});
 		

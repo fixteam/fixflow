@@ -250,6 +250,11 @@ public class FlowCenter extends HttpServlet {
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/selectStepList.jsp");
+			} else if(action.equals("viewDelegation")){	//选择步骤列表
+//				Map<String, Object> pageResult = getFlowCenter().getRollbackTask(filter);
+//				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);

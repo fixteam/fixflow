@@ -3,7 +3,7 @@
 <%    
 String path = request.getContextPath();    
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";    
-pageContext.setAttribute("basePath",basePath);    
+pageContext.setAttribute("basePath",basePath); 
 %>   
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>
