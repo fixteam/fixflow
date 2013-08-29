@@ -1,32 +1,20 @@
 
-/* 表单 */
-.ui-table-A { margin:15px 0 15px 0;border:1px solid #DDD;width:100%;}
-.ui-table-A thead tr{ background-color:#E7E7E7;border-bottom:1px solid #FFBA00 }
-.ui-table-A thead td {border-left:1px solid #DDD;border-right:1px solid #DDD;text-align:center;}
-.ui-table-A tfoot td {border-left:1px solid #DDD;border-right:1px solid #DDD;}
-.ui-table-A tbody td {border-left:1px solid #DDD;border-right:1px solid #DDD;border-bottom:1px solid #DDD;}
-.ui-table-A td { padding:3px 3px;}
-.ui-table-A kbd { color:#666; width:100px; padding:1px;}
-.ui-table-A td.title-r { text-align:right; color:#666;background-color:#FFFAED; padding-right:20px; width:100px;}
-.ui-table-A input[inputType=text], .ui-table-A input[type=text], .ui-table-A select {WIDTH: 100%; height:21px; box-sizing: border-box;border:0px;opacity:0.5;}
-.ui-table-A TEXTAREA{WIDTH: 100%; box-sizing: border-box;}
+/* 琛ㄥ崟 */
+.table-form { margin:0; color:#444; background:#fff; width:100%;}
+.table-form td { padding:2px 5px; font-family:"寰蒋闆呴粦"; text-align:left;}
+.table-form td.title-r { text-align:right; color:#666; padding-right:10px;}
+.table-form input[inputType=text], .table-form input[type=text], .table-form select { padding:4px 5px; width:100%; box-sizing:border-box; background:#f2f2f2; border:none; font-size:12px; line-height:12px; color:#888;}
+.table-form textarea { padding:4px 5px; width:100%; box-sizing:border-box; background:#f2f2f2; border:none; font-size:12px; line-height:18px; color:#888;}
 
-.ui-table-B { margin:15px 0 15px 0;}
-.ui-table-B td.title-r { text-align:right; color:#666; width:100px; padding:10px 20px 10px 0;}
-.ui-table-B input[inputType=text], .ui-table-B input[type=text], .ui-table-B select {height:21px; box-sizing: border-box;}
-.ui-table-B TEXTAREA{box-sizing: border-box;}
 
-/* 明细表  
-modify by Rex.Yin
-modify date 2012-8-2*/
-.ui-table-Detail { margin:15px 0 15px 0;border:1px solid #DDD;width:100%;}
-.ui-table-Detail thead tr{ background-color:#E7E7E7;border-bottom:1px solid #FFBA00 }
-.ui-table-Detail tbody tr:hover {background-color:#FFFAED;}
-.ui-table-Detail thead td {border-left:1px solid #DDD;border-right:1px solid #DDD;text-align:center;}
-.ui-table-Detail tfoot td {border-left:1px solid #DDD;border-right:1px solid #DDD;}
-.ui-table-Detail tbody td {border-left:1px solid #DDD;border-right:1px solid #DDD;border-bottom:1px solid #DDD;}
-.ui-table-Detail td { padding:3px 3px;}
-.ui-table-Detail td.title-r { text-align:right; color:#666; padding-right:20px; width:100px;}
-.ui-table-Detail input[inputType=text], .ui-table-Detail input[type=text] {WIDTH: 100%; height:21px; box-sizing: border-box;border:1px solid #fff;opacity:0.5;}
-.ui-table-Detail TEXTAREA{WIDTH: 100%; box-sizing: border-box;}
+/* 鍒楄〃 */
+.table-list { margin:8px 0; color:#444; background:#fff; width:100%;}
+.table-list th { padding:4px 0; background:#f8ddd5; font-family:"寰蒋闆呴粦"; border-right: 1px solid #fff; text-align:center;}
+.table-list td { padding:3px 0; text-align:center;}
+.table-list tr.gray { background:#f7f7f7;}
+.table-list td.left { text-align:left; color:#666; padding-left:10px;}
+.table-list td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
+.table-list td.checkbox { text-align:center; width:30px;}
+.table-list td.center { text-align:center;}
+
 
