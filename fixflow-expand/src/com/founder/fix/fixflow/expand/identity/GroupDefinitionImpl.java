@@ -78,6 +78,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 		try {
 			String groupIdField = getGroupInfo().getGroupIdField();
 			String groupNameField = getGroupInfo().getGroupNameField();
+			String supIdField = getGroupInfo().getSupGroupIdField();
 			String sqlText = getGroupInfo().getSqlText();
 			SqlCommand sqlCommand = getSqlCommand();
 			String sql = "SELECT USERTABLE.* FROM (" + sqlText + ") USERTABLE where 1=1";
@@ -88,6 +89,9 @@ public class GroupDefinitionImpl extends GroupDefinition {
 			}
 			if(queryMap!= null && queryMap.containsKey("GROUPNAME")){
 				whereSql += " and " + groupNameField +" like '%"+queryMap.get("GROUPNAME")+"%'";
+			}
+			if(queryMap!= null && queryMap.containsKey("SUPID")){
+				whereSql += " and (" + supIdField +" = '"+queryMap.get("SUPID")+"' or "+groupIdField+"='"+queryMap.get("SUPID")+"')";
 			}
 			sql += whereSql;
 			countSql += whereSql;

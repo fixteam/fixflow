@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <jsp:include page="head.jsp" flush="true"/>
+<link rel="stylesheet" href="fixflow/css/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="fixflow/js/jquery.ztree.core-3.5.js"></script>
 <title>用户查询</title>
 
 <script type="text/javascript">
@@ -15,6 +17,36 @@
 		window.showModalDialog("FlowCenter?action=getUserInfo&targetUserId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
 	}
 </script>
+<SCRIPT type="text/javascript">
+		var setting = {
+			data: {
+				key: {
+					title:"t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+		function onClick(event, treeId, treeNode, clickFlag) {
+			var supId = treeNode.id.split("__");
+			$("#supId").val(supId[1]);
+			$("#groupType").val(supId[0]);
+			$("#action").val("getGroupList");
+			$("#subForm").submit();
+		}		
+
+		$(document).ready(function(){
+			$(".zTreeDiv").each(function(index,obj){
+				var jsonStr = $(obj).find("div").eq(0).html();
+				var zNodeInfo = eval(jsonStr);
+				$.fn.zTree.init($(obj).find("ul").eq(0), setting, zNodeInfo);
+			});
+		});
+	</SCRIPT>
 </head>
 <body>
 <form action="FlowManager" id="subForm">
@@ -29,7 +61,10 @@
        	<div class="left-nav"><a name="group" href="#">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="images/temp/user01.jpg" />${group.typeName}</a></div>
+			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/temp/user01.jpg" />${group.typeName}</a></div>
+				  <c:if test="${group.isTree!= null && group.isTree == true}">
+			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
+			      </c:if>			   
 			    </c:forEach>
        	  	</c:if>
         </div>
@@ -81,6 +116,8 @@
 </div>
 <!-- 隐藏参数部分 -->
 <input type="hidden" name="action" id="action" value="getUserList"> 
+<input type="hidden" name="supId" id="supId"> 
+<input type="hidden" name="groupType" id="groupType" value="dept"> 
 </form>
 </body>
 </html>
