@@ -79,7 +79,7 @@ a{text-decoration: none;}
 		return false;
 	}
 	$(function(){
-		$(".fix-table").find("tr").each(function(i,obj){
+		/*$(".fix-table").find("tr").each(function(i,obj){
 			$(obj).click(function(){
 				var checkObj = $(this).find("input:checkbox").eq(0);
 				if($(this).attr("class")=="selected"){
@@ -91,7 +91,8 @@ a{text-decoration: none;}
 				}
 				Fix.Util.CheckBtnStatus();
 			});
-		});
+		});*/
+		Fix.Util.ClickTr(null,true,true,0);
 	});
 </script>
 </head>
@@ -123,10 +124,10 @@ a{text-decoration: none;}
             </table>
         </div>
        <div class="toolbar" style="padding-left:0px; padding-right:80px;">
-		  <div class="btn-normal" style="float:left;margin-left:5px;" onclick="deployment()"><a href="#" >发布流程</a></div>
-		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="deleteDeploy()">删除定义</a></div>
-		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="updateDeploy()">更新定义</a></div>
-		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="downloadProcess()">下载定义</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;" onclick="deployment()" data-scope=all><a href="#" >发布流程</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope=multi><a href="#" onclick="deleteDeploy()">删除定义</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope=multi><a href="#" onclick="updateDeploy()">更新定义</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope=single><a href="#" onclick="downloadProcess()">下载定义</a></div>
 	  
 	  </div>
 	  <div>
