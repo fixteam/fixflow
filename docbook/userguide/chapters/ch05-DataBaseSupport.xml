@@ -60,18 +60,441 @@
   </section>
   
   
+  <section xml:id="dataBase.createTable">
+    <title>创建数据库表</title>
+    <para>获取数据库DDL脚本: DDL脚本位于GitHub上FixFlow资源中,DataBase项目为存放DDL脚本的项目。</para>
+    <itemizedlist>
+      <title>目录说明:</title>
+      <listitem>
+        <para>
+          <emphasis role="bold">create</emphasis>: 数据表创建脚本目录。
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis role="bold">fixflow.oracle.create.all.sql</emphasis>:   oracle数据库的创建脚本。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">fixflow.mysql.create.all.sql</emphasis>:   mysql数据库的创建脚本。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">fixflow.db2.create.all.sql</emphasis>:   db2数据库的创建脚本。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">fixflow.sqlserver.create.all.sql</emphasis>:   sqlserver数据库的创建脚本。
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">drop</emphasis>: 数据表删除脚本目录。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">upgrade</emphasis>: 数据表更新脚本目录,版本号位于FixFlowCongfig.xml。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">datadictionary</emphasis>: 数据字典目录。 <link   linkend="dataBase.dataDictionary">数据字典</link>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">sqlhelp</emphasis>: 常用流程运维SQL语句目录。
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  
   <section xml:id="dataBase.table">
     <title>数据表介绍</title>
     <para>
-      
+      FIXFLOW_DEF、FIXFLOW_RUN、FIXFLOW_HIS、FIXFLOW_AGENT、FIXFLOW_MAIL、FIXFLOW_WORKDATE、QRZT_
     </para>
+    
+    <table xml:id="dataBase.table.info.def">
+      <title>【FIXFLOW_DEF_*】【定义相关表】</title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>FIXFLOW_DEF_DEPLOYMENT</entry>
+            <entry>定义表</entry>
+            <entry>流程资源部署主表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_DEF_BYTEARRAY</entry>
+            <entry>定义表</entry>
+            <entry>流程资源部署明细表,用来存放文件流。</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_DEF_PROCESSDEFINITION</entry>
+            <entry>定义表</entry>
+            <entry>流程定义表,流程定义文件存放在BTYEARRAY表里。</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    
+    
+    <table xml:id="dataBase.table.info.run">
+      <title>【FIXFLOW_RUN_*】【运行相关表】</title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>FIXFLOW_RUN_PROCESSINSTANCE</entry>
+            <entry>运行表</entry>
+            <entry>流程实例表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_TOKEN</entry>
+            <entry>运行表</entry>
+            <entry>令牌表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_TASKINSTANCE</entry>
+            <entry>运行表</entry>
+            <entry>任务数据表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_TASKIDENTITYLINK</entry>
+            <entry>运行表</entry>
+            <entry>共享任务人员表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_VARIABLE</entry>
+            <entry>运行表</entry>
+            <entry>流程变量表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    
+    
+    <table xml:id="dataBase.table.info.his">
+      <title>【FIXFLOW_HIS_*】【实例相关表】</title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>FIXFLOW_RUN_PROCESSINSTANCE</entry>
+            <entry>运行表</entry>
+            <entry>流程历史实例表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_TOKEN</entry>
+            <entry>运行表</entry>
+            <entry>令牌历史表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_TASKINSTANCE</entry>
+            <entry>运行表</entry>
+            <entry>任务数据历史表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_TASKIDENTITYLINK</entry>
+            <entry>运行表</entry>
+            <entry>共享任务人员历史表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_RUN_VARIABLE</entry>
+            <entry>运行表</entry>
+            <entry>流程变量历史表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    
+    
+    <table xml:id="dataBase.table.info.agent">
+      <title>【FIXFLOW_AGENT_*】【委托授权相关表】</title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>FIXFLOW_AGENT_AGENTINFO</entry>
+            <entry>委托授权表</entry>
+            <entry>委托授权主信息表,一个用户只会有一条对应自己数据。</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_AGENT_AGENTDETAILS</entry>
+            <entry>委托授权表</entry>
+            <entry>委托授权明细信息表</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    
+    <table xml:id="dataBase.table.info.mail">
+      <title>【FIXFLOW_MAIL】【邮件表】</title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>FIXFLOW_MAIL</entry>
+            <entry>邮件表</entry>
+            <entry>邮件信息表,用来存放从流程中发送的邮件记录。</entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    
+    
+    <table xml:id="dataBase.table.info.quartz">
+      <title>【QRZT_*】【定时任务相关表】<link xlink:href="http://quartz-scheduler.org/documentation">详细信息请参阅Quartz官方网站</link></title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>    
+            <entry>QRTZ_BLOB_TRIGGERS</entry>
+            <entry>定时任务</entry>
+            <entry>Trigger 作为 Blob 类型存储 </entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_CALENDARS</entry>
+            <entry>定时任务</entry>
+            <entry>以 Blob 类型存储 Quartz 的 Calendar 信息</entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_CRON_TRIGGERS</entry>
+            <entry>定时任务</entry>
+            <entry>存储 Cron Trigger，包括 Cron表达式和时区信息 </entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_FIRED_TRIGGERS</entry>
+            <entry>定时任务</entry>
+            <entry>存储与已触发的 Trigger 相关的状态信息,以及相联 Job的执行信息。  </entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_JOB_DETAILS</entry>
+            <entry>定时任务</entry>
+            <entry>存储每一个已配置的 Job 的详细信息 </entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_LOCKS</entry>
+            <entry>定时任务</entry>
+            <entry>存储程序的悲观锁的信息</entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_PAUSED_TRIGGER_GRPS</entry>
+            <entry>定时任务</entry>
+            <entry>存储已暂停的 Trigger 组的信息</entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_SCHEDULER_STATE</entry>
+            <entry>定时任务</entry>
+            <entry>存储少量的有关Scheduler的状态信息，和别的Scheduler实例。 </entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_SIMPLE_TRIGGERS</entry>
+            <entry>定时任务</entry>
+            <entry>存储简单的Trigger,包括重复次数,间隔,以及已触的次数。 </entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry>QRTZ_SIMPROP_TRIGGERS</entry>
+            <entry>定时任务</entry>
+            <entry></entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+          <row>
+            <entry> QRTZ_TRIGGERS</entry>
+            <entry>定时任务</entry>
+            <entry>存储已配置的 Trigger 的信息</entry>
+            <entry align="center"><link xlink:href="http://quartz-scheduler.org/documentation">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    <table xml:id="dataBase.table.info.workDate">
+      <title>【FIXFLOW_WORKDATE_*】【工作日历表】</title>
+      <tgroup cols='4'>
+        <thead>
+          <row>
+            <entry>表名</entry>
+            <entry>类型</entry>
+            <entry>备注</entry>
+            <entry>字段</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>FIXFLOW_WORKDATE_DES</entry>
+            <entry>工作日历</entry>
+            <entry></entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_WORKDATE_DETAIL</entry>
+            <entry>工作日历</entry>
+            <entry></entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_WORKDATE_RULE</entry>
+            <entry>工作日历</entry>
+            <entry></entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_WORKDATE_SPEC</entry>
+            <entry>工作日历</entry>
+            <entry></entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+          <row>
+            <entry>FIXFLOW_WORKDATE_WEEKNUM</entry>
+            <entry>工作日历</entry>
+            <entry></entry>
+            <entry align="center"><link linkend="dataBase.dataDictionary">查看</link></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    
+    
   </section>
   
   <section xml:id="dataBase.extension">
     <title>扩展数据库</title>
-    <para>
-      
-    </para>
+    <para>要支持新的数据库,需要实现数据库方言接口,并在fixflowconfig.xml文件中添加一行新的数据源。<link linkend="config.dataBaseConfig">数据源配置</link></para>
+    <para>数据库方言实现类位于:fixflow-expand/src/com/founder/fix/fixflow/expand/database/pagination</para>
+    <para>数据库方言接口:</para>
+    <programlisting language="java">   
+<![CDATA[
+  /**
+   * 数据库方言接口
+   * @author kenshin
+   *
+   */
+  public interface Pagination {
+  
+  /**
+   * 获取分页的Sql语句
+   * @param sql 数据结果集SQl语句
+   * @param firstResult 开始行
+   * @param maxResults 结束行
+   * @param fields 需要显示的字段
+   * @param orderBy 分页排序
+   * @return
+   */
+  String getPaginationSql(String sql, int firstResult, int maxResults,String fields,String orderBy);
+  
+  /**
+   * 获取判断空的数据库方言
+   * @param value 判断为空的值
+   * @return
+   */
+  String getIsNullLocalismSql(String sql);
+  
+  /**
+   * 获取时间类型方言
+   * @param date
+   * @return
+   */
+  String getDateSql();
+  
+  /**
+   * 获取当前时间类型方言
+   * @return
+   */
+  String getCurrentDateSql();
+  
+  /**
+   * 获取转换类型
+   * @param sql
+   * @param type
+   * @return
+   */
+  String getCastConvertSql(String sql, String type);
+
+  /**
+   * 获取方言数据库语句 
+   * @param localismKey 方言的Key
+   * @param localismValue 方言带入的值
+   * @return
+   */
+  String getLocalismSql(String localismKey,String localismValue);
+
+}
+]]> 
+    </programlisting>
   </section>
   
   <section xml:id="dataBase.dataDictionary">
