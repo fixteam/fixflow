@@ -37,18 +37,6 @@ $(function(){
     $("#agentType").val();
     $("#subForm").submit();
   });
-  $("a[name=agentUsers]").click(function(){
-    var userId = $(this).attr("userId");
-    $("#agentUserId").val(userId);
-    $("#agentType").val('1');
-    $("#subForm").submit();
-  });
-  $("a[name=agentToUsers]").click(function(){
-    var userId = $(this).attr("userId");
-    $("#agentUserId").val(userId);
-    $("#agentType").val('0');
-    $("#subForm").submit();
-  });
   $("a[name=flowGraph]").click(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
@@ -82,45 +70,10 @@ $(function(){
 <jsp:include page="top.jsp" flush="true"/>
 
 <div class="center-panel">
-<form id="subForm" method="post" action="FlowCenter">
-<!-- 左 -->
-	<div class="left">
-    	<div class="left-nav-box">
-        	<div class="left-nav"><a name="myTask" href="#">我的待办任务</a></div>
-            <div class="left-nav-orange-line">&nbsp;</div>
-            
-
-
-       	  <div class="left-nav m-top"><h1>代理人</h1></div>
-       	  	<c:if test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
-			    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.userid}" href="#"><img src="${agentUsers.userid}" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>${agentUsers.username}</a></div>
-			    </c:forEach>
-       	  	</c:if>
-
-       	  <div class="left-nav m-top"><h1>委托人</h1></div>
-       	  	<c:if test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
-			    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img src="icon/${agentToUsers.userid}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>${agentToUsers.username}</a></div>
-			    </c:forEach>
-       	  	</c:if>
-        </div>
-        <div class="message">
-        	<div class="title"><a href="#"><em class="icon-message"></em>消息中心</a></div>
-        	<div class="message-content">
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-             	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>曹操：煮酒论英雄！谁一起吃饭啊<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-       	</div>
-        </div> 
-    </div>
+<form id="subForm" method="post" action="FlowManager">
     <div class="right">
     <!-- 隐藏参数部分 -->
-		<input type="hidden" id="agentUserId" name="agentUserId" value="<c:out value="${result.agentUserId}"/>">
-		<input type="hidden" id="agentType" name="agentType" value="<c:out value="${result.agentType}"/>">
-    	<input type="hidden" name="action" value="getMyTask"/> 
+    	<input type="hidden" name="action" value="taskInstanceList"/> 
     	<div class="search">
         	<table width="100%">
               <tr>

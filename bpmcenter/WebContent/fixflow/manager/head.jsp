@@ -11,7 +11,7 @@ pageContext.setAttribute("basePath",basePath);
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/global.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/index_manager.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/popup_manager.css">
+<!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/popup_manager.css"> -->
 <script type="text/javascript">
 var message = '${errorMsg}';
 if(message!=''){

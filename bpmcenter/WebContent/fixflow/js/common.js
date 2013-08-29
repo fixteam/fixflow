@@ -51,6 +51,7 @@ Fix = {
 							$(this).attr("checked",true);
 						}
 						$(this).parents("tr").trigger("boxClick");
+						Fix.Util.CheckBtnStatus();
 					});
 				});
 			}
@@ -71,6 +72,7 @@ Fix = {
 						$("td:eq("+boxPosition+") input",$(this)).trigger("trClick");
 					}
 				}
+				Fix.Util.CheckBtnStatus();
 			}).bind("boxClick",function(){
 				var isChecked = $("td:eq("+boxPosition+") input",$(this)).attr("checked");
 				if(isChecked){

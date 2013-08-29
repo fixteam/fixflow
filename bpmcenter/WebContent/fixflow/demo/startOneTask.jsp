@@ -21,14 +21,17 @@ a{text-decoration: none;}
 <tr>
 <td class="title-r">流程关联键：</td>
 <td><input type="text" name="businessKey"/></td>
+<td></td><td></td>
 </tr>
 <tr>
 <td class="title-r">信息：</td>
 <td><input type="text" name="COL2"/></td>
+<td></td><td></td>
 </tr>
 <tr>
 <td class="title-r">审批意见：</td>
 <td><textarea rows="3" cols="20" name="_taskComment"></textarea></td>
+<td></td><td></td>
 </tr>
 </table>
 <input type="hidden" name="action" value="demoCompleteTask"/>
