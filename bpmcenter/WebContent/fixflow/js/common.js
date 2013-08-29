@@ -17,16 +17,16 @@ Fix = {
 			else
 				selectedRow = $("tr.selected",$table).length;
 			if(selectedRow==0){
-				$("div[data-scope]").addClass("disable");
-				$("div[data-scope=all]").removeClass("disable");
+				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
+				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
 			}else if(selectedRow==1){
-				$("div[data-scope]").addClass("disable");
-				$("div[data-scope=all]").removeClass("disable");
-				$("div[data-scope=single]").removeClass("disable");
+				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
+				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
+				$("div[data-scope=single]").removeClass("btn-disable").addClass("btn-normal");
 			}else{
-				$("div[data-scope]").addClass("disable");
-				$("div[data-scope=all]").removeClass("disable");
-				$("div[data-scope=multi]").removeClass("disable");
+				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
+				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
+				$("div[data-scope=multi]").removeClass("btn-disable").addClass("btn-normal");
 			}
 		},
 		ClickTr:function($table,isMulti,hasBox,boxPosition){
