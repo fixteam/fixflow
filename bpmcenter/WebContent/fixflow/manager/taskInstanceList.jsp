@@ -100,8 +100,9 @@ $(function(){
               <thead>
                 <th width="30">&nbsp;</th>
                 <th width="70">发起人</th>
+                <th width="200">当前处理</th>
                 <th>任务</th>
-                <th width="300">单据号</th>
+                <th width="250">单据号</th>
                 <th width="180">发起/到达时间</th>
                 <th width="60">流程状态</th>
               </thead>
@@ -109,6 +110,8 @@ $(function(){
 		    <tr>
 		      <td><c:out value="${index.index+1}"/></td>
 		      <td><img src="icon/${dataList.PI_START_AUTHOR}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"><br>${dataList.userName}</td>
+		      <td>${dataList.nowProc}</td>
+		      
 		      <td>
 		   		<div><span>流&nbsp;程：</span><span>${dataList.nodeName}&nbsp; --&nbsp; ${dataList.processDefinitionName}</span></div>
 		   		<div><span>主&nbsp;题：</span><span><a name="doTask" href="#" formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">${dataList.description}</a></span></div>   
