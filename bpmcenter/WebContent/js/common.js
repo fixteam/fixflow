@@ -39,3 +39,10 @@ Fix = {
 		
 	}	
 };
+
+/*
+ * 启动时的一些预设方法
+ * */
+$(function(){
+	$("table.fix-table tbody tr:odd").addClass("odd");
+});
