@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 import com.founder.fix.fixflow.service.UserGroupService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.FileUtil;
+import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
@@ -154,6 +155,23 @@ private Connection connection;
 				Map<String,Object> groupMap = new HashMap<String,Object>();
 				groupMap.put("typeId", group.getId());
 				groupMap.put("typeName", group.getName());
+				if(!group.getGroupInfo().getSupGroupIdField().equals(group.getGroupInfo().getGroupIdField())){
+					groupMap.put("isTree", true);
+					List<GroupTo> GroupTolist = (List<GroupTo>)group.findGroups(null, null).get("groupList");
+					List<Map<String, Object>> resultJsonList = new ArrayList<Map<String,Object>>();
+					for(GroupTo tmpGroupTo:GroupTolist){
+						Map<String,Object> tmpResult = new HashMap<String,Object>();
+						if(tmpGroupTo.getGroupId().equals(tmpGroupTo.getPropertyValue(group.getGroupInfo().getSupGroupIdField()))){
+							tmpResult.put("pId", "0");
+						}else{
+							tmpResult.put("pId", tmpGroupTo.getPropertyValue(group.getGroupInfo().getSupGroupIdField()));
+						}
+						tmpResult.put("id", tmpGroupTo.getGroupId());
+						tmpResult.put("name", tmpGroupTo.getGroupName());
+						resultJsonList.add(tmpResult);
+					}
+					groupMap.put("groupJson", JSONUtil.parseObject2JSON(resultJsonList));
+				}
 				resultList.add(groupMap);
 			}
 		}finally{
