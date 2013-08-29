@@ -7,9 +7,56 @@
   
   <section xml:id="dataBase.support">
     <title>数据库支持</title>
-    <para>
-      
-    </para>
+    <para>下面列表列出了FixFlow引擎所支持的经过测试的数据库</para>
+    <table xml:id="dataBase.support.table">
+      <title>数据库支持列表</title>
+      <tgroup cols='3'>
+        <thead>
+          <row>
+            <entry>数据库</entry>
+            <entry>版本</entry>
+            <entry>JDBC URL</entry>
+            <entry>驱动Jar</entry>
+            <entry>数据库方言</entry>
+            <entry>注释</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>mysql</entry>
+            <entry>5+</entry>
+            <entry>jdbc:mysql://127.0.0.1:3306/fixflow?characterEncoding=UTF-8</entry>
+            <entry>mysql-connector-java-5.1.17-bin.jar</entry>
+            <entry>MySqlPaginationImpl</entry>
+            <entry></entry>
+          </row>
+          <row>
+            <entry>oracle</entry>
+            <entry>9i+</entry>
+            <entry>jdbc:oracle:thin:@127.0.0.1:1521:orcl</entry>
+            <entry>ojdbc5.jar</entry>
+            <entry>OraclePaginationImpl</entry>
+            <entry></entry>
+          </row>
+          <row>
+            <entry>db2</entry>
+            <entry>9.5</entry>
+            <entry>jdbc:db2://localhost:5000/fixflow</entry>
+            <entry>db2jcc4.jar、db2jcc_license_cu.jar</entry>
+            <entry>DB2PaginationImpl</entry>
+            <entry></entry>
+          </row>
+          <row>
+            <entry>sqlserver</entry>
+            <entry>2005+</entry>
+            <entry>jdbc:jtds:sqlserver://127.0.0.1:1433/fixflow</entry>
+            <entry>jtds-1.2.2.jar</entry>
+            <entry>SqlServerPaginationImpl</entry>
+            <entry></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
   </section>
   
   

@@ -3,12 +3,12 @@
                '../dtd/docbook.dtd'> 
                
 <chapter>
-  <title>常用配置<</title>
+  <title>常用配置</title>
   
   <section xml:id="config.createProcessEngine">
     <title>创建一个ProcessEngine</title>
     <para>
-      FixFlow的流程引擎是通过一个名称为fixflowconf333333ig.xml的XML配置文件创建出来的。
+      FixFlow的流程引擎是通过一个名称为fixflowconfig.xml的XML配置文件创建出来的。
     </para>
     <para>
       最简单的方法来获得一个ProcessEngine,是使用FixFlow-Core中的ProcessEngineManagement类:
@@ -509,55 +509,92 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
   <section xml:id="config.quartzConfig">
     <title>定时任务配置</title>
     <para>
-      
+      FixFlow的定时任务使用的是开源定时任务框架Quartz,Job的采用Quarzt官方的方式持久化在数据库中。
     </para>
     
     <itemizedlist>
       <listitem>
         <para>
-          <emphasis role="bold">selected</emphasis>: 当前使用邮件配置,一个系统可以使用多个邮箱,其中一个为系统默认选中邮箱。
+          <emphasis role="bold">isEnable</emphasis>: 是否启用定时任务。
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis role="bold">mailAddress</emphasis>: 邮件地址。
+          <emphasis role="bold">isDefaultConfig</emphasis>: 是否使用FixFlow默认的数据源。
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis role="bold">mailName</emphasis>: 邮件名称。
+          <emphasis role="bold">dataBaseId</emphasis>: 数据源编号。
         </para>
       </listitem>
-      <listitem>
-        <para>
-          <emphasis role="bold">smtpHost</emphasis>: 发送服务器的地址。
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis role="bold">smtpPort</emphasis>: 发送服务器端口。
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis role="bold">userName</emphasis>: 邮箱用户名。
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis role="bold">passWord</emphasis>: 邮箱密码。
-        </para>
-      </listitem>
-    </itemizedlist>
+      </itemizedlist>
+    <para>
+      定时任务配置的例子：
+    </para>
+    <programlisting language="xml">   
+<![CDATA[       
+<quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>
+]]> 
+    </programlisting>
     
+    <para>
+      设计器上如何配置
+    </para>
+    <para>
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 定时任务
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" fileref="images/config.quartzConfig.1.png"/>
+    </imageobject></mediaobject>
     
   </section>
   
   <section xml:id="config.scriptConfig">
     <title>脚本语言配置</title>
     <para>
-      
+      FixFlow中脚本语言默认支持使用两种语言: Groovy、BeanShell,这两种脚本语言各自对应一种表达式编辑器,这里我们推荐使用Groovy来做为默认脚本语言。
     </para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis role="bold">selected</emphasis>: 当前正在使用的脚本语言。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">id</emphasis>: 脚本语言的编号。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">classImpl</emphasis>: 脚本语言的实现类。
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      脚本语言配置的例子：
+    </para>
+    <programlisting language="xml">   
+<![CDATA[       
+<scriptLanguageConfig selected="Groovy">
+  <scriptLanguage id="BeanShell" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl"/>
+  <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>
+</scriptLanguageConfig>
+]]> 
+    </programlisting>
+    
+    <para>
+      设计器上如何配置
+    </para>
+    <para>
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 脚本语言
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" fileref="images/config.scriptConfig.1.png"/>
+    </imageobject></mediaobject>
+    
   </section>
   
  
