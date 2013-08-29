@@ -119,6 +119,10 @@ private Connection connection;
 			if(StringUtil.isNotEmpty(queryGroupName)){
 				queryMap.put("GROUPNAME", queryGroupName);
 			}
+			String supId = StringUtil.getString(params.get("supId"));
+			if(StringUtil.isNotEmpty(supId)){
+				queryMap.put("SUPID", supId);
+			}
 			
 			GroupDefinition groupDefinition = identityService.getGroupDefinition(groupType);
 			Map<String,Object> map = groupDefinition.findGroups(new Page(firstResult,maxResults), queryMap);
@@ -164,10 +168,11 @@ private Connection connection;
 						if(tmpGroupTo.getGroupId().equals(tmpGroupTo.getPropertyValue(group.getGroupInfo().getSupGroupIdField()))){
 							tmpResult.put("pId", "0");
 						}else{
-							tmpResult.put("pId", tmpGroupTo.getPropertyValue(group.getGroupInfo().getSupGroupIdField()));
+							tmpResult.put("pId", group.getId()+"__"+tmpGroupTo.getPropertyValue(group.getGroupInfo().getSupGroupIdField()));
 						}
-						tmpResult.put("id", tmpGroupTo.getGroupId());
+						tmpResult.put("id", group.getId()+"__"+tmpGroupTo.getGroupId());
 						tmpResult.put("name", tmpGroupTo.getGroupName());
+						tmpResult.put("open", true);
 						resultJsonList.add(tmpResult);
 					}
 					groupMap.put("groupJson", JSONUtil.parseObject2JSON(resultJsonList));
