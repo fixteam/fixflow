@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/global.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/login.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/common.js"></script>
 <title>Founder Fix BPM</title>
 </head>  
 
@@ -20,7 +20,7 @@
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
-	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" /></td>
+	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" onerror="imgNotFound('${pageContext.request.contextPath}');" /></td>
 	                  <td class="username" width="330"><span id="lastLoginUser"></span>
 	                  	<input type="hidden" name="userName" id="userNameS"/>
 	                  	<input type="hidden" name="loginType" id="loginTypeS"/></td>

@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.DBConnFactory;
 import com.founder.fix.fixflow.util.MD5;
@@ -76,6 +77,14 @@ public class LoginServlet extends HttpServlet {
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
 			List<Object> list= new ArrayList<Object>();
+
+			String logout = request.getParameter("doLogOut");
+			if(StringUtil.isNotEmpty(logout)){
+				request.getSession().invalidate();
+				response.sendRedirect(context+"/fixflow/login.jsp");
+				return;
+			}
+			
 			list.add(userName);
 			password = MD5.getMD5(password.getBytes());
 			list.add(password);

@@ -18,7 +18,7 @@
 package com.founder.fix.fixflow.core.db.pagination;
 
 /**
- * 数据库分页接口
+ * 数据库方言接口
  * @author kenshin
  *
  */

@@ -7,8 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <jsp:include page="head.jsp" flush="true"/>
-<link rel="stylesheet" href="css/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
+<link rel="stylesheet" href="fixflow/css/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="fixflow/js/jquery.ztree.core-3.5.js"></script>
 <title>用户组查询</title>
 <script type="text/javascript">
 function viewGroupInfo(groupId,groupType){
@@ -19,24 +19,19 @@ function viewGroupInfo(groupId,groupType){
 <SCRIPT type="text/javascript">
 		var setting = {
 			data: {
-				key: {
-					title:"t"
-				},
 				simpleData: {
 					enable: true
 				}
 			},
 			callback: {
-				beforeClick: beforeClick,
 				onClick: onClick
 			}
 		};
-		var log, className = "dark";
-		function beforeClick(treeId, treeNode, clickFlag) {
-			alert(2);
-		}
 		function onClick(event, treeId, treeNode, clickFlag) {
-			alert(3);
+			var supId = treeNode.id.split("__");
+			$("#supId").val(supId[1]);
+			$("#groupType").val(supId[0]);
+			$("#subForm").submit();
 		}		
 
 		$(document).ready(function(){
@@ -62,9 +57,9 @@ function viewGroupInfo(groupId,groupType){
        	<div class="left-nav"><a name="group" href="#">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="images/temp/user01.jpg" />${group.typeName}</a></div>
+			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/temp/user01.jpg" />${group.typeName}</a></div>
 			      <c:if test="${group.isTree!= null && group.isTree == true}">
-			      	<div class="zTreeDiv"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
+			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
 			      </c:if>
 			    </c:forEach>
        	  	</c:if>
@@ -112,6 +107,8 @@ function viewGroupInfo(groupId,groupType){
 	</div>
 </div>
 <!-- 隐藏参数部分 -->
+<input type="hidden" name="supId" id="supId">
+<input type="hidden" name="groupType" id="groupType" value="${result.groupType}"> 
 <input type="hidden" name="action" id="action" value="getGroupList"> 
 </form>
 </body>

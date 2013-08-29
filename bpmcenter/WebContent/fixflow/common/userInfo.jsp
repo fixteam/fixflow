@@ -17,7 +17,7 @@
 <body>
 <div class="userinfo">
 	<div class="head-info">
-        <img src="${result.icon}" />
+        <img src="${result.icon}" onerror="imgNotFound('${pageContext.request.contextPath}');"/>
         <div class="name">
         	<h1>${result.user.userName}</h1>
             <h5></h5>

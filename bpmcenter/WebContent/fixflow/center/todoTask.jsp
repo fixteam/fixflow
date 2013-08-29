@@ -96,14 +96,14 @@ $(function(){
        	  <div class="left-nav m-top"><h1>代理人</h1></div>
        	  	<c:if test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
 			    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.userid}" href="#"><img src="${agentUsers.userid}" height="30" width="30" alt="头像"/>${agentUsers.username}</a></div>
+			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.userid}" href="#"><img src="${agentUsers.userid}" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>${agentUsers.username}</a></div>
 			    </c:forEach>
        	  	</c:if>
 
        	  <div class="left-nav m-top"><h1>委托人</h1></div>
        	  	<c:if test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
 			    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img src="icon/${agentToUsers.userid}_small.png" height="30" width="30" alt="头像"/>${agentToUsers.username}</a></div>
+			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img src="icon/${agentToUsers.userid}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>${agentToUsers.username}</a></div>
 			    </c:forEach>
        	  	</c:if>
         </div>
@@ -157,7 +157,7 @@ $(function(){
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		      <td><c:out value="${index.index+1}"/></td>
-		      <td><img src="icon/${dataList.PI_START_AUTHOR}_small.png" height="30" width="30" alt="头像"><br>${dataList.userName}</td>
+		      <td><img src="icon/${dataList.PI_START_AUTHOR}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"><br>${dataList.userName}</td>
 		      <td>
 		   		<div><span>流&nbsp;程：</span><span>${dataList.nodeName}&nbsp; --&nbsp; ${dataList.processDefinitionName}</span></div>
 		   		<div><span>主&nbsp;题：</span><span><a name="doTask" href="#" formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">${dataList.description}</a></span></div>   

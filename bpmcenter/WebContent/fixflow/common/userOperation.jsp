@@ -14,11 +14,11 @@
 		<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 		codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
 		WIDTH="650" HEIGHT="450" id="myMovieName">
-		<PARAM NAME=movie VALUE="js/flash_avatar/avatar.swf">
+		<PARAM NAME=movie VALUE="${pageContext.request.contextPath}/fixflow/js/flash_avatar/avatar.swf">
 		<PARAM NAME=quality VALUE=high>
 		<PARAM NAME=bgcolor VALUE=#FFFFFF>
-		<param name="flashvars" value="imgUrl=${result.icon}&uploadUrl=js/flash_avatar/upfile.jsp&uploadSrc=false" />
-		<EMBED src="js/flash_avatar/avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=${result.icon}&uploadUrl=js/flash_avatar/upfile.jsp&uploadSrc=false"
+		<param name="flashvars" value="imgUrl=${result.icon}&uploadUrl=${pageContext.request.contextPath}/fixflow/js/flash_avatar/upfile.jsp&uploadSrc=false" />
+		<EMBED src="${pageContext.request.contextPath}/fixflow/js/flash_avatar/avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent" flashVars="imgUrl=${result.icon}&uploadUrl=${pageContext.request.contextPath}/fixflow/js/flash_avatar/upfile.jsp&uploadSrc=false"
 		NAME="myMovieName" ALIGN="" TYPE="application/x-shockwave-flash" allowScriptAccess="always"
 		PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
 		</EMBED>
