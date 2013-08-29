@@ -78,6 +78,21 @@ a{text-decoration: none;}
 		}
 		return false;
 	}
+	$(function(){
+		$(".fix-table").find("tr").each(function(i,obj){
+			$(obj).click(function(){
+				var checkObj = $(this).find("input:checkbox").eq(0);
+				if($(this).attr("class")=="selected"){
+					$(this).removeClass("selected");
+					$(checkObj).removeAttr("checked"); 
+				}else{
+					$(this).addClass("selected");
+					$(checkObj).attr("checked","true"); 
+				}
+				Fix.Util.CheckBtnStatus();
+			});
+		});
+	});
 </script>
 </head>
 
@@ -108,7 +123,7 @@ a{text-decoration: none;}
             </table>
         </div>
        <div class="toolbar" style="padding-left:0px; padding-right:80px;">
-		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope="single"><a href="#" onclick="deployment()">发布流程</a></div>
+		  <div class="btn-normal" style="float:left;margin-left:5px;" onclick="deployment()"><a href="#" >发布流程</a></div>
 		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="deleteDeploy()">删除定义</a></div>
 		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="updateDeploy()">更新定义</a></div>
 		  <div class="btn-normal" style="float:left;margin-left:5px;"><a href="#" onclick="downloadProcess()">下载定义</a></div>
