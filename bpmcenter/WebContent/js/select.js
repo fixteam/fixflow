@@ -6,6 +6,7 @@
  */
 function FixSelect(obj){
 	//var that = arguments[arguments.length-1];
+	window.rv = null;
 	var rv = null;
 	var w = obj.width||"800px";
 	var h = obj.height||"600px";
@@ -24,5 +25,5 @@ function FixSelect(obj){
 			break;
 			
 	}
-	return rv;
+	return window.rv;
 };

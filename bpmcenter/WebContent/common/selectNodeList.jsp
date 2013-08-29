@@ -53,7 +53,7 @@ $(function(){
 			eval("var j = " + r)
 			rv[index] = j;
 		});
-		window.returnValue=rv;
+		window.opener.rv = rv;
 		window.close();
 	});
 })
