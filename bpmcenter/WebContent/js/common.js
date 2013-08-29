@@ -28,6 +28,57 @@ Fix = {
 				$("div[data-scope=all]").removeClass("disable");
 				$("div[data-scope=multi]").removeClass("disable");
 			}
+		},
+		ClickTr:function($table,isMulti,hasBox,boxPosition){
+			if(!$table)$table = $("table.fix-table");
+			if(!isMulti)isMulti = false;
+			if(!hasBox)hasBox = false;
+			if(!boxPosition)boxPosition = 0;
+			if(hasBox){
+				$("tbody tr",$table).each(function(){
+					$("td:eq("+boxPosition+") input",$(this)).bind("trClick",function(){
+						var $tr = $(this).parents("tr");
+						if($tr.hasClass("selected")){
+							$(this).attr("checked",true);
+						}else{
+							$(this).attr("checked",false);
+						}
+					}).click(function(){
+						var isChecked = $(this).attr("checked");
+						if(isChecked){
+							$(this).attr("checked",false);
+						}else{
+							$(this).attr("checked",true);
+						}
+						$(this).parents("tr").trigger("boxClick");
+					});
+				});
+			}
+			$("tbody tr",$table).click(function(){
+				if(!isMulti){
+					$("tbody tr",$table).removeClass("selected");
+					$(this).addClass("selected");
+					if(hasBox){
+						$("td:eq("+boxPosition+") input",$(this)).click();
+					}
+				}else{
+					if($(this).hasClass("selected")){
+						$(this).removeClass("selected");
+					}else{
+						$(this).addClass("selected");
+					}
+					if(hasBox){
+						$("td:eq("+boxPosition+") input",$(this)).trigger("trClick");
+					}
+				}
+			}).bind("boxClick",function(){
+				var isChecked = $("td:eq("+boxPosition+") input",$(this)).attr("checked");
+				if(isChecked){
+					$(this).addClass("selected");
+				}else{
+					$(this).removeClass("selected");
+				}
+			});
 		}
 	},
 	OpenMethod:{
@@ -45,4 +96,7 @@ Fix = {
  * */
 $(function(){
 	$("table.fix-table tbody tr:odd").addClass("odd");
+	$("table.fix-table tbody tr").click(function(){
+		
+	});
 });
