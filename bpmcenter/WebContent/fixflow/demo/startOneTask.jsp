@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>启动任务</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/form.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/flowcommand.js"></script>
@@ -16,21 +17,18 @@ a{text-decoration: none;}
 
 <body>
 <form id="form1" action="DemoServlet">
-<table>
+<table class="table-form">
 <tr>
-<td>
-流程关联键：<input type="text" name="businessKey"/>
-</td>
+<td class="title-r">流程关联键：</td>
+<td><input type="text" name="businessKey"/></td>
 </tr>
 <tr>
-<td>
-信息：<input type="text" name="COL2"/>
-</td>
+<td class="title-r">信息：</td>
+<td><input type="text" name="COL2"/></td>
 </tr>
 <tr>
-<td>
-审批意见：<textarea rows="3" cols="20" name="_taskComment"></textarea>
-</td>
+<td class="title-r">审批意见：</td>
+<td><textarea rows="3" cols="20" name="_taskComment"></textarea></td>
 </tr>
 </table>
 <input type="hidden" name="action" value="demoCompleteTask"/>
