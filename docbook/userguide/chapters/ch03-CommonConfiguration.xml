@@ -265,7 +265,7 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 数据库
     </para>
     <mediaobject><imageobject>
       <imagedata align="center" fileref="images/config.dataBaseConfig.1.png"/>
@@ -422,7 +422,7 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 -->组织结构
     </para>
     <mediaobject><imageobject>
       <imagedata align="center" fileref="images/config.orgConfig.1.png"/>
@@ -492,6 +492,15 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
 ]]> 
     </programlisting>
     
+    <para>
+      设计器上如何配置
+    </para>
+    <para>
+      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 邮件配置
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" fileref="images/config.mailConfig.1.png"/>
+    </imageobject></mediaobject>
     
    
   </section>
@@ -502,6 +511,46 @@ ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
     <para>
       
     </para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis role="bold">selected</emphasis>: 当前使用邮件配置,一个系统可以使用多个邮箱,其中一个为系统默认选中邮箱。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">mailAddress</emphasis>: 邮件地址。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">mailName</emphasis>: 邮件名称。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">smtpHost</emphasis>: 发送服务器的地址。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">smtpPort</emphasis>: 发送服务器端口。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">userName</emphasis>: 邮箱用户名。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">passWord</emphasis>: 邮箱密码。
+        </para>
+      </listitem>
+    </itemizedlist>
+    
+    
   </section>
   
   <section xml:id="config.scriptConfig">
