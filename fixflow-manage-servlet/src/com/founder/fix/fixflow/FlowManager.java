@@ -117,7 +117,7 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/manager/processDefinitionList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/processDefinitionList.jsp");
 			}else if(action.equals("processManageList")){
 //				String processAction = StringUtil.getString(filter.get("processAction"));
 //				request.setAttribute("nowProcessAction", action);
@@ -125,7 +125,7 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/manager/processInstanceList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/processInstanceList.jsp");
 			}else if(action.equals("suspendProcessInstance")){
 				try{
 					getFlowManager().suspendProcessInstance(filter);
@@ -162,7 +162,7 @@ public class FlowManager extends HttpServlet {
 				Map<String, Object> result = getFlowManager().getProcessVariables(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/processVariableList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/processVariableList.jsp");
 			}else if(action.equals("saveProcessVariables")){
 				String tmp = (String)filter.get("insertAndUpdate");
 				if(StringUtil.isNotEmpty(tmp)){
@@ -175,7 +175,7 @@ public class FlowManager extends HttpServlet {
 				Map<String,Object> result = getFlowManager().getProcessTokens(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/processTokenList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/processTokenList.jsp");
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
@@ -221,7 +221,7 @@ public class FlowManager extends HttpServlet {
 				List<Map<String,Object>> groupList = getUserGroupService().getAllGroupDefinition(filter);
 				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/manager/userList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/userList.jsp");
 			}
 			if("getGroupList".equals(action)){
 				request.setAttribute("nowAction", "UserGroup");
@@ -231,35 +231,35 @@ public class FlowManager extends HttpServlet {
 				List<Map<String,Object>> groupList = getUserGroupService().getAllGroupDefinition(filter);
 				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/manager/groupList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/groupList.jsp");
 			}
 			if("getUserInfo".equals(action)){
 				Map<String, Object> pageResult = getUserGroupService().getUserInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/userInfo.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/userInfo.jsp");
 			}
 			if("getGroupInfo".equals(action)){
 				Map<String, Object> pageResult = getUserGroupService().getGroupInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/groupInfo.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/groupInfo.jsp");
 			}
 			if("getJobList".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
 			}
 			if("viewJobInfo".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobInfo.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
 			}
 			if("suspendJob".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
@@ -267,7 +267,7 @@ public class FlowManager extends HttpServlet {
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
 			}
 			if("continueJob".equals(action)){
 				getJobService().continueJob(filter);
@@ -275,7 +275,7 @@ public class FlowManager extends HttpServlet {
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
 			}
 			if("suspendTrigger".equals(action)){
 				getJobService().suspendTrigger(filter);
@@ -283,7 +283,7 @@ public class FlowManager extends HttpServlet {
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobInfo.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
 			}
 			if("continueTrigger".equals(action)){
 				getJobService().continueTrigger(filter);
@@ -291,7 +291,7 @@ public class FlowManager extends HttpServlet {
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/manager/jobInfo.jsp");
+				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
 			}
 			if("setHis".equals(action)){
 				getFlowManager().setHistory(filter);
