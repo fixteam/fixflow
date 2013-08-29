@@ -303,12 +303,72 @@
     
   </section>
   
+  
+  
   <section xml:id="bpmn.ExtensionElements">
-    <title>FixFlow extension elements</title>
+    <title>扩展元素</title>
     <para>
       
     </para>
+    <section xml:id="bpmn.ExtensionElements.connector">
+      <title>连接器</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.ExtensionElements.dataVariable">
+      <title>数据变量</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.ExtensionElements.skip">
+      <title>跳过策略</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.ExtensionElements.form">
+      <title>任务表单</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.ExtensionElements.taskTopic">
+      <title>任务主题</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.ExtensionElements.taskCommand">
+      <title>处理命令</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.ExtensionElements.assignPolicy">
+      <title>分配策略</title>
+      <para>
+        
+      </para>
+      
+    </section>
     
   </section>
+  
+  
+  
   
 </chapter>
