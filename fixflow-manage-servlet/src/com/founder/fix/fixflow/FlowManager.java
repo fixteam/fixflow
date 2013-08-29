@@ -42,6 +42,7 @@ import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.JobService;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
+import com.founder.fix.fixflow.service.TaskInstanceService;
 import com.founder.fix.fixflow.service.UserGroupService;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.JSONUtil;
@@ -176,6 +177,19 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/processTokenList.jsp");
+			}else if(action.equals("taskInstanceList")){
+				try{
+					filter.put("path", request.getSession().getServletContext()
+							.getRealPath("/"));
+					Map<String, Object> pageResult = getTaskManager().getTaskList(filter);
+					filter.putAll(pageResult);
+					request.setAttribute("result", filter);
+					request.setAttribute("pageInfo", filter.get("pageInfo"));
+				}catch(Exception e){
+					e.printStackTrace();
+					request.setAttribute("errorMsg", e.getMessage());
+				}
+				rd = request.getRequestDispatcher("/fixflow/manager/taskInstanceList.jsp");
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
@@ -318,6 +332,11 @@ public class FlowManager extends HttpServlet {
 	public ProcessInstanceService getFlowManager() {
 		return (ProcessInstanceService) SpringConfigLoadHelper
 				.getBean("processInstanceServiceImpl");
+	}
+	
+	public TaskInstanceService getTaskManager() {
+		return (TaskInstanceService) SpringConfigLoadHelper
+				.getBean("taskInstanceServiceImpl");
 	}
 
 	private ProcessDefinitionService getProcessDefinitionService(){
