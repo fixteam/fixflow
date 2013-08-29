@@ -75,7 +75,7 @@ public class DemoServlet extends HttpServlet {
 				FlowCenterService.LOGIN_USER_ID));
 		if (StringUtil.isEmpty(userId)) {
 			String context = request.getContextPath();
-			response.sendRedirect(context + "/center/login.jsp");
+			response.sendRedirect(context + "/");
 			return;
 		}
 		CurrentThread.init();
@@ -125,7 +125,7 @@ public class DemoServlet extends HttpServlet {
 						filter);
 				filter.putAll(list);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/demo/startOneTask.jsp");
+				rd = request.getRequestDispatcher("/fixflow/demo/startOneTask.jsp");
 			} else if (action.equals("doTask")) {// 演示如何进入一个已发起的流程处理页面
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -146,7 +146,7 @@ public class DemoServlet extends HttpServlet {
 					Map<String, Object> list = fcs.GetFlowRefInfo(filter);
 					filter.putAll(list);
 					request.setAttribute("result", filter);
-					rd = request.getRequestDispatcher("/demo/doTask.jsp");
+					rd = request.getRequestDispatcher("/fixflow/demo/doTask.jsp");
 				}finally{
 					connection.close();					
 				}
@@ -168,7 +168,7 @@ public class DemoServlet extends HttpServlet {
 					fcs.setConnection(connection);
 					fcs.completeTask(filter);
 					rd = request
-							.getRequestDispatcher("/common/result.jsp");
+							.getRequestDispatcher("/fixflow/common/result.jsp");
 					//事务提交
 					connection.commit();
 				} catch(Exception e){
@@ -189,7 +189,7 @@ public class DemoServlet extends HttpServlet {
 				filter.put("taskParams", flowMaps);
 				getFlowCenter().completeTask(filter);
 				rd = request
-						.getRequestDispatcher("/common/result.jsp");
+						.getRequestDispatcher("/fixflow/common/result.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);

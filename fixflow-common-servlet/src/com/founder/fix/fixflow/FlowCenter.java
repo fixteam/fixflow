@@ -158,7 +158,7 @@ public class FlowCenter extends HttpServlet {
 					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
-				rd = request.getRequestDispatcher("/center/startTask.jsp");
+				rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
 				try{
 					filter.put("path", request.getSession().getServletContext()
@@ -172,7 +172,7 @@ public class FlowCenter extends HttpServlet {
 					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
-				rd = request.getRequestDispatcher("/center/todoTask.jsp");
+				rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
 			} else if (action.equals("getAllProcess")) {
@@ -186,20 +186,20 @@ public class FlowCenter extends HttpServlet {
 					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
 				}
-				rd = request.getRequestDispatcher("/center/queryprocess.jsp");
+				rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
 			} else if (action.equals("getPlaceOnFile")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryPlaceOnFile(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/center/placeOnFile.jsp");
+				rd = request.getRequestDispatcher("/fixflow/center/placeOnFile.jsp");
 			}else if (action.equals("getTaskDetailInfo")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.getTaskDetailInfo(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/center/flowGraphic.jsp");
+				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
 			} else if (action.equals("getFlowGraph")) {
 				InputStream is = getFlowCenter().getFlowGraph(filter);
 				out = response.getOutputStream();
@@ -216,7 +216,7 @@ public class FlowCenter extends HttpServlet {
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/common/userInfo.jsp");
+				rd = request.getRequestDispatcher("/fixflow/common/userInfo.jsp");
 			}else if (action.equals("getUserIcon")) {
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -224,7 +224,7 @@ public class FlowCenter extends HttpServlet {
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/common/userOperation.jsp");
+				rd = request.getRequestDispatcher("/fixflow/common/userOperation.jsp");
 			} else if (action.equals("updateUserIcon")) {
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -239,17 +239,17 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", filter);
 				request.setAttribute("isMulti", isMulti);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/common/selectUserList.jsp?isMulti="+isMulti);
+				rd = request.getRequestDispatcher("/fixflow/common/selectUserList.jsp?isMulti="+isMulti);
 			} else if(action.equals("selectNodeList")){	//选择节点列表
 				Map<String, Object> pageResult = getFlowCenter().getRollbackNode(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/common/selectNodeList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/common/selectNodeList.jsp");
 			} else if(action.equals("selectStepList")){	//选择步骤列表
 				Map<String, Object> pageResult = getFlowCenter().getRollbackTask(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/common/selectStepList.jsp");
+				rd = request.getRequestDispatcher("/fixflow/common/selectStepList.jsp");
 			}
 			if (rd != null)
 				rd.forward(request, response);

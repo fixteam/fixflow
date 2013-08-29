@@ -99,7 +99,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				
 			}else{
-				response.sendRedirect(context+"/login.jsp");
+				response.sendRedirect(context+"/fixflow/login.jsp");
 			}
 			
 		} catch (SQLException e) {

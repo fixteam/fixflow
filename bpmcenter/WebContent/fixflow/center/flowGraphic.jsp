@@ -7,11 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>流程追逐</title>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/global.css">
-<link rel="stylesheet" type="text/css" href="css/popup.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/global.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/popup.css">
 </head>
 
 <body>
