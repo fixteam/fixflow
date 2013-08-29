@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <jsp:include page="head.jsp" flush="true"/>
+<link rel="stylesheet" href="css/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
 <title>用户组查询</title>
 <script type="text/javascript">
 function viewGroupInfo(groupId,groupType){
@@ -14,6 +16,37 @@ function viewGroupInfo(groupId,groupType){
 	window.showModalDialog("FlowManager?action=getGroupInfo&viewGroupId="+groupId+"&viewGroupType="+groupType,obj,"dialogWidth=800px;dialogHeight=600px");
 }
 </script>
+<SCRIPT type="text/javascript">
+		var setting = {
+			data: {
+				key: {
+					title:"t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick,
+				onClick: onClick
+			}
+		};
+		var log, className = "dark";
+		function beforeClick(treeId, treeNode, clickFlag) {
+			alert(2);
+		}
+		function onClick(event, treeId, treeNode, clickFlag) {
+			alert(3);
+		}		
+
+		$(document).ready(function(){
+			$(".zTreeDiv").each(function(index,obj){
+				var jsonStr = $(obj).find("div").eq(0).html();
+				var zNodeInfo = eval(jsonStr);
+				$.fn.zTree.init($(obj).find("ul").eq(0), setting, zNodeInfo);
+			});
+		});
+	</SCRIPT>
 </head>
 <body>
 <form action="FlowManager" id="subForm">
@@ -25,10 +58,14 @@ function viewGroupInfo(groupId,groupType){
     	<div class="left-nav-box">
     	<div class="left-nav"><a name="userList" href="FlowManager?action=getUserList">用户</a></div>
         <div class="left-nav-orange-line">&nbsp;</div>
+        
        	<div class="left-nav"><a name="group" href="#">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
 			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="images/temp/user01.jpg" />${group.typeName}</a></div>
+			      <c:if test="${group.isTree!= null && group.isTree == true}">
+			      	<div class="zTreeDiv"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
+			      </c:if>
 			    </c:forEach>
        	  	</c:if>
         </div> 

@@ -43,6 +43,11 @@
         <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_2" name="同意" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:taskCommand id="HandleCommand_3" name="接收任务" commandType="claim" isVerification="false" isSaveData="false" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_4" name="转发" commandType="transfer" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_5" name="退回-节点" commandType="rollBack" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_6" name="退回-任务" commandType="rollBackTaskByTaskId" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_7" name="转办" commandType="pending" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_8" name="还回" commandType="resolved" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>

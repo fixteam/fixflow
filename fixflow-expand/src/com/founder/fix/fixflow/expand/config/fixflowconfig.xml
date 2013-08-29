@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.0.0.20130806">
-  <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
-    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
-    <dataBase id="DB_FIX_ACC" name="DB_FIX_ACC" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
-    <dataBase id="db2" name="db2数据库" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.OraclePaginationImpl" dbtype="db2"/>
-    <dataBase id="mysql" name="mysql数据库" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.SqlServerPaginationImpl" dbtype="mysql"/>
-    <dataBase id="sqlserver" name="DB_FIX_BIZ_BASE" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
-    <dataBase id="oracle" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl"/>
+  <dataBaseConfig selected="oracle" mode="internal" isEnableDesCon="false">
+    <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>   
+    <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
+    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.MySqlPaginationImpl" dbtype="mysql"/>
+    <dataBase id="sqlserver" name="sqlserver" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
   </dataBaseConfig>
   <taskCommandConfig commandType="manualclaim">
     <taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
@@ -43,7 +41,7 @@
     <taskCommandDef id="endEvent" name="流程结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="receiveEnd" name="等待结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
   </taskCommandConfig>
-  <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
+  <designerOrgConfig dataBaseId="oracle">
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="false" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
       <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from au_userinfo t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID"/>
@@ -52,7 +50,9 @@
       <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID ,t3.name as name from au_userinfo t1,  FIX_GROUP_RELATION t2, au_roleinfo t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role' and t2.group_id =t3.roleid"/>
     </groupInfo>
   </designerOrgConfig>
-  <sysMailConfig selected=""/>
+  <sysMailConfig selected="方正国际邮箱">
+    <mailInfo mailAddress="jiang_nan@founder.com" mailName="方正国际邮箱" smtpHost="mail.founder.com.cn" smtpPort="25" userName="kenshin" passWord="kenshin"/>
+  </sysMailConfig>
   <expandClassConfig>
     <expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>
     <expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
@@ -76,7 +76,7 @@
     <expandClass classId="ProcessDefinitionQuery" className="流程定义查询" classInterface="com.founder.fix.fixflow.core.model.ProcessDefinitionQuery" classImpl="com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl" remarks="流程定义查询"/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
-  <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>
+  <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="oracle"/>
   <scriptLanguageConfig selected="Groovy">
     <scriptLanguage id="BeanShell" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl"/>
     <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>

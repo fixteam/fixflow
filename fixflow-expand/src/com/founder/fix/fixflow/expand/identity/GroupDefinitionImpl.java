@@ -83,10 +83,10 @@ public class GroupDefinitionImpl extends GroupDefinition {
 			String sql = "SELECT USERTABLE.* FROM (" + sqlText + ") USERTABLE where 1=1";
 			String countSql = "SELECT count(*) FROM (" + sqlText + ") USERTABLE where 1=1";
 			String whereSql = "";
-			if(queryMap.containsKey("GROUPID")){
+			if(queryMap!= null && queryMap.containsKey("GROUPID")){
 				whereSql += " and " + groupIdField +" like '%"+queryMap.get("GROUPID")+"%'";
 			}
-			if(queryMap.containsKey("GROUPNAME")){
+			if(queryMap!= null && queryMap.containsKey("GROUPNAME")){
 				whereSql += " and " + groupNameField +" like '%"+queryMap.get("GROUPNAME")+"%'";
 			}
 			sql += whereSql;
