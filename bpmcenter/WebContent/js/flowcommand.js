@@ -12,13 +12,14 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 		$("#"+formId).append(cprocessInstanceId);
 		$("#"+formId).append(cprocessDefinitionKey);
 		$("#"+formId).append(ctaskId);
-		
+
 		$("button[commandType]").click(function() {
 			var id = $(this).attr("commandId");
 			var type = $(this).attr("commandType");
 			$("#commandId").val(id);
 			$("#commandType").val(type);
 			var params={};
+
 			if(type=="processStatus"){
 				var pii = processInstanceId;
 				var pdk = processDefinitionKey;
@@ -30,26 +31,34 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						"dialogWidth=800px;dialogHeight=600px");
 				return false;
 			}else if(type=="transfer"){
+				var obj = {
+						  type:"user"
+						};
+				var d = FixSelect(obj);
 				params={
 						//被转发的UserId，这里设定了就是管理员
-						transferUserId:""
+						transferUserId:d['USERID']
 				};
-
 			}else if(type=="Pending"){//转办
 				var obj = {type:"user"};
 			  	var d = FixSelect(obj);
 			  	if(d&&d.length>0){
 					params={
 							//转办的任务编号
-						pendingTaskId:d[0].USERID
+						pendingUserId:d[0].USERID
 					};
 			  	}else{
 			  		return;
 			  	}
 			}else if(type=="recover"){
+				var obj = {
+						  type:"node",
+						taskId:taskId
+						};
+				var d = FixSelect(obj);
 				params={
 						//追回的任务编号
-					recoverNodeId:""
+					recoverNodeId:d['nodeId']
 				};
 			}else if(type=="reminders"){
 				params={
@@ -62,9 +71,25 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						
 				};
 			}else if(type=="rollBack"){
+				var obj = {
+						  type:"node",
+						taskId:taskId
+						};
+				var d = FixSelect(obj);
 				params={
 						//退回到某个节点
-					rollBackNodeId:"",
+					rollBackNodeId:d['nodeId']
+						
+				};
+			}else if(type=="rollBackTaskByTaskId"){
+				var obj = {
+						type:"step",
+						taskId:taskId
+						};
+				var d = FixSelect(obj);
+				params={
+						//退回到某个节点
+					rollBackTaskId:d['taskId']
 						
 				};
 			}
