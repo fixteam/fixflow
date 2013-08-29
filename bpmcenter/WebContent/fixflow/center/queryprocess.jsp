@@ -10,12 +10,14 @@
 <title>流程查询</title>
 <jsp:include page="head.jsp" flush="true"/>
 <script type="text/javascript">
+$(function(){
 $("a[name=flowGraph]").click(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
     var obj = {};
     window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
   });
+});
 </script>
 </head>
 <body>
@@ -114,21 +116,7 @@ $("a[name=flowGraph]").click(function(){
 	<!-- 隐藏参数部分 -->
 	<input type="hidden" name="userId"
 		value="<c:out value="${result.userId}"/>">
-	<input type="hidden" name="pageIndex"
-		value="<c:out value="${result.pageIndex}"/>">
-	<input type="hidden" name="rowNum"
-		value="<c:out value="${result.rowNum}"/>">
 	<input type="hidden" name="type"
 		value="<c:out value="${result.action}"/>">
 </body>
-<script>
-$(function(){
-  var type = $("input[name=type]").val();
-  var userId = $("input[name=userId]").val();
-  $("a[name=page]").click(function(){
-    var pageNo = $(this).html();
-    window.location.href = "FlowCenter?action="+type+"&pageIndex="+pageNo+"&rowNum=15&userId="+userId;
-  });
-}); 
-</script>
 </html>

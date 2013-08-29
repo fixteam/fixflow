@@ -15,10 +15,6 @@
 	<div class="main-panel">
 		<jsp:include page="top.jsp" flush="true" />
 		<div class="center-panel">
-				<!-- 左 -->
-				<div class="left">
-				<!-- 左侧暂为空 -->
-				</div>
 				<!-- 右-->
 				<div class="right">
 					<!-- 查 -->
@@ -53,6 +49,7 @@
 					<div class="content">
 						<table width="100%" class="fix-table">
 							<thead>
+								<th width="30">&nbsp;</th>
 								<th>实例编号</th>
 								<th>流程定义</th>
 								<th>任务主题</th>
@@ -65,6 +62,7 @@
 							<tbody>
 								<c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 									<tr>
+										<td><c:out value="${index.index+1}"/></td>
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionKey}</td>
 										<td>${dataList.subject}</td>

@@ -4,7 +4,7 @@
     <div class="top-right">
         <ul>
         <li>委托人：<a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
-        <li><a href="login.jsp" onclick="">退出</a></li>
+        <li><a href="LoginServlet?doLogOut=true">退出</a></li>
         </ul>
     </div>
     <div class="menu">
