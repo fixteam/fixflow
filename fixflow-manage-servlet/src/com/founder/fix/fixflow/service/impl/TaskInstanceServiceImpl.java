@@ -111,21 +111,21 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			if(filter.get("ended")==null)
 				tq.taskNotEnd();
 			
-			if(StringUtil.isNotEmpty(StringUtil.getString(filter.get("agentUserId")))){
-				tq.isAgent(true);
-				if(filter.get("agentType").equals("1")){
-					tq.taskAssignee(StringUtil.getString(filter.get("userId")));
-					tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
-					tq.agentId(StringUtil.getString(filter.get("agentUserId")));
-				}else{
-					tq.taskAssignee(StringUtil.getString(filter.get("agentUserId")));
-					tq.taskCandidateUser(StringUtil.getString(filter.get("agentUserId")));
-					tq.agentId(StringUtil.getString(filter.get("userId")));
-				}
-			}else{
-				tq.taskAssignee(StringUtil.getString(filter.get("userId")));
-				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
-			}
+//			if(StringUtil.isNotEmpty(StringUtil.getString(filter.get("agentUserId")))){
+//				tq.isAgent(true);
+//				if(filter.get("agentType").equals("1")){
+//					tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+//					tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+//					tq.agentId(StringUtil.getString(filter.get("agentUserId")));
+//				}else{
+//					tq.taskAssignee(StringUtil.getString(filter.get("agentUserId")));
+//					tq.taskCandidateUser(StringUtil.getString(filter.get("agentUserId")));
+//					tq.agentId(StringUtil.getString(filter.get("userId")));
+//				}
+//			}else{
+//				tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+//				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+//			}
 			
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			Long count = tq.count();
