@@ -67,6 +67,7 @@
                 <th width="">业务数据</th>
                 <th width="">发起人</th>
                 <th width="">更新时间</th>
+                 <th width="">运行状态</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
@@ -80,6 +81,10 @@
 		      <td>${dataList.BIZ_KEY}</td>
 		      <td>${dataList.initiator}</td>
 				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
+				<td>
+					<c:if test="${dataList.isSuspended == true}" var="runStatue">暂停</c:if>
+					<c:if test="${dataList.isSuspended == false}" var="runStatue">运行中</c:if>
+				</td>
 		    </tr>
 		    </c:forEach>
             </table>

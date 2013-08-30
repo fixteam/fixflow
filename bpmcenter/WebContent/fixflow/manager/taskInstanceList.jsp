@@ -117,10 +117,11 @@ $(function(){
 								<th>当前步骤</th>
 								<th width="160">到达时间</th>
 								<th width="60">流程状态</th>
+								<th width="60">运行状态</th>
 							</thead>
 							<c:forEach items="${result.dataList}" var="dataList"
 								varStatus="index">
-								<tr>
+								<tr isSuspended = ${dataList.isSuspended}>
 									<td><c:out value="${index.index+1}" /></td>
 
 									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
@@ -143,6 +144,10 @@ $(function(){
 									<td><a name="flowGraph" href="#"
 										pii="${dataList.processInstanceId}"
 										pdk="${dataList.processDefinitionKey}">查看</a></td>
+									<td>
+										<c:if test="${dataList.isSuspended == true}" var="runStatue">暂停</c:if>
+										<c:if test="${dataList.isSuspended == false}" var="runStatue">运行中</c:if>
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
