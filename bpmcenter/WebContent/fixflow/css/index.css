@@ -79,8 +79,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 /* 表单 */
 .fix-table { margin:0; color:#444;}
-.fix-table th { padding:4px 0; background:#f8ddd5; font-family:"微软雅黑"; border-right: 1px solid #fff; text-align:center;}
-.fix-table td { padding:2px 0;}
+.fix-table th { padding:5px 0; background:#f8ddd5; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #fff;}
+.fix-table td { padding:6px 0; border-bottom:1px solid #fff;}
 .fix-table td.title-r { text-align:right; color:#666; padding-right:20px;}
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
 .fix-table td.time { text-align:center;}
