@@ -219,7 +219,7 @@ $(function(){
 							<c:forEach items="${result.dataList}" var="dataList"
 								varStatus="index">
 								<tr>
-									<td><c:out value="${index.index+1}" /></td>
+									<td style="text-align: center;"><c:out value="${index.index+1}" /></td>
 
 									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
 										height="30" width="30" alt="头像"
