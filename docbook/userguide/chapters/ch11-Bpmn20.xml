@@ -7,15 +7,100 @@
 
   <section xml:id="bpmn.info">
     <title>BPMN简介</title>
+    <para><emphasis role="bold">介绍:</emphasis></para>
     <para>
-      
+      业务流程建模标记法（BPMN, Business Process Modeling Notation）是对象管理组织（OMG, Object Management Group）维护的关于业务流程建模的行业性标准。
+      它创建在与UML的活动图非常相似的流程图法（flowcharting）基础上，为“业务流程图”（BPD, Business Process Diagram）中的特定业务流程提供一套图形化标记法。
+    </para>
+    <para> <emphasis role="bold">目标:</emphasis></para>
+    <para>
+     BPMN的目标是，通过提供一套既符合业务人员直观又能表现复杂流程语义的标记法，同时为技术人员和业务人员从事业务流程管理提供支持。
+      BPMN的首要目的是提供全体业务相关者易于理解的标准标记法。业务相关者包括创造与梳理流程的业务分析师、负责实施流程的技术开发者、以及管理和监督流程的经理人。BPMN旨在充当公共语言，跨越业务流程设计和实施之间常见的鸿沟。
+      当前有多种竞争的业务流程建模语言标准供建模过程和工具选用。广泛采用BPMN将有助于统一基本的业务流程概念的表达（例如：公共或私有的流程、编排），就像一些高级的业务概念一样（例如：例外处理、事务补偿）。
+    </para>
+    <para> <emphasis role="bold">BPMN2.0元素图</emphasis></para>
+    <para>
+      <link xlink:href="../../images/BPMN2_0_Poster_EN.png">查看完整图片</link>
+      <mediaobject ><imageobject>
+        <imagedata align="center" contentwidth="900"  fileref="images/BPMN2_0_Poster_EN.png"/>
+      </imageobject></mediaobject>
+    </para>
+
+    <para> <emphasis role="bold">我们使用BPMN元素进行建模，BPMN的元素分为五个类别</emphasis></para>
+    <para>
+      <mediaobject ><imageobject>
+        <imagedata align="center" contentwidth="800"   fileref="images/bpmn.info.1.png"/>
+      </imageobject></mediaobject>
+    </para>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="bold">流对象(Flow Objects)</emphasis>: 流对象是定义业务流程的主要图形元素。它进一步细分为三个类别,分别是事件(Events)、活动(Activities)和网关(Gateways)。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">数据(Data)</emphasis>: 它分为四个类别:数据对象（Data Object)、数据输入(Data Inputs)、数据输出(Data Outputs)和数据存储(Data Stores)。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">连接对象(Connection Ojbects)</emphasis>: 用来把各个流对象或流对象与其他信息连接起来,它分为四种类别:顺序流(Sequence Flows)、消息流(Message Flows)、关联(Associations)和数据关联(Data Associations)。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">泳道(Swimlanes)</emphasis>: 用来区分不同部门或者不同参与者的功能和职责,Swimlanes包含两种类别：池(Pool)和道（Lane)。
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="bold">人工交付物(Artifacts)</emphasis>: 它用以给流程附加一些额外的信息,它分为两种类别：组(Group)和附注（Text Annotation)。
+          </para>
+        </listitem>
+      </itemizedlist>    
+    </para>
+    <para>
+      <emphasis role="bold">BPMN元素的三个层次</emphasis>
+    </para>
+    <para>
+      根据流程引擎的实现顺序我们将BPMN元素分为了三个层次，分别是基本元素、核心元素和高级元素，通过基本元素的学习，我们能够开始进行简单的建模；通过核心元素的学习，能够满足我们平常大部分的建模需求；通过学习高级元素，我们能够看到BPMN所能处理的复杂情况。 
+    </para>
+    
+    <para>
+      <emphasis role="bold">基本元素:</emphasis>
+      <mediaobject ><imageobject>
+        <imagedata contentwidth="800" align="center" fileref="images/bpmn.info.2.png"/>
+      </imageobject></mediaobject>
+    </para>
+    <para>
+      <emphasis role="bold">核心元素:</emphasis>
+      <mediaobject ><imageobject>
+        <imagedata contentwidth="800" align="center" fileref="images/bpmn.info.3.png"/>
+      </imageobject></mediaobject>
+    </para>
+    <para>
+      <emphasis role="bold">高级元素:</emphasis>
+      <mediaobject ><imageobject>
+        <imagedata contentwidth="800" align="center" fileref="images/bpmn.info.4.png"/>
+      </imageobject></mediaobject>
     </para>
   </section>
-  
+ 
   <section xml:id="bpmn.extensions">
     <title>扩展元素</title>
     <para>
+      BPMN 2.0的开放标准是一件好事。最终用户不受到来自供应商的锁定，依靠专有解决方案。框架，特别是开源框架如Activiti的，可实施的解决方案，具有相同的（往往更好地实施;-)功能作为一个大供应商。由于BPMN 2.0标准，从这样的大厂商的解决方案对Activiti的过渡是一个容易和顺畅的路径。
       
+      然而，一个标准的缺点，是事实，它始终是许多不同的公司（往往愿景）之间的讨论和妥协的结果。作为一名开发人员阅读BPMN 2.0 XML流程定义的，有时它感觉像某些结构或方式做事情是太麻烦了。 Activiti的把易用性作为最优先的发展，我们推出了一种叫做Activiti的BPMN扩展。这些'扩展'的新的结构或方法来简化某些结构，不BPMN 2.0规范。
+      
+      虽然BPMN 2.0规范中明确指出，这是自定义扩展，我们确保：
+      
+      这样的自定义扩展的先决条件是，必须始终有一个简单的标准做事的方式转变。所以，当你决定要使用自定义的扩展，你不要有害怕，有没有回来的路上。
+      当使用自定义的扩展，这始终是明确表示给予新的XML元素，属性，等activiti的命名空间前缀。
+      这些扩展的目标是最终推动它们放回BPMN规范的下一个版本，或者至少触发的讨论，可导致BPMN构造特定的修订版。
+      因此，是否要使用自定义的扩展与否，完全取决于你。有几个因素会影响这个决定（图形编辑器的使用，公司政策等） 。我们只提供他们，因为我们认为可以做一些点在标准更简单或更有效。随意给我们（积极和/或负）反馈对我们的扩展，或发布自定义扩展的新思路。谁知道，有一天，你的想法可能会出现在规范中！
     </para>
   </section>
   
