@@ -34,7 +34,7 @@ $(function(){
 <body>
 <form action="FlowManager" method="post" id="subForm">
 <div class="popup">
-    <div class="info" style="width:900px;">
+    <div class="info" style="width:900px;padding-top:30px;padding-left:20px;">
         <table width="900" border="0">
           <tr>
             <td width="50">编号：</td>

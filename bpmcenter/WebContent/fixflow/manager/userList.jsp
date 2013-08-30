@@ -61,7 +61,7 @@
        	<div class="left-nav"><a name="group" href="#">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/temp/user01.jpg" />${group.typeName}</a></div>
+			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
 				  <c:if test="${group.isTree!= null && group.isTree == true}">
 			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
 			      </c:if>			   
