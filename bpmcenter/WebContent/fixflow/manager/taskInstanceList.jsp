@@ -82,7 +82,8 @@ $(function(){
                 <td class="title-r">流程变量：</td>
                 <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
                 <td class="title-r">单 据 号：</td>
-                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td style="width:200px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
               <tr>
                 <td class="title-r">发 起 人：</td>
@@ -91,7 +92,8 @@ $(function(){
                 <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
                  - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
                 <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td></td>
+              	<td></td>
               </tr>
             </table>
         </div>
