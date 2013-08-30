@@ -62,6 +62,10 @@ $(function(){
    	window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 });
+
+	$(function(){
+		Fix.Util.ClickTr(null,true,true,0);
+	});
 </script>
 </head>
 
@@ -98,47 +102,61 @@ $(function(){
             </table>
         </div>
         <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
-        	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
-            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
-            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">转发</a></div>
-            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-节点</a></div>
-            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
+        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
+            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">转发</a></div>
+            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-节点</a></div>
+            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
-              <thead>
-                <th width="30">&nbsp;</th>
-                <th width="70">发起人</th>
-                <th width="200">当前处理</th>
-                <th>任务</th>
-                <th width="250">单据号</th>
-                <th width="180">发起/到达时间</th>
-                <th width="60">流程状态</th>
-              </thead>
-		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
-		    <tr>
-		      <td><c:out value="${index.index+1}"/></td>
-		      <td><img src="icon/${dataList.PI_START_AUTHOR}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"><br>${dataList.userName}</td>
-		      <td>${dataList.nowProc}</td>
-		      
-		      <td>
-		   		<div><span>流&nbsp;程：</span><span>${dataList.nodeName}&nbsp; --&nbsp; ${dataList.processDefinitionName}</span></div>
-		   		<div><span>主&nbsp;题：</span><span><a name="doTask" href="#" formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">${dataList.description}</a></span></div>   
-		    	</td>
-		      <td>${dataList.bizKey}</td>
-		      <td>
-		      	<div>
-					发起时间:<fmt:formatDate value="${dataList.PI_START_TIME}" type="both"/> 
-				</div>
-				<div>
-		      		到达时间:<fmt:formatDate value="${dataList.createTime}" type="both"/>
-		      	</div>
-		      	</td>
-		      <td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">查看</a></td>
-		    </tr>
-		    </c:forEach>
-            </table>
+							<thead>
+								<th width="30"><input type="checkbox" id="checkall" name="checkall"/></th>
+								<th width="30">&nbsp;</th>
+								<th width="30"></th>
+								<th>流程</th>
+								<th>单据号</th>
+								<th>任务主题</th>
+								<th>发起人</th>
+								<th>发起时间</th>
+								<th>当前步骤</th>
+								<th width="160">到达时间</th>
+								<th width="60">流程状态</th>
+								<th width="60">运行状态</th>
+							</thead>
+							<c:forEach items="${result.dataList}" var="dataList"
+								varStatus="index">
+								<tr isSuspended = ${dataList.isSuspended}>
+								<td class="num"><input type="checkbox" name="checked" value="${dataList.taskInstanceId}"></td>
+									<td><c:out value="${index.index+1}" /></td>
 
+									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
+										height="30" width="30" alt="头像"
+										onerror="miniImgNotFound('${pageContext.request.contextPath}');"></td>
+									<td>${dataList.processDefinitionName}</td>
+									<td>${dataList.bizKey}</td>
+									<td><a name="doTask" href="#"
+										formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}"
+										pii="${dataList.processInstanceId}" bk="${dataList.bizKey}"
+										pdk="${dataList.processDefinitionKey}">${dataList.description}</a>
+									</td>
+									<td>${dataList.userName}</td>
+									<td><fmt:formatDate value="${dataList.PI_START_TIME}"
+											type="both" /></td>
+									<td>${dataList.nowProc}</td>
+									<td><fmt:formatDate value="${dataList.createTime}"
+											type="both" />
+									</td>
+									<td><a name="flowGraph" href="#"
+										pii="${dataList.processInstanceId}"
+										pdk="${dataList.processDefinitionKey}">查看</a></td>
+									<td>
+										<c:if test="${dataList.isSuspended == true}" var="runStatue">暂停</c:if>
+										<c:if test="${dataList.isSuspended == false}" var="runStatue">运行中</c:if>
+									</td>
+								</tr>
+							</c:forEach>
+						</table>
         </div>
     </div>
 <!-- 分页 -->	    

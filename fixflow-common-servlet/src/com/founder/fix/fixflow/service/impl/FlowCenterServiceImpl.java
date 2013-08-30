@@ -149,7 +149,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			}
 			
-			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
+			List<TaskInstance> lts = tq.orderByTaskCreateTime().desc().listPagination(pageIndex, rowNum);
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 			

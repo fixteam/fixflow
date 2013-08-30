@@ -13,8 +13,8 @@
 </head>
 <body>
 <form action="../FlowManager" method="post" ENCTYPE="multipart/form-data">
-<input type="file" name="ProcessFile" />
-<input type="text" name="deploymentId" id="deploymentId" value="<%=deploymentId%>">
+<input type="file" name="ProcessFile" /><br>
+<input type="text" name="deploymentId" id="deploymentId" value="<%=deploymentId%>"><br>
 <input type="submit" value="发布" />
 <input type="hidden" name="action" value="deploy">
 

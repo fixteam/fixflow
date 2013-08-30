@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>待办任务</title>
-<jsp:include page="head.jsp" flush="true"/>
+<jsp:include page="head.jsp" flush="true" />
 <script type="text/javascript">
 /*  
  * "userId" 用户编号
@@ -78,112 +79,182 @@ $(function(){
 </head>
 
 <body>
-<div class="main-panel">
-<jsp:include page="top.jsp" flush="true"/>
+	<div class="main-panel">
+		<jsp:include page="top.jsp" flush="true" />
 
-<div class="center-panel">
-<form id="subForm" method="post" action="FlowCenter">
-<!-- 左 -->
-	<div class="left">
-    	<div class="left-nav-box">
-        	<div class="left-nav"><a name="myTask" href="#">我的待办任务</a></div>
-            <div class="left-nav-orange-line">&nbsp;</div>
-            
+		<div class="center-panel">
+			<form id="subForm" method="post" action="FlowCenter">
+				<!-- 左 -->
+				<div class="left">
+					<div class="left-nav-box">
+						<div class="left-nav">
+							<a name="myTask" href="#">我的待办任务</a>
+						</div>
+						<div class="left-nav-orange-line">&nbsp;</div>
 
 
-       	  <div class="left-nav m-top"><h1>代理人</h1></div>
-       	  	<c:if test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
-			    <c:forEach items="${result.agentUsers}" var="agentUsers" varStatus="index">
-			      <div class="left-nav"><a name="agentUsers" userId="${agentUsers.userid}" href="#"><img src="${agentUsers.userid}" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>${agentUsers.username}</a></div>
-			    </c:forEach>
-       	  	</c:if>
 
-       	  <div class="left-nav m-top"><h1>委托人</h1></div>
-       	  	<c:if test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
-			    <c:forEach items="${result.agentToUsers}" var="agentToUsers" varStatus="index">
-			      <div class="left-nav"><a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img src="icon/${agentToUsers.userid}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>${agentToUsers.username}</a></div>
-			    </c:forEach>
-       	  	</c:if>
-        </div>
-        <div class="message">
-        	<div class="title"><a href="#"><em class="icon-message"></em>消息中心</a></div>
-        	<div class="message-content">
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-             	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>曹操：煮酒论英雄！谁一起吃饭啊<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-            	<div class="msg"><img src="images/temp/user01.jpg" onerror="miniImgNotFound('${pageContext.request.contextPath}');"/>张飞：今天还没吃午饭！<div class="time">一小时前</div></div>
-       	</div>
-        </div> 
-    </div>
-    <div class="right">
-    <!-- 隐藏参数部分 -->
-		<input type="hidden" id="agentUserId" name="agentUserId" value="<c:out value="${result.agentUserId}"/>">
-		<input type="hidden" id="agentType" name="agentType" value="<c:out value="${result.agentType}"/>">
-    	<input type="hidden" name="action" value="getMyTask"/> 
-    	<div class="search">
-        	<table width="100%">
-              <tr>
-                <td class="title-r">任务主题：</td>
-                <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
-                <td class="title-r">流程变量：</td>
-                <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
-                <td class="title-r">单 据 号：</td>
-                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
-              </tr>
-              <tr>
-                <td class="title-r">发 起 人：</td>
-                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
-                <td class="title-r">到达时间：</td>
-                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
-                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
-                <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
-              </tr>
-            </table>
-        </div>
-        <div class="content">
-        	<table width="100%" class="fix-table">
-              <thead>
-                <th width="30">&nbsp;</th>
-                <th width="70">发起人</th>
-                <th>任务</th>
-                <th width="300">单据号</th>
-                <th width="180">发起/到达时间</th>
-                <th width="60">流程状态</th>
-              </thead>
-		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
-		    <tr>
-		      <td><c:out value="${index.index+1}"/></td>
-		      <td><img src="icon/${dataList.PI_START_AUTHOR}_small.png" height="30" width="30" alt="头像" onerror="miniImgNotFound('${pageContext.request.contextPath}');"><br>${dataList.userName}</td>
-		      <td>
-		   		<div><span>流&nbsp;程：</span><span>${dataList.nodeName}&nbsp; --&nbsp; ${dataList.processDefinitionName}</span></div>
-		   		<div><span>主&nbsp;题：</span><span><a name="doTask" href="#" formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}" pii="${dataList.processInstanceId}" bk="${dataList.bizKey}" pdk="${dataList.processDefinitionKey}">${dataList.description}</a></span></div>   
-		    	</td>
-		      <td>${dataList.bizKey}</td>
-		      <td>
-		      	<div>
-					发起时间:<fmt:formatDate value="${dataList.PI_START_TIME}" type="both"/> 
+						<div class="left-nav m-top">
+							<h1>代理人</h1>
+						</div>
+						<c:if
+							test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
+							<c:forEach items="${result.agentUsers}" var="agentUsers"
+								varStatus="index">
+								<div class="left-nav">
+									<a name="agentUsers" userId="${agentUsers.userid}" href="#"><img
+										src="${agentUsers.userid}" height="30" width="30" alt="头像"
+										onerror="miniImgNotFound('${pageContext.request.contextPath}');" />${agentUsers.username}</a>
+								</div>
+							</c:forEach>
+						</c:if>
+
+						<div class="left-nav m-top">
+							<h1>委托人</h1>
+						</div>
+						<c:if
+							test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
+							<c:forEach items="${result.agentToUsers}" var="agentToUsers"
+								varStatus="index">
+								<div class="left-nav">
+									<a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img
+										src="icon/${agentToUsers.userid}_small.png" height="30"
+										width="30" alt="头像"
+										onerror="miniImgNotFound('${pageContext.request.contextPath}');" />${agentToUsers.username}</a>
+								</div>
+							</c:forEach>
+						</c:if>
+					</div>
+					<div class="message">
+						<div class="title">
+							<a href="#"><em class="icon-message"></em>消息中心</a>
+						</div>
+						<div class="message-content">
+							<div class="msg">
+								<img src="images/temp/user01.jpg"
+									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+								<div class="time">一小时前</div>
+							</div>
+							<div class="msg">
+								<img src="images/temp/user01.jpg"
+									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />曹操：煮酒论英雄！谁一起吃饭啊
+								<div class="time">一小时前</div>
+							</div>
+							<div class="msg">
+								<img src="images/temp/user01.jpg"
+									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+								<div class="time">一小时前</div>
+							</div>
+							<div class="msg">
+								<img src="images/temp/user01.jpg"
+									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+								<div class="time">一小时前</div>
+							</div>
+							<div class="msg">
+								<img src="images/temp/user01.jpg"
+									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+								<div class="time">一小时前</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div>
-		      		到达时间:<fmt:formatDate value="${dataList.createTime}" type="both"/>
-		      	</div>
-		      	</td>
-		      <td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">查看</a></td>
-		    </tr>
-		    </c:forEach>
-            </table>
+				<div class="right">
+					<!-- 隐藏参数部分 -->
+					<input type="hidden" id="agentUserId" name="agentUserId"
+						value="<c:out value="${result.agentUserId}"/>"><input
+						type="hidden" id="agentType" name="agentType"
+						value="<c:out value="${result.agentType}"/>"><input
+						type="hidden" name="action" value="getMyTask" />
+					<div class="search">
+						<table width="100%">
+							<tr>
+								<td class="title-r">任务主题：</td>
+								<td style="width: 180px;"><input type="text" id="text_0"
+									name="title" class="fix-input" style="width: 160px;"
+									value="${result.title}" /></td>
+								<td class="title-r">流程变量：</td>
+								<td style="width: 180px;"><input type="text" id="text_1"
+									name="text_1" class="fix-input" style="width: 160px;" value="" /></td>
+								<td class="title-r">单 据 号：</td>
+								<td style="width: 180px;"><input type="text" id="text_2"
+									name="bizKey" class="fix-input" style="width: 160px;"
+									value="${result.bizKey}" /></td>
+								<td><div class="btn-normal">
+										<a href="#" onclick="$('#subForm').submit();">查 找<em
+											class="arrow-small"></em></a>
+									</div></td>
+							</tr>
+							<tr>
+								<td class="title-r">发 起 人：</td>
+								<td><input type="text" id="text_3" name="initor"
+									class="fix-input" style="width: 160px;"
+									value="${result.initor}" /></td>
+								<td class="title-r">到达时间：</td>
+								<td><input type="text" id="text_4" name="arrivalTimeS"
+									class="fix-input" style="width: 69px;"
+									value="${result.arrivalTimeS}" onClick="WdatePicker()" /> - <input
+									type="text" id="text_5" name="arrivalTimeE" class="fix-input"
+									style="width: 69px;" value="${result.arrivalTimeE}"
+									onClick="WdatePicker()" /></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div class="content">
+						<table width="100%" class="fix-table">
+							<thead>
+								<th width="30">&nbsp;</th>
+								<th width="30"></th>
+								<th>流程</th>
+								<th>单据号</th>
+								<th>任务主题</th>
+								<th>发起人</th>
+								<th>发起时间</th>
+								<th>当前步骤</th>
+								<th width="160">到达时间</th>
+								<th width="60">流程状态</th>
+							</thead>
+							<c:forEach items="${result.dataList}" var="dataList"
+								varStatus="index">
+								<tr>
+									<td style="text-align: center;"><c:out value="${index.index+1}" /></td>
 
-        </div>
-    </div>
-<!-- 分页 -->	    
-	    <div id="page">
-	      <jsp:include page="../common/page.jsp" flush="true"/>
-	    </div>
+									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
+										height="30" width="30" alt="头像"
+										onerror="miniImgNotFound('${pageContext.request.contextPath}');"></td>
+									<td>${dataList.processDefinitionName}</td>
+									<td>${dataList.bizKey}</td>
+									<td><a name="doTask" href="#"
+										formUri="${dataList.formUri}" tii="${dataList.taskInstanceId}"
+										pii="${dataList.processInstanceId}" bk="${dataList.bizKey}"
+										pdk="${dataList.processDefinitionKey}">${dataList.description}</a>
+									</td>
+									<td>${dataList.userName}</td>
+									<td><fmt:formatDate value="${dataList.PI_START_TIME}"
+											type="both" /></td>
+									<td>${dataList.nodeName}</td>
+									<td><fmt:formatDate value="${dataList.createTime}"
+											type="both" />
+									</td>
+									<td><a name="flowGraph" href="#"
+										pii="${dataList.processInstanceId}"
+										pdk="${dataList.processDefinitionKey}">查看</a></td>
+								</tr>
+							</c:forEach>
+						</table>
 
-	</form>
-</div>
-</div>
- 
+					</div>
+				</div>
+				<!-- 分页 -->
+				<div id="page">
+					<jsp:include page="../common/page.jsp" flush="true" />
+				</div>
+
+			</form>
+		</div>
+	</div>
+
 </body>
 </html>

@@ -58,11 +58,12 @@ $("a[name=flowGraph]").click(function(){
 						<table width="100%">
 			              <tr>
 			                <td class="title-r">任务主题：</td>
-			                <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
+			                <td style="width:180px;"><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
 			                <td class="title-r">流程变量：</td>
-			                <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
+			                <td style="width:180px;"><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
 			                <td class="title-r">单 据 号：</td>
-			                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+			                <td style="width:180px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
 			              </tr>
 			              <tr>
 			                <td class="title-r">发 起 人：</td>
@@ -70,8 +71,9 @@ $("a[name=flowGraph]").click(function(){
 			                <td class="title-r">发起时间：</td>
 			                <td><input type="text" id="text_4" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
 			                 - <input type="text" id="text_5" name="startlTimeE" class="fix-input" style="width:69px;" value="${result.startlTimeE}" onClick="WdatePicker()"/></td>
-			                <td>&nbsp;</td>
-			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+			                <td></td>
+			                <td></td>
+			                <td></td>
 			              </tr>
 			            </table>
 					</div>
