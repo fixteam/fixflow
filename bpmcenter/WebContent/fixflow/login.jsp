@@ -27,7 +27,7 @@
 	                </tr>
 	                <tr>
 	                  <td class="password"><div class="btn-login"><a href="#"><em class="arrow-login"></em></a></div>
-	                  <input type="password" name="password" class="inputset" /></td>
+	                  <input type="password" name="password" class="inputset" id="pwd"/></td>
 	                </tr>
 	                <tr>
 	                  <td class="change"><a href="#" id="returnLoginForm">切换用户</a></td>
@@ -97,6 +97,12 @@ $(function(){
 	var username = window.sessionStorage.getItem("username");
 	if(username==undefined||username==""){
 		$("#returnToLockScreen").hide();
+		$("#userName").focus();
+		$(document).keydown(function(event){
+			if (event.which == 13) {
+				$("#login").click();
+			}
+		});
 	}else{
 		$("#lastLoginUser").html(username);
 		if(window.sessionStorage.getItem("loginType")){
@@ -105,6 +111,12 @@ $(function(){
 		$("#userNameS").val(username);
 		$("#lockScreen").show();
 		$("#loginForm").hide();
+		$("#pwd").focus();
+		$(document).keydown(function(event){
+			if (event.which == 13) {
+				$(".btn-login").click();
+			}
+		});
 	}
 })
 </script>
