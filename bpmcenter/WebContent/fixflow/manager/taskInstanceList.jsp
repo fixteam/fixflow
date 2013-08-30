@@ -97,16 +97,12 @@ $(function(){
               </tr>
             </table>
         </div>
-        <div>
-        	<table width="400px">
-              	<tbody><tr>
-              	<td><div class="btn-normal"><a href="#" onclick="doSuspend();">暂停</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="doContinue();">恢复</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="">转发</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="">退回-节点</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="">退回-步骤</a></div></td>
-              	</tr>
-              	</tbody></table>
+        <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
+        	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">转发</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-节点</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
