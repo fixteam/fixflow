@@ -98,9 +98,7 @@ Fix = {
  * */
 $(function(){
 	$("table.fix-table tbody tr:odd").addClass("odd");
-	$("table.fix-table tbody tr").click(function(){
-		
-	});
+	Fix.Util.CheckBtnStatus();
 });
 
 function imgNotFound(url){ 
