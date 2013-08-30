@@ -60,7 +60,7 @@
 							<tbody>
 								<c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 									<tr>
-										<td><c:out value="${index.index+1}"/></td>
+										<td style="text-align: center;"><c:out value="${index.index+1}"/></td>
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionKey}</td>
 										<td>${dataList.subject}</td>
