@@ -64,7 +64,15 @@ public interface ManagementService extends ProcessService{
 	
 
 	
+	/**
+	 * 恢复任务
+	 */
+	void resumeTask(String taskId);
 	
+	/**
+	 * 暂停任务
+	 */
+	void suspendTask(String taskId);
 	
 	
 	/* ****************************************    任务干预接口  end  ************************************************************ */

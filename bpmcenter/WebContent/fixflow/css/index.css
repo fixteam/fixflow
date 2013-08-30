@@ -65,7 +65,7 @@ body { min-width:1000px;}
 .btn-normal a:hover { border:2px solid #dc562e; color:#dc562e; background:#fff;}
 .btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
 .btn-normal a:hover .arrow-small { background-position:0 -12px;}
-.btn-disable { display:inline-block; margin:0 4px;}
+.btn-disable { display:inline-block; }
 .btn-disable a,.btn-disable a:hover { display:inline-block; padding:3px 8px; border:2px solid #ddd; background:#ddd; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#999; text-decoration:none;}
 
 /* input按钮样式 */
@@ -79,8 +79,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 /* 表单 */
 .fix-table { margin:0; color:#444;}
-.fix-table th { padding:4px 0; background:#f8ddd5; font-family:"微软雅黑"; border-right: 1px solid #fff; text-align:center;}
-.fix-table td { padding:2px 0;}
+.fix-table th { padding:5px 0; background:#f8ddd5; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #fff;}
+.fix-table td { padding:6px; border-bottom:1px solid #fff;}
 .fix-table td.title-r { text-align:right; color:#666; padding-right:20px;}
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
 .fix-table td.time { text-align:center;}

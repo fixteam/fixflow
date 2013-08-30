@@ -21,7 +21,6 @@ package com.founder.fix.fixflow.core.impl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -165,6 +164,7 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	public List<Trigger> getTriggerList(String jobName, String jobGroup) {
 		Scheduler scheduler = getScheduler();
 		try{
+			@SuppressWarnings("unchecked")
 			List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(new JobKey(jobName,jobGroup));
 			return triggers;
 		}catch(Exception e){

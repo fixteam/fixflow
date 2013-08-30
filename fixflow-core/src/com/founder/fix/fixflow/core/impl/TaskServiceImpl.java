@@ -183,6 +183,20 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	public void deleteTasks(Collection<String> taskIds, boolean cascade) {
 		commandExecutor.execute(new DeleteTaskCmd(taskIds, cascade));
 	}
+	
+	public void resumeTask(String taskId) {
+
+		TaskInstance taskInstance=createTaskQuery().taskId(taskId).singleResult();
+		taskInstance.resume();
+		saveTask(taskInstance);
+	}
+
+	public void suspendTask(String taskId) {
+
+		TaskInstance taskInstance=createTaskQuery().taskId(taskId).singleResult();
+		taskInstance.suspend();
+		saveTask(taskInstance);
+	}
 
 	public TaskQuery createTaskQuery() {
 		return ProcessObjectFactory.FACTORYINSTANCE.createTaskQuery(commandExecutor);
