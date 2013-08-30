@@ -95,6 +95,17 @@ $(function(){
               </tr>
             </table>
         </div>
+        <div>
+        	<table width="400px">
+              	<tbody><tr>
+              	<td><div class="btn-normal"><a href="#" onclick="doSuspend();">暂停</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="doContinue();">恢复</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="">转发</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="">退回-节点</a></div></td>
+              	<td><div class="btn-normal"><a href="#" onclick="">退回-步骤</a></div></td>
+              	</tr>
+              	</tbody></table>
+        </div>
         <div class="content">
         	<table width="100%" class="fix-table">
               <thead>
