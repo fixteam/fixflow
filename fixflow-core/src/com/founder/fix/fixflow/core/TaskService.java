@@ -179,6 +179,17 @@ public interface TaskService extends ProcessService {
 	 *            是否级联
 	 */
 	void deleteTasks(Collection<String> taskIds, boolean cascade);
+	
+	
+	/**
+	 * 恢复任务
+	 */
+	void resumeTask(String taskId);
+	
+	/**
+	 * 暂停任务
+	 */
+	void suspendTask(String taskId);
 
 	/**
 	 * 返回一个新 {@link TaskQuery}，可用于动态查询的任务。
