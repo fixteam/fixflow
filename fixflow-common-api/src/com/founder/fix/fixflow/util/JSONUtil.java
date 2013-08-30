@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -120,22 +118,6 @@ public class JSONUtil {
 		return obj;
 	}
 	
-	public static Object parseJSON(HttpServletRequest request) { 
-        JSONObject jsonObject = new JSONObject(); 
-        try { 
-            Map<String, String[]> parameterMap = request.getParameterMap(); 
-            // 通过循环遍历的方式获得key和value并set到JSONObject中 
-            Iterator<String> paIter = parameterMap.keySet().iterator(); 
-            while (paIter.hasNext()) { 
-                    String key = paIter.next().toString(); 
-                    String[] values = (String[])parameterMap.get(key); 
-                    jsonObject.accumulate(key, values[0]); 
-            } 
-        } catch (Exception e) { 
-            e.printStackTrace(); 
-        } 
-        return parseJSON(jsonObject.toString()); 
-	}
 	
 	private static Object __parseJSON(Object jsonObj,boolean doAll) throws JSONException {
 		Object ret = null;

@@ -82,7 +82,8 @@ $(function(){
                 <td class="title-r">流程变量：</td>
                 <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
                 <td class="title-r">单 据 号：</td>
-                <td><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td style="width:200px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
               <tr>
                 <td class="title-r">发 起 人：</td>
@@ -91,9 +92,17 @@ $(function(){
                 <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
                  - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
                 <td></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td></td>
+              	<td></td>
               </tr>
             </table>
+        </div>
+        <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
+        	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">转发</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-节点</a></div>
+            <div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">

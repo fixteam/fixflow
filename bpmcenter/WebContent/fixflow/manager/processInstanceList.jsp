@@ -29,7 +29,8 @@
                 <td class="title-r">流程实例号：</td>
                 <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>
-                <td><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
+                <td style="width:200px;"><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
               <tr>
                 <td class="title-r">业务数据：</td>
@@ -40,26 +41,18 @@
                 <td>
                 <input type="text" id="text_5" name="status" class="fix-input" style="width:160px;" value="${result.status}"/>
                 </td>
-              </tr>
-              <tr>
-              	<td colspan="5">
-              	<table width="400px">
-              	<tr>
-              	<td><div class="btn-normal"><a href="#" onclick="doSuspend();">暂停</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="doContinue();">恢复</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="doTerminat();">作废</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="doDelete();">删除</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="updateVariables();">变量管理</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="updateToken();">令牌管理</a></div></td>
-              	<td><div class="btn-normal"><a href="#" onclick="setHis();">归档</a></div></td>
-              	</tr>
-              	</table>
-              	</td>
-              	<td>
-              	<div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div>
-              	</td>
+                <td></td>
               </tr>
             </table>
+        </div>
+        <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
+        	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+        	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
+           	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTerminat();">作废</a></div>
+           	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
+        	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
+           	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
+          	<div class="btn-normal" style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">

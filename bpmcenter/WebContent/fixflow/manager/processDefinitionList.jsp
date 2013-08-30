@@ -106,17 +106,16 @@ a{text-decoration: none;}
                 <td class="title-r">流程名称：</td>
                 <td><input type="text" id="text_4" name="queryProcessName" class="fix-input" style="width:160px;" value="${result.queryProcessName}"/></td>
                 <td class="title-r">流程分类：</td>
-                <td><input type="text" id="text_4" name="queryType" class="fix-input" style="width:160px;" value="${result.queryType}"/></td>
-                <td></td>
+                <td style="width:200px;"><input type="text" id="text_4" name="queryType" class="fix-input" style="width:160px;" value="${result.queryType}"/></td>
                 <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
               </tr>
             </table>
         </div>
-       <div class="toolbar" style="padding-left:0px; padding-right:80px;">
-		  <div class="btn-normal" style="float:left;margin-left:5px;" onclick="deployment()" data-scope=all><a href="#" >发布流程</a></div>
-		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope=multi onclick="deleteDeploy(this)"><a href="#" >删除定义</a></div>
-		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope=single onclick="updateDeploy(this)"><a href="#" >更新定义</a></div>
-		  <div class="btn-normal" style="float:left;margin-left:5px;" data-scope=single onclick="downloadProcess(this)"><a href="#" >下载定义</a></div>
+       <div class="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
+		  <div class="btn-normal" style="display:inline-block;margin-left:5px;" onclick="deployment()" data-scope=all><a href="#" >发布流程</a></div>
+		  <div class="btn-normal" style="display:inline-block;margin-left:5px;" data-scope=multi onclick="deleteDeploy(this)"><a href="#" >删除定义</a></div>
+		  <div class="btn-normal" style="display:inline-block;margin-left:5px;" data-scope=single onclick="updateDeploy(this)"><a href="#" >更新定义</a></div>
+		  <div class="btn-normal" style="display:inline-block;margin-left:5px;" data-scope=single onclick="downloadProcess(this)"><a href="#" >下载定义</a></div>
 	  </div>
 	  <div>
 	 

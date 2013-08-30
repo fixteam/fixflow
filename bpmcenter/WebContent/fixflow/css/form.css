@@ -25,3 +25,5 @@
 .btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
 .btn-normal a:hover .arrow-small { background-position:0 -12px;}
 
+/* 工具条容器 */
+.toolbar { text-align: center;}
