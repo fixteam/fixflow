@@ -51,6 +51,7 @@ import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
@@ -61,6 +62,7 @@ import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.event.BaseElementEventImpl;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.DeploymentCache;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -158,11 +160,21 @@ public class ProcessDefinitionPersistence {
 		}
 		return processDefinition;
 	}
-
-	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery) {
-		List<Object> objectParamWhere = new ArrayList<Object>();
-		String selectProcessDefinitionsByQueryCriteriaSql = " select PD.* from FIXFLOW_DEF_PROCESSDEFINITION PD ";
+	
+	public String selectProcessDefinitionsByQueryCriteria(String selectProcessDefinitionsByQueryCriteriaSql, ProcessDefinitionQueryImpl processDefinitionQuery, List<Object> objectParamWhere){
+		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql+" from FIXFLOW_DEF_PROCESSDEFINITION PD ";
+		//自定义扩展查询
+		if(processDefinitionQuery.getQueryExpandTo()!=null&&processDefinitionQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processDefinitionQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
+			selectProcessDefinitionsByQueryCriteriaSql=selectProcessDefinitionsByQueryCriteriaSql+processDefinitionQuery.getQueryExpandTo().getLeftJoinSql();
+		}
 		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " WHERE 1=1";
+		//自定义扩展查询
+		if(processDefinitionQuery.getQueryExpandTo()!=null&&processDefinitionQuery.getQueryExpandTo().getWhereSql()!=null&&!processDefinitionQuery.getQueryExpandTo().getWhereSql().equals("")){
+			selectProcessDefinitionsByQueryCriteriaSql=selectProcessDefinitionsByQueryCriteriaSql+" and "+processDefinitionQuery.getQueryExpandTo().getWhereSql();
+			if(processDefinitionQuery.getQueryExpandTo().getWhereSqlObj()!=null&&processDefinitionQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
+				objectParamWhere.addAll(processDefinitionQuery.getQueryExpandTo().getWhereSqlObj());
+			}
+		}
 		if (processDefinitionQuery.getId() != null) {
 			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_ID=? ";
 			objectParamWhere.add(processDefinitionQuery.getId());
@@ -206,10 +218,23 @@ public class ProcessDefinitionPersistence {
 					+ " and PD.DEPLOYMENT_ID =?";
 			objectParamWhere.add(processDefinitionQuery.getDeploymentId());
 		}
+		
+		return selectProcessDefinitionsByQueryCriteriaSql;
+	}
+
+	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery) {
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		String selectProcessDefinitionsByQueryCriteriaSql = " select PD.* ";
+		if(processDefinitionQuery.getQueryExpandTo()!=null && processDefinitionQuery.getQueryExpandTo().getFieldSql()!=null&&!processDefinitionQuery.getQueryExpandTo().getFieldSql().equals("")){
+			selectProcessDefinitionsByQueryCriteriaSql=selectProcessDefinitionsByQueryCriteriaSql+" , "+processDefinitionQuery.getQueryExpandTo().getFieldSql();
+		}
+		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteria(selectProcessDefinitionsByQueryCriteriaSql,processDefinitionQuery,objectParamWhere);
 		if (processDefinitionQuery.getOrderBy() != null) {
 			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " order by "
 					+ processDefinitionQuery.getOrderBy().toString();
 		}
+		
+		/********这里需要添加分页和order by,并将不认识的扩展字段返回回去 *******************/
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
 		List<ProcessDefinitionBehavior> processDefinitionList = new ArrayList<ProcessDefinitionBehavior>();
 		for (Map<String, Object> dataMap : dataObj) {
@@ -239,51 +264,8 @@ public class ProcessDefinitionPersistence {
 	
 	public long selectProcessDefinitionsCountByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery){
 		List<Object> objectParamWhere = new ArrayList<Object>();
-		String selectProcessDefinitionsByQueryCriteriaSql = " select count(*) from FIXFLOW_DEF_PROCESSDEFINITION PD ";
-		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " WHERE 1=1";
-		if (processDefinitionQuery.getId() != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_ID=? ";
-			objectParamWhere.add(processDefinitionQuery.getId());
-		}
-		if (processDefinitionQuery.getKey() != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_KEY=? ";
-			objectParamWhere.add(processDefinitionQuery.getKey());
-		}
-		if (processDefinitionQuery.getKeyLike() != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " and PD.PROCESS_KEY like '%"+processDefinitionQuery.getKeyLike()+"%' ";
-		}
-		if (processDefinitionQuery.isLatest()) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.VERSION = (select max(VERSION) from FIXFLOW_DEF_PROCESSDEFINITION where PROCESS_KEY = PD.PROCESS_KEY)";
-		}
-		if(processDefinitionQuery.getCategory() != null){
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.CATEGORY = ?";
-			objectParamWhere.add(processDefinitionQuery.getCategory());
-		}
-		if(processDefinitionQuery.getCategoryLike() !=null){
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.CATEGORY like '%"+processDefinitionQuery.getCategoryLike()+"%'";
-		}
-		if(processDefinitionQuery.getName() != null){
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.PROCESS_NAME =?";
-			objectParamWhere.add(processDefinitionQuery.getName());
-		}
-		if(processDefinitionQuery.getNameLike() !=null){
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.PROCESS_NAME like '%"+processDefinitionQuery.getNameLike()+"%'";
-		}
-		if(processDefinitionQuery.getVersion() != null){
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.VERSION =?";
-			objectParamWhere.add(processDefinitionQuery.getVersion());
-		}
-		if(processDefinitionQuery.getDeploymentId() != null){
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql
-					+ " and PD.DEPLOYMENT_ID =?";
-			objectParamWhere.add(processDefinitionQuery.getDeploymentId());
-		}
+		String selectProcessDefinitionsByQueryCriteriaSql = " select count(*)";
+		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteria(selectProcessDefinitionsByQueryCriteriaSql,processDefinitionQuery,objectParamWhere);
 		Object returnObj = sqlCommand.queryForValue(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
 		return Integer.parseInt(returnObj.toString());
 	}

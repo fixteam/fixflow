@@ -5,15 +5,124 @@
 <chapter>
   <title>快速入门</title>
   
+  <section xml:id="gs.prerequisites">
+    <title>先决条件</title>
+    <para> 本章建立在用户已经下载Eclipse Juno SR2工具，安装了JDK 6+运行环境，以及tomcat
+      V6.0服务器，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，在github.com注册了账号。</para>
+  </section>
+  <section xml:id="gs.goal">
+    <title>目标</title>
+    <para> 获取并部署好FixFlow源代码，保证可以正常访问运行FixFlow的Web。</para>
+  </section>
   <section xml:id="gs.getFixFlow">
     <title>获取FixFlow</title>
-    <para>
-    </para>
+    <orderedlist>
+      <listitem> <para> 打开eclispse工具，先设置下workspace的编码方式，fixflow使用UTF-8的编码方式，点击window->preferences->General->workspace->Text file encoding 把编码方式改为UTF-8即可</para>
+      </listitem>
+      <listitem>       
+        <para>然后在工程空白区域，右键选择import->import->Git->Projects from git ，点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.1.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>在弹出的界面选择URI，点击“Next”，弹出如下界面：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.2.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>访问github.com网站，登陆，搜索fixflow,回车，如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.3.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+         <para>搜索到FixFlow相关项目，点击fixteam/fixflow进入</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.7.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+       <para>点击右边https clone url的copy按钮，复制fixflow的git地址</para>
+       <mediaobject><imageobject>
+         <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.4.png"/>
+       </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>返回eclipse，粘贴如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.5.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>输入注册的git账号密码信息，选择store in Secure store(记住密码)，点击“Next”，此时会出现fixflow代码的分支信息，如下图。全部选择，点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.6.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+         <para>选择GIT的工作目录，假设在E:\GIT\fixflow（此目录后面会用到）点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.9.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>此时会从github下载代码，需要等待几分钟，完成后如图，直接点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.10.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>此时会列出fixflow项目的信息，直接点击“finish”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.8.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>至此，fixflow项目的代码已经下载到本地，下载后的项目结构如图，因为没有配置web环境，所以会有大量错误：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.11.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+    </orderedlist>
   </section>
   <section xml:id="gs.webConfig">
     <title>Web环境配置</title>
     <para>
+      进行此节之前，请确保eclipse中已经有bpmcenter及项目项目代码
     </para>
+    <para>此时项目中有大量错误，我们排查。</para>
+    <orderedlist>
+        <listitem>
+          <para>首先，因为项目的.project文件中使用了GIT_FIXFLOW_HOME全局变量，所以我们要声明下此变量：</para>
+          <para> 打开window-->preferences-->General-->workspace-->linked Resources，新增变量：GIT_FIXFLOW_HOME,路径为上面设置的GIT工作目录+fixflow如：E:\GIT\fixflow </para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.12.png"/>
+          </imageobject></mediaobject>
+        </listitem>
+        <listitem>
+        <para>其次，因为项目依赖web服务器，所以我们要部署一个服务器：</para>
+          <para>调出服务器视图 window-->show View-->Server 新建一个服务器，本例我们选择apache tomcat V6.0作为测试服务器。</para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.13.png"/>
+          </imageobject></mediaobject>
+        <para>选择tomcat路径，（没有tomcat的可以去网上下载个），选择安装的jdk 点击Next,将bpmcenter项目add进去 点击finish。</para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.14.png"/>
+          </imageobject></mediaobject>
+        <para>双击新建的服务器，设置发布到tomcat目录下</para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.15.png"/>
+          </imageobject></mediaobject>
+        </listitem>
+       <listitem>
+         <para>重新构建项目，选择project-->clean。等结束后再看，项目中的错误全部都消失了。</para>
+         <mediaobject><imageobject>
+           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.16.png"/>
+         </imageobject></mediaobject>
+       </listitem>
+     </orderedlist>
   </section>
   
   <section xml:id="gs.dataBaseRun">

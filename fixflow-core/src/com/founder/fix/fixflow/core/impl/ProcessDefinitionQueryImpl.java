@@ -24,6 +24,7 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 
 public class ProcessDefinitionQueryImpl extends
@@ -43,8 +44,12 @@ public class ProcessDefinitionQueryImpl extends
 	  protected String resourceNameLike;
 	  protected Integer version;
 	  protected boolean latest = false;
+	  
+	  public QueryExpandTo getQueryExpandTo() {
+		return queryExpandTo;
+	  }
 
-	  public ProcessDefinitionQueryImpl() {
+	public ProcessDefinitionQueryImpl() {
 	  }
 
 	  public ProcessDefinitionQueryImpl(CommandContext commandContext) {
