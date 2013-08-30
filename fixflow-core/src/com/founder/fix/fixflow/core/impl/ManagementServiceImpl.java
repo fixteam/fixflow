@@ -6,8 +6,10 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.ManagementService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
+import com.founder.fix.fixflow.core.task.TaskInstance;
 
 public class ManagementServiceImpl extends ServiceImpl implements ManagementService {
 
@@ -70,6 +72,20 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
 		paramMap.put("rollBackNodeId", rollBackNodeId);
 		expandTaskCommand.setParamMap(paramMap);
 		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommand, null);
+	}
+
+	public void resumeTask(String taskId) {
+		TaskService taskService=getProcessEngine().getTaskService();
+		TaskInstance taskInstance=taskService.createTaskQuery().taskId(taskId).singleResult();
+		taskInstance.resume();
+		taskService.saveTask(taskInstance);
+	}
+
+	public void suspendTask(String taskId) {
+		TaskService taskService=getProcessEngine().getTaskService();
+		TaskInstance taskInstance=taskService.createTaskQuery().taskId(taskId).singleResult();
+		taskInstance.suspend();
+		taskService.saveTask(taskInstance);
 	}
 
 	
