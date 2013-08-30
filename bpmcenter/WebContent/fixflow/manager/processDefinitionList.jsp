@@ -18,7 +18,8 @@ a{text-decoration: none;}
 <title>流程定义列表</title>
 <script type="text/javascript">
 	function deployment(){
-		window.open("manager/deployment.jsp");
+		var obj = {};
+		window.showModalDialog("fixflow/manager/deployment.jsp",obj,"dialogWidth=600px;dialogHeight=400px");
 	}
 	
 	function deleteDeploy(obj){
@@ -50,7 +51,8 @@ a{text-decoration: none;}
 		if(checkList.length >0){
 		 	deploymentId = $(checkList[0]).attr("deploymentId");
 		}
-		window.open("manager/deployment.jsp?deploymentId="+deploymentId);
+		var obj = {};
+		window.showModalDialog("manager/deployment.jsp?deploymentId="+deploymentId,obj,"dialogWidth=600px;dialogHeight=400px");
 	}
 	
 	function downloadProcess(obj){
@@ -120,9 +122,9 @@ a{text-decoration: none;}
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
+		   <th >流程名称</th>
 		    <th width="12%">流程编号</th>
 		    <th width="28%">唯一编号</th>
-		    <th >流程名称</th>
 		    <th width="5%">流程版本</th>
 		    <th width="8%">流程分类</th>
 		  </thead>
@@ -130,9 +132,9 @@ a{text-decoration: none;}
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" processDefinitionId="${dataList.processDefinitionId}" /></td>
+		       <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.processDefinitionKey}</td>
 		      <td>${dataList.processDefinitionId}</td>
-		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.version}</td>
 		      <td>${dataList.category}</td>
 		    </tr>
