@@ -21,11 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.founder.fix.fixflow.core.HistoryService;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
-import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
-import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.runtime.Token;
