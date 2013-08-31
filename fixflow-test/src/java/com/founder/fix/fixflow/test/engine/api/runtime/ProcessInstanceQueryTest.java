@@ -96,9 +96,9 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//根据开始时间降序查询
 		processInstanceQuery.orderByStartTime().desc();
 		//获取第一页的0-5条结果
-		processInstances = processInstanceQuery.listPage(0, 5);
+		processInstances = processInstanceQuery.listPage(1, 5);
 		//获取第二页5-10条结果
-		List<ProcessInstance> tmpProcessInstances = processInstanceQuery.listPage(5, 10);
+		List<ProcessInstance> tmpProcessInstances = processInstanceQuery.listPage(6, 10);
 		//取得第一条结果
 		Date firstStartTime = processInstances.get(0).getStartTime();
 		//验证比本页所有的时间都大，表示降序排序正确
@@ -118,9 +118,9 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//根据开始时间升序排序
 		processInstanceQuery.orderByStartTime().asc();
 		//获取第一页的0-5条结果
-		processInstances = processInstanceQuery.listPage(0, 5);
+		processInstances = processInstanceQuery.listPage(1, 5);
 		//获取第二页5-10条结果
-		tmpProcessInstances = processInstanceQuery.listPage(5, 10);
+		tmpProcessInstances = processInstanceQuery.listPage(6, 10);
 		//取得第一条结果
 		firstStartTime = processInstances.get(0).getStartTime();
 		//验证比本页所有的时间都小，表示升序正确
@@ -141,9 +141,9 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//根据更新时间升序排序
 		processInstanceQuery.orderByUpdateTime().asc();
 		//获取第一页的0-5条结果
-		processInstances = processInstanceQuery.listPage(0, 5);
+		processInstances = processInstanceQuery.listPage(1, 5);
 		//获取第二页5-10条结果
-		tmpProcessInstances = processInstanceQuery.listPage(5, 10);
+		tmpProcessInstances = processInstanceQuery.listPage(6, 10);
 		//取得第一条结果
 		firstStartTime = processInstances.get(0).getUpdateTime();
 		//验证比本页所有的时间都小，表示升序正确
@@ -163,9 +163,9 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//根据更新时间降序序排序
 		processInstanceQuery.orderByUpdateTime().desc();
 		//获取第一页的0-5条结果
-		processInstances = processInstanceQuery.listPage(0, 5);
+		processInstances = processInstanceQuery.listPage(1, 5);
 		//获取第二页5-10条结果
-		tmpProcessInstances = processInstanceQuery.listPage(5, 10);
+		tmpProcessInstances = processInstanceQuery.listPage(6, 10);
 		//取得第一条结果
 		firstStartTime = processInstances.get(0).getUpdateTime();
 		//验证比本页所有的时间都小，表示降序正确
