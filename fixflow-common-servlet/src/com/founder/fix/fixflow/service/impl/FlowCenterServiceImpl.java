@@ -431,7 +431,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				for(TaskInstance tmp:instances){
 					instanceMaps.add(tmp.getPersistentState());
 				}
-				tq.taskNotEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
+				tq.taskNotEnd().orderByTaskCreateTime().asc();
 				List<TaskInstance> instancesNotEnd = tq.list();
 				result.put("notEnddataList", instancesNotEnd);
 				result.put("dataList", instanceMaps);
