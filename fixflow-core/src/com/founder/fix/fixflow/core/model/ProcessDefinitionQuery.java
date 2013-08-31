@@ -18,7 +18,6 @@
 package com.founder.fix.fixflow.core.model;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.query.Query;
 
 /**

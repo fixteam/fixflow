@@ -74,11 +74,8 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 * @ordered
 	 */
 	protected int version = VERSION_DEFAULT;
-	
+
 	protected String diagramResourceName;
-
-
-	
 
 	/**
 	 * 返回 '<em><b>Version</b></em>' 字段. <!-- 开始-用户-文档 -->
@@ -299,6 +296,51 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	public String getDeploymentId() {
 		return this.deploymentId;
 	}
+	
+	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
+	
+	public Object getExtensionField(String fieldName) {
+		return extensionFields.get(fieldName);
+	}
+
+	public Map<String, Object> getExtensionFields() {
+		return extensionFields;
+	}
+
+	public void setExtensionFields(Map<String, Object> extensionFields) {
+		this.extensionFields = extensionFields;
+	}
+
+	public void addExtensionField(String fieldName, Object fieldValue) {
+		this.extensionFields.put(fieldName, fieldValue);
+	}
+	
+	/**
+	 * 从数据库初始化对象
+	 * 
+	 * @param entityMap
+	 *            字段Map
+	 * @return
+	 */
+	public void persistentInit(Map<String, Object> entityMap) {
+
+		String processId = StringUtil.getString(entityMap.get("PROCESS_ID"));
+		String deploymentId = StringUtil.getString(entityMap.get("DEPLOYMENT_ID"));
+		String resourceName = StringUtil.getString(entityMap.get("RESOURCE_NAME"));
+		int version = StringUtil.getInt(entityMap.get("VERSION"));
+		String resourceId = StringUtil.getString(entityMap.get("RESOURCE_ID"));
+		// String processKey =
+		// StringUtil.getString(entityMap.get("PROCESS_KEY"));
+		String diagramResourceName = StringUtil.getString(entityMap.get("DIAGRAM_RESOURCE_NAME"));
+		this.setProcessDefinitionId(processId);
+		this.setDeploymentId(deploymentId);
+		this.setResourceName(resourceName);
+		this.setVersion(version);
+		this.setResourceId(resourceId);
+		this.setDiagramResourceName(diagramResourceName);
+		
+		this.setExtensionFields(entityMap);
+	}
 
 	public Map<String, Object> getPersistentState() {
 
@@ -312,7 +354,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		persistentState.put("resourceId", this.resourceId);
 		persistentState.put("deploymentId", this.deploymentId);
 		persistentState.put("diagramResourceName", this.diagramResourceName);
-		
+
 		// persistentState.put("startForm", this.getStartFormKey());
 
 		return persistentState;
@@ -350,15 +392,13 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	protected String category;
 
 	public String getCategory() {
-		
-		if(this.category==null){
 
-			this.category=StringUtil.getString(this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY));
+		if (this.category == null) {
+
+			this.category = StringUtil.getString(this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY));
 		}
 		return this.category;
 	}
-
-
 
 	public String getStartFormKey() {
 
@@ -396,7 +436,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	public FormUri getFormUriObj() {
 
 		if (this.formUri == null) {
-			this.formUri =EMFUtil.getExtensionElementOne(FormUri.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI);
+			this.formUri = EMFUtil.getExtensionElementOne(FormUri.class, this, FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI);
 		}
 		return this.formUri;
 	}
@@ -485,10 +525,9 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 
 			TaskSubject taskSubjectObj = EMFUtil.getExtensionElementOne(TaskSubject.class, this, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT);
 
-			if(taskSubjectObj!=null){
+			if (taskSubjectObj != null) {
 				this.taskSubject = new TaskSubjectBehavior(taskSubjectObj);
 			}
-			
 
 		}
 
@@ -519,7 +558,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	public void setDataVariableMgmtDefinition(DataVariableMgmtDefinition dataVariableMgmtDefinition) {
 		this.dataVariableMgmtDefinition = dataVariableMgmtDefinition;
 	}
-	
+
 	public String getDiagramResourceName() {
 		return diagramResourceName;
 	}

@@ -51,7 +51,6 @@ import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
@@ -62,7 +61,6 @@ import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.event.BaseElementEventImpl;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.DeploymentCache;
-import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -107,26 +105,8 @@ public class ProcessDefinitionPersistence {
 			return null;
 		}
 		Map<String, Object> dataMap = dataObj.get(0);
-		String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
-		String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
-		String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-		int version = StringUtil.getInt(dataMap.get("VERSION"));
-		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
-		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-		String diagramResourceName=StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
-		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
-		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
-		if (processDefinition == null) {
-			processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
-			processDefinition.setProcessDefinitionId(processId);
-			processDefinition.setDeploymentId(deploymentId);
-			processDefinition.setResourceName(resourceName);
-			processDefinition.setVersion(version);
-			processDefinition.setResourceId(resourceId);
-			processDefinition.setDiagramResourceName(diagramResourceName);
-			deploymentCache.addProcessDefinition(processDefinition);
-		}
-		return processDefinition;
+		ProcessDefinitionBehavior processDefinitionBehavior = getProcessDefinition(dataMap);
+		return processDefinitionBehavior;
 	}
 
 	public ProcessDefinitionBehavior selectProcessDefinitionById(String processDefinitionId) {
@@ -142,21 +122,8 @@ public class ProcessDefinitionPersistence {
 				throw new FixFlowException("流程定义 " + processDefinitionId + " 未查询到!");
 			}
 			Map<String, Object> dataMap = dataObj.get(0);
-			String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
-			String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
-			String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-			int version = StringUtil.getInt(dataMap.get("VERSION"));
-			String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
-			String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-			String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
-			processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
-			processDefinition.setProcessDefinitionId(processId);
-			processDefinition.setDeploymentId(deploymentId);
-			processDefinition.setResourceName(resourceName);
-			processDefinition.setVersion(version);
-			processDefinition.setResourceId(resourceId);
-			processDefinition.setDiagramResourceName(diagramResourceName);
-			deploymentCache.addProcessDefinition(processDefinition);
+			ProcessDefinitionBehavior processDefinitionBehavior = getProcessDefinition(dataMap);
+			return processDefinitionBehavior;
 		}
 		return processDefinition;
 	}
@@ -238,25 +205,7 @@ public class ProcessDefinitionPersistence {
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
 		List<ProcessDefinitionBehavior> processDefinitionList = new ArrayList<ProcessDefinitionBehavior>();
 		for (Map<String, Object> dataMap : dataObj) {
-			String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
-			String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
-			String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-			int version = StringUtil.getInt(dataMap.get("VERSION"));
-			String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
-			String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-			String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
-			DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
-			ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
-			if (processDefinition == null) {
-				processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
-				processDefinition.setResourceId(resourceId);
-				processDefinition.setProcessDefinitionId(processId);
-				processDefinition.setDeploymentId(deploymentId);
-				processDefinition.setResourceName(resourceName);
-				processDefinition.setVersion(version);
-				processDefinition.setDiagramResourceName(diagramResourceName);
-				deploymentCache.addProcessDefinition(processDefinition);
-			}
+			ProcessDefinitionBehavior processDefinition = getProcessDefinition(dataMap);
 			processDefinitionList.add(processDefinition);
 		}
 		return processDefinitionList;
@@ -293,60 +242,81 @@ public class ProcessDefinitionPersistence {
 		return resourceSet;
 	}
 
-	private ProcessDefinitionBehavior getProcessDefinition(String deploymentId, String resourceName, String processKey, String processId) {
-		String sqlText = "SELECT BYTES FROM FIXFLOW_DEF_BYTEARRAY WHERE NAME=? and DEPLOYMENT_ID=?";
-		// 构建查询参数
-		List<Object> objectParamWhere = new ArrayList<Object>();
-		objectParamWhere.add(resourceName);
-		objectParamWhere.add(deploymentId);
-		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
-		Map<String, Object> dataMap = dataObj.get(0);
-		Object bytesObject = dataMap.get("BYTES");
-		if (bytesObject != null) {
-			byte[] bytes = (byte[]) bytesObject;
-			ResourceSet resourceSet=getResourceSet();
-			String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
-			Resource ddddResource = null;
-			if (!filePath.startsWith("jar")) {
-				try {
-					filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(), "utf-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-					throw new FixFlowException("流程定义文件加载失败！", e);
+	private ProcessDefinitionBehavior getProcessDefinition(Map<String, Object> processDataMap) {
+		
+		String processId = StringUtil.getString(processDataMap.get("PROCESS_ID"));
+		String deploymentId = StringUtil.getString(processDataMap.get("DEPLOYMENT_ID"));
+		String resourceName = StringUtil.getString(processDataMap.get("RESOURCE_NAME"));
+		//int version = StringUtil.getInt(dataMap.get("VERSION"));
+		//String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
+		String processKey = StringUtil.getString(processDataMap.get("PROCESS_KEY"));
+		
+		
+		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
+		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
+		if (processDefinition == null) {
+			String sqlText = "SELECT BYTES FROM FIXFLOW_DEF_BYTEARRAY WHERE NAME=? and DEPLOYMENT_ID=?";
+			// 构建查询参数
+			List<Object> objectParamWhere = new ArrayList<Object>();
+			objectParamWhere.add(resourceName);
+			objectParamWhere.add(deploymentId);
+			List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
+			Map<String, Object> dataMap = dataObj.get(0);
+			Object bytesObject = dataMap.get("BYTES");
+			if (bytesObject != null) {
+				byte[] bytes = (byte[]) bytesObject;
+				ResourceSet resourceSet=getResourceSet();
+				String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
+				Resource ddddResource = null;
+				if (!filePath.startsWith("jar")) {
+					try {
+						filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(), "utf-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+						throw new FixFlowException("流程定义文件加载失败！", e);
+					}
+					ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+				} else {
+					ddddResource = resourceSet.createResource(URI.createURI(filePath));
 				}
-				ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
-			} else {
-				ddddResource = resourceSet.createResource(URI.createURI(filePath));
-			}
-			try {
-				ddddResource.load(new ByteArrayInputStream(bytes), null);
-			} catch (UnsupportedEncodingException e) {
-				throw new FixFlowException("定义文件加载失败!", e);
-			} catch (IOException e) {
-				throw new FixFlowException("定义文件加载失败!", e);
-			}
-			DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
-			definitions.setProcessId(processId);
-			ProcessDefinitionBehavior process = null;
-			for (RootElement rootElement : definitions.getRootElements()) {
-				if (rootElement instanceof ProcessDefinitionBehavior) {
-					ProcessDefinitionBehavior processObj = (ProcessDefinitionBehavior) rootElement;
-					if (processObj.getProcessDefinitionKey().equals(processKey)) {
-						process = (ProcessDefinitionBehavior) rootElement;
-						break;
+				try {
+					ddddResource.load(new ByteArrayInputStream(bytes), null);
+				} catch (UnsupportedEncodingException e) {
+					throw new FixFlowException("定义文件加载失败!", e);
+				} catch (IOException e) {
+					throw new FixFlowException("定义文件加载失败!", e);
+				}
+				DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
+				definitions.setProcessId(processId);
+				
+				for (RootElement rootElement : definitions.getRootElements()) {
+					if (rootElement instanceof ProcessDefinitionBehavior) {
+						ProcessDefinitionBehavior processObj = (ProcessDefinitionBehavior) rootElement;
+						if (processObj.getProcessDefinitionKey().equals(processKey)) {
+							processDefinition = (ProcessDefinitionBehavior) rootElement;
+							break;
+						}
 					}
 				}
+				processDefinition.setDefinitions(definitions);
+				// 加载事件定义.
+				loadEvent(processDefinition);
+				// 加载数据变量
+				loadVariable(processDefinition);
+				// 设置FlowNode元素的子流程
+				loadSubProcess(processDefinition);
+				processDefinition.persistentInit(processDataMap);
+				deploymentCache.addProcessDefinition(processDefinition);
+				return processDefinition;
+				
 			}
-			process.setDefinitions(definitions);
-			// 加载事件定义.
-			loadEvent(process);
-			// 加载数据变量
-			loadVariable(process);
-			// 设置FlowNode元素的子流程
-			loadSubProcess(process);
-			return process;
+			return null;
 		}
-		return null;
+		else{
+			return processDefinition;
+		}
+		
+		
 	}
 
 	private void setSubProcess(SubProcess subProcess) {
@@ -504,25 +474,7 @@ public class ProcessDefinitionPersistence {
 		objectParamWhere.add(processDefinitionVersion);
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
 		Map<String, Object> dataMap = dataObj.get(0);
-		String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
-		String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
-		String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-		int version = StringUtil.getInt(dataMap.get("VERSION"));
-		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
-		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-		String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
-		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
-		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
-		if (processDefinition == null) {
-			processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
-			processDefinition.setProcessDefinitionId(processId);
-			processDefinition.setDeploymentId(deploymentId);
-			processDefinition.setResourceName(resourceName);
-			processDefinition.setVersion(version);
-			processDefinition.setResourceId(resourceId);
-			processDefinition.setDiagramResourceName(diagramResourceName);
-			deploymentCache.addProcessDefinition(processDefinition);
-		}
+		ProcessDefinitionBehavior processDefinition = getProcessDefinition(dataMap);
 		return processDefinition;
 	}
 	@SuppressWarnings("unchecked")
@@ -537,25 +489,10 @@ public class ProcessDefinitionPersistence {
 		objectParamWhere.add(deploymentIdTemp);
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
 		Map<String, Object> dataMap = dataObj.get(0);
-		String processId = StringUtil.getString(dataMap.get("PROCESS_ID"));
-		String deploymentId = StringUtil.getString(dataMap.get("DEPLOYMENT_ID"));
-		String resourceName = StringUtil.getString(dataMap.get("RESOURCE_NAME"));
-		int version = StringUtil.getInt(dataMap.get("VERSION"));
-		String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
-		String processKey = StringUtil.getString(dataMap.get("PROCESS_KEY"));
-		String diagramResourceName = StringUtil.getString(dataMap.get("DIAGRAM_RESOURCE_NAME"));
-		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
-		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
-		if (processDefinition == null) {
-			processDefinition = getProcessDefinition(deploymentId, resourceName, processKey, processId);
-			processDefinition.setProcessDefinitionId(processId);
-			processDefinition.setDeploymentId(deploymentId);
-			processDefinition.setResourceName(resourceName);
-			processDefinition.setVersion(version);
-			processDefinition.setResourceId(resourceId);
-			processDefinition.setDiagramResourceName(diagramResourceName);
-			deploymentCache.addProcessDefinition(processDefinition);
-		}
+		ProcessDefinitionBehavior processDefinition = getProcessDefinition(dataMap);
+
 		return processDefinition;
 	}
+	
+
 }
