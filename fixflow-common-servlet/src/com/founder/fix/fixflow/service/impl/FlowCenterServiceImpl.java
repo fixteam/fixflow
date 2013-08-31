@@ -425,13 +425,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				TaskQuery tq = engine.getTaskService().createTaskQuery();
 				
 				tq.processInstanceId(processInstanceId);
-				tq.taskIsEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
+				tq.taskIsEnd().orderByEndTime().asc();
 				List<TaskInstance> instances = tq.list();
 				List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 				for(TaskInstance tmp:instances){
 					instanceMaps.add(tmp.getPersistentState());
 				}
-				tq.taskNotEnd().orderByEndTime().asc().orderByTaskCreateTime().asc();
+				tq.taskNotEnd().orderByTaskCreateTime().asc();
 				List<TaskInstance> instancesNotEnd = tq.list();
 				result.put("notEnddataList", instancesNotEnd);
 				result.put("dataList", instanceMaps);
