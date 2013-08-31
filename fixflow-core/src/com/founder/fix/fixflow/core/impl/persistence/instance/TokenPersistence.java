@@ -53,7 +53,7 @@ public class TokenPersistence {
 	 * @return
 	 */
 	private String selectTokenByQueryCriteriaSql(String sqlString,TokenQueryImpl tokenQuery, Page page,List<Object> objectParamWhere){
-		sqlString = sqlString+" FROM "+TokenObjKey.getTableName(tokenQuery.getQueryLocation())+" ";
+		sqlString = sqlString+" FROM "+TokenObjKey.getTableName(tokenQuery.getQueryLocation())+" tokentable ";
 		sqlString = sqlString + " WHERE 1=1";
 		if (tokenQuery.getTokenId() != null) {
 			sqlString = sqlString + " and TOKEN_ID=? ";
@@ -76,7 +76,7 @@ public class TokenPersistence {
 	 * @return
 	 */
 	public List<TokenEntity> selectTokenByQueryCriteria(TokenQueryImpl tokenQuery, Page page) {
-		String sqlString="select "+Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy")+" * ";
+		String sqlString="select "+Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy")+" tokentable.* ";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		sqlString=selectTokenByQueryCriteriaSql(sqlString,tokenQuery,page,objectParamWhere);
 		if (tokenQuery.getOrderBy() != null) {
