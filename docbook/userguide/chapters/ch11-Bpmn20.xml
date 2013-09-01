@@ -145,15 +145,68 @@
     <section xml:id="bpmn.event.StartEvents">
       <title>Start Events</title>
       <para>
-        
+        启动事件表示一个流程的开始。启动事件可以通过启动事件定义来确定如何启动流程(如通过一个消息启动、定时启动)。启动事件属于捕获型事件(Catching):一直在等待某个请求发生。
       </para>
+      
+
+      <para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" fileref="images/bpmn.event.StartEvents.1.png"/>
+        </imageobject></mediaobject>
+      </para>
+      
+      
     </section>
     
     <section xml:id="bpmn.event.NoneStartEvent">
       <title>None Start Event</title>
-      <para>
+      <section xml:id="bpmn.event.NoneStartEvent.Description">
         
+        <title>描述</title>
+        
+        <para>
+          一个空的开始事件(None StartEvent),表示流程的启动是人工启动的,需要通过调用FixFlow引擎RunTimeService中的启动方法将流程发起。
+        </para>
+        <para>
+          
+          <programlisting language="java">
+<![CDATA[//创建一个启动命令
+StartProcessInstanceCommand startProcessInstanceCommand = new StartProcessInstanceCommand();
+//设置需要启动的流程的KEY
+startProcessInstanceCommand.setProcessDefinitionKey("Process_StartProcessInstanceTest");
+//设置业务关联键
+startProcessInstanceCommand.setBusinessKey("bk_StartProcessInstanceTest");
+//设置流程的启动人
+startProcessInstanceCommand.setStartAuthor("1200119390");
+//启动流程，返回流程实例
+ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startProcessInstanceCommand);]]></programlisting>
+        </para>
+        <para>
+          <emphasis>注意: </emphasis> 私有子流程(subprocess) 总是有一个空启动事件(None StartEvent).
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.event.NoneStartEvent.GraphicalNotation">
+        
+        <title>图形符号</title>
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center" fileref="images/bpmn.event.NoneStartEvent.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.event.NoneStartEvent.xml">
+        <title>XML描述</title>
+      <para>
+        <programlisting language="xml">
+<![CDATA[<bpmn2:startEvent id="StartEvent_1" name="启动">]]></programlisting>
       </para>
+      </section>
+
+ 
     </section>
     
     <section xml:id="bpmn.event.TimerStartEvent">
