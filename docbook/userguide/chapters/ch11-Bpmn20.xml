@@ -145,17 +145,9 @@
     <section xml:id="bpmn.event.StartEvents">
       <title>Start Events</title>
       <para>
-        启动事件表示一个流程的开始。启动事件可以通过启动事件定义来确定如何启动流程(如通过一个消息启动、定时启动)。启动事件属于捕获型事件(Catching):一直在等待某个请求发生。
+        启动事件表示一个流程的开始。启动事件可以通过事件定义来确定如何启动流程(如通过一个消息启动、定时启动)。开始事件属于捕获型事件(Catching):一直在等待某个请求发生。
       </para>
-      
 
-      <para>
-        <mediaobject ><imageobject>
-          <imagedata align="center" fileref="images/bpmn.event.StartEvents.1.png"/>
-        </imageobject></mediaobject>
-      </para>
-      
-      
     </section>
     
     <section xml:id="bpmn.event.NoneStartEvent">
@@ -165,7 +157,7 @@
         <title>描述</title>
         
         <para>
-          一个空的开始事件(None StartEvent),表示流程的启动是人工启动的,需要通过调用FixFlow引擎RunTimeService中的启动方法将流程发起。
+          一个空的启动事件(None StartEvent),表示流程的启动是人工启动的,需要通过调用FixFlow引擎RunTimeService中的启动方法将流程发起。
         </para>
         <para>
           
@@ -190,9 +182,10 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       <section xml:id="bpmn.event.NoneStartEvent.GraphicalNotation">
         
         <title>图形符号</title>
-        <para>
+        <para> 
+          一个空启动事件是图形为一个圆,细边框空心圆圈的图标(即没有触发类型)。
           <mediaobject ><imageobject>
-            <imagedata align="center" fileref="images/bpmn.event.NoneStartEvent.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.event.NoneStartEvent.1.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -201,12 +194,37 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       <section xml:id="bpmn.event.NoneStartEvent.xml">
         <title>XML描述</title>
       <para>
+        这是一个空启动事件的XML表示,没有任何子元素(其他开始事件类型都有一个元素声明的类型)。
         <programlisting language="xml">
 <![CDATA[<bpmn2:startEvent id="StartEvent_1" name="启动">]]></programlisting>
       </para>
       </section>
+      
+      <section xml:id="bpmn.event.NoneStartEvent.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.event.NoneStartEvent.CustomExtensions.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
 
- 
+      <section xml:id="bpmn.event.NoneStartEvent.CustomExtensions">
+        <title>空启动事件的扩展</title>
+        <para>
+          <emphasis>isPersistence: </emphasis>
+          是否持久化,默认为true,当设置为false的时候,流程启动之后将不进行实例数据保存,但是在流程里边进行的其他数据数据操作可以正常使用,
+          这个功能一般作用在频繁触发的定时启动任务以及不需要人工参与的自动化任务上,而且不需要记录实例数据的流程。
+          <programlisting language="xml">
+<![CDATA[<bpmn2:startEvent id="StartEvent_1" fixflow:isPersistence="false" name="启动">]]></programlisting>
+          <emphasis>例如: </emphasis>一个频繁触发的定时启动流程。 参见:<link linkend="bpmn.event.TimerStartEvent">定时启动</link>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.event.NoneStartEvent.CustomExtensions.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
     </section>
     
     <section xml:id="bpmn.event.TimerStartEvent">
@@ -219,15 +237,51 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     <section xml:id="bpmn.event.EndEvents">
       <title>End Events</title>
       <para>
-        
+        结束事件标志着一个流程或者子流程的结束。结束事件属于抛出(Throwing)型事件，这意味着当流程执行到结束事件时结果将被抛出。结果类型的由事件内的事件定义决定。
       </para>
     </section>
     
     <section xml:id="bpmn.event.NoneEndEvent">
       <title>None End Event</title>
-      <para>
+      <section xml:id="bpmn.event.NoneEndEvent.Description">
         
-      </para>
+        <title>描述</title>
+        
+        <para>
+          一个空结束事件(NoneEndEvent)表示抛出的结果是不确定的。因此，流程引擎将只会结束当前执行路径(Token)。 
+        </para>
+        
+      </section>
+      <section xml:id="bpmn.event.NoneEndEvent.GraphicalNotation">
+        
+        <title>图形符号</title>
+        <para> 
+          一个空结束事件(NoneEndEvent)是粗的空心的圆圈都成的的图标(没有事件定义)。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.event.NoneEndEvent.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.event.NoneEndEvent.xml">
+        <title>XML描述</title>
+        <para>
+          这是一个空结束事件(NoneEndEvent)的XML表示,没有任何子元素(其他开始事件类型都有一个元素声明的类型)。
+          <programlisting language="xml"><![CDATA[<bpmn2:endEvent id="EndEvent_1" name="结束">]]></programlisting>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.event.NoneEndEvent.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.event.NoneEndEvent.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
     <section xml:id="bpmn.event.TerminateEndEvent">
@@ -524,7 +578,13 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     
   </section>
   
-  
+  <section xml:id="bpmn.FixFlow.ProcessEngine">
+    <title>FixFlow Engine 运行机制及原理</title>
+    <para>
+      
+    </para>
+    
+  </section>
   
   
 </chapter>
