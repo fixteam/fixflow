@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.ExternalContent;
@@ -32,9 +33,6 @@ import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
 
 public class FixFlowShellProxy {
 	
-	public static final String DB_FIX_BIZ_BASE="DB_FIX_BIZ_BASE";
-	
-
 	/**
 	  * getConnection
 	
@@ -70,7 +68,14 @@ public class FixFlowShellProxy {
 	}
 	
 	public static ProcessEngine createProcessEngine(Object operator) throws SQLException{
-		Connection connection = getConnection(DB_FIX_BIZ_BASE);
+		return createProcessEngine(operator,false);
+	}
+	
+	public static ProcessEngine createProcessEngine(Object operator,boolean needTransaction) throws SQLException{
+		Connection connection = getConnection(ConnectionManagement.defaultDataBaseId);
+		if(needTransaction){
+			connection.setAutoCommit(false);
+		}
 		return createProcessEngine(operator,connection);
 	}
 	

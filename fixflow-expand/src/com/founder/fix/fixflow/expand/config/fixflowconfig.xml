@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.0.0.20130806">
-  <dataBaseConfig selected="oracle" mode="internal" isEnableDesCon="false">
+  <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
+    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>   
     <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
     <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
@@ -41,7 +42,7 @@
     <taskCommandDef id="endEvent" name="流程结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="receiveEnd" name="等待结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
   </taskCommandConfig>
-  <designerOrgConfig dataBaseId="oracle">
+  <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="false" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
       <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from au_userinfo t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID"/>
@@ -104,8 +105,9 @@
   <fixThreadPoolExecutorConfig>
     <fixThreadPoolExecutor threadPoolKey="default" threadPoolName="默认线程池" corePoolSize="1" maximumPoolSize="1" keepAliveTime="1"/>
   </fixThreadPoolExecutorConfig>
-  <connectionManagementConfig selected="General">
+  <connectionManagementConfig selected="FixFlow">
     <connectionManagementInstanceConfig id="FixCS" name="FixCS平台连接管理" classImpl="com.founder.fix.fixflow.expand.database.FixConnectionManagement"/>
+    <connectionManagementInstanceConfig id="FixFlow" name="BPM产品连接管理" classImpl="com.founder.fix.fixflow.expand.database.FixFlowConnectionManagement"/>
     <connectionManagementInstanceConfig id="General" name="通用连接管理" classImpl="com.founder.fix.fixflow.expand.database.GeneralConnectionManagement"/>
   </connectionManagementConfig>
   <importDataVariableConfig>

@@ -34,8 +34,8 @@ $(function(){
   var agentType = $("input[name=agentType]").val();
   var userId = $("input[name=userId]").val();
   $("a[name=myTask]").click(function(){
-    $("#agentUserId").val();
-    $("#agentType").val();
+    $("#agentUserId").val('');
+    $("#agentType").val('');
     $("#subForm").submit();
   });
   $("a[name=agentUsers]").click(function(){

@@ -41,4 +41,12 @@ public abstract class CommonServiceImpl {
 			return FixFlowShellProxy.createProcessEngine(userId);
 		}
 	}
+	
+	protected ProcessEngine getTransactionProcessEngine(Object userId) throws SQLException{
+		if(connection!=null){
+			return FixFlowShellProxy.createProcessEngine(userId,connection);
+		}else{
+			return FixFlowShellProxy.createProcessEngine(userId,true);
+		}
+	}
 }
