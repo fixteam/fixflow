@@ -168,7 +168,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String deleteIndex  = StringUtil.getString(params.get("deleteIndex"));
 		String processInstanceId  = StringUtil.getString(params.get("processInstanceId"));
 		Map<String, Object> infos  = (Map<String, Object>)params.get("insertAndUpdate");
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
 		
 		if(StringUtil.isNotEmpty(deleteIndex)){
 			String[] keys  = deleteIndex.split(",");
@@ -187,7 +187,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
 		for(String tmp:pids){
 			runtimeService.suspendProcessInstance(tmp);
 		}
@@ -198,7 +198,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
 		for(String tmp:pids){
 			runtimeService.continueProcessInstance(tmp);
 		}
@@ -208,7 +208,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
 		for(String tmp:pids){
 			runtimeService.terminatProcessInstance(tmp);
 		}
@@ -218,7 +218,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
+		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
 		for(String tmp:pids){
 			runtimeService.deleteProcessInstance(tmp,true);
 		}
