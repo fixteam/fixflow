@@ -236,7 +236,7 @@ public class PersistentSession {
 		}
 		if (statement.equals("selectProcessDefinitionsByQueryCriteria")) {
 			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
-			return processDefinitionPersistence.selectProcessDefinitionsByQueryCriteria((ProcessDefinitionQueryImpl) parameter);
+			return processDefinitionPersistence.selectProcessDefinitionsByQueryCriteria((ProcessDefinitionQueryImpl) parameter,page);
 		}
 
 		if (statement.equals("selectProcessInstanceByQueryCriteria")) {

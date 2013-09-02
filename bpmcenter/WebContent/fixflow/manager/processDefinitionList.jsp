@@ -126,7 +126,8 @@ a{text-decoration: none;}
 		    <th width="12%">流程编号</th>
 		    <th width="28%">唯一编号</th>
 		    <th width="5%">流程版本</th>
-		    <th width="8%">流程分类</th>
+		    <th width="12%">流程分类</th>
+		    <th width="12%">发布时间</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
@@ -137,6 +138,7 @@ a{text-decoration: none;}
 		      <td>${dataList.processDefinitionId}</td>
 		      <td>${dataList.version}</td>
 		      <td>${dataList.category}</td>
+		       <td><fmt:formatDate value="${dataList.DEPLOY_TIME}" type="both"/></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>

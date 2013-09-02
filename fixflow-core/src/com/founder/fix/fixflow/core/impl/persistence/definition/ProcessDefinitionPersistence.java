@@ -49,8 +49,10 @@ import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputs;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
@@ -69,6 +71,7 @@ public class ProcessDefinitionPersistence {
 
 	public Connection connection;
 	protected SqlCommand sqlCommand;
+	Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 
 	public ProcessDefinitionPersistence(Connection connection) {
 		this.connection = connection;
@@ -189,7 +192,7 @@ public class ProcessDefinitionPersistence {
 		return selectProcessDefinitionsByQueryCriteriaSql;
 	}
 
-	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery) {
+	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery,Page page) {
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		String selectProcessDefinitionsByQueryCriteriaSql = " select PD.* ";
 		if(processDefinitionQuery.getQueryExpandTo()!=null && processDefinitionQuery.getQueryExpandTo().getFieldSql()!=null&&!processDefinitionQuery.getQueryExpandTo().getFieldSql().equals("")){
@@ -200,8 +203,31 @@ public class ProcessDefinitionPersistence {
 			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " order by "
 					+ processDefinitionQuery.getOrderBy().toString();
 		}
-		
-		/********这里需要添加分页和order by,并将不认识的扩展字段返回回去 *******************/
+		String orderByString="";
+		if (processDefinitionQuery.getOrderBy() != null && page != null) {
+			String orderBySql=processDefinitionQuery.getOrderBy();
+			String orderBySqlFin="";
+			if(orderBySql.indexOf(",")>=0){
+				String[] orderBySqlTemp=orderBySql.split(",");
+				for (String orderByObj : orderBySqlTemp) {
+					if(orderBySqlFin.equals("")){
+						orderBySqlFin=orderBySqlFin+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+					else{
+						orderBySqlFin=orderBySqlFin+","+orderByObj.substring(orderByObj.indexOf(".")+1,orderByObj.length());
+					}
+				}
+				orderByString = orderByString + " order by " + orderBySqlFin;
+			}else{
+				orderByString = orderByString + " order by " + processDefinitionQuery.getOrderBy().toString().substring(3);
+			}
+		}
+		if (page != null) {
+			selectProcessDefinitionsByQueryCriteriaSql = pagination.getPaginationSql(selectProcessDefinitionsByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
+		}
+		if (processDefinitionQuery.getOrderBy() != null && page != null) {
+			selectProcessDefinitionsByQueryCriteriaSql=selectProcessDefinitionsByQueryCriteriaSql+orderByString;
+		}
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
 		List<ProcessDefinitionBehavior> processDefinitionList = new ArrayList<ProcessDefinitionBehavior>();
 		for (Map<String, Object> dataMap : dataObj) {
@@ -221,11 +247,6 @@ public class ProcessDefinitionPersistence {
 	
 	private ResourceSet getResourceSet() {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		
-		//System.out.println("********************sdsdsdsd******");
-		//System.out.println(EPackage.Registry.INSTANCE);
-		//System.out.println(EPackage.Registry.INSTANCE.getClass().getName());
-		//System.out.println(EPackage.Registry.INSTANCE.getClass().getSimpleName());
 		(EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
 		(EPackage.Registry.INSTANCE).put("http://www.founderfix.com/fixflow", FixFlowPackage.eINSTANCE);
 		(EPackage.Registry.INSTANCE).put("http://www.omg.org/spec/DD/20100524/DI", DiPackage.eINSTANCE);
@@ -243,15 +264,10 @@ public class ProcessDefinitionPersistence {
 	}
 
 	private ProcessDefinitionBehavior getProcessDefinition(Map<String, Object> processDataMap) {
-		
 		String processId = StringUtil.getString(processDataMap.get("PROCESS_ID"));
 		String deploymentId = StringUtil.getString(processDataMap.get("DEPLOYMENT_ID"));
 		String resourceName = StringUtil.getString(processDataMap.get("RESOURCE_NAME"));
-		//int version = StringUtil.getInt(dataMap.get("VERSION"));
-		//String resourceId = StringUtil.getString(dataMap.get("RESOURCE_ID"));
 		String processKey = StringUtil.getString(processDataMap.get("PROCESS_KEY"));
-		
-		
 		DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
 		ProcessDefinitionBehavior processDefinition = deploymentCache.getProcessDefinitionCache().get(processId);
 		if (processDefinition == null) {
@@ -315,8 +331,6 @@ public class ProcessDefinitionPersistence {
 		else{
 			return processDefinition;
 		}
-		
-		
 	}
 
 	private void setSubProcess(SubProcess subProcess) {

@@ -329,8 +329,6 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		String resourceName = StringUtil.getString(entityMap.get("RESOURCE_NAME"));
 		int version = StringUtil.getInt(entityMap.get("VERSION"));
 		String resourceId = StringUtil.getString(entityMap.get("RESOURCE_ID"));
-		// String processKey =
-		// StringUtil.getString(entityMap.get("PROCESS_KEY"));
 		String diagramResourceName = StringUtil.getString(entityMap.get("DIAGRAM_RESOURCE_NAME"));
 		this.setProcessDefinitionId(processId);
 		this.setDeploymentId(deploymentId);
@@ -338,12 +336,24 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		this.setVersion(version);
 		this.setResourceId(resourceId);
 		this.setDiagramResourceName(diagramResourceName);
-		
+		//删除map中无用或无效字段
+		entityMap.remove("DIFINITIONS_KEY");
+		entityMap.remove("DIFINITIONS_ID");
+		entityMap.remove("PROCESS_ID");
+		entityMap.remove("PROCESS_KEY");
+		entityMap.remove("CATEGORY");
+		entityMap.remove("PROCESS_NAME");
+		entityMap.remove("VERSION");
+		entityMap.remove("RESOURCE_NAME");
+		entityMap.remove("DEPLOYMENT_ID");
+		entityMap.remove("DIAGRAM_RESOURCE_NAME");
+		entityMap.remove("RESOURCE_ID");
+		entityMap.remove("SUB_TASK_ID");
+		entityMap.remove("START_FORM_KEY");
 		this.setExtensionFields(entityMap);
 	}
 
 	public Map<String, Object> getPersistentState() {
-
 		Map<String, Object> persistentState = new HashMap<String, Object>();
 		persistentState.put("processDefinitionId", this.processDefinitionId);
 		persistentState.put("processDefinitionName", this.name);
@@ -354,9 +364,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		persistentState.put("resourceId", this.resourceId);
 		persistentState.put("deploymentId", this.deploymentId);
 		persistentState.put("diagramResourceName", this.diagramResourceName);
-
-		// persistentState.put("startForm", this.getStartFormKey());
-
+		persistentState.putAll(this.extensionFields);
 		return persistentState;
 	}
 
