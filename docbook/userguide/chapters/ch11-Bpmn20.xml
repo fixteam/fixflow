@@ -249,8 +249,10 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         
         <para>
           一个空结束事件(NoneEndEvent)表示抛出的结果是不确定的。因此，流程引擎将只会结束当前执行路径(Token)。 
+          在FixFlow引擎中,流程执行到空结束事件(NoneEndEvent)的时候,当前<link linkend="bpmn.FixFlow.ProcessEngine"><emphasis>令牌(Token)</emphasis></link>会被结束,如果当前令牌(Token)是根令牌(RootToken)
+          ,则整个流程实例将会被结束,否则只会结束这个分支令牌(ChildToken),流程实例结束的时候会触发 <link linkend="bpmn.FixFlow.ProcessEngine.Event"><emphasis>实例结束事件(process-end)</emphasis></link>。
         </para>
-        
+      
       </section>
       <section xml:id="bpmn.event.NoneEndEvent.GraphicalNotation">
         
@@ -286,9 +288,52 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     
     <section xml:id="bpmn.event.TerminateEndEvent">
       <title>Terminate End Event</title>
-      <para>
+      <section xml:id="bpmn.event.TerminateEndEvent.Description">
         
-      </para>
+        <title>描述</title>
+        
+        <para>
+          终止结束事件(Terminate End Event)表示流程走到这里的时候,不仅仅会结束当前的分支,而且还会直接结束整个流程实例,
+          不管当前走到结束的是 分支令牌(ChildToken) 还是 根令牌(RootToken) 都会直接结束整个流程实例,并触发流程
+          <link linkend="bpmn.FixFlow.ProcessEngine.Event"><emphasis>实例结束事件(process-end)</emphasis></link>。 
+        </para>
+        <para>
+          关于分支令牌(ChildToken)、根令牌(RootToken)、并发、合并、分支 请参见 <link linkend="bpmn.FixFlow.ProcessEngine"><emphasis>流程内核原理</emphasis></link>
+        </para>
+        
+      </section>
+      <section xml:id="bpmn.event.TerminateEndEvent.GraphicalNotation">
+        
+        <title>图形符号</title>
+        <para> 
+          一个空结束事件(NoneEndEvent)是粗的空心的圆圈都成的的图标(没有事件定义)。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.event.TerminateEndEvent.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.event.TerminateEndEvent.xml">
+        <title>XML描述</title>
+        <para>
+          这是一个空结束事件(NoneEndEvent)的XML表示,没有任何子元素(其他开始事件类型都有一个元素声明的类型)。
+          <programlisting language="xml"><![CDATA[<bpmn2:endEvent id="EndEvent_1" name="结束">
+  <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
+</bpmn2:endEvent>]]></programlisting>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.event.TerminateEndEvent.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.event.NoneEndEvent.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
     <section xml:id="bpmn.event.BoundaryEvents">
@@ -326,46 +371,109 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
   
   <section xml:id="bpmn.SequenceFlow">
     <title>Sequence Flow</title>
-    <para>
-      
-    </para>
     
     <section xml:id="bpmn.Description">
       <title>描述</title>
       <para>
-        
+        顺序流是流程中两个元素之间的连接。令牌通过顺序流流转到下面的节点上。一个节点后面可以有多个顺序流,当条件都满足的时候会产生并行的执行。 
       </para>
     </section>
-    
-    <section xml:id="bpmn.GraphicalNotation">
+
+    <section xml:id="bpmn.SequenceFlow.GraphicalNotation">
       <title>图形符号</title>
-      <para>
-        
+      <para> 
+        一个顺序流可视化作为一个从源元素对目标元素的箭头。箭头始终指向朝着既定目标。 
+        <mediaobject ><imageobject>
+          <imagedata align="center"  fileref="images/bpmn.SequenceFlow.1.png"/>
+        </imageobject></mediaobject>
       </para>
     </section>
     
-    <section xml:id="bpmn.XMLRepresentation">
+    <section xml:id="bpmn.SequenceFlow.XMLRepresentation">
       <title>XML描述</title>
       <para>
-        
+          这是一个空结束事件(NoneEndEvent)的XML表示,没有任何子元素(其他开始事件类型都有一个元素声明的类型)。
+          <programlisting language="xml"><![CDATA[<bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="UserTask_2"/>]]></programlisting>
       </para>
     </section>
     
+    <section xml:id="bpmn.SequenceFlow.designer">
+      
+      <title>设计器配置</title>
+      <para> 
+        <mediaobject ><imageobject>
+          <imagedata align="center"  fileref="images/bpmn.SequenceFlow.2.png"/>
+        </imageobject></mediaobject>
+      </para>
+      
+    </section>
+
     
-    <section xml:id="bpmn.ConditionalSequenceFlow">
+    
+    <section xml:id="bpmn.SequenceFlow.ConditionalSequenceFlow">
       <title>条件序列流</title>
-      <para>
+      <section xml:id="bpmn.SequenceFlow.ConditionalSequenceFlow.Description">
+        <title>描述</title>
+        <para>
+          一个顺序流(SequenceFlow)上可以定义条件,当条件返回为true则允许通过,返回false则不允许通过。
+          当节点后面多条线都满足条件将产生一个并发(有几条线满足则产生几个并发)。
+        </para>
+        <para>注:以上适用于非网关节点的连接,网关会根据类型对线条的判断产生影响。</para>
+      </section>
+
+
+      
+      <section xml:id="bpmn.SequenceFlow.ConditionalSequenceFlow.SequenceFlow.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          一个有条件的序列流图形为一个常规序列流左边加上一个小钻石开始。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.SequenceFlow.ConditionalSequenceFlow.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.SequenceFlow.ConditionalSequenceFlow.SequenceFlow.XMLRepresentation">
+        <title>XML描述</title>
+        <para>
+          这是一个空结束事件(NoneEndEvent)的XML表示,没有任何子元素(其他开始事件类型都有一个元素声明的类型)。
+          <programlisting language="xml"><![CDATA[<bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="StartEvent_2" targetRef="UserTask_1">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">1==1</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>]]></programlisting>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.SequenceFlow.ConditionalSequenceFlow.SequenceFlow.designer">
         
-      </para>
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.SequenceFlow.ConditionalSequenceFlow.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
+    <section>
+      <title>序列流的扩展</title>
+      <para>
+        <emphasis>orderId:</emphasis>顺序流的排序号,当一个节点后面有多个顺序流的时候,会按照顺序流的排序号进行验证,越小的越先参与计算。网关有自己的计算逻辑,请参见 <link linkend="bpmn.Gateways">网关章节</link>。
+        <programlisting language="xml"><![CDATA[<bpmn2:sequenceFlow id="SequenceFlow_3" name="" fixflow:orderId="1" sourceRef="UserTask_1" targetRef="UserTask_2"/>]]></programlisting>
+      </para>
+    </section>
     
   </section>
   
   <section xml:id="bpmn.Gateways">
     <title>Gateways</title>
     <para>
-      
+      　　网关是用来控制流程分支执行的(令牌的分支执行)。网关能够合并或分散令牌。网关是图形为一个菱形,内部为一个图标。这个图标显示了网关的类型。
+    </para>
+    <para>
+    <mediaobject ><imageobject>
+      <imagedata align="center"  fileref="images/bpmn.Gateways.1.png"/>
+    </imageobject></mediaobject>
     </para>
     <section xml:id="bpmn.ExclusiveGateway">
       <title>Exclusive Gateway</title>
@@ -580,9 +688,13 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
   
   <section xml:id="bpmn.FixFlow.ProcessEngine">
     <title>FixFlow Engine 运行机制及原理</title>
-    <para>
+    <section xml:id="bpmn.FixFlow.ProcessEngine.Event">
+      <title>FixFlow Event</title>
+      <para>
+        
+      </para>
       
-    </para>
+    </section>
     
   </section>
   
