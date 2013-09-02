@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -131,32 +132,32 @@ public class FlowManager extends HttpServlet {
 				try{
 					getFlowManager().suspendProcessInstance(filter);
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("continueProcessInstance")){
 				try{
 					getFlowManager().continueProcessInstance(filter);
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("terminatProcessInstance")){
 				try{
 					getFlowManager().terminatProcessInstance(filter);
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("deleteProcessInstance")){
 				try{
 					getFlowManager().deleteProcessInstance(filter);
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("toProcessVariable")){
@@ -186,8 +187,8 @@ public class FlowManager extends HttpServlet {
 					request.setAttribute("result", filter);
 					request.setAttribute("pageInfo", filter.get("pageInfo"));
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/fixflow/manager/taskInstanceList.jsp");
 			}
@@ -319,12 +320,21 @@ public class FlowManager extends HttpServlet {
 				rd.forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
+			try {
+				CurrentThread.rollBack();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		} finally {
 			if (out != null) {
 				out.flush();
 				out.close();
 			}
-			CurrentThread.clear();
+			try {
+				CurrentThread.clear();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
