@@ -37,9 +37,9 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var d = FixSelect(obj);
 				params={
 						//被转发的UserId，这里设定了就是管理员
-						transferUserId:d['USERID']
+						transferUserId:d[0].USERID
 				};
-			}else if(type=="Pending"){//转办
+			}else if(type=="pending"){//转办
 				var obj = {type:"user"};
 			  	var d = FixSelect(obj);
 			  	if(d&&d.length>0){
@@ -58,7 +58,7 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var d = FixSelect(obj);
 				params={
 						//追回的任务编号
-					recoverNodeId:d['nodeId']
+					recoverNodeId:d[0].nodeId
 				};
 			}else if(type=="reminders"){
 				params={
@@ -78,7 +78,7 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var d = FixSelect(obj);
 				params={
 						//退回到某个节点
-					rollBackNodeId:d['nodeId']
+					rollBackNodeId:d[0].nodeId
 						
 				};
 			}else if(type=="rollBackTaskByTaskId"){
@@ -89,14 +89,17 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var d = FixSelect(obj);
 				params={
 						//退回到某个节点
-					rollBackTaskId:d['taskId']
+					rollBackTaskId:d[0].taskId
 						
 				};
 			}
 			
-			var ss = JSON.stringify(params);
-			$("#taskParams").val(ss);
-			$("#"+formId).submit();
+			if(confirm("确认提交?")){
+				var ss = JSON.stringify(params);
+				$("#taskParams").val(ss);
+				$("#"+formId).submit();
+			}else 
+				return false;
 		});
 	}
 
