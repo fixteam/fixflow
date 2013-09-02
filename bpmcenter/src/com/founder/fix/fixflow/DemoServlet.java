@@ -20,6 +20,7 @@ package com.founder.fix.fixflow;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
@@ -131,7 +133,7 @@ public class DemoServlet extends HttpServlet {
 						.getRealPath("/"));
 
 				Connection connection = FixFlowShellProxy
-						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
+						.getConnection(ConnectionManagement.defaultDataBaseId);
 
 				try {
 					SqlCommand sc = new SqlCommand(connection);
@@ -153,7 +155,7 @@ public class DemoServlet extends HttpServlet {
 			} else if (action.equals("demoCompleteTask")) {// 演示如何完成下一步
 				//这里直接打开了DB_FIX_BIZ_BASE库
 				Connection connection = FixFlowShellProxy
-						.getConnection(FixFlowShellProxy.DB_FIX_BIZ_BASE);
+						.getConnection(ConnectionManagement.defaultDataBaseId);
 				PreparedStatement ps = null;
 
 				try {
@@ -194,13 +196,23 @@ public class DemoServlet extends HttpServlet {
 			if (rd != null)
 				rd.forward(request, response);
 		} catch (Exception e) {
+			try {
+				CurrentThread.rollBack();
+			} catch (SQLException e1) {
+				// TODO 自动生成的 catch 块
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		} finally {
 			if (out != null) {
 				out.flush();
 				out.close();
 			}
-			CurrentThread.clear();
+			try {
+				CurrentThread.clear();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

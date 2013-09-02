@@ -17,8 +17,10 @@
  */
 package com.founder.fix.fixflow.util;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -36,11 +38,11 @@ public class CurrentThread {
 	
 	private static final ThreadLocal<Date> timer = new ThreadLocal<Date>();
 	
-	private static final ThreadLocal<Map<String,DBConnection>> ThreadDBPool = new ThreadLocal<Map<String,DBConnection>>();
+	private static final ThreadLocal<LinkedHashMap<String,DBConnection>> ThreadDBPool = new ThreadLocal<LinkedHashMap<String,DBConnection>>();
 	
 	
 	
-	public static ThreadLocal<Map<String,DBConnection>> getThreadDBPool() {
+	public static ThreadLocal<LinkedHashMap<String,DBConnection>> getThreadDBPool() {
 		return ThreadDBPool;
 	}
 
@@ -53,15 +55,28 @@ public class CurrentThread {
 	}
 	
 	public static void init(){
-		getThreadDBPool().set(new HashMap<String,DBConnection>());
+		getThreadDBPool().set(new LinkedHashMap<String,DBConnection>());
 	}
 	
-	public static void clear(){
+	public static void rollBack() throws SQLException{
+		if(FixFlowShellProxy.isPoolConn()){
+			Map<String,DBConnection> dbconns = (CurrentThread.getThreadDBPool().get());
+			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
+				DBConnection td = tmp.getValue();
+				if(td!=null){
+					if (td != null) td.closeAndRockBack();
+				}
+			}
+			getThreadDBPool().set(null);
+		}
+	}
+	
+	public static void clear() throws SQLException{
 		currentItems.set(null);
 		timer.set(null);
 		
 		if(FixFlowShellProxy.isPoolConn()){
-			Map<String,DBConnection> dbconns = (CurrentThread.getThreadDBPool().get());
+			LinkedHashMap<String,DBConnection> dbconns = (CurrentThread.getThreadDBPool().get());
 			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
 				DBConnection td = tmp.getValue();
 				if(td!=null){

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -155,8 +156,8 @@ public class FlowCenter extends HttpServlet {
 					request.setAttribute("result", newResult);
 					request.setAttribute("userId", userId); // 返回userId add Rex
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
@@ -169,8 +170,8 @@ public class FlowCenter extends HttpServlet {
 					request.setAttribute("result", filter);
 					request.setAttribute("pageInfo", filter.get("pageInfo"));
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
@@ -183,8 +184,8 @@ public class FlowCenter extends HttpServlet {
 					request.setAttribute("result", filter);
 					request.setAttribute("pageInfo", filter.get("pageInfo"));
 				}catch(Exception e){
-					e.printStackTrace();
 					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
 				}
 				rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
 			} else if (action.equals("getPlaceOnFile")) {
@@ -260,12 +261,21 @@ public class FlowCenter extends HttpServlet {
 				rd.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				CurrentThread.rollBack();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		} finally {
 			if (out != null) {
 				out.flush();
 				out.close();
 			}
-			CurrentThread.clear();
+			try {
+				CurrentThread.clear();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

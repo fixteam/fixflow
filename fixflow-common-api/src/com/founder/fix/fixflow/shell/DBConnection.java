@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.shell;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -28,8 +29,22 @@ public class DBConnection {
 	
 	private Connection connection;
 	
-	public void close(){
-		if (connection != null) DataSourceUtils.releaseConnection(connection, dataSource);
+	public void close() throws SQLException{
+		if (connection != null && connection.isClosed()==false){
+			if(connection.getAutoCommit()==false){
+				connection.commit();
+			}
+			DataSourceUtils.releaseConnection(connection, dataSource);
+		}
+	}
+	
+	public void closeAndRockBack() throws SQLException{
+		if (connection != null && connection.isClosed()==false){
+			if(connection.getAutoCommit()==false){
+				connection.rollback();
+			}
+			DataSourceUtils.releaseConnection(connection, dataSource);
+		}
 	}
 
 	public DataSource getDataSource() {
