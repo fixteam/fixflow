@@ -128,20 +128,72 @@
   <section xml:id="gs.dataBaseRun">
     <title>DataBase脚本安装</title>
     <para>
+      数据库的详细介绍请查看其他章节<link linkend="dataBase.support">数据库说明</link>
     </para>
   </section>
   
   <section xml:id="gs.jarConfig">
     <title>依赖Jar配置</title>
     <para>
+     <programlisting language="xml">
+       "/fixweb/WebRoot/WEB-INF/lib/bsh-2.0b4.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.contenttype_3.4.100.v20100505-1235.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.jobs_3.5.1.R36x_v20100824.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.runtime_3.6.0.v20100505.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.common_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore_2.6.1.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.change_2.5.1.v20100907-1643.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.xmi_2.5.0.v20100521-1846.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.edit_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.app_1.3.1.R36x_v20100803.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.common_3.6.0.v20100503.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.preferences_3.3.0.v20100503.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.registry_3.5.0.v20100503.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.osgi_3.6.2.R36x_v20110210.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.xsd_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/runtime_registry_compatibility.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/ojdbc5.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/c3p0-0.9.1.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/quartz-2.1.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/quartz-oracle-2.1.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/log4j-1.2.16.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/com.founder.fix.fixflow.bpmn2.extensions.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/mail.jar"
+     </programlisting>
     </para>
   </section>
   
   <section xml:id="gs.runFixFlow">
     <title>运行FixFlow</title>
     <para>
+      进行这步之前，请确保完成<link linkend="gs.webConfig">web环境配置</link>和<link  linkend="gs.dataBaseRun">数据库脚本安装</link>。
     </para>
+    <para>
+      这步需要进行数据库配置，打开com\founder\fix\fixflow\expand\config\fixflowconfig.xml文件，找到dataBaseConfig节点的selected属性配置的数据库信息，修改
+      对应的数据库配置的驱动、用户名、密码等信息。
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.17.png"/>
+    </imageobject></mediaobject>
+    <para>保存，重新发布，启动tomcat服务器，发现已经启动成功。</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.18.png"/>
+    </imageobject></mediaobject>
+    <para>访问http://127.0.0.1:8080/bpmcenter/</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.19.png"/>
+    </imageobject></mediaobject>
+    <para>输入账号：admin 密码：1，点击登录，登录成功，进入任务中心界面</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.20.png"/>
+    </imageobject></mediaobject>
+    <para>输入账号：admin 密码：1，并勾选管控中心登录，点击登录，可进入流程管控中心界面</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.21.png"/>
+    </imageobject></mediaobject>
+    <para>至此，快速入门结束。关于fixflow的其他详细信息，请继续看我们的文档。</para>
   </section>
-  
-  
 </chapter>
