@@ -158,8 +158,9 @@ public class FlowCenter extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
 				try{
 					filter.put("path", request.getSession().getServletContext()
@@ -172,8 +173,9 @@ public class FlowCenter extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
 			} else if (action.equals("getAllProcess")) {
@@ -186,8 +188,9 @@ public class FlowCenter extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
 			} else if (action.equals("getPlaceOnFile")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryPlaceOnFile(filter);
@@ -257,8 +260,6 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
 			}
-			if (rd != null)
-				rd.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -277,6 +278,8 @@ public class FlowCenter extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		if (rd != null)
+			rd.forward(request, response);
 	}
 
 	public FlowCenterService getFlowCenter() {
