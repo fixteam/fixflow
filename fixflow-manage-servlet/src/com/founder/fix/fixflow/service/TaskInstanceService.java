@@ -36,4 +36,12 @@ public interface TaskInstanceService {
 	  * @throws Exception
 	  */
 	public Map<String,Object> getTaskList(Map<String,Object> filter) throws Exception;
+	
+	public void suspendTask(Map<String,Object> filter) throws Exception;
+	
+	public void resumeTask(Map<String,Object> filter) throws Exception;
+	
+	public void transferTask(Map<String,Object> filter) throws Exception;
+	
+	public void rollBackNode(Map<String,Object> filter) throws Exception;
 }

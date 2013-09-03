@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.IdentityService;
+import com.founder.fix.fixflow.core.ManagementService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
@@ -158,6 +159,58 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			FixFlowShellProxy.closeProcessEngine(engine, false);
 		}
 		return result;
+	}
+	
+	public void suspendTask(Map<String,Object> filter) throws Exception{
+		ProcessEngine engine = getProcessEngine(filter
+				.get("userId"));
+		ManagementService mservice = engine.getManagementService();
+		String taskId = StringUtil.getString(filter.get("taskId"));
+		try{
+			mservice.suspendTask(taskId);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+	}
+	
+	public void resumeTask(Map<String,Object> filter) throws Exception{
+		ProcessEngine engine = getProcessEngine(filter
+				.get("userId"));
+		ManagementService mservice = engine.getManagementService();
+		String taskId = StringUtil.getString(filter.get("taskId"));
+		try{
+			mservice.resumeTask(taskId);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+	}
+	
+	public void transferTask(Map<String,Object> filter) throws Exception{
+		ProcessEngine engine = getProcessEngine(filter
+				.get("userId"));
+		String transferUserId = StringUtil.getString(filter.get("transferUserId"));
+		String taskId = StringUtil.getString(filter.get("taskId"));
+		
+		ManagementService mservice = engine.getManagementService();
+		try{
+			mservice.transfer(taskId, transferUserId,"管理员干预", null);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+	}
+	
+	public void rollBackNode(Map<String,Object> filter) throws Exception{
+		ProcessEngine engine = getProcessEngine(filter
+				.get("userId"));
+		String rollBackNodeId = StringUtil.getString(filter.get("rollBackNodeId"));
+		String taskId = StringUtil.getString(filter.get("taskId"));
+		
+		ManagementService mservice = engine.getManagementService();
+		try{
+			mservice.rollBack(taskId, rollBackNodeId,"管理员干预", null);
+		}finally{
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
 	}
 
 	/**

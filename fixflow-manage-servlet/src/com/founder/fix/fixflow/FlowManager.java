@@ -134,32 +134,36 @@ public class FlowManager extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 				}
-				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("continueProcessInstance")){
 				try{
 					getFlowManager().continueProcessInstance(filter);
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 				}
-				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("terminatProcessInstance")){
 				try{
 					getFlowManager().terminatProcessInstance(filter);
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 				}
-				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("deleteProcessInstance")){
 				try{
 					getFlowManager().deleteProcessInstance(filter);
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 				}
-				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
 			}else if(action.equals("toProcessVariable")){
 				Map<String, Object> result = getFlowManager().getProcessVariables(filter);
 				filter.putAll(result);
@@ -189,18 +193,55 @@ public class FlowManager extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/manager/taskInstanceList.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/manager/taskInstanceList.jsp");
+			}else if(action.equals("doTaskSuspend")){
+				try{
+					getTaskManager().suspendTask(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				}
+			}else if(action.equals("doTaskResume")){
+				try{
+					getTaskManager().resumeTask(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				}
+			}else if(action.equals("doTaskTransfer")){
+				try{
+					getTaskManager().transferTask(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				}
+			}else if(action.equals("doTaskRollBackNode")){
+				try{
+					getTaskManager().rollBackNode(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				}
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
 				getProcessDefinitionService().deployByZip(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
-			}
+			}else
 			if("deleteDeploy".equals(action)){
 				getProcessDefinitionService().deleteDeploy(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
-			}
+			}else
 			if("download".equals(action)){
 				String processDefinitionId = StringUtil.getString(filter.get("processDefinitionId"));
 				response.reset();
@@ -225,7 +266,7 @@ public class FlowManager extends HttpServlet {
 				outZip.close();
 				outZip.flush();
 				outZip.close();
-			}
+			}else
 			
 			if("getUserList".equals(action)){
 				request.setAttribute("nowAction", "UserGroup");
@@ -237,7 +278,7 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/fixflow/manager/userList.jsp");
-			}
+			}else
 			if("getGroupList".equals(action)){
 				request.setAttribute("nowAction", "UserGroup");
 				Map<String, Object> result = getUserGroupService().getAllGroup(filter);
@@ -247,35 +288,35 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
 				rd = request.getRequestDispatcher("/fixflow/manager/groupList.jsp");
-			}
+			}else
 			if("getUserInfo".equals(action)){
 				Map<String, Object> pageResult = getUserGroupService().getUserInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/userInfo.jsp");
-			}
+			}else
 			if("getGroupInfo".equals(action)){
 				Map<String, Object> pageResult = getUserGroupService().getGroupInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/groupInfo.jsp");
-			}
+			}else
 			if("getJobList".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
-			}
+			}else
 			if("viewJobInfo".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
-			}
+			}else
 			if("suspendJob".equals(action)){
 				request.setAttribute("nowAction", "jobManager");
 				getJobService().suspendJob(filter);
@@ -283,7 +324,7 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
-			}
+			}else
 			if("continueJob".equals(action)){
 				getJobService().continueJob(filter);
 				request.setAttribute("nowAction", "jobManager");
@@ -291,7 +332,7 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
-			}
+			}else
 			if("suspendTrigger".equals(action)){
 				getJobService().suspendTrigger(filter);
 				request.setAttribute("nowAction", "jobManager");
@@ -299,7 +340,7 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
-			}
+			}else
 			if("continueTrigger".equals(action)){
 				getJobService().continueTrigger(filter);
 				request.setAttribute("nowAction", "jobManager");
@@ -307,17 +348,15 @@ public class FlowManager extends HttpServlet {
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
-			}
+			}else
 			if("setHis".equals(action)){
 				getFlowManager().setHistory(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
-			}
+			}else
 			if("updateCache".equals(action)){
 				ProcessEngineManagement.getDefaultProcessEngine().cleanCache(true, true);
 				response.getOutputStream().print("update success!");
 			}
-			if (rd != null)
-				rd.forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -336,7 +375,8 @@ public class FlowManager extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
+		if (rd != null)
+			rd.forward(request, response);
 	}
 	
 	public ProcessInstanceService getFlowManager() {
