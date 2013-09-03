@@ -9,63 +9,9 @@
 <title>待办任务</title>
 <jsp:include page="head.jsp" flush="true"/>
 <script type="text/javascript">
-/*  
- * "userId" 用户编号
- * "pdkey" 流程编号
- * "pageIndex" 第几页
- * "rowNum" 有几行
- * "agentUserId" 有几行
- * "agentType" 0我代理别人，1别人委托给我
- * "title" 查询主题
- * "processVeriy" 查询变量
- * "arrivalTimeS" 到达时间开始
- * "arrivalTimeE" 到达时间结束
- * "initor" 发起人
- * @param @return
- * "dataList" 数据列表
- * "pageNumber" 总行数
- * "agentUsers" 代理用户
- * "agentToUsers" 委托用户
- * "pageIndex" 第几页
- * "rowNum" 有几行
- */
-$(function(){
-  var agentType = $("input[name=agentType]").val();
-  var userId = $("input[name=userId]").val();
-  $("a[name=myTask]").click(function(){
-    $("#agentUserId").val();
-    $("#agentType").val();
-    $("#subForm").submit();
-  });
-  $("a[name=flowGraph]").click(function(){
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj);
-  });
-  $("a[name=doTask]").click(function(){
-    var tii = $(this).attr("tii");
-    var pdk = $(this).attr("pdk");
-    var pii = $(this).attr("pii");
-    var bizKey = $(this).attr("bk");
-    
-    var obj = {};
-    var formUrl = $(this).attr("formUri");//"FlowCenter?action=startOneTask";
-    var url = formUrl;
-    if(formUrl.indexOf("?")!=-1){
-   	 url+="&";
-   	
-    }else{
-   	 url+="?";
-    }
-    url+="taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
-   	window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
-  });
-});
-
-	$(function(){
-		Fix.Util.ClickTr(null,true,true,0);
-	});
+function doSuspend(){
+	
+}
 </script>
 </head>
 
