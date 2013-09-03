@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.task;
 
 import java.util.ArrayList;
@@ -21,6 +38,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
+import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
@@ -132,12 +150,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	
 	protected String commandId;
 	
+	/**
+	 * 归档时间
+	 */
+	protected Date archiveTime;
 	
-	
-
-	
-
-
 	/**
 	 * 代理处理者
 	 */
@@ -325,6 +342,14 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setTaskDefinition(TaskDefinition taskDefinition) {
 		this.taskDefinition = taskDefinition;
 	}
+	
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
+	}
 
 	public void setToken(TokenEntity token) {
 
@@ -371,9 +396,42 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		 * task.fireEvent(Event.EVENTTYPE_TASK_START, executionContext); }
 		 */
 	}
+	
+	public void end(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin) {
+		//判断是否是自动处理
+		if(AbstractCommandFilter.isAutoClaim()){
+			this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+		}
+	
+
+		//设置任务上点击的处理命令
+		this.setCommandId(taskCommandInst.getId());
+		//设置任务上点击的处理命令类型
+		this.setCommandType(taskCommandInst.getTaskCommandType());
+		//设置任务上点击的处理命令文本
+		this.setCommandMessage(taskCommandInst.getName());
+		//处理意见
+		this.setTaskComment(taskComment);
+		
+		if(admin!=null&&!admin.equals("")){
+			this.setAdmin(admin);
+		}
+		
+		if(agent!=null&&!agent.equals("")){
+			this.setAgent(Authentication.getAuthenticatedUserId());
+			this.setAssigneeWithoutCascade(agent);
+		}else{
+			this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+			this.setAgent(null);
+		}
+		
+		//调用任务的完成方法
+		end();
+	}
 
 	public void end() {
 		
+		//设置是否为草稿
 		this.isDraft=false;
 
 		// this.operationCommand = operationCommand;
@@ -550,13 +608,21 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.taskComment=taskComment;
 		
 		
+		if(agent!=null&&!agent.equals("")){
+			this.setAgent(Authentication.getAuthenticatedUserId());
+			this.setAssigneeWithoutCascade(this.agent);
+		}else{
+			this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+			this.setAgent(null);
+		}
+		/*
 		if(this.agent!=null&&!this.agent.equals("")){
 			this.setAgent(Authentication.getAuthenticatedUserId());
 			//this.setAssigneeWithoutCascade(this.agent);
 		}else{
 			//this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
 			this.setAgent(null);
-		}
+		}*/
 		
 		//if(agent!=null&&!agent.equals("")){
 		//	this.setAgent(Authentication.getAuthenticatedUserId());
@@ -1295,25 +1361,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setPendingTaskId(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
+			if (dataKey.equals(TaskInstanceObjKey.ArchiveTime().DataBaseKey())) {
+				this.setArchiveTime(StringUtil.getDate(entityMap.get(dataKey)));
+				continue;
+			}
 			
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
-			/*
-			 * if (dataKey.equals("PI_INITIATOR")) {
-			 * this.addExtensionField("PI_INITIATOR",
-			 * StringUtil.getString(entityMap.get(dataKey))); }
-			 * 
-			 * if (dataKey.equals("PI_START_AUTHOR")) {
-			 * this.addExtensionField("PI_START_AUTHOR",
-			 * StringUtil.getString(entityMap.get(dataKey))); }
-			 * 
-			 * if (dataKey.equals("PI_START_TIME")) {
-			 * this.addExtensionField("PI_START_TIME",
-			 * StringUtil.getDate(entityMap.get(dataKey))); }
-			 * 
-			 * if (dataKey.equals("PI_SUBJECT")) {
-			 * this.addExtensionField("PI_SUBJECT",
-			 * StringUtil.getString(entityMap.get(dataKey))); }
-			 */
 		}
 	}
 
@@ -1395,7 +1448,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		
 		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
 		objectParam.put(TaskInstanceObjKey.PendingTaskId().DataBaseKey(), this.pendingTaskId);
-		
+		objectParam.put(TaskInstanceObjKey.ArchiveTime().DataBaseKey(), this.archiveTime);
 		
 		for (String key : persistenceExtensionFields.keySet()) {
 			objectParam.put(key, persistenceExtensionFields.get(key));	
@@ -1451,7 +1504,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		persistentState.put(TaskInstanceObjKey.Admin().FullKey(), this.admin);
 		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
 		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
-		
+		persistentState.put(TaskInstanceObjKey.ArchiveTime().FullKey(), this.pendingTaskId);
 		
 		for (String key : extensionFields.keySet()) {
 			persistentState.put(key, extensionFields.get(key));	

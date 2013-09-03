@@ -33,9 +33,9 @@ public class PaginationTest extends AbstractFixFlowTestCase{
 	public void testOraclePagination()
 	{
 		SqlCommand sqlCommand=new SqlCommand(processEngineConfiguration.createConnection());
-		Pagination pagination=Context.getProcessEngineConfiguration().getDbConfig().getPagination();
+		Pagination pagination=processEngineConfiguration.getDbConfig().getPagination();
 		String runSqlString="SELECT * FROM AU_USERINFO ORDER BY SSOID";
-		String paginationSqlString= pagination.getPaginationSql(runSqlString, 3, 5, "*",null);
+		String paginationSqlString= pagination.getPaginationSql(runSqlString, 3, 5, "*", null);
 		List<Map<String, Object>> dataList=sqlCommand.queryForList(paginationSqlString);
 		assertNotNull(dataList);
 		return;

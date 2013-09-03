@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.persistence;
 
 import java.util.List;
@@ -7,14 +24,13 @@ import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
+import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.persistence.AbstractManager;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 /**
+ * 任务数据管理器
  * @author kenshin
  */
 public class TaskManager extends AbstractManager {
@@ -43,6 +59,12 @@ public class TaskManager extends AbstractManager {
 		return getDbSqlSession().selectList(query,userId);
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> findAgentToUsers(String userId){
+		String query = "findAgentToUsers";
+		return getDbSqlSession().selectList(query,userId);
+	}
 	// getTaskStatusByByProcessInstanceIdList
 
 	@SuppressWarnings("unchecked")
@@ -78,13 +100,14 @@ public class TaskManager extends AbstractManager {
 		if (cascade) {
 
 			getCommandContext().getIdentityLinkManager().deleteIdentityLinksByTaskId(taskInstanceId);
+			
+			
+			QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
+			queryVariablesCommand.setTaskInstanceId(taskInstanceId);
+			
 
-			VariableQueryEntity variableQueryEntity = new VariableQueryEntity();
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.TASKINSTANCE, taskInstanceId);
 
-			variableQueryEntity.addVariableFlowType(variableFlowTypeEntity);
-
-			getCommandContext().getVariableManager().deleteVariable(variableQueryEntity);
+			getCommandContext().getVariableManager().deleteVariable(queryVariablesCommand);
 			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
 			
 

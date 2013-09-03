@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>如何扩展</title>
+
+  <section xml:id="extension.TaskCommand">
+    <title>任务命令</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  
+</chapter>

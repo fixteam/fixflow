@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>管控中心</title>
+
+  <section xml:id="management.def">
+    <title>定义管理</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="management.processInstance">
+    <title>实例管理</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="management.task">
+    <title>任务管理</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="management.job">
+    <title>定时任务</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="management.org">
+    <title>组织结构</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="management.config">
+    <title>系统配置</title>
+    <para>
+      
+    </para>
+  </section>
+ 
+  
+</chapter>

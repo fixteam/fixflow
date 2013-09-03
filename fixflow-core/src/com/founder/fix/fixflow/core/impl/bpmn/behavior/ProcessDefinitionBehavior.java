@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.bpmn.behavior;
 
 import java.util.ArrayList;
@@ -57,6 +74,8 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	 * @ordered
 	 */
 	protected int version = VERSION_DEFAULT;
+
+	protected String diagramResourceName;
 
 	/**
 	 * 返回 '<em><b>Version</b></em>' 字段. <!-- 开始-用户-文档 -->
@@ -277,9 +296,64 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	public String getDeploymentId() {
 		return this.deploymentId;
 	}
+	
+	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
+	
+	public Object getExtensionField(String fieldName) {
+		return extensionFields.get(fieldName);
+	}
+
+	public Map<String, Object> getExtensionFields() {
+		return extensionFields;
+	}
+
+	public void setExtensionFields(Map<String, Object> extensionFields) {
+		this.extensionFields = extensionFields;
+	}
+
+	public void addExtensionField(String fieldName, Object fieldValue) {
+		this.extensionFields.put(fieldName, fieldValue);
+	}
+	
+	/**
+	 * 从数据库初始化对象
+	 * 
+	 * @param entityMap
+	 *            字段Map
+	 * @return
+	 */
+	public void persistentInit(Map<String, Object> entityMap) {
+
+		String processId = StringUtil.getString(entityMap.get("PROCESS_ID"));
+		String deploymentId = StringUtil.getString(entityMap.get("DEPLOYMENT_ID"));
+		String resourceName = StringUtil.getString(entityMap.get("RESOURCE_NAME"));
+		int version = StringUtil.getInt(entityMap.get("VERSION"));
+		String resourceId = StringUtil.getString(entityMap.get("RESOURCE_ID"));
+		String diagramResourceName = StringUtil.getString(entityMap.get("DIAGRAM_RESOURCE_NAME"));
+		this.setProcessDefinitionId(processId);
+		this.setDeploymentId(deploymentId);
+		this.setResourceName(resourceName);
+		this.setVersion(version);
+		this.setResourceId(resourceId);
+		this.setDiagramResourceName(diagramResourceName);
+		//删除map中无用或无效字段
+		entityMap.remove("DIFINITIONS_KEY");
+		entityMap.remove("DIFINITIONS_ID");
+		entityMap.remove("PROCESS_ID");
+		entityMap.remove("PROCESS_KEY");
+		entityMap.remove("CATEGORY");
+		entityMap.remove("PROCESS_NAME");
+		entityMap.remove("VERSION");
+		entityMap.remove("RESOURCE_NAME");
+		entityMap.remove("DEPLOYMENT_ID");
+		entityMap.remove("DIAGRAM_RESOURCE_NAME");
+		entityMap.remove("RESOURCE_ID");
+		entityMap.remove("SUB_TASK_ID");
+		entityMap.remove("START_FORM_KEY");
+		this.setExtensionFields(entityMap);
+	}
 
 	public Map<String, Object> getPersistentState() {
-
 		Map<String, Object> persistentState = new HashMap<String, Object>();
 		persistentState.put("processDefinitionId", this.processDefinitionId);
 		persistentState.put("processDefinitionName", this.name);
@@ -289,8 +363,8 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		persistentState.put("resourceName", this.resourceName);
 		persistentState.put("resourceId", this.resourceId);
 		persistentState.put("deploymentId", this.deploymentId);
-		// persistentState.put("startForm", this.getStartFormKey());
-
+		persistentState.put("diagramResourceName", this.diagramResourceName);
+		persistentState.putAll(this.extensionFields);
 		return persistentState;
 	}
 
@@ -326,15 +400,13 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	protected String category;
 
 	public String getCategory() {
-		
-		if(this.category==null){
 
-			this.category=StringUtil.getString(this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY));
+		if (this.category == null) {
+
+			this.category = StringUtil.getString(this.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY));
 		}
 		return this.category;
 	}
-
-
 
 	public String getStartFormKey() {
 
@@ -372,7 +444,7 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	public FormUri getFormUriObj() {
 
 		if (this.formUri == null) {
-			this.formUri =EMFUtil.getExtensionElementOne(FormUri.class,this,FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI);
+			this.formUri = EMFUtil.getExtensionElementOne(FormUri.class, this, FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI);
 		}
 		return this.formUri;
 	}
@@ -461,10 +533,9 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 
 			TaskSubject taskSubjectObj = EMFUtil.getExtensionElementOne(TaskSubject.class, this, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT);
 
-			if(taskSubjectObj!=null){
+			if (taskSubjectObj != null) {
 				this.taskSubject = new TaskSubjectBehavior(taskSubjectObj);
 			}
-			
 
 		}
 
@@ -494,6 +565,14 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 
 	public void setDataVariableMgmtDefinition(DataVariableMgmtDefinition dataVariableMgmtDefinition) {
 		this.dataVariableMgmtDefinition = dataVariableMgmtDefinition;
+	}
+
+	public String getDiagramResourceName() {
+		return diagramResourceName;
+	}
+
+	public void setDiagramResourceName(String diagramResourceName) {
+		this.diagramResourceName = diagramResourceName;
 	}
 
 }

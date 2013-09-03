@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.expand.cmd;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -13,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.expand.command.TransferTaskCommand;
 
 public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand, Void>{
@@ -66,26 +84,26 @@ public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand,
 				
 				TaskCommandInst taskCommand=null;
 				
-				if(this.admin!=null&&!this.admin.equals("")){
-					
-					String taskCommandName=commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(userCommandId).getName();
-					
-					taskCommand=new TaskCommandInst(userCommandId, taskCommandName, null, userCommandId, true);
-					
-					
-				}
-				else{
-					taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
+				String taskCommandType = expandTaskCommand.getCommandType();
+				
+				if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
+
+					String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
+
+					taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
+
+				} else {
+					taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
 				}
 				
-			
+				/*
 				if(this.agent!=null&&!this.agent.equals("")){
 					taskInstance.setAgent(Authentication.getAuthenticatedUserId());
 					taskInstance.setAssigneeWithoutCascade(this.agent);
 				}else{
 					taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
 					taskInstance.setAgent(null);
-				}
+				}*/
 			
 				taskInstance.customEnd(taskCommand, taskComment, this.agent, this.admin);
 

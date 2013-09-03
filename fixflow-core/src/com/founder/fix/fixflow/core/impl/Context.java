@@ -1,10 +1,26 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl;
 
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-
 
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguage;
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
@@ -25,90 +41,83 @@ public class Context {
 
 	protected static ThreadLocal<Stack<CommandContext>> commandContextThreadLocal = new ThreadLocal<Stack<CommandContext>>();
 	protected static ThreadLocal<Stack<ProcessEngineConfigurationImpl>> processEngineConfigurationStackThreadLocal = new ThreadLocal<Stack<ProcessEngineConfigurationImpl>>();
-	
-	//languageType
+
+	// languageType
 	protected static ThreadLocal<Stack<String>> languageTypeThreadLocal = new ThreadLocal<Stack<String>>();
 
-	
-	
 	protected static ThreadLocal<Stack<AbstractScriptLanguageMgmt>> abstractScriptLanguageMgmtThreadLocal = new ThreadLocal<Stack<AbstractScriptLanguageMgmt>>();
-	
+
 	protected static ThreadLocal<Stack<Boolean>> isQuartzTransactionAutoThreadLocal = new ThreadLocal<Stack<Boolean>>();
 
 	protected static ThreadLocal<Stack<String>> connectionManagementDefault = new ThreadLocal<Stack<String>>();
 
-	
-	//protected static ThreadLocal<Stack<Interpreter>> bshInterpreterThreadLocal = new ThreadLocal<Stack<Interpreter>>();
-	public static void setLanguageType(String languageType) {
-		getStack(languageTypeThreadLocal).push(languageType);
-	}
-	
-	public static String getLanguageType() {
-
-		Stack<String> stack = getStack(languageTypeThreadLocal);
-		if (stack.isEmpty()) {
-			return "defauld";
-		}
-	
-		String languageTypeTemp=stack.peek();
-		if(languageTypeTemp==null||languageTypeTemp.equals("")){
-			return "defauld";
-		}else{
-			return stack.peek();
-			
-		}
-		
-	}
-	
 	public static void setConnectionManagementDefault(String cmId) {
 		getStack(connectionManagementDefault).push(cmId);
 	}
-	
+
 	public static String getConnectionManagementDefault() {
 
 		Stack<String> stack = getStack(connectionManagementDefault);
 		if (stack.isEmpty()) {
 			return null;
 		}
-	
-		String languageTypeTemp=stack.peek();
-		if(languageTypeTemp==null||languageTypeTemp.equals("")){
+
+		String languageTypeTemp = stack.peek();
+		if (languageTypeTemp == null || languageTypeTemp.equals("")) {
 			return null;
-		}else{
+		} else {
 			return stack.peek();
-			
+
 		}
-		
+
 	}
-	
-	
+
+	// protected static ThreadLocal<Stack<Interpreter>>
+	// bshInterpreterThreadLocal = new ThreadLocal<Stack<Interpreter>>();
+	public static void setLanguageType(String languageType) {
+		getStack(languageTypeThreadLocal).push(languageType);
+	}
+
+	public static String getLanguageType() {
+
+		Stack<String> stack = getStack(languageTypeThreadLocal);
+		if (stack.isEmpty()) {
+			return "defauld";
+		}
+
+		String languageTypeTemp = stack.peek();
+		if (languageTypeTemp == null || languageTypeTemp.equals("")) {
+			return "defauld";
+		} else {
+			return stack.peek();
+
+		}
+
+	}
+
 	public static void removeLanguageType() {
 
 		getStack(languageTypeThreadLocal).clear();
 	}
-	
-	
+
 	public static void removeQuartzTransactionAutoThreadLocal() {
 
 		getStack(isQuartzTransactionAutoThreadLocal).clear();
 	}
-	
+
 	public static AbstractScriptLanguageMgmt getAbstractScriptLanguageMgmt() {
 		Stack<AbstractScriptLanguageMgmt> stack = getStack(abstractScriptLanguageMgmtThreadLocal);
 		if (stack.isEmpty()) {
-			
 
-			AbstractScriptLanguageMgmt abstractScriptLanguageMgmt=null;
-			ScriptLanguageConfig scriptLanguageConfig=getProcessEngineConfiguration().getScriptLanguageConfig();
+			AbstractScriptLanguageMgmt abstractScriptLanguageMgmt = null;
+			ScriptLanguageConfig scriptLanguageConfig = getProcessEngineConfiguration().getScriptLanguageConfig();
 			for (ScriptLanguage scriptLanguage : scriptLanguageConfig.getScriptLanguage()) {
-				if(scriptLanguage.getId().equals(scriptLanguageConfig.getSelected())){
-					abstractScriptLanguageMgmt= (AbstractScriptLanguageMgmt)ReflectUtil.instantiate(scriptLanguage.getClassImpl());
+				if (scriptLanguage.getId().equals(scriptLanguageConfig.getSelected())) {
+					abstractScriptLanguageMgmt = (AbstractScriptLanguageMgmt) ReflectUtil.instantiate(scriptLanguage.getClassImpl());
 					break;
 				}
 			}
-			
-			
-			
+
 			Context.setAbstractScriptLanguageMgmt(abstractScriptLanguageMgmt.init());
 
 			return abstractScriptLanguageMgmt;
@@ -131,13 +140,12 @@ public class Context {
 	public static void setCacheObject(CacheObject cacheObject) {
 		getStack(cacheObjectThreadLocal).push(cacheObject);
 	}
-	
 
 	public static void setQuartzTransactionAuto(boolean isAuto) {
-		
-		
+
 		getStack(isQuartzTransactionAutoThreadLocal).push(isAuto);
 	}
+
 	public static boolean isQuartzTransactionAuto() {
 
 		Stack<Boolean> stack = getStack(isQuartzTransactionAutoThreadLocal);
@@ -146,82 +154,71 @@ public class Context {
 		}
 		return stack.peek();
 	}
-	
-
 
 	public static Connection getDbConnection() {
-		
-		String dbID=ConnectionManagement.defaultDataBaseId;
-		
+
+		String dbID = ConnectionManagement.defaultDataBaseId;
+
 		return getDbConnection(dbID);
 
 	}
-	
-	
+
 	public static Connection getDbConnection(String dbId) {
 
 		Stack<Map<String, FixConnectionResult>> stack = getStack(dbConnectionThreadLocal);
 		if (stack.isEmpty()) {
-			
-			Map<String, FixConnectionResult> connectioMap=new HashMap<String, FixConnectionResult>();
-			
-		
-			
-			FixConnectionResult fixConnectionResult=ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
-			
+
+			Map<String, FixConnectionResult> connectioMap = new HashMap<String, FixConnectionResult>();
+
+			FixConnectionResult fixConnectionResult = ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
+
 			connectioMap.put(dbId, fixConnectionResult);
-			
+
 			getStack(dbConnectionThreadLocal).push(connectioMap);
-			
+
 			fixConnectionResult.openConnection();
 
 			return fixConnectionResult.getConnection();
-			
+
 		}
 
-		Map<String, FixConnectionResult> connMap= stack.peek();
-		if(connMap==null){
-			Map<String, FixConnectionResult> connectioMap=new HashMap<String, FixConnectionResult>();
-			
-		
-			
-			FixConnectionResult fixConnectionResult=ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
-			
+		Map<String, FixConnectionResult> connMap = stack.peek();
+		if (connMap == null) {
+			Map<String, FixConnectionResult> connectioMap = new HashMap<String, FixConnectionResult>();
+
+			FixConnectionResult fixConnectionResult = ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
+
 			connectioMap.put(dbId, fixConnectionResult);
-			
+
 			getStack(dbConnectionThreadLocal).push(connectioMap);
-			
+
 			fixConnectionResult.openConnection();
 
 			return fixConnectionResult.getConnection();
-		}
-		else{
-			
-		
-			FixConnectionResult fixConnectionResult=connMap.get(dbId);
-			
-			if(fixConnectionResult==null){
-				
-				FixConnectionResult fixConnectionResultObj=ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
-				
+		} else {
+
+			FixConnectionResult fixConnectionResult = connMap.get(dbId);
+
+			if (fixConnectionResult == null) {
+
+				FixConnectionResult fixConnectionResultObj = ConnectionManagement.INSTANCE().getFixConnectionResult(dbId);
+
 				connMap.put(dbId, fixConnectionResultObj);
 
 				fixConnectionResultObj.openConnection();
-				
+
 				return fixConnectionResultObj.getConnection();
-				
-			}
-			else{
-				
-				//fixConnectionResult.openConnection();
+
+			} else {
+
+				// fixConnectionResult.openConnection();
 
 				return fixConnectionResult.getConnection();
 			}
 		}
-		
-		
+
 	}
-	
+
 	public static Map<String, FixConnectionResult> getDbConnectionMap() {
 
 		Stack<Map<String, FixConnectionResult>> stack = getStack(dbConnectionThreadLocal);
@@ -229,57 +226,44 @@ public class Context {
 			return null;
 		}
 
-		Map<String, FixConnectionResult> connMap= stack.peek();
-		if(connMap==null){
+		Map<String, FixConnectionResult> connMap = stack.peek();
+		if (connMap == null) {
 			return null;
-		}
-		else{
+		} else {
 			return connMap;
 		}
-		
-		
+
 	}
 
-	public static void setFixConnectionResult(String dbID,FixConnectionResult fixConnectionResult) {
-		
-		
-		
+	public static void setFixConnectionResult(String dbID, FixConnectionResult fixConnectionResult) {
+
 		Stack<Map<String, FixConnectionResult>> stack = getStack(dbConnectionThreadLocal);
 		if (stack.isEmpty()) {
-			Map<String, FixConnectionResult> conMap=new HashMap<String, FixConnectionResult>();
+			Map<String, FixConnectionResult> conMap = new HashMap<String, FixConnectionResult>();
 			conMap.put(dbID, fixConnectionResult);
-			
+
 			getStack(dbConnectionThreadLocal).push(conMap);
-		}else{
-			Map<String, FixConnectionResult> connMap= stack.peek();
-			if(connMap==null){
-				Map<String, FixConnectionResult> conMap=new HashMap<String, FixConnectionResult>();
+		} else {
+			Map<String, FixConnectionResult> connMap = stack.peek();
+			if (connMap == null) {
+				Map<String, FixConnectionResult> conMap = new HashMap<String, FixConnectionResult>();
 				conMap.put(dbID, fixConnectionResult);
-				
+
 				getStack(dbConnectionThreadLocal).push(conMap);
-			}else{
+			} else {
 				connMap.put(dbID, fixConnectionResult);
 			}
 		}
 
 	}
-	
-	
+
 	public static void setFixConnectionResult(FixConnectionResult fixConnectionResult) {
-		
-	
-		String dbID=ConnectionManagement.defaultDataBaseId;
-		
-		
+
+		String dbID = ConnectionManagement.defaultDataBaseId;
+
 		setFixConnectionResult(dbID, fixConnectionResult);
 
 	}
-	
-	
-	
-
-	
-	
 
 	public static void removeDbConnection() {
 
@@ -294,8 +278,6 @@ public class Context {
 		}
 		return stack.peek();
 	}
-	
-	
 
 	public static void setCommandContext(CommandContext commandContext) {
 		getStack(commandContextThreadLocal).push(commandContext);
@@ -318,10 +300,10 @@ public class Context {
 	public static ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
 		Stack<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
 		if (stack.isEmpty()) {
-			
-			//setProcessEngineConfiguration(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration());
-			
-			return null;//ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+
+			// setProcessEngineConfiguration(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration());
+
+			return null;// ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
 		}
 		return stack.peek();
 	}

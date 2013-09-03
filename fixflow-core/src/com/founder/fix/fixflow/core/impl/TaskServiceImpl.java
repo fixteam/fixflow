@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl;
 
 import java.util.ArrayList;
@@ -8,6 +25,7 @@ import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.Priority;
 import com.founder.fix.fixflow.core.TaskService;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AddCommentCmd;
@@ -16,6 +34,8 @@ import com.founder.fix.fixflow.core.impl.cmd.DeleteIdentityLinkCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteTaskCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandTaskComplete;
+import com.founder.fix.fixflow.core.impl.cmd.GetAgentToUsersAndCountCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetAgentToUsersCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentUsersAndCountCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentUsersCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetNextTaskCmd;
@@ -50,10 +70,8 @@ import com.founder.fix.fixflow.core.impl.command.SaveTaskDraftCommand;
 import com.founder.fix.fixflow.core.impl.command.SaveVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.TransferTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
-import com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
-import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.runtime.IdentityLinkQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -64,6 +82,72 @@ import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
 public class TaskServiceImpl extends ServiceImpl implements TaskService {
+	
+	
+	/* ****************************************    任务处理接口  begin  ************************************************************ */
+
+	
+
+	public void complete(String taskId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("general");
+		expandTaskCommandClaim.setTaskId(taskId);
+		expandTaskCommandClaim.setTaskComment(taskComment);
+
+		expandTaskCommandClaim.setTransientVariables(transientVariables);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
+	}
+	
+	public void claim(String taskId) {
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("claim");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
+	}
+
+	
+	public void claim(String taskId, String claimUserId) {
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("claim");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);		
+	}
+
+	
+	
+
+	public void release(String taskId){
+		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
+		expandTaskCommandClaim.setCommandType("releaseTask");
+		expandTaskCommandClaim.setTaskId(taskId);
+		this.expandTaskComplete(expandTaskCommandClaim, null);
+	}
+	
+	
+	
+
+
+	
+	public void transfer(String taskId, String transferUserId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void rollBack(String taskId, String rollBackNodeId, String taskComment, String taskCommandId, Map<String, Object> transientVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	public <T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn) {
+
+		return (T) commandExecutor.execute(new ExpandTaskComplete<AbstractCustomExpandTaskCommand, T>(expandTaskCommand));
+
+	}
+	
+	
+	/* ****************************************    任务处理接口  end  ************************************************************ */
+	
 
 	public TaskInstance newTask() {
 
@@ -99,14 +183,28 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	public void deleteTasks(Collection<String> taskIds, boolean cascade) {
 		commandExecutor.execute(new DeleteTaskCmd(taskIds, cascade));
 	}
+	
+	public void resumeTask(String taskId) {
+
+		TaskInstance taskInstance=createTaskQuery().taskId(taskId).singleResult();
+		taskInstance.resume();
+		saveTask(taskInstance);
+	}
+
+	public void suspendTask(String taskId) {
+
+		TaskInstance taskInstance=createTaskQuery().taskId(taskId).singleResult();
+		taskInstance.suspend();
+		saveTask(taskInstance);
+	}
 
 	public TaskQuery createTaskQuery() {
-		return new TaskQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createTaskQuery(commandExecutor);
 	}
 
 	public IdentityLinkQuery createIdentityLinkQuery() {
 
-		return new IdentityLinkQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createIdentityLinkQuery(commandExecutor);
 	}
 
 	public List<UserCommandQueryTo> getSubTaskUserCommandByKey(String processDefinitionKey) {
@@ -127,24 +225,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	}
 
 	
-	public void claim(String taskId, String claimUserId) {
-		// TODO 自动生成的方法存根
-		
-		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		expandTaskCommandClaim.setCommandType("claim");
-		expandTaskCommandClaim.setTaskId(taskId);
-		this.expandTaskComplete(expandTaskCommandClaim, null);
-		
-		
-	}
 
-
-	public void release(String taskId){
-		ExpandTaskCommand expandTaskCommandClaim=new ExpandTaskCommand();
-		expandTaskCommandClaim.setCommandType("releaseTask");
-		expandTaskCommandClaim.setTaskId(taskId);
-		this.expandTaskComplete(expandTaskCommandClaim, null);
-	}
 
 	public void transferTask(TransferTaskCommand transferTaskCommand) {
 
@@ -153,11 +234,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 
 
 
-	public <T> T expandTaskComplete(ExpandTaskCommand expandTaskCommand, T classReturn) {
-
-		return (T) commandExecutor.execute(new ExpandTaskComplete<AbstractCustomExpandTaskCommand, T>(expandTaskCommand));
-
-	}
+	
 
 	public void setAssignee(String taskId, String userId) {
 		// TODO Auto-generated method stub
@@ -254,7 +331,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 		return map;
 	}
 
-	public Map<String, Object> getVariables(String taskId, Collection<String> variableNames) {
+	public Map<String, Object> getVariables(String taskId, List<String> variableNames) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
 		queryVariablesCommand.setTaskInstanceId(taskId);
 		queryVariablesCommand.setVariableNames(variableNames);
@@ -315,7 +392,17 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 
 		return commandExecutor.execute(new GetAgentUsersAndCountCmd(userId));
 	}
+	
+	public List<UserTo> getAgentToUsers(String userId) {
 
+		return commandExecutor.execute(new GetAgentToUsersCmd(userId));
+	}
+
+	public List<Map<String, Object>> getAgentToUsersAndCount(String userId) {
+
+		return commandExecutor.execute(new GetAgentToUsersAndCountCmd(userId));
+	}
+	
 	public List<TaskCommandInst> getSystemTaskCommand(String commandType) {
 		
 		
@@ -367,6 +454,12 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 	public List<TaskInstance> GetRecoverTask(String taskId, String taskCommandId) {
 		return commandExecutor.execute(new GetRecoverTaskCmd(taskId,taskCommandId));
 	}
+
+	
+
+	
+
+	
 
 	
 

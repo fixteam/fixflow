@@ -119,6 +119,23 @@ public class DocumentationImpl extends BaseElementImpl implements Documentation 
      * @generated NOT
      */
     public String getText() {
+    	
+    	
+    	 if (mixed != null && !mixed.isEmpty()) {
+             StringBuilder result = new StringBuilder();
+             if(mixed.size()>0){
+            	 FeatureMap.Entry cur = mixed.get(0);
+                 result.append(cur.getValue());
+                 
+                 return result.toString();
+             }
+            
+         }
+
+         return null;
+    	
+    	/*
+    	
         if (mixed != null) {
             StringBuilder result = new StringBuilder();
             for (FeatureMap.Entry cur : mixed) {
@@ -135,7 +152,7 @@ public class DocumentationImpl extends BaseElementImpl implements Documentation 
             return result.toString();
         }
 
-        return null;
+        return null;*/
     }
 
     /**

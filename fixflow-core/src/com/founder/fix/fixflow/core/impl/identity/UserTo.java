@@ -1,8 +1,25 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.identity;
 
 import java.util.Map;
 
-import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 
@@ -56,29 +73,36 @@ public class UserTo {
 	 * @return
 	 */
 	public String getUserName() {
+		
+		
+		
+		try {
+			Boolean booleanTemp = StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
 
-		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+			//用户名称国际化处理
+			if (booleanTemp) {
 
-		//用户名称国际化处理
-		if (booleanTemp) {
+				FixFlowResources fixFlowResources = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
 
-			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
-
-			String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_user_Name_Key");
-			if (nameTemp == null || nameTemp.equals("")) {
-				return userName;
-			} else {
-				Object otherName = this.getPropertyValue(nameTemp);
-				if (otherName == null || otherName.equals("")) {
+				String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_user_Name_Key");
+				if (nameTemp == null || nameTemp.equals("")) {
 					return userName;
 				} else {
-					return StringUtil.getString(otherName);
+					Object otherName = this.getPropertyValue(nameTemp);
+					if (otherName == null || otherName.equals("")) {
+						return userName;
+					} else {
+						return StringUtil.getString(otherName);
+					}
 				}
-			}
 
-		} else {
+			} else {
+				return userName;
+			}
+		} catch (Exception e) {
 			return userName;
 		}
+		
 
 	}
 

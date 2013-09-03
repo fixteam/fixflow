@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.runtime;
 
 import java.util.Date;
@@ -117,9 +134,20 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	 */
 	boolean isSuspended = false;
 
+	/**
+	 * 流程实例ID
+	 */
 	protected String processInstanceId;
+	
+	/**
+	 * 父令牌ID
+	 */
 	protected String parentTokenId;
 
+	
+	protected Date archiveTime;
+	
+	
 	public TokenEntity() {
 
 	}
@@ -775,9 +803,9 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 		// 流程实例编号 String
 		objectParam.put(TokenObjKey.ProcessInstanceId().FullKey(), this.getProcessInstanceId());
 		// 父令牌编号 String
-
 		objectParam.put(TokenObjKey.ParentTokenId().FullKey(), this.getParentTokenId());
-
+		//归档时间
+		objectParam.put(TokenObjKey.ArchiveTime().FullKey(), this.getArchiveTime());
 		// 流程实例编号 String
 		objectParam.put(TokenObjKey.FreeToken().FullKey(), String.valueOf(this.isFreeToken()));
 		objectParam.put(TokenObjKey.ParentFreeTokenId().FullKey(), this.getParentFreeTokenId());
@@ -892,6 +920,14 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	public void setExtensionFields(Map<String, Object> extensionFields) {
 		this.extensionFields = extensionFields;
 	}
+	
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
+	}
 
 	public void addExtensionField(String fieldName, Object fieldValue) {
 		this.extensionFields.put(fieldName, fieldValue);
@@ -900,6 +936,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 	public TokenEntity(Map<String, Object> entityMap){
 		persistentInit(entityMap);
 	}
+	
 
 
 	@Override
@@ -976,6 +1013,11 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 				this.parentFreeTokenId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
+			
+			if (dataKey.equals(TokenObjKey.ArchiveTime().DataBaseKey())) {
+				this.archiveTime = StringUtil.getDate(entityMap.get(dataKey));
+				continue;
+			}
 
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
 
@@ -1019,6 +1061,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 				// 流程实例编号 String
 				objectParam.put("FREETOKEN", String.valueOf(this.isFreeToken()));
 				objectParam.put("PARENT_FREETOKEN_ID", this.getParentFreeTokenId());
+				objectParam.put(TokenObjKey.ArchiveTime().DataBaseKey(), this.getArchiveTime());
 
 				return objectParam;
 	}

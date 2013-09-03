@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.cmd;
 
 
@@ -56,10 +73,15 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 				if (diagramElement instanceof BPMNShape) {
 					BPMNShape bpmnShape = (BPMNShape) diagramElement;
 					Map<String, Object>  positionMap=new HashMap<String, Object>();
-					BaseElement bpmnElement=bpmnShape.getBpmnElement();
+					
+					BaseElement bpmnElement=getBaseElement(bpmnShape.getBpmnElement());
+				
+					
+					
 					if(bpmnElement==null){
 						continue;
 					}
+
 					float x=bpmnShape.getBounds().getX();
 					float y=bpmnShape.getBounds().getY();
 					float height=bpmnShape.getBounds().getHeight();
@@ -86,20 +108,27 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 		
 		//return CommonNodeToSVG(bpmnShape, new SvgCallActivityTo());
 	}
-	@SuppressWarnings("unused")
+
 	private  BaseElement getBaseElement(BaseElement baseElement)
 	{
 		
 		
-		
-		BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
-		if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
-			String elementId=basicEObjectImpl.eProxyURI().fragment();
-			BaseElement bpmnElement=definitions.getElement(elementId);
-			return bpmnElement;
-		}
-		else{
+		if(baseElement==null){
 			return null;
+		}
+		
+		if(baseElement.getId()==null){
+			BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
+			if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
+				String elementId=basicEObjectImpl.eProxyURI().fragment();
+				BaseElement bpmnElement=definitions.getElement(elementId);
+				return bpmnElement;
+			}
+			else{
+				return null;
+			}
+		}else{
+			return baseElement;
 		}
 		
 		

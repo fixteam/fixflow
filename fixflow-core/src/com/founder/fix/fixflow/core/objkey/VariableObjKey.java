@@ -1,8 +1,60 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.objkey;
+
+
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 public class VariableObjKey {
 
+	/**
+	 * 查询类型
+	 * @param tableType 0或null查运行表，1查历史表 2查历史和run表
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  VariableHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+VariableTableName()+" union all select * from "+VariableHisTableName()+")";
+		}else{
+			tableName = VariableTableName();
+		}
+		return tableName;
+	}
+	/**
+	 * 流程变量表名
+	 * @return
+	 */
+	public static String VariableTableName(){
+		return "FIXFLOW_RUN_VARIABLE";
+	}
+	
+	/**
+	 * 流程变量归档表名
+	 * @return
+	 */
+	public static String VariableHisTableName(){
+		return "FIXFLOW_HIS_VARIABLE";
+	}
+	
 	/**
 	 * 编号
 	 * @return
@@ -225,5 +277,102 @@ public class VariableObjKey {
 		}
 
 	}
+	
+
+	/**
+	 * 变量业务类型
+	 * @return
+	 */
+	public static FlowKeyVariableType VariableType(){
+		return new VariableObjKey().new FlowKeyVariableType();
+	}
+	
+	public class FlowKeyVariableType implements ObjKeyInterface{
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "variableType";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "VARIABLE_TYPE";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "variableType";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "变量业务类型";
+		}
+	}
+	
+	
+	
+	/** 
+	 * 业务查询数据
+	 * @return
+	 */
+	public static FlowKeyBizData BizData(){
+		return new VariableObjKey().new FlowKeyBizData();
+	}
+	
+	public class FlowKeyBizData implements ObjKeyInterface{
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "bizData";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "BIZ_DATA";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "bizData";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "业务查询数据";
+		}
+	}
+	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new VariableObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
+		}
+
+	}
+	
 	
 }

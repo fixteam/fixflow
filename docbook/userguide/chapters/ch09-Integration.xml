@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>如何集成</title>
+
+  <section xml:id="integration.engine">
+    <title>FixFlow Engine 集成</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="integration.org">
+    <title>组织结构</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="integration.transaction">
+    <title>数据库事务控制</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="integration.web">
+    <title>TaskCenter、ManagementCenter 集成</title>
+    <para>
+      
+    </para>
+  </section>
+
+
+  <section xml:id="integration.eclipse">
+    <title>Eclipse 集成</title>
+    <para>
+      
+    </para>
+  </section>
+  
+</chapter>

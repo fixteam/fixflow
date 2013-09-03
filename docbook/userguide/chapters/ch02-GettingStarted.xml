@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+
+<chapter>
+  <title>快速入门</title>
+  
+  <section xml:id="gs.prerequisites">
+    <title>先决条件</title>
+    <para> 本章建立在用户已经下载Eclipse Juno SR2工具，安装了JDK 6+运行环境，以及tomcat
+      V6.0服务器，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，在github.com注册了账号。</para>
+  </section>
+  <section xml:id="gs.goal">
+    <title>目标</title>
+    <para> 获取并部署好FixFlow源代码，保证可以正常访问运行FixFlow的Web。</para>
+  </section>
+  <section xml:id="gs.getFixFlow">
+    <title>获取FixFlow</title>
+    <orderedlist>
+      <listitem> <para> 打开eclispse工具，先设置下workspace的编码方式，fixflow使用UTF-8的编码方式，点击window->preferences->General->workspace->Text file encoding 把编码方式改为UTF-8即可</para>
+      </listitem>
+      <listitem>       
+        <para>然后在工程空白区域，右键选择import->import->Git->Projects from git ，点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.1.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>在弹出的界面选择URI，点击“Next”，弹出如下界面：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.2.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>访问github.com网站，登陆，搜索fixflow,回车，如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.3.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+         <para>搜索到FixFlow相关项目，点击fixteam/fixflow进入</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.7.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+       <para>点击右边https clone url的copy按钮，复制fixflow的git地址</para>
+       <mediaobject><imageobject>
+         <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.4.png"/>
+       </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>返回eclipse，粘贴如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.5.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>输入注册的git账号密码信息，选择store in Secure store(记住密码)，点击“Next”，此时会出现fixflow代码的分支信息，如下图。全部选择，点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.6.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+         <para>选择GIT的工作目录，假设在E:\GIT\fixflow（此目录后面会用到）点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.9.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>此时会从github下载代码，需要等待几分钟，完成后如图，直接点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.10.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>此时会列出fixflow项目的信息，直接点击“finish”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.8.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>至此，fixflow项目的代码已经下载到本地，下载后的项目结构如图，因为没有配置web环境，所以会有大量错误：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.11.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section xml:id="gs.webConfig">
+    <title>Web环境配置</title>
+    <para>
+      进行此节之前，请确保eclipse中已经有bpmcenter及项目项目代码
+    </para>
+    <para>此时项目中有大量错误，我们排查。</para>
+    <orderedlist>
+        <listitem>
+          <para>首先，因为项目的.project文件中使用了GIT_FIXFLOW_HOME全局变量，所以我们要声明下此变量：</para>
+          <para> 打开window-->preferences-->General-->workspace-->linked Resources，新增变量：GIT_FIXFLOW_HOME,路径为上面设置的GIT工作目录+fixflow如：E:\GIT\fixflow </para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.12.png"/>
+          </imageobject></mediaobject>
+        </listitem>
+        <listitem>
+        <para>其次，因为项目依赖web服务器，所以我们要部署一个服务器：</para>
+          <para>调出服务器视图 window-->show View-->Server 新建一个服务器，本例我们选择apache tomcat V6.0作为测试服务器。</para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.13.png"/>
+          </imageobject></mediaobject>
+        <para>选择tomcat路径，（没有tomcat的可以去网上下载个），选择安装的jdk 点击Next,将bpmcenter项目add进去 点击finish。</para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.14.png"/>
+          </imageobject></mediaobject>
+        <para>双击新建的服务器，设置发布到tomcat目录下</para>
+          <mediaobject><imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.15.png"/>
+          </imageobject></mediaobject>
+        </listitem>
+       <listitem>
+         <para>重新构建项目，选择project-->clean。等结束后再看，项目中的错误全部都消失了。</para>
+         <mediaobject><imageobject>
+           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.16.png"/>
+         </imageobject></mediaobject>
+       </listitem>
+     </orderedlist>
+  </section>
+  
+  <section xml:id="gs.dataBaseRun">
+    <title>DataBase脚本安装</title>
+    <para>
+      数据库的详细介绍请查看其他章节<link linkend="dataBase.support">数据库说明</link>
+    </para>
+  </section>
+  
+  <section xml:id="gs.jarConfig">
+    <title>依赖Jar配置</title>
+    <para>
+     <programlisting language="xml">
+       "/fixweb/WebRoot/WEB-INF/lib/bsh-2.0b4.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.contenttype_3.4.100.v20100505-1235.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.jobs_3.5.1.R36x_v20100824.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.runtime_3.6.0.v20100505.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.common_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore_2.6.1.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.change_2.5.1.v20100907-1643.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.xmi_2.5.0.v20100521-1846.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.edit_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.app_1.3.1.R36x_v20100803.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.common_3.6.0.v20100503.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.preferences_3.3.0.v20100503.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.registry_3.5.0.v20100503.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.osgi_3.6.2.R36x_v20110210.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.xsd_2.6.0.v20100914-1218.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/runtime_registry_compatibility.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/ojdbc5.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/c3p0-0.9.1.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/quartz-2.1.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/quartz-oracle-2.1.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/log4j-1.2.16.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/com.founder.fix.fixflow.bpmn2.extensions.jar"
+      "/fixweb/WebRoot/WEB-INF/lib/mail.jar"
+     </programlisting>
+    </para>
+  </section>
+  
+  <section xml:id="gs.runFixFlow">
+    <title>运行FixFlow</title>
+    <para>
+      进行这步之前，请确保完成<link linkend="gs.webConfig">web环境配置</link>和<link  linkend="gs.dataBaseRun">数据库脚本安装</link>。
+    </para>
+    <para>
+      这步需要进行数据库配置，打开com\founder\fix\fixflow\expand\config\fixflowconfig.xml文件，找到dataBaseConfig节点的selected属性配置的数据库信息，修改
+      对应的数据库配置的驱动、用户名、密码等信息。
+    </para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.17.png"/>
+    </imageobject></mediaobject>
+    <para>保存，重新发布，启动tomcat服务器，发现已经启动成功。</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.18.png"/>
+    </imageobject></mediaobject>
+    <para>访问http://127.0.0.1:8080/bpmcenter/</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.19.png"/>
+    </imageobject></mediaobject>
+    <para>输入账号：admin 密码：1，点击登录，登录成功，进入任务中心界面</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.20.png"/>
+    </imageobject></mediaobject>
+    <para>输入账号：admin 密码：1，并勾选管控中心登录，点击登录，可进入流程管控中心界面</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.21.png"/>
+    </imageobject></mediaobject>
+    <para>至此，快速入门结束。关于fixflow的其他详细信息，请继续看我们的文档。</para>
+  </section>
+</chapter>

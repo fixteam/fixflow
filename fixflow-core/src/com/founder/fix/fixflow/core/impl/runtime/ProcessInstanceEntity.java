@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.runtime;
 
 import java.util.ArrayList;
@@ -22,6 +39,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
+import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -31,8 +49,6 @@ import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableQueryEntity;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -40,7 +56,6 @@ import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class ProcessInstanceEntity extends AbstractPersistentObject implements ProcessInstance {
 
@@ -156,6 +171,11 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	 * 更新时间
 	 */
 	protected Date updateTime;
+	
+	/**
+	 * 归档时间
+	 */
+	protected Date archiveTime;
 	
 	/**
 	 * 实例状态
@@ -526,56 +546,23 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		callActivityBehavior.endSubTask(this.getId());
 		
 		ExecutionContext executionContext=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.rootToken);
-		
-		//String flowId =  StringUtil.getString(ExpressionMgmt.execute(EMFExtensionUtil.getAnyAttributeValue(callActivityBehavior, "callableElementId"),executionContext));
-
-		//String flowVersion = StringUtil.getString(ExpressionMgmt.execute(EMFExtensionUtil.getAnyAttributeValue(callActivityBehavior, "callableElementVersion"),executionContext));
-		//int version = StringUtil.getInt(flowVersion);
-		
-		
-		
-		
-		//String bizKeyTemp = EMFExtensionUtil.getAnyAttributeValue(callActivityBehavior, "callableElementBizKey");
-		
-		//String bizKey=StringUtil.getString(ExpressionMgmt.execute(bizKeyTemp, executionContext));
-		
-		
-	
-		
 		Map<String, Object> dataVarMap=new HashMap<String, Object>();
 		
 		SubProcessToDataSourceMapping subProcessToDataSourceMapping=callActivityBehavior.getSubProcessToDataSourceMapping();
 		if(subProcessToDataSourceMapping!=null){
 			for (DataVariableMapping dataVariableMapping : subProcessToDataSourceMapping.getDataVariableMapping()) {
-				 
-				 //String dataSourceId="${"+dataVariableMapping.getDataSourceId()+"}";
 				 String subProcesId="${"+dataVariableMapping.getSubProcesId()+"}";
-				 
 				 dataVarMap.put(dataVariableMapping.getDataSourceId(),  ExpressionMgmt.execute(subProcesId,executionContext));
 			}
 		}
-		
-	
-		
-		
 		ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
-		
 		processEngine.getRuntimeService().tokenSignal(this.getParentProcessInstanceTokenId(), null,dataVarMap);
-		
 	}
 
 	public Map<String, Object> getDataVariable() {
-		// TODO Auto-generated method stub
-
-		VariableQueryEntity variableQueryEntity = new VariableQueryEntity();
-
-		if (this.id != null && !this.id.equals("")) {
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, this.id);
-			variableQueryEntity.addVariableFlowType(variableFlowTypeEntity);
-		}
-
-		return Context.getCommandContext().getVariableManager().queryVariable(variableQueryEntity);
-
+		QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(this.id);
+		return Context.getCommandContext().getVariableManager().queryVariable(queryVariablesCommand);
 	}
 
 	/**
@@ -593,7 +580,6 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 	 * @return 父流程实例
 	 */
 	public ProcessInstanceEntity getParentProcessInstance() {
-
 		if (this.parentProcessInstanceId != null) {
 			if (this.parentProcessInstance != null) {
 				return this.parentProcessInstance;
@@ -603,9 +589,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 			if (processInstanceImpl != null) {
 				this.parentProcessInstance = processInstanceImpl;
 			}
-
 			return processInstanceImpl;
-
 		}
 
 		return parentProcessInstance;
@@ -701,6 +685,13 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		this.updateTime = updateTime;
 	}
 	
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
+	}
 
 	public ProcessInstanceType getInstanceType() {
 		return instanceType;
@@ -864,7 +855,9 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		
 		mapPersistentState.put(ProcessInstanceObjKey.UpdateTime().FullKey(), this.updateTime);
 		
-		mapPersistentState.put(ProcessInstanceObjKey.InstanceType().FullKey(), this.instanceType);
+		mapPersistentState.put(ProcessInstanceObjKey.InstanceStatus().FullKey(), this.instanceType);
+		
+		mapPersistentState.put(ProcessInstanceObjKey.ArchiveTime().FullKey(), this.archiveTime);
 
 		for (String key : extensionFields.keySet()) {
 			mapPersistentState.put(key, extensionFields.get(key));	
@@ -1066,7 +1059,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				continue;
 			}
 			
-			if (dataKey.equals(ProcessInstanceObjKey.InstanceType().DataBaseKey())) {
+			if (dataKey.equals(ProcessInstanceObjKey.InstanceStatus().DataBaseKey())) {
 				//为了兼容老系统
 				if(entityMap.get(dataKey) == null){
 					if(entityMap.get(ProcessInstanceObjKey.EndTime().DataBaseKey()) == null){
@@ -1077,6 +1070,11 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				}else{
 					this.instanceType = ProcessInstanceType.valueOf(StringUtil.getString(entityMap.get(dataKey)));
 				}
+				continue;
+			}
+			
+			if (dataKey.equals(ProcessInstanceObjKey.ArchiveTime().DataBaseKey())) {
+				this.archiveTime =  StringUtil.getDate(entityMap.get(dataKey));
 				continue;
 			}
 
@@ -1128,10 +1126,14 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 				objectParam.put(ProcessInstanceObjKey.ProcessLocation().DataBaseKey(), this.getProcessLocation());
 				
 				// 实例状态
-				objectParam.put(ProcessInstanceObjKey.InstanceType().DataBaseKey(), this.getInstanceType().toString());
+				objectParam.put(ProcessInstanceObjKey.InstanceStatus().DataBaseKey(), this.getInstanceType().toString());
 				
 				// 更新时间
 				objectParam.put(ProcessInstanceObjKey.UpdateTime().DataBaseKey(), this.getUpdateTime());
+				
+				//归档时间
+				// 更新时间
+				objectParam.put(ProcessInstanceObjKey.ArchiveTime().DataBaseKey(), this.getArchiveTime());
 				
 				for (String key : persistenceExtensionFields.keySet()) {
 					objectParam.put(key, persistenceExtensionFields.get(key));	

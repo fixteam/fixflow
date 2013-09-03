@@ -1,8 +1,23 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core;
 
 
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -142,10 +157,37 @@ public interface RuntimeService extends ProcessService{
 	 */
 	boolean deleteProcessInstance(String processDefinitionKey, String businessKey, boolean cascade);
 	
+	/**
+	 * 暂停流程实例
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	void suspendProcessInstance(String processInstanceId);
 	
+	/**
+	 * 恢复流程实例
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	void continueProcessInstance(String processInstanceId);
+	
+	/**
+	 * 终止流程实例
+	 * @param processInstanceId 流程实例号
+	 * @return
+	 */
+	void terminatProcessInstance(String processInstanceId);
+	/**
+	 * 更新流程关联键
+	 * @param processInstanceId 流程实例号 
+	 * @param businessKey 关联键
+	 */
 	void updateProcessInstanceBusinessKey(String processInstanceId,String businessKey);
 	
-	
+	/**
+	 * 创建流程实例查询
+	 * @return
+	 */
 	ProcessInstanceQuery createProcessInstanceQuery();
 	
 	/**
@@ -178,6 +220,26 @@ public interface RuntimeService extends ProcessService{
 	 *            变量Map
 	 */
 	void setProcessInstanceVariables(String processInstanceId, Map<String, ? extends Object> variables);
+	
+	/**
+	 * 删除流程实例持久变量
+	 * @param processInstanceId  流程实例编号
+	 * @param variableName 变量名称key
+	 */
+	void deleteProcessInstanceVariable(String processInstanceId,String variableName);
+	
+	/**
+	 * 删除流程实例持久变量
+	 * @param processInstanceId 流程实例编号
+	 * @param variableNames 变量名称集合
+	 */
+	void deleteProcessInstanceVariables(String processInstanceId,List<String> variableNames);
+	
+	/**
+	 * 删除流程实例持久变量
+	 * @param processInstnaceId 流程实例编号
+	 */
+	void deleteProcessInstanceVariables(String processInstanceId);
 
 	/**
 	 * 获取流程实例的持久变量
@@ -208,7 +270,7 @@ public interface RuntimeService extends ProcessService{
 	 *            变量key集合
 	 * @return 变量Map
 	 */
-	Map<String, Object> getProcessInstanceVariables(String processInstanceId, Collection<String> variableNames);
+	Map<String, Object> getProcessInstanceVariables(String processInstanceId, List<String> variableNames);
 
 	
 	
@@ -266,7 +328,7 @@ public interface RuntimeService extends ProcessService{
 	 *            变量key集合
 	 * @return 变量Map
 	 */
-	Map<String, Object> getTokenVariables(String tokenId, Collection<String> variableNames);
+	Map<String, Object> getTokenVariables(String tokenId, List<String> variableNames);
 	
 	/**
 	 * 插入流程归档数据

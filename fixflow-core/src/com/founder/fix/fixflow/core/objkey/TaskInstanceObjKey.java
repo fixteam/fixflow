@@ -1,12 +1,67 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.objkey;
+
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 
 public class TaskInstanceObjKey {
 	
-
+	/**
+	 * 查询类型
+	 * @param queryLocation查询类型
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  TaskInstanceHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+TaskInstanceTableName()+" union all select * from "+TaskInstanceHisTableName()+")";
+		}else{
+			tableName = TaskInstanceTableName();
+		}
+		return tableName;
+	}
+	/**
+	 * 任务实例表名
+	 * @return
+	 */
+	public static String TaskInstanceTableName(){
+		int flowVersion = ProcessEngineManagement.getDefaultProcessEngine().getVersion().getMajorVersionNumber();
+		if(flowVersion >4)
+			return "FIXFLOW_RUN_TASKINSTANCE";
+		else
+			return "FIXFLOW_RUN_TAKSINSTANECE";
+	}
+	
+	/**
+	 * 任务实例归档表名
+	 * @return
+	 */
+	public static String TaskInstanceHisTableName(){
+		return "FIXFLOW_HIS_TASKINSTANCE";
+	}
+	
+	
 	public class FlowKeyTaskInstanceId implements ObjKeyInterface{
-
 
 		public String EntityKey() {
 			// TODO Auto-generated method stub
@@ -31,7 +86,29 @@ public class TaskInstanceObjKey {
 	}
 	
 	
-	
+	public class FlowKeyTaskInstanceArchiveTime implements ObjKeyInterface{
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
+		}
+
+	}
 	
 	
 	public class FlowKeyCategory implements ObjKeyInterface{
@@ -1342,5 +1419,16 @@ public class TaskInstanceObjKey {
 		
 		return new TaskInstanceObjKey().new FlowKeyPendingTaskId();
 	}
+	
+	/**
+	 * 转办任务编号
+	 * @return
+	 */
+	public static FlowKeyTaskInstanceArchiveTime ArchiveTime(){
+		
+		return new TaskInstanceObjKey().new FlowKeyTaskInstanceArchiveTime();
+	}
+	
+	
 	
 }

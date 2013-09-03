@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>入门：10分钟教程</title>
+
+  <section xml:id="tenmt.prerequisites">
+    <title>先决条件</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="tenmt.goal">
+    <title>目标</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="tenmt.useCase">
+    <title>用例</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="tenmt.processDiagram">
+    <title>设计流程</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="tenmt.xml">
+    <title>XML的表示</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="tenmt.StartingProcess">
+    <title>启动一个流程实例</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="tenmt.taskLists">
+    <title>任务列表</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="tenmt.claimingTask">
+    <title>领取任务</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="tenmt.completingTask">
+    <title>完成任务</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="tenmt.endingProcess">
+    <title>结束流程</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="tenmt.codeOverview">
+    <title>通过代码完成</title>
+    <para>
+      
+    </para>
+  </section>
+  
+</chapter>

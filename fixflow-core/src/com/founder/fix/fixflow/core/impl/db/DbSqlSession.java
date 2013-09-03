@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.db;
 
 import java.sql.Connection;
@@ -5,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
@@ -22,6 +40,12 @@ public class DbSqlSession {
 		this.cacheObject = cacheObject;
 		persistentSession = new PersistentSession(connection);
 	}
+	
+	//execute
+	
+	public Object execute(String execStatement,Object parameter){
+		return persistentSession.execute(execStatement, parameter);
+	}
 
 	// insert
 
@@ -36,6 +60,11 @@ public class DbSqlSession {
 	public void delete(String deleteStatement, String persistentObjectId) {
 
 		persistentSession.delete(deleteStatement,persistentObjectId);
+	}
+	
+	public void delete(String deleteStatement, Object parameter) {
+
+		persistentSession.delete(deleteStatement,parameter);
 	}
 	
 	public void delete(String deleteStatement, PersistentObject persistentObject) {
@@ -91,19 +120,20 @@ public class DbSqlSession {
 	}
 
 	public Object selectOne(String statement, Object parameter) {
-
+		/*
 		if (cacheObject != null) {
 			if (statement.equals("selectProcessInstance")) {
 				return selectProcessInstance(parameter);
 			}
 		}
-
+		 */
 		Object result = persistentSession.selectOne(statement, parameter);
 
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
+
+	@SuppressWarnings({ "unused", "unchecked" })
 	private Object selectProcessInstance(Object parameter) {
 		Map<String, Object> parameters = (HashMap<String, Object>) parameter;
 		String processInstanceId = parameters.get("processInstanceId").toString();
@@ -123,19 +153,19 @@ public class DbSqlSession {
 	}
 
 	public DeploymentQueryImpl createDeploymentQuery() {
-		return new DeploymentQueryImpl();
+		return new DeploymentQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 	public ProcessDefinitionQueryImpl createProcessDefinitionQuery() {
-		return new ProcessDefinitionQueryImpl();
+		return new ProcessDefinitionQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 	public ProcessInstanceQueryImpl createProcessInstanceQuery() {
-		return new ProcessInstanceQueryImpl();
+		return new ProcessInstanceQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 	public TaskQueryImpl createTaskQuery() {
-		return new TaskQueryImpl();
+		return new TaskQueryImpl(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCommandExecutor());
 	}
 
 }

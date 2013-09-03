@@ -1,8 +1,27 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author demonrain
+ */
+
 package com.founder.fix.fixflow.test.bpmn.callactivity;
 
 import java.util.List;
 
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.model.DeploymentBuilder;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -12,15 +31,18 @@ import com.founder.fix.fixflow.test.Deployment;
 
 public class CallActivityTest extends AbstractFixFlowTestCase {
 
-	@Deployment(resources = { "com/founder/fix/fixflow/test/bpmn/callactivity/CallActivityTest.bpmn","com/founder/fix/fixflow/test/bpmn/subprocess/SubProcessTest.bpmn" })
 	public void testCallActivity() {
-		/*ProcessDefinitionBehavior processDefinition = modelService.createProcessDefinitionQuery().processDefinitionKey("ExclusiveGatewayTest").singleResult();
-		assertNotNull(processDefinition);*/
-		// 数据变量
-		// 瞬态
-//		Map<String, Object> transientVariables = new HashMap<String,Object>();
-		// 持久化
-		// Map<String, Object> Variables = new HashMap<String, Object>();
+		DeploymentBuilder deploymentBuilder = processEngine.getModelService().createDeployment().name("测试名称");
+		//添加你要发布的定义
+		deploymentBuilder.addClasspathResource("com/founder/fix/fixflow/test/bpmn/callactivity/CallActivityTest.bpmn");
+		String deploymentIdTemp = deploymentBuilder.deploy().getId();
+		assertNotNull(deploymentIdTemp);
+		//重置下流程发布，发布下一个流程
+		DeploymentBuilder deploymentBuilder2 = processEngine.getModelService().createDeployment().name("测试发布");
+		deploymentBuilder2.addClasspathResource("com/founder/fix/fixflow/test/bpmn/subprocess/SubProcessTest.bpmn");
+		//发布
+		deploymentIdTemp = deploymentBuilder2.deploy().getId();
+		assertNotNull(deploymentIdTemp);
 		
 		// 启动测试流程
 		// 创建一个启动并提交命令

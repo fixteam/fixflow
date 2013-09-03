@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.task;
 
 
@@ -13,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskQuery;
@@ -79,14 +97,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	protected boolean isContainsSubProcess=false;
 
-	
-
-	protected QueryExpandTo queryExpandTo;
-
-	
-
-	
-
+	protected QueryLocation queryLocation = null;
 	
 	protected List<TaskInstanceType> taskTypeList=new ArrayList<TaskInstanceType>();
 
@@ -110,11 +121,21 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return this;
 	}
 	
-	public TaskQueryImpl queryExpandTo(QueryExpandTo queryExpandTo) {
-		if (queryExpandTo == null) {
-			throw new FixFlowException("queryExpandTo  is null");
+	public TaskQuery his() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.HIS;
 		}
-		this.queryExpandTo = queryExpandTo;
+		return this;
+	}
+	
+	public TaskQuery run() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.RUN;
+		}
 		return this;
 	}
 	
@@ -643,6 +664,74 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public boolean isContainsSubProcess() {
 		return isContainsSubProcess;
+	}
+	
+	
+	
+	
+	
+	/* 变量查询 */
+	protected String taskVariableKey;
+	protected String taskVariableValue;
+	protected boolean taskVariableValueIsLike;
+	
+	protected String processInstanceVariableKey;
+	protected String processInstanceVariableValue;
+	protected boolean processInstanceVariableValueIsLike;
+
+	public TaskQuery variableData(String variableValue, boolean isLike) {
+		this.taskVariableValue=variableValue;
+		this.taskVariableValueIsLike=isLike;
+		return this;
+	}
+
+	public TaskQuery variableData(String variableKey, String variableValue, boolean isLike) {
+		this.taskVariableValue=variableValue;
+		this.taskVariableValueIsLike=isLike;
+		this.taskVariableKey=variableKey;
+		
+		return this;
+	}
+
+	public TaskQuery processInstanceVariableData(String variableValue, boolean isLike) {
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		return this;
+	}
+
+	public TaskQuery processInstanceVariableData(String variableKey, String variableValue, boolean isLike) {
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		this.processInstanceVariableKey=variableKey;
+		return this;
+	}
+	
+	public String getTaskVariableKey() {
+		return taskVariableKey;
+	}
+
+	public String getTaskVariableValue() {
+		return taskVariableValue;
+	}
+
+	public boolean isTaskVariableValueIsLike() {
+		return taskVariableValueIsLike;
+	}
+
+	public String getProcessInstanceVariableKey() {
+		return processInstanceVariableKey;
+	}
+
+	public String getProcessInstanceVariableValue() {
+		return processInstanceVariableValue;
+	}
+
+	public boolean isProcessInstanceVariableValueIsLike() {
+		return processInstanceVariableValueIsLike;
+	}
+
+	public QueryLocation getQueryLocation() {
+		return queryLocation;
 	}
 
 }

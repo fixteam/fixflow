@@ -1,9 +1,65 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.objkey;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 
 public class ProcessInstanceObjKey {
 
+	/**
+	 * 查询类型
+	 * @param tableType 0或null查运行表，1查历史表 2查历史和run表
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  ProcessInstanceHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+ProcessInstanceTableName()+" union all select * from "+ProcessInstanceHisTableName()+")";
+		}else{
+			tableName = ProcessInstanceTableName();
+		}
+		return tableName;
+	}
+	
+	/**
+	 * 获取流程实例表名
+	 * @return
+	 */
+	public static String ProcessInstanceTableName(){
+		int flowVersion = ProcessEngineManagement.getDefaultProcessEngine().getVersion().getMajorVersionNumber();
+		if(flowVersion >4)
+			return "FIXFLOW_RUN_PROCESSINSTANCE";
+		else
+			return "FIXFLOW_RUN_PROCESSINSTANECE";
+	}
+	
+	/**
+	 * 获取流程实例归档表明
+	 * @return
+	 */
+	public static String ProcessInstanceHisTableName(){
+		return "FIXFLOW_HIS_PROCESSINSTANCE";
+	}
+	
 	
 	/**
 	 * 编号
@@ -541,16 +597,16 @@ public class ProcessInstanceObjKey {
 	 * 实例状态
 	 * @return
 	 */
-	public static FlowKeyInstanceType InstanceType(){
-		return new ProcessInstanceObjKey().new FlowKeyInstanceType();
+	public static FlowKeyInstanceStatus InstanceStatus(){
+		return new ProcessInstanceObjKey().new FlowKeyInstanceStatus();
 	}
 	
-	public class FlowKeyInstanceType implements ObjKeyInterface{
+	public class FlowKeyInstanceStatus implements ObjKeyInterface{
 
 
 		public String EntityKey() {
 			// TODO Auto-generated method stub
-			return "instanceType";
+			return "instanceStatus";
 		}
 
 		public String DataBaseKey() {
@@ -599,6 +655,39 @@ public class ProcessInstanceObjKey {
 		public String KeyName() {
 			// TODO Auto-generated method stub
 			return "更新时间";
+		}
+
+	}
+	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new ProcessInstanceObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
 		}
 
 	}

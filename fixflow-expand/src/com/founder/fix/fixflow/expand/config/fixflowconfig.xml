@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="4.7.1.20130617">
+<coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.0.0.20130806">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
     <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="DB_FIX_ACC" name="DB_FIX_ACC" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
-    <dataBase id="db2" name="db2数据库" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.OraclePaginationImpl" dbtype="db2"/>
-    <dataBase id="mysql" name="mysql数据库" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/myDB?user=soft&amp;password=soft1234&amp;useUnicode=true&amp;characterEncoding=8859_1" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.SqlServerPaginationImpl" dbtype="mysql"/>
-    <dataBase id="sqlserver" name="DB_FIX_BIZ_BASE" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
-    <dataBase id="oracle" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:jndb" username="idbase" password="idbase" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl"/>
+    <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
+    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
+    <dataBase id="sqlserver" name="sqlserver" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
   </dataBaseConfig>
   <taskCommandConfig commandType="manualclaim">
     <taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
@@ -46,19 +45,36 @@
   <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="true" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
-      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID from au_userinfo t1,  FIX_GROUP_RELATION t2 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org'"/>
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from au_userinfo t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID"/>
     </groupInfo>
     <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
-      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID from au_userinfo t1,  FIX_GROUP_RELATION t2 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role'"/>
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID ,t3.name as name from au_userinfo t1,  FIX_GROUP_RELATION t2, au_roleinfo t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role' and t2.group_id =t3.roleid"/>
     </groupInfo>
   </designerOrgConfig>
-  <sysMailConfig selected=""/>
+  <sysMailConfig selected="方正国际邮箱">
+    <mailInfo mailAddress="jiang_nan@founder.com" mailName="方正国际邮箱" smtpHost="mail.founder.com.cn" smtpPort="25" userName="kenshin" passWord="kenshin"/>
+  </sysMailConfig>
   <expandClassConfig>
     <expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>
-    <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
     <expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
     <expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
-    <expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.FixAuthenticationImpl" remarks="获取用户信息"/>
+    <expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.CommonAuthenticationImpl" remarks="获取用户信息"/>
+    <expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
+    <expandClass classId="ProcessInstancePersistence" className="流程实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" remarks="流程实例的数据库存储类"/>
+    <expandClass classId="IdentityLinkPersistence" className="任务候选人持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence" remarks="任务候选人持久化"/>
+    <expandClass classId="JobPersistence" className="定时任务持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence" remarks="定时任务持久化"/>
+    <expandClass classId="TokenPersistence" className="令牌持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence" remarks="令牌持久化"/>
+    <expandClass classId="VariablePersistence" className="变量持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence" remarks="变量持久化"/>
+    <expandClass classId="DeploymentPersistence" className="流程发布持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence" remarks="流程发布持久化"/>
+    <expandClass classId="ResourcePersistence" className="资源持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence" remarks="资源持久化"/>
+    <expandClass classId="HistoryPersistence" className="归档持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence" remarks="归档持久化"/>
+    <expandClass classId="ProcessDefinitionPersistence" className="流程定义持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence" remarks="流程定义持久化"/>
+    <expandClass classId="DeploymentQuery" className="流程发布查询" classInterface="com.founder.fix.fixflow.core.model.DeploymentQuery" classImpl="com.founder.fix.fixflow.core.impl.model.DeploymentQueryImpl" remarks="流程发布查询"/>
+    <expandClass classId="ProcessInstanceQuery" className="流程实例查询" classInterface="com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl" remarks="流程实例查询"/>
+    <expandClass classId="TaskQuery" className="任务查询" classInterface="com.founder.fix.fixflow.core.task.TaskQuery" classImpl="com.founder.fix.fixflow.core.impl.task.TaskQueryImpl" remarks="任务查询"/>
+    <expandClass classId="IdentityLinkQuery" className="任务候选人查询" classInterface="com.founder.fix.fixflow.core.runtime.IdentityLinkQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl" remarks="任务候选人查询"/>
+    <expandClass classId="TokenQuery" className="令牌查询" classInterface="com.founder.fix.fixflow.core.runtime.TokenQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl" remarks="令牌查询"/>
+    <expandClass classId="ProcessDefinitionQuery" className="流程定义查询" classInterface="com.founder.fix.fixflow.core.model.ProcessDefinitionQuery" classImpl="com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl" remarks="流程定义查询"/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
   <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="DB_FIX_BIZ_BASE"/>
@@ -96,6 +112,6 @@
   <importDataVariableConfig>
     <importDataVariable id="FixCSForm" name="FixCS平台表单变量" expression="formInfo.getData(&quot;#{FieldName}&quot;)"/>
     <importDataVariable id="FixCSDB" name="FixCS平台数据库变量" expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)"/>
-    <importDataVariable id="GeneralDB" name="通用数据库变量" expression="#{DataBaseId},#{BizObjName},#{FieldName}"/>
+    <importDataVariable id="GeneralDB" name="通用数据库变量" expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);"/>
   </importDataVariableConfig>
 </coreconfig:FixFlowConfig>

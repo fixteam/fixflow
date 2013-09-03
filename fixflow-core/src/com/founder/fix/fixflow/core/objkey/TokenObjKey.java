@@ -1,9 +1,59 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.objkey;
+
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 public class TokenObjKey {
 	
+	/**
+	 * 查询类型
+	 * @param tableType 0或null查运行表，1查历史表 2查历史和run表
+	 * @return
+	 */
+	public static String getTableName(QueryLocation queryLocation){
+		String tableName = "";
+		if(QueryLocation.HIS.equals(queryLocation)){
+			tableName =  TokenHisTableName();
+		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
+			tableName = "(select * from "+TokenTableName()+" union all select * from "+TokenHisTableName()+")";
+		}else{
+			tableName = TokenTableName();
+		}
+		return tableName;
+	}
 	
+	/**
+	 * 令牌表名
+	 * @return
+	 */
+	public static String TokenTableName(){
+		return "FIXFLOW_RUN_TOKEN";
+	}
+	
+	/**
+	 * 令牌归档表名
+	 * @return
+	 */
+	public static String TokenHisTableName(){
+		return "FIXFLOW_HIS_TOKEN";
+	}
 	
 	/**
 	 * 编号
@@ -497,6 +547,39 @@ public class TokenObjKey {
 		public String KeyName() {
 			// TODO Auto-generated method stub
 			return "父自由令牌编号";
+		}
+
+	}
+	
+	/**
+	 * 归档时间
+	 * @return
+	 */
+	public static FlowKeyArchiveTime ArchiveTime(){
+		return new TokenObjKey().new FlowKeyArchiveTime();
+	}
+	
+	public class FlowKeyArchiveTime implements ObjKeyInterface{
+
+
+		public String EntityKey() {
+			// TODO Auto-generated method stub
+			return "archive_time";
+		}
+
+		public String DataBaseKey() {
+			// TODO Auto-generated method stub
+			return "ARCHIVE_TIME";
+		}
+		
+		public String FullKey() {
+			// TODO Auto-generated method stub
+			return "archiveTime";
+		}
+
+		public String KeyName() {
+			// TODO Auto-generated method stub
+			return "归档时间";
 		}
 
 	}

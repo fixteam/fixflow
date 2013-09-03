@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core;
 
 import com.founder.fix.fixflow.core.impl.ExternalContent;
@@ -12,7 +29,7 @@ public interface ProcessEngine {
 	/**
 	 * fixflow引擎的版本号
 	 */
-	public static String VERSION = "4.7";
+	public static String VERSION = "5.0";
 
 	/** 
 	 * 默认名称为 'default' */
@@ -76,8 +93,8 @@ public interface ProcessEngine {
 	
 
 	/**
-	 * 设置引擎使用的外部数据资源
-	 * @param 
+	 * 设置引擎使用的外部数据库连接
+	 * @param connection
 	 */
 	void setExternalContent(ExternalContent externalContent);
 	
@@ -131,7 +148,13 @@ public interface ProcessEngine {
 	 */
 	FixFlowVersion getVersion();
 	
-
+	/**
+	 * 清楚流程引擎缓存
+	 * @param deploymentCache 定义缓存
+	 * @param processDataCache 流程对象缓存
+	 */
+	void cleanCache(boolean deploymentCache,boolean processDataCache);
+	
 
 
 }

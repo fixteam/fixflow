@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.persistence.instance;
 
 import java.sql.Connection;
@@ -8,6 +25,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.job.JobDetailEntity;
 import com.founder.fix.fixflow.core.impl.job.JobEntity;
+import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
 
 public class JobPersistence {
 	
@@ -75,7 +93,7 @@ public class JobPersistence {
 	public void insertJob(JobEntity jobEntity){
 		Map<String, Object> objectParam=jobEntity.getPersistentDbMap();
 		// 执行插入语句
-		sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam);
+		sqlCommand.insert(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), objectParam);
 	}
 	
 	public void updateJob(JobEntity jobEntity){
@@ -85,7 +103,7 @@ public class JobPersistence {
 		Object[] objectParamWhere = { jobEntity.getId() };
 
 		// 执行插入语句
-		sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK", objectParam, " JOB_ID=?", objectParamWhere);
+		sqlCommand.update(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), objectParam, " JOB_ID=?", objectParamWhere);
 	}
 
 }

@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.cmd;
 
 
@@ -20,14 +37,14 @@ public class ExpandTaskComplete<A extends AbstractCustomExpandTaskCommand,T> imp
 	}
 	
 	
-
-	@SuppressWarnings("unchecked")
 	public T execute(CommandContext commandContext) {
+		
+		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
+			throw new FixFlowException("登录用户不能!");
+		}
 		// TODO Auto-generated method stub
 		Object[] obj = new Object[] {expandTaskCommand};  
-		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
-			throw new FixFlowException("登录用户不能为空!");
-		}
+		
 		
 		TaskCommandDef taskCommandDef= commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(this.expandTaskCommand.getCommandType());
 		if(taskCommandDef!=null){
@@ -45,6 +62,7 @@ public class ExpandTaskComplete<A extends AbstractCustomExpandTaskCommand,T> imp
 			AbstractCustomExpandTaskCommand abstractCustomExpandTaskCommand=(AbstractCustomExpandTaskCommand)ReflectUtil.instantiate(commandClassNameString, obj);
 			
 			Object[] objTemp = new Object[] {abstractCustomExpandTaskCommand};  
+			@SuppressWarnings("unchecked")
 			AbstractExpandTaskCmd<A,T> abstractExpandTaskCmd=(AbstractExpandTaskCmd<A,T>)ReflectUtil.instantiate(classNameString, objTemp);
 			return (T) abstractExpandTaskCmd.execute(commandContext);
 			

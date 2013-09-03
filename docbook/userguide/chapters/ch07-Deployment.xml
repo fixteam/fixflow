@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter>
+  <title>部署</title>
+
+  <section xml:id="deploy.file">
+    <title>归档文件部署</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  <section xml:id="deploy.code">
+    <title>代码方式部署</title>
+    <para>
+      
+    </para>
+  </section>
+
+
+  <section xml:id="deploy.webCenter">
+    <title>管控中心中部署</title>
+    <para>
+      
+    </para>
+  </section>
+
+
+  <section xml:id="deploy.designer">
+    <title>设计器上部署</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="deploy.ava">
+    <title>Java类部署</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="deploy.flowDef">
+    <title>流程定义过程解释</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="deploy.flowImgBuild">
+    <title>生成流程图</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="deploy.flowImgGet">
+    <title>获取流程图</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  
+  
+  <section xml:id="deploy.tomcat">
+    <title>Tomcat部署</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="deploy.weblogic">
+    <title>Weblogic部署</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="deploy.websphere">
+    <title>Websphere部署</title>
+    <para>
+      
+    </para>
+  </section>
+  
+</chapter>

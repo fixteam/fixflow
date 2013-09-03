@@ -109,6 +109,7 @@
     <dataVariableBizType typeId="dataBaseVariable" typeName="数据库变量" img="systemsave_16.png"/>
     <dataVariableBizType typeId="bizObjVariable" typeName="业务对象变量" img="estat_16.png"/>
     <dataVariableBizType typeId="relatedFieldVariable" typeName="关联字段变量" img="estat_16.png"/>
+    <dataVariableBizType typeId="queryBizVariable" typeName="可查询实例变量" img="querydata_16.png"/>
     <dataVariableBizType typeId="customVariable" typeName="自定义变量" img="recycle_16.png"/>
   </dataVariableBizTypeConfig>
 </variableconfig:DataVariableConfig>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN' 'dtd/docbook.dtd'>
+<book xmlns="http://docbook.org/ns/docbook"
+  version="5.0"  
+  xml:lang="zh_cn">
+
+  <info><title>FixFlow 5.0 用户向导</title></info>
+  
+  <toc/>
+
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch01-Introduction.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch02-GettingStarted.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch03-CommonConfiguration.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch04-AdvancedConfiguration.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch05-DataBaseSupport.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch06-FixFlowApi.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch07-Deployment.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch08-Extension.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch09-Integration.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch10-TenMinuteTutorial.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch11-Bpmn20.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch12-EclipseDesigner.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch13-TaskCenter.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch14-ManagementCenter.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch15-CommonAPI.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch16-RESTAPI.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch17-FutureEnhancements.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch18-Annotation.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch19-ExternalLinks.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch20-Reference.xml"/>
+</book>

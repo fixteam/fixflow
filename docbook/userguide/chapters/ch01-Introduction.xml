@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+
+<chapter>
+<title>介绍</title>
+
+  <section xml:id="license">
+  <title>授权</title>
+    <para>FixFlow Engine 使用了 <link xlink:href="../../license.txt">Apache V2 license 授权协议</link></para>
+</section>
+  
+  <section xml:id="download">
+  <title>下载</title>
+    <para><link xlink:href="https://github.com/fixteam/fixflow">https://github.com/fixteam/fixflow</link></para>
+</section>
+
+  <section xml:id="sources">
+  <title>源码</title>
+  <para>FixFlow引擎代码托管在GitHub平台中,采用git来管理源代码,可以通过Git工具拉取源代码
+    <link xlink:href="https://github.com/fixteam/fixflow">GtiHub-FixFlow</link> 
+  </para>
+</section>
+
+  <section xml:id="required.software">
+  <title>所需要的软件</title>
+  <section>
+    <title>JDK 6+</title>
+    <para>FixFlow引擎支持 jdk1.5 1.6 1.7  jdk下载地址为   <link xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle Java SE downloads</link>
+    </para>
+  </section>
+  <section>
+    <title>Eclipse Juno</title>
+    <para>
+      FixFlow设计器插件能够在 Eclipse Juno SR2 版本中运行. <link xlink:href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2">Eclipse Juno SR2</link>
+    </para>
+  </section>
+  <section>
+    <title>Graphiti 0.8+</title>
+    <para>
+      在安装Fixflow设计器插件之前先要安装 Graphiti 框架 <link xlink:href="http://download.eclipse.org/graphiti/updates/0.9.2">Graphiti框架安装连接</link>
+    </para>
+  </section>
+  <section>
+    <title>Groovy Eclipse Plugin 4.2 and 3.8 (Juno)</title>
+    <para>
+      在安装Fixflow设计器插件之前先要安装 Groovy Eclipse Plugin<link xlink:href="http://dist.springsource.org/release/GRECLIPSE/e4.2/">Groovy Eclipse Plugin安装连接</link>
+    </para>
+  </section>
+  <section>
+    <title>FixFlow Eclipse Plugin (Juno)</title>
+    <para>
+      满足上面两个设计器要求之后就可以安装 FixFlow的 Eclipse 插件了<link xlink:href="https://github.com/fixflow/">Eclipse Eclipse Plugin 下载地址</link>
+    </para>
+  </section>
+</section>
+
+  <section xml:id="reporting.problems">
+  <title>报告问题</title>
+  <para>可以通过GitHub平台提供的issues功能来提交问题和bug。
+    <link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>.
+  </para>
+</section>
+
+  <section xml:id="experimental">
+    <title>实验性功能</title>
+  <para></para>
+</section>
+
+
+</chapter>
+  

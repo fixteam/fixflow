@@ -1,14 +1,33 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.RuntimeService;
+import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
+import com.founder.fix.fixflow.core.impl.cmd.ContinueProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdAndDefKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceByInstanceIdCmd;
+import com.founder.fix.fixflow.core.impl.cmd.DeleteProcessInstanceVaribalesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExecuteRuleScriptCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessCommand;
@@ -23,6 +42,8 @@ import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface4Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface5Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.QueryVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveVariablesCmd;
+import com.founder.fix.fixflow.core.impl.cmd.SuspendProcessInstanceCmd;
+import com.founder.fix.fixflow.core.impl.cmd.TerminatProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TimeStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TokenSignalCmd;
 import com.founder.fix.fixflow.core.impl.cmd.TokenTimeOutCmd;
@@ -32,8 +53,6 @@ import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.SaveVariablesCommand;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
-import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
 import com.founder.fix.fixflow.core.impl.subscription.EventSubscriptionQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -63,13 +82,29 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 	public boolean deleteProcessInstance(String processDefinitionKey, String businessKey, boolean cascade) {
 		return commandExecutor.execute(new DeleteProcessInstanceByInstanceIdAndDefKeyCmd(processDefinitionKey, businessKey, cascade));
 	}
-
+	
+	public void continueProcessInstance(String processInstanceId) {
+		
+		commandExecutor.execute(new ContinueProcessInstanceCmd(processInstanceId));
+	}
+	
+	public void suspendProcessInstance(String processInstanceId) {
+		
+		commandExecutor.execute(new SuspendProcessInstanceCmd(processInstanceId));
+	}
+	
+	public void terminatProcessInstance(String processInstanceId) {
+		
+		commandExecutor.execute(new TerminatProcessInstanceCmd(processInstanceId));
+		
+	}
+	
 	public ProcessInstanceQuery createProcessInstanceQuery() {
-		return new ProcessInstanceQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createProcessInstanceQuery(commandExecutor);
 	}
 
 	public TokenQuery createTokenQuery() {
-		return new TokenQueryImpl(commandExecutor);
+		return ProcessObjectFactory.FACTORYINSTANCE.createTokenQuery(commandExecutor);
 	}
 
 	public void updateProcessInstanceBusinessKey(String processInstanceId, String businessKey) {
@@ -91,6 +126,28 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		saveVariablesCommand.setVariables(variables);
 		commandExecutor.execute(new SaveVariablesCmd(saveVariablesCommand));
 	}
+	
+	public void deleteProcessInstanceVariable(String processInstanceId, String variableName) {
+		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		List<String> variableNames = new ArrayList<String>();
+		variableNames.add(variableName);
+		queryVariablesCommand.setVariableNames(variableNames);
+		commandExecutor.execute(new DeleteProcessInstanceVaribalesCmd(queryVariablesCommand));
+	}
+	
+	public void deleteProcessInstanceVariables(String processInstanceId, List<String> variableNames) {
+		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		queryVariablesCommand.setVariableNames(variableNames);
+		commandExecutor.execute(new DeleteProcessInstanceVaribalesCmd(queryVariablesCommand));
+	}
+	
+	public void deleteProcessInstanceVariables(String processInstanceId) {
+		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		commandExecutor.execute(new DeleteProcessInstanceVaribalesCmd(queryVariablesCommand));
+	}
 
 	public Object getProcessInstanceVariable(String processInstanceId, String variableName) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
@@ -109,7 +166,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		return map;
 	}
 
-	public Map<String, Object> getProcessInstanceVariables(String processInstanceId, Collection<String> variableNames) {
+	public Map<String, Object> getProcessInstanceVariables(String processInstanceId, List<String> variableNames) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
 		queryVariablesCommand.setProcessInstanceId(processInstanceId);
 		queryVariablesCommand.setVariableNames(variableNames);
@@ -150,7 +207,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		return map;
 	}
 
-	public Map<String, Object> getTokenVariables(String tokenId, Collection<String> variableNames) {
+	public Map<String, Object> getTokenVariables(String tokenId, List<String> variableNames) {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
 		queryVariablesCommand.setTokenId(tokenId);
 		queryVariablesCommand.setVariableNames(variableNames);

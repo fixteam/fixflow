@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"       
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans                     
+					http://www.springframework.org/schema/beans/spring-beans.xsd 
+					http://www.springframework.org/schema/context        
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd                      
+					http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+					http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
+	   	<property name="location" value="classpath:/testjdbc.properties"/>        
+	</bean> 
+	 	<bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
+	    <property name="driverClassName" value="${idbase.driverClassName}" />        
+	    <property name="url" value="${idbase.url}" />        
+	    <property name="username" value="${idbase.username}" />        
+	    <property name="password" value="${idbase.password}" />        
+	</bean>     
+	<bean id="DB_FIX_BIZ_BASE" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
+	  <property name="dataSource"> 
+	    <ref bean="fix_biz_base_dataSource"/> 
+	  </property>  
+	  <property name="transactionName" value="TransactionManager"/> 
+	</bean>  
+  <bean id="TransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+    <property name="dataSource"> 
+      <ref bean="fix_biz_base_dataSource"/> 
+    </property> 
+  </bean>  
+</beans>

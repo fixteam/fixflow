@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.expand.internationalization;
 
 import java.io.IOException;
@@ -8,7 +25,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
-import com.founder.fix.fl.core.FixResourceCore;
+
 
 public class FixFlowResourcesImpl implements FixFlowResources {
 
@@ -88,6 +105,11 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 
 	public String getNowLanguage() {
 		return FixResourceCore.getNowLanguage();
+	}
+
+	public void setNowLanguage(String languageType) {
+		// TODO Auto-generated method stub
+		FixResourceCore.setNowLanguage(languageType);
 	}
 
 

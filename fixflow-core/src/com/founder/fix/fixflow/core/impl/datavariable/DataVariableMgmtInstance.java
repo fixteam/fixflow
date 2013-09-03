@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.datavariable;
 
 import java.io.Serializable;
@@ -20,16 +37,16 @@ public class DataVariableMgmtInstance implements Serializable {
 	protected ProcessInstanceEntity processInstance;
 	
 	
-	protected List<DataVariableInstance> dataVariableInstances=new ArrayList<DataVariableInstance>();
+	protected List<DataVariableEntity> dataVariableEntities=new ArrayList<DataVariableEntity>();
 	
-	public List<DataVariableInstance> getDataVariableInstances() {
-		return dataVariableInstances;
+	public List<DataVariableEntity> getDataVariableEntities() {
+		return dataVariableEntities;
 	}
 	
 	
-	public DataVariableInstance getDataVariableById(String id){
+	public DataVariableEntity getDataVariableById(String id){
 		
-		for (DataVariableInstance dataVariableInstance : dataVariableInstances) {
+		for (DataVariableEntity dataVariableInstance : dataVariableEntities) {
 			if(dataVariableInstance.getId().equals(id)){
 				return dataVariableInstance;
 			}
@@ -38,8 +55,8 @@ public class DataVariableMgmtInstance implements Serializable {
 		
 	}
 	
-	public DataVariableInstance getDataVariableByExpressionId(String expressionId){
-		for (DataVariableInstance dataVariableInstance : dataVariableInstances) {
+	public DataVariableEntity getDataVariableByExpressionId(String expressionId){
+		for (DataVariableEntity dataVariableInstance : dataVariableEntities) {
 			if(dataVariableInstance.getId().equals(expressionId)){
 				return dataVariableInstance;
 			}
@@ -48,9 +65,9 @@ public class DataVariableMgmtInstance implements Serializable {
 	}
 
 
-	public DataVariableInstance createDataVariableInstance(DataVariableBehavior dataVariableBehavior){
-		DataVariableInstance dataVariableInstance=new DataVariableInstance(dataVariableBehavior,this);
-		dataVariableInstances.add(dataVariableInstance);
+	public DataVariableEntity createDataVariableInstance(DataVariableBehavior dataVariableBehavior){
+		DataVariableEntity dataVariableInstance=new DataVariableEntity(dataVariableBehavior,this);
+		dataVariableEntities.add(dataVariableInstance);
 		return dataVariableInstance;
 	}
 	

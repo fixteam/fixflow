@@ -1,5 +1,23 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.task;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +43,8 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 	protected String groupId;
 
 	protected String groupType;
+	
+	protected Date archiveTime;
 
 	public String getGroupId() {
 		return groupId;
@@ -40,6 +60,14 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 
 	public void setGroupType(String groupType) {
 		this.groupType = groupType;
+	}
+	
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
 	}
 
 	protected IncludeExclusion includeExclusion;
@@ -175,14 +203,12 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 		objectParam.put(TaskIdentityLinkObjKey.GroupId().FullKey(), this.getGroupId());
 		// 组类型 String
 		objectParam.put(TaskIdentityLinkObjKey.GroupType().FullKey(), this.getGroupType());
-
 		// 包含排除 String
 		objectParam.put(TaskIdentityLinkObjKey.IncludeExclusion().FullKey(), this.getIncludeExclusion().toString());
 		// 任务实例编号 String
 		objectParam.put(TaskIdentityLinkObjKey.TaskInstanceId().FullKey(), this.getTaskId());
-		
-		
-		
+		// 归档时间
+		objectParam.put(TaskIdentityLinkObjKey.ArchiveTime().FullKey(), this.getArchiveTime());
 		return objectParam;
 
 	}
@@ -227,6 +253,11 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 				this.taskId = StringUtil.getString(entityMap.get(dataKey));
 				continue;
 			}
+			
+			if (dataKey.equals(TaskIdentityLinkObjKey.ArchiveTime().DataBaseKey())) {
+				this.archiveTime = StringUtil.getDate(entityMap.get(dataKey));
+				continue;
+			}
 
 		}
 	}
@@ -250,7 +281,8 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 				objectParam.put(TaskIdentityLinkObjKey.IncludeExclusion().DataBaseKey(), this.getIncludeExclusion().toString());
 				// 任务实例编号 String
 				objectParam.put(TaskIdentityLinkObjKey.TaskInstanceId().DataBaseKey(), this.getTaskId());
-
+				// 任务实例归档时间
+				objectParam.put(TaskIdentityLinkObjKey.ArchiveTime().DataBaseKey(), this.getArchiveTime());
 				return objectParam;
 	}
 }

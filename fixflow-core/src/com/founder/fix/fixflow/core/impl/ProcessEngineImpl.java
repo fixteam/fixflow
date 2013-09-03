@@ -1,13 +1,30 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl;
 
 import java.sql.Connection;
 import java.util.Map;
 
-
 import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
+import com.founder.fix.fixflow.core.ManagementService;
 import com.founder.fix.fixflow.core.ModelService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
@@ -21,7 +38,6 @@ import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.processversion.FixFlowVersion;
 import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
-import com.founder.fix.fl.core.FixResourceCore;
 
 public class ProcessEngineImpl implements ProcessEngine {
 
@@ -33,6 +49,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 	protected TaskService taskService;
 	protected FormService formService;
 	protected ScheduleService scheduleService;
+	protected ManagementService managementService;
 
 	protected CommandExecutor commandExecutor;
 	protected CacheHandler cacheHandler;
@@ -50,6 +67,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 		this.taskService = processEngineConfiguration.getTaskService();
 		this.formService = processEngineConfiguration.getFormService();
 		this.scheduleService = processEngineConfiguration.getScheduleService();
+		this.managementService = processEngineConfiguration.getManagementService();
 		this.cacheHandler = processEngineConfiguration.getCacheHandler();
 		this.commandExecutor = processEngineConfiguration.getCommandExecutor();
 
@@ -99,6 +117,11 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 	}
 
+	public ManagementService getManagementService() {
+
+		return managementService;
+	}
+
 	public TaskService getTaskService() {
 
 		return taskService;
@@ -111,7 +134,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 
 	public void setExternalContent(ExternalContent externalContent) {
 
-		if( externalContent.getConnectionMap()!=null){
+		if (externalContent.getConnectionMap() != null) {
 			for (String connKey : externalContent.getConnectionMap().keySet()) {
 				Connection connection = externalContent.getConnectionMap().get(connKey);
 				if (connection != null) {
@@ -120,7 +143,6 @@ public class ProcessEngineImpl implements ProcessEngine {
 				}
 			}
 		}
-		
 
 		String authenticatedUserId = externalContent.getAuthenticatedUserId();
 		Authentication.setAuthenticatedUserId(authenticatedUserId);
@@ -129,13 +151,12 @@ public class ProcessEngineImpl implements ProcessEngine {
 		if (languageType == null || languageType.equals("")) {
 
 		} else {
-			FixResourceCore.setNowLanguage(languageType);
+			processEngineConfiguration.getFixFlowResources().setNowLanguage(languageType);
 		}
-		if(externalContent.getConnectionManagement()!=null&&!externalContent.getConnectionManagement().equals("")){
+
+		if (externalContent.getConnectionManagement() != null && !externalContent.getConnectionManagement().equals("")) {
 			Context.setConnectionManagementDefault(externalContent.getConnectionManagement());
 		}
-		
-
 	}
 
 	public void setLanguageType(String languageType) {
@@ -143,7 +164,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 		if (languageType == null || languageType.equals("")) {
 			// Context.setLanguageType("defauld");
 		} else {
-			FixResourceCore.setNowLanguage(languageType);
+			processEngineConfiguration.getFixFlowResources().setNowLanguage(languageType);
 			// Context.setLanguageType(languageType);
 		}
 	}
@@ -329,9 +350,20 @@ public class ProcessEngineImpl implements ProcessEngine {
 			Context.removeLanguageType();
 			Context.removeQuartzTransactionAutoThreadLocal();
 
-			
+		}
+
+	}
+
+	public void cleanCache(boolean deploymentCache, boolean processDataCache) {
+		if (deploymentCache) {
+			processEngineConfiguration.getDeploymentCache().cleanProcessDefinitionCache();
+		}
+		if (processDataCache) {
+			processEngineConfiguration.getCacheHandler().cleanCacheData();
 		}
 		
 	}
+
+
 
 }

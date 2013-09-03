@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.expand.cmd;
 
 
@@ -25,6 +42,7 @@ import com.founder.fix.fixflow.core.impl.persistence.TaskManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskDefinition;
@@ -46,6 +64,9 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 	public Void execute(CommandContext commandContext) {
 		
 		
+		if(Authentication.getAuthenticatedUserId()==null||Authentication.getAuthenticatedUserId().equals("")){
+			throw new FixFlowException("登录用户不能!");
+		}
 		
 
 		if (taskId != null&&!taskId.equals("")) {
@@ -72,17 +93,16 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			
 			TaskCommandInst taskCommand=null;
 			
-			if(this.admin!=null&&!this.admin.equals("")){
-				
-				String taskCommandName=commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(userCommandId).getName();
-				
-				taskCommand=new TaskCommandInst(userCommandId, taskCommandName, null, userCommandId, true);
-				
-				
-				
-			}
-			else{
-				taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
+			String taskCommandType = expandTaskCommand.getCommandType();
+			
+			if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
+
+				String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
+
+				taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
+
+			} else {
+				taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
 			}
 			
 			

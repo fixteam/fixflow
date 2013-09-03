@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.runtime;
 
 import java.util.ArrayList;
@@ -13,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
 public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery {
@@ -39,14 +57,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected CommandExecutor commandExecutor;
 	
 	
-	
-	protected QueryExpandTo queryExpandTo;
-	
-	
-	
-
-	
 	public ProcessInstanceQueryImpl() {
+		
 	}
 
 	public ProcessInstanceQueryImpl(CommandContext commandContext) {
@@ -72,15 +84,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.businessKey = businessKey;
 		return this;
 	}
-	
-	public ProcessInstanceQuery queryExpandTo(QueryExpandTo queryExpandTo) {
-		if (queryExpandTo == null) {
-			throw new FixFlowException("queryExpandTo  is null");
-		}
-		this.queryExpandTo = queryExpandTo;
-		return this;
-	}
-	
+
 	public ProcessInstanceQuery containsSubProcess() {
 		this.isContainsSubProcess=true;
 		return this;
@@ -260,50 +264,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	public String getTaskParticipants() {
 		return taskParticipants;
 	}
-
-
-	public ProcessInstanceQuery variableValueEquals(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueNotEquals(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueGreaterThan(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueGreaterThanOrEqual(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueLessThan(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueLessThanOrEqual(String name, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ProcessInstanceQuery variableValueLike(String name, String value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 	protected String initiatorLike;
-
-	
-
-
 
 	protected String subject;
 	
@@ -315,6 +277,13 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	
 	protected Date startTimeAfter;
 	
+	protected Date archiveTime;
+	
+	protected Date archiveTimeBefore;
+	
+	protected Date archiveTimeAfter;
+	
+	protected QueryLocation queryLocation = null;
 
 	public ProcessInstanceQuery initiatorLike(String initiatorLike) {
 		this.initiatorLike=initiatorLike;
@@ -345,8 +314,65 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.startTimeAfter=startTimeAfter;
 		return this;
 	}
+	
+	public ProcessInstanceQuery archiveTimeOn(Date archiveTime) {
+		this.archiveTime = archiveTime;
+		return this;
+	}
+	
+	public ProcessInstanceQuery archiveTimeAfter(Date archiveTimeAfter) {
+		this.archiveTimeAfter = archiveTimeAfter;
+		return this;
+	}
+	
+	public ProcessInstanceQuery archiveTimeBefore(Date archiveTimeBefore) {
+		this.archiveTimeBefore = archiveTimeBefore;
+		return this;
+	}
+	
+	public ProcessInstanceQuery his() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.HIS;
+		}
+		return this;
+	}
+	
+	public ProcessInstanceQuery run() {
+		if(this.queryLocation != null){
+			this.queryLocation = QueryLocation.RUN_HIS;
+		}else{
+			this.queryLocation = QueryLocation.RUN;
+		}
+		return this;
+	}
 
 	
+	public String getExecutionId() {
+		return executionId;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public CommandExecutor getCommandExecutor() {
+		return commandExecutor;
+	}
+
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public Date getArchiveTimeBefore() {
+		return archiveTimeBefore;
+	}
+
+	public Date getArchiveTimeAfter() {
+		return archiveTimeAfter;
+	}
+
 	public String getInitiatorLike() {
 		return initiatorLike;
 	}
@@ -371,14 +397,13 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return startTimeAfter;
 	}
 
-	
-
-
-
 	public String getIsPigeonhole() {
 		return isPigeonhole;
 	}
 
+	public QueryLocation getQueryLocation() {
+		return queryLocation;
+	}
 
 	public String getIsEnd() {
 		return isEnd;
@@ -400,5 +425,40 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	public boolean isContainsSubProcess() {
 		return isContainsSubProcess;
 	}
+	
+	/* 变量查询 */
+	protected String processInstanceVariableKey;
+	protected String processInstanceVariableValue;
+	protected boolean processInstanceVariableValueIsLike;
+
+	public ProcessInstanceQuery processInstanceVariableData(String variableValue, boolean isLike) {
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		return this;
+	}
+
+	public ProcessInstanceQuery processInstanceVariableData(String variableKey, String variableValue, boolean isLike) {
+		this.processInstanceVariableValue=variableValue;
+		this.processInstanceVariableValueIsLike=isLike;
+		this.processInstanceVariableKey=variableKey;
+		return this;
+	}
+
+
+	
+	public String getProcessInstanceVariableKey() {
+		return processInstanceVariableKey;
+	}
+
+	public String getProcessInstanceVariableValue() {
+		return processInstanceVariableValue;
+	}
+
+	public boolean isProcessInstanceVariableValueIsLike() {
+		return processInstanceVariableValueIsLike;
+	}
+	
+	
+
 
 }

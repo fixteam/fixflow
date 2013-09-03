@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core.impl.context;
 
 import java.util.HashMap;
@@ -6,13 +23,11 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.context.ContextInstance;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableFlowTypeEntity;
-import com.founder.fix.fixflow.core.impl.variable.VariableTransferEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
-import com.founder.fix.fixflow.core.variable.VariableFlowType;
 
 public class ContextInstanceImpl implements ContextInstance {
 
@@ -106,16 +121,26 @@ public class ContextInstanceImpl implements ContextInstance {
 
 		}
 		String processInstanceId=processInstance.getId();
-		VariableTransferEntity variableTransferEntity = new VariableTransferEntity();
-		variableTransferEntity.setVariableMap(variableMap);
+		
+		
+		
+		
 
-		if (processInstanceId != null && !processInstanceId.equals("")) {
-			VariableFlowTypeEntity variableFlowTypeEntity = new VariableFlowTypeEntity(VariableFlowType.PROCESSINSTANCE, processInstanceId);
-			variableTransferEntity.addVariableFlowType(variableFlowTypeEntity);
+		for (String key : variableMap.keySet()) {
+			Object variableData=variableMap.get(key);
+			
+			DataVariableEntity dataVariableEntity=new DataVariableEntity();
+			dataVariableEntity.setVariableKey(key);
+			dataVariableEntity.setPersistence(true);
+			dataVariableEntity.setProcessInstanceId(processInstanceId);
+
+			dataVariableEntity.setExpressionValue(variableData);
+			//dataVariableEntity.setVariableType(this.variableType);
+			Context.getCommandContext().getVariableManager().saveVariable(dataVariableEntity);
+			
+			
 		}
 	
-		Context.getCommandContext().getVariableManager().saveVariable(variableTransferEntity);
-
 
 	
 		this.variableMap = variableMap;
