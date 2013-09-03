@@ -90,6 +90,7 @@ a{text-decoration: none;}
 <form action="FlowManager" id="subForm">
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
+<div class="center-panel">
 <div style="margin-top:1px;">
 <!-- 左 -->
 <div class="left" style="width:0px;">
@@ -117,7 +118,7 @@ a{text-decoration: none;}
 		  <div class="btn-normal" style="display:inline-block;margin-left:5px;" data-scope=single onclick="updateDeploy(this)"><a href="#" >更新定义</a></div>
 		  <div class="btn-normal" style="display:inline-block;margin-left:5px;" data-scope=single onclick="downloadProcess(this)"><a href="#" >下载定义</a></div>
 	  </div>
-	  <div>
+	  <div class="content">
 	 
 		<table style="width:100%;" class="fix-table">
 		  <thead>
@@ -154,5 +155,6 @@ a{text-decoration: none;}
 	<input type="hidden" name="action" id="action" value="processDefinitionList"/>
 	<input type="hidden" name="processDefinitionId" id="processDefinitionId" value=""/>
 </form>
+</div>
 </body>
 </html>
