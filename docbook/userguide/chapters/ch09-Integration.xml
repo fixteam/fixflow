@@ -8,8 +8,50 @@
   <section xml:id="integration.engine">
     <title>FixFlow Engine 集成</title>
     <para>
-      
+      FixFlow Engine可以以下使用方式
+      <itemizedlist>
+        <listitem><para>跨系统集成方案（未完成待补充）</para></listitem>
+        <listitem><para>本地系统集成方案</para></listitem>
+      </itemizedlist>
+
     </para>
+    <section xml:id="integration.engine.standalone">
+      <title>跨系统集成方案</title>
+      <para>
+        跨系统集成就是将FixFlow Engine作为一个独立的系统存在，所有的系统都与该系统串联。这种串联方式可以是通过底层数据库，也可以是根据各种协议进行。这里以示例的方式描述通用的集成方式：
+        <itemizedlist>
+          <listitem><para>这里假设有A、B两个系统，A系统的所属数据库里保存着用户等基础信息，同时A系统不知道B等系统的存在，B系统为业务系统，也有自己的业务数据库。</para></listitem>
+          <listitem><para>现在要在这个环境里架设一个流程服务器，该服务器将独立与于A、B系统存在</para></listitem>
+          <listitem><para>现在要做的事情包括使用了流程引擎串联A、B系统</para></listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem><para></para></listitem>
+          <listitem><para></para></listitem>
+        </itemizedlist>
+        
+      </para>
+    </section>
+    <section xml:id="integration.engine.local">
+      <title>本地系统集成方案</title>
+      <para>
+        本地系统集成是平台最常用的集成方案，在这里可以将FixFlow Engine理解为JBPM的替代品，同时要比JBPM更好用、更符合BPMN2标准、更适合中国式工作流。对于用户来说要做的就是把FixFlow Engine作为一个工作流集成进来，使用其串联本系统各个功能。在这里会以一个示例来说明应该如何将FixFlow Engine集成进一个JAVA项目。
+        <literal>这里假设有A系统，A系统为JSP+Servlet的web系统，使用JSP进行页面展示，使用Servlet来处理后台逻辑，此时A系统需要在项目里集成FixFlow Engine工作流引擎。</literal>
+        <itemizedlist>
+          <listitem><para>本示例的数据源来自于Spring，这种数据源最通用，在实际项目里可以改成各种方式的连接来源。</para></listitem>
+          <listitem><para>本示例里使用jdbc级事务管理，在实际项目中通过事务声明也可以使用其他类型的事务。</para></listitem>
+          <listitem><para>本示例会提到一些集成的规范，请在实际项目里也按照规范使用，这样可以避免一些比不要的排错工作。</para></listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        <itemizedlist>
+          <listitem><para>首先，系统</para></listitem>
+          <listitem><para>集成进本地系统使用</para></listitem>
+        </itemizedlist>
+        
+      </para>
+    </section>
   </section>
   
   <section xml:id="integration.org">
