@@ -57,10 +57,15 @@ function viewGroupInfo(groupId,groupType){
        	<div class="left-nav"><a name="group" href="#" class="down-arrow">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a class="down-arrow" name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
-				  <c:if test="${group.isTree!= null && group.isTree == true}">
-			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
-			      </c:if>			   
+			      <c:choose>
+				    <c:when test="${group.isTree!= null && group.isTree == true}">
+				    	<div class="left-nav"><a class="down-arrow" name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+						<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>				   
+				    </c:when>
+				    <c:otherwise>
+				    	<div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+				    </c:otherwise>
+				</c:choose>			   
 			    </c:forEach>
        	  	</c:if>
         </div>
