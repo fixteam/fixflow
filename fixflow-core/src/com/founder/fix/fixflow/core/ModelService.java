@@ -167,6 +167,7 @@ public interface ModelService extends ProcessService{
 	 * "resourceId" 流程定义资源编号;<br>
 	 * "deploymentId" 资源定义发布号;<br>
 	 * "diagramResourceName" 流程图名称;<br>
+	 * "startFormKey" 启动表单;<br>
 	 */
 	List<Map<String, String>> getStartProcessByUserId(String userId);
 	
@@ -184,6 +185,7 @@ public interface ModelService extends ProcessService{
 	 * "resourceId" 流程定义资源编号;<br>
 	 * "deploymentId" 资源定义发布号;<br>
 	 * "diagramResourceName" 流程图名称;<br>
+	 * "startFormKey" 启动表单;<br>
 	 */
 	List<Map<String, String>> getUserSubmitProcess(String userId,int number);
 	
