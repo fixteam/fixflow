@@ -146,7 +146,11 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 				String userId = StringUtil.getString(instances.get("PI_START_AUTHOR"));
 				
 				UserTo user = identsvz.getUserTo(userId);
-				instances.put("userName", user.getUserName());
+				if(user!=null){
+					instances.put("userName", user.getUserName());
+				}else{
+					instances.put("userName", userId+"(未知用户)");
+				}
 				
 				String nowproc = getShareTaskNowNodeInfo(tmp,engine);
 				instances.put("nowProc", nowproc);
