@@ -47,11 +47,13 @@ public class GetAgentToUsersAndCountCmd  implements  Command<List<Map<String, Ob
 			String userIdDataString=StringUtil.getString(map.get("EID"));
 			if(userIdDataString!=null&&!userIdDataString.equals("")){
 				UserTo userTo=userDefinition.findUserByUserId(userIdDataString);
-				Map<String, Object> mapDataMap=new HashMap<String, Object>();
-				mapDataMap.put("userid", userTo.getUserId());
-				mapDataMap.put("username", userTo.getUserName());
-				mapDataMap.put("count", 0);
-				returnListMaps.add(mapDataMap);
+				if(userTo !=null){
+					Map<String, Object> mapDataMap=new HashMap<String, Object>();
+					mapDataMap.put("userid", userTo.getUserId());
+					mapDataMap.put("username", userTo.getUserName());
+					mapDataMap.put("count", 0);
+					returnListMaps.add(mapDataMap);
+				}
 			}
 		}
 		
