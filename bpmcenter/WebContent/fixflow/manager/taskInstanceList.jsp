@@ -108,7 +108,7 @@ $(function(){
     	<input type="hidden" id="rollBackNodeId" name="rollBackNodeId"/> 
     	<input type="hidden" id="taskId" name="taskId">
     	<div class="search">
-        	<table width="100%">
+        	<table>
               <tr>
                 <td class="title-r">任务主题：</td>
                 <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
@@ -161,7 +161,7 @@ $(function(){
 
 									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
 										height="30" width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');"></td>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);"></td>
 									<td>${dataList.processDefinitionName}</td>
 									<td>${dataList.bizKey}</td>
 									<td><a name="doTask" href="#"

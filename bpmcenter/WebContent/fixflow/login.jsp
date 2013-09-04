@@ -20,7 +20,7 @@
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
-	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" onerror="imgNotFound('${pageContext.request.contextPath}');" /></td>
+	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" onerror="imgNotFound('${pageContext.request.contextPath}',this);" /></td>
 	                  <td class="username" width="330"><span id="lastLoginUser"></span>
 	                  	<input type="hidden" name="userName" id="userNameS"/>
 	                  	<input type="hidden" name="loginType" id="loginTypeS"/></td>
