@@ -69,7 +69,7 @@ body { min-width:1000px;}
 .btn-disable a,.btn-disable a:hover { display:inline-block; padding:3px 8px; border:2px solid #ddd; background:#ddd; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#999; text-decoration:none;}
 
 /* input按钮样式 */
-.fix-input { padding:4px 5px; background:#f2f2f2; border:none; font-size:12px; line-height:12px; color:#333;}
+.fix-input { padding:2px; font-size:12px; line-height:12px; color:#333;}
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
 input[type="submit"]::-moz-focus-inner,
@@ -79,7 +79,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 /* 表单 */
 .fix-table { margin:0; color:#444;}
-.fix-table th { padding:5px 0; background:#f8ddd5; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #fff;}
+.fix-table th { padding:5px 0; background:#ddd; font-family:"微软雅黑"; font-size:12px; font-weight:bold;  border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #dc562e;}
 .fix-table td { padding:6px; border-bottom:1px solid #fff;}
 .fix-table td.title-r { text-align:right; color:#666; padding-right:20px;}
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
