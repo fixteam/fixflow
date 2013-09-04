@@ -54,16 +54,16 @@ function viewGroupInfo(groupId,groupType){
     	<div class="left-nav"><a name="userList" href="FlowManager?action=getUserList">用户</a></div>
         <div class="left-nav-orange-line">&nbsp;</div>
         
-       	<div class="left-nav"><a name="group" href="#">组</a></div>
+       	<div class="left-nav"><a name="group" href="#" class="down-arrow">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
-			      <c:if test="${group.isTree!= null && group.isTree == true}">
+			      <div class="left-nav"><a class="down-arrow" name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+				  <c:if test="${group.isTree!= null && group.isTree == true}">
 			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
-			      </c:if>
+			      </c:if>			   
 			    </c:forEach>
        	  	</c:if>
-        </div> 
+        </div>
 </div>
 <!-- 右-->
 	<div class="right">

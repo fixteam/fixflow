@@ -73,7 +73,7 @@
 	<div class="right">
 	  <!-- 查 -->
 	  <div class="search">
-        	<table>
+        	<table width="100%">
               <tr>
                 <td class="title-r">用户编号：</td>
                 <td style="width:200px;"><input type="text" id="text_3" name="queryUserId" class="fix-input" style="width:160px;" value="${result.queryUserId}"/></td>
