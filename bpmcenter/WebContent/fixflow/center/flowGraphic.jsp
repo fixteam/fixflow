@@ -58,8 +58,10 @@
 			</table>
 		</div>
 		<div>
+			<c:if test="${param.noGraphic!='1'}">
 			<img
 				src="FlowCenter?action=getFlowGraph&processDefinitionKey=${result.processDefinitionKey}" />
+				</c:if>
 		</div>
 	</div>
 </body>
