@@ -105,7 +105,7 @@
 		<input type="hidden" id="operProcessInstanceId" name="operProcessInstanceId">
     	<input type="hidden" id="action" name="action" value="processManageList"/>
     	<div class="search">
-        	<table width="100%">
+        	<table>
               <tr>
                 <td class="title-r">任务定义：</td>
                 <td><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>

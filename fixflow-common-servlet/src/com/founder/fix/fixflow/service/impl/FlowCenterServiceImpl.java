@@ -175,7 +175,11 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 //				instances.put("icon", "icon/"+userId+"_small.png");
 				
 				UserTo user = identsvz.getUserTo(userId);
-				instances.put("userName", user.getUserName());
+				if(user!=null){
+					instances.put("userName", user.getUserName());
+				}else{
+					instances.put("userName", userId+"(未知用户)");
+				}
 				instanceMaps.add(instances);
 			}
 			result.put("dataList", instanceMaps);
@@ -580,7 +584,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		expandTaskCommand.setParamMap(taskParams);
 
 		ProcessEngine engine = getProcessEngine(userId);
-		ProcessInstance processInstance = engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
+		ProcessInstance processInstance = (ProcessInstance)engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
 		
 		return processInstance;
 	}

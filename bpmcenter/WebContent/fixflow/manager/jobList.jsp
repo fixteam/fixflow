@@ -49,7 +49,7 @@ $(function(){
 	<div class="right" style="width:99%;">
 	  <!-- 查 -->
 	   <div class="search">
-        	<table width="100%">
+        	<table>
               <tr>
                 <td class="title-r" style="width:200px;">流程编号/实例编号/令牌编号：</td>
                 <td style="width:220px;"><input type="text" id="text_3" name="queryId" class="fix-input" style="width:200px;" value="${result.queryId}"/></td>

@@ -70,7 +70,25 @@ $(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj);
+    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
+  });
+    $("a[name=doTask]").click(function(){
+    var tii = $(this).attr("tii");
+    var pdk = $(this).attr("pdk");
+    var pii = $(this).attr("pii");
+    var bizKey = $(this).attr("bk");
+    
+    var obj = {};
+    var formUrl = $(this).attr("formUri");//"FlowCenter?action=startOneTask";
+    var url = formUrl;
+    if(formUrl.indexOf("?")!=-1){
+   	 url+="&";
+   	
+    }else{
+   	 url+="?";
+    }
+    url+="taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
+   	window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
   });
 	Fix.Util.ClickTr(null,true,true,0);
 });
@@ -90,7 +108,7 @@ $(function(){
     	<input type="hidden" id="rollBackNodeId" name="rollBackNodeId"/> 
     	<input type="hidden" id="taskId" name="taskId">
     	<div class="search">
-        	<table width="100%">
+        	<table>
               <tr>
                 <td class="title-r">任务主题：</td>
                 <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>

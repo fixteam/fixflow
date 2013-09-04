@@ -354,6 +354,7 @@ public interface TaskInstance extends PersistentObject{
 
 	String getProcessDefinitionKey();
 	
+	List<IdentityLink> getIdentityLinkQueryToListNoCache();
 	
 	List<IdentityLink> getIdentityLinkQueryToList();
 	

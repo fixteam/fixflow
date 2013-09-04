@@ -12,7 +12,7 @@ xmlns:context="http://www.springframework.org/schema/context"
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
 	   	<property name="location" value="classpath:/testjdbc.properties"/>        
 	</bean> 
-	 	<bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
+	<bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
 	    <property name="driverClassName" value="${idbase.driverClassName}" />        
 	    <property name="url" value="${idbase.url}" />        
 	    <property name="username" value="${idbase.username}" />        
