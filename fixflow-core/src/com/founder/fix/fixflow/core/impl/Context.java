@@ -71,6 +71,12 @@ public class Context {
 		}
 
 	}
+	
+	public static void removeConnectionManagement() {
+
+		getStack(connectionManagementDefault).clear();
+
+	}
 
 	// protected static ThreadLocal<Stack<Interpreter>>
 	// bshInterpreterThreadLocal = new ThreadLocal<Stack<Interpreter>>();

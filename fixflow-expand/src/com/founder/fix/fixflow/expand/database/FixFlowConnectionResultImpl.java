@@ -18,14 +18,9 @@
 package com.founder.fix.fixflow.expand.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
-import com.founder.fix.bpmn2extensions.coreconfig.FixFlowConfig;
-import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 
