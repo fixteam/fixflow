@@ -100,7 +100,7 @@ a{text-decoration: none;}
 	<div class="right" style="width:98%;">
 	  <!-- 查 -->
 	  <div class="search">
-        	<table width="100%">
+        	<table>
               <tr>
                 <td class="title-r">流程编号：</td>
                 <td><input type="text" id="text_3" name="queryProcessId" class="fix-input" style="width:160px;" value="${result.queryProcessId}"/></td>

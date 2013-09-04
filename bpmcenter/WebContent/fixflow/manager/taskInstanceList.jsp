@@ -108,7 +108,7 @@ $(function(){
     	<input type="hidden" id="rollBackNodeId" name="rollBackNodeId"/> 
     	<input type="hidden" id="taskId" name="taskId">
     	<div class="search">
-        	<table width="100%">
+        	<table>
               <tr>
                 <td class="title-r">任务主题：</td>
                 <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
