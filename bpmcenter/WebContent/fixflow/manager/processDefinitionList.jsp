@@ -94,7 +94,6 @@ a{text-decoration: none;}
 <div style="margin-top:1px;">
 <!-- 左 -->
 <div class="left" style="width:0px;">
-    	
 </div>
 <!-- 右-->
 	<div class="right" style="width:98%;">
@@ -124,10 +123,10 @@ a{text-decoration: none;}
 		  <thead>
 		   <th width="2%"></th>
 		   <th >流程名称</th>
-		    <th width="12%">流程编号</th>
-		    <th width="28%">唯一编号</th>
-		    <th width="5%">流程版本</th>
+		    <th width="15%">编号</th>
+		     <th width="5%">流程版本</th>
 		    <th width="12%">流程分类</th>
+		    <th width="31%">唯一编号</th>
 		    <th width="12%">发布时间</th>
 		  </thead>
 		  <tbody>
@@ -136,9 +135,9 @@ a{text-decoration: none;}
 		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" processDefinitionId="${dataList.processDefinitionId}" /></td>
 		       <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.processDefinitionKey}</td>
-		      <td>${dataList.processDefinitionId}</td>
-		      <td>${dataList.version}</td>
+		       <td>${dataList.version}</td>
 		      <td>${dataList.category}</td>
+		      <td>${dataList.processDefinitionId}</td>
 		       <td><fmt:formatDate value="${dataList.DEPLOY_TIME}" type="both"/></td>
 		    </tr>
 		    </c:forEach>
@@ -154,7 +153,8 @@ a{text-decoration: none;}
 	<input type="hidden" name="deploymentId" id="deploymentId" value=""/>
 	<input type="hidden" name="action" id="action" value="processDefinitionList"/>
 	<input type="hidden" name="processDefinitionId" id="processDefinitionId" value=""/>
+	</div>
 </form>
-</div>
+
 </body>
 </html>
