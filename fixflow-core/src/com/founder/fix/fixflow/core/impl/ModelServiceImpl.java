@@ -38,6 +38,7 @@ import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessDefinitionGroupKeyCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetResourceAsStreamCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetStartProcessByUserIdCmd;
+import com.founder.fix.fixflow.core.impl.cmd.GetUserSubmitProcess;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateDeploymentByZipCmd;
 import com.founder.fix.fixflow.core.impl.cmd.UpdateResourceCmd;
 import com.founder.fix.fixflow.core.impl.model.DeploymentBuilderImpl;
@@ -184,5 +185,10 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 			return null;
 		}
 		return updateDeploymentByZip(new ZipInputStream(inputStream),deploymentId);
+	}
+
+	public List<Map<String, String>> getUserSubmitProcess(String userId, int number) {
+
+		return commandExecutor.execute(new GetUserSubmitProcess(userId,number));
 	}
 }
