@@ -161,7 +161,7 @@ $(function(){
 
 									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
 										height="30" width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');"></td>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);"></td>
 									<td>${dataList.processDefinitionName}</td>
 									<td>${dataList.bizKey}</td>
 									<td><a name="doTask" href="#"
