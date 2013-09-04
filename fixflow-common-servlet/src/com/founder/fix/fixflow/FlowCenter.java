@@ -42,6 +42,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
+import com.founder.fix.fixflow.service.FlowIdentityService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.JSONUtil;
@@ -255,8 +256,10 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/selectStepList.jsp");
 			} else if(action.equals("viewDelegation")){	//选择步骤列表
-//				Map<String, Object> pageResult = getFlowCenter().getRollbackTask(filter);
-//				filter.putAll(pageResult);
+				Map<String, Object> pageResult = new HashMap<String, Object>();
+				
+				pageResult = this.getFlowIdentityService().getUserDelegationInfo(userId);
+				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
 			}
@@ -285,6 +288,11 @@ public class FlowCenter extends HttpServlet {
 	public FlowCenterService getFlowCenter() {
 		return (FlowCenterService) SpringConfigLoadHelper
 				.getBean("flowCenterServiceImpl");
+	}
+	
+	public FlowIdentityService getFlowIdentityService(){
+		return (FlowIdentityService)SpringConfigLoadHelper
+				.getBean("flowIdentityServiceImpl");
 	}
 
 }

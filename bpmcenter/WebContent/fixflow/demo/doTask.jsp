@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>审批</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/form.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>

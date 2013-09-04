@@ -69,7 +69,7 @@ body { min-width:1000px;}
 .btn-disable a,.btn-disable a:hover { display:inline-block; padding:3px 8px; border:2px solid #ddd; background:#ddd; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#999; text-decoration:none;}
 
 /* input按钮样式 */
-.fix-input { padding:4px 5px; background:#f2f2f2; border:none; font-size:12px; line-height:12px; color:#333;}
+.fix-input { padding:2px; font-size:12px; line-height:12px; color:#333;}
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
 input[type="submit"]::-moz-focus-inner,
@@ -79,7 +79,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 /* 表单 */
 .fix-table { margin:0; color:#444;}
-.fix-table th { padding:5px 0; background:#f8ddd5; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #fff;}
+.fix-table th { padding:5px 0; background:#ddd; font-family:"微软雅黑"; font-size:12px; font-weight:bold;  border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #dc562e;}
 .fix-table td { padding:6px; border-bottom:1px solid #fff;}
 .fix-table td.title-r { text-align:right; color:#666; padding-right:20px;}
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
@@ -103,7 +103,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .type-box { padding:20px; height:100%; text-align:center;}
 .type-box .type {  margin:0 auto 10px auto; padding-bottom:12px; width:85%; height:auto; overflow:hidden; background:#bbb;}
 .type-box .type h1 { display:block; padding:6px 10px; height:16px; line-height:16px; background:#999; color:#fff; font-family:"微软雅黑"; font-size:14px; font-weight:bold; text-align:left;}
-.type-box .type a { float:left; margin:12px 0 0 15px; padding:15px 10px 15px 15px; display:block; width:100px; height:40px; overflow:hidden; text-decoration:none; color:#dc562e; line-height:16px; background:#eee ; border:3px solid #eee;}
+.type-box .type a { float:left; margin:12px 0 0 15px; padding:5px; display:block; width:100px; height:40px; overflow:hidden; text-decoration:none; color:#dc562e; line-height:16px; background:#eee ; border:3px solid #eee;}
 .type-box .type a div { font-size:14px; text-align:left; font-family:"微软雅黑";}
 .type-box .type a div:first-letter {font-size:200%;font-weight:bold;float:left;margin:0 5px;}
 .type-box .type a:hover { color:#dc562e; background:#eee ; border:3px solid #dc562e;}
