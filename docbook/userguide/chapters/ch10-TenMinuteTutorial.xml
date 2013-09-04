@@ -14,9 +14,7 @@
   
   <section xml:id="tenmt.goal">
     <title>目标</title>
-    <para>
-      本章将通过一个实际的案例演示如何使用FixFlow的设计器已经web项目，以及如果通过代码的方式驱动FixFlow引擎。
-    </para>
+    <para> 本章将通过一个实际的案例演示如何使用FixFlow的设计器和Bpmcenter项目，以及如果通过代码的方式驱动FixFlow引擎。 </para>
   </section>
   
   <section xml:id="tenmt.useCase">

@@ -41,7 +41,7 @@ assertNotNull(deploymentId);
     </para>
     <orderedlist>
       <listitem><para>解压Zip文件。</para></listitem>
-      <listitem><para>将解压后的bpmn文件放到设计器的项目中，直接双击打开。</para></listitem>
+      <listitem><para>将解压后的bpmn文件放到设计器的项目中，直接双击打开（设计器部署不需要zip中的png文件）。</para></listitem>
       <listitem><para>点击流程空白处，在属性框中点击发布。</para></listitem>
     </orderedlist>
   </section>

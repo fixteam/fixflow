@@ -7,7 +7,7 @@
   
   <section xml:id="gs.prerequisites">
     <title>先决条件</title>
-    <para> 本章建立在用户已经下载Eclipse Juno SR2工具，安装了JDK 6+运行环境，以及tomcat
+    <para> 本章建立在用户已经下载Eclipse Juno SR2工具，安装了JDK 6+运行环境，以及Tomcat
       V6.0服务器，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，在github.com注册了账号。</para>
   </section>
   <section xml:id="gs.goal">
@@ -96,7 +96,7 @@
     <orderedlist>
         <listitem>
           <para>首先，因为项目的.project文件中使用了GIT_FIXFLOW_HOME全局变量，所以我们要声明下此变量：</para>
-          <para> 打开window-->preferences-->General-->workspace-->linked Resources，新增变量：GIT_FIXFLOW_HOME,路径为上面设置的GIT工作目录+fixflow如：E:\GIT\fixflow </para>
+          <para> 打开window-->preferences-->General-->workspace-->linked Resources，新增变量：GIT_FIXFLOW_HOME,路径为上面设置的GIT工作目录，如：E:\GIT\fixflow </para>
           <mediaobject><imageobject>
             <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.12.png"/>
           </imageobject></mediaobject>
@@ -107,7 +107,7 @@
           <mediaobject><imageobject>
             <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.13.png"/>
           </imageobject></mediaobject>
-        <para>选择tomcat路径，（没有tomcat的可以去网上下载个），选择安装的jdk 点击Next,将bpmcenter项目add进去 点击finish。</para>
+        <para>选择tomcat路径，选择安装的jdk 点击Next,将bpmcenter项目add进去 点击finish。</para>
           <mediaobject><imageobject>
             <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.14.png"/>
           </imageobject></mediaobject>
@@ -128,13 +128,14 @@
   <section xml:id="gs.dataBaseRun">
     <title>DataBase脚本安装</title>
     <para>
-      数据库的详细介绍请查看其他章节<link linkend="dataBase.support">数据库说明</link>
+      数据库的详细介绍请查看<link linkend="dataBase.support">数据库说明</link>章节
     </para>
   </section>
   
   <section xml:id="gs.jarConfig">
     <title>依赖Jar配置</title>
     <para>
+      FixFlow依赖以下jar文件：
      <programlisting language="xml">
        "/fixweb/WebRoot/WEB-INF/lib/bsh-2.0b4.jar"
       "/fixweb/WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"
