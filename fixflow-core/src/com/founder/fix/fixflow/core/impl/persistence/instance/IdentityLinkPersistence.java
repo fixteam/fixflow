@@ -87,9 +87,11 @@ public class IdentityLinkPersistence {
 	}
 	
 	
+	
+	
 	public List<IdentityLinkEntity> selectIdentityLinksByTask(String taskId)
 	{
-		String sqlString="SELECT * FROM "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" WHERE TASKINSTANCE_ID=?";
+		String sqlString="SELECT * FROM "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" WHERE TASKINSTANCE_ID=? ORDER BY USER_ID,GROUP_ID";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(taskId);
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);

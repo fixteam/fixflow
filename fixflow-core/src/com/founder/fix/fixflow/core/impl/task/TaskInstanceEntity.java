@@ -1037,7 +1037,27 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setCommandId(String commandId) {
 		this.commandId = commandId;
 	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<IdentityLink> getIdentityLinkQueryToListNoCache() {
 
+		if (this.taskIdentityLinks.size() == 0) {
+
+				List valueObjectTemp = (List) Context.getCommandContext().getIdentityLinkManager().findIdentityLinksByTaskId(this.id);
+				if (valueObjectTemp.size() > 0) {
+					
+					this.taskIdentityLinks = (List<IdentityLinkEntity>) valueObjectTemp;
+					return (List) this.taskIdentityLinks;
+				} else {
+					return (List) this.taskIdentityLinks;
+				}
+			
+		} else {
+			return (List) this.taskIdentityLinks;
+		}
+
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<IdentityLink> getIdentityLinkQueryToList() {
