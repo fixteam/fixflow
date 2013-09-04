@@ -206,8 +206,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		try {
 			result = engine.getModelService().getStartProcessByUserId(userId);
 			for(Map<String,String> tmp:result){
-				String pdkey = tmp.get("processDefinitionKey");
-				String formUrl = engine.getFormService().getStartFormByKey(pdkey);
+				String formUrl = tmp.get("startFormKey");
+				//String formUrl = engine.getFormService().getStartFormByKey(pdkey);
 				
 				tmp.put("formUrl", formUrl);
 			}
