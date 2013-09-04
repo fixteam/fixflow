@@ -58,13 +58,19 @@
     	<div class="left-nav-box">
     	<div class="left-nav"><a name="userList" href="#">用户</a></div>
         <div class="left-nav-orange-line">&nbsp;</div>
-       	<div class="left-nav"><a name="group" href="#">组</a></div>
+       	<div class="left-nav"><a name="group" href="#" class="down-arrow">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
-				  <c:if test="${group.isTree!= null && group.isTree == true}">
-			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
-			      </c:if>			   
+			    
+			     <c:choose>
+				    <c:when test="${group.isTree!= null && group.isTree == true}">
+				    	<div class="left-nav"><a class="down-arrow" name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+						<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>				   
+				    </c:when>
+				    <c:otherwise>
+				    	<div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+				    </c:otherwise>
+				</c:choose>		   
 			    </c:forEach>
        	  	</c:if>
         </div>
@@ -73,7 +79,7 @@
 	<div class="right">
 	  <!-- 查 -->
 	  <div class="search">
-        	<table>
+        	<table width="100%">
               <tr>
                 <td class="title-r">用户编号：</td>
                 <td style="width:200px;"><input type="text" id="text_3" name="queryUserId" class="fix-input" style="width:160px;" value="${result.queryUserId}"/></td>

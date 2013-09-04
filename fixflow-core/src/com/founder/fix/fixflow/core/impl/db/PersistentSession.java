@@ -293,6 +293,14 @@ public class PersistentSession {
 		}
 		
 		
+		if (statement.equals("findUserSubmitProcess")) {
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
+			Map<String, String> strmap = (Map<String, String>) parameter;
+			String userId = strmap.get("userId");
+			int number = StringUtil.getInt(strmap.get("number"));
+			return processDefinitionPersistence.findUserSubmitProcess(userId,number);
+		}
+		
 		
 
 		if (statement.equals("selectDeploymentById")) {
