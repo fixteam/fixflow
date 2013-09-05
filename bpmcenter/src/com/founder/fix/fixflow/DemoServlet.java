@@ -80,6 +80,7 @@ public class DemoServlet extends HttpServlet {
 			response.sendRedirect(context + "/");
 			return;
 		}
+		//在开始时调用此方法，会声明本次线程里所有的数据库操作都会线程池化。
 		CurrentThread.init();
 		ServletOutputStream out = null;
 		String action = StringUtil.getString(request.getParameter("action"));
@@ -204,10 +205,12 @@ public class DemoServlet extends HttpServlet {
 			}
 			e.printStackTrace();
 		} finally {
+			//在最终结果里进行结果清空
 			if (out != null) {
 				out.flush();
 				out.close();
 			}
+			//调用这个方法会清空本次线程里所有用到的连接等资源，确保不会有泄漏
 			try {
 				CurrentThread.clear();
 			} catch (SQLException e) {

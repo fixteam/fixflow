@@ -13,7 +13,7 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 		$("#"+formId).append(cprocessDefinitionKey);
 		$("#"+formId).append(ctaskId);
 
-		$("div[commandType]").click(function() {
+		$("div[commandType],button[commandType]").click(function() {
 			var id = $(this).attr("commandId");
 			var type = $(this).attr("commandType");
 			$("#commandId").val(id);
