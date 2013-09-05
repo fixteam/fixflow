@@ -518,13 +518,13 @@ public class ProcessDefinitionPersistence {
 
 	public List<Map<String, Object>> findUserSubmitProcess(String userId, int number) {
 		String sqlTextString = "select processdefinition_key from (" + "select p.processdefinition_key, max(p.start_time) start_time, p.initiator"
-				+ "from fixflow_run_processinstanece p" + "group by p.processdefinition_key, p.initiator" + "having p.initiator = ?"
-				+ ")t order by start_time desc;";
+				+ " from fixflow_run_processinstanece p" + "group by p.processdefinition_key, p.initiator" + " having p.initiator = ? "
+				+ ")t order by start_time desc";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(userId);
 		
 		
-		sqlTextString = pagination.getPaginationSql(sqlTextString, 1,1+number, "*", "");
+		sqlTextString = pagination.getPaginationSql(sqlTextString, 1,1+number, " processdefinition_key ", "");
 		
 		
 		
