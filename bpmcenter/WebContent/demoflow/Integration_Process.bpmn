@@ -46,9 +46,6 @@
         <fixflow:taskCommand id="HandleCommand_5" name="退回-任务" commandType="rollBackTaskByTaskId" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:taskCommand id="HandleCommand_6" name="转发" commandType="transfer" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
-        <fixflow:formUri>
-          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="&quot;toAdd&quot;">&quot;toAdd&quot;</fixflow:expression>
-        </fixflow:formUri>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
