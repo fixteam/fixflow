@@ -61,7 +61,6 @@ public class FixFlowShellProxy {
 			DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean(beanId);
 			DBConnection dbconn = dbcf.createDBConnection();
 			connection = dbconn.getConnection();
-			setDBConn(beanId,dbconn);
 		}
 		
 		return connection;
