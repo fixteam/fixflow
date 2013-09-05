@@ -26,6 +26,23 @@
 			$("#auser").val(userId);
 			$("#auserName").text(userName);
 		})
+		
+		$("#saveBtn").click(function()	{
+			alert("提交数据");
+			
+			var agentInfo = {
+				operator:${sessionScope.LOGIN_USER_ID};
+				sDate: $("#sDate").val();
+				eDate: $("#eDate").val();
+				statue: $("#statue").val();
+				agentId: $("#agentId").val();
+			}
+			
+			var ss = JSON.stringify(params);
+			$("#insertAndUpdate").val(ss);
+			$("#form").submit();
+			
+		})
 	})
 	
 	
@@ -66,6 +83,7 @@
 				</tr>
 			</table>
 		</div>
+		<input type="hidden" name="insertAndUpdate" id="insertAndUpdate"/>
 		<div class="listbox">
 			<table class="table-list" id="detailTable">
 				<thead>
