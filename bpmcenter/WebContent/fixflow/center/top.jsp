@@ -23,8 +23,8 @@
 <script>
  
 	$(function(){
-		$("#updateCache").click(function(){
-			window.open("FlowManager?action=updateCache")
+		$("#updateCache").click(function(){ 
+			window.showModalDialog("FlowManager?action=updateCache");
 		});
 		
 		$("#setAgent").click(function(){

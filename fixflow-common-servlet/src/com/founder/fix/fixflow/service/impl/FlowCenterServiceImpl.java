@@ -217,6 +217,23 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 
 		return result;
 	}
+	
+	@Override
+	public List<Map<String, String>> queryLastestProcess(String userid) throws SQLException {
+		List<Map<String, String>> result = null;
+		ProcessEngine engine = getProcessEngine(userid);
+		try {
+			result = engine.getModelService().getUserSubmitProcess(userid,3);
+			for(Map<String,String> tmp:result){
+				String formUrl = tmp.get("startFormKey");
+				tmp.put("formUrl", formUrl);
+			}
+		} finally {
+			FixFlowShellProxy.closeProcessEngine(engine, false);
+		}
+
+		return result;
+	}
 
 	public List<Map<String, Object>> getAgentUsers(ProcessEngine engine, String targetId) {
 		return engine.getTaskService().getAgentUsersAndCount(targetId);

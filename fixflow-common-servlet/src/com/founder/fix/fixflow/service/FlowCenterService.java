@@ -118,6 +118,16 @@ public interface FlowCenterService {
 	public List<Map<String, String>> queryStartProcess(String s)
 		throws SQLException;
 
+	/**
+	  * queryLastestProcess
+	  * @Title: queryStartProcess
+	  * @Description: 获取某人最近使用的流程
+	  * @param s<br>
+	  * "userId" 用户编号<br>
+	  * @return List<Map<String,String>><br>
+	  * @throws SQLException
+	  */
+	public List<Map<String,String>> queryLastestProcess(String userid) throws SQLException;
 
 	/**
 	  * queryStartProcessImage
