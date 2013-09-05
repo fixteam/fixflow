@@ -41,12 +41,12 @@ $(function(){
 <form action="FlowManager" id="subForm" method="post">
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
-<div style="margin-top:1px;">
+<div style="margin-top:1px;" class="center-panel">
 <!-- 左 -->
 <div class="left" style="width:0px;">
 </div>
 <!-- 右-->
-	<div class="right" style="width:99%;">
+	<div class="right">
 	  <!-- 查 -->
 	   <div class="search">
         	<table>

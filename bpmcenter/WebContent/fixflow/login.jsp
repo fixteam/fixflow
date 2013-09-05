@@ -81,6 +81,7 @@ $(function(){
 	$("#returnLoginForm").click(function(){
 		$("#lockScreen").hide("fast");
 		$("#loginForm").show("fast");
+		$("#userName").focus();
 	});
 	$("#login").click(function(){
 		var storage = window.sessionStorage;
@@ -98,11 +99,6 @@ $(function(){
 	if(username==undefined||username==""){
 		$("#returnToLockScreen").hide();
 		$("#userName").focus();
-		$(document).keydown(function(event){
-			if (event.which == 13) {
-				$("#login").click();
-			}
-		});
 	}else{
 		$("#lastLoginUser").html(username);
 		if(window.sessionStorage.getItem("loginType")){
@@ -112,11 +108,19 @@ $(function(){
 		$("#lockScreen").show();
 		$("#loginForm").hide();
 		$("#pwd").focus();
-		$(document).keydown(function(event){
-			if (event.which == 13) {
-				$(".btn-login").click();
-			}
-		});
 	}
-})
+	$(document).keydown(function(event){
+		loginClick(event);
+	})
+});
+
+function loginClick(e){
+	if(e.which == 13){
+		if($("#loginForm").is(":hidden")){
+			$(".btn-login").click();
+		}else{
+			$("#login").click();
+		}
+	}
+}
 </script>

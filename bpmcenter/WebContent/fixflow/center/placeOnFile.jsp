@@ -11,10 +11,10 @@
 <script type="text/javascript" src="fixflow/js/select.js"></script>
 </head>
 <body>
-<form id="subForm" method="post" action="FlowCenter">
 	<div class="main-panel">
 		<jsp:include page="top.jsp" flush="true" />
 		<div class="center-panel">
+		<form id="subForm" method="post" action="FlowCenter">
 				<!-- 右-->
 				<div class="right">
 					<!-- 查 -->
@@ -79,18 +79,14 @@
 					    </div>
 					</div>
 				</div>
+				<!-- 隐藏参数部分 -->
+				<input type="hidden" name="userId" value="<c:out value="${result.userId}"/>">
+				<input type="hidden" name="pageIndex" value="<c:out value="${result.pageIndex}"/>">
+				<input type="hidden" name="rowNum" value="<c:out value="${result.rowNum}"/>">
+				<input type="hidden" name="type" value="<c:out value="${result.action}"/>">
+			</form>
 		</div>
 	</div>
-	<!-- 隐藏参数部分 -->
-	<input type="hidden" name="userId"
-		value="<c:out value="${result.userId}"/>">
-	<input type="hidden" name="pageIndex"
-		value="<c:out value="${result.pageIndex}"/>">
-	<input type="hidden" name="rowNum"
-		value="<c:out value="${result.rowNum}"/>">
-	<input type="hidden" name="type"
-		value="<c:out value="${result.action}"/>">
-</form>
 </body>
 <script>
 $(function(){

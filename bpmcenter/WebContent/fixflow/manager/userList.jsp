@@ -49,10 +49,10 @@
 	</SCRIPT>
 </head>
 <body>
-<form action="FlowManager" id="subForm">
+
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
-<div style="margin-top:1px;">
+<div style="margin-top:1px;" class="center-panel">
 <!-- 左 -->
 <div class="left">
     	<div class="left-nav-box">
@@ -76,6 +76,7 @@
         </div>
 </div>
 <!-- 右-->
+<form action="FlowManager" id="subForm">
 	<div class="right">
 	  <!-- 查 -->
 	  <div class="search">
@@ -117,12 +118,12 @@
 	   <jsp:include page="../common/page.jsp" flush="true"/>
 	    </div>
 	  </div>
+</form>
 	</div>
 </div>
 <!-- 隐藏参数部分 -->
 <input type="hidden" name="action" id="action" value="getUserList"> 
 <input type="hidden" name="supId" id="supId"> 
 <input type="hidden" name="groupType" id="groupType" value="dept"> 
-</form>
 </body>
 </html>
