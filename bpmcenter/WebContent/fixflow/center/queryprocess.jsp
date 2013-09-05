@@ -63,7 +63,7 @@ $("a[name=flowGraph]").click(function(){
 			                <td style="width:180px;"><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
 			                <td class="title-r">单 据 号：</td>
 			                <td style="width:180px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
-			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
 			              </tr>
 			              <tr>
 			                <td class="title-r">发 起 人：</td>

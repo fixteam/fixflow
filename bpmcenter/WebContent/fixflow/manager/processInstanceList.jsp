@@ -113,7 +113,7 @@
                 <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>
                 <td style="width:200px;"><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
               <tr>
                 <td class="title-r">业务数据：</td>

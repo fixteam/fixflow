@@ -180,8 +180,7 @@ $(function(){
 									name="bizKey" class="fix-input" style="width: 160px;"
 									value="${result.bizKey}" /></td>
 								<td><div class="btn-normal">
-										<a href="#" onclick="$('#subForm').submit();">查 找<em
-											class="arrow-small"></em></a>
+										<a href="#" onclick="$('#subForm').submit();">查 找</a>
 									</div></td>
 							</tr>
 							<tr>
