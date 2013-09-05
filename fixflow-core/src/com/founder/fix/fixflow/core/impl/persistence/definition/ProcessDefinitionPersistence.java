@@ -66,6 +66,7 @@ import com.founder.fix.fixflow.core.impl.persistence.deployer.DeploymentCache;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 
 public class ProcessDefinitionPersistence {
 
@@ -518,7 +519,7 @@ public class ProcessDefinitionPersistence {
 
 	public List<Map<String, Object>> findUserSubmitProcess(String userId, int number) {
 		String sqlTextString = "select processdefinition_key from (" + "select p.processdefinition_key, max(p.start_time) start_time, p.initiator"
-				+ " from fixflow_run_processinstanece p" + "group by p.processdefinition_key, p.initiator" + " having p.initiator = ? "
+				+ " from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" p" + " group by p.processdefinition_key, p.initiator" + " having p.initiator = ? "
 				+ ")t order by start_time desc";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(userId);
@@ -528,9 +529,9 @@ public class ProcessDefinitionPersistence {
 		
 		
 		
-		sqlTextString = "SELECT PROCESS_KEY,MAX(PROCESS_NAME) AS PROCESS_NAME,MAX(CATEGORY) AS CATEGORY ,MAX(RESOURCE_NAME) AS RESOURCE_NAME,MAX(RESOURCE_ID) AS RESOURCE_ID,"+
+		sqlTextString = "SELECT * FROM (SELECT PROCESS_KEY,MAX(PROCESS_NAME) AS PROCESS_NAME,MAX(CATEGORY) AS CATEGORY ,MAX(RESOURCE_NAME) AS RESOURCE_NAME,MAX(RESOURCE_ID) AS RESOURCE_ID,"+
 		"MAX(DEPLOYMENT_ID) AS  DEPLOYMENT_ID,MAX(DIAGRAM_RESOURCE_NAME) AS DIAGRAM_RESOURCE_NAME "
-				+ "FROM FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY IN ("+sqlTextString+")";
+				+ "FROM FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY) WHERE PROCESS_KEY IN ("+sqlTextString+")";
 		
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlTextString, objectParamWhere);
 		return dataObj;
