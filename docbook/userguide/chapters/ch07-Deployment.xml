@@ -100,7 +100,7 @@ assertTrue(map.containsKey("EndEvent_1"));
   <section xml:id="deploy.tomcat">
     <title>Tomcat部署</title>
     <para>
-      
+      Tomcat部署没有特别需要配置的地方，详细见<link linkend="gs.webConfig">Web环境配置</link>
     </para>
   </section>
   

@@ -223,7 +223,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		List<Map<String, String>> result = null;
 		ProcessEngine engine = getProcessEngine(userid);
 		try {
-			result = engine.getModelService().getUserSubmitProcess(userid,3);
+			result = engine.getModelService().getUserSubmitProcess(userid,5);
 			for(Map<String,String> tmp:result){
 				String formUrl = tmp.get("startFormKey");
 				tmp.put("formUrl", formUrl);
