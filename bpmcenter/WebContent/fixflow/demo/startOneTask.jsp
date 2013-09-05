@@ -19,9 +19,6 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/fixflow/js/flowautoassemble.js"></script>
 <style>
-a {
-	text-decoration: none;
-}
 </style>
 </head>
 

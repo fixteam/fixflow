@@ -16,15 +16,15 @@
 			<tr>
                	<td class="title-r">用户编号/姓名：</td>
                	<td style="width:180px"><input type="text" id="text_0" name="queryInfo" class="fix-input" style="width:160px;" value="${result.queryInfo}"/></td>
-             	<td style="width:70px"><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
-             	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
+             	<td style="width:70px"><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+             	<td><div class="btn-normal"><a href="#" id="ok">确定</a></div></td>
              </tr>
 		</table>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
 		<thead>
-			<th>用户编号</th>
+			<th style="width:50%;">用户编号</th>
 			<th>用户姓名</th>
 		</thead>
 		<tbody>

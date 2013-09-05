@@ -20,6 +20,8 @@ package com.founder.fix.fixflow.service.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +104,8 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 			throws SQLException {
 		Map<String, Object> resultData = new HashMap<String, Object>();
 		Map<String, Object> agentInfo = new HashMap<String, Object>();
+		List<Map<String, Object>> detailInfoList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> eachResultData = new HashMap<String, Object>();
 		Connection connection = null;
 		try {
 			connection = FixFlowShellProxy
@@ -125,8 +129,8 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 				// eachAgentInfo.put("agentName", this.getUserName(agentId));
 
 				sqlStr = "select * from fixflow_agent_agentdetails where agent_id = ?";
-				List<Map<String, Object>> detailInfoList = new ArrayList<Map<String, Object>>();
-				Map<String, Object> eachResultData = new HashMap<String, Object>();
+				
+			
 				data.clear();
 				data.add(agentId);
 				listData = sqlCommand.queryForList(sqlStr, data);
@@ -162,11 +166,28 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 			} else {
 //				String loginUser = "";
 				Map<String, Object> eachAgentInfo = new HashMap<String, Object>();
-				eachAgentInfo.put("agentName", this.getUserName(agentId));
-				eachAgentInfo.put("agent", "");
-				eachAgentInfo.put("sdate", DateUtil.getCurrentDateStr());
-				// eachAgentInfo.put("edate", DateUtil.getCurrentDateStr());
-				resultData.put("agentInfo", eachAgentInfo);
+				agentInfo.put("agentName", this.getUserName(agentId));
+				agentInfo.put("agent", agentId);
+				agentInfo.put("sDate", new Date());
+				Calendar calendar = Calendar.getInstance();
+				calendar.add(Calendar.DAY_OF_MONTH, 14);
+				Date eDate = calendar.getTime();
+				agentInfo.put("eDate", eDate);
+				
+				
+				eachResultData.put("agentId", agentId);
+				String auser = "";
+				eachResultData.put("auser", auser);
+				eachResultData.put("auserName", "");
+
+				String processId = FIX_FLOW_ALL_FLOW;
+				eachResultData.put("processId", processId);
+				String processName = "所有流程";
+				eachResultData.put("processName", processName);
+				eachResultData.put("guid", java.util.UUID.randomUUID().toString());
+				
+				detailInfoList.add(eachResultData);
+				agentInfo.put("detailInfoList", detailInfoList);
 			}
 		} finally {
 			connection.close();

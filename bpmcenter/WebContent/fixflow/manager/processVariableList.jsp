@@ -12,7 +12,7 @@
 	function addNew(){
 		var nowIndex = $("#nowIndex").val();
 		$.ajax({ type: "POST", 
-			url: "manager/processVariableModel.jsp", 
+			url: "fixflow/manager/processVariableModel.jsp", 
 			data: "index="+nowIndex, 
 			success: function(msg)
 			{ 
