@@ -168,7 +168,7 @@ List&lt;String> processInstances = processInstanceQuery.listPage(1, 5);
 processInstances = processInstanceQuery.listPagination(1, 5);
      
     </programlisting>
-    <important><para>如果需要再次用到processInstanceQuery，则需要重置processInstanceQuery，如：processInstanceQuery = runtimeService.createProcessInstanceQuery();，因为Query对象会将上次的查询条件保存。</para></important>
+    <important><para>如果需要再次用到processInstanceQuery对象，则需要重置processInstanceQuery对象，如：processInstanceQuery = runtimeService.createProcessInstanceQuery();，因为Query对象会将上次的查询条件保存。</para></important>
     <para>这些Query对象包含了流程引擎中最常用的字段，遇到不满足的FixFlow的Query提供了扩展查询方法，使用方法如下：</para>
     <orderedlist>
       <listitem>

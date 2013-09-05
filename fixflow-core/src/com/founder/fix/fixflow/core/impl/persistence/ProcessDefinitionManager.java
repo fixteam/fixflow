@@ -52,6 +52,17 @@ public class ProcessDefinitionManager extends AbstractManager {
 		parameters.put("processDefinitionVersion", processDefinitionVersion);
 		return (ProcessDefinitionBehavior) getDbSqlSession().selectOne("selectProcessDefinitionByKeyAndVersion",parameters);
 	}
+	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<Map<String, Object>> findUserSubmitProcess(String userId, int number) {
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("userId", userId);
+		parameters.put("number", number);
+		return (List) getDbSqlSession().selectOne("findUserSubmitProcess",parameters);
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public List<ProcessDefinitionBehavior> findProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery, Page page) {

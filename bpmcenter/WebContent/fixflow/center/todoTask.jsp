@@ -104,7 +104,7 @@ $(function(){
 								<div class="left-nav">
 									<a name="agentUsers" userId="${agentUsers.userid}" href="#"><img
 										src="${agentUsers.userid}" height="30" width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');" />${agentUsers.username}</a>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />${agentUsers.username}</a>
 								</div>
 							</c:forEach>
 						</c:if>
@@ -120,7 +120,7 @@ $(function(){
 									<a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img
 										src="icon/${agentToUsers.userid}_small.png" height="30"
 										width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');" />${agentToUsers.username}</a>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />${agentToUsers.username}</a>
 								</div>
 							</c:forEach>
 						</c:if>
@@ -132,27 +132,27 @@ $(function(){
 						<div class="message-content">
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />曹操：煮酒论英雄！谁一起吃饭啊
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />曹操：煮酒论英雄！谁一起吃饭啊
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 						</div>
@@ -223,7 +223,7 @@ $(function(){
 
 									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
 										height="30" width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');"></td>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);"></td>
 									<td>${dataList.processDefinitionName}</td>
 									<td>${dataList.bizKey}</td>
 									<td><a name="doTask" href="#"

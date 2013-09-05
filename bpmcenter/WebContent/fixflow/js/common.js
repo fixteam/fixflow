@@ -101,14 +101,14 @@ $(function(){
 	Fix.Util.CheckBtnStatus();
 });
 
-function imgNotFound(url){ 
-    var img=event.srcElement; 
-    img.src= url+"/fixflow/images/temp/user-m.png";  
-    img.onerror=null;
+function imgNotFound(url,that){ 
+    var img=$(that); 
+    img.attr("src",url+"/fixflow/images/temp/user-m.png");  
+    img.unbind("error");
 } 
 
-function miniImgNotFound(url){ 
-    var img=event.srcElement; 
-    img.src= url+"/fixflow/images/temp/user01.jpg";  
-    img.onerror=null;
+function miniImgNotFound(url,that){ 
+    var img=$(that); 
+    img.attr("src", url+"/fixflow/images/temp/user01.jpg");  
+    img.unbind("error");
 } 

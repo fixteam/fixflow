@@ -4,67 +4,98 @@
                
 <chapter>
   <title>部署</title>
-
-  <section xml:id="deploy.file">
-    <title>归档文件部署</title>
-    <para>
-      
-    </para>
-  </section>
-  
-  
+  <para>关于流程定义的部署，FixFlow提供了三种部署方式：通过代码部署，通过FixFlow设计器部署，通过流程管控中心部署。</para>
+  <para>下面说明在拿到通过FixFlow设计器导出的流程定义的Zip文件之后，如何通过这三种
+  方式进行流程定义的部署，以及在部署的过程中FixFlow引擎都做了哪些事情。</para>
   <section xml:id="deploy.code">
     <title>代码方式部署</title>
     <para>
-      
+      代码方式部署主要用到了ModelService中的deploymentByZip(String path)或deploymentByZip(ZipInputStream zip)方法，具体使用方法如下：
+      <programlisting language="java">
+//通过zip文件的path发布流程
+String deploymentId = modelService.deploymentByZip("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest.zip");
+assertNotNull(deploymentId);
+//获取ZIP文件流
+ZipInputStream zipInputStream = new ZipInputStream(ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/test/engine/api/model/Process_TaskServiceTest_new.zip"));
+//通过zip文件流发布流程
+deploymentId = modelService.deploymentByZip(zipInputStream);
+//验证是否发布成功
+assertNotNull(deploymentId);
+      </programlisting>
     </para>
   </section>
 
-
   <section xml:id="deploy.webCenter">
     <title>管控中心中部署</title>
-    <para>
-      
-    </para>
+    <orderedlist>
+      <listitem><para>登陆流程管控中心，选择流程定义管理</para></listitem>
+      <listitem><para>点击发布流程，在弹出的界面上选择Zip文件，点击发布。</para></listitem>
+    </orderedlist>
   </section>
 
 
   <section xml:id="deploy.designer">
     <title>设计器上部署</title>
     <para>
-      
+      在设计器上部署更简单一点：
     </para>
-  </section>
-  
-  <section xml:id="deploy.ava">
-    <title>Java类部署</title>
-    <para>
-      
-    </para>
+    <orderedlist>
+      <listitem><para>解压Zip文件。</para></listitem>
+      <listitem><para>将解压后的bpmn文件放到设计器的项目中，直接双击打开（设计器部署不需要zip中的png文件）。</para></listitem>
+      <listitem><para>点击流程空白处，在属性框中点击发布。</para></listitem>
+    </orderedlist>
   </section>
   
   <section xml:id="deploy.flowDef">
     <title>流程定义过程解释</title>
     <para>
-      
+      在Fixflow引擎拿到流程定义的Zip文件后，会做如下几件事情：
     </para>
-  </section>
-  
-  <section xml:id="deploy.flowImgBuild">
-    <title>生成流程图</title>
-    <para>
-      
-    </para>
+    <orderedlist>
+      <listitem><para>将Zip文件转换为ZipInputStream，解压获得bpmn的流程文件流和png的流程图文件流。</para></listitem>
+      <listitem><para>在FIXFLOW_DEF_DEPLOYMENT发布表中新建一条主记录，作为发布的主记录。</para></listitem>
+      <listitem><para>将bpmn文件通过EMF模型解析，将流程的属性存到FIXFLOW_DEF_PROCESSDEFINITION流程定义表中。</para></listitem>
+      <listitem><para>将bpmn的文件流存入FIXFLOW_DEF_BYTEARRAY中。</para></listitem>
+      <listitem><para>将png的文件流存入FIXFLOW_DEF_BYTEARRAY中。</para></listitem>
+      <listitem><para>完成。</para></listitem>
+    </orderedlist>
   </section>
   
   <section xml:id="deploy.flowImgGet">
-    <title>获取流程图</title>
+    <title>展现流程图</title>
     <para>
-      
+      在Web上展现流程图需要分为三个操作：获取流程图PNG文件、获取流程的任务信息（已办，当前节点等信息）、获取流程图节点信息的坐标（用来给节点加状态）。
     </para>
+    <orderedlist>
+      <listitem><para>获取流程图PNG文件，代码如下：
+        <programlisting language="java">
+//通过流程定义编号获取流程图的文件流
+InputStream streamById = modelService.GetFlowGraphicsImgStreamByDefId(processDefinitionId);
+        </programlisting>
+      </para></listitem>
+      
+      <listitem><para>获取流程的任务信息
+          <programlisting language="java">
+// 查找 1200119390 的这个流程实例的当前独占任务
+List&lt;TaskInstance> taskInstances = taskQuery.processInstanceId(processInstanceId).list();
+          </programlisting>
+        这样取得流程实例的所有任务信息，通过判断任务是否结束来给流程图加上状态信息。
+      </para></listitem>
+      
+      <listitem><para>获取流程图的节点位置信息，代码如下：
+        <programlisting language="java">
+//获得流程图节点的位置信息
+Map&lt;String,Map&lt;String,Object>> map = modelService.GetFlowGraphicsElementPosition(processDefinitionBehavior.getProcessDefinitionId());
+//验证是否含有UserTask_1，UserTask_4，EndEvent_1等节点
+assertTrue(map.containsKey("UserTask_1"));
+assertTrue(map.containsKey("UserTask_4"));
+assertTrue(map.containsKey("EndEvent_1"));
+        </programlisting>
+      Map中以节点ID为key，value是HashMap,key包括“x”、“y”、“height”、“width”。</para>
+      </listitem>
+    </orderedlist>
+    
   </section>
-  
-  
   
   <section xml:id="deploy.tomcat">
     <title>Tomcat部署</title>
