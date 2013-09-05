@@ -742,6 +742,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 
 	public void resume(){
 		isSuspended = false;
+		this.instanceType=ProcessInstanceType.RUNNING;
 		rootToken.resume();
 
 	}
@@ -757,7 +758,9 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 
 	public void suspend(){
 		isSuspended = true;
+		this.instanceType=ProcessInstanceType.SUSPEND;
 		rootToken.suspend();
+		
 	}
 
 	public ContextInstance getContextInstance() {

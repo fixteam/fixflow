@@ -165,8 +165,10 @@
 		      <td>${dataList.initiator}</td>
 				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 				<td>
-					<c:if test="${dataList.isSuspended == true}" var="runStatue">暂停</c:if>
-					<c:if test="${dataList.isSuspended == false}" var="runStatue">运行中</c:if>
+					<c:if test="${dataList.instanceStatus == 'SUSPEND'}" var="runStatue">暂停</c:if>
+					<c:if test="${dataList.instanceStatus == 'RUNNING'}" var="runStatue">运行中</c:if>
+					<c:if test="${dataList.instanceStatus == 'COMPLETE'}" var="runStatue">完成</c:if>
+					<c:if test="${dataList.instanceStatus == 'TERMINATION'}" var="runStatue">终止</c:if>
 				</td>
 		    </tr>
 		    </c:forEach>
