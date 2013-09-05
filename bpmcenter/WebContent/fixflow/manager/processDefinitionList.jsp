@@ -107,7 +107,7 @@ a{text-decoration: none;}
                 <td><input type="text" id="text_4" name="queryProcessName" class="fix-input" style="width:160px;" value="${result.queryProcessName}"/></td>
                 <td class="title-r">流程分类：</td>
                 <td style="width:200px;"><input type="text" id="text_4" name="queryType" class="fix-input" style="width:160px;" value="${result.queryType}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
             </table>
         </div>

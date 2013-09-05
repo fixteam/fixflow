@@ -86,7 +86,7 @@
                 <td style="width:200px;"><input type="text" id="text_3" name="queryUserId" class="fix-input" style="width:160px;" value="${result.queryUserId}"/></td>
                 <td class="title-r">用户姓名：</td>
                 <td style="width:200px;"><input type="text" id="text_4" name="queryUserName" class="fix-input" style="width:160px;" value="${result.queryUserName}"/>
-                <td><div class="btn-normal" ><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td><div class="btn-normal" ><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
             </table>
         </div>

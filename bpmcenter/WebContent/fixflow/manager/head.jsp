@@ -11,7 +11,8 @@ pageContext.setAttribute("basePath",basePath);
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/global.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/index_manager.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/index.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/color_blue.css">
 <!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/popup_manager.css"> -->
 <script type="text/javascript">
 var message = '${errorMsg}';

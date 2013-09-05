@@ -10,7 +10,7 @@
 <body>
 <div style="padding:8px;">
 <div id="search" class="search">
-	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
+	<td><div class="btn-normal"><a href="#" id="ok">确定</a></div></td>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
