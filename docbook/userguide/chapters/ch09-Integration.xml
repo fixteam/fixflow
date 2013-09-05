@@ -25,13 +25,6 @@
           <listitem><para>现在要做的事情包括使用了流程引擎串联A、B系统</para></listitem>
         </itemizedlist>
       </para>
-      <para>
-        <itemizedlist>
-          <listitem><para></para></listitem>
-          <listitem><para></para></listitem>
-        </itemizedlist>
-        
-      </para>
     </section>
 
   </section>
@@ -143,38 +136,38 @@
                 applicationContext_resource.xml文件，该文件是FixFlow Engine的数据库和运行引擎的重要部分。请留意本配置文件，在实际项目中可能会用到多个数据源，如果希望流程引擎连接多个数据源可以在本文件里增加内容。
                 <programlisting language="xml">
                   <![CDATA[ 
-      <?xml version="1.0" encoding="UTF-8"?>
-      <beans xmlns="http://www.springframework.org/schema/beans"
-      xmlns:context="http://www.springframework.org/schema/context"       
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
-        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans                     
-                http://www.springframework.org/schema/beans/spring-beans.xsd 
-                http://www.springframework.org/schema/context        
-          http://www.springframework.org/schema/context/spring-context-2.5.xsd                      
-                http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-                http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
-        <!-- 注解配置，如果有新的注解在后逗号分隔，这一段务必保留 -->
-        <context:component-scan base-package="com.founder.fix.fixflow" />
-        
-        <!-- 读取数据库配置所在 -->
-        <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
-             <property name="location" value="classpath:/jdbc.properties"/>        
-        </bean>
-        <!-- 数据源配置，该数据源可以是spring连接池也可以是来自服务器连接池 -->
-        <bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
-            <property name="driverClassName" value="${idbase.driverClassName}" />        
-            <property name="url" value="${idbase.url}" />        
-            <property name="username" value="${idbase.username}" />        
-            <property name="password" value="${idbase.password}" />        
-        </bean>
-        <!-- 平台本身的连接配置，DB_FIX_BIZ_BASE是连接名称，改名称与fixflowconfig.xml里的可用连接一一对应-->
-        <bean id="DB_FIX_BIZ_BASE" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
-          <property name="dataSource"> 
-            <ref bean="fix_biz_base_dataSource"/> 
-          </property>
-        </bean>
-      </beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"       
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+  xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans                     
+          http://www.springframework.org/schema/beans/spring-beans.xsd 
+          http://www.springframework.org/schema/context        
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd                      
+          http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+          http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+  <!-- 注解配置，如果有新的注解在后逗号分隔，这一段务必保留 -->
+  <context:component-scan base-package="com.founder.fix.fixflow" />
+  
+  <!-- 读取数据库配置所在 -->
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
+       <property name="location" value="classpath:/jdbc.properties"/>        
+  </bean>
+  <!-- 数据源配置，该数据源可以是spring连接池也可以是来自服务器连接池 -->
+  <bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
+      <property name="driverClassName" value="${idbase.driverClassName}" />        
+      <property name="url" value="${idbase.url}" />        
+      <property name="username" value="${idbase.username}" />        
+      <property name="password" value="${idbase.password}" />        
+  </bean>
+  <!-- 平台本身的连接配置，DB_FIX_BIZ_BASE是连接名称，改名称与fixflowconfig.xml里的可用连接一一对应-->
+  <bean id="DB_FIX_BIZ_BASE" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
+    <property name="dataSource"> 
+      <ref bean="fix_biz_base_dataSource"/> 
+    </property>
+  </bean>
+</beans>
                   ]]>
                   </programlisting>
               </para></listitem>
@@ -187,21 +180,21 @@
               <listitem><para>
                 jdbc.xml文件，该文件是数据库配置文件，里面记录被连接数据库的配置信息。
                 <programlisting language="xml">
-                  ##########
-                  # Oracle #
-                  ##########
-                  idbase.driverClassName=oracle.jdbc.driver.OracleDriver
-                  idbase.url=jdbc:oracle:thin:@127.0.0.1:1521:orcl
-                  idbase.username=idbase2
-                  idbase.password=idbase2
-                  
-                  ##########
-                  # MySql #
-                  ##########
-                  #idbase.driverClassName=com.mysql.jdbc.Driver
-                  #idbase.url=jdbc:mysql://127.0.0.1/fixbpm
-                  #idbase.username=root
-                  #idbase.password=root
+##########
+# Oracle #
+##########
+idbase.driverClassName=oracle.jdbc.driver.OracleDriver
+idbase.url=jdbc:oracle:thin:@127.0.0.1:1521:orcl
+idbase.username=idbase2
+idbase.password=idbase2
+
+##########
+# MySql #
+##########
+#idbase.driverClassName=com.mysql.jdbc.Driver
+#idbase.url=jdbc:mysql://127.0.0.1/fixbpm
+#idbase.username=root
+#idbase.password=root
                  </programlisting>
               </para></listitem>
             </itemizedlist>
@@ -701,7 +694,7 @@ public class TestService {
          <![CDATA[
     <tx:advice id="txAdvice" transaction-manager="TransactionManager">  
 	    <tx:attributes>
-	    	<!-- 对save开头的public方法进行事务处理，传播基本为随时加入 -->
+	    	<!-- 对save开头的public方法进行事务处理，传播级别为随时加入 -->
 	        <tx:method name="save*" propagation="REQUIRED" read-only="false"
                             rollback-for="java.lang.Exception"/>  
 	    </tx:attributes>  
