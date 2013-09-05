@@ -21,24 +21,24 @@
 					<div id="search" class="search">
 					 		<input type="hidden" name="action" value="getPlaceOnFile"/> 
 					  		<input type="hidden" id="processType" name="processType" value="${result.processType}"/>
-							<table width="100%">
+							<table>
 				              <tr>
 				                <td class="title-r">流程定义：</td>
-				                <td style="width:180px;"><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
+				                <td><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" value="${result.processDefinitionKey}"/></td>
 				                <td class="title-r">流程实例号：</td>
-				                <td style="width:180px;"><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
+				                <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" value="${result.processInstanceId}"/></td>
 				                <td class="title-r">主 题：</td>
-				                <td style="width:180px;"><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
-				              	<td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+				                <td><input type="text" id="text_2" name="subject" class="fix-input" value="${result.subject}"/></td>
+				              	<td><div class="btn-normal" style="margin-left:5px"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
 				              </tr>
 				              <tr>
 				                <td class="title-r">发 起 人：</td>
-				                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+				                <td><input type="text" id="text_3" name="initor" class="fix-input" value="${result.initor}"/></td>
 				                <td class="title-r">业务数据：</td>
-				                <td><input type="text" id="text_4" name="BIZ_KEY" class="fix-input" style="width:160px;" value="${result.BIZ_KEY}"/></td>
+				                <td><input type="text" id="text_4" name="BIZ_KEY" class="fix-input" value="${result.BIZ_KEY}"/></td>
 				                <td class="title-r">归档时间：</td>
-				                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
-				                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
+				                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input fix-input-data" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
+				                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input fix-input-data" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
 				              	<td></td>
 				              </tr>
 				            </table>
