@@ -41,7 +41,6 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.TaskInstanceService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.Pagination;
 
 /**
@@ -160,7 +159,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			result.put("pageInfo", page);
 			
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -173,7 +172,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.suspendTask(taskId);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -185,7 +184,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.resumeTask(taskId);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -199,7 +198,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.transfer(taskId, transferUserId,"管理员干预", null);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -213,7 +212,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.rollBack(taskId, rollBackNodeId,"管理员干预", null);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 
