@@ -71,7 +71,7 @@
 .btn-disable a,.btn-disable a:hover { display:inline-block; padding:3px 8px; border:2px solid #ddd; background:#ddd; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#999; text-decoration:none;}
 
 /* input按钮样式 */
-.fix-input { width:160px; padding:3px 5px; border:1px solid #ddd; font-size:12px; line-height:14px; height:14px; color:#333;}
+.fix-input { width:160px; padding:3px 5px; border:1px solid #ddd; font-size:12px; line-height:14px; color:#333;}
 .fix-input-data { width:68px; }
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
