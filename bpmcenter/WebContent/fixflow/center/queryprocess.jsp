@@ -97,10 +97,10 @@ $("a[name=flowGraph]").click(function(){
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionName}</td>
 										<td>${dataList.subject}</td>
-										<td>${dataList.startAuthor}</td>
+										<td>${dataList.startAuthorName}</td>
 										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
-										<td>${dataList.processLocation}</td>
+										<td>${dataList.nowNodeInfo}</td>
 										<td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">查看</a></td>
 									</tr>
 								</c:forEach>
