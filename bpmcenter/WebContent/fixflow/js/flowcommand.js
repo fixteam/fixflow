@@ -13,7 +13,7 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 		$("#"+formId).append(cprocessDefinitionKey);
 		$("#"+formId).append(ctaskId);
 
-		$("div[commandType]").click(function() {
+		$("div[commandType],button[commandType]").click(function() {
 			var id = $(this).attr("commandId");
 			var type = $(this).attr("commandType");
 			$("#commandId").val(id);
@@ -24,11 +24,10 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var pii = processInstanceId;
 				var pdk = processDefinitionKey;
 				var obj = {};
-				window.showModalDialog(
+				window.open(
 						"FlowCenter?action=getTaskDetailInfo&processInstanceId="
 								+ pii+"&processDefinitionKey="
-								+ pdk+"", obj,
-						"dialogWidth=800px;dialogHeight=600px");
+								+ pdk+"");
 				return false;
 			}else if(type=="transfer"){
 				var obj = {

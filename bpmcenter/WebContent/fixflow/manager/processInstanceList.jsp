@@ -90,6 +90,13 @@
   	
   	$(function(){
 		Fix.Util.ClickTr(null,true,true,0);
+		
+	  $("a[name=flowGraph]").click(function(){
+		    var pdk = $(this).attr("pdk");
+		    var pii = $(this).attr("pii");
+		    var obj = {};
+		    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
+		  });
 	});
 </script>
 </head>
@@ -113,7 +120,7 @@
                 <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>
                 <td style="width:200px;"><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
               <tr>
                 <td class="title-r">业务数据：</td>
@@ -150,6 +157,7 @@
                 <th width="">业务数据</th>
                 <th width="">发起人</th>
                 <th width="">更新时间</th>
+                <th width="60">流程状态</th>
                  <th width="">运行状态</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
@@ -164,9 +172,14 @@
 		      <td>${dataList.BIZ_KEY}</td>
 		      <td>${dataList.initiator}</td>
 				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
+			<td><a name="flowGraph" href="#"
+				pii="${dataList.processInstanceId}"
+				pdk="${dataList.processDefinitionKey}">查看</a></td>
 				<td>
-					<c:if test="${dataList.isSuspended == true}" var="runStatue">暂停</c:if>
-					<c:if test="${dataList.isSuspended == false}" var="runStatue">运行中</c:if>
+					<c:if test="${dataList.instanceStatus == 'SUSPEND'}" var="runStatue">暂停</c:if>
+					<c:if test="${dataList.instanceStatus == 'RUNNING'}" var="runStatue">运行中</c:if>
+					<c:if test="${dataList.instanceStatus == 'COMPLETE'}" var="runStatue">完成</c:if>
+					<c:if test="${dataList.instanceStatus == 'TERMINATION'}" var="runStatue">终止</c:if>
 				</td>
 		    </tr>
 		    </c:forEach>

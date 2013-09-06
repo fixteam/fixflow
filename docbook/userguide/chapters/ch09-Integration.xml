@@ -25,57 +25,695 @@
           <listitem><para>现在要做的事情包括使用了流程引擎串联A、B系统</para></listitem>
         </itemizedlist>
       </para>
-      <para>
-        <itemizedlist>
-          <listitem><para></para></listitem>
-          <listitem><para></para></listitem>
-        </itemizedlist>
-        
-      </para>
     </section>
-    <section xml:id="integration.engine.local">
-      <title>本地系统集成方案</title>
+
+  </section>
+  <section xml:id="integration.localIntegration">
+    <title>本地系统集成方案</title>
+    <para>
+      本地系统集成是平台最常用的集成方案，可以将FixFlow Engine理解为JBPM的替代品，并且比JBPM更好用、更符合BPMN2标准、更适合中国式工作流。对于用户来说，要做的就是把FixFlow Engine作为一个插件集成进来，使用其串联本系统各个功能。在这里会以一个示例来说明应该如何将FixFlow Engine集成进一个JAVA项目。
+      这里假设有A系统，A系统为Struts2+Spring3.0+MyBatis3架构的web系统，此时A系统需要在项目里集成FixFlow Engine工作流引擎。
+      <itemizedlist>
+        <listitem><para>本示例的数据源来自于Spring，这种数据源最通用，在实际项目里可以改成各种方式的连接来源。</para></listitem>
+        <listitem><para>本示例里使用了Sping声明式事务。</para></listitem>
+        <listitem><para>本示例会提到一些集成的规范，请在实际项目里也按照规范使用，这样可以避免一些比不要的排错工作。</para></listitem>
+        <listitem><para>接下来的示例里我们会称呼待集成的web项目为“本地项目”</para></listitem>
+      </itemizedlist>
+    </para>
+    <section xml:id="integration.localIntegration.prepare">
+      <title>集成准备工作</title>
       <para>
-        本地系统集成是平台最常用的集成方案，在这里可以将FixFlow Engine理解为JBPM的替代品，同时要比JBPM更好用、更符合BPMN2标准、更适合中国式工作流。对于用户来说要做的就是把FixFlow Engine作为一个工作流集成进来，使用其串联本系统各个功能。在这里会以一个示例来说明应该如何将FixFlow Engine集成进一个JAVA项目。
-        <literal>这里假设有A系统，A系统为JSP+Servlet的web系统，使用JSP进行页面展示，使用Servlet来处理后台逻辑，此时A系统需要在项目里集成FixFlow Engine工作流引擎。</literal>
-        <itemizedlist>
-          <listitem><para>本示例的数据源来自于Spring，这种数据源最通用，在实际项目里可以改成各种方式的连接来源。</para></listitem>
-          <listitem><para>本示例里使用jdbc级事务管理，在实际项目中通过事务声明也可以使用其他类型的事务。</para></listitem>
-          <listitem><para>本示例会提到一些集成的规范，请在实际项目里也按照规范使用，这样可以避免一些比不要的排错工作。</para></listitem>
-        </itemizedlist>
+        首先请在网站上下载FixFlow Engine的全部内容，完整的FixFlow Engine为一个Web工程bpmcenter、一个Java工程fixflow-expand、一个数据库脚本包、一个设计器插件包。这里web工程就是核心，现在要做的事情就是把这个web工程集成到本地的工程里。
+        <orderedlist>
+          <listitem><para>导入fixflow-expand工程到工作区里，保证fixflow-expand里的src、internationalization、fixflowdiagram这三个文件夹可以发布到本地项目的classes目录下，eclipse可以使用linksource功能，myeclipse可以直接引用发布。</para></listitem>
+          <listitem><para>安装eclipse插件，具体请参照安装eclipse插件章节。</para></listitem>
+          <listitem><para>准备数据库环境，选择正确的数据库脚本在本地数据库执行。</para></listitem>
+          </orderedlist>
       </para>
+      
+    </section>
+    <section xml:id="integration.localIntegration.webproject">
+      <title>web合并</title>
       <para>
-        <itemizedlist>
-          <listitem><para>首先，系统</para></listitem>
-          <listitem><para>集成进本地系统使用</para></listitem>
-        </itemizedlist>
-        
+        bpmcenter是一个web项目，而本地项目也是一个web项目，现在要将两个项目集成到一起，使本地项目可以使用工作流。
+        <orderedlist>
+          <listitem><para>
+            代码集成，bpmcenter的src目录下的底层文件夹内有两个java文件，这两个文件就是代码集成文件。请将这两个文件按照原有的包路径拷贝至本地项目。这两个文件是FixFlow Engine提供的扩展部分，一个是LoginServlet，其作用是登录，具体内容文中以注释方式标出，该部分代码可以提供给用户进行各种扩展。
+            <programlisting language="java">
+            /**
+            * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+            */
+            protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean("DB_FIX_BIZ_BASE");
+            Connection connection = null;
+            
+            try {
+            String context = request.getContextPath();
+            //从登录的口获取到用户名和密码
+            String userName = request.getParameter("userName");
+            String password = request.getParameter("password");
+            List list= new ArrayList();
+            //该接口同时也是登出的口，当发现有特殊参数时则做登出操作。
+            String logout = request.getParameter("doLogOut");
+            if(StringUtil.isNotEmpty(logout)){
+            request.getSession().invalidate();
+            response.sendRedirect(context+"/fixflow/login.jsp");
+            return;
+            }
+            //这里进行用户名密码验证，可以任意修改这里的代码。
+            list.add(userName);
+            password = MD5.getMD5(password.getBytes());
+            list.add(password);
+            
+            StringBuffer sb = new StringBuffer();
+            sb.append("select USERID,USERNAME from AU_USERINFO where LOGINID=? and PASSWORD=?");
+            connection = dbcf.createConnection();
+            //这里是自带的数据库操作方式。
+            SqlCommand sqlcommand = new SqlCommand(connection);
+            List list2 = sqlcommand.queryForList(sb.toString(),list);
+            if(list2!=null &amp;&amp; list2.size()>0){
+            //这里约定了一个参数，流程引擎在运行时会默认从session里按照这两个key来获取参数，如果替换了登录的方式，请保证这两个key依然可以获取到正确的数据
+            request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, ((Map)list2.get(0)).get("USERID"));
+            request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, ((Map)list2.get(0)).get("USERNAME"));
+            
+            //登录时根据登录的目标切换跳转目标
+            String loginType = request.getParameter("loginType");
+            if(loginType !=null &amp;&amp; loginType.equals("on")){
+            request.setAttribute("action", "processDefinitionList");
+            response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
+            }else{
+            request.setAttribute("action", "getMyTask");
+            response.sendRedirect(context+"/FlowCenter?action=getMyTask");
+            }
+            
+            }else{
+            response.sendRedirect(context+"/fixflow/login.jsp");
+            }
+            
+            
+            } catch (SQLException e) {
+            e.printStackTrace();
+            }finally{
+            //最终关闭数据库连接
+            try {
+            if(connection!=null &amp;&amp; !connection.isClosed())
+            connection.close();
+            } catch (SQLException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+            }
+            }
+            
+            }
+            </programlisting>
+            另一个类是DemoServlet，该类是平台自带的一个示例，对外示例了如何使用平台进行保存和调用流程下一步。这个示例是针对servlet的情况，对于SSI的集成并没有太大参考价值，所以这里没有贴出，本文会对针对struts2的情况进行专门描述。
+          </para></listitem>
+          <listitem><para>
+            配置文件集成，bpmcenter的conf目录下存放着几个配置文件，这几个配置文件就是需要集成进去的文件，请将这几个文件拷贝至本地工程目录，并保证该目录下的文件最终会发布到WEB-INF/classes/目录下。
+            <itemizedlist>
+              <listitem><para>
+                applicationContext_resource.xml文件，该文件是FixFlow Engine的数据库和运行引擎的重要部分。请留意本配置文件，在实际项目中可能会用到多个数据源，如果希望流程引擎连接多个数据源也需要在本文件里增加内容。
+                <programlisting language="xml">
+                  <![CDATA[ 
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"       
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+  xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans                     
+          http://www.springframework.org/schema/beans/spring-beans.xsd 
+          http://www.springframework.org/schema/context        
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd                      
+          http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+          http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+  <!-- 注解配置，如果有新的注解在后逗号分隔，这一段务必保留 -->
+  <context:component-scan base-package="com.founder.fix.fixflow" />
+  
+  <!-- 读取数据库配置所在 -->
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
+       <property name="location" value="classpath:/jdbc.properties"/>        
+  </bean>
+  <!-- 数据源配置，该数据源可以是spring连接池也可以是来自服务器连接池 -->
+  <bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
+      <property name="driverClassName" value="${idbase.driverClassName}" />        
+      <property name="url" value="${idbase.url}" />        
+      <property name="username" value="${idbase.username}" />        
+      <property name="password" value="${idbase.password}" />        
+  </bean>
+  <!-- 平台本身的连接配置，DB_FIX_BIZ_BASE是连接名称，改名称与fixflowconfig.xml里的可用连接一一对应-->
+  <bean id="DB_FIX_BIZ_BASE" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
+    <property name="dataSource"> 
+      <ref bean="fix_biz_base_dataSource"/> 
+    </property>
+  </bean>
+</beans>
+                  ]]>
+                  </programlisting>
+              </para></listitem>
+              <listitem><para>
+                log4j.dtd文件，该文件是log4j的规范文件，这里不对其做解释，将该文件放入系统即可。
+              </para></listitem>
+              <listitem><para>
+                log4j.xml文件，该文件是log4j的配置文件，里面的配置项目可供参考，这里不做重点。
+              </para></listitem>
+              <listitem><para>
+                jdbc.xml文件，该文件是数据库配置文件，里面记录被连接数据库的配置信息。
+                <programlisting language="xml">
+##########
+# Oracle #
+##########
+idbase.driverClassName=oracle.jdbc.driver.OracleDriver
+idbase.url=jdbc:oracle:thin:@127.0.0.1:1521:orcl
+idbase.username=idbase2
+idbase.password=idbase2
+
+##########
+# MySql #
+##########
+#idbase.driverClassName=com.mysql.jdbc.Driver
+#idbase.url=jdbc:mysql://127.0.0.1/fixbpm
+#idbase.username=root
+#idbase.password=root
+                 </programlisting>
+              </para></listitem>
+            </itemizedlist>
+          </para></listitem>
+          <listitem>
+            <para>
+              页面集成，FixFlow Engine自带了一套页面，这套页面可以帮助用户进行流程的日常维护和使用。集成方式是将WebContent/fixflow文件夹直接拷贝至本地web根目录即可。
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              激活FixFlow Engine，FixFlow Engine所需要的文件已经准备就绪，现在需要让他工作起来，现在打开本地系统的web.xml，确保里有如下内容。其中在里面的流程管理中心默认版本并不附带，请确认自己拥有流程管理中心功能再激活他。
+              <programlisting language="xml">
+                  <![CDATA[
+        <?xml version="1.0" encoding="UTF-8"?>
+        <web-app 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns="http://java.sun.com/xml/ns/javaee" 
+        xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+        http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+        id="WebApp_ID" 
+          version="2.5">
+          <display-name>bpmcenter</display-name>
+          <!-- Spring加载配置 -->
+          <listener>
+            <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+          </listener>
+          <context-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                  classpath*:applicationContext*.xml
+            </param-value>
+          </context-param>
+          <!-- 登录用servlet -->
+          <servlet>
+            <description></description>
+            <display-name>LoginServlet</display-name>
+            <servlet-name>LoginServlet</servlet-name>
+            <servlet-class>com.founder.fix.fixflow.LoginServlet</servlet-class>
+            <load-on-startup>1</load-on-startup>
+          </servlet>
+          <servlet-mapping>
+            <servlet-name>LoginServlet</servlet-name>
+            <url-pattern>/LoginServlet</url-pattern>
+          </servlet-mapping>
+          <!-- 任务处理中心配置 -->
+          <servlet>
+            <description></description>
+            <display-name>FlowCenter</display-name>
+            <servlet-name>FlowCenter</servlet-name>
+            <servlet-class>com.founder.fix.fixflow.FlowCenter</servlet-class>
+          </servlet>
+          <servlet-mapping>
+            <servlet-name>FlowCenter</servlet-name>
+            <url-pattern>/FlowCenter</url-pattern>
+          </servlet-mapping>
+            <welcome-file-list>
+            <welcome-file>/fixflow/login.jsp</welcome-file>
+          </welcome-file-list>
+          
+          
+          <!-- 流程管理中心配置，激活之前请确认所使用版本包括流程管理中心这个功能 -->
+            <servlet>
+              <description></description>
+              <display-name>FlowManager</display-name>
+              <servlet-name>FlowManager</servlet-name>
+              <servlet-class>com.founder.fix.fixflow.FlowManager</servlet-class>
+            </servlet>
+            <servlet-mapping>
+              <servlet-name>FlowManager</servlet-name>
+              <url-pattern>/FlowManager</url-pattern>
+            </servlet-mapping>
+          
+            <!-- 演示模块配置 -->
+            <servlet>
+              <description></description>
+              <display-name>DemoServlet</display-name>
+              <servlet-name>DemoServlet</servlet-name>
+              <servlet-class>com.founder.fix.fixflow.DemoServlet</servlet-class>
+            </servlet>
+            <servlet-mapping>
+              <servlet-name>DemoServlet</servlet-name>
+              <url-pattern>/DemoServlet</url-pattern>
+            </servlet-mapping>
+        </web-app>
+                  ]]>
+                </programlisting>
+            </para>
+          </listitem>
+        </orderedlist>
+      </para>
+      
+    </section>
+    <section xml:id="integration.localIntegration.start">
+      <title>发起流程</title>
+      <para>
+         每个流程都会至少有一个发起流程界面，用户可以在这个节目里填写业务信息，然后保存数据，与此同时流程将往下一级流转。那么我们可以总结一下在发起阶段需要做的工作包括：
+         打开页面、得知发起页面有哪些按钮、保存数据、将流程向下一步流转。这里将以最简单朴实的例子展示一个表单保存与审批的开发过程，本示例不对流程的开发做赘述，本示例使用的流程为最简单的只有“发起、审批、结束”这样的简单流程。
+        <orderedlist>
+          <listitem>
+          <para>
+            开发一个流程发起页面，该页面分为两部分，后台部分和前台部分。本地项目时Struts2作为前台框架，因此此处以struts2的代码为示例，用户会先访问到struts2的代码，然后跳转到前台页面，前台页面根据后台代码返回的结果绘制流程命令按钮。从流程任务处理中心发起的流程会附带很多信息，比如processDefinitionKey，这些信息会拼在url上，如果不是从任务处理中心发起，那么该信息就需要自己准备。
+            <programlisting language="java">
+              <![CDATA[
+/**
+ * @ClassName: TestAction
+ * @Description: 测试类
+ * @author shao
+ *
+ */
+@Namespace("/") 
+@Component(value="testAction") 
+@Scope(value="prototype") 
+public class TestAction extends ActionSupport implements ServletContextAware,ServletRequestAware{
+	
+	@Resource(name = "flowCenterServiceImpl")
+	private FlowCenterService flowCenterService;
+	
+	@Resource(name = "testService")
+	private TestService testService;
+	
+	private HttpServletRequest request;
+	
+	private ServletContext context;
+	
+	private UserBean user;
+	
+	private List<Map<String,Object>> flowComand;
+	
+	private String bizKey;
+	
+	private String taskId;
+	
+	private String commandType;
+	
+	private String commandId;
+	
+	private String processDefinitionKey;
+	
+	private String _taskComment;
+	
+	private String taskParams;
+	
+	//各种get/set这里不一一写出
+	
+	@Action(value = "toAdd", 
+			results = { 
+			@Result(name = "success", location = "/add.jsp")}) 
+	public String toAdd() throws SQLException{
+		List<Map<String,Object>> tmpres = new ArrayList<Map<String,Object>>();
+		//获取默认放到session里的用户id
+		String userId = StringUtil.getString(request.getSession().getAttribute(
+				FlowCenterService.LOGIN_USER_ID));
+		//获取流程引擎
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		List<TaskCommandInst> list = null;
+		//根据传入的流程key拿到发起页面的按钮,processDefinitionKey是内部变量，通过struts2的OGNL引擎填充
+		list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
+		//将对象转换为map
+		for(TaskCommandInst tmp:list){
+			tmpres.add(tmp.getPersistentState());
+		}
+		//返回值，该对象将通过跳转传给前台页面
+		flowComand=tmpres;
+		
+		//最终要关闭流程引擎
+		FixFlowShellProxy.closeProcessEngine(engine, true);
+		
+		return "success";
+	}
+	}
+              ]]>
+             </programlisting>
+            
+            上面的代码会在执行完毕后跳转到add.jsp页面，同时过去的还有之前传过来的参数，以及为其准备好的按钮数据。下面贴出页面里的代码，在这里可以去阅读flowcommand.js里的代码，里面的内容非常简单。他会获取当前页面的form，然后为其多添加一个hidden的标签并填充值，最后在将这个form提交。
+            <programlisting language="html">
+              <![CDATA[
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<!-- 这里引入了三个js，引入这三个文件会自动为页面上的功能按钮配置信息 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/flowcommand.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/flowautoassemble.js"></script>
+
+</head>
+<body>
+<form method="post" id="form1" action="doAdd">
+<table class="table-form">
+<tr>
+<td class="title-r">流程关联键：</td>
+<td><input type="text" name="user.userId"/></td>
+<td></td><td></td>
+</tr>
+<tr>
+<td class="title-r">信息：</td>
+<td><input type="text" name="user.userName"/></td>
+<td></td><td></td>
+</tr>
+<tr>
+<td class="title-r">审批意见：</td>
+<td><textarea rows="3" cols="20" name="_taskComment"></textarea></td>
+<td></td><td></td>
+</tr>
+</table>
+<div class="toolbar">
+<!-- 这里使用了c标签来输出,实际项目里可以使用任意标签 -->
+<c:forEach items="${flowComand}" var="row" varStatus="status">
+<!-- div或是button都可以，css可以任意设置，里面的自动扩展属性请按照原样输出 -->
+<div class="btn-normal" id="btn_${status.index+1}" 
+	commandId="${row.id}" commandName="${row.name}" commandType="${row.type}"
+	isAdmin="${row.isAdmin}" isVerification="${row.isVerification}" isSaveData="${row.isSaveData}"
+	isSimulationRun="${row.isSimulationRun}" nodeId="${row.nodeId}" nodeName="${row.nodeName}"><a href="#">${row.name}</a></div>
+</c:forEach>
+</div>
+</form>
+</body>
+</html>
+              ]]>
+            </programlisting>
+            前台提交后，逻辑继续回到后台，上面的form将会提交至doAdd，下面给出doAdd的逻辑代码，这里的代码只有控制部分。
+            <programlisting language="java">
+              <![CDATA[
+	@Action(value = "doAdd", 
+			results = { 
+			@Result(name = "success", location = "/info.jsp")})
+	public String doAdd() throws Exception{
+		try{
+			String userId = StringUtil.getString(request.getSession().getAttribute(
+					FlowCenterService.LOGIN_USER_ID));
+			//这里做一个转换，任务参数以json字符的方式存在，所以到后台后需要转换一下。
+			String ttaskParams = StringUtil.getString(taskParams);
+			Map<String, Object> flowMaps = JSONUtil
+					.parseJSON2Map(ttaskParams);
+			
+			testService.save(user,_taskComment,userId,processDefinitionKey,commandType,commandId,flowMaps);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "success";
+	}
+              ]]>
+            </programlisting>
+            
+            <programlisting language="java">
+              <![CDATA[
+/**
+ *  Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author shao
+ */
+package com.founder.test.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.founder.fix.fixflow.core.ProcessEngine;
+import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
+import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.test.bean.UserBean;
+
+/**
+ * @ClassName: TestService
+ * @Description: TODO
+ * @author shao
+ *
+ */
+
+@Scope(value="prototype") 
+@Service
+public class TestService {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession; 
+
+	public SqlSessionTemplate getSqlSession() {
+		return sqlSession;
+	}
+
+
+
+	public void setSqlSession(SqlSessionTemplate sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+  //把两个逻辑包在一个方法里，这样方便事务控制
+	public void save(UserBean user,String taskComment,String operatiorId,String processDefinitionKey,String commandType,String commandId,Map<String,Object> tmpParams) throws Exception{
+		SqlSessionTemplate st = (SqlSessionTemplate) getSqlSession();
+		//这里调用了MyBatis作为保存，由于本文重点不是mybatis，因此这里不做太多描述
+		st.insert("insertUser",user);
+		completeTask(operatiorId,null,commandId,commandType,taskComment,processDefinitionKey,user.getUserId(),tmpParams);
+	}
+	//该方法可以重复使用，可作为发起，再之后的完成任务也可以继续使用
+	public void completeTask(String userId, String taskId, String commandId,
+			String commandType, String taskComment,
+			String processDefinitionKey, String businessKey,
+			Map<String, Object> tmpParams) throws SQLException {
+		Map<String, Object> taskParams = null;
+		if (tmpParams instanceof Map)
+			taskParams = (Map<String, Object>) tmpParams;
+		else
+			taskParams = new HashMap<String, Object>();
+
+		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+
+		// 命令类型，可以从流程引擎配置中查询 启动并提交为startandsubmit
+		expandTaskCommand.setCommandType(commandType);
+		// 设置提交人
+		expandTaskCommand.setInitiator(userId);
+		// 设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+		expandTaskCommand.setUserCommandId(commandId);
+		expandTaskCommand.setTaskComment(taskComment);
+		if (StringUtil.isNotEmpty(taskId)) {
+			expandTaskCommand.setTaskId(taskId);
+		} else {
+			expandTaskCommand.setProcessDefinitionKey(processDefinitionKey);
+			// 设置流程的业务关联键
+			expandTaskCommand.setBusinessKey(businessKey);
+		}
+		expandTaskCommand.setParamMap(taskParams);
+
+		ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+		ProcessInstance processInstance = (ProcessInstance) engine
+				.getTaskService().expandTaskComplete(expandTaskCommand, null);
+		//这里第二个参数传入false的意思是只关闭引擎，但是不关闭连接，因为该链接为Mybatis托管，因此我们不予关闭
+		FixFlowShellProxy.closeProcessEngine(engine, false);
+	}
+	
+	public UserBean getUser(String key){
+		SqlSessionTemplate st = (SqlSessionTemplate) getSqlSession();
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("id", key);
+		UserBean result = st.selectOne("getUser", params);
+		
+		return result;
+	}
+}
+              ]]>
+             </programlisting>
+          </para>
+          </listitem>
+          <listitem>
+            <para>
+              审批步骤，流程在发起以后将会流转到第二个人手中，第二个人在任务处理中心点击待办任务可以看到之前人提交的数据，此时点击进入审批环节。点击进入的表单是在流程上设定的，从以下代码可以看出，其内容与之前的发起并无太大区别，唯一的区别在于此处要多传一个taskId。
+              <programlisting language="java">
+              <![CDATA[
+	@Action(value = "toView", 
+			results = { 
+			@Result(name = "success", location = "/info.jsp")}) 
+	public String toView(){
+		try{
+			List<Map<String,Object>> tmpres = new ArrayList<Map<String,Object>>();
+			user = testService.getUser(bizKey);
+			String userId = StringUtil.getString(request.getSession().getAttribute(
+					FlowCenterService.LOGIN_USER_ID));
+			
+			ProcessEngine engine = FixFlowShellProxy.createProcessEngine(userId);
+			List<TaskCommandInst> list = null;
+
+			list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
+
+			for(TaskCommandInst tmp:list){
+				tmpres.add(tmp.getPersistentState());
+			}
+			flowComand=tmpres;
+			FixFlowShellProxy.closeProcessEngine(engine, true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "success";
+	}
+              ]]>
+              
+              
+              </programlisting>
+              
+              完成上面的代码后，页面会跳转到info.jsp，可以看出在流程按钮部分，这里的代码和提交环节完全一致。
+              <programlisting language="html">
+              <![CDATA[
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<!-- 这里引入了三个js，引入这三个文件会自动为页面上的功能按钮配置信息 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/flowcommand.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/flowautoassemble.js"></script>
+
+</head>
+<body>
+<form method="post" id="form1" action="completeTask">
+<table class="table-form">
+<tr>
+<td class="title-r">流程关联键：</td>
+<td><input type="text" name="user.userId" value="${user.userId}" readonly="true"/></td>
+<td></td><td></td>
+</tr>
+<tr>
+<td class="title-r">信息：</td>
+<td><input type="text" name="user.userName" value="${user.userName}" readonly="true"/></td>
+<td></td><td></td>
+</tr>
+<tr>
+<td class="title-r">审批意见：</td>
+<td><textarea rows="3" cols="20" name="_taskComment"></textarea></td>
+<td></td><td></td>
+</tr>
+</table>
+<div class="toolbar">
+<!-- 这里使用了c标签来输出,实际项目里可以使用任意标签 -->
+<c:forEach items="${flowComand}" var="row" varStatus="status">
+<!-- div或是button都可以，css可以任意设置，里面的自动扩展属性请按照原样输出 -->
+<div class="btn-normal" id="btn_${status.index+1}" 
+	commandId="${row.id}" commandName="${row.name}" commandType="${row.type}"
+	isAdmin="${row.isAdmin}" isVerification="${row.isVerification}" isSaveData="${row.isSaveData}"
+	isSimulationRun="${row.isSimulationRun}" nodeId="${row.nodeId}" nodeName="${row.nodeName}"><a href="#">${row.name}</a></div>
+</c:forEach>
+</div>
+</form>
+</body>
+</html>
+              ]]>
+              
+              
+              </programlisting>
+              最后，调用审批代码，代码里调用的completeTask代码在之前已经贴出。
+              <programlisting language="java">
+              <![CDATA[
+	@Action(value = "completeTask", 
+			results = { 
+			@Result(name = "success", location = "/info.jsp")}) 
+	public String completeTask() throws SQLException{
+		String ttaskParams = StringUtil.getString(taskParams);
+		String userId = StringUtil.getString(request.getSession().getAttribute(
+				FlowCenterService.LOGIN_USER_ID));
+		
+		Map<String, Object> flowMaps = JSONUtil
+				.parseJSON2Map(ttaskParams);
+		
+		testService.completeTask(userId, taskId, commandId, commandType, _taskComment, processDefinitionKey, user.getUserId(), flowMaps);
+		return "success";
+	}
+              ]]>
+              
+              
+              </programlisting>
+              至此，流程完成了与框架之间的整合。
+            </para>
+            </listitem>
+          </orderedlist>
       </para>
     </section>
   </section>
+
   
+  <section xml:id="integration.transaction">
+    <title>数据库事务控制</title>
+    <para>
+      FixFlow Engine的事务集成是交给外部的，其本身就是只接收一个connection，并且不对其进行关闭。目前测试可以使用Spring事务，可以与Ibatis进行无缝集成，Hibernate和其他ORM框架还待测试。下面贴出一段集成事务的配置部分，这些配置文件需要在spring容器里才会生效，这段配置在本章节里提到的SSI框架集成时用到过。
+      <programlisting language="xml">
+         <![CDATA[
+    <tx:advice id="txAdvice" transaction-manager="TransactionManager">  
+	    <tx:attributes>
+	    	<!-- 对save开头的public方法进行事务处理，传播级别为随时加入 -->
+	        <tx:method name="save*" propagation="REQUIRED" read-only="false"
+                            rollback-for="java.lang.Exception"/>  
+	    </tx:attributes>  
+	</tx:advice>  
+      
+	<aop:config proxy-target-class="true">
+		<!-- 对特定目录下类操作进行事务处理 -->
+		<aop:pointcut id="pc" expression="execution(public * com.founder.test.service.*.*(..))" />
+	    <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
+	</aop:config> 
+              ]]>
+       </programlisting>
+    </para>
+  </section>
   <section xml:id="integration.org">
     <title>组织结构</title>
     <para>
       
     </para>
   </section>
-  
-  <section xml:id="integration.transaction">
-    <title>数据库事务控制</title>
-    <para>
-      
-    </para>
-  </section>
-  
-  
-  <section xml:id="integration.web">
-    <title>TaskCenter、ManagementCenter 集成</title>
-    <para>
-      
-    </para>
-  </section>
-
 
   <section xml:id="integration.eclipse">
     <title>Eclipse 集成</title>

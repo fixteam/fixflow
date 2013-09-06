@@ -27,7 +27,7 @@ public class test {
 	/**
 	 * @param args
 	 * @throws IOException
-	 * @throws DocumentException
+	 * @throws DocumentException11
 	 */
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws IOException, DocumentException {

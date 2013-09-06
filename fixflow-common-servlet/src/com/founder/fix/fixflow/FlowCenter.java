@@ -141,6 +141,7 @@ public class FlowCenter extends HttpServlet {
 				try{
 					List<Map<String, String>> result = getFlowCenter()
 							.queryStartProcess(userId);
+					List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
 					Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
 					for(Map<String,String> tmp:result){
 						String category = tmp.get("category");
@@ -155,6 +156,7 @@ public class FlowCenter extends HttpServlet {
 						newResult.put(category, tlist);
 					}
 					request.setAttribute("result", newResult);
+					request.setAttribute("lastest", lastestProcess);
 					request.setAttribute("userId", userId); // 返回userId add Rex
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());

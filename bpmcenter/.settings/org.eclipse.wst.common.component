@@ -4,7 +4,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/apisrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/apiconf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/restsrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/conf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/servletsrc"/>

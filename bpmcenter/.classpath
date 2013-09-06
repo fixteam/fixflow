@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="apisrc"/>
-	<classpathentry kind="src" path="apiconf"/>
 	<classpathentry kind="src" path="restsrc"/>
 	<classpathentry kind="src" path="servletsrc"/>
 	<classpathentry kind="src" path="wssrc"/>

@@ -247,5 +247,11 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	 */
 	ProcessInstanceQuery orderByUpdateTime();
 	
+	/**
+	 * 根据流程状态查询
+	 * @return
+	 */
+	ProcessInstanceQuery processInstanceStatus(ProcessInstanceType status);
+	
 
 }

@@ -41,19 +41,19 @@ $(function(){
 <form action="FlowManager" id="subForm" method="post">
 <div class="main-panel">
 <jsp:include page="top.jsp" flush="true"/>
-<div style="margin-top:1px;">
+<div style="margin-top:1px;" class="center-panel">
 <!-- 左 -->
 <div class="left" style="width:0px;">
 </div>
 <!-- 右-->
-	<div class="right" style="width:99%;">
+	<div class="right">
 	  <!-- 查 -->
 	   <div class="search">
         	<table>
               <tr>
                 <td class="title-r" style="width:200px;">流程编号/实例编号/令牌编号：</td>
                 <td style="width:220px;"><input type="text" id="text_3" name="queryId" class="fix-input" style="width:200px;" value="${result.queryId}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
             </table>
         </div>

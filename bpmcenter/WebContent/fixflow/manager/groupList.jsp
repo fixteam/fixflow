@@ -81,7 +81,7 @@ function viewGroupInfo(groupId,groupType){
                 <td class="title-r">组名称：</td>
                 <td><input type="text" id="text_4" name="queryGroupName" class="fix-input" style="width:160px;" value="${result.queryGroupName}"/>
                 <td ></td>
-                <td ><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td ><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
             </table>
         </div>

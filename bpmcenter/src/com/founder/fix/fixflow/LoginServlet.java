@@ -72,32 +72,38 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean("DB_FIX_BIZ_BASE");
+		Connection connection = null;
+		
 		try {
 			String context = request.getContextPath();
+			//从登录的口获取到用户名和密码
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
 			List<Object> list= new ArrayList<Object>();
-
+			//该接口同时也是登出的口，当发现有特殊参数时则做登出操作。
 			String logout = request.getParameter("doLogOut");
 			if(StringUtil.isNotEmpty(logout)){
 				request.getSession().invalidate();
 				response.sendRedirect(context+"/fixflow/login.jsp");
 				return;
 			}
-			
+			//这里进行用户名密码验证，可以任意修改这里的代码。
 			list.add(userName);
 			password = MD5.getMD5(password.getBytes());
 			list.add(password);
 			
 			StringBuffer sb = new StringBuffer();
 			sb.append("select USERID,USERNAME from AU_USERINFO where LOGINID=? and PASSWORD=?");
-			Connection connection = dbcf.createConnection();
+			connection = dbcf.createConnection();
+			//这里是自带的数据库操作方式。
 			SqlCommand sqlcommand = new SqlCommand(connection);
 			List<Map<String, Object>> list2 = sqlcommand.queryForList(sb.toString(),list);
 			if(list2!=null && list2.size()>0){
+				//这里约定了一个参数，流程引擎在运行时会默认从session里按照这两个key来获取参数，如果替换了登录的方式，请保证这两个key依然可以获取到正确的数据
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
 				request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, list2.get(0).get("USERNAME"));
 				
+				//登录时根据登录的目标切换跳转目标
 				String loginType = request.getParameter("loginType");
 				if(loginType !=null && loginType.equals("on")){
 					request.setAttribute("action", "processDefinitionList");
@@ -111,8 +117,18 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect(context+"/fixflow/login.jsp");
 			}
 			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			//最终关闭数据库连接
+			try {
+				if(connection!=null && !connection.isClosed())
+					connection.close();
+			} catch (SQLException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
 		}
 		
 	}

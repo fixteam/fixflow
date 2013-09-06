@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,23 +11,24 @@
 <body>
 <div style="padding:8px;">
 <div id="search" class="search">
-	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
+	<td><div class="btn-normal"><a href="#" id="ok">确定</a></div></td>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
 		<thead>
-			<th>任务编号</th>
-			<th>节点名称</th>
-			<th>assignee</th>
+			<th>任务名称</th>
+			<th>开始时间</th>
 			<th>结束时间</th>
+			<th>处理者</th>
 		</thead>
 		<tbody>
 			<c:forEach items="${result.dataList}" var="list" varStatus="index">
 				<tr data-rowData="${list}">
-					<td>${list.taskId}</td>
-					<td>${list.nodeName}</td>
-					<td>${list.assignee}</td>
-					<td>${list.endTime}</td>
+					<td>${list.taskName}</td>
+					<td class="time"><fmt:formatDate value="${list.startTime}" type="both"/></td>
+					<td class="time"><fmt:formatDate value="${list.endTime}" type="both"/></td>
+					<td>${list.assigneeUserName}</td>
+					
 				</tr>
 			</c:forEach>
 		</tbody>

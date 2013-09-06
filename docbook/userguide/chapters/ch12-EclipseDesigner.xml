@@ -1,22 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
-               '../dtd/docbook.dtd'> 
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V5.0//EN" "../dtd/docbook.dtd"> 
                
-<chapter>
+<chapter xml:id="EclipseDesigner">
   <title>Eclipse Designer</title>
 
   <section xml:id="eclipse.Installation">
     <title>安装</title>
     <para>
-      
+      <orderedlist>
+        <listitem>
+          <para>打开Eclipse的官网，进入下载页面。地址：<link xlink:href="http://eclipse.org/downloads/"
+              >http://eclipse.org/downloads/</link></para>
+          <para>点击如图右方所示红框部分，进入Juno版本的下载界面。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>点击如图红框部分进入Juno所有版本的下载界面。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.2.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>如图所示选择Juno的Java EE版本下载，注意右边选择对应本机系统的版本。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.3.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>解压下载好的文件，打开Eclipse。</para>
+          <para>如图所示点击右上角的帮助(Help)菜单，选择安装新软件(Install New Software)。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.4.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
     </para>
   </section>
   
   <section xml:id="eclipse.template">
     <title>流程模板</title>
     <para>
-      
+      <orderedlist>
+        <listitem>
+          <para>在菜单中选择文件(File)或者右键点击项目树的菜单均可选择新建(New)--其他(Other...)</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.7.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>如图所示选择飞鸿流程目录下的“新建飞鸿流程”。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.8.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>系统默认内置了两套模板：默认模板和定时任务模板，选择需要按哪个模板创建新流程即可。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.9.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
     </para>
   </section>
-
+  
+  <section xml:id="eclipse.customtemplate">
+    <title>创建自定义流程模板</title>
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>流程自定义模板包含三个文件：bpmn文件，png模板图片文件和properties属性文件，放在fixflow-expand的template目录下。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/customTemplate.1.png" />
+            </imageobject>
+          </mediaobject>
+          <para>结构如上图所示，需要在properties文件里面指定一系列的流程属性，例：</para>
+          <programlisting language="properties"><![CDATA[
+model_id default_process //流程模板的ID
+model_name 默认模板 //流程模板的名字，显示在新建流程模板的下拉框里
+model_file default_process.bpmn //流程文件名
+model_image_name default_process.png //流程模板图片名
+model_description 用默认流程模板创建一个新的流程 //流程模板描述
+]]> </programlisting>
+        </listitem>
+      </orderedlist>
+    </para>
+  </section>
 </chapter>
