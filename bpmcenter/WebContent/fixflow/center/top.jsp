@@ -25,6 +25,18 @@
 <script>
  
 	$(function(){
+		var color = window.localStorage.getItem("color");
+		if(color){
+			var url = $("#color").attr("href");
+			url=url.substring(0,url.lastIndexOf("_")+1);
+			url+=color+".css";
+			$("#color").attr("href",url);
+		}else{
+			var url = $("#color").attr("href");
+			url=url.substring(0,url.lastIndexOf("_")+1);
+			url+="red.css";
+			$("#color").attr("href",url);
+		}
 		$("#updateCache").click(function(){ 
 			window.showModalDialog("FlowManager?action=updateCache");
 		});
@@ -39,6 +51,7 @@
 			url=url.substring(0,url.lastIndexOf("_")+1);
 			url+="red.css";
 			$("#color").attr("href",url);
+			window.localStorage.setItem("color","red");
 			return false;
 		});
 		$("#blue").click(function(){
@@ -46,6 +59,7 @@
 			url=url.substring(0,url.lastIndexOf("_")+1);
 			url+="blue.css";
 			$("#color").attr("href",url);
+			window.localStorage.setItem("color","blue");
 			return false;
 		});
 	})
