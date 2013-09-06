@@ -63,6 +63,7 @@
 
 
 /* 按钮 */
+.btn-normal { margin-left: 10px;}
 .btn-normal a { display:inline-block; padding:3px 8px; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
 .btn-normal a:hover { background:#fff;}
 .btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
