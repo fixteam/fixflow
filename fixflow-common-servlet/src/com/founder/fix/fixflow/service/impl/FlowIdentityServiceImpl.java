@@ -72,7 +72,7 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return userTo;
 	}
@@ -191,7 +191,7 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 				agentInfo.put("detailInfoList", detailInfoList);
 			}
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		resultData.put("agentInfo", agentInfo);
 		// mapInfo.put("agentId", userId);

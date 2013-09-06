@@ -65,14 +65,6 @@ import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
 public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCenterService {
-	
-	public Connection getConnection() {
-		return connection;
-	}
-
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-	}
 
 	/*
 	  * <p>Title: queryMyTaskNotEnd</p>
@@ -192,7 +184,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
 			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -216,7 +208,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tmp.put("formUrl", formUrl);
 			}
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 
 		return result;
@@ -233,7 +225,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tmp.put("formUrl", formUrl);
 			}
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 
 		return result;
@@ -339,7 +331,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -436,7 +428,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -464,7 +456,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				result.put("dataList", instanceMaps);
 				
 			}finally{
-				FixFlowShellProxy.closeProcessEngine(engine, true);
+				closeProcessEngine();
 			}
 		}
 		return result;
@@ -485,7 +477,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			else
 				result = engine.getModelService().GetFlowGraphicsImgStreamByDefKey(processDefinitionKey);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		
 		return result;
@@ -513,7 +505,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			result.put("user", user);
 			result.put("groups", groups);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -569,7 +561,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			}
 			result.put("commandList", tmpres);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -613,7 +605,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		try{
 			processInstance = (ProcessInstance)engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, true);
+			closeProcessEngine();
 		}
 		return processInstance;
 	}
@@ -693,7 +685,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			resultMap.put("dataList", userList);
 			resultMap.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, true);
+			closeProcessEngine();
 		}
 		return resultMap;
 	}
@@ -714,7 +706,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				resultList.add(nodeMap);
 			}
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, true);
+			closeProcessEngine();
 		}
 		resultMap.put("dataList", resultList);
 		return resultMap;
