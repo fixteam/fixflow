@@ -66,7 +66,9 @@ $("a[name=flowGraph]").click(function(){
 			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
 			              </tr>
 			              <tr>
+			              	
 			                <td class="title-r">发 起 人：</td>
+			               
 			                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
 			                <td class="title-r">发起时间：</td>
 			                <td><input type="text" id="text_4" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
@@ -84,9 +86,10 @@ $("a[name=flowGraph]").click(function(){
 								<th>单据号</th>
 								<th>流程名称</th>
 								<th>任务主题</th>
-								<th>发起人</th>
-								<th>发起时间</th>
-								<th>更新时间</th>
+								<c:if test="${result.processType != 'initor'}"><th>发起人</th> </c:if>
+								
+								<th width="130">发起时间</th>
+								<th width="130">更新时间</th>
 								<th>当前步骤</th>
 								<th>流程状态</th>
 							</thead>
@@ -97,7 +100,7 @@ $("a[name=flowGraph]").click(function(){
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionName}</td>
 										<td>${dataList.subject}</td>
-										<td>${dataList.startAuthorName}</td>
+										<c:if test="${result.processType != 'initor'}"><td>${dataList.startAuthorName}</td></c:if>
 										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 										<td>${dataList.nowNodeInfo}</td>

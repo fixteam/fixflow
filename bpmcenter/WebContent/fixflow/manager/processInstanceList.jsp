@@ -148,39 +148,39 @@
         	<table width="100%" class="fix-table">
               <thead>
               	<th width="30"><input type="checkbox" id="checkall" name="checkall"/></th>
-                <th width="30">&nbsp;</th>
+                 <!-- <th width="30">&nbsp;</th> -->
                 <th width="">实例编号</th>
-                <th>流程定义</th>
+                <th>流程名称</th>
                 <th width="">主题</th>
-                <th width="">启动时间</th>
-                <th width="">结束时间</th>
                 <th width="">业务数据</th>
+                <th width="130">启动时间</th>
+                <th width="130">更新时间</th>
                 <th width="">发起人</th>
-                <th width="">更新时间</th>
-                <th width="60">流程状态</th>
+                <th width="">当前步骤</th>
                  <th width="">运行状态</th>
+                  <th width="60">操作</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		    	<td class="num"><input type="checkbox" name="checked" value="${dataList.processInstanceId}"></td>
-		      <td class="num"><c:out value="${index.index+1}"/></td>
+		     <!-- <td class="num"><c:out value="${index.index+1}"/></td>-->
 		      <td>${dataList.processInstanceId}</td>
-		      <td>${dataList.processDefinitionKey}</td>
+		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.subject}</td>
-		      <td class="time"><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
-		      <td class="time"><fmt:formatDate value="${dataList.endTime}" type="both"/></td>
 		      <td>${dataList.BIZ_KEY}</td>
-		      <td>${dataList.initiator}</td>
+		      <td class="time"><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
-			<td><a name="flowGraph" href="#"
-				pii="${dataList.processInstanceId}"
-				pdk="${dataList.processDefinitionKey}">查看</a></td>
+				 <td>${dataList.startAuthorName}</td>
+				<td>${dataList.nowNodeInfo}</td>
 				<td>
 					<c:if test="${dataList.instanceStatus == 'SUSPEND'}" var="runStatue">暂停</c:if>
 					<c:if test="${dataList.instanceStatus == 'RUNNING'}" var="runStatue">运行中</c:if>
 					<c:if test="${dataList.instanceStatus == 'COMPLETE'}" var="runStatue">完成</c:if>
 					<c:if test="${dataList.instanceStatus == 'TERMINATION'}" var="runStatue">终止</c:if>
 				</td>
+				<td><a name="flowGraph" href="#"
+				pii="${dataList.processInstanceId}"
+				pdk="${dataList.processDefinitionKey}">查看</a></td>
 		    </tr>
 		    </c:forEach>
             </table>

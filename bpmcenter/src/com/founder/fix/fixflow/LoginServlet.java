@@ -114,7 +114,8 @@ public class LoginServlet extends HttpServlet {
 				}
 				
 			}else{
-				response.sendRedirect(context+"/fixflow/login.jsp");
+				response.setContentType("text/html;charset=utf-8");
+				response.getWriter().print("<script>alert('用户名或密码错误！');window.location.href='"+context+"/fixflow/login.jsp';</script>");
 			}
 			
 			

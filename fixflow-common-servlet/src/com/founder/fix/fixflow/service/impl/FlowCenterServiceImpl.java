@@ -311,6 +311,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				else
 					tq.taskParticipants(userId);
 			}
+			tq.orderByUpdateTime().desc();
 			instances = tq.listPagination(pageIndex, rowNum);
 
 			Long count = tq.count();
@@ -321,9 +322,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			IdentityService identityService = engine.getIdentityService();
 			for(ProcessInstance tmp:instances){
 				Map<String, Object> persistentState = tmp.getPersistentState();
-				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
 				String processDefinitionId = tmp.getProcessDefinitionId();
-				ProcessDefinitionBehavior processDefinitionBehavior = processEngine.getModelService().getProcessDefinition(processDefinitionId);
+				ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
 				String processDefinitionName = processDefinitionBehavior.getName();
 				persistentState.put("processDefinitionName", processDefinitionName);
 				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
@@ -448,6 +448,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		if(StringUtil.isNotEmpty(processInstanceId)){
 			String userId = (String) filter.get("userId");
 			ProcessEngine engine = getProcessEngine(userId);
+			ProcessInstance processInstance = engine.getRuntimeService().getProcessInstance(processInstanceId);
+			String processName = processInstance.getProcessDefinition().getName();
 			try{
 				TaskQuery tq = engine.getTaskService().createTaskQuery();
 				
@@ -460,8 +462,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				}
 				tq.taskNotEnd().orderByTaskCreateTime().asc();
 				List<TaskInstance> instancesNotEnd = tq.list();
+				Map<String,Map<String,Object>> postionMap = engine.getModelService().GetFlowGraphicsElementPosition(processInstance.getProcessDefinitionId());
 				result.put("notEnddataList", instancesNotEnd);
 				result.put("dataList", instanceMaps);
+				result.put("positionInfo", JSONUtil.parseObject2JSON(postionMap));
+				result.put("taskEndedJson", JSONUtil.parseObject2JSON(instanceMaps));
+				result.put("taskNotEndJson", JSONUtil.parseObject2JSON(instancesNotEnd));
+				result.put("processName", processName);
 				
 			}finally{
 				FixFlowShellProxy.closeProcessEngine(engine, false);
