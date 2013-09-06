@@ -486,6 +486,9 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           排他网关(ExclusiveGateway)在分裂时，只会选择一个输出顺序流传递Token,会按照后面线条的排序号优先计算,第一个满足条件的会将Token传递过去,排他网关在聚合时，任何一个输入顺序流传入Token，网关都会向后传递，不会对Token进行同步。我们使用"x"在网关内部标示出这是一个排他网关，默认情况下，我们也可以忽略标示。
         </para>
         <para>
+          一般情况下,值只允许后面有一条线通过或者说是只允许有一个条件满足的时候使用排他网关。
+        </para>
+        <para>
           <emphasis>注意: </emphasis> 当排他网关(ExclusiveGateway)后面的线条都不满足的时候会抛出异常.
         </para>
       </section>
@@ -493,18 +496,37 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       <section xml:id="bpmn.ExclusiveGateway.GraphicalNotation">
         <title>图形符号</title>
         <para> 
-          一个顺序流可视化作为一个从源元素对目标元素的箭头。箭头始终指向朝着既定目标。 
+          排他网关(ExclusiveGateway)图形为一个菱形里边有一个X,。注意,一个网关如果内部是空的则默认为排他网关。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.SequenceFlow.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
       
       <section xml:id="bpmn.ExclusiveGateway.XMLRepresentation">
         <title>XML描述</title>
+        <para>下面描述的是一个排他网关,后面通过带条件的顺序流<link linkend="bpmn.SequenceFlow.ConditionalSequenceFlow">(Conditional SequenceFlow)</link>连接了三个Task。</para>
+        <mediaobject ><imageobject>
+          <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.XMLRepresentation.1.png"/>
+        </imageobject></mediaobject>
+       
         <para>
-          这是一个空结束事件(NoneEndEvent)的XML表示,没有任何子元素(其他开始事件类型都有一个元素声明的类型)。
-          <programlisting language="xml"><![CDATA[<bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="UserTask_2"/>]]></programlisting>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="">
+  <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+</bpmn2:exclusiveGateway>
+<bpmn2:sequenceFlow id="SequenceFlow_3" name="${金额}==300" sourceRef="ExclusiveGateway_1" targetRef="Task_1">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${金额}==300</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+<bpmn2:sequenceFlow id="SequenceFlow_4" name="${金额}==200" sourceRef="ExclusiveGateway_1" targetRef="Task_2">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${金额}==200</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+<bpmn2:sequenceFlow id="SequenceFlow_5" name="${金额}==100" sourceRef="ExclusiveGateway_1" targetRef="Task_3">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${金额}==100</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>]]></programlisting>
         </para>
       </section>
       
@@ -513,7 +535,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.SequenceFlow.2.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.designer.1.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -708,7 +730,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     </section>
     
     <section xml:id="bpmn.ExtensionElements.taskCommand">
-      <title>处理命令</title>
+      <title>任务命令</title>
       <para>
         
       </para>
