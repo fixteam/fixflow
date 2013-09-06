@@ -17,9 +17,6 @@
  */
 package com.founder.fix.fixflow.service.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,31 +29,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
-import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
-import com.founder.fix.fixflow.core.runtime.ProcessInstance;
-import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.fix.fixflow.shell.CommonServiceImpl;
 import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
-public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
-
-	private Connection connection;
-	
-	public Connection getConnection() {
-		return connection;
-	}
-	
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-	}
+public class ProcessDefinitionServiceImpl extends CommonServiceImpl implements ProcessDefinitionService{
 	
 	@SuppressWarnings("rawtypes")
 	public Map<String, Object> getProcessDefitionList(Map<String, Object> params) throws SQLException {
@@ -109,7 +93,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 			resultMap.put("dataList", processDefinitionList);
 			resultMap.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 		return resultMap;
 	}
@@ -131,7 +115,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 			e.printStackTrace();
 		}
 		finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -148,7 +132,7 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 			e.printStackTrace();
 		}
 		finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -173,17 +157,8 @@ public class ProcessDefinitionServiceImpl implements ProcessDefinitionService{
 			e.printStackTrace();
 		}
 		finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 		return resultList;
 	}
-	
-	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
-		if(connection!=null){
-			return FixFlowShellProxy.createProcessEngine(userId,connection);
-		}else{
-			return FixFlowShellProxy.createProcessEngine(userId);
-		}
-	}
-
 }

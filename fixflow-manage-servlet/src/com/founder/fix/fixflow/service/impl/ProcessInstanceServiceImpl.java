@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
 import com.founder.fix.fixflow.core.HistoryService;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
@@ -41,12 +40,11 @@ import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
 import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
-import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
 
 /**
  * @ClassName: ProcessInstanceServiceImpl
- * @Description: TODO
+ * @Description: 
  * @author shao
  *
  */
@@ -73,59 +71,63 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String initor				= StringUtil.getString(params.get("initor"));
 		String status				= StringUtil.getString(params.get("status"));
 		ProcessInstanceType processInstanceStatus = getInstanceStaus(status);
-		
 		ProcessEngine engine = getProcessEngine(userId);
 		RuntimeService runtimeService = engine.getRuntimeService();
 		
 		IdentityService identityService = engine.getIdentityService();
-		String pageI = StringUtil.getString(params.get("pageIndex"));
-		String rowI = StringUtil.getString(params.get("pageSize"));
-		
-		int pageIndex=1;
-		int rowNum   =10;
-		if(StringUtil.isNotEmpty(pageI)){
-			pageIndex = Integer.valueOf(pageI);
-		}
-		if(StringUtil.isNotEmpty(rowI)){
-			rowNum = Integer.valueOf(rowI);
-		}
-		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
-		if(StringUtil.isNotEmpty(processDefinitionKey))
-			processInstanceQuery.processDefinitionKey(processDefinitionKey);
-		if(StringUtil.isNotEmpty(processInstanceId))
-			processInstanceQuery.processInstanceId(processDefinitionKey);
-		if(StringUtil.isNotEmpty(subject))
-			processInstanceQuery.subjectLike(processDefinitionKey);
-		if(StringUtil.isNotEmpty(initor))
-			processInstanceQuery.initiatorLike(processDefinitionKey);
-		if(processInstanceStatus !=null){
-			processInstanceQuery.processInstanceStatus(processInstanceStatus);
-		}
-		processInstanceQuery.orderByUpdateTime().desc();
-		List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
-		FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
-		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
-		for(ProcessInstance tmp: processInstances){
-			Map<String, Object> persistentState = tmp.getPersistentState();
-			String processDefinitionId = tmp.getProcessDefinitionId();
-			ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
-			String processDefinitionName = processDefinitionBehavior.getName();
-			persistentState.put("processDefinitionName", processDefinitionName);
-			String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
-			persistentState.put("nowNodeInfo", nowNodeInfo);
-			UserTo user = identityService.getUserTo(tmp.getStartAuthor());
-			if(user !=null){
-				persistentState.put("startAuthorName", user.getUserName());
-			}else{
-				persistentState.put("startAuthorName", tmp.getStartAuthor());
+		try{
+			
+			String pageI = StringUtil.getString(params.get("pageIndex"));
+			String rowI = StringUtil.getString(params.get("pageSize"));
+			
+			int pageIndex=1;
+			int rowNum   =10;
+			if(StringUtil.isNotEmpty(pageI)){
+				pageIndex = Integer.valueOf(pageI);
 			}
-			instanceMaps.add(persistentState);
+			if(StringUtil.isNotEmpty(rowI)){
+				rowNum = Integer.valueOf(rowI);
+			}
+			ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+			if(StringUtil.isNotEmpty(processDefinitionKey))
+				processInstanceQuery.processDefinitionKey(processDefinitionKey);
+			if(StringUtil.isNotEmpty(processInstanceId))
+				processInstanceQuery.processInstanceId(processDefinitionKey);
+			if(StringUtil.isNotEmpty(subject))
+				processInstanceQuery.subjectLike(processDefinitionKey);
+			if(StringUtil.isNotEmpty(initor))
+				processInstanceQuery.initiatorLike(processDefinitionKey);
+			if(processInstanceStatus !=null){
+				processInstanceQuery.processInstanceStatus(processInstanceStatus);
+			}
+			processInstanceQuery.orderByUpdateTime().desc();
+			List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
+			FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
+			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			for(ProcessInstance tmp: processInstances){
+				Map<String, Object> persistentState = tmp.getPersistentState();
+				String processDefinitionId = tmp.getProcessDefinitionId();
+				ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
+				String processDefinitionName = processDefinitionBehavior.getName();
+				persistentState.put("processDefinitionName", processDefinitionName);
+				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
+				persistentState.put("nowNodeInfo", nowNodeInfo);
+				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
+				if(user !=null){
+					persistentState.put("startAuthorName", user.getUserName());
+				}else{
+					persistentState.put("startAuthorName", tmp.getStartAuthor());
+				}
+				instanceMaps.add(persistentState);
+			}
+			Long count = processInstanceQuery.count();
+			Pagination page = new Pagination(pageIndex,rowNum);
+			page.setTotal(count.intValue());
+			resultMap.put("dataList", instanceMaps);
+			resultMap.put("pageInfo", page);
+		}finally{
+			closeProcessEngine();
 		}
-		Long count = processInstanceQuery.count();
-		Pagination page = new Pagination(pageIndex,rowNum);
-		page.setTotal(count.intValue());
-		resultMap.put("dataList", instanceMaps);
-		resultMap.put("pageInfo", page);
 		return resultMap;
 	}
 	
@@ -144,22 +146,25 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 	public Map<String,Object> getProcessTokens(Map<String,Object> params) throws SQLException{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
-		
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
-		TokenQuery tokenQuery = runtimeService.createTokenQuery();
-		
-		String processInstanceId = StringUtil.getString(params.get("processInstanceId"));
-		if(StringUtil.isNotEmpty(processInstanceId))
-			tokenQuery.processInstanceId(processInstanceId);
-		
-		List<Token> tokenList = tokenQuery.list();
-		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
-		for(Token tmp : tokenList){
-			result.add(tmp.getPersistentState());
+		ProcessEngine engine =  getProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+			TokenQuery tokenQuery = runtimeService.createTokenQuery();
+			
+			String processInstanceId = StringUtil.getString(params.get("processInstanceId"));
+			if(StringUtil.isNotEmpty(processInstanceId))
+				tokenQuery.processInstanceId(processInstanceId);
+			
+			List<Token> tokenList = tokenQuery.list();
+			List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+			for(Token tmp : tokenList){
+				result.add(tmp.getPersistentState());
+			}
+			
+			resultMap.put("dataList", result);
+		}finally{
+			closeProcessEngine();
 		}
-		
-		resultMap.put("dataList", result);
-		
 		return resultMap;
 	}
 	
@@ -167,13 +172,16 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("processInstanceId"));
-		
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
-		Map<String, Object> dataList = runtimeService.getProcessInstanceVariables(processInstanceId);
-		
-		
-		resultMap.put("dataList", dataList);
-		
+		ProcessEngine engine = getProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+			Map<String, Object> dataList = runtimeService.getProcessInstanceVariables(processInstanceId);
+			
+			
+			resultMap.put("dataList", dataList);
+		}finally{
+			closeProcessEngine();
+		}
 		return resultMap;
 	}
 	
@@ -183,7 +191,10 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String deleteIndex  = StringUtil.getString(params.get("deleteIndex"));
 		String processInstanceId  = StringUtil.getString(params.get("processInstanceId"));
 		Map<String, Object> infos  = (Map<String, Object>)params.get("insertAndUpdate");
-		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
+		ProcessEngine engine = getTransactionProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+		
 		
 		if(StringUtil.isNotEmpty(deleteIndex)){
 			String[] keys  = deleteIndex.split(",");
@@ -195,6 +206,9 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		if(infos!=null){
 			runtimeService.setProcessInstanceVariables(processInstanceId, infos);
 		}
+		}finally{
+			closeProcessEngine();
+		}
 		
 	}
 	
@@ -202,9 +216,14 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
-		for(String tmp:pids){
-			runtimeService.suspendProcessInstance(tmp);
+		ProcessEngine engine = getTransactionProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+			for(String tmp:pids){
+				runtimeService.suspendProcessInstance(tmp);
+			}
+		}finally{
+			closeProcessEngine();
 		}
 		
 	}
@@ -213,9 +232,14 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
-		for(String tmp:pids){
-			runtimeService.continueProcessInstance(tmp);
+		ProcessEngine engine = getTransactionProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+			for(String tmp:pids){
+				runtimeService.continueProcessInstance(tmp);
+			}
+		}finally{
+			closeProcessEngine();
 		}
 	}
 	
@@ -223,9 +247,14 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
-		for(String tmp:pids){
-			runtimeService.terminatProcessInstance(tmp);
+		ProcessEngine engine = getTransactionProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+			for(String tmp:pids){
+				runtimeService.terminatProcessInstance(tmp);
+			}
+		}finally{
+			closeProcessEngine();
 		}
 	}
 	
@@ -233,9 +262,14 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		RuntimeService runtimeService = getTransactionProcessEngine(userId).getRuntimeService();
-		for(String tmp:pids){
-			runtimeService.deleteProcessInstance(tmp,true);
+		ProcessEngine engine = getTransactionProcessEngine(userId);
+		try{
+			RuntimeService runtimeService = engine.getRuntimeService();
+			for(String tmp:pids){
+				runtimeService.deleteProcessInstance(tmp,true);
+			}
+		}finally{
+			closeProcessEngine();
 		}
 	}
 	
@@ -244,12 +278,17 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		HistoryService historyService = getProcessEngine(userId).getHistoryService();
-		List<String> processInstanceIds = new ArrayList<String>();
-		for(String tmp:pids){
-			processInstanceIds.add(tmp);
+		ProcessEngine engine = getProcessEngine(userId);
+		try{
+			HistoryService historyService = engine.getHistoryService();
+			List<String> processInstanceIds = new ArrayList<String>();
+			for(String tmp:pids){
+				processInstanceIds.add(tmp);
+			}
+			historyService.archiveByProcessInstanceIds(processInstanceIds);
+		}finally{
+			closeProcessEngine();
 		}
-		historyService.archiveByProcessInstanceIds(processInstanceIds);
 	}
 	
 }

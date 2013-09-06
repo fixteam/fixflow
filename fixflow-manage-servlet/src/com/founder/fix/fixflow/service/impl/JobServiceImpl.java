@@ -17,23 +17,17 @@
  */
 package com.founder.fix.fixflow.service.impl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.quartz.JobDetail;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.Trigger.TriggerState;
-import org.quartz.TriggerKey;
-import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -41,20 +35,10 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.JobService;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.fix.fixflow.shell.CommonServiceImpl;
 @Scope("prototype")
 @Service
-public class JobServiceImpl implements JobService {
-
-	private Connection connection;
-	
-	public Connection getConnection() {
-		return connection;
-	}
-	
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-	}
+public class JobServiceImpl extends CommonServiceImpl implements JobService {
 
 	@Override
 	public Map<String, Object> getJobList(Map<String, Object> params) throws SchedulerException, SQLException {
@@ -97,7 +81,7 @@ public class JobServiceImpl implements JobService {
 			}
 			resultMap.put("dataList", jobList);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 		return resultMap;
 	}
@@ -110,7 +94,7 @@ public class JobServiceImpl implements JobService {
 		try{
 			scheduleService.schedulerStart();
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -122,7 +106,7 @@ public class JobServiceImpl implements JobService {
 		try{
 			scheduleService.schedulerShutdown();
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -136,7 +120,7 @@ public class JobServiceImpl implements JobService {
 		try{
 			scheduleService.suspendJob(jobKeyName, jobKeyGroup);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -150,7 +134,7 @@ public class JobServiceImpl implements JobService {
 		try{
 			scheduleService.continueJob(jobKeyName, jobKeyGroup);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -192,7 +176,7 @@ public class JobServiceImpl implements JobService {
 			jobMap.put("jobKeyGroup", jobKeyGroup);
 			resultMap.put("job", jobMap);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 		return resultMap;
 	}
@@ -207,7 +191,7 @@ public class JobServiceImpl implements JobService {
 		try{
 			scheduleService.suspendTrigger(triggerKeyName, triggerKeyGroup);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -221,7 +205,7 @@ public class JobServiceImpl implements JobService {
 		try{
 			scheduleService.continueTrigger(triggerKeyName, triggerKeyGroup);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -257,15 +241,6 @@ public class JobServiceImpl implements JobService {
 		}
 		else {
 			return type;
-		}
-	}
-
-	
-	private ProcessEngine getProcessEngine(Object userId) throws SQLException{
-		if(connection!=null){
-			return FixFlowShellProxy.createProcessEngine(userId,connection);
-		}else{
-			return FixFlowShellProxy.createProcessEngine(userId);
 		}
 	}
 
