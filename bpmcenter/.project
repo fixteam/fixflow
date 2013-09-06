@@ -35,11 +35,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>apiconf</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-api/conf</locationURI>
-		</link>
-		<link>
 			<name>apisrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-api/src</locationURI>
