@@ -26,18 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.ConnectionManagement;
+import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
-import com.founder.fix.fixflow.core.impl.interceptor.Session;
-import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowIdentityService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
@@ -66,12 +62,17 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 	 */
 	@Override
 	public UserTo getUserTo(String userId) {
+		ProcessEngine engine = null;
 		UserTo userTo = null;
+		
 		try {
-			userTo = this.getProcessEngine(userId).getIdentityService()
+			engine = getProcessEngine(userId);
+			userTo = engine.getIdentityService()
 					.getUserTo(userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			closeProcessEngine();
 		}
 		return userTo;
 	}
@@ -107,11 +108,12 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 		List<Map<String, Object>> detailInfoList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> eachResultData = new HashMap<String, Object>();
 		Connection connection = null;
+		ProcessEngine engine = null;
 		try {
 			connection = FixFlowShellProxy
 					.getConnection(ConnectionManagement.defaultDataBaseId);
 			this.connection = connection;
-			this.getProcessEngine("");
+			engine = this.getProcessEngine(agentId);
 			SqlCommand sqlCommand = new SqlCommand(connection);
 			String sqlStr = "select * from fixflow_agent_agentinfo where agent_id = ?";
 			List<Object> data = new ArrayList<Object>();
@@ -150,8 +152,7 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 					if (processId.equals(FIX_FLOW_ALL_FLOW)) {
 						processName = "所有流程";
 					} else {
-						ProcessDefinitionBehavior processDefinition = this
-								.getProcessEngine(agentId).getModelService()
+						ProcessDefinitionBehavior processDefinition = engine.getModelService()
 								.createProcessDefinitionQuery()
 								.processDefinitionKey(processId)
 								.latestVersion().singleResult();
@@ -190,7 +191,7 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 				agentInfo.put("detailInfoList", detailInfoList);
 			}
 		} finally {
-			connection.close();
+			closeProcessEngine();
 		}
 		resultData.put("agentInfo", agentInfo);
 		// mapInfo.put("agentId", userId);

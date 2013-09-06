@@ -24,8 +24,9 @@
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch14-ManagementCenter.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch15-CommonAPI.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch16-RESTAPI.xml"/>
-  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch17-FutureEnhancements.xml"/>
-  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch18-Annotation.xml"/>
-  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch19-ExternalLinks.xml"/>
-  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch20-Reference.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch17-NewFeatures.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch18-FutureEnhancements.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch19-Annotation.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch20-ExternalLinks.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch21-Reference.xml"/>
 </book>

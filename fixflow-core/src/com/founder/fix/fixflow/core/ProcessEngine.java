@@ -84,13 +84,13 @@ public interface ProcessEngine {
 	 */
 	ScheduleService getScheduleService();
 	
+
+
 	/**
-	  * getManagementService
-	
-	  * @Title: getManagementService
-	  * @Description: 获取
-	  * @return
-	  */
+	 * 流程管理服务
+	 * (用于对流程干预)
+	 * @return
+	 */
 	ManagementService getManagementService();
 	
 
