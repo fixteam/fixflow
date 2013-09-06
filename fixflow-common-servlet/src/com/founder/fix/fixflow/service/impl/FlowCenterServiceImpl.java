@@ -286,10 +286,10 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.startTimeBefore(datee);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
-			String rowI = StringUtil.getString(filter.get("rowNum"));
+			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =20;
+			int rowNum   =10;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
