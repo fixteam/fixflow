@@ -24,9 +24,10 @@ Fix = {
 				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
 				$("div[data-scope=single]").removeClass("btn-disable").addClass("btn-normal");
 			}else{
-				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
-				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
-				$("div[data-scope=multi]").removeClass("btn-disable").addClass("btn-normal");
+				$("div[data-scope]").removeClass("btn-disable");
+				//$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
+				//$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
+				//$("div[data-scope=multi]").removeClass("btn-disable").addClass("btn-normal");
 			}
 		},
 		ClickTr:function($table,isMulti,hasBox,boxPosition){
