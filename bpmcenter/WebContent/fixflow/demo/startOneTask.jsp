@@ -31,11 +31,11 @@ a {
 			<table class="table-form">
 				<tr>
 					<td class="title-r">流程关联键：</td>
-					<td><input type="text" name="businessKey" /></td>
+					<td><input type="text" name="businessKey" value="${result.demoObject.COL1}"/></td>
 				</tr>
 				<tr>
 					<td class="title-r">信息：</td>
-					<td><input type="text" name="COL2" /></td>
+					<td><input type="text" name="COL2" value="${result.demoObject.COL2}"/></td>
 				</tr>
 				<tr>
 					<td class="title-r">审批意见：</td>

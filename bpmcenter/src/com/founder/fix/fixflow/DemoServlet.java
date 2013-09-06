@@ -125,6 +125,24 @@ public class DemoServlet extends HttpServlet {
 
 				Map<String, Object> list = getFlowCenter().GetFlowRefInfo(
 						filter);
+				Object key = filter.get("bizKey");
+				if(key!=null){
+					Connection connection = FixFlowShellProxy
+							.getConnection(ConnectionManagement.defaultDataBaseId);
+					try {
+						SqlCommand sc = new SqlCommand(connection);
+						List params = new ArrayList();
+						params.add(key);
+						List<Map<String, Object>> res = sc.queryForList(
+								"select * from DEMOTABLE where COL1=?", params);
+	
+						filter.put("demoObject", res.get(0));
+						request.setAttribute("result", filter);
+						rd = request.getRequestDispatcher("/fixflow/demo/doTask.jsp");
+					}finally{
+						connection.close();					
+					}
+				}
 				filter.putAll(list);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/demo/startOneTask.jsp");
