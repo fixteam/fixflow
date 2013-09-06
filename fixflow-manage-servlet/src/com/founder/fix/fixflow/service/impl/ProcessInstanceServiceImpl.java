@@ -27,7 +27,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.core.HistoryService;
+import com.founder.fix.fixflow.core.IdentityService;
+import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.RuntimeService;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
@@ -36,6 +40,7 @@ import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.runtime.TokenQuery;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
+import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
 import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
 
@@ -68,8 +73,11 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String initor				= StringUtil.getString(params.get("initor"));
 		String status				= StringUtil.getString(params.get("status"));
 		ProcessInstanceType processInstanceStatus = getInstanceStaus(status);
-		RuntimeService runtimeService = getProcessEngine(userId).getRuntimeService();
 		
+		ProcessEngine engine = getProcessEngine(userId);
+		RuntimeService runtimeService = engine.getRuntimeService();
+		
+		IdentityService identityService = engine.getIdentityService();
 		String pageI = StringUtil.getString(params.get("pageIndex"));
 		String rowI = StringUtil.getString(params.get("pageSize"));
 		
@@ -88,19 +96,30 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			processInstanceQuery.processInstanceId(processDefinitionKey);
 		if(StringUtil.isNotEmpty(subject))
 			processInstanceQuery.subjectLike(processDefinitionKey);
-//		if(StringUtil.isNotEmpty(bizKey))
-//			processInstanceQuery.(processDefinitionKey);
 		if(StringUtil.isNotEmpty(initor))
 			processInstanceQuery.initiatorLike(processDefinitionKey);
 		if(processInstanceStatus !=null){
 			processInstanceQuery.processInstanceStatus(processInstanceStatus);
 		}
 		processInstanceQuery.orderByUpdateTime().desc();
-		//根据流程定义key查询
 		List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
+		FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
 		List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 		for(ProcessInstance tmp: processInstances){
-			instanceMaps.add(tmp.getPersistentState());
+			Map<String, Object> persistentState = tmp.getPersistentState();
+			String processDefinitionId = tmp.getProcessDefinitionId();
+			ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
+			String processDefinitionName = processDefinitionBehavior.getName();
+			persistentState.put("processDefinitionName", processDefinitionName);
+			String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
+			persistentState.put("nowNodeInfo", nowNodeInfo);
+			UserTo user = identityService.getUserTo(tmp.getStartAuthor());
+			if(user !=null){
+				persistentState.put("startAuthorName", user.getUserName());
+			}else{
+				persistentState.put("startAuthorName", tmp.getStartAuthor());
+			}
+			instanceMaps.add(persistentState);
 		}
 		Long count = processInstanceQuery.count();
 		Pagination page = new Pagination(pageIndex,rowNum);
