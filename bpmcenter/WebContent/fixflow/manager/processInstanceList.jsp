@@ -90,6 +90,13 @@
   	
   	$(function(){
 		Fix.Util.ClickTr(null,true,true,0);
+		
+	  $("a[name=flowGraph]").click(function(){
+		    var pdk = $(this).attr("pdk");
+		    var pii = $(this).attr("pii");
+		    var obj = {};
+		    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
+		  });
 	});
 </script>
 </head>
@@ -150,6 +157,7 @@
                 <th width="">业务数据</th>
                 <th width="">发起人</th>
                 <th width="">更新时间</th>
+                <th width="60">流程状态</th>
                  <th width="">运行状态</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
@@ -164,6 +172,9 @@
 		      <td>${dataList.BIZ_KEY}</td>
 		      <td>${dataList.initiator}</td>
 				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
+			<td><a name="flowGraph" href="#"
+				pii="${dataList.processInstanceId}"
+				pdk="${dataList.processDefinitionKey}">查看</a></td>
 				<td>
 					<c:if test="${dataList.instanceStatus == 'SUSPEND'}" var="runStatue">暂停</c:if>
 					<c:if test="${dataList.instanceStatus == 'RUNNING'}" var="runStatue">运行中</c:if>
