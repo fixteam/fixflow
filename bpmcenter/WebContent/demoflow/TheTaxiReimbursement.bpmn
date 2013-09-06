@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  <bpmn2:process id="TheTaxiReimbursement" fixflow:verification="true" fixflow:dbid="TheTaxiReimbursement:1:7a71d309-b9c3-4d61-a60d-d89f07331f7c" fixflow:category="财务费用控制" name="出租车费报销申请流程">
+  <bpmn2:process id="TheTaxiReimbursement" fixflow:verification="true" fixflow:dbid="TheTaxiReimbursement:4:a2cbd90a-740f-4870-bfb4-9eeb77c62eed" fixflow:category="财务费用控制" name="出租车费报销申请流程">
     <bpmn2:extensionElements>
       <fixflow:taskSubject id="TaskSubject_1">
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;出租车费报销申请流程&quot;">&quot;出租车费报销申请流程&quot;</fixflow:expression>
@@ -45,21 +45,23 @@
     <bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="1.填写">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="HandleCommand_3" name="提交" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_3" name="y=1">y=1</fixflow:parameterExpression>
-        </fixflow:taskCommand>
-        <fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_4" name="y=1">y=1</fixflow:parameterExpression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="y=1">y=1</fixflow:expression>
         </fixflow:taskCommand>
         <fixflow:assignPolicyType id="potentialOwner"/>
+        <fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="y=1">y=1</fixflow:expression>
+        </fixflow:taskCommand>
         <fixflow:skipStrategy/>
+        <fixflow:taskCommand id="HandleCommand_4" name="作废" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="y=2">y=2</fixflow:expression>
+        </fixflow:taskCommand>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
         <fixflow:expectedExecutionTime/>
         <fixflow:formUri>
           <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&quot;DemoServlet?action=startOneTask&quot;">&quot;DemoServlet?action=startOneTask&quot;</fixflow:expression>
         </fixflow:formUri>
-        <fixflow:taskCommand id="HandleCommand_4" name="作废" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_5" name="y=2">y=2</fixflow:parameterExpression>
-        </fixflow:taskCommand>
+        <fixflow:taskCommand id="HandleCommand_5" name="接收任务" commandType="claim" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_6" name="保存草稿" commandType="saveTaskDraft" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
@@ -73,15 +75,16 @@
     <bpmn2:userTask id="UserTask_2" name="2.财务核对">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:assignPolicyType id="potentialOwner_One"/>
         <fixflow:taskCommand id="HandleCommand_2" name="同意" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_6" name="y=1">y=1</fixflow:parameterExpression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_6" name="y=1">y=1</fixflow:expression>
         </fixflow:taskCommand>
-        <fixflow:assignPolicyType id="humanPerformer"/>
-        <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_3" name="作废" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_7" name="y=2">y=2</fixflow:parameterExpression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_7" name="y=2">y=2</fixflow:expression>
         </fixflow:taskCommand>
+        <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_4" name="不符合财务制度" commandType="rollBackTaskByTaskId" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_5" name="接收任务" commandType="claim" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
@@ -96,10 +99,10 @@
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_1">
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="作废" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2">y==2</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="提交" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1">y==1</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="UserTask_2" targetRef="ExclusiveGateway_2"/>
@@ -108,34 +111,45 @@
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="ExclusiveGateway_2" targetRef="UserTask_3">
+    <bpmn2:sequenceFlow id="SequenceFlow_10" name="同意" sourceRef="ExclusiveGateway_2" targetRef="UserTask_3">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1">y==1</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="UserTask_3" name="3.主管审批">
+    <bpmn2:userTask id="UserTask_3" fixflow:taskType="FIXFLOWTASK" name="3.主管审批">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
         <fixflow:taskCommand id="HandleCommand_2" name="同意(金额大于1000)" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_8" name="y=1">y=1</fixflow:parameterExpression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_8" name="y=1">y=1</fixflow:expression>
         </fixflow:taskCommand>
+        <fixflow:assignPolicyType id="potentialOwner_One"/>
         <fixflow:taskCommand id="HandleCommand_3" name="不同意" commandType="rollBackTaskByTaskId" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-        <fixflow:assignPolicyType id="humanPerformer"/>
-        <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_4" name="作废" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_9" name="y=3">y=3</fixflow:parameterExpression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_9" name="y=3">y=3</fixflow:expression>
         </fixflow:taskCommand>
         <fixflow:taskCommand id="HandleCommand_5" name="同意(金额不大于1000)" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_10" name="y=2">y=2</fixflow:parameterExpression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_10" name="y=2">y=2</fixflow:expression>
         </fixflow:taskCommand>
+        <fixflow:skipStrategy/>
+        <fixflow:expectedExecutionTime/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
       <bpmn2:potentialOwner id="PotentialOwner_3" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="部门主管">
         <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_3">
-          <bpmn2:formalExpression id="processInfo.findUserDeptAndRole(userInfo.getOrgId(),&quot;014&quot;);">processInfo.findUserDeptAndRole(userInfo.getOrgId(),&quot;014&quot;);</bpmn2:formalExpression>
+          <bpmn2:formalExpression id="importcom.founder.fix.fixflow.core.impl.Context;&#xD;&#xA;importcom.founder.fix.fixflow.core.impl.identity.GroupTo;&#xD;&#xA;&#xD;&#xA;groupTos=Context.getProcessEngineConfiguration().getUserDefinition().getUserInGroups(processInfo.getInitiator());&#xD;&#xA;for(GroupTogroupTo:groupTos){&#xD;&#xA;&#x9;//默认取出用户的第一个所在部门&#xD;&#xA;&#x9;if(groupTo.getGroupType().equals(&quot;dept&quot;)){&#xD;&#xA;&#x9;&#x9;returnprocessInfo.findUserDeptAndRole(groupTo.getGroupId(),&quot;014&quot;);;&#xD;&#xA;&#x9;}&#xD;&#xA;}&#xD;&#xA;returnnull;">import com.founder.fix.fixflow.core.impl.Context;&#xD;
+import com.founder.fix.fixflow.core.impl.identity.GroupTo;&#xD;
+&#xD;
+groupTos=Context.getProcessEngineConfiguration().getUserDefinition().getUserInGroups(processInfo.getInitiator());&#xD;
+for (GroupTo groupTo : groupTos) {&#xD;
+	//默认取出用户的第一个所在部门&#xD;
+	if(groupTo.getGroupType().equals(&quot;dept&quot;)){&#xD;
+		return processInfo.findUserDeptAndRole(groupTo.getGroupId(),&quot;014&quot;);;&#xD;
+	}&#xD;
+}&#xD;
+return null;</bpmn2:formalExpression>
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="ExclusiveGateway_2" targetRef="EndEvent_1">
+    <bpmn2:sequenceFlow id="SequenceFlow_11" name="作废" sourceRef="ExclusiveGateway_2" targetRef="EndEvent_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2">y==2</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_3" targetRef="ExclusiveGateway_3"/>
@@ -148,8 +162,8 @@
     <bpmn2:userTask id="UserTask_5" name="5.打印、粘贴">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
-        <fixflow:taskCommand id="HandleCommand_2" name="已打印粘贴" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:taskCommand id="HandleCommand_2" name="确认" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:skipStrategy/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
@@ -161,20 +175,20 @@
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="UserTask_5" targetRef="UserTask_7"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_18" name="确认" sourceRef="UserTask_5" targetRef="UserTask_7"/>
     <bpmn2:userTask id="UserTask_4" name="4.领导审批">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
-        <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:assignPolicyType id="potentialOwner_One"/>
         <fixflow:taskCommand id="HandleCommand_3" name="不同意" commandType="rollBackTaskByTaskId" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_2" name="同意" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
-      <bpmn2:potentialOwner id="PotentialOwner_5" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="领导角色">
+      <bpmn2:potentialOwner id="PotentialOwner_5" fixflow:resourceType="role" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="领导角色">
         <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_5">
-          <bpmn2:formalExpression id="processInfo.findUserDeptAndRole(userInfo.getOrgId(),&quot;011&quot;);">processInfo.findUserDeptAndRole(userInfo.getOrgId(),&quot;011&quot;);</bpmn2:formalExpression>
+          <bpmn2:formalExpression id="&quot;011&quot;">&quot;011&quot;</bpmn2:formalExpression>
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
@@ -182,8 +196,8 @@
     <bpmn2:userTask id="UserTask_7" name="6.领款提醒">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
-        <fixflow:taskCommand id="HandleCommand_2" name="已领款" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:assignPolicyType id="humanPerformer"/>
+        <fixflow:taskCommand id="HandleCommand_2" name="确认" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:skipStrategy/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
@@ -194,20 +208,20 @@
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="UserTask_7" targetRef="EndEvent_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_21" name="确认" sourceRef="UserTask_7" targetRef="EndEvent_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_3" name="">
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_4">
+    <bpmn2:sequenceFlow id="SequenceFlow_13" name="金额>1000" sourceRef="ExclusiveGateway_3" targetRef="UserTask_4">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1">y==1</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_15" name="" sourceRef="ExclusiveGateway_3" targetRef="EndEvent_1">
+    <bpmn2:sequenceFlow id="SequenceFlow_15" name="作废" sourceRef="ExclusiveGateway_3" targetRef="EndEvent_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==3">y==3</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_5">
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="金额&lt;=1000" sourceRef="ExclusiveGateway_3" targetRef="UserTask_5">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2">y==2</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
@@ -295,7 +309,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_11" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_EndEvent_1">
         <di:waypoint xsi:type="dc:Point" x="438.0" y="165.0"/>
-        <di:waypoint xsi:type="dc:Point" x="737.0" y="165.0"/>
+        <di:waypoint xsi:type="dc:Point" x="738.0" y="165.0"/>
         <di:waypoint xsi:type="dc:Point" x="738.0" y="640.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
@@ -345,8 +359,9 @@
         <dc:Bounds height="100.0" width="731.0" x="46.0" y="614.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_UserTask_5">
-        <di:waypoint xsi:type="dc:Point" x="541.0" y="264.0"/>
-        <di:waypoint xsi:type="dc:Point" x="615.0" y="264.0"/>
+        <di:waypoint xsi:type="dc:Point" x="515.0" y="290.0"/>
+        <di:waypoint xsi:type="dc:Point" x="515.0" y="338.0"/>
+        <di:waypoint xsi:type="dc:Point" x="615.0" y="338.0"/>
         <di:waypoint xsi:type="dc:Point" x="615.0" y="530.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
