@@ -55,14 +55,14 @@ $("a[name=flowGraph]").click(function(){
 					<div id="search" class="search">
 					<input type="hidden" name="action" value="getAllProcess"/> 
 					<input type="hidden" id="processType" name="processType" value="${result.processType}"/> 
-						<table width="100%">
+						<table>
 			              <tr>
 			                <td class="title-r">任务主题：</td>
-			                <td style="width:180px;"><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
+			                <td><input type="text" id="text_0" name="title" class="fix-input" value="${result.title}"/></td>
 			                <td class="title-r">流程变量：</td>
-			                <td style="width:180px;"><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
+			                <td><input type="text" id="text_1" name="text_1" class="fix-input" value=""/></td>
 			                <td class="title-r">单 据 号：</td>
-			                <td style="width:180px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+			                <td><input type="text" id="text_2" name="bizKey" class="fix-input" value="${result.bizKey}"/></td>
 			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
 			              </tr>
 			              <tr>
@@ -97,10 +97,10 @@ $("a[name=flowGraph]").click(function(){
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionName}</td>
 										<td>${dataList.subject}</td>
-										<td>${dataList.startAuthor}</td>
+										<td>${dataList.startAuthorName}</td>
 										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
-										<td>${dataList.processLocation}</td>
+										<td>${dataList.nowNodeInfo}</td>
 										<td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">查看</a></td>
 									</tr>
 								</c:forEach>

@@ -43,17 +43,21 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
+import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
 import com.founder.fix.fixflow.util.FileUtil;
 import com.founder.fix.fixflow.util.ImageCutUtil;
 import com.founder.fix.fixflow.util.JSONUtil;
@@ -313,7 +317,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
-			
+			FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
+			IdentityService identityService = engine.getIdentityService();
 			for(ProcessInstance tmp:instances){
 				Map<String, Object> persistentState = tmp.getPersistentState();
 				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
@@ -321,11 +326,15 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				ProcessDefinitionBehavior processDefinitionBehavior = processEngine.getModelService().getProcessDefinition(processDefinitionId);
 				String processDefinitionName = processDefinitionBehavior.getName();
 				persistentState.put("processDefinitionName", processDefinitionName);
-				
+				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
+				persistentState.put("nowNodeInfo", nowNodeInfo);
+				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
+				if(user !=null){
+					persistentState.put("startAuthorName", user.getUserName());
+				}else{
+					persistentState.put("startAuthorName", tmp.getStartAuthor());
+				}
 				instanceMaps.add(persistentState);
-				
-				
-				
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);
@@ -423,9 +432,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				persistentState.put("processDefinitionName", processDefinitionName);
 				
 				instanceMaps.add(persistentState);
-				
-				
-				
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);
@@ -493,7 +499,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		
 		String path = StringUtil.getString(filter.get("path"));
 		path = path+"/icon/";
-//		File newFile = new File(path);
 		String tuserId = (String)filter.get("targetUserId");
 		if(StringUtil.isNotEmpty(tuserId)){
 			userId = tuserId;
@@ -715,15 +720,21 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		String taskId = StringUtil.getString(params.get("taskId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		TaskService taskService = processEngine.getTaskService();
+		IdentityService identityService = processEngine.getIdentityService();
 		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
 		try{
 			List<TaskInstance> taskInstances = taskService.getRollBackTask(taskId);
 			for(TaskInstance task :taskInstances){
 				Map<String,Object> taskMap = new HashMap<String,Object>();
 				taskMap.put("taskId", task.getId());
-				taskMap.put("nodeName", task.getNodeName());
+				taskMap.put("taskName", task.getName());
+				taskMap.put("startTime", task.getCreateTime());
 				taskMap.put("endTime", task.getEndTime());
+				UserTo user = identityService.getUserTo(task.getAssignee());
 				taskMap.put("assignee", task.getAssignee());
+				if(user !=null){
+					taskMap.put("assigneeUserName", user.getUserName());
+				}
 				resultList.add(taskMap);
 			}
 		}finally{
@@ -732,4 +743,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		resultMap.put("dataList", resultList);
 		return resultMap;
 	}
+	
+	
 }

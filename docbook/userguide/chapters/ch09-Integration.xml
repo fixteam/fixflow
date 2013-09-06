@@ -31,8 +31,8 @@
   <section xml:id="integration.localIntegration">
     <title>本地系统集成方案</title>
     <para>
-      本地系统集成是平台最常用的集成方案，在这里可以将FixFlow Engine理解为JBPM的替代品，同时要比JBPM更好用、更符合BPMN2标准、更适合中国式工作流。对于用户来说要做的就是把FixFlow Engine作为一个工作流集成进来，使用其串联本系统各个功能。在这里会以一个示例来说明应该如何将FixFlow Engine集成进一个JAVA项目。
-      这里假设有A系统，A系统为Struts2+Spring3.0+MyBatis3架构的web系统，此时A系统需要在项目里集成FixFlow Engine工作流引擎，或者也可以说用流程把原系统的多个页面串联起来变成一个流程。
+      本地系统集成是平台最常用的集成方案，可以将FixFlow Engine理解为JBPM的替代品，并且比JBPM更好用、更符合BPMN2标准、更适合中国式工作流。对于用户来说，要做的就是把FixFlow Engine作为一个插件集成进来，使用其串联本系统各个功能。在这里会以一个示例来说明应该如何将FixFlow Engine集成进一个JAVA项目。
+      这里假设有A系统，A系统为Struts2+Spring3.0+MyBatis3架构的web系统，此时A系统需要在项目里集成FixFlow Engine工作流引擎。
       <itemizedlist>
         <listitem><para>本示例的数据源来自于Spring，这种数据源最通用，在实际项目里可以改成各种方式的连接来源。</para></listitem>
         <listitem><para>本示例里使用了Sping声明式事务。</para></listitem>
@@ -43,7 +43,7 @@
     <section xml:id="integration.localIntegration.prepare">
       <title>集成准备工作</title>
       <para>
-        首先请在网站上下载FixFlow Engine的全部内容，完整的FixFlow Engine为一个Web工程bpmcenter、一个Java工程fixflow-expand、一个数据库脚本包、一个设计器插件包。这是本身就是一个完整的web工程，在配置完毕后是可以直接运行的。现在我们要做的事情就是把这个web工程集成到本地的工程里。
+        首先请在网站上下载FixFlow Engine的全部内容，完整的FixFlow Engine为一个Web工程bpmcenter、一个Java工程fixflow-expand、一个数据库脚本包、一个设计器插件包。这里web工程就是核心，现在要做的事情就是把这个web工程集成到本地的工程里。
         <orderedlist>
           <listitem><para>导入fixflow-expand工程到工作区里，保证fixflow-expand里的src、internationalization、fixflowdiagram这三个文件夹可以发布到本地项目的classes目录下，eclipse可以使用linksource功能，myeclipse可以直接引用发布。</para></listitem>
           <listitem><para>安装eclipse插件，具体请参照安装eclipse插件章节。</para></listitem>
@@ -58,8 +58,7 @@
         bpmcenter是一个web项目，而本地项目也是一个web项目，现在要将两个项目集成到一起，使本地项目可以使用工作流。
         <orderedlist>
           <listitem><para>
-            代码集成，bpmcenter的src目录下的底层文件夹内有两个java文件，这两个文件就是代码集成文件。请将这两个文件拷贝至本地项目。FixFlow Engine里提供了一部分可供扩展的代码以供用户进行适当的扩展，比如流程管控中心本身是可以登录登出的，由于每个使用者本地的用户表等情况各不一样，所以这部分是开放出来的。
-            这里的代码有两个，一个是LoginServlet，其作用是登录，具体内容文中以注释方式标出。
+            代码集成，bpmcenter的src目录下的底层文件夹内有两个java文件，这两个文件就是代码集成文件。请将这两个文件按照原有的包路径拷贝至本地项目。这两个文件是FixFlow Engine提供的扩展部分，一个是LoginServlet，其作用是登录，具体内容文中以注释方式标出，该部分代码可以提供给用户进行各种扩展。
             <programlisting language="java">
             /**
             * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -130,10 +129,10 @@
             另一个类是DemoServlet，该类是平台自带的一个示例，对外示例了如何使用平台进行保存和调用流程下一步。这个示例是针对servlet的情况，对于SSI的集成并没有太大参考价值，所以这里没有贴出，本文会对针对struts2的情况进行专门描述。
           </para></listitem>
           <listitem><para>
-            配置文件集成，bpmcenter的conf目录下存放着几个配置文件，这几个配置文件的集成就是需要集成进去的文件，请将这几个文件拷贝至本地工程目录，并保证该目录下的文件最终会发布到WEB-INF/classes/目录下。
+            配置文件集成，bpmcenter的conf目录下存放着几个配置文件，这几个配置文件就是需要集成进去的文件，请将这几个文件拷贝至本地工程目录，并保证该目录下的文件最终会发布到WEB-INF/classes/目录下。
             <itemizedlist>
               <listitem><para>
-                applicationContext_resource.xml文件，该文件是FixFlow Engine的数据库和运行引擎的重要部分。请留意本配置文件，在实际项目中可能会用到多个数据源，如果希望流程引擎连接多个数据源可以在本文件里增加内容。
+                applicationContext_resource.xml文件，该文件是FixFlow Engine的数据库和运行引擎的重要部分。请留意本配置文件，在实际项目中可能会用到多个数据源，如果希望流程引擎连接多个数据源也需要在本文件里增加内容。
                 <programlisting language="xml">
                   <![CDATA[ 
 <?xml version="1.0" encoding="UTF-8"?>
