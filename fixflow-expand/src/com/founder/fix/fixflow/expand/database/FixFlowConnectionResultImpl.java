@@ -65,6 +65,9 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 	public void colseConnection() {
 		try {
 			if (!this.connection.isClosed()) {
+				if(this.connection.getAutoCommit()==false){
+					commitConnection();
+				}
 				this.connection.close();
 			}
 

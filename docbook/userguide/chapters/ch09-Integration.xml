@@ -58,76 +58,8 @@
         bpmcenter是一个web项目，而本地项目也是一个web项目，现在要将两个项目集成到一起，使本地项目可以使用工作流。
         <orderedlist>
           <listitem><para>
-            代码集成，bpmcenter的src目录下的底层文件夹内有两个java文件，这两个文件就是代码集成文件。请将这两个文件按照原有的包路径拷贝至本地项目。这两个文件是FixFlow Engine提供的扩展部分，一个是LoginServlet，其作用是登录，具体内容文中以注释方式标出，该部分代码可以提供给用户进行各种扩展。
-            <programlisting language="java">
-            /**
-            * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-            */
-            protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean("DB_FIX_BIZ_BASE");
-            Connection connection = null;
-            
-            try {
-            String context = request.getContextPath();
-            //从登录的口获取到用户名和密码
-            String userName = request.getParameter("userName");
-            String password = request.getParameter("password");
-            List list= new ArrayList();
-            //该接口同时也是登出的口，当发现有特殊参数时则做登出操作。
-            String logout = request.getParameter("doLogOut");
-            if(StringUtil.isNotEmpty(logout)){
-            request.getSession().invalidate();
-            response.sendRedirect(context+"/fixflow/login.jsp");
-            return;
-            }
-            //这里进行用户名密码验证，可以任意修改这里的代码。
-            list.add(userName);
-            password = MD5.getMD5(password.getBytes());
-            list.add(password);
-            
-            StringBuffer sb = new StringBuffer();
-            sb.append("select USERID,USERNAME from AU_USERINFO where LOGINID=? and PASSWORD=?");
-            connection = dbcf.createConnection();
-            //这里是自带的数据库操作方式。
-            SqlCommand sqlcommand = new SqlCommand(connection);
-            List list2 = sqlcommand.queryForList(sb.toString(),list);
-            if(list2!=null &amp;&amp; list2.size()>0){
-            //这里约定了一个参数，流程引擎在运行时会默认从session里按照这两个key来获取参数，如果替换了登录的方式，请保证这两个key依然可以获取到正确的数据
-            request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, ((Map)list2.get(0)).get("USERID"));
-            request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, ((Map)list2.get(0)).get("USERNAME"));
-            
-            //登录时根据登录的目标切换跳转目标
-            String loginType = request.getParameter("loginType");
-            if(loginType !=null &amp;&amp; loginType.equals("on")){
-            request.setAttribute("action", "processDefinitionList");
-            response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
-            }else{
-            request.setAttribute("action", "getMyTask");
-            response.sendRedirect(context+"/FlowCenter?action=getMyTask");
-            }
-            
-            }else{
-            response.sendRedirect(context+"/fixflow/login.jsp");
-            }
-            
-            
-            } catch (SQLException e) {
-            e.printStackTrace();
-            }finally{
-            //最终关闭数据库连接
-            try {
-            if(connection!=null &amp;&amp; !connection.isClosed())
-            connection.close();
-            } catch (SQLException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            }
-            }
-            
-            }
-            </programlisting>
-            另一个类是DemoServlet，该类是平台自带的一个示例，对外示例了如何使用平台进行保存和调用流程下一步。这个示例是针对servlet的情况，对于SSI的集成并没有太大参考价值，所以这里没有贴出，本文会对针对struts2的情况进行专门描述。
-          </para></listitem>
+            jar包类库集成，将web工程里的WEB-INF/lib目录下的所有文件都拷贝到本地项目里。这些jar包的版本也许会低于本地项目的版本，这种情况请保留最新版本，其他版本删除即可。
+            </para></listitem>
           <listitem><para>
             配置文件集成，bpmcenter的conf目录下存放着几个配置文件，这几个配置文件就是需要集成进去的文件，请将这几个文件拷贝至本地工程目录，并保证该目录下的文件最终会发布到WEB-INF/classes/目录下。
             <itemizedlist>
