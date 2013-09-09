@@ -252,7 +252,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userId = (String) filter.get("userId");
 		String processType = StringUtil.getString(filter.get("processType"));
-		
+		String status = StringUtil.getString(filter.get("status"));
+		ProcessInstanceType processInstanceStatus = FlowUtilServiceImpl.getInstanceStaus(status);
 		ProcessEngine engine = getProcessEngine(userId);
 		try{
 			ProcessInstanceQuery tq = engine.getRuntimeService()
@@ -302,6 +303,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 					tq.initiator(userId);
 				else
 					tq.taskParticipants(userId);
+			}
+			if(processInstanceStatus !=null){
+				tq.processInstanceStatus(processInstanceStatus);
 			}
 			tq.orderByUpdateTime().desc();
 			instances = tq.listPagination(pageIndex, rowNum);
