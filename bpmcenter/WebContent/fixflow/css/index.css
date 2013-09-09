@@ -2,6 +2,7 @@
 
 /* 2013-8-13 */
 /* body { min-width:1000px;} */
+body { background-color: #f2f2f2;}
 .main-panel { width:100%; height:100%; display:table;}
 .header { display:table-row; width:100%; height:70px; overflow:hidden;}
 .top { height:22px; line-height:22px; overflow:hidden;}
