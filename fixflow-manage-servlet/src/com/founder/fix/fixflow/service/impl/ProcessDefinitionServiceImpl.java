@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.service.impl;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public class ProcessDefinitionServiceImpl extends CommonServiceImpl implements P
 		return resultMap;
 	}
 	
-	public void deployByZip(Map<String, Object> params) {
+	public void deployByZip(Map<String, Object> params) throws Exception {
 		String userid = StringUtil.getString(params.get("userId"));
 		FileItem file = (FileItem)params.get("ProcessFile");
 		ProcessEngine processEngine = null;
@@ -111,9 +112,7 @@ public class ProcessDefinitionServiceImpl extends CommonServiceImpl implements P
 			}else{
 				processEngine.getModelService().deploymentByZip(new ZipInputStream(file.getInputStream()));
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		finally{
 			closeProcessEngine();
 		}
