@@ -448,18 +448,35 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String processName = processInstance.getProcessDefinition().getName();
 			try{
 				TaskQuery tq = engine.getTaskService().createTaskQuery();
-				
+				IdentityService identityService = engine.getIdentityService();
 				tq.processInstanceId(processInstanceId);
 				tq.taskIsEnd().orderByEndTime().asc();
 				List<TaskInstance> instances = tq.list();
 				List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 				for(TaskInstance tmp:instances){
-					instanceMaps.add(tmp.getPersistentState());
+					Map<String,Object> instanceMap = tmp.getPersistentState();
+					String assigneeUserId = tmp.getAssignee();
+					UserTo tmpUser = identityService.getUserTo(assigneeUserId);
+					if(tmpUser!=null){
+						instanceMap.put("assgneeUserName", tmpUser.getUserName());
+					}
+					instanceMaps.add(instanceMap);
 				}
 				tq.taskNotEnd().orderByTaskCreateTime().asc();
 				List<TaskInstance> instancesNotEnd = tq.list();
+				
+				List<Map<String,Object>> notEndInstanceMaps = new ArrayList<Map<String,Object>>();
+				for(TaskInstance tmp:instancesNotEnd){
+					Map<String,Object> instanceMap = tmp.getPersistentState();
+					String assigneeUserId = tmp.getAssignee();
+					UserTo tmpUser = identityService.getUserTo(assigneeUserId);
+					if(tmpUser!=null){
+						instanceMap.put("assgneeUserName", tmpUser.getUserName());
+					}
+					notEndInstanceMaps.add(instanceMap);
+				}
 				Map<String,Map<String,Object>> postionMap = engine.getModelService().GetFlowGraphicsElementPosition(processInstance.getProcessDefinitionId());
-				result.put("notEnddataList", instancesNotEnd);
+				result.put("notEnddataList", notEndInstanceMaps);
 				result.put("dataList", instanceMaps);
 				result.put("positionInfo", JSONUtil.parseObject2JSON(postionMap));
 				result.put("taskEndedJson", JSONUtil.parseObject2JSON(instanceMaps));
