@@ -64,22 +64,21 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 	public Map<String,Object> getProcessInstances(Map<String,Object> params) throws SQLException{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
+		ProcessEngine engine = getProcessEngine(userId);
+		RuntimeService runtimeService = engine.getRuntimeService();
+		IdentityService identityService = engine.getIdentityService();
+		FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
 		String processDefinitionKey = StringUtil.getString(params.get("processDefinitionKey"));
 		String processInstanceId    = StringUtil.getString(params.get("processInstanceId"));
 		String subject				= StringUtil.getString(params.get("subject"));
 		String bizKey				= StringUtil.getString(params.get("bizKey"));
 		String initor				= StringUtil.getString(params.get("initor"));
 		String status				= StringUtil.getString(params.get("status"));
-		ProcessInstanceType processInstanceStatus = getInstanceStaus(status);
-		ProcessEngine engine = getProcessEngine(userId);
-		RuntimeService runtimeService = engine.getRuntimeService();
-		
-		IdentityService identityService = engine.getIdentityService();
+		ProcessInstanceType processInstanceStatus = FlowUtilServiceImpl.getInstanceStaus(status);
 		try{
 			
 			String pageI = StringUtil.getString(params.get("pageIndex"));
 			String rowI = StringUtil.getString(params.get("pageSize"));
-			
 			int pageIndex=1;
 			int rowNum   =10;
 			if(StringUtil.isNotEmpty(pageI)){
@@ -102,7 +101,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			}
 			processInstanceQuery.orderByUpdateTime().desc();
 			List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
-			FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
+			
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 			for(ProcessInstance tmp: processInstances){
 				Map<String, Object> persistentState = tmp.getPersistentState();
@@ -131,18 +130,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		return resultMap;
 	}
 	
-	private ProcessInstanceType getInstanceStaus(String status){
-		if("运行中".equals(status)){
-			return ProcessInstanceType.RUNNING;
-		}else if("暂停".equals(status)){
-			return ProcessInstanceType.SUSPEND;
-		}else if("完成".equals(status)){
-			return ProcessInstanceType.COMPLETE;
-		}else if("终止".equals(status)){
-			return ProcessInstanceType.TERMINATION;
-		}
-		return null;
-	}
+	
 	public Map<String,Object> getProcessTokens(Map<String,Object> params) throws SQLException{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
