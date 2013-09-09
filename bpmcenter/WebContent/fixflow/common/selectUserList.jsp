@@ -46,6 +46,7 @@
 </body>
 <script>
 $(function(){
+	var obj = window.dialogArguments;
 	var isMulti = Fix.Util.GetQueryString("isMulti");
 	$("table#dataList tr").click(function(){
 		if(isMulti=="false"){
@@ -76,7 +77,8 @@ $(function(){
 			eval("var j = " + r);
 			rv[index] = j;
 		});
-		window.opener.rv = rv;
+		//window.opener.rv = rv;
+		obj.fn(obj.params,rv);
 		window.close();
 	});
 })

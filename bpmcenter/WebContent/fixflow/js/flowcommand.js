@@ -33,32 +33,49 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var obj = {
 						  type:"user"
 						};
-				var d = FixSelect(obj);
-				params={
+				var params = {};
+				var fn = function(params,d){
+					params['transferUserId'] = d[0].USERID;
+				}
+				var d = FixSelect(obj,fn,params);
+				/*params={
 						//被转发的UserId，这里设定了就是管理员
 						transferUserId:d[0].USERID
-				};
+				};*/
 			}else if(type=="pending"){//转办
 				var obj = {type:"user"};
-			  	var d = FixSelect(obj);
-			  	if(d&&d.length>0){
+				var params = {};
+				var fn = function(params,d){
+					if(d&&d.length>0){
+						params['recoverNodeId:d'] = d[0].nodeId;
+				  	}else{
+				  		return;
+				  	}
+				};
+			  	var d = FixSelect(obj,fn,params);
+			  	/*if(d&&d.length>0){
 					params={
 							//转办的任务编号
 						pendingUserId:d[0].USERID
 					};
 			  	}else{
 			  		return;
-			  	}
+			  	}*/
 			}else if(type=="recover"){
 				var obj = {
 						  type:"node",
 						taskId:taskId
 						};
-				var d = FixSelect(obj);
-				params={
+				
+				var params = {};
+				var fn = function(params,d){
+					params['recoverNodeId:d'] = d[0].nodeId;
+				};
+				var d = FixSelect(obj,fn,params);
+				/*params={
 						//追回的任务编号
 					recoverNodeId:d[0].nodeId
-				};
+				};*/
 			}else if(type=="reminders"){
 				params={
 						//提醒某一个用户
@@ -74,23 +91,31 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						  type:"node",
 						taskId:taskId
 						};
-				var d = FixSelect(obj);
-				params={
+				var params = {};
+				var fn = function(params,d){
+					params['rollBackNodeId:d'] = d[0].nodeId;
+				};
+				var d = FixSelect(obj,fn,params);
+				/*params={
 						//退回到某个节点
 					rollBackNodeId:d[0].nodeId
 						
-				};
+				};*/
 			}else if(type=="rollBackTaskByTaskId"){
 				var obj = {
 						type:"step",
 						taskId:taskId
 						};
-				var d = FixSelect(obj);
-				params={
+				var params = {};
+				var fn = function(params,d){
+					params['rollBackTaskId:d'] = d[0].taskId;
+				};
+				var d = FixSelect(obj,fn,params);
+				/*params={
 						//退回到某个节点
 					rollBackTaskId:d[0].taskId
 						
-				};
+				};*/
 			}
 			
 			if(confirm("确认提交?")){
