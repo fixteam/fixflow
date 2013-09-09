@@ -69,11 +69,11 @@ $(function(){
 			for(var i=0;i<rowDatas.length;i++){
 				var d = rowDatas[i].split("=");
 				r+=d[0];
-				r+=":\""+d[1]+"\","
+				r+=":\""+d[1]+"\",";
 			};
 			r = r.substring(0,r.length-1);
-			r+="}"
-			eval("var j = " + r)
+			r+="}";
+			eval("var j = " + r);
 			rv[index] = j;
 		});
 		window.opener.rv = rv;

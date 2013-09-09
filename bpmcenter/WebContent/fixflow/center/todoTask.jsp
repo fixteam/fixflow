@@ -72,7 +72,7 @@ $(function(){
    	 url+="?";
     }
     url+="taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
-   	window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
+   	window.open(url);
   });
 });
 </script>

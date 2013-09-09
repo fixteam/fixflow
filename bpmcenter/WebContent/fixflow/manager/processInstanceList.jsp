@@ -38,7 +38,7 @@
 		}
 		if(id!=""){
 			var obj = {};
-		    window.showModalDialog("FlowManager?action=toProcessVariable&processInstanceId="+id,obj,"dialogWidth=800px;dialogHeight=600px");
+		    window.open("FlowManager?action=toProcessVariable&processInstanceId="+id);
 	    }
   	}
   	
@@ -55,7 +55,7 @@
 		}
 		if(id!=""){
 			var obj = {};
-		    window.showModalDialog("FlowManager?action=processTokenList&processInstanceId="+id,obj,"dialogWidth=800px;dialogHeight=600px");
+		    window.open("FlowManager?action=processTokenList&processInstanceId="+id);
 	    }
   	}
   	function doSuspend(){
