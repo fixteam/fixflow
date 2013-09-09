@@ -73,8 +73,8 @@ $("a[name=flowGraph]").click(function(){
 			                <td class="title-r">发起时间：</td>
 			                <td><input type="text" id="text_4" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
 			                 - <input type="text" id="text_5" name="startlTimeE" class="fix-input" style="width:69px;" value="${result.startlTimeE}" onClick="WdatePicker()"/></td>
-			                <td></td>
-			                <td></td>
+			                <td class="title-r">流程状态：</td>
+			                <td><input type="text" id="text_6" name="status" class="fix-input" style="width:160px;" value="${result.status}"/></td>
 			                <td></td>
 			              </tr>
 			            </table>
@@ -92,6 +92,7 @@ $("a[name=flowGraph]").click(function(){
 								<th width="130">更新时间</th>
 								<th>当前步骤</th>
 								<th>流程状态</th>
+								<th>操作</th>
 							</thead>
 							<tbody>
 								<c:forEach items="${result.dataList}" var="dataList"
@@ -104,6 +105,12 @@ $("a[name=flowGraph]").click(function(){
 										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 										<td>${dataList.nowNodeInfo}</td>
+										<td>
+											<c:if test="${dataList.instanceStatus == 'SUSPEND'}" var="runStatue">暂停</c:if>
+											<c:if test="${dataList.instanceStatus == 'RUNNING'}" var="runStatue">运行中</c:if>
+											<c:if test="${dataList.instanceStatus == 'COMPLETE'}" var="runStatue">完成</c:if>
+											<c:if test="${dataList.instanceStatus == 'TERMINATION'}" var="runStatue">终止</c:if>
+										</td>
 										<td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">查看</a></td>
 									</tr>
 								</c:forEach>
