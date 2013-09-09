@@ -100,10 +100,10 @@
 
 				<c:if test="${result.dataList!=null}">
 					<thead>
-						<th style="width:160px">处理者</th>
 						<th style="width:160px">步骤名称</th>
 						<th style="width:160px">到达时间</th>
 						<th style="width:160px">完成时间</th>
+						<th style="width:160px">处理者</th>
 <!-- 						<th>预计时间</th> -->
 						<th style="width:80px">处理结果</th>
 						<th>处理意见</th>
@@ -111,10 +111,11 @@
 					</thead>
 					<c:forEach items="${result.dataList}" var="row" varStatus="status">
 						<tr <c:if test="${status.index%2!=0}">class="gray"</c:if>>
-							<td>${row.assignee}</td>
+							
 							<td>${row.nodeName}</td>
 							<td><fmt:formatDate value="${row.createTime}" type="both" /></td>
 							<td><fmt:formatDate value="${row.endTime}" type="both" /></td>
+							<td>${row.assgneeUserName}</td>
 <%-- 							<td>${row.expectedExecutionTime}</td> --%>
 							<td class="left">${row.commandMessage}</td>
 							<td class="left">${row.taskComment}</td>
@@ -124,10 +125,10 @@
 					<c:forEach items="${result.notEnddataList}" var="row"
 						varStatus="status">
 						<tr <c:if test="${status.index%2!=0}">class="gray"</c:if>>
-							<td>${row.assignee}</td>
 							<td>${row.nodeName}</td>
 							<td><fmt:formatDate value="${row.createTime}" type="both" /></td>
 							<td><fmt:formatDate value="${row.endTime}" type="both" /></td>
+							<td>${row.assgneeUserName}</td>
 <%-- 							<td>${row.expectedExecutionTime}</td> --%>
 							<td class="left">${row.commandMessage}</td>
 							<td class="left">${row.taskComment}</td>

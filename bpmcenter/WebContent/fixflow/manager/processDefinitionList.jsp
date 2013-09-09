@@ -22,6 +22,11 @@ a{text-decoration: none;}
 		window.showModalDialog("fixflow/manager/deployment.jsp",obj,"dialogWidth=600px;dialogHeight=400px");
 	}
 	
+	function searchProcess(){
+		$("#action").val("processDefinitionList");
+		document.forms[0].submit();
+	}
+	
 	function deleteDeploy(obj){
 		if($(obj).attr("class")=="btn-disable"){
 			alert("请选择流程");
@@ -52,7 +57,7 @@ a{text-decoration: none;}
 		 	deploymentId = $(checkList[0]).attr("deploymentId");
 		}
 		var obj = {};
-		window.showModalDialog("manager/deployment.jsp?deploymentId="+deploymentId,obj,"dialogWidth=600px;dialogHeight=400px");
+		window.showModalDialog("fixflow/manager/deployment.jsp?deploymentId="+deploymentId,obj,"dialogWidth=600px;dialogHeight=400px");
 	}
 	
 	function downloadProcess(obj){
@@ -107,7 +112,7 @@ a{text-decoration: none;}
                 <td><input type="text" id="text_4" name="queryProcessName" class="fix-input" value="${result.queryProcessName}"/></td>
                 <td class="title-r">流程分类：</td>
                 <td><input type="text" id="text_4" name="queryType" class="fix-input" value="${result.queryType}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+                <td><div class="btn-normal"><a href="#" onclick="searchProcess()">查 找</a></div></td>
               </tr>
             </table>
         </div>
