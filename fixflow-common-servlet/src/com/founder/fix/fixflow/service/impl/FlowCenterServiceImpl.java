@@ -390,7 +390,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.subjectLike(subject);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
-			String rowI = StringUtil.getString(filter.get("rowNum"));
+			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
 			int rowNum   =20;
