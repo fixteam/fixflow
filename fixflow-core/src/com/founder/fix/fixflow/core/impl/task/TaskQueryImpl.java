@@ -57,6 +57,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 	protected GroupTo candidateGroup;
 	protected String end;
 	protected String businessKey;
+	protected String businessKeyLike;
+	
+
 	protected boolean isAgent=false;
 	
 	protected String nodeId;
@@ -200,6 +203,15 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		this.businessKey = businessKey;
 		return this;
 	}
+	
+	public TaskQueryImpl businessKeyLike(String businessKey) {
+		if (businessKey == null) {
+			throw new FixFlowException("业务关联键不能为空!");
+		}
+		this.businessKeyLike = businessKey;
+		return this;
+	}
+	
 	
 	public TaskQueryImpl addTaskType(TaskInstanceType taskInstanceType) {
 		
@@ -732,6 +744,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public QueryLocation getQueryLocation() {
 		return queryLocation;
+	}
+	
+	public String getBusinessKeyLike() {
+		return businessKeyLike;
 	}
 
 }
