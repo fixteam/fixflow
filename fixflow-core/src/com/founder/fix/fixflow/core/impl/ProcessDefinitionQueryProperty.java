@@ -38,6 +38,7 @@ public class ProcessDefinitionQueryProperty implements QueryProperty {
   public static final ProcessDefinitionQueryProperty PROCESS_DEFINITION_VERSION = new ProcessDefinitionQueryProperty("PD.VERSION");
   public static final ProcessDefinitionQueryProperty PROCESS_DEFINITION_NAME = new ProcessDefinitionQueryProperty("PD.PROCESS_NAME");
   public static final ProcessDefinitionQueryProperty DEPLOYMENT_ID = new ProcessDefinitionQueryProperty("PD.DEPLOYMENT_ID");
+  public static final ProcessDefinitionQueryProperty DEPLOYMENT_TIME = new ProcessDefinitionQueryProperty("DP.DEPLOY_TIME");//DP是fixflow_def_deployment表简称
 
   private String name;
 

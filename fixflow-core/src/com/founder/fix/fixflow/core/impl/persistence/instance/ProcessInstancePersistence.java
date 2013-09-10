@@ -433,7 +433,7 @@ public class ProcessInstancePersistence {
 		
 		if (processInstanceQuery.getBusinessKeyLike() != null) {
 			sqlString = sqlString + " and E.BIZ_KEY LIKE '%"+processInstanceQuery.getBusinessKeyLike()+"%'";
-			objectParamWhere.add(processInstanceQuery.getBusinessKey());
+			//objectParamWhere.add(processInstanceQuery.getBusinessKeyLike());
 		}
 		
 		if (processInstanceQuery.getIsPigeonhole() != null) {

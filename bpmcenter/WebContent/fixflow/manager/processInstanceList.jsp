@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>待办任务</title>
+<title>流程实例管理</title>
 <jsp:include page="head.jsp" flush="true"/>
 <script type="text/javascript">
 
@@ -89,7 +89,19 @@
   	}
   	
   	$(function(){
-		Fix.Util.ClickTr(null,true,true,0);
+		Fix.Util.ClickTr(null,true,true,0,function($table){
+		  var flag = true;
+		  $("tbody tr.selected",$table).each(function(){
+		    var state = $("td:eq(9)",$(this)).html();
+		    //alert(state);
+		    if(state.trim()=="运行中" ||state.trim()=="暂停"){
+		      flag = false;
+		    }
+		  });
+		  if(!flag){
+		    $("div#gd").removeClass("btn-normal").addClass("btn-disable");
+		  }
+		});
 		
 	  $("a[name=flowGraph]").click(function(){
 		    var pdk = $(this).attr("pdk");
@@ -97,6 +109,10 @@
 		    var obj = {};
 		    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
 		  });
+	  
+	  var status = '${result.status}';
+	  if(status!='')
+	  	$("#status").val(status);
 	});
 </script>
 </head>
@@ -129,7 +145,13 @@
                 <td><input type="text" id="text_4" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
                 <td class="title-r">状态：</td>
                 <td>
-                <input type="text" id="text_5" name="status" class="fix-input" style="width:160px;" value="${result.status}"/>
+                <select id="status" name="status" class="fix-input" style="width:160px;">
+                  <option value ="">请选择</option>
+				  <option value ="SUSPEND">暂停</option>
+				  <option value ="RUNNING">运行中</option>
+				  <option value ="COMPLETE">完成</option>
+				  <option value ="TERMINATION">终止</option>
+				</select>
                 </td>
                 <td></td>
               </tr>
@@ -142,7 +164,7 @@
            	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
         	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
            	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
-          	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
+          	<div id="gd" class="btn-normal" data-scope=multi style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">

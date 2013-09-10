@@ -96,7 +96,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			String bizKey	   = StringUtil.getString(filter.get("bizKey"));
 			if(StringUtil.isNotEmpty(bizKey))
-				tq.businessKey(bizKey);
+				tq.businessKeyLike(bizKey);
 			
 			Date dates = null;
 			Date datee = null;
@@ -106,7 +106,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
 			}
 			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
 				tq.taskCreatedAfter(datee);
@@ -274,7 +276,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
 			}
 			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
 				tq.startTimeAfter(dates);
@@ -369,7 +373,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
 			}
 			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
 				tq.archiveTimeAfter(dates);

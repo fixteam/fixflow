@@ -197,6 +197,11 @@ public class TaskInstancePersistence {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.BIZKEY=? ";
 			objectParamWhere.add(taskQuery.getBusinessKey());
 		}
+		
+		if (taskQuery.getBusinessKeyLike() != null) {
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.BIZKEY LIKE '%"+taskQuery.getBusinessKeyLike()+"%' ";
+			//objectParamWhere.add(taskQuery.getBusinessKeyLike());
+		}
 		if (taskQuery.getProcessInstanceId() != null) {
 			if(taskQuery.isContainsSubProcess()){
 				//这个地方需要用到递归去寻找所有的子流程
