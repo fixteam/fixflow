@@ -43,5 +43,5 @@ public interface FlowIdentityService {
 	
 	Map<String, Object> getUserDelegationInfo(String agentId) throws SQLException;
 	
-	void saveUserDelegationInfo(Map<String, Object> delegationInfo);
+	void saveUserDelegationInfo(Map<String, Object> delegationInfo) throws Exception;
 }
