@@ -62,7 +62,7 @@ public class DeploymentManager extends AbstractManager {
 			List<ProcessDefinitionBehavior> processDefinitions = getDbSqlSession().createProcessDefinitionQuery().deploymentId(deploymentId).list();
 
 			for (ProcessDefinitionBehavior processDefinition : processDefinitions) {
-				String processDefinitionId = processDefinition.getId();
+				String processDefinitionId = processDefinition.getProcessDefinitionId();
 
 				commandContext.getProcessInstanceManager().deleteProcessInstancesByProcessDefinition(processDefinitionId, "deleted deployment", cascade);
 
