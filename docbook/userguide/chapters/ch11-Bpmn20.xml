@@ -942,9 +942,140 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     <section xml:id="bpmn.ExtensionElements.connector">
       <title>连接器</title>
       <para>
-        
+        连接器的使用主要在于封装一些在流程中常用操作，用可视化界面代替原有静态方法，并提供在流程各种事件中扩展。本例以发送短信为例子介绍连接器的使用。
       </para>
-      
+      <para>按照项目经验，这部分工作会分为“封装”连接器和“调用”连接器。</para>
+      <section xml:id="bpmn.ExtensionElements.connector.create">
+        <title>创建连接器</title>
+        <orderedlist>
+          <listitem>
+            <para>打开设计器，点击流程设置->创建连接器</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.1.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>填写连接器ID，名称，描述等信息，分类可选择新建或者原有分类。</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.2.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>发送短信需要配置收件人号码和信息内容，所以创建一个页面，填写页面ID，标题，描述等，并创建两个参数：收件人号码和信息内容。</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.3.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>配置输出参数，这里可以将发送短信之后的结果返回给FixFlow在流程中使用,当然，实际使用中我们可能会返回更复杂的数据结构，如List、Map等，如：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.6.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>点击确定->完成，连接器创建成功，下面需要写发送短信的业务逻辑，设计器已经为我们创建好了相关的java类和xml配置文件（flow-expand\src\com\founder\fix\fixflow\expand\connector\TestSendMessage包下）。</para>
+          </listitem>
+          <listitem>
+            <para>实现发送短信的具体逻辑</para>
+            <para>查看生成的java代码，其中receiveId和messageInfo是我们刚才创建的变量ID，execute方法是最终执行的方法，这里的业务逻辑可能要调用第三方的短信猫接口，需要自己去补充。
+              我们这里仅仅做简单的输出，表明我们拿到了相关的参数，可以进行复杂的业务计算等：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.5.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>到这里我们的“封装”的工具就完成了。下面看下流程开发人员怎么“调用”这个连接器。</para>
+          </listitem>
+        </orderedlist>
+        
+      </section>
+      <section xml:id="bpmn.ExtensionElements.connector.use">
+        <title>使用连接器</title>
+        <para>连接器作用在不同的地方有不同的触发事件，作用在流程上时有启动触发，终止触发，结束触发；作用在节点上时有进入时触发，分配任务时触发，离开时触发。</para>
+        <orderedlist>
+          <listitem> 
+            <para>打开设计器，打开一个简单流程，打开Properties属性页，点击流程空白处，在属性页中选择连接器，如图：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.1.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>点击添加->选择TestFixFlow分类下TestSendMessage连接器，如图：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.2.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>填写基本信息</para>
+            <itemizedlist>
+              <listitem><para>名称、描述用来描述这个连接器的作用。</para></listitem>
+              <listitem><para>跳过策略，通过条件来设置次连接器的跳过策略。详细跳过策略介绍可参考<link linkend="bpmn.ExtensionElements.skip">跳过策略</link></para></listitem>
+              <listitem>
+                <para>定时器可以让我们方便的设置延迟，循环执行次功能</para>
+                <para>当勾选了定时器配置中的 启用定时器之后 便可以在时间表达式中去指定 Trigger（触发器）。
+                  对于时间表达式我们使用的是Quartz定时任务框架所带的功能。
+                </para>
+                <para>
+                  这里我们说明一下：我们的时间表达式配置里边,可以指定一个Trigger，
+                  也可以指定多个Trigger,可以指定在指定时间触发的Trigger，
+                  也可以指定复杂的间歇性Trigger。如：
+                </para>
+                <programlisting>import org.quartz.Trigger;
+import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
+
+cal = Calendar.getInstance();
+cal.add(Calendar.MINUTE, +1);
+trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());
+trigger2=QuartzUtil.createCronTrigger(processInfo, "0 0 12 * * ?");
+
+List&lt;Trigger> triggers=new ArrayList&lt;Trigger>();
+triggers.add(trigger1);
+triggers.add(trigger2);
+return triggers;          
+                </programlisting>
+              </listitem>
+              <listitem>
+                <para>连接器如果失效时，可以选择忽略或者抛出异常等。</para>
+              </listitem>
+            </itemizedlist>
+            <para>这里我们只设置简单的当流程启动时给指定人员发送短信，点击下一步，如：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.3.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem><para>填写我们创建的两个参数：收件人号码和短信内容，点击下一步：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.4.png"/>
+            </imageobject></mediaobject>
+            <para>当然我们这里的号码和短信内容和FixFlow流程中的其他配置一样，都可以写复杂的java代码的。</para>
+          </listitem>
+          <listitem>
+            <para>配置输出参数，左边的result是我们创建连接器时的输出参数，右边是次流程定义的变量。</para>
+          </listitem>
+          <listitem>
+            <para>点击完成，保存，发布流程。</para>
+          </listitem>
+          <listitem>
+            <para>启动tomcat，访问bpmcenter，启动此流程，查看控制台输出：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.5.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+        </orderedlist>
+        <para>至此，连接器的使用基本就结束了，需要注意的是当连接器作用在不同的地方时，其可选择的触发事件是不一样的。FixFlow为了方便用户，已经将
+        项目中常用的连接器封装好了，比如：发送短信，发送邮件，超时自动处理，webService等。</para>
+        
+        <para>下面介绍两个最常用的连接器：</para>
+        <orderedlist>
+          <listitem>
+            <para>超时处理，超时处理。</para>
+          </listitem>
+          <listitem>
+            <para>自动发送邮件。这个经常使用在当流程到达某个节点时，自动给相关处理者发送一封提醒邮件</para>
+          </listitem>
+        </orderedlist>
+        
+      </section>
     </section>
     
     <section xml:id="bpmn.ExtensionElements.dataVariable">

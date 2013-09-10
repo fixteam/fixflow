@@ -140,7 +140,7 @@ $(function(){
         <div class="content">
         	<table width="100%" class="fix-table">
 							<thead>
-								<th width="30"><input type="checkbox" id="checkall" name="checkall"/></th>
+								<th width="30"></th>
 								<th width="30">&nbsp;</th>
 								<th width="30"></th>
 								<th>流程</th>
