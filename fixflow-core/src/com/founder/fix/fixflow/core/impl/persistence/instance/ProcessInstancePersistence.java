@@ -52,6 +52,7 @@ import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 import com.founder.fix.fixflow.core.objkey.VariableObjKey;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class ProcessInstancePersistence {
@@ -649,7 +650,23 @@ public class ProcessInstancePersistence {
 		}
 		return processInstancePersistenceToList;
 	}
-
+	
+	/**
+	 * 根据流程定义Id查询所有实例
+	 * @param processDefinitionId
+	 * @return
+	 */
+	public List<String> selectProcessInstanceIdByDefinitionId(String processDefinitionId){
+		List<String> processInstanceIds = new ArrayList<String>();
+		String sql = "select processinstance_id from "+ProcessInstanceObjKey.getTableName(QueryLocation.RUN_HIS)+" p where p.processdefinition_id =?";
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(processDefinitionId);
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sql, objectParamWhere);
+		for(Map<String, Object> tmp :dataObj){
+			processInstanceIds.add(StringUtil.getString(tmp.get("PROCESSINSTANCE_ID")));
+		}
+		return processInstanceIds;
+	}
 	/**
 	 * 
 	 * @param processInstanceQuery

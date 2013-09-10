@@ -243,6 +243,11 @@ public class PersistentSession {
 			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			return processInstancePersistence.selectProcessInstanceByQueryCriteria((ProcessInstanceQueryImpl) parameter, page);
 		}
+		
+		if(statement.equals("selectProcessInstanceIdsByProcessDefinitionId")){
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
+			return processInstancePersistence.selectProcessInstanceIdByDefinitionId(StringUtil.getString(parameter));
+		}
 
 		if (statement.equals("selectTokenByQueryCriteria")) {
 			TokenPersistence tokenPersistence = ProcessObjectFactory.FACTORYINSTANCE.createTokenPersistence(connection);

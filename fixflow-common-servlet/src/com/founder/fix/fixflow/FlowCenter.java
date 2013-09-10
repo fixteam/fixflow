@@ -80,6 +80,7 @@ public class FlowCenter extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String userId = StringUtil.getString(request.getSession().getAttribute(
 				FlowCenterService.LOGIN_USER_ID));
+		
 		if (StringUtil.isEmpty(userId)) {
 			String context = request.getContextPath();
 			response.sendRedirect(context + "/");
@@ -264,6 +265,16 @@ public class FlowCenter extends HttpServlet {
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
+			}
+			else if(action.equals("saveDelegation")){	//选择步骤列表
+				
+				String agentInfoJson = StringUtil.getString(request.getParameter("insertAndUpdate"));
+				if(StringUtil.isNotEmpty(agentInfoJson)){
+					Map<String, Object> delegationInfo = JSONUtil.parseJSON2Map(agentInfoJson);
+					this.getFlowIdentityService().saveUserDelegationInfo(delegationInfo );
+				}
+				response.setContentType("text/html;charset=UTF-8"); 
+				response.getWriter().write("<script>alert('保存完成');window.close();</script>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
