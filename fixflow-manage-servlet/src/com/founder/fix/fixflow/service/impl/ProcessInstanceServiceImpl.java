@@ -91,11 +91,11 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			if(StringUtil.isNotEmpty(processDefinitionKey))
 				processInstanceQuery.processDefinitionKey(processDefinitionKey);
 			if(StringUtil.isNotEmpty(processInstanceId))
-				processInstanceQuery.processInstanceId(processDefinitionKey);
+				processInstanceQuery.processInstanceId(processInstanceId);
 			if(StringUtil.isNotEmpty(subject))
-				processInstanceQuery.subjectLike(processDefinitionKey);
+				processInstanceQuery.subjectLike(subject);
 			if(StringUtil.isNotEmpty(initor))
-				processInstanceQuery.initiatorLike(processDefinitionKey);
+				processInstanceQuery.initiatorLike(initor);
 			if(processInstanceStatus !=null){
 				processInstanceQuery.processInstanceStatus(processInstanceStatus);
 			}
@@ -109,7 +109,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 				ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
 				String processDefinitionName = processDefinitionBehavior.getName();
 				persistentState.put("processDefinitionName", processDefinitionName);
-				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
+				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId()); 
 				persistentState.put("nowNodeInfo", nowNodeInfo);
 				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
 				if(user !=null){
