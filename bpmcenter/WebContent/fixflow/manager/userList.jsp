@@ -117,12 +117,13 @@
 	   <jsp:include page="../common/page.jsp" flush="true"/>
 	    </div>
 	  </div>
-</form>
-	</div>
-</div>
-<!-- 隐藏参数部分 -->
+	  <!-- 隐藏参数部分 -->
 <input type="hidden" name="action" id="action" value="getUserList"> 
 <input type="hidden" name="supId" id="supId"> 
 <input type="hidden" name="groupType" id="groupType" value="dept"> 
+</form>
+	</div>
+</div>
+
 </body>
 </html>
