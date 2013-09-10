@@ -135,6 +135,7 @@ public class ProcessDefinitionPersistence {
 	public String selectProcessDefinitionsByQueryCriteria(String selectProcessDefinitionsByQueryCriteriaSql, ProcessDefinitionQueryImpl processDefinitionQuery,
 			List<Object> objectParamWhere) {
 		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " from FIXFLOW_DEF_PROCESSDEFINITION PD ";
+		selectProcessDefinitionsByQueryCriteriaSql += " left join FIXFLOW_DEF_DEPLOYMENT DP ON PD.DEPLOYMENT_ID = DP.ID ";
 		// 自定义扩展查询
 		if (processDefinitionQuery.getQueryExpandTo() != null && processDefinitionQuery.getQueryExpandTo().getLeftJoinSql() != null
 				&& !processDefinitionQuery.getQueryExpandTo().getLeftJoinSql().equals("")) {
@@ -197,7 +198,7 @@ public class ProcessDefinitionPersistence {
 
 	public List<ProcessDefinitionBehavior> selectProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery, Page page) {
 		List<Object> objectParamWhere = new ArrayList<Object>();
-		String selectProcessDefinitionsByQueryCriteriaSql = " select " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " PD.* ";
+		String selectProcessDefinitionsByQueryCriteriaSql = " select " + Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy") + " PD.* ,DP.*";
 		if (processDefinitionQuery.getQueryExpandTo() != null && processDefinitionQuery.getQueryExpandTo().getFieldSql() != null
 				&& !processDefinitionQuery.getQueryExpandTo().getFieldSql().equals("")) {
 			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " , "
