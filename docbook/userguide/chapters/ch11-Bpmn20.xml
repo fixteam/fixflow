@@ -496,7 +496,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       <section xml:id="bpmn.ExclusiveGateway.GraphicalNotation">
         <title>图形符号</title>
         <para> 
-          排他网关(ExclusiveGateway)图形为一个菱形里边有一个X,。注意,一个网关如果内部是空的则默认为排他网关。
+          排他网关(ExclusiveGateway)图形为一个菱形里边有一个X。注意,一个网关如果内部是空的则默认为排他网关。
           <mediaobject ><imageobject>
             <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
@@ -545,41 +545,291 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     
     <section xml:id="bpmn.ParallelGateway">
       <title>Parallel Gateway</title>
-      <para>
+      <section xml:id="bpmn.ParallelGateway.Description">
+        <title>描述</title>
+        <para>
+          并行网关(ParallelGateway)用于将流程产生多个并行的分支,也可以将多个并行的分支合并回一个主线。
+
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis role="bold">分散</emphasis>(Diverging):  
+                当并行网关处于分散(Diverging)状态的时候,流程令牌(token)经过的时候,会被分散出和网关输出顺序流相同数据量的分支,并每个分支沿着对应的顺序流向下执行。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">合并</emphasis>(Converging): 
+                当并行网关处于合并(Converging)状态的时候,当分支令牌经过的时候,分支令牌会停留在网关上,等待其他的分支一起走到该网关,然后合并为一个继续向下。
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        <para>
+          分散、合并原理解释: 令牌 token1 走到 ParallelGateway1(Diverging) 的时候,token1会生成两个子令牌 token1.1 和 token1.2,两个子令牌沿着顺序流向下面的节点运行,token1父令牌
+          停留在ParallelGateway1上面,当token1.1到达 ParallelGateway2(Converging) 的时候,会停在上面等待 它的"兄弟" token1.2,当token1.2到达ParallelGateway2(Converging)的时候,
+          两个子令牌都被结束,同时激活父令牌token1,将token1拉到ParallelGateway2,沿着后面的线条向下运行。
+        </para>
+        <para>
+          <emphasis>注意: </emphasis> 并行网关处于分散的时候,会忽略掉后面顺序流的条件,直接向下执行,这是并行网关和包容网关最大的区别。
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ParallelGateway.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          并行网关(ParallelGateway)图形为一个菱形里边有一个"+"。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ParallelGateway.XMLRepresentation">
+        <title>XML描述</title>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[ <bpmn2:parallelGateway id="ParallelGateway_1" name=""></bpmn2:parallelGateway>]]></programlisting>
+        </para>
+        <para>
+          下面是一个合并、分散例子的XML表示:
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_7" name="提交">
+  <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_7" targetRef="ParallelGateway_1"/>
+
+<bpmn2:parallelGateway id="ParallelGateway_1" name="" gatewayDirection="Diverging">
+  <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+</bpmn2:parallelGateway>
+
+<bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_2"/>
+<bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_4"/>
+
+<bpmn2:userTask id="UserTask_2" name="并行审批1">
+  <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:userTask id="UserTask_4" name="并行审批2">
+  <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+</bpmn2:userTask>
+    
+<bpmn2:parallelGateway id="ParallelGateway_2" name="" gatewayDirection="Converging">
+  <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+  <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+</bpmn2:parallelGateway>
+   
+<bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="UserTask_2" targetRef="ParallelGateway_2"/>
+<bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_4" targetRef="ParallelGateway_2"/>
+
+<bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="ParallelGateway_2" targetRef="UserTask_8"/>
+
+<bpmn2:userTask id="UserTask_8" name="最终审批">   
+  <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+</bpmn2:userTask>]]>
+          </programlisting>
+        </para>
         
-      </para>
+        <para>
+          FixFlow的分支和合并要遵循同时分散,同时收回的原则,一次分散出来的子令牌必须在一个合并网关上合并。例如下面的例子：
+        </para>
+        
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+        
+      </section>
+      
+      <section xml:id="bpmn.ParallelGateway.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
     <section xml:id="bpmn.InclusiveGateway">
-      <title>Parallel Gateway</title>
-      <para>
+      <title>InclusiveGateway</title>
+      <section xml:id="bpmn.InclusiveGateway.Description">
+        <title>描述</title>
+        <para>
+          包容网关(InclusiveGateway)更像是排他网关和并行网关的结合,它会验证后面的每条顺序流,如果后面有多条顺序流条件都满足则产生并发,如只有一个
+          满足,则令牌正常往下流转不产生分支,如没有一条顺序流满足则抛出异常。
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.InclusiveGateway.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          包容网关(ExclusiveGateway)图形为一个菱形里边有一个"o"圆圈。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.InclusiveGateway.XMLRepresentation">
+        <title>XML描述</title>
+     
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:inclusiveGateway id="InclusiveGateway_1"></bpmn2:inclusiveGateway>]]></programlisting>
+        </para>
         
-      </para>
+        <para>
+          下面是一个使用包容网关和平行网关例子的XML表示:
+          <programlisting language="xml"><![CDATA[
+<bpmn2:inclusiveGateway id="InclusiveGateway_1" name="">
+  <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_26</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_27</bpmn2:outgoing>
+</bpmn2:inclusiveGateway>
+
+<bpmn2:userTask id="UserTask_16" name="UserTask_2">
+  <bpmn2:incoming>SequenceFlow_26</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_28</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:userTask id="UserTask_17" name="UserTask_3">
+  <bpmn2:incoming>SequenceFlow_27</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_29</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:parallelGateway id="ParallelGateway_5" name="" gatewayDirection="Converging">
+  <bpmn2:incoming>SequenceFlow_28</bpmn2:incoming>
+  <bpmn2:incoming>SequenceFlow_29</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
+</bpmn2:parallelGateway>
+
+<bpmn2:sequenceFlow id="SequenceFlow_26" name="${金额>300}" sourceRef="InclusiveGateway_1" targetRef="UserTask_16">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${金额>300}">${金额>300}</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+
+<bpmn2:sequenceFlow id="SequenceFlow_27" name="${金额>400}" sourceRef="InclusiveGateway_1" targetRef="UserTask_17">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${金额>400}">${金额>400}</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+    
+<bpmn2:sequenceFlow id="SequenceFlow_28" name="" sourceRef="UserTask_16" targetRef="ParallelGateway_5"/>
+
+<bpmn2:sequenceFlow id="SequenceFlow_29" name="" sourceRef="UserTask_17" targetRef="ParallelGateway_5"/>
+
+<bpmn2:userTask id="UserTask_19" name="UserTask_1">
+  <bpmn2:outgoing>SequenceFlow_32</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:userTask id="UserTask_20" name="UserTask_4">
+  <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
+</bpmn2:userTask>
+
+<bpmn2:sequenceFlow id="SequenceFlow_31" name="" sourceRef="ParallelGateway_5" targetRef="UserTask_20"/>
+
+<bpmn2:sequenceFlow id="SequenceFlow_32" name="" sourceRef="UserTask_19" targetRef="InclusiveGateway_1"/>]]></programlisting>
+        </para>
+        <para>
+          上面的例子使用包容网关和并行网关来完成操作,当包容网关后面有多个分支的时候,并行网关负责合并,如果包容网关后面没有产生并发的话,那么并行网关将忽略不记。
+        </para>
+        
+        <para>
+          <emphasis>注意: </emphasis> 所有非网关的FlowNode节点,后面都默认实现了包容网关的功能,FixFlow允许开发人员不使用网关来控制顺序流走向,但这样做是不推荐的,除非万不得已。
+        </para>
+        <para>
+          下面这样做法FixFLow引擎是支持的,但是不推荐这么用。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.InclusiveGateway.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.designer.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
-    <section xml:id="bpmn.ComplexGateway">
-      <title>Complex Gateway</title>
-      <para>
-        
-      </para>
-    </section>
 
   </section>
   
   
   <section xml:id="bpmn.Tasks">
     <title>Tasks</title>
+    <para>任务是一个流程里面最基本的活动，一个任务在使用的过程中不能再被拆分到更细的水平去执行。一般情况下，任务是被最终用户或应用程序执行的。</para>
     <para>
       
+      <emphasis role="bold">BPMN2.0 Task类型元素图:</emphasis>
+      <mediaobject ><imageobject>
+        <imagedata  align="center" fileref="images/bpmn.Tasks.1.png"/>
+      </imageobject></mediaobject>
     </para>
     
     <section xml:id="bpmn.UserTask">
       <title>User Task</title>
-      <para>
+      
+      <section xml:id="bpmn.UserTask.Description">
+        <title>描述</title>
+        <para>
+          人工任务(UserTask)是用于模拟人工工作的，通常是需要被人来操作完成的。当执行到一个人工任务时，这个任务列表中的用户或者组都会被分配到此任务。 
+        </para>
+      </section>
+      <section xml:id="bpmn.UserTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          一个人工任务是图形为一个圆角矩形,有一个小的用户图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.UserTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" name="人工任务"/>]]></programlisting>
+        </para>
+       
+      </section>
+      
+      
+      <section xml:id="bpmn.UserTask.assignment">
+        <title>任务分配</title>
+        
+        <para>
+          人工任务需要指派给一个用户或者是一个组(部门、角色)
+        </para>
+        
+      </section>
+      
+      
     </section>
     
+   
     <section xml:id="bpmn.ScriptTask">
       <title>Script Task</title>
       <para>
