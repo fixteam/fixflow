@@ -30,7 +30,7 @@ Fix = {
 				$("div[data-scope=multi]").removeClass("btn-disable").addClass("btn-normal");
 			}
 		},
-		ClickTr:function($table,isMulti,hasBox,boxPosition){
+		ClickTr:function($table,isMulti,hasBox,boxPosition,fn){
 			if(!$table)$table = $("table.fix-table");
 			if(!isMulti)isMulti = false;
 			if(!hasBox)hasBox = false;
@@ -53,6 +53,7 @@ Fix = {
 						}
 						$(this).parents("tr").trigger("boxClick");
 						Fix.Util.CheckBtnStatus();
+						fn($table);
 					});
 				});
 			}
@@ -74,6 +75,7 @@ Fix = {
 					}
 				}
 				Fix.Util.CheckBtnStatus();
+				fn($table);
 			}).bind("boxClick",function(){
 				var isChecked = $("td:eq("+boxPosition+") input",$(this)).attr("checked");
 				if(isChecked){
