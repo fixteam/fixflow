@@ -75,13 +75,13 @@ public class ProcessDefinitionServiceImpl extends CommonServiceImpl implements P
 				rowNum = Integer.valueOf(rowI);
 			}
 			
-			QueryExpandTo queryExpandTo = new QueryExpandTo();
-			//添加扩展的字段
-			queryExpandTo.setFieldSql("fixflow_def_deployment.deploy_Time");
-			//增加扩展查询的left join语句
-			queryExpandTo.setLeftJoinSql("left join fixflow_def_deployment on PD.deployment_id = fixflow_def_deployment.id");
-			processDefinitionQuery.queryExpandTo(queryExpandTo);
-			processDefinitionQuery.orderByProcessDefinitionVersion().desc();
+//			QueryExpandTo queryExpandTo = new QueryExpandTo();
+//			//添加扩展的字段
+//			queryExpandTo.setFieldSql("fixflow_def_deployment.deploy_Time");
+//			//增加扩展查询的left join语句
+//			queryExpandTo.setLeftJoinSql("left join fixflow_def_deployment on PD.deployment_id = fixflow_def_deployment.id");
+//			processDefinitionQuery.queryExpandTo(queryExpandTo);
+			processDefinitionQuery.orderByDeploymentTime().desc();
 			List<ProcessDefinitionBehavior> processDefinitions = processDefinitionQuery.listPagination(pageIndex, rowNum);
 			Long count = processDefinitionQuery.count();
 			List<Map<String,Object>> processDefinitionList = new ArrayList<Map<String,Object>>();
