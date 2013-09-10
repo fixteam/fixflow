@@ -174,6 +174,10 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
 	public ProcessDefinitionQuery orderByProcessDefinitionName() {
 		return orderBy(ProcessDefinitionQueryProperty.PROCESS_DEFINITION_NAME);
 	}
+	
+	public ProcessDefinitionQuery orderByDeploymentTime() {
+		return orderBy(ProcessDefinitionQueryProperty.DEPLOYMENT_TIME);
+	}
 
 	// results ////////////////////////////////////////////
 
