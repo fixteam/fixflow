@@ -32,6 +32,9 @@ a{text-decoration: none;}
 			alert("请选择流程");
 			return;
 		}
+		if(!confirm("此操作会删除所有流程相关数据，并且不可恢复，请慎重选择，确认继续吗？")){
+			return;
+		}
 		var deploymentId = "";
 		var checkList = $("input:checked");
 		for(var i=0;i<checkList.length;i++){
@@ -87,6 +90,19 @@ a{text-decoration: none;}
 	}
 	$(function(){
 		Fix.Util.ClickTr(null,true,true,0);
+		$("#checkAll").click(function(obj){
+			if($(this).attr("checked")=="checked"){
+				$("table.fix-table tbody tr").each(function(){
+				  if(!$(this).hasClass("selected"))
+				  	$(this).click();
+				});
+			}else{
+				$("table.fix-table tbody tr").each(function(){
+					 if($(this).hasClass("selected"))
+				  		$(this).click();
+				});
+			}
+		});
 	});
 </script>
 </head>
@@ -126,7 +142,7 @@ a{text-decoration: none;}
 	 
 		<table style="width:100%;" class="fix-table">
 		  <thead>
-		   <th width="2%"></th>
+		   <th width="2%"><input type="checkbox" id="checkAll" /></th>
 		   <th >流程名称</th>
 		    <th width="15%">编号</th>
 		     <th width="5%">流程版本</th>
