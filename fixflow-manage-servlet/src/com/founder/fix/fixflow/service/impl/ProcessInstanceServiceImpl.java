@@ -94,6 +94,8 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 				processInstanceQuery.processInstanceId(processInstanceId);
 			if(StringUtil.isNotEmpty(subject))
 				processInstanceQuery.subjectLike(subject);
+			if(StringUtil.isNotEmpty(bizKey))
+				processInstanceQuery.processInstanceBusinessKeyLike(bizKey);
 			if(StringUtil.isNotEmpty(initor))
 				processInstanceQuery.initiatorLike(initor);
 			if(processInstanceStatus !=null){
