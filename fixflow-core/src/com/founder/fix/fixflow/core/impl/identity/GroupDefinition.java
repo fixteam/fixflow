@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
@@ -144,7 +145,21 @@ public abstract class GroupDefinition {
 	 * @return
 	 */
 	public SqlCommand getSqlCommand() {
-		String dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
+		DesignerOrgConfig designerOrgConfig=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig();
+		
+		boolean isDefaultConfig=true;
+		try {
+			isDefaultConfig=StringUtil.getBoolean(designerOrgConfig.getIsDefaultConfig());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String dataBaseId="";
+		if(isDefaultConfig){
+			dataBaseId=Context.getProcessEngineConfiguration().getSelectedDatabase().getId();
+		}else{
+			dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
+		}
+
 		Connection connection = Context.getDbConnection(dataBaseId);// Context.getDbConnection();
 		SqlCommand sqlCommand = new SqlCommand(connection);
 		return sqlCommand;

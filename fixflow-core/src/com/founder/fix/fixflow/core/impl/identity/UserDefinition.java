@@ -22,9 +22,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
+import com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public abstract class UserDefinition {
 	
@@ -47,7 +49,22 @@ public abstract class UserDefinition {
 	 * @return
 	 */
 	public SqlCommand getSqlCommand(){
-		String dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
+		
+		DesignerOrgConfig designerOrgConfig=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig();
+		
+		boolean isDefaultConfig=true;
+		try {
+			isDefaultConfig=StringUtil.getBoolean(designerOrgConfig.getIsDefaultConfig());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		String dataBaseId="";
+		if(isDefaultConfig){
+			dataBaseId=Context.getProcessEngineConfiguration().getSelectedDatabase().getId();
+		}else{
+			dataBaseId=Context.getProcessEngineConfiguration().getFixFlowConfig().getDesignerOrgConfig().getDataBaseId();
+		}
+
 		Connection connection = Context.getDbConnection(dataBaseId);// Context.getDbConnection();
 		SqlCommand sqlCommand = new SqlCommand(connection);
 		return sqlCommand;
