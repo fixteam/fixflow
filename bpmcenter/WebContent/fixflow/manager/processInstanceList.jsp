@@ -89,7 +89,19 @@
   	}
   	
   	$(function(){
-		Fix.Util.ClickTr(null,true,true,0);
+		Fix.Util.ClickTr(null,true,true,0,function($table){
+		  var flag = true;
+		  $("tbody tr.selected",$table).each(function(){
+		    var state = $("td:eq(9)",$(this)).html();
+		    //alert(state);
+		    if(state.trim()=="运行中" ||state.trim()=="暂停"){
+		      flag = false;
+		    }
+		  });
+		  if(!flag){
+		    $("div#gd").removeClass("btn-normal").addClass("btn-disable");
+		  }
+		});
 		
 	  $("a[name=flowGraph]").click(function(){
 		    var pdk = $(this).attr("pdk");
@@ -152,7 +164,7 @@
            	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
         	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
            	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
-          	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
+          	<div id="gd" class="btn-normal" data-scope=multi style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
