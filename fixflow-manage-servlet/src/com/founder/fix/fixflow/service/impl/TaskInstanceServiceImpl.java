@@ -70,8 +70,8 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
 			
-			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
-			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+//			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+//			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			
 			String descritpion = StringUtil.getString(filter.get("title"));
 			if(StringUtil.isNotEmpty(descritpion))
