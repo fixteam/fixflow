@@ -29,9 +29,9 @@ function FixSelect(obj,fn,params){
 			break;
 			
 	}
-	/*if(rv){
+	if(rv){
 		return rv;
 	}else{
 		return window.rv;
-	}*/
+	}
 };
