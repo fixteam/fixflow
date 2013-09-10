@@ -109,7 +109,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 				ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
 				String processDefinitionName = processDefinitionBehavior.getName();
 				persistentState.put("processDefinitionName", processDefinitionName);
-				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId());
+				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId()); 
 				persistentState.put("nowNodeInfo", nowNodeInfo);
 				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
 				if(user !=null){
