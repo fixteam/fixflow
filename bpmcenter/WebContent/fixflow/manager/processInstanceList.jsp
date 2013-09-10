@@ -97,6 +97,10 @@
 		    var obj = {};
 		    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
 		  });
+	  
+	  var status = '${result.status}';
+	  if(status!='')
+	  	$("#status").val(status);
 	});
 </script>
 </head>
@@ -129,7 +133,13 @@
                 <td><input type="text" id="text_4" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
                 <td class="title-r">状态：</td>
                 <td>
-                <input type="text" id="text_5" name="status" class="fix-input" style="width:160px;" value="${result.status}"/>
+                <select id="status" name="status" class="fix-input" style="width:160px;">
+                  <option value ="">请选择</option>
+				  <option value ="SUSPEND">暂停</option>
+				  <option value ="RUNNING">运行中</option>
+				  <option value ="COMPLETE">完成</option>
+				  <option value ="TERMINATION">终止</option>
+				</select>
                 </td>
                 <td></td>
               </tr>

@@ -207,13 +207,13 @@ public class FlowUtilServiceImpl extends CommonServiceImpl {
 	 * @return
 	 */
 	public static ProcessInstanceType getInstanceStaus(String status){
-		if("运行中".equals(status)){
+		if("RUNNING".equals(status)){
 			return ProcessInstanceType.RUNNING;
-		}else if("暂停".equals(status)){
+		}else if("SUSPEND".equals(status)){
 			return ProcessInstanceType.SUSPEND;
-		}else if("完成".equals(status)){
+		}else if("COMPLETE".equals(status)){
 			return ProcessInstanceType.COMPLETE;
-		}else if("终止".equals(status)){
+		}else if("TERMINATION".equals(status)){
 			return ProcessInstanceType.TERMINATION;
 		}
 		return null;
