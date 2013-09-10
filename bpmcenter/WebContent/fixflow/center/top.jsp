@@ -16,7 +16,7 @@
         <div class="logo"></div>
         <ul>
         <li><a id="getMyProcess" href="FlowCenter?action=getMyProcess"><h1>发起流程</h1><h4>start flow</h4></a></li>
-        <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>代办任务</h1><h4>schedule</h4></a></li>
+        <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>待办任务</h1><h4>schedule</h4></a></li>
         <li><a id="getAllProcess" href="FlowCenter?action=getAllProcess"><h1>流程追踪</h1><h4>flow query</h4></a></li>
         <li><a id="getPlaceOnFile" href="FlowCenter?action=getPlaceOnFile"><h1>归档流程</h1><h4>place on file</h4></a></li>
         </ul>
