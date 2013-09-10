@@ -91,10 +91,11 @@ Fix = {
 		}
 	},
 	OpenMethod:{
-		openWindow:function(url, width, height){
+		openWindow:function(url, width, height, winName){
 			var _width = width || 800;
 			var _height = height || 600;
-			window.open(url);
+			var wn = winName || "nw"
+			window.open(url,wn);
 		}
 		
 	}	
