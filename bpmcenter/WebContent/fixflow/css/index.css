@@ -4,12 +4,14 @@
 /* body { min-width:1000px;} */
 body { background-color: #f2f2f2;}
 .main-panel { width:100%; height:100%; display:table;}
-.header { display:table-row; width:100%; height:70px; overflow:hidden;}
+.header { display:table-row; width:100%; height:70px; overflow:hidden; position:relative;}
 .top { height:22px; line-height:22px; overflow:hidden;}
 .top-right { float:right; padding:2px 0; text-align:right; color:#DDD; font-size:12px;}
 .top-right ul { padding-right:4px;}
 .top-right li { float:left; display:inline-block; padding:0 8px;}
 .top-right li a { color:#DDD;font-weight: bold;}
+.top-right-l2 {  position:absolute; right:5px; top:20px;}
+.top-right-l2 li { float:left; display:inline-block; padding:0 8px;}
 .menu { display:block; padding:3px; height:60px; background:#404040; border-bottom:4px solid #a8a9ad;}
 .menu .logo { float:left; margin:2px; width:320px; height:56px; background:url(../images/logo.jpg) no-repeat center;}
 .menu ul { margin:0; padding:0;}
