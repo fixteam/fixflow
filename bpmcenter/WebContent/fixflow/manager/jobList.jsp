@@ -14,7 +14,7 @@ $(function(){
   	var jobKeyGroup = $(this).attr("jobKeyGroup");
   	var jobKeyName = $(this).attr("jobKeyName");
 	var obj = {};
-	window.showModalDialog("FlowManager?action=viewJobInfo&jobKeyName="+jobKeyName+"&jobKeyGroup="+jobKeyGroup,obj,"dialogWidth=940px;dialogHeight=400px");
+	window.open("FlowManager?action=viewJobInfo&jobKeyName="+jobKeyName+"&jobKeyGroup="+jobKeyGroup);
   });
   //暂停
    $("a[name=suspend]").click(function(){

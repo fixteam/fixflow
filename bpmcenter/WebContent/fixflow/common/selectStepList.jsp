@@ -38,6 +38,7 @@
 </body>
 <script>
 $(function(){
+	var obj = window.dialogArguments;
 	$("table#dataList tr").click(function(){
 		$("table#dataList tr.selected").removeClass("selected");
 		$(this).addClass("selected");
@@ -59,7 +60,11 @@ $(function(){
 			eval("var j = " + r)
 			rv[index] = j;
 		});
-		window.opener.rv = rv;
+		if(window.opener){
+		  window.opener.rv = rv;
+		}else{
+		  obj.fn(obj.params,rv);
+		}
 		window.close();
 	});
 })

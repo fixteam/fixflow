@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	function openUserIcon() {
 		var obj = {};
-		window.showModalDialog("FlowCenter?action=getUserIcon",obj,"dialogWidth=800px;dialogHeight=600px");
+		window.open("FlowCenter?action=getUserIcon");
 	}
 </script>
 <body>

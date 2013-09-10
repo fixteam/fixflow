@@ -13,7 +13,7 @@
 <script type="text/javascript">
 function viewGroupInfo(groupId,groupType){
 	var obj = {};
-	window.showModalDialog("FlowManager?action=getGroupInfo&viewGroupId="+groupId+"&viewGroupType="+groupType,obj,"dialogWidth=800px;dialogHeight=600px");
+	window.open("FlowManager?action=getGroupInfo&viewGroupId="+groupId+"&viewGroupType="+groupType);
 }
 </script>
 <SCRIPT type="text/javascript">

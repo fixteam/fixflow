@@ -49,7 +49,7 @@ $(function(){
      }
      url+="userId=<%=request.getAttribute("userId")%>&processDefinitionKey="+pdk;
     var obj = {};
-    window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.open(url);
   });
 });
 </script>

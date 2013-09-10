@@ -38,6 +38,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 
 	protected String executionId;
 	protected String businessKey;
+	protected String businessKeyLike;
+	
 	protected String processDefinitionId;
 	protected String processDefinitionKey;
 	protected String superProcessInstanceId;
@@ -83,6 +85,14 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 			throw new FixFlowException("Business key is null");
 		}
 		this.businessKey = businessKey;
+		return this;
+	}
+	
+	public ProcessInstanceQuery processInstanceBusinessKeyLike(String businessKey) {
+		if (businessKey == null) {
+			throw new FixFlowException("Business key is null");
+		}
+		this.businessKeyLike = businessKey;
 		return this;
 	}
 
@@ -468,7 +478,11 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return processInstanceVariableValueIsLike;
 	}
 	
-	
+	public String getBusinessKeyLike() {
+		return businessKeyLike;
+	}
+
+
 
 
 }

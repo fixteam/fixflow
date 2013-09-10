@@ -39,7 +39,7 @@
 		}
 		$("#"+color).css("border","1px solid #fff");
 		$("#updateCache").click(function(){ 
-			window.showModalDialog("FlowManager?action=updateCache");
+			window.open("FlowManager?action=updateCache");
 		});
 		
 		$("#setAgent").click(function(){
@@ -72,7 +72,7 @@
 	chooseSelect();
 	function updateMyself(){
 		var obj = {};
-		window.showModalDialog("FlowCenter?action=getUserInfo&isUpdate=true",obj,"dialogWidth=800px;dialogHeight=600px");
+		window.open("FlowCenter?action=getUserInfo&isUpdate=true");
 	}
 	
 	function chooseSelect(){

@@ -46,6 +46,7 @@
 </body>
 <script>
 $(function(){
+	var obj = window.dialogArguments;
 	var isMulti = Fix.Util.GetQueryString("isMulti");
 	$("table#dataList tr").click(function(){
 		if(isMulti=="false"){
@@ -69,14 +70,18 @@ $(function(){
 			for(var i=0;i<rowDatas.length;i++){
 				var d = rowDatas[i].split("=");
 				r+=d[0];
-				r+=":\""+d[1]+"\","
+				r+=":\""+d[1]+"\",";
 			};
 			r = r.substring(0,r.length-1);
-			r+="}"
-			eval("var j = " + r)
+			r+="}";
+			eval("var j = " + r);
 			rv[index] = j;
 		});
-		window.opener.rv = rv;
+		if(window.opener){
+		  window.opener.rv = rv;
+		}else{
+		  obj.fn(obj.params,rv);
+		}
 		window.close();
 	});
 })

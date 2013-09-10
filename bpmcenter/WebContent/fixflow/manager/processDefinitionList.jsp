@@ -19,7 +19,7 @@ a{text-decoration: none;}
 <script type="text/javascript">
 	function deployment(){
 		var obj = {};
-		window.showModalDialog("fixflow/manager/deployment.jsp",obj,"dialogWidth=600px;dialogHeight=400px");
+		window.open("fixflow/manager/deployment.jsp");
 	}
 	
 	function searchProcess(){
@@ -57,7 +57,7 @@ a{text-decoration: none;}
 		 	deploymentId = $(checkList[0]).attr("deploymentId");
 		}
 		var obj = {};
-		window.showModalDialog("fixflow/manager/deployment.jsp?deploymentId="+deploymentId,obj,"dialogWidth=600px;dialogHeight=400px");
+		window.open("fixflow/manager/deployment.jsp?deploymentId="+deploymentId);
 	}
 	
 	function downloadProcess(obj){

@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	function viewUser(userid){
 		var obj = {};
-		window.showModalDialog("FlowCenter?action=getUserInfo&targetUserId="+userid,obj,"dialogWidth=800px;dialogHeight=600px");
+		window.open("FlowCenter?action=getUserInfo&targetUserId="+userid);
 	}
 </script>
 <SCRIPT type="text/javascript">
