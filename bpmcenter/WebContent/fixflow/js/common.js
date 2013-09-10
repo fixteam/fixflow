@@ -53,7 +53,9 @@ Fix = {
 						}
 						$(this).parents("tr").trigger("boxClick");
 						Fix.Util.CheckBtnStatus();
-						fn($table);
+						if(typeof fn == "function"){
+							fn($table);
+						}
 					});
 				});
 			}
@@ -75,7 +77,9 @@ Fix = {
 					}
 				}
 				Fix.Util.CheckBtnStatus();
-				fn($table);
+				if(typeof fn == "function"){
+					fn($table);
+				}
 			}).bind("boxClick",function(){
 				var isChecked = $("td:eq("+boxPosition+") input",$(this)).attr("checked");
 				if(isChecked){
