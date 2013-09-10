@@ -117,7 +117,7 @@ public class FlowManager extends HttpServlet {
 			}
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
-			if ("processDefinitionList".endsWith(action)) {
+			if ("processDefinitionList".equals(action)) {
 				Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
