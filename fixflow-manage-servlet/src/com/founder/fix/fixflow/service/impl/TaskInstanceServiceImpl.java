@@ -131,7 +131,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 //				tq.taskAssignee(StringUtil.getString(filter.get("userId")));
 //				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 //			}
-			
+			tq.orderByTaskCreateTime().desc();
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
