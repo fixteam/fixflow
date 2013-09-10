@@ -199,8 +199,8 @@ public class TaskInstancePersistence {
 		}
 		
 		if (taskQuery.getBusinessKeyLike() != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.BIZKEY LIKE '%"+taskQuery.getBusinessKeyLike()+"%') ";
-			objectParamWhere.add(taskQuery.getBusinessKeyLike());
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.BIZKEY LIKE '%"+taskQuery.getBusinessKeyLike()+"%' ";
+			//objectParamWhere.add(taskQuery.getBusinessKeyLike());
 		}
 		if (taskQuery.getProcessInstanceId() != null) {
 			if(taskQuery.isContainsSubProcess()){
