@@ -29,6 +29,8 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.AbstractCustomExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
+import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
+import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
@@ -104,22 +106,22 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 	/**
 	 * 流程执行上下文对象
 	 */
-	protected ExecutionContext executionContext;
+	protected ExecutionContext executionContextAbstract;
 
 	/**
 	 * 任务处理命名
 	 */
-	protected TaskCommandInst taskCommandInst;
+	protected TaskCommandInst taskCommandInstAbstract;
 
 	/**
 	 * 正在操作的任务的实体
 	 */
-	protected TaskInstanceEntity taskInstanceEntity;
-	
+	protected TaskInstanceEntity taskInstanceEntityAbstract;
+
 	/**
 	 * 流程实例
 	 */
-	protected ProcessInstanceEntity processInstance;
+	protected ProcessInstanceEntity processInstanceAbstract;
 
 	/**
 	 * 加载流程相关参数
@@ -149,13 +151,13 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 
 		String nodeId = taskInstanceQuery.getNodeId();
 
-		this.processInstance = processInstanceManager.findProcessInstanceById(processInstanceId);
+		this.processInstanceAbstract = processInstanceManager.findProcessInstanceById(processInstanceId);
 
-		TokenEntity tokenEntity = this.processInstance.getTokenMap().get(tokenId);
+		TokenEntity tokenEntity = this.processInstanceAbstract.getTokenMap().get(tokenId);
 
-		this.executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity);
+		this.executionContextAbstract = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity);
 
-		ProcessDefinitionBehavior processDefinition = this.processInstance.getProcessDefinition();
+		ProcessDefinitionBehavior processDefinition = this.processInstanceAbstract.getProcessDefinition();
 
 		// 获取任务所在节点对象
 		UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
@@ -166,75 +168,102 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 
 			String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandTypeString).getName();
 
-			this.taskCommandInst = new TaskCommandInst(taskCommandTypeString, taskCommandName, null, taskCommandTypeString, true);
+			this.taskCommandInstAbstract = new TaskCommandInst(taskCommandTypeString, taskCommandName, null, taskCommandTypeString, true);
 
 		} else {
-			this.taskCommandInst = userTask.getTaskCommandsMap().get(this.userCommandId);
+			this.taskCommandInstAbstract = userTask.getTaskCommandsMap().get(this.userCommandId);
 		}
 
 		// 获取任务管理器
-		List<TaskInstanceEntity> taskInstances = this.processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
+		List<TaskInstanceEntity> taskInstances = this.processInstanceAbstract.getTaskMgmtInstance().getTaskInstanceEntitys();
 
 		for (TaskInstanceEntity taskInstance : taskInstances) {
 			if (taskInstance.getId().equals(this.taskId)) {
 
-				this.taskInstanceEntity = taskInstance;
+				this.taskInstanceEntityAbstract = taskInstance;
 
 				break;
 			}
 		}
 
-		this.executionContext.setTaskInstance(this.taskInstanceEntity);
+		if (AbstractCommandFilter.isAutoClaim()) {
+			this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+		}
+		if (this.taskInstanceEntityAbstract.getAssignee() == null) {
+
+			if (StringUtil.isNotEmpty(this.admin)) {
+				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(this.admin);
+			} else {
+				throw new FixFlowException("任务 " + taskId + " 无代理人!");
+			}
+
+		}
+
+		if (StringUtil.isNotEmpty(agent)) {
+			this.taskInstanceEntityAbstract.setAgent(Authentication.getAuthenticatedUserId());
+			if (StringUtil.isEmpty(this.taskInstanceEntityAbstract.getAssignee())) {
+				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(this.agent);
+			}
+
+		} else {
+			if (StringUtil.isEmpty(this.taskInstanceEntityAbstract.getAssignee())) {
+				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+			}
+			this.taskInstanceEntityAbstract.setAgent(null);
+		}
+
+		if (StringUtil.isNotEmpty(admin)) {
+			this.taskInstanceEntityAbstract.setAdmin(admin);
+		}
+
+		this.executionContextAbstract.setTaskInstance(this.taskInstanceEntityAbstract);
 
 	}
 
 	protected void addVariable() {
 		// 放置当前点击的按钮ID
-		this.processInstance.getContextInstance().addTransientVariable("fixVariable_userCommand", this.userCommandId);
+		this.processInstanceAbstract.getContextInstance().addTransientVariable("fixVariable_userCommand", this.userCommandId);
 		// 放置持久化变量
-		this.processInstance.getContextInstance().setVariableMap(this.variables);
+		this.processInstanceAbstract.getContextInstance().setVariableMap(this.variables);
 		// 放置瞬态变量
-		this.processInstance.getContextInstance().setTransientVariableMap(this.transientVariables);
+		this.processInstanceAbstract.getContextInstance().setTransientVariableMap(this.transientVariables);
 	}
-	
-	
-	protected void runCommandExpression(){
 
-		
-		this.executionContext.setTaskInstance(this.taskInstanceEntity);
-		if (this.taskCommandInst != null && this.taskCommandInst.getExpression() != null) {
+	protected void runCommandExpression() {
+
+		this.executionContextAbstract.setTaskInstance(this.taskInstanceEntityAbstract);
+		if (this.taskCommandInstAbstract != null && this.taskCommandInstAbstract.getExpression() != null) {
 			try {
-				
-				ExpressionMgmt.execute(this.taskCommandInst.getExpression(), this.executionContext);
+
+				ExpressionMgmt.execute(this.taskCommandInstAbstract.getExpression(), this.executionContextAbstract);
 			} catch (Exception e) {
 				throw new FixFlowException("用户命令表达式执行异常!", e);
 			}
 		}
 	}
-	
-	protected void saveProcessInstance(CommandContext commandContext){
+
+	protected void saveProcessInstance(CommandContext commandContext) {
 		try {
 			commandContext.getProcessInstanceManager().saveProcessInstance(getProcessInstance());
 		} catch (Exception e) {
 			throw new FixFlowException("流程实例持久化失败!", e);
 		}
 	}
-	
-	
+
 	public ExecutionContext getExecutionContext() {
-		return executionContext;
+		return executionContextAbstract;
 	}
 
 	public TaskCommandInst getTaskCommandInst() {
-		return taskCommandInst;
+		return taskCommandInstAbstract;
 	}
 
 	public TaskInstanceEntity getTaskInstanceEntity() {
-		return taskInstanceEntity;
+		return taskInstanceEntityAbstract;
 	}
 
 	public ProcessInstanceEntity getProcessInstance() {
-		return processInstance;
+		return processInstanceAbstract;
 	}
 
 }

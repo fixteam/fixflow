@@ -85,7 +85,7 @@ public class SubmitTaskCmd extends AbstractExpandTaskCmd<SubmitTaskCommand, Void
 		if (taskInstanceImpl != null) {
 			
 			//结束任务，并推动token运行
-			taskInstance.end(taskCommand, this.taskComment, this.agent, this.admin);
+			taskInstance.end(taskCommand, this.taskComment);
 
 		} else {
 			throw new FixFlowException("没有找到id为: " + taskId + " 的任务");

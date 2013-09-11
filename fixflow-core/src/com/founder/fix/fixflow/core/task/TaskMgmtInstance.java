@@ -28,6 +28,8 @@ public interface TaskMgmtInstance {
 
 	TaskInstanceEntity createTaskInstanceEntity(TaskDefinition taskDefinition, ExecutionContext executionContext);
 	
+	void addTaskInstanceEntity(TaskInstanceEntity taskInstance);
+	
 	public TaskInstanceEntity createTaskInstanceEntity(TaskDefinition taskDefinition, ExecutionContext executionContext,String taskGroup);
 
 	void setProcessInstance(ProcessInstance processInstance);

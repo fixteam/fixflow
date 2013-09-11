@@ -444,7 +444,7 @@ public class UserTaskBehavior extends UserTaskImpl {
 		TaskMgmtInstance tmi = getTaskMgmtInstance(token);
 		for (TaskInstanceEntity taskInstance : tmi.getTaskInstanceEntitys(token)) {
 			if (!taskInstance.hasEnded()) {
-				taskInstance.customEnd(null, null, null, null);
+				taskInstance.customEnd(null, null);
 			}
 		}
 	}
