@@ -18,12 +18,14 @@
 			var obj = {
 			  type:"user"
 			};
+			
 			var d = FixSelect(obj);
 			var userId = d[0].USERID;
 			var userName = d[0].USERNAME;
 			var $tr = $(this).closest("tr");
-			$("#auser", $tr).val(userId);
-			$("#auserName", $tr).text(userName);
+			$("#auser").val(userId);
+			$("#auserName").text(userName);
+			
 		})
 		
 		$("#saveBtn").click(function()	{
@@ -31,7 +33,14 @@
 			$("#detailTable tbody tr").each(function(i, tr){
 				var $tr = $(tr);
 				
-				var processId = $("#processId", $tr).val();;
+				var processId = $("#processId", $tr).val();
+				
+				if(processId == ""){
+					alert("请选择要授权的流程");
+					return;
+				}
+				
+				
 				var auser = $("#auser", $tr).val();
 
 				detailInfoList.push({
@@ -78,11 +87,11 @@
 					<tr>
 						<td class="title-r">开始时间:</td>
 						<td><input type="text" id="sDate" name="sDate" readOnly
-							value='<fmt:formatDate value="${result.agentInfo.sDate}"/>'
+							value='<fmt:formatDate value="${result.agentInfo.sDate}"  type="date" pattern="yyyy-MM-dd"/>'
 							onClick="WdatePicker()" /></td>
 						<td class="title-r">结束时间:</td>
 						<td><input type="text" id="eDate" name="eDate" readOnly
-							value='<fmt:formatDate value="${result.agentInfo.eDate}"/>'
+							value='<fmt:formatDate value="${result.agentInfo.eDate}" type="date" pattern="yyyy-MM-dd"/>'
 							onClick="WdatePicker()" /></td>
 					</tr>
 					<tr>
