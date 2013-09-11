@@ -114,7 +114,7 @@ $(function(){
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionKey}</td>
 										<td>${dataList.subject}</td>
-										<td>${dataList.startAuthor}</td>
+										<td>${dataList.startAuthorName}</td>
 										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 										<td>${dataList.BIZ_KEY}</td>

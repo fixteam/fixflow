@@ -437,7 +437,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
-			
+			IdentityService identityService = engine.getIdentityService();
 			for(ProcessInstance tmp:instances){
 				Map<String, Object> persistentState = tmp.getPersistentState();
 				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
@@ -446,6 +446,14 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				String processDefinitionName = processDefinitionBehavior.getName();
 				persistentState.put("processDefinitionName", processDefinitionName);
 				
+				
+				
+				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
+				if(user !=null){
+					persistentState.put("startAuthorName", user.getUserName());
+				}else{
+					persistentState.put("startAuthorName", tmp.getStartAuthor());
+				}
 				instanceMaps.add(persistentState);
 			}
 			result.put("dataList", instanceMaps);
