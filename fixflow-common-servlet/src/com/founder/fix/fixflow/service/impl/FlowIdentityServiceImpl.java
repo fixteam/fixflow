@@ -34,6 +34,7 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
+import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowIdentityService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
@@ -168,7 +169,7 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 //				String loginUser = "";
 				Map<String, Object> eachAgentInfo = new HashMap<String, Object>();
 				agentInfo.put("agentName", this.getUserName(agentId));
-				agentInfo.put("agent", agentId);
+				agentInfo.put("agentId", agentId);
 				agentInfo.put("sDate", new Date());
 				Calendar calendar = Calendar.getInstance();
 				calendar.add(Calendar.DAY_OF_MONTH, 14);
@@ -196,7 +197,6 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 		resultData.put("agentInfo", agentInfo);
 		// mapInfo.put("agentId", userId);
 		// mapInfo.put("agentName", this.getUserName(userId));
-		System.out.println(resultData);
 		return resultData;
 	}
 
@@ -210,7 +210,69 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 	 * (java.util.Map)
 	 */
 	@Override
-	public void saveUserDelegationInfo(Map<String, Object> delegationInfo) {
+	public void saveUserDelegationInfo(Map<String, Object> delegationInfo) throws Exception {
+		String operator = StringUtil.getString(delegationInfo.get("operator"));
+		
+//		SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy");
+//		Date s_date =(Date)sdf.parse(s);
+		
+		
+		String formatString = "yyyy-MM-dd";
+		Date sDate =  DateUtil.stringToDate(StringUtil.getString(delegationInfo.get("sDate")), formatString);
+		Date eDate = DateUtil.stringToDate(StringUtil.getString(delegationInfo.get("eDate")), formatString);
+		String status = StringUtil.getString(delegationInfo.get("status"));
+		String agentId = StringUtil.getString(delegationInfo.get("agentId"));
+		Date oDate = DateUtil.currentDate();
+		String viewType = "1";
+		Object detailInfoListObj = delegationInfo.get("detailInfoList");
+		List<Map<String, Object>> detailInfoList = new ArrayList<Map<String,Object>>();
+		if(detailInfoListObj != null){
+			detailInfoList = (List)detailInfoListObj;
+		}
+		
+		this.connection = FixFlowShellProxy
+				.getConnection(ConnectionManagement.defaultDataBaseId);
+		
+		/* 删除原来的数据 */
+		/* begin*/
+		Object[] objectParamWhere = { agentId };
+		SqlCommand sqlCommand = new SqlCommand(this.connection);
+		sqlCommand.delete("FIXFLOW_AGENT_AGENTINFO", "AGENT_ID=?",objectParamWhere);
+
+		sqlCommand.delete("FIXFLOW_AGENT_AGENTDETAILS", "AGENT_ID=?",objectParamWhere);
+		
+		/* 删除原来的数据 */
+		/* end */
+		
+		
+		/* 新增数据 */
+		/* begin*/
+		Map<String, Object> objectParam = new HashMap<String, Object>();
+		objectParam.put("OPERATOR", operator);
+		objectParam.put("SDATE", sDate);
+		objectParam.put("EDATE", eDate);
+		objectParam.put("STATUS", status);
+		objectParam.put("AGENT_ID", agentId);
+		objectParam.put("ODATE", oDate);
+		objectParam.put("VIEW_TYPE", viewType);
+		
+		// 执行插入语句
+		sqlCommand.insert("FIXFLOW_AGENT_AGENTINFO", objectParam);
+		
+		for(Map<String, Object> detailInfo : detailInfoList){
+			String processId = StringUtil.getString(detailInfo.get("processId"));
+			String auser = StringUtil.getString(detailInfo.get("auser"));
+					
+			objectParam = new HashMap<String, Object>();
+			objectParam.put("PROCESS_ID", processId);
+			objectParam.put("AUSER", auser);
+			objectParam.put("AGENT_ID", agentId);
+			objectParam.put("GUID", java.util.UUID.randomUUID().toString());
+			sqlCommand.insert("FIXFLOW_AGENT_AGENTDETAILS", objectParam);
+		}
+		
+		/* 新增数据 */
+		/* end */
 	}
 
 	/*
