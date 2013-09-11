@@ -60,8 +60,8 @@ $(function(){
 			eval("var j = " + r)
 			rv[index] = j;
 		});
-		if(window.opener){
-		  window.opener.rv = rv;
+		if(obj.opener){
+		  obj.opener.rv = rv;
 		}else{
 		  obj.fn(obj.params,rv);
 		}

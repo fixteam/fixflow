@@ -13,7 +13,8 @@ function FixSelect(obj,fn,params){
 	var isMulti = obj.isMulti||"false";
 	var passObj = {
 		fn:fn,
-		params:params
+		params:params,
+		opener:window
 	};
 	switch(obj.type){
 		case "user":
