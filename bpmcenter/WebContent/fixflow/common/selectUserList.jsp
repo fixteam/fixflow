@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户选择</title>
+<base target="_self" /> 
 <jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
