@@ -61,7 +61,7 @@ public class ProcessDefinitionServiceImpl extends CommonServiceImpl implements P
 			}
 			String processCategory = StringUtil.getString(params.get("queryType"));
 			if(StringUtil.isNotEmpty(processCategory)){
-				processDefinitionQuery.processDefinitionCategory(processCategory);
+				processDefinitionQuery.processDefinitionCategoryLike(processCategory);
 			}
 			String pageI = StringUtil.getString(params.get("pageIndex"));
 			String rowI = StringUtil.getString(params.get("pageSize"));
