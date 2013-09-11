@@ -10,14 +10,23 @@
 <jsp:include page="head.jsp" flush="true"/>
 <script type="text/javascript">
 function doSuspend(){
+	if(checkButton("doSuspend")){
+ 			return false;
+ 		}
 	doProcess("doTaskSuspend");
 }
 
 function doResume(){
+	if(checkButton("doResume")){
+ 			return false;
+ 		}
 	doProcess("doTaskResume");
 }
 
 function doTransfer(){
+	if(checkButton("doTransfer")){
+			return false;
+		}
 	var obj = {
 			  type:"user"
 			};
@@ -29,6 +38,9 @@ function doTransfer(){
 }
 
 function doRollBackNode(){
+	if(checkButton("doRollBackNode")){
+			return false;
+		}
 	var checkboxs = $("input:checked[name=checked]");
 	var id = "";
 	if(checkboxs.length!=1){
@@ -176,11 +188,11 @@ function clearInfo(){
             </table>
         </div>
         <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doResume();">恢复</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTransfer();">转发</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doRollBackNode();">退回-节点</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
+        	<div id="doSuspend" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+            <div id="doResume" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doResume();">恢复</a></div>
+            <div id="doTransfer" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTransfer();">转发</a></div>
+            <div id="doRollBackNode" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doRollBackNode();">退回-节点</a></div>
+            <div id="" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">

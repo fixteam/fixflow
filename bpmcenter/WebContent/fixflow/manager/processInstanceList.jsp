@@ -26,6 +26,9 @@
     	}
   	});
   	function updateVariables(){
+  		if(checkButton("updateVariables")){
+  			return false;
+  		}
  		var checkboxs = $("input[name=checked]");
  		var id = "";
  		
@@ -43,6 +46,9 @@
   	}
   	
   	function updateToken(){
+  		if(checkButton("updateToken")){
+  			return false;
+  		}
  		var checkboxs = $("input[name=checked]");
  		var id = "";
  		
@@ -59,33 +65,55 @@
 	    }
   	}
   	function doSuspend(){
+  		if(checkButton("doSuspend")){
+  			return false;
+  		}
   		doProcess("suspendProcessInstance");
   	}
   	function doContinue(){
+  		if(checkButton("doContinue")){
+  			return false;
+  		}
   		doProcess("continueProcessInstance");
   	}
   	function doTerminat(){
+  		if(checkButton("doTerminat")){
+  			return false;
+  		}
   		doProcess("terminatProcessInstance");
   	}
   	function doDelete(){
+  		if(checkButton("doDelete")){
+  			return false;
+  		}
   		doProcess("deleteProcessInstance");
   	}
   	function setHis(){
+  		if(checkButton("setHis")){
+  			return false;
+  		}
   		doProcess("setHis");
   	}
   	function doProcess(action){
  		var checkboxs = $("input:checked[name=checked]");
  		var id = "";
-   		for(var i=0;i<checkboxs.length;i++) 
-		{ 
-			if(i!=0){
-				id += ',';
+ 		if(checkboxs.length!=1){
+ 			alert("请选中一个流程实例！");	
+ 			return;
+ 		}else{
+	   		for(var i=0;i<checkboxs.length;i++) 
+			{ 
+				if(i!=0){
+					id += ',';
+				}
+				id += $(checkboxs[i]).val();
 			}
-			id += $(checkboxs[i]).val();
-		}
-		$("#action").val(action);
-		$("#operProcessInstanceId").val(id);
-		$("#subForm").submit();
+ 		}
+ 		if(confirm("确认提交?")){
+			$("#action").val(action);
+			$("#operProcessInstanceId").val(id);
+			$("#subForm").submit();
+ 		}
   	}
   	
   	$(function(){
@@ -99,7 +127,7 @@
 		    }
 		  });
 		  if(!flag){
-		    $("div#gd").removeClass("btn-normal").addClass("btn-disable");
+		    $("div#setHis").removeClass("btn-normal").addClass("btn-disable");
 		  }
 		});
 		
@@ -206,13 +234,13 @@
             </table>
         </div>
         <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
-           	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTerminat();">作废</a></div>
-           	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
-           	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
-          	<div id="gd" class="btn-normal" data-scope=multi style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
+        	<div id="doSuspend" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+        	<div id="doContinue" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
+           	<div id="doTerminat" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTerminat();">作废</a></div>
+           	<div id="doDelete" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
+        	<div id="updateVariables" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
+           	<div id="updateToken" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
+          	<div id="setHis" class="btn-normal" data-scope=multi style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
