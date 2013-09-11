@@ -110,10 +110,32 @@
 		    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
 		  });
 	  
+		$("#selectUser").click(function(){
+			var obj = {
+			  type:"user"
+			};
+			var d = FixSelect(obj);
+			var userId = d[0].USERID;
+			var userName = d[0].USERNAME;
+			$("#initor").val(userId);
+			$("#initorName").val(userName);
+		});
+	  
 	  var status = '${result.status}';
 	  if(status!='')
 	  	$("#status").val(status);
 	});
+  	
+  	
+  	function clearInfo(){
+  		$("#processDefinitionKey").val("");
+  		$("#processInstanceId").val("");
+  		$("#subject").val("");
+  		$("#bizKey").val("");
+  		$("#initor").val("");
+  		$("#initorName").val("");
+  		$("#status").val("");
+  	}
 </script>
 </head>
 
@@ -130,22 +152,48 @@
     	<div class="search">
         	<table>
               <tr>
-                <td class="title-r">任务定义：</td>
-                <td><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
-                <td class="title-r">流程实例号：</td>
-                <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
+                <td class="title-r">流程名称：</td>
+                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
+                <td class="title-r">实例编号：</td>
+                <td><input type="text" id="processInstanceId" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>
-                <td style="width:200px;"><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+                <td style="width:200px;"><input type="text" id="subject" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
+                <td>
+                <table style="margin:0">
+                <tr>
+                <td>
+                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+                </td>
+                <td>
+                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+				</td>                
+                </tr>
+                </table>
+                </td>
               </tr>
               <tr>
                 <td class="title-r">业务数据：</td>
-                <td><input type="text" id="text_3" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td><input type="text" id="bizKey" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
                 <td class="title-r">发起人：</td>
-                <td><input type="text" id="text_4" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+                <td>
+                <table style="margin:0">
+                <tr>
+                <td>
+                <input type="hidden" id="initor" name="initor" class="fix-input" value="${result.initor}"/>
+                <input type="text" id="initorName" readonly="true" name="initorName" class="fix-input" style="width:94px;" value="${result.initorName}"/>
+                </td>
+                <td>
+                <div class="btn-normal">
+										<a href="#" onclick="" id="selectUser">选择<em
+											class="arrow-small"></em></a>
+									</div>
+									</td>
+									</tr>
+									</table>
+                </td>
                 <td class="title-r">状态：</td>
                 <td>
-                <select id="status" name="status" class="fix-input" style="width:160px;">
+                <select id="status" name="status" class="fix-input" style="width:172px;">
                   <option value ="">请选择</option>
 				  <option value ="SUSPEND">暂停</option>
 				  <option value ="RUNNING">运行中</option>

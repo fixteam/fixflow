@@ -143,7 +143,10 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 					String auser = StringUtil
 							.getString(rowDataMap.get("AUSER"));
 					eachResultData.put("auser", auser);
-					eachResultData.put("auserName", this.getUserName(auser));
+					if(StringUtil.isNotEmpty(auser))
+						eachResultData.put("auserName", this.getUserName(auser));
+					else
+						eachResultData.put("auserName","查无此人");
 
 					String processId = StringUtil.getString(rowDataMap
 							.get("PROCESS_ID"));
