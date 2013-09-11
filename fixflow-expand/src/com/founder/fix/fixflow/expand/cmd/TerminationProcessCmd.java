@@ -54,7 +54,7 @@ public class TerminationProcessCmd extends AbstractExpandTaskCmd<TerminationProc
 		
 		if(taskInstance!=null){
 			//结束任务
-			taskInstance.customEnd(taskCommand, this.taskComment,this.agent, this.admin);
+			taskInstance.customEnd(taskCommand, this.taskComment);
 			
 		}else{
 			throw new FixFlowException("没有找到id为: "+taskId+" 的任务");

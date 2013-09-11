@@ -20,24 +20,14 @@ package com.founder.fix.fixflow.expand.cmd;
 import org.eclipse.bpmn2.impl.FlowNodeImpl;
 
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
-import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
-import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
-import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
-import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.DelegationState;
 import com.founder.fix.fixflow.expand.command.ResolvedTaskCommand;
@@ -50,117 +40,64 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 
 	public Void execute(CommandContext commandContext) {
 
-		if (taskId == null || taskId.equals("")) {
-			throw new FixFlowException("任务编号为空！");
-		}
+		// 初始化任务命令执行所需要的常用对象
+		loadProcessParameter(commandContext);
 
-		TaskInstanceEntity task = Context.getCommandContext().getTaskManager().findTaskById(taskId);
-		if(AbstractCommandFilter.isAutoClaim()){
-			task.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-		}
-		if (task == null) {
-			throw new FixFlowException("无法找到编号为: " + taskId + " 的任务!");
-		}
-		if (Authentication.getAuthenticatedUserId() != null) {
-			String owner = task.getOwner();
+		// 将外部变量注册到流程实例运行环境中
+		addVariable();
 
-			String nodeId = task.getNodeId();
-			String processDefinitionId = task.getProcessDefinitionId();
+		// 执行处理命令中的开发人员设置的表达式
+		runCommandExpression();
 
-			ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
+		// 获取当前正在操作的任务对象
+		TaskInstanceEntity taskInstance = getTaskInstanceEntity();
 
-			ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
+		// 获取当前正在操作的任务命令
+		TaskCommandInst taskCommand = getTaskCommandInst();
 
-			UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
+		String owner = taskInstance.getOwner();
 
-			TaskCommandInst taskCommand = null;
 
-			String taskCommandType = expandTaskCommand.getCommandType();
-			
-			if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
+		taskInstance.customEnd(taskCommand, taskComment);
 
-				String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
+		taskInstance.setDelegationState(DelegationState.RESOLVED);
 
-				taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
+		// 拷贝出一个新的任务
+		TaskInstanceEntity taskInstanceNew = taskInstance.clone();
 
-			} else {
-				taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
-			}
-			
-			if(taskCommand==null){
-				throw new FixFlowException("未点击任务处理按钮,任务处理失败。");
-			}
+		taskInstanceNew.setIdWithoutCascade(GuidUtil.CreateGuid());
+		taskInstanceNew.setAssigneeWithoutCascade(owner);
+		taskInstanceNew.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
 
-			
-			if(this.agent!=null&&!this.agent.equals("")){
-				task.setAgent(Authentication.getAuthenticatedUserId());
-				task.setAssigneeWithoutCascade(this.agent);
-			}else{
-				task.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-				task.setAgent(null);
-			}
-			
-			task.customEnd(taskCommand, taskComment, this.agent, this.admin);
+		taskInstanceNew.setEndTimeWithoutCascade(null);
+		taskInstanceNew.setCommandId(null);
+		taskInstanceNew.setCommandType(null);
+		taskInstanceNew.setCommandMessage(null);
+		taskInstanceNew.setTaskComment(null);
+		taskInstanceNew.setAgent(null);
+		taskInstanceNew.setAdmin(null);
+		taskInstanceNew.setDelegationState(null);
 
-			
-
-			task.setDelegationState(DelegationState.RESOLVED);
-
-			Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(task);
-
-			task.setIdWithoutCascade(GuidUtil.CreateGuid());
-			task.setAssigneeWithoutCascade(owner);
-			task.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
-
-			task.setEndTimeWithoutCascade(null);
-			task.setCommandId(null);
-			task.setCommandType(null);
-			task.setCommandMessage(null);
-			task.setTaskComment(null);
-			task.setAgent(null);
-			task.setAdmin(null);
-			task.setDelegationState(null);
-			
-			if(task.getPendingTaskId()==null){
-				
-			}
-			else{
-				TaskInstanceEntity resolvedTask = Context.getCommandContext().getTaskManager().findTaskById(task.getPendingTaskId());
-
-				task.setFormUri(resolvedTask.getFormUri());
-			}
-			
-			
-			
-			
-			Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(task);
-			
-			
-			
-			
-			
-			//转办通知
-			//任务分配事件
-
-			
-			ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
-
-			String processInstanceId = task.getProcessInstanceId();
-
-			ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
-
-			TokenEntity token=processInstanceImpl.getTokenMap().get(task.getTokenId());
-
-			
-			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
-			
-			((FlowNodeImpl) token.getFlowNode()).fireEvent(BaseElementEvent.EVENTTYPE_TASK_ASSIGN, executionContext, task);
-
+		if (taskInstanceNew.getPendingTaskId() == null) {
 
 		} else {
-			throw new FixFlowException("无法找到当前处理者");
+			TaskInstanceEntity resolvedTask = Context.getCommandContext().getTaskManager().findTaskById(taskInstanceNew.getPendingTaskId());
+
+			taskInstanceNew.setFormUri(resolvedTask.getFormUri());
 		}
 
+		// 获取当前正在操作的流程实例对象
+		ProcessInstanceEntity processInstance = getProcessInstance();
+		// 将新创建的出的任务插入任务管理器中
+		processInstance.getTaskMgmtInstance().addTaskInstanceEntity(taskInstanceNew);
+		// 获取流程上下文
+		ExecutionContext executionContext = getExecutionContext();
+		// 触发节点的任务分配事件
+		((FlowNodeImpl) executionContext.getToken().getFlowNode()).fireEvent(BaseElementEvent.EVENTTYPE_TASK_ASSIGN, executionContext, taskInstanceNew);
+
+		
+		
+		saveProcessInstance(commandContext);
 		return null;
 	}
 

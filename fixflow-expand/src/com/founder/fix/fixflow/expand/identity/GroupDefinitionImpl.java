@@ -136,6 +136,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 				objectParamWhere.add(userId);
 				UserInfo userInfo = getGroupInfo().getUserInfo();
 				String userIdField = userInfo.getUserIdField();
+				@SuppressWarnings("unused")
 				String userNameField = userInfo.getUserNameField();
 				String groupIdField = userInfo.getGroupIdField();
 				String sqlText = userInfo.getSqlText();

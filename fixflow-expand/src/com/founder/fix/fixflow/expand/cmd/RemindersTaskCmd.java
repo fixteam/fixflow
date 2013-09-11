@@ -22,6 +22,7 @@ package com.founder.fix.fixflow.expand.cmd;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.expand.command.RemindersTaskCommand;
@@ -45,12 +46,31 @@ public class RemindersTaskCmd  extends AbstractExpandTaskCmd<RemindersTaskComman
 	}
 
 	public Void execute(CommandContext commandContext) {
-		// TODO 自动生成的方法存根
+
+
+		//初始化任务命令执行所需要的常用对象
+		loadProcessParameter(commandContext);
+		
+		//将外部变量注册到流程实例运行环境中
+		addVariable();
+		
+		//执行处理命令中的开发人员设置的表达式
+		runCommandExpression();
+		
+		//获取正在操作的任务实例对象
+		//TaskInstanceEntity taskInstance=getTaskInstanceEntity();
+		
+		//获取正在操作的任务命令对象实例
+		//TaskCommandInst taskCommand=getTaskCommandInst();
+		
 		
 		System.out.print("usersInfo: "+usersInfo+"\n title: "+title+"\n content: "+content);
 		
+		saveProcessInstance(commandContext);
 		
-		return null;
+		throw new FixFlowException("催办任务需用开发人员实现催办逻辑!");
+		
+
 	}
 
 }
