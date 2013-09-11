@@ -38,8 +38,8 @@ function clearInfo(){
 	$("#bizKey").val("");
 	$("#initor").val("");
 	$("#initorName").val("");
-	$("#arrivalTimeS").val("");
-	$("#arrivalTimeE").val("");
+	$("#startTimeS").val("");
+	$("#startTimeE").val("");
 	$("#status").val("");
 }
 </script>
