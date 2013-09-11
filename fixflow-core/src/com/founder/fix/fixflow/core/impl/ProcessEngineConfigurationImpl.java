@@ -488,6 +488,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			if (dataBase.getId().equals(selectedDB)) {
 				selectedDatabase = dataBase;
 				ConnectionManagement.defaultDataBaseId = selectedDatabase.getId();
+				break;
 			}
 		}
 
