@@ -19,9 +19,7 @@
   
   <section xml:id="tenmt.useCase">
     <title>用例</title>
-    <para>
-      
-    </para>
+    <para> 员工报销流程，当报销金额大于5000元时需要经理审批，小于5000元时需要部门主管审批。</para>
   </section>
   
   
@@ -52,8 +50,7 @@
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>删除人工任务节点和结束节点之间的线，从画板上拖一个活动/人工任务到设计界面上，用连接/顺序流连接起来各个节点
-        做成如下图样子：</para>
+        <para>删除人工任务节点和结束节点之间的线，从画板上拖两个活动/人工任务和一个排他网关到设计界面上，用连接/顺序流连接起来各个节点 做成如下图样子：</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.5.png"/>
         </imageobject></mediaobject>
@@ -73,14 +70,32 @@
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>下面修改提交节点的配置，选中第一个节点“人工任务”，填写基本信息，名称和编号是必填项，其他可暂时不填，填完后如：</para>
+        <para>因为需求中需要判断报销金额的大小，所以我们创建一个流程变量amount,类型为整型：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.16.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>下面修改提交节点的配置，选中第一个节点“人工任务”，填写基本信息，名称和编号是必填项，这里我们在提交的时候将amount的值设置为4000
+        （当然实际项目中这个值可能是从表单上得到，或者通过数据库查询语句得到。）其他可暂时不填。</para>
+        <para>再增加一个按钮，类型选启动并提交，名称为“走经理审批”我们将amount的值设置为6000，设置方法如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.17.png"/>
+        </imageobject></mediaobject>
+       <para>配置完成之后如图：</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.9.png"/>
         </imageobject></mediaobject>
-        <para>提交节点比较简单，暂时先不用配置其他信息，用FixFlow的默认配置即可。</para>
       </listitem>
       <listitem>
-        <para>最后配置User_Task2节点的信息，即审批节点的配置，点击节点，属性->常规，配置操作表单，如：</para>
+        <para>然后我们配置网关之后的线条条件，选中线条，打开Properties属性框，设置表单式，这里我们可以是简单的判断语句，也可以是经过复杂运算之后用return true的形式返回判断结果。简单配置如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.18.png"/>
+        </imageobject></mediaobject>
+        <para>同样的方法我们设置网关后面的另外一条线条条件为：amount&lt;=5000</para>
+      </listitem>
+      <listitem>
+        <para>最后配置User_Task2和User_Task3节点的信息，即审批节点的配置，点击节点，属性->常规，配置操作表单，如：</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.10.png"/>
         </imageobject></mediaobject>
@@ -116,16 +131,17 @@
     <title>XML的表示 </title>
     <para>在设计器中右键流程空白处，选择显示源码可以看到此流程的xml内容。如下：</para>
     <programlisting language="xml">
-&lt;?xml version="1.0" encoding="UTF-8"?>
-&lt;bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  &lt;bpmn2:process id="processExpense" fixflow:verification="true" fixflow:dbid="" name="财务报销流程">
+&lt;bpmn2:process id="processExpense" fixflow:verification="true" fixflow:dbid="processExpense:1:b15331b2-0991-4bdc-b1b1-358850316ab1" name="财务报销流程">
     &lt;bpmn2:extensionElements>
       &lt;fixflow:taskSubject id="TaskSubject_1">
-        &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&amp;quot;财务报销请审批&amp;quot;">&amp;quot;财务报销请审批&amp;quot;&lt;/fixflow:expression>
+        &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="&amp;quot;测试流程主题&amp;quot;">&amp;quot;测试流程主题&amp;quot;&lt;/fixflow:expression>
       &lt;/fixflow:taskSubject>
       &lt;fixflow:formUri>
-        &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&amp;quot;add&amp;quot;">&amp;quot;add&amp;quot;&lt;/fixflow:expression>
+        &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&amp;quot;DemoServlet?action=startOneTask&amp;quot;">&amp;quot;DemoServlet?action=startOneTask&amp;quot;&lt;/fixflow:expression>
       &lt;/fixflow:formUri>
+      &lt;fixflow:DataVariable id="amount" dataType="int" bizType="customVariable">
+        &lt;fixflow:documentation xsi:type="fixflow:Documentation">&lt;/fixflow:documentation>
+      &lt;/fixflow:DataVariable>
     &lt;/bpmn2:extensionElements>
     &lt;bpmn2:startEvent id="StartEvent_1" name="开始">
       &lt;bpmn2:outgoing>SequenceFlow_1&lt;/bpmn2:outgoing>
@@ -134,16 +150,18 @@
       &lt;bpmn2:extensionElements>
         &lt;fixflow:assignPolicyType id="potentialOwner"/>
         &lt;fixflow:skipStrategy/>
-        &lt;fixflow:taskCommand id="HandleCommand_3" name="提交" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-        &lt;fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-        &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
         &lt;fixflow:expectedExecutionTime/>
-        &lt;fixflow:formUri>
-          &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&amp;quot;add&amp;quot;">&amp;quot;add&amp;quot;&lt;/fixflow:expression>
-        &lt;/fixflow:formUri>
+        &lt;fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="${amount}=4000;">${amount}=4000;&lt;/fixflow:expression>
+        &lt;/fixflow:taskCommand>
+        &lt;fixflow:taskCommand id="HandleCommand_3" name="提交" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_4" name="走经理审批" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="${amount}=6000;">${amount}=6000;&lt;/fixflow:expression>
+        &lt;/fixflow:taskCommand>
+        &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
       &lt;/bpmn2:extensionElements>
       &lt;bpmn2:incoming>SequenceFlow_1&lt;/bpmn2:incoming>
-      &lt;bpmn2:outgoing>SequenceFlow_3&lt;/bpmn2:outgoing>
+      &lt;bpmn2:outgoing>SequenceFlow_2&lt;/bpmn2:outgoing>
       &lt;bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
         &lt;bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
           &lt;bpmn2:formalExpression id="所有人">&amp;quot;fixflow_allusers&amp;quot;&lt;/bpmn2:formalExpression>
@@ -153,17 +171,21 @@
     &lt;bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
     &lt;bpmn2:endEvent id="EndEvent_1" name="结束">
       &lt;bpmn2:incoming>SequenceFlow_4&lt;/bpmn2:incoming>
+      &lt;bpmn2:incoming>SequenceFlow_7&lt;/bpmn2:incoming>
     &lt;/bpmn2:endEvent>
     &lt;bpmn2:userTask id="UserTask_2" name="经理审批">
       &lt;bpmn2:extensionElements>
         &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
         &lt;fixflow:assignPolicyType id="potentialOwner"/>
         &lt;fixflow:skipStrategy/>
+        &lt;fixflow:formUri>
+          &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&amp;quot;DemoServlet?action=doTask&amp;quot;">&amp;quot;DemoServlet?action=doTask&amp;quot;&lt;/fixflow:expression>
+        &lt;/fixflow:formUri>
         &lt;fixflow:taskCommand id="HandleCommand_2" name="接收任务" commandType="claim" isVerification="false" isSaveData="false" isSimulationRun="false"/>
         &lt;fixflow:taskCommand id="HandleCommand_3" name="同意" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         &lt;fixflow:taskCommand id="HandleCommand_4" name="拒绝" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
       &lt;/bpmn2:extensionElements>
-      &lt;bpmn2:incoming>SequenceFlow_3&lt;/bpmn2:incoming>
+      &lt;bpmn2:incoming>SequenceFlow_5&lt;/bpmn2:incoming>
       &lt;bpmn2:outgoing>SequenceFlow_4&lt;/bpmn2:outgoing>
       &lt;bpmn2:potentialOwner id="PotentialOwner_2" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
         &lt;bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_2">
@@ -171,45 +193,38 @@
         &lt;/bpmn2:resourceAssignmentExpression>
       &lt;/bpmn2:potentialOwner>
     &lt;/bpmn2:userTask>
-    &lt;bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="UserTask_2"/>
     &lt;bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="UserTask_2" targetRef="EndEvent_1"/>
+    &lt;bpmn2:userTask id="UserTask_3" name="部门领导审批">
+      &lt;bpmn2:extensionElements>
+        &lt;fixflow:assignPolicyType id="potentialOwner"/>
+        &lt;fixflow:skipStrategy/>
+        &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        &lt;fixflow:taskCommand id="HandleCommand_2" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_4" name="接收任务" commandType="claim" isVerification="false" isSaveData="false" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_3" name="退回-上一步" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      &lt;/bpmn2:extensionElements>
+      &lt;bpmn2:incoming>SequenceFlow_6&lt;/bpmn2:incoming>
+      &lt;bpmn2:outgoing>SequenceFlow_7&lt;/bpmn2:outgoing>
+      &lt;bpmn2:potentialOwner fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+        &lt;bpmn2:resourceAssignmentExpression>
+          &lt;bpmn2:formalExpression id="所有人">&amp;quot;fixflow_allusers&amp;quot;&lt;/bpmn2:formalExpression>
+        &lt;/bpmn2:resourceAssignmentExpression>
+      &lt;/bpmn2:potentialOwner>
+    &lt;/bpmn2:userTask>
+    &lt;bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="Exclusive Gateway 1">
+      &lt;bpmn2:incoming>SequenceFlow_2&lt;/bpmn2:incoming>
+      &lt;bpmn2:outgoing>SequenceFlow_5&lt;/bpmn2:outgoing>
+      &lt;bpmn2:outgoing>SequenceFlow_6&lt;/bpmn2:outgoing>
+    &lt;/bpmn2:exclusiveGateway>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
+      &lt;bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${amount}>5000">${amount}>5000&lt;/bpmn2:conditionExpression>
+    &lt;/bpmn2:sequenceFlow>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_3">
+      &lt;bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${amount}&amp;lt;=5000;">${amount}&amp;lt;=5000;&lt;/bpmn2:conditionExpression>
+    &lt;/bpmn2:sequenceFlow>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="UserTask_3" targetRef="EndEvent_1"/>
   &lt;/bpmn2:process>
-  &lt;bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default 流程定义">
-    &lt;bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="processExpense">
-      &lt;bpmndi:BPMNShape id="BPMNShape_1">
-        &lt;dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
-      &lt;/bpmndi:BPMNShape>
-      &lt;bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        &lt;dc:Bounds height="36.0" width="36.0" x="62.0" y="152.0"/>
-      &lt;/bpmndi:BPMNShape>
-      &lt;bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
-        &lt;dc:Bounds height="50.0" width="110.0" x="200.0" y="145.0"/>
-      &lt;/bpmndi:BPMNShape>
-      &lt;bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
-        &lt;dc:Bounds height="36.0" width="36.0" x="710.0" y="152.0"/>
-      &lt;/bpmndi:BPMNShape>
-      &lt;bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
-        &lt;di:waypoint xsi:type="dc:Point" x="98.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="200.0" y="170.0"/>
-      &lt;/bpmndi:BPMNEdge>
-      &lt;bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2">
-        &lt;dc:Bounds height="50.0" width="110.0" x="445.0" y="145.0"/>
-      &lt;/bpmndi:BPMNShape>
-      &lt;bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_UserTask_2">
-        &lt;di:waypoint xsi:type="dc:Point" x="310.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="370.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="370.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="445.0" y="170.0"/>
-      &lt;/bpmndi:BPMNEdge>
-      &lt;bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_UserTask_2" targetElement="BPMNShape_EndEvent_1">
-        &lt;di:waypoint xsi:type="dc:Point" x="555.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="624.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="624.0" y="170.0"/>
-        &lt;di:waypoint xsi:type="dc:Point" x="710.0" y="170.0"/>
-      &lt;/bpmndi:BPMNEdge>
-    &lt;/bpmndi:BPMNPlane>
-  &lt;/bpmndi:BPMNDiagram>
-&lt;/bpmn2:definitions>
     </programlisting>
   </section>
   
@@ -230,12 +245,22 @@
           <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.2.png"/>
         </imageobject></mediaobject>
       </para></listitem>
-      <listitem><para>因为流程审批人设置的所有人，所以点击待办，就可以看到刚才提交的流程了，当然在流程查询里面也可以看到。说明流程已经成功启动，
-        你可以点击查看看下流程的流程图以及处理过程等信息。
+      <listitem><para>因为流程审批人设置的所有人，所以点击待办，就可以看到刚才提交的流程了，并且这条流程的当前步骤为部门领导审批，当然在流程查询里面也可以看到。说明流程已经成功启动，
+          你可以点击查看看下流程的流程图以及处理过程等信息。
+        <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600"
+                fileref="images/tenmt.StartingProcess.3.png"/>
+            </imageobject>
+          </mediaobject>
+      </para>
+      </listitem>
+      <listitem>
+        <para>再以同样的步骤启动另外一个流程，这次点击“走经理审批”按钮，回去待办任务发现另外这条流程的当前步骤为“经理审批”：</para>
         <mediaobject><imageobject>
-          <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.3.png"/>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.7.png"/>
         </imageobject></mediaobject>
-      </para></listitem>
+      </listitem>
     </orderedlist>
   </section>
   

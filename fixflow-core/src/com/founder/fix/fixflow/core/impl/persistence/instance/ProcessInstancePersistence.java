@@ -1113,5 +1113,6 @@ public class ProcessInstancePersistence {
 	public void deleteProcessInstanceByProcessInstanceId(String processInstanceId){
 		Object[] objectParamWhere = { processInstanceId };
 		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
+		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 	}
 }
