@@ -43,6 +43,108 @@
             </imageobject>
           </mediaobject>
         </listitem>
+        <listitem>
+          <para>如果是首次安装，需要添加一个站点，如果是更新安装可跳过此步骤，点击红框中的可用软件站点。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.10.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>点击添加按钮。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.11.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>将下面这个站点加入。</para>
+          <programlisting language="properties"><![CDATA[
+Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
+]]> </programlisting>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.12.png" />
+            </imageobject>
+          </mediaobject>
+          <para>添加好之后点击确定。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.13.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>回到安装软件界面，点击添加按钮。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.5.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>选择本地安装包模式。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.6.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>选择我们的插件包，名称可以随便填写，然后点击确定。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.14.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>安装界面会显示我们的插件包信息，勾选起来，点击下一步。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.15.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>点击下一步，之后在许可信息的界面点击同意，点击完成。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.16.png" />
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.17.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para> 在安装过程中会弹出，遇到请点击确定，即可完成安装。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.18.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para> 安装完毕后会提示重启信息，我们选择重启。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.19.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para> 重启完成后，看到流程设置的菜单后，表示平台已经顺利安装成功。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.20.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
       </orderedlist>
     </para>
   </section>

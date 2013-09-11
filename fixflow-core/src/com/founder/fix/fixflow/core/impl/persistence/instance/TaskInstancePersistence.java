@@ -527,6 +527,7 @@ public class TaskInstancePersistence {
 	public void deleteTaskInstanceByProcessInstanceId(String processInstanceId) {
 		Object[] objectParamWhere = { processInstanceId };
 		sqlCommand.delete(TaskInstanceObjKey.TaskInstanceTableName(), " PROCESSINSTANCE_ID=?", objectParamWhere);
+		sqlCommand.delete(TaskInstanceObjKey.TaskInstanceHisTableName(), " PROCESSINSTANCE_ID=?", objectParamWhere);
 
 	}
 

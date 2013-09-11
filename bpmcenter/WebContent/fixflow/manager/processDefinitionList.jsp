@@ -29,7 +29,6 @@ a{text-decoration: none;}
 	
 	function deleteDeploy(obj){
 		if($(obj).attr("class")=="btn-disable"){
-			alert("请选择流程");
 			return;
 		}
 		if(!confirm("此操作会删除所有流程相关数据，并且不可恢复，请慎重选择，确认继续吗？")){
@@ -51,7 +50,6 @@ a{text-decoration: none;}
 	
 	function updateDeploy(obj){
 		if($(obj).attr("class")=="btn-disable"){
-			alert("请选择一个流程！");
 			return;
 		}
 		var deploymentId = "";
@@ -65,7 +63,6 @@ a{text-decoration: none;}
 	
 	function downloadProcess(obj){
 		if($(obj).attr("class")=="btn-disable"){
-			alert("请选择流程！");
 			return;
 		}
 		var deploymentId = "";
