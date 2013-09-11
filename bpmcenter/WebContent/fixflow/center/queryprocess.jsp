@@ -20,7 +20,28 @@ $("a[name=flowGraph]").click(function(){
 var status = '${result.status}';
 if(status!='')
 	$("#status").val(status);
+	
+$("#selectUser").click(function(){
+	var obj = {
+	  type:"user"
+	};
+	var d = FixSelect(obj);
+	var userId = d[0].USERID;
+	var userName = d[0].USERNAME;
+	$("#initor").val(userId);
+	$("#initorName").val(userName);
 });
+});
+function clearInfo(){
+	$("#title").val("");
+	$("#processDefinitionKey").val("");
+	$("#bizKey").val("");
+	$("#initor").val("");
+	$("#initorName").val("");
+	$("#arrivalTimeS").val("");
+	$("#arrivalTimeE").val("");
+	$("#status").val("");
+}
 </script>
 </head>
 <body>
@@ -61,24 +82,50 @@ if(status!='')
 						<table>
 			              <tr>
 			                <td class="title-r">任务主题：</td>
-			                <td><input type="text" id="text_0" name="title" class="fix-input" value="${result.title}"/></td>
-			                <td class="title-r">流程变量：</td>
-			                <td><input type="text" id="text_1" name="text_1" class="fix-input" value=""/></td>
+			                <td><input type="text" id="title" name="title" class="fix-input" value="${result.title}"/></td>
+			                <td class="title-r">流程名称：</td>
+			                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" value=""/></td>
 			                <td class="title-r">单 据 号：</td>
-			                <td><input type="text" id="text_2" name="bizKey" class="fix-input" value="${result.bizKey}"/></td>
-			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+			                <td><input type="text" id="bizKey" name="bizKey" class="fix-input" value="${result.bizKey}"/></td>
+			                <td>
+				                <table style="margin:0">
+				                <tr>
+				                <td>
+				                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+				                </td>
+				                <td>
+				                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+								</td>                
+				                </tr>
+				                </table>
+			                </td>
 			              </tr>
 			              <tr>
 			              	
 			                <td class="title-r">发 起 人：</td>
-			               
-			                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+			               <td>
+									<table style="margin: 0">
+										<tr>
+											<td><input type="hidden" id="initor" name="initor"
+												class="fix-input" value="${result.initor}" /> <input
+												type="text" id="initorName" readonly="true"
+												name="initorName" class="fix-input" style="width: 94px;"
+												value="${result.initorName}" /></td>
+											<td>
+												<div class="btn-normal">
+													<a href="#" onclick="" id="selectUser">选择<em
+														class="arrow-small"></em></a>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
 			                <td class="title-r">发起时间：</td>
-			                <td><input type="text" id="text_4" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
-			                 - <input type="text" id="text_5"  name="startTimeE" class="fix-input" style="width:69px;" value="${result.startlTimeE}" onClick="WdatePicker()"/></td>
+			                <td><input type="text" id="startTimeS" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
+			                 - <input type="text" id="startTimeE"  name="startTimeE" class="fix-input" style="width:69px;" value="${result.startTimeE}" onClick="WdatePicker()"/></td>
 			                <td class="title-r">流程状态：</td>
 			                <td>
-		                    <select id="status" name="status" class="fix-input" style="width:160px;">
+		                    <select id="status" name="status" class="fix-input" style="width:172px;">
 			                  <option value ="">请选择</option>
 							  <option value ="SUSPEND">暂停</option>
 							  <option value ="RUNNING">运行中</option>

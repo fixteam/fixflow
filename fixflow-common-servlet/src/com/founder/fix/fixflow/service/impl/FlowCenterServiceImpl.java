@@ -93,7 +93,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			String initor	   = StringUtil.getString(filter.get("initor"));
 			if(StringUtil.isNotEmpty(initor))
-				tq.initiatorLike(initor);
+				tq.initiator(initor);
 			
 			String bizKey	   = StringUtil.getString(filter.get("bizKey"));
 			if(StringUtil.isNotEmpty(bizKey))
@@ -296,6 +296,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			if(processInstanceStatus !=null){
 				processInstanceQuery.processInstanceStatus(processInstanceStatus);
 			}
+			if(StringUtil.isNotEmpty(initor))
+				processInstanceQuery.initiator(initor);
+			
 			
 			if(StringUtil.isNotEmpty(processType)){
 				if(processType.equals("initor"))
@@ -373,7 +376,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			String initor = StringUtil.getString(filter.get("initor"));	//发起人
 			if(StringUtil.isNotEmpty(initor))
-				tq.initiatorLike(initor);
+				tq.initiator(initor);
 			
 			Date dates = null;
 			Date datee = null;

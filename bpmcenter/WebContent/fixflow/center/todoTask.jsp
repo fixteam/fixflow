@@ -74,7 +74,27 @@ $(function(){
     url+="taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
    	window.open(url);
   });
+	$("#selectUser").click(function(){
+		var obj = {
+		  type:"user"
+		};
+		var d = FixSelect(obj);
+		var userId = d[0].USERID;
+		var userName = d[0].USERNAME;
+		$("#initor").val(userId);
+		$("#initorName").val(userName);
+	});
 });
+
+function clearInfo(){
+		$("#title").val("");
+		$("#processDefinitionKey").val("");
+		$("#bizKey").val("");
+		$("#initor").val("");
+		$("#initorName").val("");
+		$("#arrivalTimeS").val("");
+		$("#arrivalTimeE").val("");
+	}
 </script>
 </head>
 
@@ -169,30 +189,52 @@ $(function(){
 						<table>
 							<tr>
 								<td class="title-r">任务主题：</td>
-								<td><input type="text" id="text_0"
+								<td><input type="text" id="title"
 									name="title" class="fix-input"
 									value="${result.title}" /></td>
-								<td class="title-r">流程变量：</td>
-								<td><input type="text" id="text_1"
-									name="text_1" class="fix-input"  value="" /></td>
+								<td class="title-r">流程名称：</td>
+								<td><input type="text" id="processDefinitionKey"
+									name="processDefinitionKey" class="fix-input"  value="" /></td>
 								<td class="title-r">单 据 号：</td>
-								<td><input type="text" id="text_2"
+								<td><input type="text" id="bizKey"
 									name="bizKey" class="fix-input"
 									value="${result.bizKey}" /></td>
-								<td><div class="btn-normal">
-										<a href="#" onclick="$('#subForm').submit();">查 找</a>
-									</div></td>
+								<td>
+					                <table style="margin:0">
+					                <tr>
+					                <td>
+					                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+					                </td>
+					                <td>
+					                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+									</td>                
+					                </tr>
+					                </table>
+									</td>
 							</tr>
 							<tr>
 								<td class="title-r">发 起 人：</td>
-								<td><input type="text" id="text_3" name="initor"
-									class="fix-input" style="width: 160px;"
-									value="${result.initor}" /></td>
+								<td>
+					                <table style="margin:0">
+					                <tr>
+					                <td>
+					                <input type="hidden" id="initor" name="initor" class="fix-input" value="${result.initor}"/>
+					                <input type="text" id="initorName" readonly="true" name="initorName" class="fix-input" style="width:94px;" value="${result.initorName}"/>
+					                </td>
+					                <td>
+					                <div class="btn-normal">
+															<a href="#" onclick="" id="selectUser">选择<em
+																class="arrow-small"></em></a>
+									</div>
+									</td>
+									</tr>
+									</table>
+								</td>
 								<td class="title-r">到达时间：</td>
-								<td><input type="text" id="text_4" name="arrivalTimeS"
+								<td><input type="text" id="arrivalTimeS" name="arrivalTimeS"
 									class="fix-input" style="width: 69px;"
 									value="${result.arrivalTimeS}" onClick="WdatePicker()" /> - <input
-									type="text" id="text_5" name="arrivalTimeE" class="fix-input"
+									type="text" id="arrivalTimeE" name="arrivalTimeE" class="fix-input"
 									style="width: 69px;" value="${result.arrivalTimeE}"
 									onClick="WdatePicker()" /></td>
 								<td></td>
