@@ -39,7 +39,9 @@
 		}
 		$("#"+color).css("border","1px solid #fff");
 		$("#updateCache").click(function(){ 
-			window.open("FlowManager?action=updateCache");
+			$.get("FlowManager?action=updateCache",function(msg){
+				alert(msg);
+			})
 		});
 		
 		$("#setAgent").click(function(){
