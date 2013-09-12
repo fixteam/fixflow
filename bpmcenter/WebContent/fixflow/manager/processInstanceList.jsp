@@ -26,6 +26,9 @@
     	}
   	});
   	function updateVariables(){
+  		if(checkButton("updateVariables")){
+  			return false;
+  		}
  		var checkboxs = $("input[name=checked]");
  		var id = "";
  		
@@ -43,6 +46,9 @@
   	}
   	
   	function updateToken(){
+  		if(checkButton("updateToken")){
+  			return false;
+  		}
  		var checkboxs = $("input[name=checked]");
  		var id = "";
  		
@@ -59,33 +65,55 @@
 	    }
   	}
   	function doSuspend(){
+  		if(checkButton("doSuspend")){
+  			return false;
+  		}
   		doProcess("suspendProcessInstance");
   	}
   	function doContinue(){
+  		if(checkButton("doContinue")){
+  			return false;
+  		}
   		doProcess("continueProcessInstance");
   	}
   	function doTerminat(){
+  		if(checkButton("doTerminat")){
+  			return false;
+  		}
   		doProcess("terminatProcessInstance");
   	}
   	function doDelete(){
+  		if(checkButton("doDelete")){
+  			return false;
+  		}
   		doProcess("deleteProcessInstance");
   	}
   	function setHis(){
+  		if(checkButton("setHis")){
+  			return false;
+  		}
   		doProcess("setHis");
   	}
   	function doProcess(action){
  		var checkboxs = $("input:checked[name=checked]");
  		var id = "";
-   		for(var i=0;i<checkboxs.length;i++) 
-		{ 
-			if(i!=0){
-				id += ',';
+ 		if(checkboxs.length!=1){
+ 			alert("请选中一个流程实例！");	
+ 			return;
+ 		}else{
+	   		for(var i=0;i<checkboxs.length;i++) 
+			{ 
+				if(i!=0){
+					id += ',';
+				}
+				id += $(checkboxs[i]).val();
 			}
-			id += $(checkboxs[i]).val();
-		}
-		$("#action").val(action);
-		$("#operProcessInstanceId").val(id);
-		$("#subForm").submit();
+ 		}
+ 		if(confirm("确认提交?")){
+			$("#action").val(action);
+			$("#operProcessInstanceId").val(id);
+			$("#subForm").submit();
+ 		}
   	}
   	
   	$(function(){
@@ -99,7 +127,7 @@
 		    }
 		  });
 		  if(!flag){
-		    $("div#gd").removeClass("btn-normal").addClass("btn-disable");
+		    $("div#setHis").removeClass("btn-normal").addClass("btn-disable");
 		  }
 		});
 		
@@ -110,10 +138,32 @@
 		    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
 		  });
 	  
+		$("#selectUser").click(function(){
+			var obj = {
+			  type:"user"
+			};
+			var d = FixSelect(obj);
+			var userId = d[0].USERID;
+			var userName = d[0].USERNAME;
+			$("#initor").val(userId);
+			$("#initorName").val(userName);
+		});
+	  
 	  var status = '${result.status}';
 	  if(status!='')
 	  	$("#status").val(status);
 	});
+  	
+  	
+  	function clearInfo(){
+  		$("#processDefinitionKey").val("");
+  		$("#processInstanceId").val("");
+  		$("#subject").val("");
+  		$("#bizKey").val("");
+  		$("#initor").val("");
+  		$("#initorName").val("");
+  		$("#status").val("");
+  	}
 </script>
 </head>
 
@@ -130,22 +180,48 @@
     	<div class="search">
         	<table>
               <tr>
-                <td class="title-r">任务定义：</td>
-                <td><input type="text" id="text_0" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
-                <td class="title-r">流程实例号：</td>
-                <td><input type="text" id="text_1" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
+                <td class="title-r">流程名称：</td>
+                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
+                <td class="title-r">实例编号：</td>
+                <td><input type="text" id="processInstanceId" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>
-                <td style="width:200px;"><input type="text" id="text_2" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+                <td style="width:200px;"><input type="text" id="subject" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
+                <td>
+                <table style="margin:0">
+                <tr>
+                <td>
+                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+                </td>
+                <td>
+                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+				</td>                
+                </tr>
+                </table>
+                </td>
               </tr>
               <tr>
                 <td class="title-r">业务数据：</td>
-                <td><input type="text" id="text_3" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td><input type="text" id="bizKey" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
                 <td class="title-r">发起人：</td>
-                <td><input type="text" id="text_4" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+                <td>
+                <table style="margin:0">
+                <tr>
+                <td>
+                <input type="hidden" id="initor" name="initor" class="fix-input" value="${result.initor}"/>
+                <input type="text" id="initorName" readonly="true" name="initorName" class="fix-input" style="width:94px;" value="${result.initorName}"/>
+                </td>
+                <td>
+                <div class="btn-normal">
+										<a href="#" onclick="" id="selectUser">选择<em
+											class="arrow-small"></em></a>
+									</div>
+									</td>
+									</tr>
+									</table>
+                </td>
                 <td class="title-r">状态：</td>
                 <td>
-                <select id="status" name="status" class="fix-input" style="width:160px;">
+                <select id="status" name="status" class="fix-input" style="width:172px;">
                   <option value ="">请选择</option>
 				  <option value ="SUSPEND">暂停</option>
 				  <option value ="RUNNING">运行中</option>
@@ -158,13 +234,13 @@
             </table>
         </div>
         <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
-           	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTerminat();">作废</a></div>
-           	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
-           	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
-          	<div id="gd" class="btn-normal" data-scope=multi style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
+        	<div id="doSuspend" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+        	<div id="doContinue" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doContinue();">恢复</a></div>
+           	<div id="doTerminat" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTerminat();">作废</a></div>
+           	<div id="doDelete" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doDelete();">删除</a></div>
+        	<div id="updateVariables" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateVariables();">变量管理</a></div>
+           	<div id="updateToken" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="updateToken();">令牌管理</a></div>
+          	<div id="setHis" class="btn-normal" data-scope=multi style="display:inline-block;margin-left:5px;"><a href="#" onclick="setHis();">归档</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">

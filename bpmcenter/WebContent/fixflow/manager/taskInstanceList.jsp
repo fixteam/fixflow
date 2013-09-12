@@ -10,14 +10,23 @@
 <jsp:include page="head.jsp" flush="true"/>
 <script type="text/javascript">
 function doSuspend(){
+	if(checkButton("doSuspend")){
+ 			return false;
+ 		}
 	doProcess("doTaskSuspend");
 }
 
 function doResume(){
+	if(checkButton("doResume")){
+ 			return false;
+ 		}
 	doProcess("doTaskResume");
 }
 
 function doTransfer(){
+	if(checkButton("doTransfer")){
+			return false;
+		}
 	var obj = {
 			  type:"user"
 			};
@@ -29,6 +38,9 @@ function doTransfer(){
 }
 
 function doRollBackNode(){
+	if(checkButton("doRollBackNode")){
+			return false;
+		}
 	var checkboxs = $("input:checked[name=checked]");
 	var id = "";
 	if(checkboxs.length!=1){
@@ -66,6 +78,16 @@ function doProcess(action,taskId){
 		}
 }
 $(function(){
+	$("#selectUser").click(function(){
+		var obj = {
+		  type:"user"
+		};
+		var d = FixSelect(obj);
+		var userId = d[0].USERID;
+		var userName = d[0].USERNAME;
+		$("#initor").val(userId);
+		$("#initorName").val(userName);
+	});
   $("a[name=flowGraph]").click(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
@@ -92,6 +114,15 @@ $(function(){
   });
 	Fix.Util.ClickTr(null,true,true,0);
 });
+function clearInfo(){
+ 		$("#title").val("");
+ 		$("#processDefinitionKey").val("");
+ 		$("#bizKey").val("");
+ 		$("#initor").val("");
+ 		$("#initorName").val("");
+ 		$("#arrivalTimeS").val("");
+ 		$("#arrivalTimeE").val("");
+ 	}
 </script>
 </head>
 
@@ -111,19 +142,45 @@ $(function(){
         	<table>
               <tr>
                 <td class="title-r">任务主题：</td>
-                <td><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
-                <td class="title-r">流程变量：</td>
-                <td><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
+                <td><input type="text" id="title" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
+                <td class="title-r">流程名称：</td>
+                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" style="width:160px;" value=""/></td>
                 <td class="title-r">单 据 号：</td>
-                <td style="width:200px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+                <td style="width:200px;"><input type="text" id="bizKey" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
+                <td>
+                <table style="margin:0">
+                <tr>
+                <td>
+                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+                </td>
+                <td>
+                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+				</td>                
+                </tr>
+                </table>
+                </td>
               </tr>
               <tr>
                 <td class="title-r">发 起 人：</td>
-                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
+                <td>
+                <table style="margin:0">
+                <tr>
+                <td>
+                <input type="hidden" id="initor" name="initor" class="fix-input" value="${result.initor}"/>
+                <input type="text" id="initorName" readonly="true" name="initorName" class="fix-input" style="width:94px;" value="${result.initorName}"/>
+                </td>
+                <td>
+                <div class="btn-normal">
+										<a href="#" onclick="" id="selectUser">选择<em
+											class="arrow-small"></em></a>
+				</div>
+				</td>
+				</tr>
+				</table>
+                </td>
                 <td class="title-r">到达时间：</td>
-                <td><input type="text" id="text_4" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
-                 - <input type="text" id="text_5" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
+                <td><input type="text" id="arrivalTimeS" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${result.arrivalTimeS}" onClick="WdatePicker()"/>
+                 - <input type="text" id="arrivalTimeE" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${result.arrivalTimeE}" onClick="WdatePicker()"/></td>
                 <td></td>
                 <td></td>
               	<td></td>
@@ -131,11 +188,11 @@ $(function(){
             </table>
         </div>
         <div id="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
-        	<div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doResume();">恢复</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTransfer();">转发</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doRollBackNode();">退回-节点</a></div>
-            <div class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
+        	<div id="doSuspend" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doSuspend();">暂停</a></div>
+            <div id="doResume" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doResume();">恢复</a></div>
+            <div id="doTransfer" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTransfer();">转发</a></div>
+            <div id="doRollBackNode" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doRollBackNode();">退回-节点</a></div>
+            <div id="" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
@@ -143,7 +200,7 @@ $(function(){
 								<th width="30"></th>
 								<th width="30">&nbsp;</th>
 								<th width="30"></th>
-								<th>流程</th>
+								<th>流程名称</th>
 								<th>单据号</th>
 								<th>任务主题</th>
 								<th>发起人</th>

@@ -413,7 +413,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 			for (TaskInstanceEntity taskInstance : taskMgmtInstance.getTaskInstanceEntitys(this)) {
 				if (!taskInstance.hasEnded()) {
 					
-					taskInstance.customEnd(null,null,null,null);
+					taskInstance.customEnd(null,null);
 				}
 			}
 
@@ -511,7 +511,7 @@ public class TokenEntity extends AbstractPersistentObject implements Token {
 		TaskMgmtInstance tmi = getTaskMgmtInstance(token);
 		for (TaskInstanceEntity taskInstance : tmi.getTaskInstanceEntitys(token)) {
 			if (!taskInstance.hasEnded()) {
-				taskInstance.customEnd(null,null,null,null);
+				taskInstance.customEnd(null,null);
 				if(assigneeId!=null){
 					taskInstance.setAssignee(assigneeIdObj);
 					

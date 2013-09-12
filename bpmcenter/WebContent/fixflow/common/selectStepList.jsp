@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>步骤选择</title>
 <jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
@@ -60,8 +60,8 @@ $(function(){
 			eval("var j = " + r)
 			rv[index] = j;
 		});
-		if(window.opener){
-		  window.opener.rv = rv;
+		if(obj.opener){
+		  obj.opener.rv = rv;
 		}else{
 		  obj.fn(obj.params,rv);
 		}

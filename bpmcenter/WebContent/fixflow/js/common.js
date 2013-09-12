@@ -94,7 +94,7 @@ Fix = {
 		openWindow:function(url, width, height, winName){
 			var _width = width || 800;
 			var _height = height || 600;
-			var wn = winName || "nw"
+			var wn = winName || "nw";
 			window.open(url,wn);
 		}
 		
@@ -108,6 +108,10 @@ $(function(){
 	$("table.fix-table tbody tr:odd").addClass("odd");
 	Fix.Util.CheckBtnStatus();
 });
+
+function checkButton(id){
+	return $("#"+id).hasClass("btn-disable");
+}
 
 function imgNotFound(url,that){ 
     var img=$(that); 
