@@ -59,8 +59,9 @@ public interface ProcessDefinitionService {
 	 * @param 
 	 * key：deploymentId发布号（更新用）
 	 * ProcessFile：文件流
+	 * @throws Exception 
 	 */
-	public void deployByZip(Map<String,Object> params);
+	public void deployByZip(Map<String,Object> params) throws Exception;
 	
 	/**
 	 * 删除流程定义

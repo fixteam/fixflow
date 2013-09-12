@@ -41,7 +41,6 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.TaskInstanceService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.Pagination;
 
 /**
@@ -71,8 +70,8 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
 			
-			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
-			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
+//			tq.taskAssignee(StringUtil.getString(filter.get("userId")));
+//			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			
 			String descritpion = StringUtil.getString(filter.get("title"));
 			if(StringUtil.isNotEmpty(descritpion))
@@ -84,7 +83,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			
 			String bizKey	   = StringUtil.getString(filter.get("bizKey"));
 			if(StringUtil.isNotEmpty(bizKey))
-				tq.businessKey(bizKey);
+				tq.businessKeyLike(bizKey);
 			
 			Date dates = null;
 			Date datee = null;
@@ -94,7 +93,9 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
 			}
 			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
 				tq.taskCreatedAfter(datee);
@@ -132,7 +133,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 //				tq.taskAssignee(StringUtil.getString(filter.get("userId")));
 //				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 //			}
-			
+			tq.orderByTaskCreateTime().desc();
 			List<TaskInstance> lts = tq.listPagination(pageIndex, rowNum);
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
@@ -160,7 +161,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			result.put("pageInfo", page);
 			
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -173,7 +174,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.suspendTask(taskId);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -185,7 +186,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.resumeTask(taskId);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -199,7 +200,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.transfer(taskId, transferUserId,"管理员干预", null);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 	
@@ -213,7 +214,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		try{
 			mservice.rollBack(taskId, rollBackNodeId,"管理员干预", null);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 	}
 

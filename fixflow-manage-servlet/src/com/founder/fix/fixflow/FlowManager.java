@@ -88,6 +88,9 @@ public class FlowManager extends HttpServlet {
 					filter.put(item.getFieldName(), item);
 					if (item.getFieldName().equals("action"))
 						action = item.getString();
+					if(item.getFieldName().equals("deploymentId")){
+						filter.put("deploymentId", item.getString());
+					}
 				}
 			} else {
 				Enumeration enu = request.getParameterNames();
@@ -114,7 +117,7 @@ public class FlowManager extends HttpServlet {
 			}
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
-			if ("processDefinitionList".endsWith(action)) {
+			if ("processDefinitionList".equals(action)) {
 				Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
@@ -235,8 +238,16 @@ public class FlowManager extends HttpServlet {
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
-				getProcessDefinitionService().deployByZip(filter);
-				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
+				String message = "操作成功！";
+				try{
+					getProcessDefinitionService().deployByZip(filter);
+					response.setContentType("text/html;charset=utf-8");
+				}catch(Exception ex){
+					message +="操作失败："+ex.getMessage();
+				}
+				finally{
+					response.getWriter().print("<script>alert('"+message+"');window.close();</script>");
+				}
 			}else
 			if("deleteDeploy".equals(action)){
 				getProcessDefinitionService().deleteDeploy(filter);
