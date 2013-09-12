@@ -141,6 +141,7 @@ function clearInfo(){
 						<!-- 表 -->
 						<table width="100%" class="fix-table">
 							<thead>
+							<th width="30px">序号</th>
 								<th>单据号</th>
 								<th>流程名称</th>
 								<th>任务主题</th>
@@ -156,6 +157,7 @@ function clearInfo(){
 								<c:forEach items="${result.dataList}" var="dataList"
 									varStatus="index">
 									<tr>
+									<td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionName}</td>
 										<td>${dataList.subject}</td>
