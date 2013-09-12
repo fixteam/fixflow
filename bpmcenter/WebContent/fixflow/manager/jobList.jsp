@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -57,11 +57,12 @@ $(function(){
               </tr>
             </table>
         </div>
-	  <div>
+	  <div class="content">
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		   <th width="2%"></th>
+		   <th width="30px">序号</th>
 		    <th width="25%">流程编号</th>
 		    <th>实例编号</th>
 		    <th width="10%">节点编号</th>
@@ -74,6 +75,7 @@ $(function(){
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
 		     <td><input type="checkbox"/></td>
+		     <td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
 		     <td>${dataList.processKey}</td>
 		     <td>${dataList.processInstanceId}</td>
 		      <td>${dataList.nodeId}</td>

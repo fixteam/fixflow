@@ -97,7 +97,7 @@ $(function(){
 					<div class="content">
 						<table width="100%" class="fix-table">
 							<thead>
-								<th width="30">&nbsp;</th>
+								<th width="30">序号</th>
 								<th>实例编号</th>
 								<th>流程定义</th>
 								<th>任务主题</th>
@@ -110,7 +110,7 @@ $(function(){
 							<tbody>
 								<c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 									<tr>
-										<td style="text-align: center;"><c:out value="${index.index+1}"/></td>
+										<td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionKey}</td>
 										<td>${dataList.subject}</td>
