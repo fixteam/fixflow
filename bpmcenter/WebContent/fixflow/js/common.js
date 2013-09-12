@@ -64,7 +64,7 @@ Fix = {
 					$("tbody tr",$table).removeClass("selected");
 					$(this).addClass("selected");
 					if(hasBox){
-						$("td:eq("+boxPosition+") input",$(this)).click();
+						$("td:eq("+boxPosition+") input",$(this)).trigger("trClick");
 					}
 				}else{
 					if($(this).hasClass("selected")){
