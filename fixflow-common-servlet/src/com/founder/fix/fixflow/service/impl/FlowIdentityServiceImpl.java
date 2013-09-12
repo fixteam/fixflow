@@ -61,7 +61,6 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 	 * com.founder.fix.fixflow.service.FlowIdentityService#getUserTo(java.lang
 	 * .String)
 	 */
-	@Override
 	public UserTo getUserTo(String userId) {
 		ProcessEngine engine = null;
 		UserTo userTo = null;
@@ -87,7 +86,6 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 	 * com.founder.fix.fixflow.service.FlowIdentityService#getUserName(java.
 	 * lang.String)
 	 */
-	@Override
 	public String getUserName(String userId) {
 		return this.getUserTo(userId).getUserName();
 	}
@@ -101,7 +99,6 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 	 * com.founder.fix.fixflow.service.FlowIdentityService#getUserDelegationInfo
 	 * ()
 	 */
-	@Override
 	public Map<String, Object> getUserDelegationInfo(String agentId)
 			throws SQLException {
 		Map<String, Object> resultData = new HashMap<String, Object>();
@@ -212,7 +209,6 @@ public class FlowIdentityServiceImpl extends CommonServiceImpl implements
 	 * com.founder.fix.fixflow.service.FlowIdentityService#saveUserDelegationInfo
 	 * (java.util.Map)
 	 */
-	@Override
 	public void saveUserDelegationInfo(Map<String, Object> delegationInfo) throws Exception {
 		String operator = StringUtil.getString(delegationInfo.get("operator"));
 		

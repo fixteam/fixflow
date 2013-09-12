@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fixConfig>
+	<items>
+		<item>
+			<key>1</key>
+			<value>a</value>
+		</item>
+		<item>
+			<key>2</key>
+			<value>b</value>
+		</item>
+	</items>
+</fixConfig>
