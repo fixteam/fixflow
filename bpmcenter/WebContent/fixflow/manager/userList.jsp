@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -89,7 +89,7 @@
               </tr>
             </table>
         </div>
-	  <div>
+	  <div class="content">
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>

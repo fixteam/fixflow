@@ -26,4 +26,5 @@
 .page li .orange { color:#10a7d9;}
 
 /*分类配色*/
-.type-box .type a { color:#10a7d9; }
+.type-box .type a { color:#10a7d9;}
+.type-box .type a:hover {  border:3px solid #10a7d9;}

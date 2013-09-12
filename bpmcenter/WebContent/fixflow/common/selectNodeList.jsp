@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>节点选择</title>
+<base target="_self" /> 
 <jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
@@ -61,6 +62,18 @@ $(function(){
 		}
 		window.close();
 	});
+	var color = window.localStorage.getItem("color");
+	if(color){
+		var url = $("#color").attr("href");
+		url=url.substring(0,url.lastIndexOf("_")+1);
+		url+=color+".css";
+		$("#color").attr("href",url);
+	}else{
+		var url = $("#color").attr("href");
+		url=url.substring(0,url.lastIndexOf("_")+1);
+		url+="red.css";
+		$("#color").attr("href",url);
+	}
 })
 </script>
 </html>

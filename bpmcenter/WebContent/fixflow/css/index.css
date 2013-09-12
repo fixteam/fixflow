@@ -111,4 +111,4 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .type-box .type a { float:left; margin:12px 0 0 15px; padding:15px 10px 15px 15px; display:block; width:100px; height:40px; overflow:hidden; text-decoration:none; line-height:16px; background:#eee ; border:3px solid #eee;}
 .type-box .type a div { font-size:14px; text-align:left; font-family:"微软雅黑";}
 .type-box .type a div:first-letter {font-size:200%;font-weight:bold;float:left;margin:0 5px;}
-.type-box .type a:hover { color:#10a7d9; background:#eee ; border:3px solid #10a7d9;}
+.type-box .type a:hover { background:#eee ;}
