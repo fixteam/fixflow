@@ -984,10 +984,116 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
             </imageobject></mediaobject>
           </listitem>
           <listitem>
-            <para>到这里我们的“封装”的工具就完成了。下面看下流程开发人员怎么“调用”这个连接器。</para>
+            <para>到这里我们的“封装”的工具就完成了。</para>
           </listitem>
         </orderedlist>
-        
+        <para>连接器定义的源文件介绍：</para>
+        <para>FixFlow的连接器定义文件在fixflow-expand\src\com\founder\fix\fixflow\expand\connector包下，其中FixConnectorMenu.xml是连接器的总览文件
+          一个包代表一个连接器的定义，其中包括**.java和FixConnector.xml两个文件。
+        </para>
+        <para>FixConnectorMenu.xml中一个连接的定义如下：</para>
+        <programlisting>&lt;node id="64159507-476c-483c-ad29-9918465afbab" name="TestFixFlow">
+    &lt;menuConnector id="TestSendMessage" name="发送短信" note="发送短信连接器"/>
+ &lt;/node></programlisting>
+        <itemizedlist>
+          <listitem><para>node：表示一个连接器分类</para></listitem>
+          <listitem>
+            <para>id：表示分类的唯一编号，自动生成的</para>
+          </listitem>
+          <listitem>
+            <para>name：分类的名称</para>
+          </listitem>
+          <listitem>
+            <para>ico：分类在设计器中的图标</para>
+          </listitem>
+          <listitem>
+            <para>menuConnector：连接器的定义</para>
+            <itemizedlist>
+              <listitem><para>id：连接器的唯一编号，自己定义，并且相同目录下必须有这个同名包，包下有同名的java文件。</para></listitem>
+              <listitem><para>name：连接器的名称。</para></listitem>
+              <listitem><para>note：连接器的说明。</para></listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+        <para>同名包下的FixConnector.xml文件的定义如下：</para>
+        <programlisting>
+&lt;connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="TestSendMessage" className="TestSendMessage" packageName="com.founder.fix.fixflow.expand.connector.TestSendMessage" connectorName="发送短信" connectorNote="发送短信连接器" category="TestFixFlow">
+  &lt;outputs>
+    &lt;outputParameter id="result" name="发送是否成功" dataType="java.lang.String"/>
+  &lt;/outputs>
+  &lt;Pages>
+    &lt;page pageId="messageConfig" pageTitle="信息配置" pageNote="信息配置">
+      &lt;inputParameter id="receiveId" name="收件人号码" dataType="java.lang.String" controlType="text"/>
+      &lt;inputParameter id="messageInfo" name="短信内容" dataType="java.lang.String" controlType="text"/>
+    &lt;/page>
+  &lt;/Pages>
+&lt;/connector:Connector>      
+        </programlisting>
+        <para>主要属性说明</para>
+        <itemizedlist>
+          <listitem>
+            <para>connector：连接器的声明，类名，包名等信息</para>
+          </listitem>
+          <listitem>
+            <para>outputs：输出参数</para>
+          </listitem>
+          <listitem>
+            <para>Pages：页面数，流程中使用此连接器时需要配置几个界面。<itemizedlist>
+              <listitem>
+                <para>page：页面定义</para>
+              </listitem>
+              <listitem>
+                <para>inputParameter：页面上的输入参数，与Java文件中的一一对应。</para>
+              </listitem>
+            </itemizedlist></para>
+          </listitem>
+        </itemizedlist>
+        <para>对应的java文件代码如下：</para>
+        <programlisting>
+package com.founder.fix.fixflow.expand.connector.TestSendMessage;
+
+
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.action.ConnectorHandler;
+
+public class TestSendMessage implements ConnectorHandler {
+
+	private java.lang.String receiveId;
+
+	private java.lang.String messageInfo;
+
+	public void execute(ExecutionContext executionContext) throws Exception {
+		System.out.println("收件人号码为："+receiveId);
+		System.out.println("短信内容为："+messageInfo);
+	}
+
+	public void  setReceiveId(java.lang.String receiveId){
+		this.receiveId = receiveId;
+	}
+
+	public void  setMessageInfo(java.lang.String messageInfo){
+		this.messageInfo = messageInfo;
+	}
+
+	public java.lang.String  getResult(){
+		return "true" ;
+	}
+
+}          
+        </programlisting>
+        <para>主要代码说明</para>
+        <itemizedlist>
+          <listitem>
+            <para>receiveId：和messageInfo一样，是连接器定义XML文件中定义的输入参数，并且要有setReceiveId()方法</para>
+          </listitem>
+          <listitem>
+            <para>getResult()：定义文件中有出参result，所以此处会有getResult()方法，返回给流程使用</para>
+          </listitem>
+          <listitem>
+            <para>execute()：具体逻辑的实现方法。</para>
+          </listitem>
+        </itemizedlist>
+        <para><emphasis>注意：</emphasis>get方法和set方法是由FixFlow流程引擎调用，用户只需要实现execute()中的相关逻辑即可。</para>
       </section>
       <section xml:id="bpmn.ExtensionElements.connector.use">
         <title>使用连接器</title>
@@ -1062,6 +1168,85 @@ return triggers;
             </imageobject></mediaobject>
           </listitem>
         </orderedlist>
+        <para>配置在流程中的连接器XML文件表示如图：</para>
+        <programlisting>&lt;fixflow:connectorInstance connectorId="TestSendMessage" packageName="com.founder.fix.fixflow.expand.connector.TestSendMessage" className="TestSendMessage" connectorInstanceId="2c2ee38b-785e-4f52-9112-8710980124ad" connectorInstanceName="发送短信" eventType="node-enter" errorHandling="抛出异常" errorCode="" isTimeExecute="true">
+          &lt;documentation xsi:type="fixflow:Documentation">流程启动时给管理员发送短信&lt;/documentation>
+          &lt;fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="receiveId" name="收件人号码" dataType="java.lang.String">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;13022222222&amp;quot;">&amp;quot;13022222222&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:connectorParameterInputs>
+          &lt;fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="messageInfo" name="短信内容" dataType="java.lang.String">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;流程启动发送短信&amp;quot;">&amp;quot;流程启动发送短信&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:connectorParameterInputs>
+          &lt;fixflow:connectorParameterOutputs xsi:type="fixflow:ConnectorParameterOutputs" variableTarget="${amount}">
+            &lt;fixflow:expression xsi:type="fixflow:Expression">result&lt;/fixflow:expression>
+          &lt;/fixflow:connectorParameterOutputs>
+          &lt;fixflow:connectorParameterOutputsDef xsi:type="fixflow:ConnectorParameterOutputsDef" id="result" name="发送是否成功" dataType="java.lang.String"/>
+          &lt;fixflow:skipComment xsi:type="fixflow:SkipComment">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="returnfalse;">return false;&lt;/fixflow:expression>
+          &lt;/fixflow:skipComment>
+          &lt;fixflow:timeExpression xsi:type="fixflow:timeExpression">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="importorg.quartz.Trigger;&amp;#xD;&amp;#xA;importcom.founder.fix.fixflow.core.impl.util.QuartzUtil;&amp;#xD;&amp;#xA;&amp;#xD;&amp;#xA;cal=Calendar.getInstance();&amp;#xD;&amp;#xA;cal.add(Calendar.MINUTE,+1);&amp;#xD;&amp;#xA;trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());&amp;#xD;&amp;#xA;trigger2=QuartzUtil.createCronTrigger(processInfo,&amp;quot;0012**?&amp;quot;);&amp;#xD;&amp;#xA;&amp;#xD;&amp;#xA;List&amp;lt;Trigger>triggers=newArrayList&amp;lt;Trigger>();&amp;#xD;&amp;#xA;triggers.add(trigger1);&amp;#xD;&amp;#xA;triggers.add(trigger2);&amp;#xD;&amp;#xA;returntriggers;">import org.quartz.Trigger;&amp;#xD;
+import com.founder.fix.fixflow.core.impl.util.QuartzUtil;&amp;#xD;
+&amp;#xD;
+cal = Calendar.getInstance();&amp;#xD;
+cal.add(Calendar.MINUTE, +1);&amp;#xD;
+trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());&amp;#xD;
+trigger2=QuartzUtil.createCronTrigger(processInfo, &amp;quot;0 0 12 * * ?&amp;quot;);&amp;#xD;
+&amp;#xD;
+List&amp;lt;Trigger> triggers=new ArrayList&amp;lt;Trigger>();&amp;#xD;
+triggers.add(trigger1);&amp;#xD;
+triggers.add(trigger2);&amp;#xD;
+return triggers;&lt;/fixflow:expression>
+          &lt;/fixflow:timeExpression>
+          &lt;fixflow:timeSkipExpression xsi:type="fixflow:timeSkipExpression">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="returnfalse;">return false;&lt;/fixflow:expression>
+          &lt;/fixflow:timeSkipExpression>
+        &lt;/fixflow:connectorInstance>          
+        </programlisting>
+        <para>主要节点和属性说明</para>
+        <itemizedlist>
+          <listitem>
+            <para>fixflow:connectorInstance：连接器实例<itemizedlist>
+              <listitem>
+                <para>connectorId：连接器定义编号</para>
+              </listitem>
+              <listitem>
+                <para>eventType：作用时机：节点进入、节点离开、任务分配、流程启动、流程结束等</para>
+              </listitem>
+              <listitem>
+                <para>isTimeExecute：是否启动定时器</para>
+              </listitem>
+              <listitem>
+                <para>errorHandling：错误机制：抛出异常、忽略错误并继续流程、抛出错误事件。</para>
+              </listitem>
+            </itemizedlist></para>
+          </listitem>
+          <listitem>
+            <para>documentation：连接器描述</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:connectorParameterInputs：连接器输入参数</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:connectorParameterOutputs：连接器输出参数<itemizedlist>
+              <listitem>
+                <para>variableTarget：输出变量对应的目标变量</para>
+              </listitem>
+            </itemizedlist></para>
+          </listitem>
+          <listitem>
+            <para>fixflow:skipComment：跳过策略</para>
+          </listitem>
+          <listitem>
+            <para>timeExpression：启动定时器时的时间表达式</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:timeSkipExpression：时间表达式的跳过策略</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:expression：groovy代码或表达式。</para>
+          </listitem>
+        </itemizedlist>
         <para>至此，连接器的使用基本就结束了，需要注意的是当连接器作用在不同的地方时，其可选择的触发事件是不一样的。FixFlow为了方便用户，已经将
         项目中常用的连接器封装好了，比如：发送短信，发送邮件，超时自动处理，webService等。</para>
         
