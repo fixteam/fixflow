@@ -9,7 +9,7 @@ public enum DataBaseTableEnum {
 	fixflow_run_variable, 
 	
 	fixflow_his_processinstance, 
-	fixflow_histoken, 
+	fixflow_his_token, 
 	fixflow_his_taskinstance, 
 	fixflow_his_taskidentitylink, 
 	fixflow_his_variable
