@@ -60,7 +60,6 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 	 * @throws SQLException
 	 * @see com.founder.fix.fixflow.service.ProcessInstanceService#getProcessInstances(java.util.Map)
 	 */
-	@Override
 	public Map<String,Object> getProcessInstances(Map<String,Object> params) throws SQLException{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
@@ -263,7 +262,6 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		}
 	}
 	
-	@Override
 	public void setHistory(Map<String, Object> params) throws SQLException {
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));

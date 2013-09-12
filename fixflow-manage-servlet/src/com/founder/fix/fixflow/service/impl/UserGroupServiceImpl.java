@@ -26,7 +26,6 @@ import com.founder.fix.fixflow.util.Pagination;
 @Service
 public class UserGroupServiceImpl extends CommonServiceImpl implements UserGroupService {
 
-	@Override
 	public Map<String, Object> getAllUsers(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
@@ -74,7 +73,6 @@ public class UserGroupServiceImpl extends CommonServiceImpl implements UserGroup
 		return resultMap;
 	}
 
-	@Override
 	public Map<String, Object> getAllGroup(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String groupType = StringUtil.getString(params.get("groupType"));
@@ -193,7 +191,6 @@ public class UserGroupServiceImpl extends CommonServiceImpl implements UserGroup
 		return result;
 	}
 	
-	@Override
 	public Map<String, Object> getGroupInfo(Map<String, Object> params) throws SQLException {
 		Map<String,Object> result= new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));

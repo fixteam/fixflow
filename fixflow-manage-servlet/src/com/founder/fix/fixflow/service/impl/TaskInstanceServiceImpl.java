@@ -61,7 +61,6 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 	 * @throws Exception
 	 * @see com.founder.fix.fixflow.service.TaskInstanceService#getTaskList(java.util.Map)
 	 */
-	@Override
 	public Map<String, Object> getTaskList(Map<String, Object> filter)
 			throws Exception {
 		Map<String,Object> result = new HashMap<String,Object>();

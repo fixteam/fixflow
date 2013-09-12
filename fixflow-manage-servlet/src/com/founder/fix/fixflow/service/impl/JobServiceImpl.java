@@ -40,7 +40,6 @@ import com.founder.fix.fixflow.shell.CommonServiceImpl;
 @Service
 public class JobServiceImpl extends CommonServiceImpl implements JobService {
 
-	@Override
 	public Map<String, Object> getJobList(Map<String, Object> params) throws SchedulerException, SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
@@ -86,7 +85,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		return resultMap;
 	}
 	
-	@Override
 	public void continueScheduler(Map<String,Object> params) throws SQLException {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -98,7 +96,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		}
 	}
 	
-	@Override
 	public void suspendScheduler(Map<String,Object> params) throws SQLException {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -110,7 +107,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		}
 	}
 	
-	@Override
 	public void suspendJob(Map<String, Object> params) throws SchedulerException, SQLException {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -124,7 +120,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		}
 	}
 	
-	@Override
 	public void continueJob(Map<String, Object> params) throws SQLException, SchedulerException {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -138,7 +133,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		}
 	}
 	
-	@Override
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getJobTrigger(Map<String, Object> params) throws SQLException, SchedulerException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
@@ -181,7 +175,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		return resultMap;
 	}
 	
-	@Override
 	public void suspendTrigger(Map<String, Object> params) throws SchedulerException, SQLException {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
@@ -195,7 +188,6 @@ public class JobServiceImpl extends CommonServiceImpl implements JobService {
 		}
 	}
 	
-	@Override
 	public void continueTrigger(Map<String, Object> params) throws SchedulerException,SQLException {
 		String userId = StringUtil.getString(params.get("userId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
