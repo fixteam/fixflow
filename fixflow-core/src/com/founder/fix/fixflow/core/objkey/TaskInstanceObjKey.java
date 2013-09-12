@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.core.objkey;
 
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -34,7 +35,9 @@ public class TaskInstanceObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  TaskInstanceHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			tableName = "(select * from "+TaskInstanceTableName()+" union all select * from "+TaskInstanceHisTableName()+")";
+			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance).getColumnValue();
+			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance).getColumnValue();
+			tableName = "(select "+runColumnName+" from "+TaskInstanceTableName()+" union all select "+hisColumnName+" from "+TaskInstanceHisTableName()+")";
 		}else{
 			tableName = TaskInstanceTableName();
 		}
@@ -45,11 +48,7 @@ public class TaskInstanceObjKey {
 	 * @return
 	 */
 	public static String TaskInstanceTableName(){
-		int flowVersion = ProcessEngineManagement.getDefaultProcessEngine().getVersion().getMajorVersionNumber();
-		if(flowVersion >4)
-			return "FIXFLOW_RUN_TASKINSTANCE";
-		else
-			return "FIXFLOW_RUN_TAKSINSTANECE";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance).getTableValue();
 	}
 	
 	/**
@@ -57,7 +56,7 @@ public class TaskInstanceObjKey {
 	 * @return
 	 */
 	public static String TaskInstanceHisTableName(){
-		return "FIXFLOW_HIS_TASKINSTANCE";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance).getTableValue();
 	}
 	
 	

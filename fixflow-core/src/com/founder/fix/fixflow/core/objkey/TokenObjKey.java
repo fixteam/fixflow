@@ -17,6 +17,8 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -32,7 +34,9 @@ public class TokenObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  TokenHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			tableName = "(select * from "+TokenTableName()+" union all select * from "+TokenHisTableName()+")";
+			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token).getColumnValue();
+			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token).getColumnValue();
+			tableName = "(select "+runColumnName+" from "+TokenTableName()+" union all select "+hisColumnName+" from "+TokenHisTableName()+")";
 		}else{
 			tableName = TokenTableName();
 		}
@@ -44,7 +48,7 @@ public class TokenObjKey {
 	 * @return
 	 */
 	public static String TokenTableName(){
-		return "FIXFLOW_RUN_TOKEN";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token).getTableValue();
 	}
 	
 	/**
@@ -52,7 +56,7 @@ public class TokenObjKey {
 	 * @return
 	 */
 	public static String TokenHisTableName(){
-		return "FIXFLOW_HIS_TOKEN";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token).getTableValue();
 	}
 	
 	/**

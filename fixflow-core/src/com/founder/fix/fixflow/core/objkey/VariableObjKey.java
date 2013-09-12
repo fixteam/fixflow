@@ -18,6 +18,8 @@
 package com.founder.fix.fixflow.core.objkey;
 
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -33,7 +35,9 @@ public class VariableObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  VariableHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			tableName = "(select * from "+VariableTableName()+" union all select * from "+VariableHisTableName()+")";
+			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_variable).getColumnValue();
+			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_variable).getColumnValue();
+			tableName = "(select "+runColumnName+" from "+VariableTableName()+" union all select "+hisColumnName+" from "+VariableHisTableName()+")";
 		}else{
 			tableName = VariableTableName();
 		}
@@ -44,7 +48,7 @@ public class VariableObjKey {
 	 * @return
 	 */
 	public static String VariableTableName(){
-		return "FIXFLOW_RUN_VARIABLE";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_variable).getTableValue();
 	}
 	
 	/**
@@ -52,7 +56,7 @@ public class VariableObjKey {
 	 * @return
 	 */
 	public static String VariableHisTableName(){
-		return "FIXFLOW_HIS_VARIABLE";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_variable).getTableValue();
 	}
 	
 	/**

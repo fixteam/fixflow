@@ -16,7 +16,9 @@
  * @author kenshin
  */
 package com.founder.fix.fixflow.core.objkey;
+import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -33,7 +35,9 @@ public class ProcessInstanceObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  ProcessInstanceHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			tableName = "(select * from "+ProcessInstanceTableName()+" union all select * from "+ProcessInstanceHisTableName()+")";
+			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_processinstance).getColumnValue();
+			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_processinstance).getColumnValue();
+			tableName = "(select "+runColumnName+" from "+ProcessInstanceTableName()+" union all select "+hisColumnName+" from "+ProcessInstanceHisTableName()+")";
 		}else{
 			tableName = ProcessInstanceTableName();
 		}
@@ -45,11 +49,7 @@ public class ProcessInstanceObjKey {
 	 * @return
 	 */
 	public static String ProcessInstanceTableName(){
-		int flowVersion = ProcessEngineManagement.getDefaultProcessEngine().getVersion().getMajorVersionNumber();
-		if(flowVersion >4)
-			return "FIXFLOW_RUN_PROCESSINSTANCE";
-		else
-			return "FIXFLOW_RUN_PROCESSINSTANECE";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_processinstance).getTableValue();
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class ProcessInstanceObjKey {
 	 * @return
 	 */
 	public static String ProcessInstanceHisTableName(){
-		return "FIXFLOW_HIS_PROCESSINSTANCE";
+		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_processinstance).getTableValue();
 	}
 	
 	
