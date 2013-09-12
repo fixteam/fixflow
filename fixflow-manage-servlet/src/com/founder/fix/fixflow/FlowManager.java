@@ -355,7 +355,7 @@ public class FlowManager extends HttpServlet {
 			}else
 			if("updateCache".equals(action)){
 				ProcessEngineManagement.getDefaultProcessEngine().cleanCache(true, true);
-				response.getOutputStream().print("update success!");
+				response.getWriter().write("update success!");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
