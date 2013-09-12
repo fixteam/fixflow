@@ -49,6 +49,8 @@ import com.founder.fix.bpmn2extensions.coreconfig.ConnectionManagementInstanceCo
 import com.founder.fix.bpmn2extensions.coreconfig.CoreconfigPackage;
 import com.founder.fix.bpmn2extensions.coreconfig.DBType;
 import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
+import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTable;
+import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTableConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.EventSubscriptionConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClass;
 import com.founder.fix.bpmn2extensions.coreconfig.ExpandClassConfig;
@@ -77,6 +79,7 @@ import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
+import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.cache.CacheImpl;
@@ -141,6 +144,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected FixFlowResources fixFlowResources;
 
 	protected PigeonholeConfig pigeonholeConfig;
+	
+	protected DataBaseTableConfig dataBaseTableConfig;
+
+	
 
 	protected ExpandCmdConfig expandCmdConfig;
 
@@ -189,6 +196,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initConnectionManagementConfig();
 		initServices();
 		initConnection();
+		initDataBaseTable();
 		initCache();
 		initDeployers();
 		initGroupDefinitions();
@@ -220,6 +228,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 
 	
+
+	private void initDataBaseTable() {
+
+		dataBaseTableConfig=this.fixFlowConfig.getDataBaseTableConfig();
+	}
 
 	private void initImportDataVariableConfig() {
 		this.importDataVariableConfig = this.fixFlowConfig.getImportDataVariableConfig();
@@ -1038,6 +1051,23 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	public AbstractAuthentication getAuthenticationInstance() {
 		return authenticationInstance;
+	}
+	
+	public DataBaseTableConfig getDataBaseTableConfig() {
+	
+		return dataBaseTableConfig;
+	}
+	
+	public DataBaseTable getDataBaseTableConfig(DataBaseTableEnum dataBaseTableEnum) {
+		
+		List<DataBaseTable> dataBaseTables=dataBaseTableConfig.getDataBaseTable();
+		
+		for (DataBaseTable dataBaseTable : dataBaseTables) {
+			if(dataBaseTable.getTableId().toLowerCase().equals(dataBaseTableEnum.toString().toLowerCase())){
+				return dataBaseTable;
+			}
+		}
+		return null;
 	}
 
 }
