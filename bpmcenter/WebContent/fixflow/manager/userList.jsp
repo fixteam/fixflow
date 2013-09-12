@@ -89,7 +89,7 @@
               </tr>
             </table>
         </div>
-	  <div>
+	  <div class="content">
 		<!-- 表 -->
 		<table style="width:100%;" class="fix-table">
 		  <thead>
