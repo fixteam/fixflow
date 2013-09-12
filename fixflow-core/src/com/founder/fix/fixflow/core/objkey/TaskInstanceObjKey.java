@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTable;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
@@ -35,8 +36,16 @@ public class TaskInstanceObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  TaskInstanceHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance).getColumnValue();
-			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance).getColumnValue();
+			String runColumnName = "*";
+			String hisColumnName = "*";
+			DataBaseTable runTable = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance);
+			DataBaseTable hisTable = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance);
+			if(runTable !=null){
+				runColumnName = runTable.getColumnValue();
+			}
+			if(hisTable != null){
+				hisColumnName = hisTable.getColumnValue();
+			}
 			tableName = "(select "+runColumnName+" from "+TaskInstanceTableName()+" union all select "+hisColumnName+" from "+TaskInstanceHisTableName()+")";
 		}else{
 			tableName = TaskInstanceTableName();
@@ -48,7 +57,11 @@ public class TaskInstanceObjKey {
 	 * @return
 	 */
 	public static String TaskInstanceTableName(){
-		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance).getTableValue();
+		DataBaseTable table = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance);
+		if(table != null){
+			return table.getTableValue();
+		}
+		return "FIXFLOW_RUN_TASKINSTANCE";
 	}
 	
 	/**
@@ -56,7 +69,11 @@ public class TaskInstanceObjKey {
 	 * @return
 	 */
 	public static String TaskInstanceHisTableName(){
-		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance).getTableValue();
+		DataBaseTable table = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance);
+		if(table != null){
+			return table.getTableValue();
+		}
+		return "FIXFLOW_HIS_TASKINSTANCE";
 	}
 	
 	

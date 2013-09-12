@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTable;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
@@ -34,8 +35,17 @@ public class TokenObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  TokenHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token).getColumnValue();
-			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token).getColumnValue();
+			String runColumnName = "*";
+			String hisColumnName = "*";
+			DataBaseTable runTable = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token);
+			DataBaseTable hisTable = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token);
+			if(runTable !=null){
+				runColumnName = runTable.getColumnValue();
+			}
+			if(hisTable != null){
+				hisColumnName = hisTable.getColumnValue();
+			}
+			
 			tableName = "(select "+runColumnName+" from "+TokenTableName()+" union all select "+hisColumnName+" from "+TokenHisTableName()+")";
 		}else{
 			tableName = TokenTableName();
@@ -48,7 +58,11 @@ public class TokenObjKey {
 	 * @return
 	 */
 	public static String TokenTableName(){
-		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token).getTableValue();
+		DataBaseTable table = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token);
+		if(table != null){
+			return table.getTableValue();
+		}
+		return "FIXFLOW_RUN_TOKEN";
 	}
 	
 	/**
@@ -56,7 +70,11 @@ public class TokenObjKey {
 	 * @return
 	 */
 	public static String TokenHisTableName(){
-		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token).getTableValue();
+		DataBaseTable table = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token);
+		if(table != null){
+			return table.getTableValue();
+		}
+		return "FIXFLOW_HIS_TOKEN";
 	}
 	
 	/**

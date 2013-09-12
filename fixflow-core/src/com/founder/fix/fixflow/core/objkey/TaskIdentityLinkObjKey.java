@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.objkey;
 
+import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTable;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
@@ -33,8 +34,16 @@ public class TaskIdentityLinkObjKey {
 		if(QueryLocation.HIS.equals(queryLocation)){
 			tableName =  TaskIdentityLinkHisTableName();
 		}else if(QueryLocation.RUN_HIS.equals(queryLocation)){
-			String runColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskidentitylink).getColumnValue();
-			String hisColumnName = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskidentitylink).getColumnValue();
+			String runColumnName = "*";
+			String hisColumnName = "*";
+			DataBaseTable runTable = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskidentitylink);
+			DataBaseTable hisTable = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskidentitylink);
+			if(runTable !=null){
+				runColumnName = runTable.getColumnValue();
+			}
+			if(hisTable != null){
+				hisColumnName = hisTable.getColumnValue();
+			}
 			tableName = "(select "+runColumnName+" from "+TaskIdentityLinkTableName()+" union all select "+hisColumnName+" from "+TaskIdentityLinkHisTableName()+")";
 		}else{
 			tableName = TaskIdentityLinkTableName();
@@ -46,7 +55,11 @@ public class TaskIdentityLinkObjKey {
 	 * @return
 	 */
 	public static String TaskIdentityLinkTableName(){
-		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskidentitylink).getTableValue();
+		DataBaseTable table = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskidentitylink);
+		if(table != null){
+			return table.getTableValue();
+		}
+		return "FIXFLOW_RUN_TASKIDENTITYLINK";
 	}
 	
 	/**
@@ -54,7 +67,11 @@ public class TaskIdentityLinkObjKey {
 	 * @return
 	 */
 	public static String TaskIdentityLinkHisTableName(){
-		return ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskidentitylink).getTableValue();
+		DataBaseTable table = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskidentitylink);
+		if(table != null){
+			return table.getTableValue();
+		}
+		return "FIXFLOW_HIS_TASKIDENTITYLINK";
 	}
 	/**
 	 * 编号
