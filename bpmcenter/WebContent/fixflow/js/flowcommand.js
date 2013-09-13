@@ -33,10 +33,9 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var obj = {
 						  type:"user"
 						};
-				var params = {};
 				var fn = function(params,d){
 					params['transferUserId'] = d[0].USERID;
-				}
+				};
 				var d = FixSelect(obj,fn,params);
 				/*params={
 						//被转发的UserId，这里设定了就是管理员
@@ -44,10 +43,9 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				};*/
 			}else if(type=="pending"){//转办
 				var obj = {type:"user"};
-				var params = {};
 				var fn = function(params,d){
 					if(d&&d.length>0){
-						params['recoverNodeId:d'] = d[0].nodeId;
+						params['recoverNodeId'] = d[0].nodeId;
 				  	}else{
 				  		return;
 				  	}
@@ -66,10 +64,8 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						  type:"node",
 						taskId:taskId
 						};
-				
-				var params = {};
 				var fn = function(params,d){
-					params['recoverNodeId:d'] = d[0].nodeId;
+					params['recoverNodeId'] = d[0].nodeId;
 				};
 				var d = FixSelect(obj,fn,params);
 				/*params={
@@ -91,39 +87,38 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						  type:"node",
 						taskId:taskId
 						};
-				var params = {};
 				var fn = function(params,d){
-					params['rollBackNodeId:d'] = d[0].nodeId;
+					params['rollBackNodeId'] = d[0].nodeId;
 				};
 				var d = FixSelect(obj,fn,params);
-				/*params={
+				params={
 						//退回到某个节点
 					rollBackNodeId:d[0].nodeId
 						
-				};*/
+				};
 			}else if(type=="rollBackTaskByTaskId"){
 				var obj = {
 						type:"step",
 						taskId:taskId
 						};
-				var params = {};
 				var fn = function(params,d){
-					params['rollBackTaskId:d'] = d[0].taskId;
+					params['rollBackTaskId'] = d[0].taskId;
 				};
 				var d = FixSelect(obj,fn,params);
-				/*params={
+				params={
 						//退回到某个节点
 					rollBackTaskId:d[0].taskId
 						
-				};*/
+				};
 			}
-			
-			if(confirm("确认提交?")){
-				var ss = JSON.stringify(params);
-				$("#taskParams").val(ss);
-				$("#"+formId).submit();
-			}else 
-				return false;
+			if(params!={}){
+				if(confirm("确认提交?")){
+					var ss = JSON.stringify(params);
+					$("#taskParams").val(ss);
+					$("#"+formId).submit();
+				}else 
+					return false;
+			}
 		});
 	}
 

@@ -119,13 +119,13 @@ a{text-decoration: none;}
 	  <div class="search">
         	<table>
               <tr>
-                <td class="title-r">流程编号：</td>
+                <td class="title-r">${applicationScope.appInfo["task.processDefinitionKey"]}：</td>
                 <td><input type="text" id="text_3" name="queryProcessId" class="fix-input" value="${result.queryProcessId}"/></td>
-                <td class="title-r">流程名称：</td>
+                <td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
                 <td><input type="text" id="text_4" name="queryProcessName" class="fix-input" value="${result.queryProcessName}"/></td>
-                <td class="title-r">流程分类：</td>
+                <td class="title-r">${applicationScope.appInfo["task.category"]}：</td>
                 <td><input type="text" id="text_4" name="queryType" class="fix-input" value="${result.queryType}"/></td>
-                <td><div class="btn-normal"><a href="#" onclick="searchProcess()">查 找</a></div></td>
+                <td><div class="btn-normal"><a href="#" onclick="searchProcess()">${applicationScope.appInfo["common.search"]}</a></div></td>
               </tr>
             </table>
         </div>
@@ -140,13 +140,13 @@ a{text-decoration: none;}
 		<table style="width:100%;" class="fix-table">
 		  <thead>
 		    <th width="2%">&nbsp;</th>
-		    <th>序号</th>
-		    <th >流程名称</th>
-		    <th width="15%">编号</th>
-		    <th width="5%">流程版本</th>
-		    <th width="12%">流程分类</th>
-		    <th width="31%">唯一编号</th>
-		    <th width="12%">发布时间</th>
+		    <th>${applicationScope.appInfo["common.no"]}序号</th>
+		    <th >${applicationScope.appInfo["task.processDefinitionName"]}</th>
+		    <th width="15%">${applicationScope.appInfo["task.processDefinitionKey"]}</th>
+		    <th width="5%">${applicationScope.appInfo["task.version"]}</th>
+		    <th width="12%">${applicationScope.appInfo["task.category"]}</th>
+		    <th width="31%">${applicationScope.appInfo["task.processDefinitionId"]}</th>
+		    <th width="12%">${applicationScope.appInfo["task.deplayTime"]}</th>
 		  </thead>
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">

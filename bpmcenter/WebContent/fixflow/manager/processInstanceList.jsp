@@ -180,29 +180,29 @@
     	<div class="search">
         	<table>
               <tr>
-                <td class="title-r">流程名称：</td>
+                <td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
                 <td><input type="text" id="processName" name="processName" class="fix-input" style="width:160px;" value="${result.processName}"/></td>
-                <td class="title-r">实例编号：</td>
+                <td class="title-r">${applicationScope.appInfo["task.processInstanceId"]}：</td>
                 <td><input type="text" id="processInstanceId" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
-                <td class="title-r">主题：</td>
+                <td class="title-r">${applicationScope.appInfo["task.subject"]}：</td>
                 <td style="width:200px;"><input type="text" id="subject" name="subject" class="fix-input" style="width:160px;" value="${result.subject}"/></td>
                 <td>
                 <table style="margin:0">
                 <tr>
                 <td>
-                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">${applicationScope.appInfo["common.search"]}</a></div>
                 </td>
                 <td>
-                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+                <div class="btn-normal"><a href="#" onclick="clearInfo();">${applicationScope.appInfo["common.clear"]}</a></div>
 				</td>                
                 </tr>
                 </table>
                 </td>
               </tr>
               <tr>
-                <td class="title-r">业务数据：</td>
+                <td class="title-r">${applicationScope.appInfo["task.bizKey"]}：</td>
                 <td><input type="text" id="bizKey" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
-                <td class="title-r">发起人：</td>
+                <td class="title-r">${applicationScope.appInfo["task.initor"]}：</td>
                 <td>
                 <table style="margin:0">
                 <tr>
@@ -212,14 +212,14 @@
                 </td>
                 <td>
                 <div class="btn-normal">
-										<a href="#" onclick="" id="selectUser">选择<em
+										<a href="#" onclick="" id="selectUser">${applicationScope.appInfo["common.select"]}<em
 											class="arrow-small"></em></a>
 									</div>
 									</td>
 									</tr>
 									</table>
                 </td>
-                <td class="title-r">状态：</td>
+                <td class="title-r">${applicationScope.appInfo["task.status"]}：</td>
                 <td>
                 <select id="status" name="status" class="fix-input" style="width:172px;">
                   <option value ="">请选择</option>
@@ -246,17 +246,17 @@
         	<table width="100%" class="fix-table">
               <thead>
               	<th width="30">&nbsp;</th>
-                <th width="30">序号</th>
-                <th width="">实例编号</th>
-                <th>流程名称</th>
-                <th width="">主题</th>
-                <th width="">业务数据</th>
-                <th width="130">启动时间</th>
-                <th width="130">更新时间</th>
-                <th width="">发起人</th>
-                <th width="">当前步骤</th>
-                 <th width="">运行状态</th>
-                  <th width="60">操作</th>
+                <th width="30">${applicationScope.appInfo["common.no"]}</th>
+                <th width="">${applicationScope.appInfo["task.processInstanceId"]}</th>
+                <th>${applicationScope.appInfo["task.processDefinitionName"]}</th>
+                <th width="">${applicationScope.appInfo["task.subject"]}</th>
+                <th width="">${applicationScope.appInfo["task.bizKey"]}</th>
+                <th width="130">${applicationScope.appInfo["task.startTime"]}</th>
+                <th width="130">${applicationScope.appInfo["task.updateTime"]}</th>
+                <th width="">${applicationScope.appInfo["task.initor"]}</th>
+                <th width="">${applicationScope.appInfo["task.nodeName"]}</th>
+                 <th width="">${applicationScope.appInfo["task.status"]}</th>
+                  <th width="60">${applicationScope.appInfo["common.operation"]}</th>
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>

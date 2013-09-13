@@ -81,7 +81,7 @@ function clearInfo(){
 					<input type="hidden" id="processType" name="processType" value="${result.processType}"/> 
 						<table>
 			              <tr>
-			                <td class="title-r">${applicationScope.appInfo["task.description"]}：</td>
+			                <td class="title-r">${applicationScope.appInfo["task.subject"]}：</td>
 			                <td><input type="text" id="title" name="title" class="fix-input" value="${result.title}"/></td>
 			                <td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
 			                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" value=""/></td>
@@ -144,7 +144,7 @@ function clearInfo(){
 							<th width="30px">${applicationScope.appInfo["common.no"]}</th>
 								<th>${applicationScope.appInfo["task.bizKey"]}</th>
 								<th>${applicationScope.appInfo["task.processDefinitionName"]}</th>
-								<th>${applicationScope.appInfo["task.description"]}</th>
+								<th>${applicationScope.appInfo["task.subject"]}</th>
 								<c:if test="${result.processType != 'initor'}"><th>${applicationScope.appInfo["task.initor"]}</th> </c:if>
 								
 								<th width="130">${applicationScope.appInfo["task.startTime"]}</th>
