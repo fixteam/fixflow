@@ -60,6 +60,29 @@ function doRollBackNode(){
 	}
 }
 
+function doRollBackTask(){
+	if(checkButton("doRollBackTask")){
+			return false;
+		}
+	var checkboxs = $("input:checked[name=checked]");
+	var id = "";
+	if(checkboxs.length!=1){
+		alert("请选中一个流程实例！");	
+		return;
+	}else{
+		id = $(checkboxs[0]).val();
+	}
+	var obj = {
+			  type:"step",
+			taskId:id
+			};
+	var d = FixSelect(obj);
+	if(d!=null){
+		$("#rollBackTaskId").val(d[0].taskId);
+		doProcess("doTaskRollBackTask",id);
+	}
+}
+
 function doProcess(action,taskId){
 		if(taskId==null){
 	 		var checkboxs = $("input:checked[name=checked]");
@@ -137,6 +160,7 @@ function clearInfo(){
     	<input type="hidden" id="action" name="action" value="taskInstanceList"/>
     	<input type="hidden" id="transferUserId" name="transferUserId"/> 
     	<input type="hidden" id="rollBackNodeId" name="rollBackNodeId"/> 
+    	<input type="hidden" id="rollBackTaskId" name="rollBackTaskId"/> 
     	<input type="hidden" id="taskId" name="taskId">
     	<div class="search">
         	<table>
@@ -192,7 +216,7 @@ function clearInfo(){
             <div id="doResume" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doResume();">恢复</a></div>
             <div id="doTransfer" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doTransfer();">转发</a></div>
             <div id="doRollBackNode" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doRollBackNode();">退回-节点</a></div>
-            <div id="" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="">退回-步骤</a></div>
+            <div id="doRollBackTask" class="btn-normal" data-scope=single style="display:inline-block;margin-left:5px;"><a href="#" onclick="doRollBackTask()">退回-步骤</a></div>
         </div>
         <div class="content">
         	<table width="100%" class="fix-table">
