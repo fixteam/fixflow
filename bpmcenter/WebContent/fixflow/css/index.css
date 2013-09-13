@@ -3,7 +3,7 @@
 /* 2013-8-13 */
 /* body { min-width:1000px;} */
 body { background-color: #f2f2f2;}
-.main-panel { width:100%; height:100%; display:table;}
+.main-panel { width:100%; height:100%; display:table; min-width: 1160px;}
 .header { display:table-row; width:100%; height:70px; overflow:hidden; position:relative;}
 .top { height:22px; line-height:22px; overflow:hidden;}
 .top-right { float:right; padding:2px 0; text-align:right; color:#DDD; font-size:12px;}
