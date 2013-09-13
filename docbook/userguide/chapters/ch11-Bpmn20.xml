@@ -1049,7 +1049,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           </listitem>
         </itemizedlist>
         <para>对应的java文件代码如下：</para>
-        <programlisting>
+        <programlisting language="java">
 package com.founder.fix.fixflow.expand.connector.TestSendMessage;
 
 
@@ -1126,7 +1126,7 @@ public class TestSendMessage implements ConnectorHandler {
                   也可以指定多个Trigger,可以指定在指定时间触发的Trigger，
                   也可以指定复杂的间歇性Trigger。如：
                 </para>
-                <programlisting>import org.quartz.Trigger;
+                <programlisting language="java">import org.quartz.Trigger;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 
 cal = Calendar.getInstance();
@@ -1169,7 +1169,7 @@ return triggers;
           </listitem>
         </orderedlist>
         <para>配置在流程中的连接器XML文件表示如图：</para>
-        <programlisting>&lt;fixflow:connectorInstance connectorId="TestSendMessage" packageName="com.founder.fix.fixflow.expand.connector.TestSendMessage" className="TestSendMessage" connectorInstanceId="2c2ee38b-785e-4f52-9112-8710980124ad" connectorInstanceName="发送短信" eventType="node-enter" errorHandling="抛出异常" errorCode="" isTimeExecute="true">
+        <programlisting language="xml">&lt;fixflow:connectorInstance connectorId="TestSendMessage" packageName="com.founder.fix.fixflow.expand.connector.TestSendMessage" className="TestSendMessage" connectorInstanceId="2c2ee38b-785e-4f52-9112-8710980124ad" connectorInstanceName="发送短信" eventType="node-enter" errorHandling="抛出异常" errorCode="" isTimeExecute="true">
           &lt;documentation xsi:type="fixflow:Documentation">流程启动时给管理员发送短信&lt;/documentation>
           &lt;fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="receiveId" name="收件人号码" dataType="java.lang.String">
             &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;13022222222&amp;quot;">&amp;quot;13022222222&amp;quot;&lt;/fixflow:expression>
@@ -1265,26 +1265,109 @@ return triggers;&lt;/fixflow:expression>
     
     <section xml:id="bpmn.ExtensionElements.dataVariable">
       <title>数据变量</title>
-      <para>
-        
-      </para>
+      <section xml:id="bpmn.ExtensionElements.dataVariable.description">
+        <title>描述</title>
+        <para>数据变量是在流程运转中可以由用户控制的，可以在流程各个表达式中使用的变量定义。</para>
+        <para>它分为瞬态变量和持久化变量，瞬态变量的生命周期为命令提交到令牌进入下一个节点清空数据之前。持久化变量是在使用此变量后，流程引擎会将数据持久化到数据库，在以后的各个节点状态均可直接使用。</para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.dataVariable.designer">
+        <title>设计器定义如图</title>
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.dataVariable.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.dataVariable.xmlCode">
+        <title>XML描述</title>
+        <programlisting language="xml">
+&lt;fixflow:DataVariable id="amount" dataType="int" isPersistence="true" bizType="customVariable">
+        &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;4000&amp;quot;">&amp;quot;4000&amp;quot;&lt;/fixflow:expression>
+        &lt;fixflow:documentation xsi:type="fixflow:Documentation">&lt;/fixflow:documentation>
+&lt;/fixflow:DataVariable>          
+        </programlisting>
+        <itemizedlist>
+          <listitem><para>dataType：变量数据类型。</para></listitem>
+          <listitem><para>isPersistence：是否持久化。</para></listitem>
+          <listitem><para>bizType：变量业务类型，用户自己划分。</para></listitem>
+          <listitem><para>fixflow:expression：命令表达式，这里代表默认值。</para></listitem>
+          <listitem><para>fixflow:documentation：描述。</para></listitem>
+        </itemizedlist>
+      </section>
       
     </section>
     
     <section xml:id="bpmn.ExtensionElements.skip">
       <title>跳过策略</title>
-      <para>
-        
-      </para>
+      <section xml:id="bpmn.ExtensionElements.skip.description">
+        <title>描述</title>
+        <para>跳过策略一般作用于节点上，来指定在特殊状态下次节点直接跳过</para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.skip.designer">
+        <title>设计器定义如图</title>
+        <para>
+          选中节点，点击properties属性框，选择跳过策略。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.skip.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.skip.xmlCode">
+        <title>XML描述</title>
+        <programlisting language="xml">&lt;fixflow:skipStrategy fixflow:isEnable="true">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="if(${amount}>4000){&amp;#xD;&amp;#xA;&amp;#x9;returntrue;&amp;#xD;&amp;#xA;}else{&amp;#xD;&amp;#xA;&amp;#x9;returnfalse;&amp;#xD;&amp;#xA;}">if(${amount}>4000){&amp;#xD;
+	          return true;&amp;#xD;
+              }else{&amp;#xD;
+	          return false;&amp;#xD;
+          }&lt;/fixflow:expression>
+          &lt;fixflow:skipAssignee xsi:type="fixflow:SkipAssignee">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;1200119390&amp;quot;">&amp;quot;1200119390&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:skipAssignee>
+          &lt;fixflow:skipComment xsi:type="fixflow:SkipComment">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;金额太小就不用我审批了。&amp;quot;">&amp;quot;金额太小就不用我审批了。&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:skipComment>
+&lt;/fixflow:skipStrategy>
+        </programlisting>
+      </section>
       
     </section>
     
     <section xml:id="bpmn.ExtensionElements.form">
       <title>任务表单</title>
-      <para>
-        
-      </para>
-      
+      <section xml:id="bpmn.ExtensionElements.form.description">
+        <title>描述</title>
+        <para> 任务表单分为三种。 <orderedlist>
+            <listitem>
+              <para>默认表单：在流程定义上设置，流程默认会使用的表单，优先级低。</para>
+            </listitem>
+            <listitem>
+              <para>浏览表单：流程到达某节点后，非当前处理者的有权限用户点击查看时的浏览表单。</para>
+            </listitem>
+            <listitem>
+              <para>操作表单：流程到达某节点后，当前处理者点击处理时的表单。</para>
+            </listitem>
+          </orderedlist></para>
+      </section>
+     
+      <section xml:id="bpmn.ExtensionElements.form.designer">
+        <title>设计器配置</title>
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.form.designer.1.png"/>
+          </imageobject></mediaobject>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.form.designer.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.form.xmlCode">
+        <title>XML描述</title>
+        <programlisting language="xml">
+&lt;fixflow:formUri>
+    &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&amp;quot;DemoServlet?action=startOneTask&amp;quot;">&amp;quot;DemoServlet?action=startOneTask&amp;quot;&lt;/fixflow:expression>
+&lt;/fixflow:formUri>     
+        </programlisting>
+      </section>
     </section>
     
     <section xml:id="bpmn.ExtensionElements.taskTopic">
