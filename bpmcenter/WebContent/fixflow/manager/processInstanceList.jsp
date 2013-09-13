@@ -120,7 +120,7 @@
 		Fix.Util.ClickTr(null,false,true,0,function($table){
 		  var flag = true;
 		  $("tbody tr.selected",$table).each(function(){
-		    var state = $("td:eq(9)",$(this)).html();
+		    var state = $("td:eq(10)",$(this)).html();
 		    //alert(state);
 		    if(state.trim()=="运行中" ||state.trim()=="暂停"){
 		      flag = false;
