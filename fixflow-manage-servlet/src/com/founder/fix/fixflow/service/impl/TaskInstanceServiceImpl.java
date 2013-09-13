@@ -216,6 +216,20 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			closeProcessEngine();
 		}
 	}
+	
+	public void rollBackStep(Map<String,Object> filter) throws Exception{
+		ProcessEngine engine = getProcessEngine(filter
+				.get("userId"));
+		String rollBackTaskId = StringUtil.getString(filter.get("rollBackTaskId"));
+		String taskId = StringUtil.getString(filter.get("taskId"));
+		
+		ManagementService mservice = engine.getManagementService();
+		try{
+			mservice.rollBackByTaskId(taskId, rollBackTaskId,"管理员干预", null);
+		}finally{
+			closeProcessEngine();
+		}
+	}
 
 	/**
 	 * 获得实例的当前处理信息

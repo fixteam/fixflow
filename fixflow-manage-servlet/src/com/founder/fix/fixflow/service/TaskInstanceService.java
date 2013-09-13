@@ -44,4 +44,6 @@ public interface TaskInstanceService {
 	public void transferTask(Map<String,Object> filter) throws Exception;
 	
 	public void rollBackNode(Map<String,Object> filter) throws Exception;
+	
+	public void rollBackStep(Map<String,Object> filter) throws Exception;
 }
