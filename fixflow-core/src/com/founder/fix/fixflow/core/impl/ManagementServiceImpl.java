@@ -90,6 +90,18 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
 		expandTaskCommand.setParamMap(paramMap);
 		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommand, null);
 	}
+	
+	public void rollBackByTaskId(String taskId, String rollBackTaskId, String taskComment, Map<String, Object> transientVariables) {
+		ExpandTaskCommand expandTaskCommand=new ExpandTaskCommand();
+		expandTaskCommand.setCommandType("rollBackTaskByTaskId");
+		expandTaskCommand.setTaskId(taskId);
+		expandTaskCommand.setAdmin(Authentication.getAuthenticatedUserId());
+		Map<String, Object> paramMap=new HashMap<String, Object>();
+		paramMap.put("rollBackTaskId", rollBackTaskId);
+		expandTaskCommand.setParamMap(paramMap);
+		getProcessEngine().getTaskService().expandTaskComplete(expandTaskCommand, null);
+	}
+
 
 	public void resumeTask(String taskId) {
 		TaskService taskService=getProcessEngine().getTaskService();
@@ -104,6 +116,7 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
 		taskInstance.suspend();
 		taskService.saveTask(taskInstance);
 	}
+
 
 	
 	

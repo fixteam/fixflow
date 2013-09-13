@@ -70,7 +70,7 @@ public interface ManagementService extends ProcessService{
 
 
 	/**
-	 * 退回任务
+	 * 退回节点
 	 * @param taskId 操作的任务号
 	 * @param rollBackNodeId 退回的节点号
 	 * @param taskComment 处理意见
@@ -78,7 +78,14 @@ public interface ManagementService extends ProcessService{
 	 */
 	void rollBack(String taskId,String rollBackNodeId,String taskComment,Map<String, Object> transientVariables);
 	
-	
+	/**
+	 * 退回任务
+	 * @param taskId 操作的任务号
+	 * @param rollBackTaskId 退回的任务号
+	 * @param taskComment 处理意见
+	 * @param transientVariables 瞬态变量
+	 */
+	void rollBackByTaskId(String taskId,String rollBackTaskId,String taskComment,Map<String, Object> transientVariables);
 
 	
 	/**
