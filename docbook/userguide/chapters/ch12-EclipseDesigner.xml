@@ -44,24 +44,17 @@
           </mediaobject>
         </listitem>
         <listitem>
-          <para>如果是首次安装，需要添加一个站点，如果是更新安装可跳过此步骤，点击红框中的可用软件站点。</para>
+          <para>如果是首次安装，需要安装一个依赖插件，如果是更新安装可跳过此步骤，点击添加。</para>
           <mediaobject>
             <imageobject>
-              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.10.png" />
-            </imageobject>
-          </mediaobject>
-        </listitem>
-        <listitem>
-          <para>点击添加按钮。</para>
-          <mediaobject>
-            <imageobject>
-              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.11.png" />
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.5.png" />
             </imageobject>
           </mediaobject>
         </listitem>
         <listitem>
           <para>将下面这个站点加入。</para>
           <programlisting language="properties"><![CDATA[
+
 Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
 ]]> </programlisting>
           <mediaobject>
@@ -69,7 +62,18 @@ Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
               <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.12.png" />
             </imageobject>
           </mediaobject>
-          <para>添加好之后点击确定。</para>
+          <para>添加好之后点击确定，然后勾选1、3两项，点击下一步。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.10.png" />
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.11.png" />
+            </imageobject>
+          </mediaobject>
+          <para>在许可信息这点击同意，然后点击下一步。</para>
           <mediaobject>
             <imageobject>
               <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.13.png" />
@@ -77,7 +81,15 @@ Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
           </mediaobject>
         </listitem>
         <listitem>
-          <para>回到安装软件界面，点击添加按钮。</para>
+          <para> 安装完毕后会提示重启信息，我们选择重启。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.19.png" />
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>重启完毕后，我们再次回到安装软件界面，点击添加按钮。</para>
           <mediaobject>
             <imageobject>
               <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.5.png" />

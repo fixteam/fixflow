@@ -34,6 +34,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
@@ -47,6 +48,7 @@ import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
@@ -80,6 +82,12 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		Map<String,Object> result = new HashMap<String,Object>();
 		ProcessEngine engine = getProcessEngine(filter
 				.get("userId"));
+		
+		String whereSql = " 1=1 ";
+		String leftJoinStr = "";
+
+		QueryExpandTo queryExpandTo = new QueryExpandTo();
+		
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
 			
@@ -94,6 +102,25 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String initor	   = StringUtil.getString(filter.get("initor"));
 			if(StringUtil.isNotEmpty(initor))
 				tq.initiator(initor);
+			
+			//发起人模糊匹配
+			String initorName = StringUtil.getString(filter.get("initorName"));
+			if (StringUtil.isNotEmpty(initorName)) {
+				initorName = initorName.replace("'", "");
+				ProcessEngine processEngine = ProcessEngineManagement
+						.getDefaultProcessEngine();
+				AllUserInfo userInfoConfig = processEngine
+						.getProcessEngineConfiguration().getUserDefinition()
+						.getUserInfoConfig();
+				leftJoinStr += " LEFT JOIN (" + userInfoConfig.getSqlText()
+						+ ") UT on UT." + userInfoConfig.getUserIdField()
+						+ " = P.INITIATOR ";
+				whereSql += " and (UT." + userInfoConfig.getUserNameField()
+						+ " LIKE '%" + initorName + "%'  or UT."
+						+ userInfoConfig.getUserIdField() + " = '"
+						+ initorName + "')";
+			}
+
 			
 			String bizKey	   = StringUtil.getString(filter.get("bizKey"));
 			if(StringUtil.isNotEmpty(bizKey))
@@ -147,6 +174,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.taskAssignee(StringUtil.getString(filter.get("userId")));
 				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			}
+			
+			
+			if (StringUtil.isNotEmpty(leftJoinStr)) {
+				queryExpandTo.setLeftJoinSql(leftJoinStr);
+			}
+			queryExpandTo.setWhereSql(whereSql);
+			tq.queryExpandTo(queryExpandTo);
 			
 			List<TaskInstance> lts = tq.orderByTaskCreateTime().desc().listPagination(pageIndex, rowNum);
 			Long count = tq.count();
@@ -220,7 +254,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		return result;
 	}
 	
-	@Override
 	public List<Map<String, String>> queryLastestProcess(String userid) throws SQLException {
 		List<Map<String, String>> result = null;
 		ProcessEngine engine = getProcessEngine(userid);
@@ -596,7 +629,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 	}
 	
 
-	@Override
 	public Map<String,Object> GetFlowRefInfo(Map<String,Object> filter) throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		List<Map<String,Object>> tmpres = new ArrayList<Map<String,Object>>();
@@ -691,7 +723,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		icu.cut();
 	}
 	
-	@Override
 	public Map<String, Object> getAllUsers(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
@@ -767,7 +798,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		return resultMap;
 	}
 	
-	@Override
 	public Map<String, Object> getRollbackTask(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));

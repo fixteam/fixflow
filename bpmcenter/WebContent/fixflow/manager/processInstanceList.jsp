@@ -117,10 +117,10 @@
   	}
   	
   	$(function(){
-		Fix.Util.ClickTr(null,true,true,0,function($table){
+		Fix.Util.ClickTr(null,false,true,0,function($table){
 		  var flag = true;
 		  $("tbody tr.selected",$table).each(function(){
-		    var state = $("td:eq(9)",$(this)).html();
+		    var state = $("td:eq(10)",$(this)).html();
 		    //alert(state);
 		    if(state.trim()=="运行中" ||state.trim()=="暂停"){
 		      flag = false;
@@ -181,7 +181,7 @@
         	<table>
               <tr>
                 <td class="title-r">流程名称：</td>
-                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
+                <td><input type="text" id="processName" name="processName" class="fix-input" style="width:160px;" value="${result.processName}"/></td>
                 <td class="title-r">实例编号：</td>
                 <td><input type="text" id="processInstanceId" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>
@@ -245,8 +245,8 @@
         <div class="content">
         	<table width="100%" class="fix-table">
               <thead>
-              	<th width="30"></th>
-                 <!-- <th width="30">&nbsp;</th> -->
+              	<th width="30">&nbsp;</th>
+                <th width="30">序号</th>
                 <th width="">实例编号</th>
                 <th>流程名称</th>
                 <th width="">主题</th>
@@ -260,8 +260,8 @@
               </thead>
 		    <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		    	<td class="num"><input type="checkbox" name="checked" value="${dataList.processInstanceId}"></td>
-		     <!-- <td class="num"><c:out value="${index.index+1}"/></td>-->
+		      <td class="num"><input type="radio" name="checked" value="${dataList.processInstanceId}"></td>
+		     <td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
 		      <td>${dataList.processInstanceId}</td>
 		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.subject}</td>

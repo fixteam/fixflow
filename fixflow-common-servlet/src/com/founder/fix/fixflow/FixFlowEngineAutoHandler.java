@@ -42,7 +42,6 @@ public class FixFlowEngineAutoHandler implements Filter {
 	  * <p>Description: </p>
 	  * @see javax.servlet.Filter#destroy()
 	  */
-	@Override
 	public void destroy() {
 		// TODO 自动生成的方法存根
 		
@@ -58,7 +57,6 @@ public class FixFlowEngineAutoHandler implements Filter {
 	  * @throws ServletException
 	  * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	  */
-	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
 		CurrentThread.init();
@@ -81,7 +79,6 @@ public class FixFlowEngineAutoHandler implements Filter {
 	  * @throws ServletException
 	  * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	  */
-	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO 自动生成的方法存根
 		

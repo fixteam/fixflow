@@ -86,7 +86,7 @@ a{text-decoration: none;}
 		return false;
 	}
 	$(function(){
-		Fix.Util.ClickTr(null,true,true,0);
+		Fix.Util.ClickTr(null,false,true,0);
 		$("#checkAll").click(function(obj){
 			if($(this).attr("checked")=="checked"){
 				$("table.fix-table tbody tr").each(function(){
@@ -139,10 +139,11 @@ a{text-decoration: none;}
 	 
 		<table style="width:100%;" class="fix-table">
 		  <thead>
-		   <th width="2%"><input type="checkbox" id="checkAll" /></th>
-		   <th >流程名称</th>
+		    <th width="2%">&nbsp;</th>
+		    <th>序号</th>
+		    <th >流程名称</th>
 		    <th width="15%">编号</th>
-		     <th width="5%">流程版本</th>
+		    <th width="5%">流程版本</th>
 		    <th width="12%">流程分类</th>
 		    <th width="31%">唯一编号</th>
 		    <th width="12%">发布时间</th>
@@ -150,13 +151,14 @@ a{text-decoration: none;}
 		  <tbody>
 		   <c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 		    <tr>
-		     <td><input type="checkbox" deploymentId="${dataList.deploymentId}" processDefinitionId="${dataList.processDefinitionId}" /></td>
-		       <td>${dataList.processDefinitionName}</td>
+		      <td><input type="radio" name="chk" deploymentId="${dataList.deploymentId}" processDefinitionId="${dataList.processDefinitionId}" /></td>
+		      <td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
+		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.processDefinitionKey}</td>
-		       <td>${dataList.version}</td>
+		      <td>${dataList.version}</td>
 		      <td>${dataList.category}</td>
 		      <td>${dataList.processDefinitionId}</td>
-		       <td><fmt:formatDate value="${dataList.DEPLOY_TIME}" type="both"/></td>
+		      <td><fmt:formatDate value="${dataList.DEPLOY_TIME}" type="both"/></td>
 		    </tr>
 		    </c:forEach>
 		  </tbody>
