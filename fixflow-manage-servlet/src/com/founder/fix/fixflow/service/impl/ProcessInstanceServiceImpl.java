@@ -31,6 +31,7 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
@@ -67,7 +68,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		RuntimeService runtimeService = engine.getRuntimeService();
 		IdentityService identityService = engine.getIdentityService();
 		FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
-		String processDefinitionKey = StringUtil.getString(params.get("processDefinitionKey"));
+		String processName = StringUtil.getString(params.get("processName"));
 		String processInstanceId    = StringUtil.getString(params.get("processInstanceId"));
 		String subject				= StringUtil.getString(params.get("subject"));
 		String bizKey				= StringUtil.getString(params.get("bizKey"));
@@ -87,8 +88,17 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 				rowNum = Integer.valueOf(rowI);
 			}
 			ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
-			if(StringUtil.isNotEmpty(processDefinitionKey))
-				processInstanceQuery.processDefinitionKey(processDefinitionKey);
+			if(StringUtil.isNotEmpty(processName)){
+				QueryExpandTo queryExpandTo = new QueryExpandTo();
+				//增加扩展查询的left join语句
+				List<Object> paraObjs = new ArrayList<Object>();
+				paraObjs.add("%"+processName+"%");
+				queryExpandTo.setLeftJoinSql("left join fixflow_def_processdefinition pd on PD.process_id = E.processdefinition_id");
+				queryExpandTo.setWhereSql(" PD.process_name like ? ");
+				queryExpandTo.setWhereSqlObj(paraObjs);
+				processInstanceQuery.queryExpandTo(queryExpandTo);
+				
+			}
 			if(StringUtil.isNotEmpty(processInstanceId))
 				processInstanceQuery.processInstanceId(processInstanceId);
 			if(StringUtil.isNotEmpty(subject))
@@ -183,18 +193,15 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		ProcessEngine engine = getTransactionProcessEngine(userId);
 		try{
 			RuntimeService runtimeService = engine.getRuntimeService();
-		
-		
-		if(StringUtil.isNotEmpty(deleteIndex)){
-			String[] keys  = deleteIndex.split(",");
-			for(String tmp:keys){
-				runtimeService.deleteProcessInstanceVariable(processInstanceId, tmp);
+			if(StringUtil.isNotEmpty(deleteIndex)){
+				String[] keys  = deleteIndex.split(",");
+				for(String tmp:keys){
+					runtimeService.deleteProcessInstanceVariable(processInstanceId, tmp);
+				}
 			}
-		}
-		
-		if(infos!=null){
-			runtimeService.setProcessInstanceVariables(processInstanceId, infos);
-		}
+			if(infos!=null){
+				runtimeService.setProcessInstanceVariables(processInstanceId, infos);
+			}
 		}finally{
 			closeProcessEngine();
 		}
