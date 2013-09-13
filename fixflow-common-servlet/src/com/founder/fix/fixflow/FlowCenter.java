@@ -39,6 +39,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.founder.fix.fixflow.I18N.PropertiesUtil;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
@@ -294,8 +295,9 @@ public class FlowCenter extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		if (rd != null)
+		if (rd != null){
 			rd.forward(request, response);
+		}
 	}
 
 	public FlowCenterService getFlowCenter() {

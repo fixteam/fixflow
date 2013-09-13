@@ -16,9 +16,8 @@
  * @author kenshin
  */
 package com.founder.fix.fixflow.core.objkey;
-import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTable;
-import com.founder.fix.bpmn2extensions.coreconfig.DataBaseTableConfig;
-import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
+
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;

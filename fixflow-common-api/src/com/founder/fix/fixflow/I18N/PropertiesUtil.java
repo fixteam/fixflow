@@ -23,10 +23,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.ServletContextAware;
 
 /**
  * @ClassName: PropertyUtil
@@ -37,14 +39,17 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @Lazy(false)
 @Service
-public class PropertiesUtil {
+public class PropertiesUtil implements ServletContextAware {
 	private static final String FILE="/resource/zh_cn/pageInfo.properties";
 	
 	private static Map<String,Properties> propsMap = new HashMap<String,Properties>();
 	
+	private static ServletContext servletContext;
+	
 	@PostConstruct
 	public static void initProperties(){
 		load(FILE);
+		servletContext.setAttribute("appInfo", propsMap.get(FILE));
 	}
 	
 	/**
@@ -58,6 +63,7 @@ public class PropertiesUtil {
 			InputStream is = null;
 			is = PropertiesUtil.class.getClassLoader().getResourceAsStream(path);
 			prop = new Properties();
+			
 			prop.load(is);
 			is.close();
 			propsMap.put(path, prop);
@@ -104,6 +110,21 @@ public class PropertiesUtil {
 	
 	public static String getProperty(String key){
 		return getProperty(FILE,key);
+	}
+	
+	public static Properties getProperty(){
+		return propsMap.get(FILE);
+	}
+
+	/*
+	  * <p>Title: setServletContext</p>
+	  * <p>Description: </p>
+	  * @param arg0
+	  * @see org.springframework.web.context.ServletContextAware#setServletContext(javax.servlet.ServletContext)
+	  */
+	public void setServletContext(ServletContext arg0) {
+		servletContext = arg0;
+		
 	}
 	
 }

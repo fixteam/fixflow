@@ -120,7 +120,7 @@
 		Fix.Util.ClickTr(null,false,true,0,function($table){
 		  var flag = true;
 		  $("tbody tr.selected",$table).each(function(){
-		    var state = $("td:eq(9)",$(this)).html();
+		    var state = $("td:eq(10)",$(this)).html();
 		    //alert(state);
 		    if(state.trim()=="运行中" ||state.trim()=="暂停"){
 		      flag = false;
@@ -181,7 +181,7 @@
         	<table>
               <tr>
                 <td class="title-r">流程名称：</td>
-                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" style="width:160px;" value="${result.processDefinitionKey}"/></td>
+                <td><input type="text" id="processName" name="processName" class="fix-input" style="width:160px;" value="${result.processName}"/></td>
                 <td class="title-r">实例编号：</td>
                 <td><input type="text" id="processInstanceId" name="processInstanceId" class="fix-input" style="width:160px;" value="${result.processInstanceId}"/></td>
                 <td class="title-r">主题：</td>

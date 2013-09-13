@@ -108,14 +108,14 @@ function clearInfo(){
 				<div class="left">
 					<div class="left-nav-box">
 						<div class="left-nav">
-							<a name="myTask" href="#">我的待办任务</a>
+							<a name="myTask" href="#">${applicationScope.appInfo["task.myTask"]}</a>
 						</div>
 						<div class="left-nav-orange-line">&nbsp;</div>
 
 
 
 						<div class="left-nav m-top">
-							<h1>代理人</h1>
+							<h1>${applicationScope.appInfo["task.agent"]}</h1>
 						</div>
 						<c:if
 							test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
@@ -130,7 +130,7 @@ function clearInfo(){
 						</c:if>
 
 						<div class="left-nav m-top">
-							<h1>委托人</h1>
+							<h1>${applicationScope.appInfo["task.toAgent"]}</h1>
 						</div>
 						<c:if
 							test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
@@ -188,14 +188,14 @@ function clearInfo(){
 					<div class="search">
 						<table>
 							<tr>
-								<td class="title-r">任务主题：</td>
+								<td class="title-r">${applicationScope.appInfo["task.description"]}：</td>
 								<td><input type="text" id="title"
 									name="title" class="fix-input"
 									value="${result.title}" /></td>
-								<td class="title-r">流程名称：</td>
+								<td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
 								<td><input type="text" id="processDefinitionKey"
 									name="processDefinitionKey" class="fix-input"  value="" /></td>
-								<td class="title-r">单 据 号：</td>
+								<td class="title-r">${applicationScope.appInfo["task.bizKey"]}：</td>
 								<td><input type="text" id="bizKey"
 									name="bizKey" class="fix-input"
 									value="${result.bizKey}" /></td>
@@ -203,17 +203,17 @@ function clearInfo(){
 					                <table style="margin:0">
 					                <tr>
 					                <td>
-					                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div>
+					                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">${applicationScope.appInfo["common.search"]}</a></div>
 					                </td>
 					                <td>
-					                <div class="btn-normal"><a href="#" onclick="clearInfo();">清空</a></div>
+					                <div class="btn-normal"><a href="#" onclick="clearInfo();">${applicationScope.appInfo["common.clear"]}</a></div>
 									</td>                
 					                </tr>
 					                </table>
 									</td>
 							</tr>
 							<tr>
-								<td class="title-r">发 起 人：</td>
+								<td class="title-r">${applicationScope.appInfo["task.initor"]}：</td>
 								<td>
 					                <table style="margin:0">
 					                <tr>
@@ -223,14 +223,14 @@ function clearInfo(){
 					                </td>
 					                <td>
 					                <div class="btn-normal">
-															<a href="#" onclick="" id="selectUser">选择<em
+															<a href="#" onclick="" id="selectUser">${applicationScope.appInfo["common.select"]}<em
 																class="arrow-small"></em></a>
 									</div>
 									</td>
 									</tr>
 									</table>
 								</td>
-								<td class="title-r">到达时间：</td>
+								<td class="title-r">${applicationScope.appInfo["task.createTime"]}：</td>
 								<td><input type="text" id="arrivalTimeS" name="arrivalTimeS"
 									class="fix-input" style="width: 69px;"
 									value="${result.arrivalTimeS}" onClick="WdatePicker()" /> - <input
@@ -246,16 +246,16 @@ function clearInfo(){
 					<div class="content">
 						<table width="100%" class="fix-table">
 							<thead>
-								<th width="30">序号</th>
+								<th width="30">${applicationScope.appInfo["common.no"]}</th>
 								<th width="30"></th>
-								<th>流程</th>
-								<th>单据号</th>
-								<th>任务主题</th>
-								<th>发起人</th>
-								<th>发起时间</th>
-								<th>当前步骤</th>
-								<th width="160">到达时间</th>
-								<th width="60">流程状态</th>
+								<th>${applicationScope.appInfo["task.processDefinitionName"]}</th>
+								<th>${applicationScope.appInfo["task.bizKey"]}</th>
+								<th>${applicationScope.appInfo["task.description"]}</th>
+								<th>${applicationScope.appInfo["task.initor"]}</th>
+								<th>${applicationScope.appInfo["task.startTime"]}</th>
+								<th>${applicationScope.appInfo["task.nodeName"]}</th>
+								<th width="160">${applicationScope.appInfo["task.createTime"]}</th>
+								<th width="60">${applicationScope.appInfo["task.status"]}</th>
 							</thead>
 							<c:forEach items="${result.dataList}" var="dataList"
 								varStatus="index">
@@ -281,7 +281,7 @@ function clearInfo(){
 									</td>
 									<td><a name="flowGraph" href="#"
 										pii="${dataList.processInstanceId}"
-										pdk="${dataList.processDefinitionKey}">查看</a></td>
+										pdk="${dataList.processDefinitionKey}">${applicationScope.appInfo["common.check"]}</a></td>
 								</tr>
 							</c:forEach>
 						</table>

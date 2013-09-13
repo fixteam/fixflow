@@ -18,6 +18,9 @@
 package com.founder.fix.fixflow.core.impl.expression;
 
 
+import java.util.Map;
+
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Sql;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -30,6 +33,17 @@ public class ExpressionMgmt {
 	public static Object execute(String scriptText) {
 
 		return Context.getAbstractScriptLanguageMgmt().execute(scriptText);
+		
+	}
+	
+	public static Object execute(Sql sql,Map<String, Object> variableMap) {
+		
+		
+		for (String variableKey : variableMap.keySet()) {
+			setVariable(variableKey, variableMap.get(variableKey));
+		}
+
+		return Context.getAbstractScriptLanguageMgmt().execute(sql.getSqlValue());
 		
 	}
 
