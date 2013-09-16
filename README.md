@@ -6,7 +6,9 @@ fixflow
 fixflow引擎核心项目:
 
 fixflow-core
+
 fixflow-expand
+
 fixflow-test
 
 
@@ -14,12 +16,19 @@ fixflow-test
 任务、管控中心项目:
 
 bpmcenter
+
 fixflow-common-api
+
 fixflow-common-rest
+
 fixflow-common-servlet
+
 fixflow-common-ws
+
 fixflow-manage-api
+
 fixflow-manage-servlet
+
 
 
 
