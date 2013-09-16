@@ -33,13 +33,12 @@
 
 ----------------
 
-* [用户向导](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
+* [查看用户向导文档](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
 * [产品及开发社区介绍](https://github.com/fixteam/fixflow/wiki/产品及开发社区介绍)
 * [Fixflow功能介绍](https://github.com/fixteam/fixflow/wiki/Fixflow功能介绍)
 * [如何从GitHub中获取FixFlow代码](#)
 * [如何构建运行FixFlow项目](#)
 * [如何构建运行FixFlow项目](#)
-* [查看用户手册文档](#)
 * [如何参与FixFlow社区开发](#)
 * [开发人员Blog文章列表](#)
 * [团队及Blog](#)
