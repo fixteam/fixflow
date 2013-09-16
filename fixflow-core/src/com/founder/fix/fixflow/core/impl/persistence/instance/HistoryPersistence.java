@@ -20,9 +20,11 @@ package com.founder.fix.fixflow.core.impl.persistence.instance;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Sql;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
@@ -30,6 +32,7 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
@@ -58,60 +61,53 @@ public class HistoryPersistence {
 	
 	public boolean archive(Map<String,Object> paraMap){
 		List<Object> whereObject = new ArrayList<Object>();
-		String whereSql = getWhereSql(paraMap,whereObject);
 		Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
-		
+		String tmpWhereSql = getWhereSql(paraMap,whereObject);
 		String processInstSql="select processinstance_id from " +ProcessInstanceObjKey.ProcessInstanceTableName() +" where 1=1 ";
-
+		String WhereSql = processInstSql + tmpWhereSql;
+		
+		Map<String,Object> variableMap = new HashMap<String,Object>();
+		variableMap.put("whereSql", WhereSql);
+		variableMap.put("pagination", pagination);
+		variableMap.put("processInstanceWhereSql", tmpWhereSql);
 		//流程实例表的归档
-		String processInstanceSql = "insert into "+ProcessInstanceObjKey.ProcessInstanceHisTableName()+
-				"("+ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_processinstance).getColumnValue()+")"+
-				"select " + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_processinstance).getColumnValue().replaceAll("ARCHIVE_TIME", pagination.getCurrentDateSql()) +
-				" from "+ProcessInstanceObjKey.ProcessInstanceTableName() +
-				" E WHERE E.processinstance_id  in ("+ processInstSql+whereSql +")";
+		Sql tmpProcessInstanceSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","processInstance_insert");
+		String processInstanceSql = (String)ExpressionMgmt.execute(tmpProcessInstanceSql, variableMap);
 		sqlCommand.execute(processInstanceSql, whereObject.toArray());
 		//流程实例表删除  语句
-		String processInstanceDeleteSql = "delete from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" where 1=1 "+whereSql;
+		Sql tmpProcessInstanceDeleteSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","processInstance_delete");
+		String processInstanceDeleteSql = (String)ExpressionMgmt.execute(tmpProcessInstanceDeleteSql, variableMap);
 		
 		//任务实例表的归档
-		String taskInstanceSql = "insert into "+TaskInstanceObjKey.TaskInstanceHisTableName()+
-				"("+ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskinstance).getColumnValue()+")"+
-				"select " + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskinstance).getColumnValue().replaceAll("ARCHIVE_TIME", pagination.getCurrentDateSql()) +
-				" from "+TaskInstanceObjKey.TaskInstanceTableName() +
-				" E WHERE E.processinstance_id  in (" + processInstSql+ whereSql + ")";
+		Sql tmpTaskInstanceSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","taskInstance_insert");
+		String taskInstanceSql = (String)ExpressionMgmt.execute(tmpTaskInstanceSql, variableMap);
 		sqlCommand.execute(taskInstanceSql, whereObject.toArray());
 		//任务实例表删除语句
-		String taskInstanceDeleteSql = "delete from "+TaskInstanceObjKey.TaskInstanceTableName()+"  WHERE  processinstance_id  in ("+ processInstSql+whereSql+")";
+		Sql tmpTaskInstanceDeleteSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","taskInstance_delete");
+		String taskInstanceDeleteSql = (String)ExpressionMgmt.execute(tmpTaskInstanceDeleteSql, variableMap);
 		
 		//流程令牌表的归档
-		String tokenSql = "insert into "+TokenObjKey.TokenHisTableName()+
-				"(" + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_token).getColumnValue()+")"+
-				"select "  + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_token).getColumnValue().replaceAll("ARCHIVE_TIME", pagination.getCurrentDateSql()) +
-				" from "+TokenObjKey.TokenTableName() +
-				" E WHERE E.processinstance_id  in (" + processInstSql+ whereSql + ")";
+		Sql tmpTokenSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","token_insert");
+		String tokenSql = (String)ExpressionMgmt.execute(tmpTokenSql, variableMap);
 		sqlCommand.execute(tokenSql, whereObject.toArray());
 		//流程令牌表删除语句
-		String tokenDeleteSql = "delete from "+TokenObjKey.TokenTableName()+" WHERE processinstance_id  in ("+ processInstSql+whereSql+")";
-		
+		Sql tmpTokenDeleteSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","token_delete");
+		String tokenDeleteSql = (String)ExpressionMgmt.execute(tmpTokenDeleteSql, variableMap);
 		//流程变量表的归档
-		String variableSql = "insert into "+VariableObjKey.VariableHisTableName()+
-				"(" + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_variable).getColumnValue()+")"+
-				"select "  + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_variable).getColumnValue().replaceAll("ARCHIVE_TIME", pagination.getCurrentDateSql()) +
-				" from "+VariableObjKey.VariableTableName() +
-				" E WHERE E.processinstance_id  in (" + processInstSql+ whereSql + ")";
+		Sql tmpVariableSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","variable_insert");
+		String variableSql = (String)ExpressionMgmt.execute(tmpVariableSql, variableMap);
 		sqlCommand.execute(variableSql, whereObject.toArray());
 		//流程变量表删除语句
-		String variableDeleteSql = "delete from "+VariableObjKey.VariableTableName()+" WHERE processinstance_id  in ("+ processInstSql+whereSql+")";
+		Sql tmpVariableDeleteSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","variable_delete");
+		String variableDeleteSql = (String)ExpressionMgmt.execute(tmpVariableDeleteSql, variableMap);
 		
 		//任务候选人的归档
-		String taskidentitylinkSql = "insert into "+TaskIdentityLinkObjKey.TaskIdentityLinkHisTableName()+
-				"(" + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_his_taskidentitylink).getColumnValue()+")"+
-				"select "  + ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataBaseTableConfig(DataBaseTableEnum.fixflow_run_taskidentitylink).getColumnValue().replaceAll("ARCHIVE_TIME", pagination.getCurrentDateSql()) +
-				" from "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName() +
-				" E WHERE E.taskinstance_id  in (select taskinstance_id from "+TaskInstanceObjKey.TaskInstanceTableName()+" T WHERE T.PROCESSINSTANCE_ID IN (" + processInstSql+ whereSql + "))";
+		Sql tmpTaskidentitylinkSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","identityLink_insert");
+		String taskidentitylinkSql = (String)ExpressionMgmt.execute(tmpTaskidentitylinkSql, variableMap);
 		sqlCommand.execute(taskidentitylinkSql, whereObject.toArray());
 		//任务候选人表删除语句
-		String taskidentitylinkDeleteSql = "delete from "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName() +" WHERE  taskinstance_id  in (select taskinstance_id from "+TaskInstanceObjKey.TaskInstanceTableName()+" T WHERE T.PROCESSINSTANCE_ID IN (" + processInstSql+ whereSql + "))";
+		Sql tmpTaskidentitylinkDeleteSql = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSql("history","identityLink_delete");
+		String taskidentitylinkDeleteSql = (String)ExpressionMgmt.execute(tmpTaskidentitylinkDeleteSql, variableMap);
 		
 		sqlCommand.execute(tokenDeleteSql, whereObject.toArray());
 		sqlCommand.execute(variableDeleteSql, whereObject.toArray());

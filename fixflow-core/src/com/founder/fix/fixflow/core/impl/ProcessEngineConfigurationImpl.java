@@ -306,17 +306,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		sqlMap.clear();
 		for (Object ele : document.getRootElement().elements("sqlMapping")) {
 			Element sqlMapping = (Element) ele;
-			
+			Map<String, Sql> sqlMapNew=new HashMap<String, Sql>();
 			for (Object eleNew : sqlMapping.elements("sql")) {
 				Element sqlE = (Element) eleNew;
-				
 				Sql sql=SqlmappingconfigFactory.eINSTANCE.createSql();
 				sql.setId(sqlE.attributeValue("id"));
 				sql.setSqlValue(sqlE.getText());
-				Map<String, Sql> sqlMapNew=new HashMap<String, Sql>();
 				sqlMapNew.put(sql.getId(),sql );
-				sqlMap.put(sqlMapping.attributeValue("id"), sqlMapNew);
 			}
+			sqlMap.put(sqlMapping.attributeValue("id"), sqlMapNew);
 			
 		}
 		
