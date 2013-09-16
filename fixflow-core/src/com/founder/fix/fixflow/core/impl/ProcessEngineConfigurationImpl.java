@@ -190,7 +190,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	protected List<SqlMapping> sqlMappings;
 	
-	protected Map<String, Sql> sqlMap=new HashMap<String, Sql>();
+	protected Map<String, Map<String, Sql>> sqlMap=new HashMap<String, Map<String, Sql>>();
 
 	
 
@@ -313,8 +313,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				Sql sql=SqlmappingconfigFactory.eINSTANCE.createSql();
 				sql.setId(sqlE.attributeValue("id"));
 				sql.setSqlValue(sqlE.getText());
-				
-				sqlMap.put(sql.getId(),sql );
+				Map<String, Sql> sqlMapNew=new HashMap<String, Sql>();
+				sqlMapNew.put(sql.getId(),sql );
+				sqlMap.put(sqlMapping.attributeValue("id"), sqlMapNew);
 			}
 			
 		}
@@ -1168,9 +1169,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return null;
 	}
 	
-	public Sql getSql(String sqlId) {
+	/**
+	 * 获取sql配置
+	 * @param sqlMappingId 分类编号
+	 * @param sqlId sql编号
+	 * @return
+	 */
+	public Sql getSql(String sqlMappingId,String sqlId) {
 		
-		return sqlMap.get(sqlId);
+		return sqlMap.get(sqlMappingId).get(sqlId);
 
 	}
 	
