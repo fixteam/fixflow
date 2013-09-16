@@ -26,6 +26,8 @@
 
 
 #文档说明
+* [配置说明](https://github.com/fixteam/fixflow)
+* [用户向导](https://github.com/fixteam/fixflow)
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20130916_1.png)
 
 
