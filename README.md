@@ -11,51 +11,15 @@
 **更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
 
 #项目介绍
+
 * fixflow引擎核心项目 **fixflow-core、fixflow-expand、fixflow-test**
 
+* 任务、管控中心项目 **bpmcenter、fixflow-common-api、fixflow-common-rest、fixflow-common-servlet、fixflow-common-ws、fixflow-manage-api、fixflow-manage-servlet**
 
+* 数据库脚本项目 **database**
 
+* 文档项目 **docbook**
 
+* 设计器相关项目 **eclipse**
 
-
-
-【任务、管控中心项目】
-
-bpmcenter
-
-fixflow-common-api
-
-fixflow-common-rest
-
-fixflow-common-servlet
-
-fixflow-common-ws
-
-fixflow-manage-api
-
-fixflow-manage-servlet
-
-
-
-
-【数据库脚本项目】
-
-database
-
-
-
-【文档项目】
-
-docbook
-
-【设计器相关项目】
-
-eclipse
-
-【最终成果物项目】
-
-release
-
-
-
-
+* 最终成果物项目 **release**
