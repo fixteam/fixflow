@@ -31,7 +31,7 @@
 
 #文档说明
 
-----------------
+
 
 * [查看用户向导文档](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
 * [产品及开发社区介绍](https://github.com/fixteam/fixflow/wiki/产品及开发社区介绍)
@@ -47,6 +47,9 @@
 
 
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20130916_1.png)
+
+
+#如何提交bug或者问题
 
 
 #Changelog
