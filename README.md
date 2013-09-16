@@ -11,7 +11,7 @@
 **更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
 
 #项目介绍
-* fixflow引擎核心项目 **fixflow-core**、**fixflow-expand**、**fixflow-test**
+* fixflow引擎核心项目 **fixflow-core、fixflow-expand、fixflow-test**
 
 
 
