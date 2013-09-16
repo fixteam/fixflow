@@ -67,7 +67,7 @@ public class FixMailEngine {
 		
 		
 		
-		String sqlText=pagination.getPaginationSql("SELECT * FROM FIXFLOW_MAIL WHERE MAIL_STATUS=?", -1, 10, "*", null);
+		String sqlText=pagination.getPaginationSql("SELECT * FROM FIXFLOW_MAIL WHERE MAIL_STATUS=?", 0, 10, "*", null);
 		
 		List<Map<String, Object>> dataList = sqlCommand.queryForList(sqlText, pObjects);
 		
