@@ -136,8 +136,8 @@ public class DemoServlet extends HttpServlet {
 						params.add(key);
 						List<Map<String, Object>> res = sc.queryForList(
 								"select * from DEMOTABLE where COL1=?", params);
-	
-						filter.put("demoObject", res.get(0));
+						if(res!=null && res.size()>0)
+							filter.put("demoObject", res.get(0));
 						request.setAttribute("result", filter);
 						rd = request.getRequestDispatcher("/fixflow/demo/doTask.jsp");
 					}finally{
