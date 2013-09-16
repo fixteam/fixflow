@@ -25,5 +25,12 @@
 * 最终成果物项目: **release**
 
 
+文档说明:
+![系统截图](https://github.com/fixteam/fixflow/wiki/images/BPMN_elements.gif)
+
 
 #Changelog
+
+
+
+
