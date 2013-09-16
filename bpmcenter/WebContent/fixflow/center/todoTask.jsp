@@ -103,7 +103,7 @@ function clearInfo(){
 		<jsp:include page="top.jsp" flush="true" />
 
 		<div class="center-panel">
-			<form id="subForm" method="post" action="FlowCenter">
+			
 				<!-- 左 -->
 				<div class="left">
 					<div class="left-nav-box">
@@ -179,6 +179,7 @@ function clearInfo(){
 					</div>
 				</div>
 				<div class="right">
+				<form id="subForm" method="post" action="FlowCenter">
 					<!-- 隐藏参数部分 -->
 					<input type="hidden" id="agentUserId" name="agentUserId"
 						value="<c:out value="${result.agentUserId}"/>"><input
@@ -287,13 +288,14 @@ function clearInfo(){
 						</table>
 
 					</div>
+					</form>
 				</div>
 				<!-- 分页 -->
 				<div id="page">
 					<jsp:include page="../common/page.jsp" flush="true" />
 				</div>
 
-			</form>
+			
 		</div>
 	</div>
 
