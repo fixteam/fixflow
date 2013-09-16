@@ -33,9 +33,7 @@
 
 ----------------
 
-* [配置说明](https://github.com/fixteam/fixflow)
 * [用户向导](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
-
 * [产品及开发社区介绍](https://github.com/fixteam/fixflow/wiki/产品及开发社区介绍)
 * [Fixflow功能介绍](https://github.com/fixteam/fixflow/wiki/Fixflow功能介绍)
 * [如何从GitHub中获取FixFlow代码](#)
