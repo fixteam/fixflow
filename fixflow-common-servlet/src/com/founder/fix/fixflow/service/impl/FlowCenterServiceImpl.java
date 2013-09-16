@@ -516,9 +516,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				for(TaskInstance tmp:instances){
 					Map<String,Object> instanceMap = tmp.getPersistentState();
 					String assigneeUserId = tmp.getAssignee();
-					UserTo tmpUser = identityService.getUserTo(assigneeUserId);
-					if(tmpUser!=null){
-						instanceMap.put("assgneeUserName", tmpUser.getUserName());
+					if(StringUtil.isNotEmpty(assigneeUserId)){
+						UserTo tmpUser = identityService.getUserTo(assigneeUserId);
+						if(tmpUser!=null){
+							instanceMap.put("assgneeUserName", tmpUser.getUserName());
+						}
+					}else{
+						instanceMap.put("assgneeUserName", "(空用户名)");
 					}
 					instanceMaps.add(instanceMap);
 				}
@@ -529,9 +533,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				for(TaskInstance tmp:instancesNotEnd){
 					Map<String,Object> instanceMap = tmp.getPersistentState();
 					String assigneeUserId = tmp.getAssignee();
-					UserTo tmpUser = identityService.getUserTo(assigneeUserId);
-					if(tmpUser!=null){
-						instanceMap.put("assgneeUserName", tmpUser.getUserName());
+					if(StringUtil.isNotEmpty(assigneeUserId)){
+						UserTo tmpUser = identityService.getUserTo(assigneeUserId);
+						if(tmpUser!=null){
+							instanceMap.put("assgneeUserName", tmpUser.getUserName());
+						}
+					}else{
+						instanceMap.put("assgneeUserName", "(空用户名)");
 					}
 					notEndInstanceMaps.add(instanceMap);
 				}
