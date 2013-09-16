@@ -30,8 +30,32 @@
 
 
 #文档说明
+
+----------------
+
 * [配置说明](https://github.com/fixteam/fixflow)
 * [用户向导](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
+
+* **[[产品及开发社区介绍|https://github.com/fixteam/fixflow]]**
+
+* **[[Fixflow功能介绍]]**
+
+* **[如何从GitHub中获取FixFlow代码](#)**
+
+* **[如何构建运行FixFlow项目](#)**
+
+* **[查看用户手册文档](#)**
+
+* **[如何参与FixFlow社区开发](#)**
+
+* **[开发人员Blog文章列表](#)**
+
+* **[[团队及Blog|团队及Blog]]**
+
+* **[FAQ](#)**
+
+
+
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20130916_1.png)
 
 
