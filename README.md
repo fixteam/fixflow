@@ -57,7 +57,7 @@
 
 
 #如何提交bug或者问题
-
+1.在Fixteam/FixFlow项目上点击Issues->New Issue提交bug,标签选bug、优先级、状态（未解决），我们会根据bug内容反馈相关信息给您。
 
 #Changelog
 
