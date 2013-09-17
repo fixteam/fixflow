@@ -140,6 +140,7 @@ $(function(){
 function clearInfo(){
  		$("#title").val("");
  		$("#processDefinitionKey").val("");
+ 		$("#processDefinitionName").val("");
  		$("#bizKey").val("");
  		$("#initor").val("");
  		$("#initorName").val("");
@@ -168,7 +169,7 @@ function clearInfo(){
                 <td class="title-r">${applicationScope.appInfo["task.description"]}：</td>
                 <td><input type="text" id="title" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
                 <td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
-                <td><input type="text" id="processDefinitionKey" name="processDefinitionKey" class="fix-input" style="width:160px;" value=""/></td>
+                <td><input type="text" id="processDefinitionName" name="processDefinitionName" class="fix-input" style="width:160px;" value="${result.processDefinitionName}"/></td>
                 <td class="title-r">${applicationScope.appInfo["task.bizKey"]}：</td>
                 <td style="width:200px;"><input type="text" id="bizKey" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
                 <td>

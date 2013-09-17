@@ -126,6 +126,10 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			if(StringUtil.isNotEmpty(bizKey))
 				tq.businessKeyLike(bizKey);
 			
+			String processDefinitionName	   = StringUtil.getString(filter.get("processDefinitionName"));
+			if(StringUtil.isNotEmpty(processDefinitionName))
+				tq.processDefinitionNameLike(processDefinitionName);
+			
 			Date dates = null;
 			Date datee = null;
 			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
@@ -340,6 +344,10 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 					processInstanceQuery.taskParticipants(userId);
 			}
 			
+			String processDefinitionName	   = StringUtil.getString(filter.get("processDefinitionName"));
+			if(StringUtil.isNotEmpty(processDefinitionName))
+				processInstanceQuery.processDefinitionNameLike(processDefinitionName);
+			
 			processInstanceQuery.orderByUpdateTime().desc();
 			Date dates = null;
 			Date datee = null;
@@ -367,8 +375,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				Map<String, Object> persistentState = tmp.getPersistentState();
 				String processDefinitionId = tmp.getProcessDefinitionId();
 				ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
-				String processDefinitionName = processDefinitionBehavior.getName();
-				persistentState.put("processDefinitionName", processDefinitionName);
+				String processDefinitionName1 = processDefinitionBehavior.getName();
+				persistentState.put("processDefinitionName", processDefinitionName1);
 				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId()); 
 				persistentState.put("nowNodeInfo", nowNodeInfo);
 				UserTo user = identityService.getUserTo(tmp.getStartAuthor());

@@ -158,6 +158,7 @@
   	function clearInfo(){
   		$("#processDefinitionKey").val("");
   		$("#processInstanceId").val("");
+  		$("#processName").val("");
   		$("#subject").val("");
   		$("#bizKey").val("");
   		$("#initor").val("");
