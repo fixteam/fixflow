@@ -37,6 +37,7 @@
         <listitem><para>本示例的数据源来自于Spring，这种数据源最通用，在实际项目里可以改成各种方式的连接来源。</para></listitem>
         <listitem><para>本示例里使用了Sping声明式事务。</para></listitem>
         <listitem><para>本示例会提到一些集成的规范，请在实际项目里也按照规范使用，这样可以避免一些比不要的排错工作。</para></listitem>
+        <listitem><para>集成一般会有两种方式的集成，一种方式用户只使用流程引擎本身，这种情本文集成准备工作，即可完成集成</para></listitem>
         <listitem><para>接下来的示例里我们会称呼待集成的web项目为“本地项目”</para></listitem>
       </itemizedlist>
     </para>
