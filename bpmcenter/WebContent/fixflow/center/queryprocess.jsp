@@ -48,7 +48,7 @@ function clearInfo(){
 	<div class="main-panel">
 		<jsp:include page="top.jsp" flush="true" />
 		<div class="center-panel">
-			
+			<form id="subForm" method="post" action="FlowCenter">
 				<!-- 左 -->
 				<div class="left">
 					<div class="left-nav-box">
@@ -74,7 +74,7 @@ function clearInfo(){
 				</div>
 				<!-- 右-->
 				<div class="right">
-					<form id="subForm" method="post" action="FlowCenter">
+					
 					<!-- 查 -->
 					<div id="search" class="search">
 					<input type="hidden" name="action" value="getAllProcess"/> 
@@ -181,9 +181,8 @@ function clearInfo(){
 					      <jsp:include page="../common/page.jsp" flush="true"/>
 					    </div>
 					</div>
-					</form>
 				</div>
-			
+			</form>
 		</div>
 	</div>
 	<!-- 隐藏参数部分 -->
