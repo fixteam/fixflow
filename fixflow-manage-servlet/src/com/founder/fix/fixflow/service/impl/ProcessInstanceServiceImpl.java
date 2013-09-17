@@ -89,14 +89,15 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			}
 			ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 			if(StringUtil.isNotEmpty(processName)){
-				QueryExpandTo queryExpandTo = new QueryExpandTo();
-				//增加扩展查询的left join语句
-				List<Object> paraObjs = new ArrayList<Object>();
-				paraObjs.add("%"+processName+"%");
-				queryExpandTo.setLeftJoinSql("left join fixflow_def_processdefinition pd on PD.process_id = E.processdefinition_id");
-				queryExpandTo.setWhereSql(" PD.process_name like ? ");
-				queryExpandTo.setWhereSqlObj(paraObjs);
-				processInstanceQuery.queryExpandTo(queryExpandTo);
+//				QueryExpandTo queryExpandTo = new QueryExpandTo();
+//				//增加扩展查询的left join语句
+//				List<Object> paraObjs = new ArrayList<Object>();
+//				paraObjs.add("%"+processName+"%");
+//				queryExpandTo.setLeftJoinSql("left join fixflow_def_processdefinition pd on PD.process_id = E.processdefinition_id");
+//				queryExpandTo.setWhereSql(" PD.process_name like ? ");
+//				queryExpandTo.setWhereSqlObj(paraObjs);
+//				processInstanceQuery.queryExpandTo(queryExpandTo);
+				processInstanceQuery.processDefinitionNameLike(processName);
 				
 			}
 			if(StringUtil.isNotEmpty(processInstanceId))

@@ -84,6 +84,10 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			if(StringUtil.isNotEmpty(bizKey))
 				tq.businessKeyLike(bizKey);
 			
+			String processDefinitionName	   = StringUtil.getString(filter.get("processDefinitionName"));
+			if(StringUtil.isNotEmpty(processDefinitionName))
+				tq.processDefinitionNameLike(processDefinitionName);
+			
 			Date dates = null;
 			Date datee = null;
 			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
