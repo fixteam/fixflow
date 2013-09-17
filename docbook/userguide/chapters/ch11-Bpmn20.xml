@@ -821,9 +821,159 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>任务分配</title>
         
         <para>
-          人工任务需要指派给一个用户或者是一个组(部门、角色)
+          人工任务需要指派给一个用户或者是一个组(部门、角色),任务类型也被分为两大种:独占、共享，
+          独占的任务直接指派给一个用户,共享的任务可以指定给多个用户、部门、角色等,共享任务默认需要先领取才能处理。
         </para>
         
+        <para>
+          BPMN2.0 标准中定义的UserTask节点的功能过于简单,没有办法描述复杂人工任务,所以FixFlow引擎对UserTask节点做了很多的扩展。
+        </para>
+        
+        <para>
+          下面这段XML表示,UserTask_1这个人工节点的任务处理者为"所有人",任务的分配策略为共享方式。
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" name="User Task 1">
+  <bpmn2:extensionElements>
+    <fixflow:assignPolicyType id="potentialOwner"/>
+  </bpmn2:extensionElements>
+  <bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+    <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
+      <bpmn2:formalExpression id="所有人">"quot;fixflow_allusers"</bpmn2:formalExpression>
+    </bpmn2:resourceAssignmentExpression>
+  </bpmn2:potentialOwner>
+</bpmn2:userTask>]]></programlisting>
+        </para>
+        
+        <para> 
+          对应的设计器图形表示:
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.assignment.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+        <para>
+          分配策略(assignPolicyType):
+        </para>
+        <para>
+          分配策略用来决定任务将以什么形式被分配或是怎么分配,而完成人选择,则决定了任务将分配给谁。
+          FixFlow自带了一些分配策略,开发人员还可以自己扩展出自己的分配策略,分配策略的XML配置在FixFlowConfig.xml中,详见 <link linkend="config.assignPolicyConfig">分配策略</link>
+          <programlisting language="xml"><![CDATA[
+<assignPolicy id="potentialOwner" name="共享   (默认策略)" 
+  classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerAssignmentImpl" 
+  remarks="系统默认策略,需要接收任务才能处理,不能删除。"/>
+<assignPolicy id="humanPerformer" name="独占   (默认策略)" 
+  classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerAssignmentImpl" 
+  remarks="系统默认策略,只能分配给一个处理者,不能删除。"/>
+<assignPolicy id="potentialOwner_One" name="共享   (当只有一人时采用独占策略)" 
+  classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerOneAssignmentImpl" 
+  remarks="当任务的处理者只有一个人的时候自动使用独占策略,多人的时候使用共享策略。"/>]]></programlisting>
+          
+        </para>
+        
+        <para>
+          任务处理者:
+        </para>
+        <para>
+          <emphasis role="bold">resourceType</emphasis>:分配资源的类型(用户、部门、角色 或者任意的组) 。
+        </para>
+        <para>
+          <emphasis role="bold">includeExclusion</emphasis>:是包含这个资源还是排除它。 注意:这个功能存在一个已知bug,不推荐使用。
+        </para>
+        <para>
+          <emphasis role="bold">isContainsSub</emphasis>:是否包含子集,在有上下级关系的组里才会起作用。
+        </para>
+        <para>
+          <emphasis role="bold">resourceAssignmentExpression-formalExpression</emphasis>:人员或者组信息的表达式,
+          可以是"人员编号"、也可以 return "人员编号"、或者 "人员1,人员2,人员3"、或者是个 List(String) 、也可以直接在这里调用java代码返回人员信息。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.assignment.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        <para>
+          例如:
+        </para>
+        <para>
+          <programlisting language="java"><![CDATA["admin"]]></programlisting>
+          <programlisting language="java"><![CDATA[return "admin";]]></programlisting>
+          <programlisting language="java"><![CDATA["admin,kenshin,char"]]></programlisting>
+          可以调用任意的java代码,只要保证返回值的格式正确性,流程引擎就能接收。注意：对于java代码请注意导入import。
+          <programlisting language="java"><![CDATA[import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.identity.GroupTo;
+
+groupTos=Context.getProcessEngineConfiguration().getUserDefinition().getUserInGroups("用户编号");
+for (GroupTo groupTo : groupTos) {
+	//默认取出用户的第一个所在部门
+	if(groupTo.getGroupType().equals("org")){
+		return processInfo.findUserDeptAndRole(groupTo.getGroupId(),"角色编号");;
+	}
+}
+return null;]]></programlisting>
+          
+        </para>
+      
+      </section>
+      
+      
+      <section xml:id="bpmn.UserTask.commonConfig">
+        <title>常规配置</title>
+        <para>
+          <emphasis role="bold">编号(id)</emphasis>:
+          一个bpmn文件中的任意一个元素都拥有不同的编号,通过这个编号可以定位到唯一的一个节点。
+        </para>
+        <para>
+          <emphasis role="bold">名称(name)</emphasis>:
+          用来在节点上显示的名称。
+        </para>
+        <para>
+          <emphasis role="bold">操作表单(formUri)</emphasis>:
+          用来进行任务处理的表单地址,可以从数据变量中的表单变量中选择,也可以返回一段字符串地址"add.html"。
+        </para>
+        <para>
+          <emphasis role="bold">浏览表单(formUriView)</emphasis>:
+          用来在查看已经处理完毕的任务的表单。
+        </para>
+        <para>  
+          <emphasis role="bold">XML定义</emphasis>:
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="人工任务">
+  <bpmn2:extensionElements>
+    <fixflow:formUri>
+      <fixflow:expression xsi:type="fixflow:Expression" >"add.html"</fixflow:expression>
+    </fixflow:formUri>
+    <fixflow:formUriView>
+      <fixflow:expression xsi:type="fixflow:Expression" >"view.html"</fixflow:expression>
+    </fixflow:formUriView>
+    <fixflow:taskPriority>
+      <fixflow:expression xsi:type="fixflow:Expression" >50</fixflow:expression>
+    </fixflow:taskPriority>
+  </bpmn2:extensionElements>
+</bpmn2:userTask>]]></programlisting>
+          
+        </para>
+        
+        <para>  
+          <emphasis role="bold">Java代码</emphasis>:
+          <programlisting language="java"><![CDATA[//创建任务查询
+TaskQuery taskQuery = taskService.createTaskQuery();
+//查询用户的任务,取第一个任务。
+TaskInstance taskInstance=taskQuery.taskAssignee("").list().get(0);
+//任务编号
+taskInstance.getId();
+//任务标题
+taskInstance.getDescription();
+//操作表单
+taskInstance.getFormUri();
+//浏览表单
+taskInstance.getFormUriView();
+//任务所在节点编号
+taskInstance.getNodeId();
+//任务所在节点名称
+taskInstance.getNodeName();
+//流程业务关联值
+taskInstance.getBizKey();]]></programlisting>
+          
+        </para>
+        <para>
+          
+        </para>
       </section>
       
       
