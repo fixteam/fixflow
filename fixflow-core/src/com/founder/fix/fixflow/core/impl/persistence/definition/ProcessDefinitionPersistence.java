@@ -478,9 +478,9 @@ public class ProcessDefinitionPersistence {
 	}
 
 	public List<Map<String, Object>> selectProcessDefinitionGroupKey() {
-		String sqlTextString = "SELECT PROCESS_KEY,MAX(PROCESS_NAME) AS PROCESS_NAME,MAX(CATEGORY) AS CATEGORY ,MAX(RESOURCE_NAME) AS RESOURCE_NAME,MAX(RESOURCE_ID) AS RESOURCE_ID,"+
-		"MAX(DEPLOYMENT_ID) AS  DEPLOYMENT_ID,MAX(DIAGRAM_RESOURCE_NAME) AS DIAGRAM_RESOURCE_NAME "
-				+ "FROM FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY";
+		String sqlTextString = "select * from (select max(VERSION) as VERSION,PROCESS_KEY from FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY  ) t1 "+
+	" left join FIXFLOW_DEF_PROCESSDEFINITION t2 on "+
+ "t1.VERSION=t2.VERSION and t1.PROCESS_KEY=t2.PROCESS_KEY";
 		List<Map<String, Object>> listMap = sqlCommand.queryForList(sqlTextString);
 		return listMap;
 	}
