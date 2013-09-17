@@ -176,9 +176,12 @@ public class TaskInstancePersistence {
 			}
 		}
 		if (taskQuery.getProcessDefinitionName() != null) {
-
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSDEFINITION_NAME = ? ";
+			objectParamWhere.add(taskQuery.getProcessDefinitionName());
+		}
+		if (taskQuery.getProcessDefinitionNameLike() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSDEFINITION_NAME like ? ";
-			objectParamWhere.add("%"+taskQuery.getProcessDefinitionName()+"%");
+			objectParamWhere.add("%"+taskQuery.getProcessDefinitionNameLike()+"%");
 		}
 		if (taskQuery.getIsSuspended() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  T.ISSUSPENDED=? ";

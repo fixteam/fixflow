@@ -419,7 +419,7 @@ public class ProcessInstancePersistence {
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
 			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
 		}
-		if(processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName())){
+		if((processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName()))||(processInstanceQuery.getProcessDefinitionNameLike() !=null && !"".equals(processInstanceQuery.getProcessDefinitionNameLike()))){
 			sqlString += "left join FIXFLOW_DEF_PROCESSDEFINITION PD on pd.process_id = E.processdefinition_id";
 		}
 		sqlString = sqlString + " WHERE 1=1";
@@ -430,9 +430,13 @@ public class ProcessInstancePersistence {
 				objectParamWhere.addAll(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
 			}
 		}
-		if(processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName())){
+		if(processInstanceQuery.getProcessDefinitionNameLike() !=null && !"".equals(processInstanceQuery.getProcessDefinitionNameLike())){
 			sqlString += " and PD.process_name like ?";
-			objectParamWhere.add("%"+processInstanceQuery.getProcessDefinitionName()+"%");
+			objectParamWhere.add("%"+processInstanceQuery.getProcessDefinitionNameLike()+"%");
+		}
+		if(processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName())){
+			sqlString += " and PD.process_name = ?";
+			objectParamWhere.add(processInstanceQuery.getProcessDefinitionName());
 		}
 		if (processInstanceQuery.getBusinessKey() != null) {
 			sqlString = sqlString + " and E.BIZ_KEY=? ";
