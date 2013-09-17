@@ -242,6 +242,13 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//验证是否有10个
 		assertEquals(10, processInstances.size());
 		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称like“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").list();
+		//验证是否有10个
+		assertEquals(10, processInstances.size());
+		
 	}
 	
 	/**
@@ -424,5 +431,7 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//验证是否为5个
 		assertEquals(5, processInstances.size());
 	}
+	
+	
 
 }

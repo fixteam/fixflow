@@ -328,7 +328,7 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	TaskQuery processDefinitionId(String processDefinitionId);
 
 	/**
-	 * 根据流程名称查询
+	 * 根据流程名称like查询
 	 * @param processDefinitionName
 	 * @return
 	 */

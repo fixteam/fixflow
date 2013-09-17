@@ -230,6 +230,12 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
 	 */
 	ProcessInstanceQuery processInstanceStatus(ProcessInstanceType status);
 	
+	/**
+	 * 根据流程定义名称like查询
+	 * @return
+	 */
+	ProcessInstanceQuery processDefinitionName(String definitionName);
+	
 	
 	/**
 	 * 根据流程实例编号排序

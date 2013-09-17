@@ -177,8 +177,8 @@ public class TaskInstancePersistence {
 		}
 		if (taskQuery.getProcessDefinitionName() != null) {
 
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSDEFINITION_NAME=? ";
-			objectParamWhere.add(taskQuery.getProcessDefinitionName());
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSDEFINITION_NAME like ? ";
+			objectParamWhere.add("%"+taskQuery.getProcessDefinitionName()+"%");
 		}
 		if (taskQuery.getIsSuspended() != null) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and  T.ISSUSPENDED=? ";

@@ -51,7 +51,7 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected List<String> processDefinitionKeyList=new ArrayList<String>();
 	protected ProcessInstanceType status;
 	protected boolean isContainsSubProcess=false;
-	
+	protected String processDefinitionName;
 
 
 	// Unused, see dynamic query
@@ -223,6 +223,11 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.status = status;
 		return this;
 	}
+	
+	public ProcessInstanceQuery processDefinitionName(String definitionName) {
+		this.processDefinitionName = definitionName;
+		return this;
+	}
 
 	// results /////////////////////////////////////////////////////////////////
 
@@ -263,6 +268,10 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 
 	public String getActivityId() {
 		return null; // Unused, see dynamic query
+	}
+	
+	public String getProcessDefinitionName() {
+		return processDefinitionName;
 	}
 
 	public String getSuperProcessInstanceId() {

@@ -419,6 +419,9 @@ public class ProcessInstancePersistence {
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
 			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
 		}
+		if(processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName())){
+			sqlString += "left join FIXFLOW_DEF_PROCESSDEFINITION PD on pd.process_id = E.processdefinition_id";
+		}
 		sqlString = sqlString + " WHERE 1=1";
 		//自定义扩展查询
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSql()!=null&&!processInstanceQuery.getQueryExpandTo().getWhereSql().equals("")){
@@ -426,6 +429,10 @@ public class ProcessInstancePersistence {
 			if(processInstanceQuery.getQueryExpandTo().getWhereSqlObj()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSqlObj().size()>0){
 				objectParamWhere.addAll(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
 			}
+		}
+		if(processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName())){
+			sqlString += " and PD.process_name like ?";
+			objectParamWhere.add("%"+processInstanceQuery.getProcessDefinitionName()+"%");
 		}
 		if (processInstanceQuery.getBusinessKey() != null) {
 			sqlString = sqlString + " and E.BIZ_KEY=? ";
