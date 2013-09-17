@@ -78,7 +78,9 @@ $(function(){
 			eval("var j = " + r);
 			rv[index] = j;
 		});
-		if(obj.opener){
+		if(window.opener){
+		  window.opener.rv = rv;
+		}else if(obj.opener){
 		  obj.opener.rv = rv;
 		}else{
 		  obj.fn(obj.params,rv);
