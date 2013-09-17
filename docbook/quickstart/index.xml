@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN' 'dtd/docbook.dtd'>
+<book xmlns="http://docbook.org/ns/docbook"
+  version="5.0"  
+  xml:lang="zh_cn">
+
+  <info><title>FixFlow 5.0 QuickStart</title></info>
+  
+  <toc/>
+  
+  <article xml:id="QuickStart">
+    <section xml:id="test">
+      <para>222</para>
+    </section>
+  </article>
+
+</book>
