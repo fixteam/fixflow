@@ -18,13 +18,20 @@
 	src="${pageContext.request.contextPath}/fixflow/js/flowcommand.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/fixflow/js/flowautoassemble.js"></script>
+<script type="text/javascript">
+var message = '${errorMsg}';
+if(message!=''){
+	alert(message);
+}
+</script>
+
 <style>
 </style>
 </head>
 
 <body>
 	<div class="tpl-form-border">
-		<form id="form1" action="DemoServlet">
+		<form id="form1" action="DemoServlet" method="post">
 			<table class="table-form">
 				<tr>
 					<td class="title-r">流程关联键：</td>

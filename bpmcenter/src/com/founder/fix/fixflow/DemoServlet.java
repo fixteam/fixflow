@@ -127,10 +127,12 @@ public class DemoServlet extends HttpServlet {
 				Map<String, Object> list = getFlowCenter().GetFlowRefInfo(
 						filter);
 				Object key = filter.get("bizKey");
+				Connection connection = null;
+				try {
 				if(key!=null){
-					Connection connection = FixFlowShellProxy
-							.getConnection(ConnectionManagement.defaultDataBaseId);
-					try {
+						connection = FixFlowShellProxy
+								.getConnection(ConnectionManagement.defaultDataBaseId);
+					
 						SqlCommand sc = new SqlCommand(connection);
 						List params = new ArrayList();
 						params.add(key);
@@ -140,13 +142,15 @@ public class DemoServlet extends HttpServlet {
 							filter.put("demoObject", res.get(0));
 						request.setAttribute("result", filter);
 						rd = request.getRequestDispatcher("/fixflow/demo/doTask.jsp");
-					}finally{
-						connection.close();					
-					}
+					
 				}
 				filter.putAll(list);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/demo/startOneTask.jsp");
+				}finally{
+					if(connection!=null)
+						connection.close();					
+				}
 			} else if (action.equals("doTask")) {// 演示如何进入一个已发起的流程处理页面
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -188,29 +192,35 @@ public class DemoServlet extends HttpServlet {
 					FlowCenterService fcs = getFlowCenter();
 					fcs.setConnection(connection);
 					fcs.completeTask(filter);
-					rd = request
-							.getRequestDispatcher("/fixflow/common/result.jsp");
+
 					//事务提交
 					connection.commit();
 				} catch(Exception e){
 					//事务回滚
 					connection.rollback();
-					throw e;
+					request.setAttribute("errorMsg", e.getMessage());
 				}finally {
-
+					rd = request
+							.getRequestDispatcher("/fixflow/common/result.jsp");
 					if (ps != null)
 						ps.close();
 					connection.close();
 				}
 			} else if (action.equals("demoDoNext")) {// 演示如何在流程已经发起后继续往下运行
-				String taskParams = StringUtil.getString(filter
-						.get("taskParams"));
-				Map<String, Object> flowMaps = JSONUtil
-						.parseJSON2Map(taskParams);
-				filter.put("taskParams", flowMaps);
-				getFlowCenter().completeTask(filter);
-				rd = request
-						.getRequestDispatcher("/fixflow/common/result.jsp");
+				try{
+					String taskParams = StringUtil.getString(filter
+							.get("taskParams"));
+					Map<String, Object> flowMaps = JSONUtil
+							.parseJSON2Map(taskParams);
+					filter.put("taskParams", flowMaps);
+					getFlowCenter().completeTask(filter);
+				}catch(Exception e){
+					request.setAttribute("errorMsg", e.getMessage());
+					throw e;
+				}finally{
+					rd = request
+							.getRequestDispatcher("/fixflow/common/result.jsp");
+				}
 			}
 			if (rd != null)
 				rd.forward(request, response);
