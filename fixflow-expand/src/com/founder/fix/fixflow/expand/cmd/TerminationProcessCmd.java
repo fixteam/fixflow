@@ -24,7 +24,6 @@ import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
-import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.expand.command.TerminationProcessCommand;
 
 public class TerminationProcessCmd extends AbstractExpandTaskCmd<TerminationProcessCommand, Void> {
@@ -62,9 +61,8 @@ public class TerminationProcessCmd extends AbstractExpandTaskCmd<TerminationProc
 		
 		ProcessInstanceEntity processInstanceImpl=getProcessInstance();
 		//结束流程实例
-		processInstanceImpl.end();
-		//更新实例状态为终止
-		processInstanceImpl.setInstanceType(ProcessInstanceType.TERMINATION);
+		processInstanceImpl.termination();
+	
 		try {
 			//持久化实例
 			saveProcessInstance(commandContext);

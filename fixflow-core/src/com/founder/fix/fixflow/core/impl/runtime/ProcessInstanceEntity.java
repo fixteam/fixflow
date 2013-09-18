@@ -33,6 +33,7 @@ import com.founder.fix.bpmn2extensions.fixflow.SubProcessToDataSourceMapping;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.context.ContextInstance;
+import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -474,6 +475,22 @@ public class ProcessInstanceEntity extends AbstractPersistentObject implements P
 		}
 		
 
+	}
+	
+	/**
+	 * 终止流程实例
+	 */
+	public void termination(){
+		//结束流程实例
+		this.end();
+		//更新实例状态为终止
+		this.setInstanceType(ProcessInstanceType.TERMINATION);
+		
+		ExecutionContext executionContext=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(getRootToken());
+		//触发流程实例终止事件
+		getProcessDefinition().fireEvent(BaseElementEvent.EVENTTYPE_PROCESS_ABORT, executionContext);
+		
+		
 	}
 	
 	private void createEndEventTask(ExecutionContext executionContext){
