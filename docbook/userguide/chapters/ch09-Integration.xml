@@ -49,7 +49,7 @@
           <listitem><para>导入fixflow-expand工程到工作区里，保证fixflow-expand里的src、internationalization、fixflowdiagram这三个文件夹可以发布到本地项目的classes目录下，eclipse可以使用linksource功能，myeclipse可以直接引用发布。</para></listitem>
           <listitem><para>安装eclipse插件，具体请参照安装eclipse插件章节。</para></listitem>
           <listitem><para>准备数据库环境，选择正确的数据库脚本在本地数据库执行。</para></listitem>
-          </orderedlist>
+        </orderedlist>
       </para>
       
     </section>
