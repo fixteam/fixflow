@@ -147,7 +147,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			
 			for(TaskInstance tmp:lts){ 
 				Map<String,Object> instances = tmp.getPersistentState();
-				String userId = StringUtil.getString(instances.get("PI_START_AUTHOR"));
+				String userId = StringUtil.getString(instances.get("PI_INITIATOR"));
 				
 				UserTo user = identsvz.getUserTo(userId);
 				if(user!=null){
