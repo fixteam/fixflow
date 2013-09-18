@@ -931,6 +931,10 @@ return null;]]></programlisting>
           <emphasis role="bold">浏览表单(formUriView)</emphasis>:
           用来在查看已经处理完毕的任务的表单。
         </para>
+        <para>
+          <emphasis role="bold">优先级(taskPriority)</emphasis>:
+          用来标识任务的紧急程度,接收的是int类型。
+        </para>
         <para>  
           <emphasis role="bold">XML定义</emphasis>:
           <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="人工任务">
@@ -950,7 +954,7 @@ return null;]]></programlisting>
         </para>
         
         <para>  
-          <emphasis role="bold">Java代码</emphasis>:
+          <emphasis role="bold">Java代码</emphasis>:有了表单地址和BizKey我们就可以打开相应的表单。
           <programlisting language="java"><![CDATA[//创建任务查询
 TaskQuery taskQuery = taskService.createTaskQuery();
 //查询用户的任务,取第一个任务。
@@ -969,9 +973,6 @@ taskInstance.getNodeId();
 taskInstance.getNodeName();
 //流程业务关联值
 taskInstance.getBizKey();]]></programlisting>
-          
-        </para>
-        <para>
           
         </para>
       </section>

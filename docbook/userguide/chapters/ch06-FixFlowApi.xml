@@ -55,7 +55,107 @@
       引擎会根据fixflowconfig.xml配置文件来创建,这个文件默认放在fixflow-expand项目中。</para>
   </section>
     
+  <section xml:id="api.connection">
+    <title>数据库连接和线程副本</title>
+    <para>
+      在使用各个Service之前,需要对流程引擎这次操作设置相应的数据库连接、操作人,供流程引擎在这次操作中使用,这些设置
+      都将存放在线程副本中,并不会影响到ProcessEngine这个全局实例。
+    </para>
+    <para>
+      <programlisting language="java"><![CDATA[ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
+ExternalContent externalContent =new ExternalContent();
+externalContent.setAuthenticatedUserId("操作用户编号");
+externalContent.setConnection(数据库连接);
+externalContent.setConnection(连接ID, 数据库连接);
+externalContent.setConnectionManagement("连接管理器编号");
+processEngine.setExternalContent(externalContent);]]>
+      </programlisting>
+      
+    </para>
+    <para>
+      <emphasis role="bold">externalContent对象</emphasis>: 用来存放流程操作中所需要的外部信息。
+    </para>
+    <para>
+      <emphasis role="bold">AuthenticatedUserId</emphasis>: 用来设置流程操作的处理人
+    </para>
+    <para>
+      <emphasis role="bold">Connection</emphasis>: FixFlow引擎支持从外部传递Connection和自己从内部创建Connection两种方式,做为一个可集成的流程引擎,需要考虑到各种技术框架的集成,所以
+      FixFlow引擎本身的数据库管理并不针对任何一种框架。
+    </para>
+    <para>
+      这里我们先介绍第一种也是比较常用的方式,从外部传递数据库连接,一般我们在集成流程引擎的时候,对于流程引擎的操作都是
+      先做自己的表单数据保存,之后在将数据收集好提交给流程引擎,这样就要求操作表单数据保存的Connection和流程引擎操作的Connection
+      必须为一个,这样才能获取到之前操作数据库产生变更的数据,统一控制事务。这个时候就需要把之前用的Connection传入流程引擎。
+      流程引擎本身并不负责去关闭Connection,在流程中任务的代码里也不需要手动的去关闭Connection,在流程操作完毕后,统一由外部来关闭。
+    </para>
+    <para>
+      下面是一个外部传递Connection的例子:
+    </para>
+    <para>
+    <programlisting language="java"><![CDATA[ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
+		
+//获取流程当前配置的数据库信息
+DataBase dataBase=processEngine.getProcessEngineConfiguration().getSelectedDatabase();
+
+Connection connection = null;
+String driver = dataBase.getDriverClassName();
+String url = dataBase.getUrl();
+String user = dataBase.getUsername();
+String password = dataBase.getPassword();
+
+//创建Connection
+try {
+  Class.forName(driver);
+  connection = DriverManager.getConnection(url, user, password);
+  connection.setAutoCommit(false);
+} catch (Exception e) {
+  e.printStackTrace();
+  throw new FixFlowException("数据库链接创建失败!", e);
+}
+
+
+ExternalContent externalContent =new ExternalContent();
+externalContent.setAuthenticatedUserId("操作用户编号");
+externalContent.setConnection("数据库连接");
+processEngine.setExternalContent(externalContent);
+		
+try {
+  //获取Service
+  RuntimeService runtimeService=processEngine.getRuntimeService();
   
+  //流程操作代码...................
+  
+  //外部提交事务
+  connection.commit();
+} catch (Exception e) {
+  //出现外部控制异常回滚
+  connection.rollback();
+}
+
+finally{
+  //清空引擎线程副本,但是不关闭使用的数据库连接
+  processEngine.contextClose(true, false);
+  //外部来关闭数据库连接
+  connection.close();
+}]]>
+      </programlisting>
+    </para>
+    <para>
+      <emphasis>注意：</emphasis>可以给流程设置多个Connection,一个参数的setConnection方法其实跟setConnection("默认选中数据库ID",Connection)效果是一样的。
+    </para>
+    <para>
+      数据ID请参见 <link linkend="config.dataBaseConfig">数据源配置</link>
+    </para>
+    <para>
+      如何在流程引擎内部获取外部传进来的Connection?
+      <programlisting language="java"><![CDATA[//默认的数据库连接
+Context.getDbConnection();
+//指定ID的数据库连接
+Context.getDbConnection("数据库ID");]]></programlisting>
+    </para>
+    
+    
+  </section>
   
   <section xml:id="api.apiDemo">
     <title>使用Services Api完成一个流程的操作</title>
