@@ -26,7 +26,6 @@ import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Sql;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -35,10 +34,6 @@ import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
-import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
-import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
-import com.founder.fix.fixflow.core.objkey.TokenObjKey;
-import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 
 /**
  * 归档操作持久化
