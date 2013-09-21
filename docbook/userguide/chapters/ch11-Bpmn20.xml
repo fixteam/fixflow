@@ -101,13 +101,62 @@
   
   <section xml:id="bpmn.definitions">
     <title>Definitions</title>
-    <para></para>
+    <para>
+      bpmn2.0标准的文件根节点是definitions元素。在这个元素下，可以定义多个流程定义(Process)（虽然我们建议在每个文件中只定义一个流程，因为这样在部署流程的时候，简化了维护）。一个空的流程定义看起来像下面列出来的一样。
+      
+    </para>
+    <para>
+      <emphasis >注意:</emphasis>当definitions中含有多个process的时候为交互式流程图(Collaborations)。在一个Process的流程中,Pool就相当于Process。
+    </para>
+    <para>
+      <emphasis role="bold">XML定义</emphasis>:
+      <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+  xmlns:fixflow="http://www.founderfix.com/fixflow" 
+  id="Definitions_1" 
+  targetNamespace="http://www.founderfix.com">
+    <bpmn2:process id="process_demotest" fixflow:verification="true" fixflow:dbid="" name="测试流程">
+     ........
+    </bpmn2:process>
+</bpmn2:definitions>]]></programlisting>
+    </para>
   </section>
 
   
   <section xml:id="bpmn.process">
     <title>Process</title>
-    <para></para>
+    <para>在FixFlow引擎中,一个流程定义实际指的就是一个Process元素,FixFlow现在并不支持多Process的交互式流程图。</para>
+
+    <para>
+      <emphasis role="bold">XML定义</emphasis>:      
+      <programlisting language="xml"><![CDATA[<<bpmn2:process id="process_demotest" 
+  fixflow:verification="true" 
+  fixflow:dbid="process_demotest:1:73189bfc-59cf-4ecf-b425-051cff44de3a" 
+  name="测试流程">
+    ........
+</bpmn2:process>]]></programlisting>
+    </para>
+    <para>
+      <emphasis role="bold">流程编号(id)</emphasis>:
+      
+    </para>
+    <para>
+      <emphasis role="bold">流程唯一编号(dbid)</emphasis>:
+      
+    </para>
+    <para>
+      <emphasis role="bold">流程名称(name)</emphasis>:
+      
+    </para>
+    <para>
+      <emphasis role="bold">是否验证发布(verification)</emphasis>:
+      
+    </para>
+   
   </section>
   
   <section xml:id="bpmn.event">
