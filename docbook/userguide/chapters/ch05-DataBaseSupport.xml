@@ -499,7 +499,13 @@
   
   <section xml:id="dataBase.dataDictionary">
     <title>数据字典</title>
-    <para>
+    <section xml:id="dataBase.dataDictionary.core">
+      <title>引擎核心表</title>
+      <para></para>
+    </section>
+    <section xml:id="dataBase.dataDictionary.center">
+      <title>组织结构表</title>
+      <para>
       <table xml:id="dataBase.dataDictionary.au.orginfo">
         <title>【AU_ORGINFO】【组织结构表】</title>
         <tgroup cols='3'>
@@ -877,6 +883,8 @@
         </tgroup>
       </table>
     </para>
+    </section>
+    
   </section>
 
   

@@ -99,6 +99,17 @@
     <para>开发者也可以给我们反馈对扩展的意见<link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>,或提出自定义扩展的新思路。谁知道,有一天,你的想法可能会出现在FixFlow引擎中哦。</para>
   </section>
   
+  <section xml:id="bpmn.definitions">
+    <title>Definitions</title>
+    <para></para>
+  </section>
+
+  
+  <section xml:id="bpmn.process">
+    <title>Process</title>
+    <para></para>
+  </section>
+  
   <section xml:id="bpmn.event">
     <title>Events</title>
     <para>
@@ -972,7 +983,9 @@ taskInstance.getNodeId();
 //任务所在节点名称
 taskInstance.getNodeName();
 //流程业务关联值
-taskInstance.getBizKey();]]></programlisting>
+taskInstance.getBizKey();
+//优先级
+taskInstance.getPriority();]]></programlisting>
           
         </para>
       </section>
