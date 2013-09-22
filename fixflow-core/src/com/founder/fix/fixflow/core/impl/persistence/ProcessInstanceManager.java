@@ -29,11 +29,14 @@ import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
-
 public class ProcessInstanceManager extends AbstractManager {
 
+	@SuppressWarnings("unchecked")
 	public void deleteProcessInstancesByProcessDefinition(String processDefinitionId, String deleteReason, boolean cascade) {
-
+		List<String> processInstanceIds = getDbSqlSession().selectList("selectProcessInstanceIdsByProcessDefinitionId", processDefinitionId);
+		for(String processInstanceId :processInstanceIds){
+			deleteProcessInstance(processInstanceId,cascade);
+		}
 	}
 
 	public void deleteProcessInstance(String processInstanceId,  boolean cascade) {

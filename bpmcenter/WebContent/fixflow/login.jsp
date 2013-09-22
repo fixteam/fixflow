@@ -20,7 +20,7 @@
 	            <table id="lockScreen" class="hide">
 	              <tbody>
 	                <tr>
-	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" onerror="imgNotFound('${pageContext.request.contextPath}');" /></td>
+	                  <td rowspan="3" width="110"><img src="icon/${sessionScope.LOGIN_USER_ID}.png" onerror="imgNotFound('${pageContext.request.contextPath}',this);" /></td>
 	                  <td class="username" width="330"><span id="lastLoginUser"></span>
 	                  	<input type="hidden" name="userName" id="userNameS"/>
 	                  	<input type="hidden" name="loginType" id="loginTypeS"/></td>
@@ -57,7 +57,7 @@
 	                <tr>
 	                  <td colspan="2"><div class="btn-box">
 	                      <div class="btn-orange"><a href="#" id="login">登&emsp;录</a></div>
-	                      <div class="btn-gray"><a href="#">返&emsp;回</a></div>
+	                      <div class="btn-gray"><a href="#" id="clear">清&emsp;空</a></div>
 	                  </div></td>
 	                </tr>
 	              </tbody> 
@@ -81,6 +81,7 @@ $(function(){
 	$("#returnLoginForm").click(function(){
 		$("#lockScreen").hide("fast");
 		$("#loginForm").show("fast");
+		$("#userName").focus();
 	});
 	$("#login").click(function(){
 		var storage = window.sessionStorage;
@@ -94,15 +95,14 @@ $(function(){
 		$("#loginS").submit();
 	});
 	
+	$("#clear").click(function(){
+		$("#loginF")[0].reset();
+	})
+	
 	var username = window.sessionStorage.getItem("username");
 	if(username==undefined||username==""){
 		$("#returnToLockScreen").hide();
 		$("#userName").focus();
-		$(document).keydown(function(event){
-			if (event.which == 13) {
-				$("#login").click();
-			}
-		});
 	}else{
 		$("#lastLoginUser").html(username);
 		if(window.sessionStorage.getItem("loginType")){
@@ -112,11 +112,19 @@ $(function(){
 		$("#lockScreen").show();
 		$("#loginForm").hide();
 		$("#pwd").focus();
-		$(document).keydown(function(event){
-			if (event.which == 13) {
-				$(".btn-login").click();
-			}
-		});
 	}
-})
+	$(document).keydown(function(event){
+		loginClick(event);
+	})
+});
+
+function loginClick(e){
+	if(e.which == 13){
+		if($("#loginForm").is(":hidden")){
+			$(".btn-login").click();
+		}else{
+			$("#login").click();
+		}
+	}
+}
 </script>

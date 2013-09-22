@@ -18,7 +18,9 @@ a{text-decoration: none;}
 			
 			<div class="type">
 	        	<h1>最近使用的流程</h1>
-	        	
+	        	<c:forEach items="${lastest}" var="process" varStatus="status">
+	        		<a href="#" formUrl="${process.formUrl}" processDefinitionKey="${process.processDefinitionKey}"><div>${process.processDefinitionName}</div></a>
+	        	</c:forEach>
 	    	</div>
 	    	
 		<c:forEach items="${result}" var="row" varStatus="status">
@@ -47,7 +49,7 @@ $(function(){
      }
      url+="userId=<%=request.getAttribute("userId")%>&processDefinitionKey="+pdk;
     var obj = {};
-    window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.open(url);
   });
 });
 </script>

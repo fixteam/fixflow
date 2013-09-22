@@ -186,6 +186,7 @@ public class IdentityLinkPersistence {
 		Object[] objectParamWhere = { processInstanceId };
 		
 		sqlCommand.delete(TaskIdentityLinkObjKey.TaskIdentityLinkTableName(), " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+		sqlCommand.delete(TaskIdentityLinkObjKey.TaskIdentityLinkHisTableName(), " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM "+TaskInstanceObjKey.TaskInstanceHisTableName()+" WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
 		
 	}
 	

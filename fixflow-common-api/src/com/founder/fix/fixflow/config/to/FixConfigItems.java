@@ -15,14 +15,37 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.util;
+package com.founder.fix.fixflow.config.to;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @ClassName: Pager
+ * @ClassName: Item
  * @Description: TODO
  * @author shao
  *
  */
-public class Pager {
+public class FixConfigItems {
 
+	private List<FixConfigItem> item = new ArrayList<FixConfigItem>();
+	
+	private Map<String,FixConfigItem> mapItem = new HashMap<String,FixConfigItem>();
+
+	public List<FixConfigItem> getItem() {
+		return item;
+	}
+
+	public void setItem(List<FixConfigItem> item) {
+		this.item = item;
+		for(FixConfigItem tmp:item){
+			mapItem.put(tmp.getKey(), tmp);
+		}
+	}
+	
+	public FixConfigItem getMapItem(String key){
+		return mapItem.get(key);
+	}
 }

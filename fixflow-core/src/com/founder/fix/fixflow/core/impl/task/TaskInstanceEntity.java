@@ -38,8 +38,6 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
-import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
-import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
@@ -61,7 +59,13 @@ import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
-public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable {
+public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable ,Cloneable{
+
+	
+	
+	
+
+
 
 	/**
 	 * 
@@ -397,12 +401,8 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		 */
 	}
 	
-	public void end(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin) {
-		//判断是否是自动处理
-		if(AbstractCommandFilter.isAutoClaim()){
-			this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-		}
-	
+	public void end(TaskCommandInst taskCommandInst,String taskComment) {
+		
 
 		//设置任务上点击的处理命令
 		this.setCommandId(taskCommandInst.getId());
@@ -412,18 +412,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.setCommandMessage(taskCommandInst.getName());
 		//处理意见
 		this.setTaskComment(taskComment);
-		
-		if(admin!=null&&!admin.equals("")){
-			this.setAdmin(admin);
-		}
-		
-		if(agent!=null&&!agent.equals("")){
-			this.setAgent(Authentication.getAuthenticatedUserId());
-			this.setAssigneeWithoutCascade(agent);
-		}else{
-			this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-			this.setAgent(null);
-		}
 		
 		//调用任务的完成方法
 		end();
@@ -492,7 +480,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	}
 	
 	
-	public void toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin,FlowNode flowNode,String rollBackAssignee) {
+	public void toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,FlowNode flowNode,String rollBackAssignee) {
 		
 		
 		//分支退回处理
@@ -501,7 +489,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		if(token.getParent()==null){
 			//主令牌非分支的处理
 			
-			customEnd(taskCommandInst,taskComment,agent,admin);
+			customEnd(taskCommandInst,taskComment);
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
 			executionContext.setToFlowNode(flowNode);
 			executionContext.setRollBackAssignee(rollBackAssignee);
@@ -515,7 +503,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 			Long taskNum=taskQuery.tokenId(token.getId()).nodeId(flowNode.getId()).count();
 			if(taskNum!=0){
 				//分支令牌经过这个节点则允许正常退回
-				customEnd(taskCommandInst,taskComment,agent,admin);
+				customEnd(taskCommandInst,taskComment);
 				ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
 				executionContext.setToFlowNode(flowNode);
 				executionContext.setRollBackAssignee(rollBackAssignee);
@@ -525,10 +513,10 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				
 				
 				//分支令牌经过这个节点则允许正常退回
-				customEnd(taskCommandInst,taskComment,agent,admin);
+				customEnd(taskCommandInst,taskComment);
 				
 				
-				boolean isFind=toFlowNodeEnd(taskCommandInst, taskComment, agent, admin, flowNode, rollBackAssignee,token.getParent(),taskQuery);
+				boolean isFind=toFlowNodeEnd(taskCommandInst ,taskComment, flowNode, rollBackAssignee,token.getParent(),taskQuery);
 				if(!isFind){
 					throw new FixFlowException("该节点从未到达过不能退回");
 				}
@@ -548,7 +536,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		
 	}
 	
-	private boolean toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin,FlowNode flowNode,String rollBackAssignee,TokenEntity tokenObj,TaskQuery taskQuery){
+	private boolean toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,FlowNode flowNode,String rollBackAssignee,TokenEntity tokenObj,TaskQuery taskQuery){
 		Long taskNum=taskQuery.tokenId(tokenObj.getId()).nodeId(flowNode.getId()).count();
 		if(taskNum!=0){
 			
@@ -560,7 +548,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 			return true;
 		}else{
 			if(tokenObj.getParent()!=null){
-				return toFlowNodeEnd( taskCommandInst, taskComment, agent, admin, flowNode, rollBackAssignee, tokenObj.getParent(), taskQuery);
+				return toFlowNodeEnd( taskCommandInst, taskComment, flowNode, rollBackAssignee, tokenObj.getParent(), taskQuery);
 				
 			}else{
 				return false;
@@ -589,7 +577,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	/**
 	 * 这个结束并不会去推动令牌向下。例如用在退回的时候。
 	 */
-	public void customEnd(TaskCommandInst taskCommandInst,String taskComment,String agent,String admin) {
+	public void customEnd(TaskCommandInst taskCommandInst,String taskComment) {
 		
 		// this.operationCommand = operationCommand;
 		if (this.endTime != null) {
@@ -606,30 +594,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.isOpen = false;
 		
 		this.taskComment=taskComment;
-		
-		
-		if(agent!=null&&!agent.equals("")){
-			this.setAgent(Authentication.getAuthenticatedUserId());
-			this.setAssigneeWithoutCascade(this.agent);
-		}else{
-			this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-			this.setAgent(null);
-		}
-		/*
-		if(this.agent!=null&&!this.agent.equals("")){
-			this.setAgent(Authentication.getAuthenticatedUserId());
-			//this.setAssigneeWithoutCascade(this.agent);
-		}else{
-			//this.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-			this.setAgent(null);
-		}*/
-		
-		//if(agent!=null&&!agent.equals("")){
-		//	this.setAgent(Authentication.getAuthenticatedUserId());
-		//}
-		if(admin!=null&&!admin.equals("")){
-			this.setAdmin(admin);
-		}
 		
 		
 		
@@ -1531,6 +1495,15 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		}
 		
 		return persistentState;
+	}
+
+	public TaskInstanceEntity clone(){
+
+		
+		TaskInstanceEntity taskInstanceEntityNew=new TaskInstanceEntity();
+		taskInstanceEntityNew.persistentInit(getPersistentDbMap());
+		
+		return taskInstanceEntityNew;
 	}
 
 }

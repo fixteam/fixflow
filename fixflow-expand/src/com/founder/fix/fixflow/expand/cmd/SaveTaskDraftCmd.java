@@ -25,25 +25,15 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.TaskService;
-import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
 import com.founder.fix.fixflow.core.impl.command.StartProcessInstanceCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
-import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
-import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
-import com.founder.fix.fixflow.core.impl.persistence.TaskManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskInstance;
@@ -71,130 +61,63 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 
 		if (taskId != null&&!taskId.equals("")) {
 			
-			TaskManager taskManager = commandContext.getTaskManager();
-			TaskInstance taskInstanceQuery = taskManager.findTaskById(taskId);
+
+
+			// 初始化任务命令执行所需要的常用对象
+			loadProcessParameter(commandContext);
+
+			// 将外部变量注册到流程实例运行环境中
+			addVariable();
+
+			// 执行处理命令中的开发人员设置的表达式
+			runCommandExpression();
+
+			// 获取正在操作的任务实例对象
+			TaskInstanceEntity taskInstance = getTaskInstanceEntity();
 			
-			if(taskInstanceQuery.hasEnded()){
-				throw new FixFlowBizException("当前的任务已经结束,无法继续处理!");
-			}
-
-			String tokenId = taskInstanceQuery.getTokenId();
-			String nodeId = taskInstanceQuery.getNodeId();
-			String processDefinitionId = taskInstanceQuery.getProcessDefinitionId();
-			ProcessInstanceManager processInstanceManager = commandContext.getProcessInstanceManager();
-
-			String processInstanceId = taskInstanceQuery.getProcessInstanceId();
-
-			ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
-
-			ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
-
-			UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
-			
-			TaskCommandInst taskCommand=null;
-			
-			String taskCommandType = expandTaskCommand.getCommandType();
-			
-			if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
-
-				String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
-
-				taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
-
-			} else {
-				taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
-			}
+			ProcessInstanceEntity processInstanceImpl=getProcessInstance();
 			
 			
-
-
-			ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId, processDefinition);
-
-			
-			
-			processInstanceImpl.getContextInstance().addTransientVariable("fixVariable_userCommand", userCommandId);
-
-			processInstanceImpl.getContextInstance().setVariableMap(variables);
 			
 			//在第一次启动的时候没有bizkey 的时候,在保存草稿的时候去设置bizkey
 			if(processInstanceImpl.getBizKey()==null&&this.businessKey!=null){
 				processInstanceImpl.setBizKey(this.businessKey);
 			}
 			
-			//processInstanceImpl.setBizKey(this.businessKey);
-
-			TokenEntity token = processInstanceImpl.getTokenMap().get(tokenId);
+			ProcessDefinitionBehavior processDefinition=processInstanceImpl.getProcessDefinition();
 			
-			processInstanceImpl.getContextInstance().setTransientVariableMap(transientVariables);
-
-			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
-
-			if (taskCommand != null && taskCommand.getExpression() != null) {
-				try {
-					
-					ExpressionMgmt.execute(taskCommand.getExpression(), executionContext);
-				} catch (Exception e) {
-					throw new FixFlowException("用户命令表达式执行异常!", e);
-				}
-			}
-
-			List<TaskInstanceEntity> taskInstances = processInstanceImpl.getTaskMgmtInstance().getTaskInstanceEntitys();
-
-			TaskInstanceEntity taskInstanceImpl=null;
 			
-			for (TaskInstanceEntity taskInstance : taskInstances) {
-				if (taskInstance.getId().equals(taskId)) {
+			if(taskInstance!=null){
 				
-					
-					taskInstanceImpl=taskInstance;
-		
-				}
-			}
-			
-			
-			if(taskInstanceImpl!=null){
-				
-				if(taskInstanceImpl.getBizKey()==null||taskInstanceImpl.equals("")){
-					taskInstanceImpl.setBizKey(this.businessKey);
-				}
-				
-				if(this.agent!=null&&!this.agent.equals("")){
-					taskInstanceImpl.setAgent(Authentication.getAuthenticatedUserId());
-					taskInstanceImpl.setAssigneeWithoutCascade(this.agent);
-				}else{
-					taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-					taskInstanceImpl.setAgent(null);
+				if(taskInstance.getBizKey()==null||taskInstance.equals("")){
+					taskInstance.setBizKey(this.businessKey);
 				}
 				
 				
-				//if(AbstractCommandFilter.isAutoClaim()){
-					
-				//}
+				taskInstance.setDraft(true);
 				
-				taskInstanceImpl.setDraft(true);
-				
-				TaskDefinition taskDefinition=taskInstanceImpl.getTaskDefinition();
+				TaskDefinition taskDefinition=taskInstance.getTaskDefinition();
 				
 				if (taskDefinition != null && taskDefinition.getDescriptionExpression() != null) {
 
-					Object result = ExpressionMgmt.execute(taskDefinition.getDescriptionExpression(), executionContext);
+					Object result = ExpressionMgmt.execute(taskDefinition.getDescriptionExpression(), getExecutionContext());
 					if (result != null) {
-						taskInstanceImpl.setDescription(result.toString());
+						taskInstance.setDescription(result.toString());
 					} else {
-						taskInstanceImpl.setDescription(token.getFlowNode().getName());
+						taskInstance.setDescription(taskInstance.getToken().getFlowNode().getName());
 					}
 				} else {
 					
 					if (processDefinition.getTaskSubject() != null && processDefinition.getTaskSubject().getExpressionValue() != null) {
 
-						Object result = ExpressionMgmt.execute(token.getProcessInstance().getProcessDefinition().getTaskSubject().getExpressionValue(),
-								executionContext);
+						Object result = ExpressionMgmt.execute(processInstanceImpl.getProcessDefinition().getTaskSubject().getExpressionValue(),
+								getExecutionContext());
 
 						if (result != null) {
-							taskInstanceImpl.setDescription(result.toString());
+							taskInstance.setDescription(result.toString());
 						}
 					} else {
-						taskInstanceImpl.setDescription(token.getFlowNode().getName());
+						taskInstance.setDescription(taskInstance.getToken().getFlowNode().getName());
 					}
 					
 					
@@ -202,11 +125,10 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 				
 				
 				try {
-					commandContext.getProcessInstanceManager().saveProcessInstance(processInstanceImpl);
+					saveProcessInstance(commandContext);
 				} catch (Exception e) {
 					throw new FixFlowException("任务 "+taskId+" 保存出错！");
 				}
-				//commandContext.getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstanceImpl);
 				
 			}
 			else{
@@ -277,46 +199,7 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 					commandContext.getTaskManager().saveTaskInstanceEntity(taskInstanceCandidate);
 				}
 			}
-			
 		
-			
-		
-			
-			/*
-			TaskInstance newTask = TaskInstanceEntity.create();
-			newTask.setId(GuidUtil.CreateGuid());
-			newTask.setAssignee(Authentication.getAuthenticatedUserId());
-			newTask.setCreateTime(new Date());
-			newTask.setProcessDefinitionKey(processDefinitionKey);
-			ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
-
-			ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionByKey(this.processDefinitionKey);
-
-			UserTask userTask=null;
-			Object flowNodeObject = processDefinition.getSubTask();
-			if (flowNodeObject != null && flowNodeObject instanceof UserTask) {
-				userTask=(UserTask)flowNodeObject;
-				newTask.setNodeId(userTask.getId());
-				
-			}
-			
-			newTask.setDraft(true);
-			
-			newTask.setFormUri(formUri);
-			
-			newTask.setPriority(50);
-			
-			newTask.setProcessDefinitionId(processDefinition.getProcessDefinitionId());
-	
-			newTask.setProcessDefinitionName(processDefinition.getName());
-			newTask.setTaskInstanceType(TaskInstanceType.FIXFLOWTASK);
-			newTask.setBizKey(this.businessKey);
-			
-			if(newTask==null||newTask.getId()==null||newTask.getId().equals("")){
-				throw new FixFlowException("taskId不能为空!");
-			}
-			
-			commandContext.getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)newTask);*/
 		}
 
 	

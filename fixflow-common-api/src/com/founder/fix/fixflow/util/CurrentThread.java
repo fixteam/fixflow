@@ -64,7 +64,7 @@ public class CurrentThread {
 			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
 				DBConnection td = tmp.getValue();
 				if(td!=null){
-					if (td != null) td.closeAndRockBack();
+					td.closeAndRockBack();
 				}
 			}
 			getThreadDBPool().set(null);
@@ -80,7 +80,7 @@ public class CurrentThread {
 			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
 				DBConnection td = tmp.getValue();
 				if(td!=null){
-					if (td != null) td.close();
+					td.close();
 				}
 			}
 			getThreadDBPool().set(null);

@@ -8,9 +8,9 @@ website:	http://code.google.com/p/jquerytree/
 
 -------------------------------------*/
 
-.ztree * {padding:0; margin:0; font-size:12px; font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif}
+.ztree * {padding:0; margin:0; font-size:13px; font-family:微软雅黑;}
 .ztree {margin:0; padding:5px; color:#333}
-.ztree li{padding:0; margin:0; list-style:none; line-height:14px; text-align:left; white-space:nowrap; outline:0}
+.ztree li{padding:0; margin:2px 0px; list-style:none; line-height:14px; text-align:left; white-space:nowrap; outline:0}
 .ztree li ul{ margin:0; padding:0 0 0 18px}
 .ztree li ul.line{ background:url(img/line_conn.gif) 0 0 repeat-y;}
 
@@ -70,9 +70,9 @@ website:	http://code.google.com/p/jquerytree/
 .ztree li span.button.bottom_docu{background-position:-56px -36px}
 .ztree li span.button.noline_docu{ background:none;}
 
-.ztree li span.button.ico_open{margin-right:2px; background-position:-110px -16px; vertical-align:top; *vertical-align:middle}
-.ztree li span.button.ico_close{margin-right:2px; background-position:-110px 0; vertical-align:top; *vertical-align:middle}
-.ztree li span.button.ico_docu{margin-right:2px; background-position:-110px -32px; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.ico_open{margin-right:2px; background-position:0px 0px; vertical-align:top; *vertical-align:middle; background-image: url("img/folder.png");}
+.ztree li span.button.ico_close{margin-right:2px; background-position:0px 0; vertical-align:top; *vertical-align:middle; background-image: url("img/folder_2.png");}
+.ztree li span.button.ico_docu{margin-right:2px; background-position:0px 0px; vertical-align:top; *vertical-align:middle; background-image: url("img/document.png");}
 .ztree li span.button.edit {margin-right:2px; background-position:-110px -48px; vertical-align:top; *vertical-align:middle}
 .ztree li span.button.remove {margin-right:2px; background-position:-110px -64px; vertical-align:top; *vertical-align:middle}
 

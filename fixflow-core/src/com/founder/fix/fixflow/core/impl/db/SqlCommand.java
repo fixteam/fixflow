@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +69,7 @@ public class SqlCommand {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			debugLog.debug("FixFlow引擎数据持久化语句: " +sql); 
+			debugLog.debug("参数: " +data); 
 			if (null != data && data.size() > 0) {
 				for (int i = 0; i < data.size(); i++) {
 					data.set(i, transformSqlType(data.get(i)));
@@ -122,6 +124,7 @@ public class SqlCommand {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			debugLog.debug("FixFlow引擎数据持久化语句: " +sql); 
+			debugLog.debug("参数: " +sql); 
 			if (null != data && data.length > 0) {
 				for (int i = 0; i < data.length; i++) {
 					data[i] = transformSqlType(data[i]);
@@ -318,6 +321,7 @@ public class SqlCommand {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			debugLog.debug("FixFlow引擎数据持久化语句: " +sql); 
+			debugLog.debug("参数: "+ Arrays.asList(data));
 			if (null != data && data.length > 0) {
 				for (int i = 0; i < data.length; i++) {
 					data[i] = transformSqlType(data[i]);
@@ -389,6 +393,7 @@ public class SqlCommand {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			debugLog.debug("FixFlow引擎数据持久化语句: " +sql); 
+			debugLog.debug("参数: "+ Arrays.asList(data));
 			if (null != data && data.length > 0) {
 				for (int i = 0; i < data.length; i++) {
 
@@ -458,6 +463,7 @@ public class SqlCommand {
 		PreparedStatement pstmt=null;
 		try {
 			debugLog.debug("FixFlow引擎数据持久化语句: " +querySql.toString());
+			debugLog.debug("参数: "+ data);
 			pstmt = conn.prepareStatement(querySql.toString());
 			
 			Object[] keyArray = keys.toArray();
@@ -521,6 +527,8 @@ public class SqlCommand {
 		Integer affectRow = 0;
 		try {
 			debugLog.debug("FixFlow引擎数据持久化语句: " +querySql.toString());
+			debugLog.debug("参数data: "+ data);
+			debugLog.debug("参数sdata: "+ Arrays.asList(sdata));
 			pstmt = conn.prepareStatement(querySql.toString());
 			Object[] keyArray = keys.toArray();
 			int j = 1;
@@ -605,6 +613,7 @@ public class SqlCommand {
 		PreparedStatement pstmt=null;
 		try {
 			debugLog.debug("FixFlow引擎数据持久化语句: " +querySql.toString());
+			debugLog.debug("参数: "+ Arrays.asList(data));
 			pstmt = conn.prepareStatement(querySql.toString());
 			if (data != null) {
 				for (int i = 0; i < data.length; i++) {

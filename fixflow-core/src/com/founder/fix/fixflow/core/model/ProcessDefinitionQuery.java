@@ -132,4 +132,11 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
 	 */
 	ProcessDefinitionQuery orderByDeploymentId();
 	
+	/**
+	 * 根据发布时间排序
+	 * @return
+	 */
+	ProcessDefinitionQuery orderByDeploymentTime();
+	
+	
 }

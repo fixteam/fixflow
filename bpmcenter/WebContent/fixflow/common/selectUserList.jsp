@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>用户选择</title>
+<base target="_self" /> 
 <jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
@@ -16,15 +17,15 @@
 			<tr>
                	<td class="title-r">用户编号/姓名：</td>
                	<td style="width:180px"><input type="text" id="text_0" name="queryInfo" class="fix-input" style="width:160px;" value="${result.queryInfo}"/></td>
-             	<td style="width:70px"><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
-             	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
+             	<td style="width:70px"><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
+             	<td><div class="btn-normal"><a href="#" id="ok">确定</a></div></td>
              </tr>
 		</table>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
 		<thead>
-			<th>用户编号</th>
+			<th style="width:50%;">用户编号</th>
 			<th>用户姓名</th>
 		</thead>
 		<tbody>
@@ -46,6 +47,7 @@
 </body>
 <script>
 $(function(){
+	var obj = window.dialogArguments;
 	var isMulti = Fix.Util.GetQueryString("isMulti");
 	$("table#dataList tr").click(function(){
 		if(isMulti=="false"){
@@ -69,16 +71,35 @@ $(function(){
 			for(var i=0;i<rowDatas.length;i++){
 				var d = rowDatas[i].split("=");
 				r+=d[0];
-				r+=":\""+d[1]+"\","
+				r+=":\""+d[1]+"\",";
 			};
 			r = r.substring(0,r.length-1);
-			r+="}"
-			eval("var j = " + r)
+			r+="}";
+			eval("var j = " + r);
 			rv[index] = j;
 		});
-		window.opener.rv = rv;
+		if(window.opener){
+		  window.opener.rv = rv;
+		}else if(obj.opener){
+		  obj.opener.rv = rv;
+		}else{
+		  obj.fn(obj.params,rv);
+		}
 		window.close();
 	});
+	
+	var color = window.localStorage.getItem("color");
+	if(color){
+		var url = $("#color").attr("href");
+		url=url.substring(0,url.lastIndexOf("_")+1);
+		url+=color+".css";
+		$("#color").attr("href",url);
+	}else{
+		var url = $("#color").attr("href");
+		url=url.substring(0,url.lastIndexOf("_")+1);
+		url+="red.css";
+		$("#color").attr("href",url);
+	}
 })
 </script>
 </html>

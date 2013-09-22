@@ -141,6 +141,6 @@ public class TokenPersistence {
 		
 		Object[] objectParamWhere = { processInstanceId };
 		sqlCommand.delete(TokenObjKey.TokenTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
-		
+		sqlCommand.delete(TokenObjKey.TokenHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 	}
 }

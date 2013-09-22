@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns="http://java.sun.com/xml/ns/javaee" 
-xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
-id="WebApp_ID" 
-	version="2.5">
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>bpmcenter</display-name>
+  <!-- Spring加载配置 -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>
-					classpath*:applicationContext*.xml
-		</param-value>
+    <param-value>classpath*:applicationContext*.xml</param-value>
   </context-param>
+  <!-- 登录用servlet -->
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
@@ -28,6 +27,7 @@ id="WebApp_ID"
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
+  <!-- 任务处理中心配置 -->
   <servlet>
     <description></description>
     <display-name>FlowCenter</display-name>
@@ -43,7 +43,7 @@ id="WebApp_ID"
 	</welcome-file-list>
   
   
-  <!-- manager-servlet 开始 -->
+  <!-- 流程管理中心配置，激活之前请确认所使用版本包括流程管理中心这个功能 -->
 	  <servlet>
 	    <description></description>
 	    <display-name>FlowManager</display-name>
@@ -54,9 +54,8 @@ id="WebApp_ID"
 	    <servlet-name>FlowManager</servlet-name>
 	    <url-pattern>/FlowManager</url-pattern>
 	  </servlet-mapping>
-  <!-- manager-servlet 结束 -->
   
-    <!-- demo-servlet 开始 -->
+    <!-- 演示模块配置 -->
 	  <servlet>
 	    <description></description>
 	    <display-name>DemoServlet</display-name>
@@ -67,5 +66,4 @@ id="WebApp_ID"
 	    <servlet-name>DemoServlet</servlet-name>
 	    <url-pattern>/DemoServlet</url-pattern>
 	  </servlet-mapping>
-  <!-- demo-servlet 结束 -->
 </web-app>

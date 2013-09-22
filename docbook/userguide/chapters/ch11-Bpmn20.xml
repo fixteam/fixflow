@@ -99,6 +99,66 @@
     <para>开发者也可以给我们反馈对扩展的意见<link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>,或提出自定义扩展的新思路。谁知道,有一天,你的想法可能会出现在FixFlow引擎中哦。</para>
   </section>
   
+  <section xml:id="bpmn.definitions">
+    <title>Definitions</title>
+    <para>
+      bpmn2.0标准的文件根节点是definitions元素。在这个元素下，可以定义多个流程定义(Process)（虽然我们建议在每个文件中只定义一个流程，因为这样在部署流程的时候，简化了维护）。一个空的流程定义看起来像下面列出来的一样。
+      
+    </para>
+    <para>
+      <emphasis >注意:</emphasis>当definitions中含有多个process的时候为交互式流程图(Collaborations)。在一个Process的流程中,Pool就相当于Process。
+    </para>
+    <para>
+      <emphasis role="bold">XML定义</emphasis>:
+      <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+  xmlns:fixflow="http://www.founderfix.com/fixflow" 
+  id="Definitions_1" 
+  targetNamespace="http://www.founderfix.com">
+    <bpmn2:process id="process_demotest" fixflow:verification="true" fixflow:dbid="" name="测试流程">
+     ........
+    </bpmn2:process>
+</bpmn2:definitions>]]></programlisting>
+    </para>
+  </section>
+
+  
+  <section xml:id="bpmn.process">
+    <title>Process</title>
+    <para>在FixFlow引擎中,一个流程定义实际指的就是一个Process元素,FixFlow现在并不支持多Process的交互式流程图。</para>
+
+    <para>
+      <emphasis role="bold">XML定义</emphasis>:      
+      <programlisting language="xml"><![CDATA[<<bpmn2:process id="process_demotest" 
+  fixflow:verification="true" 
+  fixflow:dbid="process_demotest:1:73189bfc-59cf-4ecf-b425-051cff44de3a" 
+  name="测试流程">
+    ........
+</bpmn2:process>]]></programlisting>
+    </para>
+    <para>
+      <emphasis role="bold">流程编号(id)</emphasis>:
+      
+    </para>
+    <para>
+      <emphasis role="bold">流程唯一编号(dbid)</emphasis>:
+      
+    </para>
+    <para>
+      <emphasis role="bold">流程名称(name)</emphasis>:
+      
+    </para>
+    <para>
+      <emphasis role="bold">是否验证发布(verification)</emphasis>:
+      
+    </para>
+   
+  </section>
+  
   <section xml:id="bpmn.event">
     <title>Events</title>
     <para>
@@ -477,48 +537,512 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     </para>
     <section xml:id="bpmn.ExclusiveGateway">
       <title>Exclusive Gateway</title>
-      <para>
+      
+      
+      
+      <section xml:id="bpmn.ExclusiveGateway.Description">
+        <title>描述</title>
+        <para>
+          排他网关(ExclusiveGateway)在分裂时，只会选择一个输出顺序流传递Token,会按照后面线条的排序号优先计算,第一个满足条件的会将Token传递过去,排他网关在聚合时，任何一个输入顺序流传入Token，网关都会向后传递，不会对Token进行同步。我们使用"x"在网关内部标示出这是一个排他网关，默认情况下，我们也可以忽略标示。
+        </para>
+        <para>
+          一般情况下,值只允许后面有一条线通过或者说是只允许有一个条件满足的时候使用排他网关。
+        </para>
+        <para>
+          <emphasis>注意: </emphasis> 当排他网关(ExclusiveGateway)后面的线条都不满足的时候会抛出异常.
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ExclusiveGateway.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          排他网关(ExclusiveGateway)图形为一个菱形里边有一个X。注意,一个网关如果内部是空的则默认为排他网关。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ExclusiveGateway.XMLRepresentation">
+        <title>XML描述</title>
+        <para>下面描述的是一个排他网关,后面通过带条件的顺序流<link linkend="bpmn.SequenceFlow.ConditionalSequenceFlow">(Conditional SequenceFlow)</link>连接了三个Task。</para>
+        <mediaobject ><imageobject>
+          <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.XMLRepresentation.1.png"/>
+        </imageobject></mediaobject>
+       
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="">
+  <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+</bpmn2:exclusiveGateway>
+<bpmn2:sequenceFlow id="SequenceFlow_3" name="${金额}==300" sourceRef="ExclusiveGateway_1" targetRef="Task_1">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${金额}==300</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+<bpmn2:sequenceFlow id="SequenceFlow_4" name="${金额}==200" sourceRef="ExclusiveGateway_1" targetRef="Task_2">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${金额}==200</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+<bpmn2:sequenceFlow id="SequenceFlow_5" name="${金额}==100" sourceRef="ExclusiveGateway_1" targetRef="Task_3">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${金额}==100</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>]]></programlisting>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ExclusiveGateway.designer">
         
-      </para>
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExclusiveGateway.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
+      
     </section>
     
     <section xml:id="bpmn.ParallelGateway">
       <title>Parallel Gateway</title>
-      <para>
+      <section xml:id="bpmn.ParallelGateway.Description">
+        <title>描述</title>
+        <para>
+          并行网关(ParallelGateway)用于将流程产生多个并行的分支,也可以将多个并行的分支合并回一个主线。
+
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis role="bold">分散</emphasis>(Diverging):  
+                当并行网关处于分散(Diverging)状态的时候,流程令牌(token)经过的时候,会被分散出和网关输出顺序流相同数据量的分支,并每个分支沿着对应的顺序流向下执行。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">合并</emphasis>(Converging): 
+                当并行网关处于合并(Converging)状态的时候,当分支令牌经过的时候,分支令牌会停留在网关上,等待其他的分支一起走到该网关,然后合并为一个继续向下。
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        <para>
+          分散、合并原理解释: 令牌 token1 走到 ParallelGateway1(Diverging) 的时候,token1会生成两个子令牌 token1.1 和 token1.2,两个子令牌沿着顺序流向下面的节点运行,token1父令牌
+          停留在ParallelGateway1上面,当token1.1到达 ParallelGateway2(Converging) 的时候,会停在上面等待 它的"兄弟" token1.2,当token1.2到达ParallelGateway2(Converging)的时候,
+          两个子令牌都被结束,同时激活父令牌token1,将token1拉到ParallelGateway2,沿着后面的线条向下运行。
+        </para>
+        <para>
+          <emphasis>注意: </emphasis> 并行网关处于分散的时候,会忽略掉后面顺序流的条件,直接向下执行,这是并行网关和包容网关最大的区别。
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ParallelGateway.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          并行网关(ParallelGateway)图形为一个菱形里边有一个"+"。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ParallelGateway.XMLRepresentation">
+        <title>XML描述</title>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[ <bpmn2:parallelGateway id="ParallelGateway_1" name=""></bpmn2:parallelGateway>]]></programlisting>
+        </para>
+        <para>
+          下面是一个合并、分散例子的XML表示:
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_7" name="提交">
+  <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_7" targetRef="ParallelGateway_1"/>
+
+<bpmn2:parallelGateway id="ParallelGateway_1" name="" gatewayDirection="Diverging">
+  <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+</bpmn2:parallelGateway>
+
+<bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_2"/>
+<bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_4"/>
+
+<bpmn2:userTask id="UserTask_2" name="并行审批1">
+  <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:userTask id="UserTask_4" name="并行审批2">
+  <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+</bpmn2:userTask>
+    
+<bpmn2:parallelGateway id="ParallelGateway_2" name="" gatewayDirection="Converging">
+  <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+  <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+</bpmn2:parallelGateway>
+   
+<bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="UserTask_2" targetRef="ParallelGateway_2"/>
+<bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_4" targetRef="ParallelGateway_2"/>
+
+<bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="ParallelGateway_2" targetRef="UserTask_8"/>
+
+<bpmn2:userTask id="UserTask_8" name="最终审批">   
+  <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+</bpmn2:userTask>]]>
+          </programlisting>
+        </para>
         
-      </para>
+        <para>
+          FixFlow的分支和合并要遵循同时分散,同时收回的原则,一次分散出来的子令牌必须在一个合并网关上合并。例如下面的例子：
+        </para>
+        
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+        
+      </section>
+      
+      <section xml:id="bpmn.ParallelGateway.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
     <section xml:id="bpmn.InclusiveGateway">
-      <title>Parallel Gateway</title>
-      <para>
+      <title>InclusiveGateway</title>
+      <section xml:id="bpmn.InclusiveGateway.Description">
+        <title>描述</title>
+        <para>
+          包容网关(InclusiveGateway)更像是排他网关和并行网关的结合,它会验证后面的每条顺序流,如果后面有多条顺序流条件都满足则产生并发,如只有一个
+          满足,则令牌正常往下流转不产生分支,如没有一条顺序流满足则抛出异常。
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.InclusiveGateway.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          包容网关(ExclusiveGateway)图形为一个菱形里边有一个"o"圆圈。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.InclusiveGateway.XMLRepresentation">
+        <title>XML描述</title>
+     
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:inclusiveGateway id="InclusiveGateway_1"></bpmn2:inclusiveGateway>]]></programlisting>
+        </para>
         
-      </para>
+        <para>
+          下面是一个使用包容网关和平行网关例子的XML表示:
+          <programlisting language="xml"><![CDATA[
+<bpmn2:inclusiveGateway id="InclusiveGateway_1" name="">
+  <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_26</bpmn2:outgoing>
+  <bpmn2:outgoing>SequenceFlow_27</bpmn2:outgoing>
+</bpmn2:inclusiveGateway>
+
+<bpmn2:userTask id="UserTask_16" name="UserTask_2">
+  <bpmn2:incoming>SequenceFlow_26</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_28</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:userTask id="UserTask_17" name="UserTask_3">
+  <bpmn2:incoming>SequenceFlow_27</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_29</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:parallelGateway id="ParallelGateway_5" name="" gatewayDirection="Converging">
+  <bpmn2:incoming>SequenceFlow_28</bpmn2:incoming>
+  <bpmn2:incoming>SequenceFlow_29</bpmn2:incoming>
+  <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
+</bpmn2:parallelGateway>
+
+<bpmn2:sequenceFlow id="SequenceFlow_26" name="${金额>300}" sourceRef="InclusiveGateway_1" targetRef="UserTask_16">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${金额>300}">${金额>300}</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+
+<bpmn2:sequenceFlow id="SequenceFlow_27" name="${金额>400}" sourceRef="InclusiveGateway_1" targetRef="UserTask_17">
+  <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${金额>400}">${金额>400}</bpmn2:conditionExpression>
+</bpmn2:sequenceFlow>
+    
+<bpmn2:sequenceFlow id="SequenceFlow_28" name="" sourceRef="UserTask_16" targetRef="ParallelGateway_5"/>
+
+<bpmn2:sequenceFlow id="SequenceFlow_29" name="" sourceRef="UserTask_17" targetRef="ParallelGateway_5"/>
+
+<bpmn2:userTask id="UserTask_19" name="UserTask_1">
+  <bpmn2:outgoing>SequenceFlow_32</bpmn2:outgoing>
+</bpmn2:userTask>
+
+<bpmn2:userTask id="UserTask_20" name="UserTask_4">
+  <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
+</bpmn2:userTask>
+
+<bpmn2:sequenceFlow id="SequenceFlow_31" name="" sourceRef="ParallelGateway_5" targetRef="UserTask_20"/>
+
+<bpmn2:sequenceFlow id="SequenceFlow_32" name="" sourceRef="UserTask_19" targetRef="InclusiveGateway_1"/>]]></programlisting>
+        </para>
+        <para>
+          上面的例子使用包容网关和并行网关来完成操作,当包容网关后面有多个分支的时候,并行网关负责合并,如果包容网关后面没有产生并发的话,那么并行网关将忽略不记。
+        </para>
+        
+        <para>
+          <emphasis>注意: </emphasis> 所有非网关的FlowNode节点,后面都默认实现了包容网关的功能,FixFlow允许开发人员不使用网关来控制顺序流走向,但这样做是不推荐的,除非万不得已。
+        </para>
+        <para>
+          下面这样做法FixFLow引擎是支持的,但是不推荐这么用。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.InclusiveGateway.designer">
+        
+        <title>设计器配置</title>
+        <para> 
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.designer.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+      </section>
     </section>
     
-    <section xml:id="bpmn.ComplexGateway">
-      <title>Complex Gateway</title>
-      <para>
-        
-      </para>
-    </section>
 
   </section>
   
   
   <section xml:id="bpmn.Tasks">
     <title>Tasks</title>
+    <para>任务是一个流程里面最基本的活动，一个任务在使用的过程中不能再被拆分到更细的水平去执行。一般情况下，任务是被最终用户或应用程序执行的。</para>
     <para>
       
+      <emphasis role="bold">BPMN2.0 Task类型元素图:</emphasis>
+      <mediaobject ><imageobject>
+        <imagedata  align="center" fileref="images/bpmn.Tasks.1.png"/>
+      </imageobject></mediaobject>
     </para>
     
     <section xml:id="bpmn.UserTask">
       <title>User Task</title>
-      <para>
+      
+      <section xml:id="bpmn.UserTask.Description">
+        <title>描述</title>
+        <para>
+          人工任务(UserTask)是用于模拟人工工作的，通常是需要被人来操作完成的。当执行到一个人工任务时，这个任务列表中的用户或者组都会被分配到此任务。 
+        </para>
+      </section>
+      <section xml:id="bpmn.UserTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          一个人工任务是图形为一个圆角矩形,有一个小的用户图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.UserTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" name="人工任务"/>]]></programlisting>
+        </para>
+       
+      </section>
+      
+      
+      <section xml:id="bpmn.UserTask.assignment">
+        <title>任务分配</title>
+        
+        <para>
+          人工任务需要指派给一个用户或者是一个组(部门、角色),任务类型也被分为两大种:独占、共享，
+          独占的任务直接指派给一个用户,共享的任务可以指定给多个用户、部门、角色等,共享任务默认需要先领取才能处理。
+        </para>
+        
+        <para>
+          BPMN2.0 标准中定义的UserTask节点的功能过于简单,没有办法描述复杂人工任务,所以FixFlow引擎对UserTask节点做了很多的扩展。
+        </para>
+        
+        <para>
+          下面这段XML表示,UserTask_1这个人工节点的任务处理者为"所有人",任务的分配策略为共享方式。
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" name="User Task 1">
+  <bpmn2:extensionElements>
+    <fixflow:assignPolicyType id="potentialOwner"/>
+  </bpmn2:extensionElements>
+  <bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+    <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
+      <bpmn2:formalExpression id="所有人">"quot;fixflow_allusers"</bpmn2:formalExpression>
+    </bpmn2:resourceAssignmentExpression>
+  </bpmn2:potentialOwner>
+</bpmn2:userTask>]]></programlisting>
+        </para>
+        
+        <para> 
+          对应的设计器图形表示:
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.assignment.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        
+        <para>
+          分配策略(assignPolicyType):
+        </para>
+        <para>
+          分配策略用来决定任务将以什么形式被分配或是怎么分配,而完成人选择,则决定了任务将分配给谁。
+          FixFlow自带了一些分配策略,开发人员还可以自己扩展出自己的分配策略,分配策略的XML配置在FixFlowConfig.xml中,详见 <link linkend="config.assignPolicyConfig">分配策略</link>
+          <programlisting language="xml"><![CDATA[
+<assignPolicy id="potentialOwner" name="共享   (默认策略)" 
+  classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerAssignmentImpl" 
+  remarks="系统默认策略,需要接收任务才能处理,不能删除。"/>
+<assignPolicy id="humanPerformer" name="独占   (默认策略)" 
+  classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerAssignmentImpl" 
+  remarks="系统默认策略,只能分配给一个处理者,不能删除。"/>
+<assignPolicy id="potentialOwner_One" name="共享   (当只有一人时采用独占策略)" 
+  classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerOneAssignmentImpl" 
+  remarks="当任务的处理者只有一个人的时候自动使用独占策略,多人的时候使用共享策略。"/>]]></programlisting>
+          
+        </para>
+        
+        <para>
+          任务处理者:
+        </para>
+        <para>
+          <emphasis role="bold">resourceType</emphasis>:分配资源的类型(用户、部门、角色 或者任意的组) 。
+        </para>
+        <para>
+          <emphasis role="bold">includeExclusion</emphasis>:是包含这个资源还是排除它。 注意:这个功能存在一个已知bug,不推荐使用。
+        </para>
+        <para>
+          <emphasis role="bold">isContainsSub</emphasis>:是否包含子集,在有上下级关系的组里才会起作用。
+        </para>
+        <para>
+          <emphasis role="bold">resourceAssignmentExpression-formalExpression</emphasis>:人员或者组信息的表达式,
+          可以是"人员编号"、也可以 return "人员编号"、或者 "人员1,人员2,人员3"、或者是个 List(String) 、也可以直接在这里调用java代码返回人员信息。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.assignment.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+        <para>
+          例如:
+        </para>
+        <para>
+          <programlisting language="java"><![CDATA["admin"]]></programlisting>
+          <programlisting language="java"><![CDATA[return "admin";]]></programlisting>
+          <programlisting language="java"><![CDATA["admin,kenshin,char"]]></programlisting>
+          可以调用任意的java代码,只要保证返回值的格式正确性,流程引擎就能接收。注意：对于java代码请注意导入import。
+          <programlisting language="java"><![CDATA[import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.identity.GroupTo;
+
+groupTos=Context.getProcessEngineConfiguration().getUserDefinition().getUserInGroups("用户编号");
+for (GroupTo groupTo : groupTos) {
+	//默认取出用户的第一个所在部门
+	if(groupTo.getGroupType().equals("org")){
+		return processInfo.findUserDeptAndRole(groupTo.getGroupId(),"角色编号");;
+	}
+}
+return null;]]></programlisting>
+          
+        </para>
+      
+      </section>
+      
+      
+      <section xml:id="bpmn.UserTask.commonConfig">
+        <title>常规配置</title>
+        <para>
+          <emphasis role="bold">编号(id)</emphasis>:
+          一个bpmn文件中的任意一个元素都拥有不同的编号,通过这个编号可以定位到唯一的一个节点。
+        </para>
+        <para>
+          <emphasis role="bold">名称(name)</emphasis>:
+          用来在节点上显示的名称。
+        </para>
+        <para>
+          <emphasis role="bold">操作表单(formUri)</emphasis>:
+          用来进行任务处理的表单地址,可以从数据变量中的表单变量中选择,也可以返回一段字符串地址"add.html"。
+        </para>
+        <para>
+          <emphasis role="bold">浏览表单(formUriView)</emphasis>:
+          用来在查看已经处理完毕的任务的表单。
+        </para>
+        <para>
+          <emphasis role="bold">优先级(taskPriority)</emphasis>:
+          用来标识任务的紧急程度,接收的是int类型。
+        </para>
+        <para>  
+          <emphasis role="bold">XML定义</emphasis>:
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="人工任务">
+  <bpmn2:extensionElements>
+    <fixflow:formUri>
+      <fixflow:expression xsi:type="fixflow:Expression" >"add.html"</fixflow:expression>
+    </fixflow:formUri>
+    <fixflow:formUriView>
+      <fixflow:expression xsi:type="fixflow:Expression" >"view.html"</fixflow:expression>
+    </fixflow:formUriView>
+    <fixflow:taskPriority>
+      <fixflow:expression xsi:type="fixflow:Expression" >50</fixflow:expression>
+    </fixflow:taskPriority>
+  </bpmn2:extensionElements>
+</bpmn2:userTask>]]></programlisting>
+          
+        </para>
+        
+        <para>  
+          <emphasis role="bold">Java代码</emphasis>:有了表单地址和BizKey我们就可以打开相应的表单。
+          <programlisting language="java"><![CDATA[//创建任务查询
+TaskQuery taskQuery = taskService.createTaskQuery();
+//查询用户的任务,取第一个任务。
+TaskInstance taskInstance=taskQuery.taskAssignee("").list().get(0);
+//任务编号
+taskInstance.getId();
+//任务标题
+taskInstance.getDescription();
+//操作表单
+taskInstance.getFormUri();
+//浏览表单
+taskInstance.getFormUriView();
+//任务所在节点编号
+taskInstance.getNodeId();
+//任务所在节点名称
+taskInstance.getNodeName();
+//流程业务关联值
+taskInstance.getBizKey();
+//优先级
+taskInstance.getPriority();]]></programlisting>
+          
+        </para>
+      </section>
+      
+      
     </section>
     
+   
     <section xml:id="bpmn.ScriptTask">
       <title>Script Task</title>
       <para>
@@ -631,33 +1155,432 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     <section xml:id="bpmn.ExtensionElements.connector">
       <title>连接器</title>
       <para>
-        
+        连接器的使用主要在于封装一些在流程中常用操作，用可视化界面代替原有静态方法，并提供在流程各种事件中扩展。本例以发送短信为例子介绍连接器的使用。
       </para>
-      
+      <para>按照项目经验，这部分工作会分为“封装”连接器和“调用”连接器。</para>
+      <section xml:id="bpmn.ExtensionElements.connector.create">
+        <title>创建连接器</title>
+        <orderedlist>
+          <listitem>
+            <para>打开设计器，点击流程设置->创建连接器</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.1.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>填写连接器ID，名称，描述等信息，分类可选择新建或者原有分类。</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.2.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>发送短信需要配置收件人号码和信息内容，所以创建一个页面，填写页面ID，标题，描述等，并创建两个参数：收件人号码和信息内容。</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.3.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>配置输出参数，这里可以将发送短信之后的结果返回给FixFlow在流程中使用,当然，实际使用中我们可能会返回更复杂的数据结构，如List、Map等，如：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.6.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>点击确定->完成，连接器创建成功，下面需要写发送短信的业务逻辑，设计器已经为我们创建好了相关的java类和xml配置文件（flow-expand\src\com\founder\fix\fixflow\expand\connector\TestSendMessage包下）。</para>
+          </listitem>
+          <listitem>
+            <para>实现发送短信的具体逻辑</para>
+            <para>查看生成的java代码，其中receiveId和messageInfo是我们刚才创建的变量ID，execute方法是最终执行的方法，这里的业务逻辑可能要调用第三方的短信猫接口，需要自己去补充。
+              我们这里仅仅做简单的输出，表明我们拿到了相关的参数，可以进行复杂的业务计算等：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.5.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>到这里我们的“封装”的工具就完成了。</para>
+          </listitem>
+        </orderedlist>
+        <para>连接器定义的源文件介绍：</para>
+        <para>FixFlow的连接器定义文件在fixflow-expand\src\com\founder\fix\fixflow\expand\connector包下，其中FixConnectorMenu.xml是连接器的总览文件
+          一个包代表一个连接器的定义，其中包括**.java和FixConnector.xml两个文件。
+        </para>
+        <para>FixConnectorMenu.xml中一个连接的定义如下：</para>
+        <programlisting>&lt;node id="64159507-476c-483c-ad29-9918465afbab" name="TestFixFlow">
+    &lt;menuConnector id="TestSendMessage" name="发送短信" note="发送短信连接器"/>
+ &lt;/node></programlisting>
+        <itemizedlist>
+          <listitem><para>node：表示一个连接器分类</para></listitem>
+          <listitem>
+            <para>id：表示分类的唯一编号，自动生成的</para>
+          </listitem>
+          <listitem>
+            <para>name：分类的名称</para>
+          </listitem>
+          <listitem>
+            <para>ico：分类在设计器中的图标</para>
+          </listitem>
+          <listitem>
+            <para>menuConnector：连接器的定义</para>
+            <itemizedlist>
+              <listitem><para>id：连接器的唯一编号，自己定义，并且相同目录下必须有这个同名包，包下有同名的java文件。</para></listitem>
+              <listitem><para>name：连接器的名称。</para></listitem>
+              <listitem><para>note：连接器的说明。</para></listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+        <para>同名包下的FixConnector.xml文件的定义如下：</para>
+        <programlisting>
+&lt;connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="TestSendMessage" className="TestSendMessage" packageName="com.founder.fix.fixflow.expand.connector.TestSendMessage" connectorName="发送短信" connectorNote="发送短信连接器" category="TestFixFlow">
+  &lt;outputs>
+    &lt;outputParameter id="result" name="发送是否成功" dataType="java.lang.String"/>
+  &lt;/outputs>
+  &lt;Pages>
+    &lt;page pageId="messageConfig" pageTitle="信息配置" pageNote="信息配置">
+      &lt;inputParameter id="receiveId" name="收件人号码" dataType="java.lang.String" controlType="text"/>
+      &lt;inputParameter id="messageInfo" name="短信内容" dataType="java.lang.String" controlType="text"/>
+    &lt;/page>
+  &lt;/Pages>
+&lt;/connector:Connector>      
+        </programlisting>
+        <para>主要属性说明</para>
+        <itemizedlist>
+          <listitem>
+            <para>connector：连接器的声明，类名，包名等信息</para>
+          </listitem>
+          <listitem>
+            <para>outputs：输出参数</para>
+          </listitem>
+          <listitem>
+            <para>Pages：页面数，流程中使用此连接器时需要配置几个界面。<itemizedlist>
+              <listitem>
+                <para>page：页面定义</para>
+              </listitem>
+              <listitem>
+                <para>inputParameter：页面上的输入参数，与Java文件中的一一对应。</para>
+              </listitem>
+            </itemizedlist></para>
+          </listitem>
+        </itemizedlist>
+        <para>对应的java文件代码如下：</para>
+        <programlisting language="java">
+package com.founder.fix.fixflow.expand.connector.TestSendMessage;
+
+
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.action.ConnectorHandler;
+
+public class TestSendMessage implements ConnectorHandler {
+
+	private java.lang.String receiveId;
+
+	private java.lang.String messageInfo;
+
+	public void execute(ExecutionContext executionContext) throws Exception {
+		System.out.println("收件人号码为："+receiveId);
+		System.out.println("短信内容为："+messageInfo);
+	}
+
+	public void  setReceiveId(java.lang.String receiveId){
+		this.receiveId = receiveId;
+	}
+
+	public void  setMessageInfo(java.lang.String messageInfo){
+		this.messageInfo = messageInfo;
+	}
+
+	public java.lang.String  getResult(){
+		return "true" ;
+	}
+
+}          
+        </programlisting>
+        <para>主要代码说明</para>
+        <itemizedlist>
+          <listitem>
+            <para>receiveId：和messageInfo一样，是连接器定义XML文件中定义的输入参数，并且要有setReceiveId()方法</para>
+          </listitem>
+          <listitem>
+            <para>getResult()：定义文件中有出参result，所以此处会有getResult()方法，返回给流程使用</para>
+          </listitem>
+          <listitem>
+            <para>execute()：具体逻辑的实现方法。</para>
+          </listitem>
+        </itemizedlist>
+        <para><emphasis>注意：</emphasis>get方法和set方法是由FixFlow流程引擎调用，用户只需要实现execute()中的相关逻辑即可。</para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.connector.use">
+        <title>使用连接器</title>
+        <para>连接器作用在不同的地方有不同的触发事件，作用在流程上时有启动触发，终止触发，结束触发；作用在节点上时有进入时触发，分配任务时触发，离开时触发。</para>
+        <orderedlist>
+          <listitem> 
+            <para>打开设计器，打开一个简单流程，打开Properties属性页，点击流程空白处，在属性页中选择连接器，如图：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.1.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>点击添加->选择TestFixFlow分类下TestSendMessage连接器，如图：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.2.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem>
+            <para>填写基本信息</para>
+            <itemizedlist>
+              <listitem><para>名称、描述用来描述这个连接器的作用。</para></listitem>
+              <listitem><para>跳过策略，通过条件来设置次连接器的跳过策略。详细跳过策略介绍可参考<link linkend="bpmn.ExtensionElements.skip">跳过策略</link></para></listitem>
+              <listitem>
+                <para>定时器可以让我们方便的设置延迟，循环执行次功能</para>
+                <para>当勾选了定时器配置中的 启用定时器之后 便可以在时间表达式中去指定 Trigger（触发器）。
+                  对于时间表达式我们使用的是Quartz定时任务框架所带的功能。
+                </para>
+                <para>
+                  这里我们说明一下：我们的时间表达式配置里边,可以指定一个Trigger，
+                  也可以指定多个Trigger,可以指定在指定时间触发的Trigger，
+                  也可以指定复杂的间歇性Trigger。如：
+                </para>
+                <programlisting language="java">import org.quartz.Trigger;
+import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
+
+cal = Calendar.getInstance();
+cal.add(Calendar.MINUTE, +1);
+trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());
+trigger2=QuartzUtil.createCronTrigger(processInfo, "0 0 12 * * ?");
+
+List&lt;Trigger> triggers=new ArrayList&lt;Trigger>();
+triggers.add(trigger1);
+triggers.add(trigger2);
+return triggers;          
+                </programlisting>
+              </listitem>
+              <listitem>
+                <para>连接器如果失效时，可以选择忽略或者抛出异常等。</para>
+              </listitem>
+            </itemizedlist>
+            <para>这里我们只设置简单的当流程启动时给指定人员发送短信，点击下一步，如：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.3.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+          <listitem><para>填写我们创建的两个参数：收件人号码和短信内容，点击下一步：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.4.png"/>
+            </imageobject></mediaobject>
+            <para>当然我们这里的号码和短信内容和FixFlow流程中的其他配置一样，都可以写复杂的java代码的。</para>
+          </listitem>
+          <listitem>
+            <para>配置输出参数，左边的result是我们创建连接器时的输出参数，右边是次流程定义的变量。</para>
+          </listitem>
+          <listitem>
+            <para>点击完成，保存，发布流程。</para>
+          </listitem>
+          <listitem>
+            <para>启动tomcat，访问bpmcenter，启动此流程，查看控制台输出：</para>
+            <mediaobject ><imageobject>
+              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.5.png"/>
+            </imageobject></mediaobject>
+          </listitem>
+        </orderedlist>
+        <para>配置在流程中的连接器XML文件表示如图：</para>
+        <programlisting language="xml">&lt;fixflow:connectorInstance connectorId="TestSendMessage" packageName="com.founder.fix.fixflow.expand.connector.TestSendMessage" className="TestSendMessage" connectorInstanceId="2c2ee38b-785e-4f52-9112-8710980124ad" connectorInstanceName="发送短信" eventType="node-enter" errorHandling="抛出异常" errorCode="" isTimeExecute="true">
+          &lt;documentation xsi:type="fixflow:Documentation">流程启动时给管理员发送短信&lt;/documentation>
+          &lt;fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="receiveId" name="收件人号码" dataType="java.lang.String">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;13022222222&amp;quot;">&amp;quot;13022222222&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:connectorParameterInputs>
+          &lt;fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="messageInfo" name="短信内容" dataType="java.lang.String">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;流程启动发送短信&amp;quot;">&amp;quot;流程启动发送短信&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:connectorParameterInputs>
+          &lt;fixflow:connectorParameterOutputs xsi:type="fixflow:ConnectorParameterOutputs" variableTarget="${amount}">
+            &lt;fixflow:expression xsi:type="fixflow:Expression">result&lt;/fixflow:expression>
+          &lt;/fixflow:connectorParameterOutputs>
+          &lt;fixflow:connectorParameterOutputsDef xsi:type="fixflow:ConnectorParameterOutputsDef" id="result" name="发送是否成功" dataType="java.lang.String"/>
+          &lt;fixflow:skipComment xsi:type="fixflow:SkipComment">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="returnfalse;">return false;&lt;/fixflow:expression>
+          &lt;/fixflow:skipComment>
+          &lt;fixflow:timeExpression xsi:type="fixflow:timeExpression">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="importorg.quartz.Trigger;&amp;#xD;&amp;#xA;importcom.founder.fix.fixflow.core.impl.util.QuartzUtil;&amp;#xD;&amp;#xA;&amp;#xD;&amp;#xA;cal=Calendar.getInstance();&amp;#xD;&amp;#xA;cal.add(Calendar.MINUTE,+1);&amp;#xD;&amp;#xA;trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());&amp;#xD;&amp;#xA;trigger2=QuartzUtil.createCronTrigger(processInfo,&amp;quot;0012**?&amp;quot;);&amp;#xD;&amp;#xA;&amp;#xD;&amp;#xA;List&amp;lt;Trigger>triggers=newArrayList&amp;lt;Trigger>();&amp;#xD;&amp;#xA;triggers.add(trigger1);&amp;#xD;&amp;#xA;triggers.add(trigger2);&amp;#xD;&amp;#xA;returntriggers;">import org.quartz.Trigger;&amp;#xD;
+import com.founder.fix.fixflow.core.impl.util.QuartzUtil;&amp;#xD;
+&amp;#xD;
+cal = Calendar.getInstance();&amp;#xD;
+cal.add(Calendar.MINUTE, +1);&amp;#xD;
+trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());&amp;#xD;
+trigger2=QuartzUtil.createCronTrigger(processInfo, &amp;quot;0 0 12 * * ?&amp;quot;);&amp;#xD;
+&amp;#xD;
+List&amp;lt;Trigger> triggers=new ArrayList&amp;lt;Trigger>();&amp;#xD;
+triggers.add(trigger1);&amp;#xD;
+triggers.add(trigger2);&amp;#xD;
+return triggers;&lt;/fixflow:expression>
+          &lt;/fixflow:timeExpression>
+          &lt;fixflow:timeSkipExpression xsi:type="fixflow:timeSkipExpression">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="returnfalse;">return false;&lt;/fixflow:expression>
+          &lt;/fixflow:timeSkipExpression>
+        &lt;/fixflow:connectorInstance>          
+        </programlisting>
+        <para>主要节点和属性说明</para>
+        <itemizedlist>
+          <listitem>
+            <para>fixflow:connectorInstance：连接器实例<itemizedlist>
+              <listitem>
+                <para>connectorId：连接器定义编号</para>
+              </listitem>
+              <listitem>
+                <para>eventType：作用时机：节点进入、节点离开、任务分配、流程启动、流程结束等</para>
+              </listitem>
+              <listitem>
+                <para>isTimeExecute：是否启动定时器</para>
+              </listitem>
+              <listitem>
+                <para>errorHandling：错误机制：抛出异常、忽略错误并继续流程、抛出错误事件。</para>
+              </listitem>
+            </itemizedlist></para>
+          </listitem>
+          <listitem>
+            <para>documentation：连接器描述</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:connectorParameterInputs：连接器输入参数</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:connectorParameterOutputs：连接器输出参数<itemizedlist>
+              <listitem>
+                <para>variableTarget：输出变量对应的目标变量</para>
+              </listitem>
+            </itemizedlist></para>
+          </listitem>
+          <listitem>
+            <para>fixflow:skipComment：跳过策略</para>
+          </listitem>
+          <listitem>
+            <para>timeExpression：启动定时器时的时间表达式</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:timeSkipExpression：时间表达式的跳过策略</para>
+          </listitem>
+          <listitem>
+            <para>fixflow:expression：groovy代码或表达式。</para>
+          </listitem>
+        </itemizedlist>
+        <para>至此，连接器的使用基本就结束了，需要注意的是当连接器作用在不同的地方时，其可选择的触发事件是不一样的。FixFlow为了方便用户，已经将
+        项目中常用的连接器封装好了，比如：发送短信，发送邮件，超时自动处理，webService等。</para>
+        
+        <para>下面介绍两个最常用的连接器：</para>
+        <orderedlist>
+          <listitem>
+            <para>超时处理，超时处理。</para>
+          </listitem>
+          <listitem>
+            <para>自动发送邮件。这个经常使用在当流程到达某个节点时，自动给相关处理者发送一封提醒邮件</para>
+          </listitem>
+        </orderedlist>
+        
+      </section>
     </section>
     
     <section xml:id="bpmn.ExtensionElements.dataVariable">
       <title>数据变量</title>
-      <para>
-        
-      </para>
+      <section xml:id="bpmn.ExtensionElements.dataVariable.description">
+        <title>描述</title>
+        <para>数据变量是在流程运转中可以由用户控制的，可以在流程各个表达式中使用的变量定义。</para>
+        <para>它分为瞬态变量和持久化变量，瞬态变量的生命周期为命令提交到令牌进入下一个节点清空数据之前。持久化变量是在使用此变量后，流程引擎会将数据持久化到数据库，在以后的各个节点状态均可直接使用。</para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.dataVariable.designer">
+        <title>设计器定义如图</title>
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.dataVariable.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.dataVariable.xmlCode">
+        <title>XML描述</title>
+        <programlisting language="xml">
+&lt;fixflow:DataVariable id="amount" dataType="int" isPersistence="true" bizType="customVariable">
+        &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;4000&amp;quot;">&amp;quot;4000&amp;quot;&lt;/fixflow:expression>
+        &lt;fixflow:documentation xsi:type="fixflow:Documentation">&lt;/fixflow:documentation>
+&lt;/fixflow:DataVariable>          
+        </programlisting>
+        <itemizedlist>
+          <listitem><para>dataType：变量数据类型。</para></listitem>
+          <listitem><para>isPersistence：是否持久化。</para></listitem>
+          <listitem><para>bizType：变量业务类型，用户自己划分。</para></listitem>
+          <listitem><para>fixflow:expression：命令表达式，这里代表默认值。</para></listitem>
+          <listitem><para>fixflow:documentation：描述。</para></listitem>
+        </itemizedlist>
+      </section>
       
     </section>
     
     <section xml:id="bpmn.ExtensionElements.skip">
       <title>跳过策略</title>
-      <para>
-        
-      </para>
+      <section xml:id="bpmn.ExtensionElements.skip.description">
+        <title>描述</title>
+        <para>跳过策略一般作用于节点上，来指定在特殊状态下次节点直接跳过</para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.skip.designer">
+        <title>设计器定义如图</title>
+        <para>
+          选中节点，点击properties属性框，选择跳过策略。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.skip.designer.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.skip.xmlCode">
+        <title>XML描述</title>
+        <programlisting language="xml">&lt;fixflow:skipStrategy fixflow:isEnable="true">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="if(${amount}>4000){&amp;#xD;&amp;#xA;&amp;#x9;returntrue;&amp;#xD;&amp;#xA;}else{&amp;#xD;&amp;#xA;&amp;#x9;returnfalse;&amp;#xD;&amp;#xA;}">if(${amount}>4000){&amp;#xD;
+	          return true;&amp;#xD;
+              }else{&amp;#xD;
+	          return false;&amp;#xD;
+          }&lt;/fixflow:expression>
+          &lt;fixflow:skipAssignee xsi:type="fixflow:SkipAssignee">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;1200119390&amp;quot;">&amp;quot;1200119390&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:skipAssignee>
+          &lt;fixflow:skipComment xsi:type="fixflow:SkipComment">
+            &lt;fixflow:expression xsi:type="fixflow:Expression" name="&amp;quot;金额太小就不用我审批了。&amp;quot;">&amp;quot;金额太小就不用我审批了。&amp;quot;&lt;/fixflow:expression>
+          &lt;/fixflow:skipComment>
+&lt;/fixflow:skipStrategy>
+        </programlisting>
+      </section>
       
     </section>
     
     <section xml:id="bpmn.ExtensionElements.form">
       <title>任务表单</title>
-      <para>
-        
-      </para>
-      
+      <section xml:id="bpmn.ExtensionElements.form.description">
+        <title>描述</title>
+        <para> 任务表单分为三种。 <orderedlist>
+            <listitem>
+              <para>默认表单：在流程定义上设置，流程默认会使用的表单，优先级低。</para>
+            </listitem>
+            <listitem>
+              <para>浏览表单：流程到达某节点后，非当前处理者的有权限用户点击查看时的浏览表单。</para>
+            </listitem>
+            <listitem>
+              <para>操作表单：流程到达某节点后，当前处理者点击处理时的表单。</para>
+            </listitem>
+          </orderedlist></para>
+      </section>
+     
+      <section xml:id="bpmn.ExtensionElements.form.designer">
+        <title>设计器配置</title>
+        <para>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.form.designer.1.png"/>
+          </imageobject></mediaobject>
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.form.designer.2.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      <section xml:id="bpmn.ExtensionElements.form.xmlCode">
+        <title>XML描述</title>
+        <programlisting language="xml">
+&lt;fixflow:formUri>
+    &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&amp;quot;DemoServlet?action=startOneTask&amp;quot;">&amp;quot;DemoServlet?action=startOneTask&amp;quot;&lt;/fixflow:expression>
+&lt;/fixflow:formUri>     
+        </programlisting>
+      </section>
     </section>
     
     <section xml:id="bpmn.ExtensionElements.taskTopic">
@@ -669,7 +1592,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     </section>
     
     <section xml:id="bpmn.ExtensionElements.taskCommand">
-      <title>处理命令</title>
+      <title>任务命令</title>
       <para>
         
       </para>

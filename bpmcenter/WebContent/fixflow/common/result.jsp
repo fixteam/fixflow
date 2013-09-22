@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人信息</title>
-<jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <script type="text/javascript">
 	function closeThisPage() {
@@ -18,6 +17,8 @@
 	<div class="head-info">
         <div class="name">
         	<h1>操作完成</h1>
+			
+        	<h1><c:if test="${errorMsg!=null}">但是发生了错误：${errorMsg}</c:if></h1>
             <h5><a href="#" onclick="closeThisPage()">关闭</a></h5>
         </div>
     </div>

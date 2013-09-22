@@ -19,10 +19,8 @@ package com.founder.fix.fixflow.shell;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
-import com.founder.fix.fixflow.core.query.Query;
 
 /**
  * @ClassName: CommonServiceImpl
@@ -32,21 +30,55 @@ import com.founder.fix.fixflow.core.query.Query;
  */
 public abstract class CommonServiceImpl {
 	
-	protected Connection connection;
+	protected Connection connection=null;
+	
+	protected ProcessEngine processEngine=null;
 	
 	protected ProcessEngine getProcessEngine(Object userId) throws SQLException{
-		if(connection!=null){
-			return FixFlowShellProxy.createProcessEngine(userId,connection);
-		}else{
-			return FixFlowShellProxy.createProcessEngine(userId);
+		ProcessEngine result = null;
+		if(processEngine==null){
+			if(connection!=null){
+				processEngine = FixFlowShellProxy.createProcessEngine(userId,connection);
+			}else{
+				processEngine = FixFlowShellProxy.createProcessEngine(userId);
+			}
 		}
+		
+		result = processEngine;
+		return result;
 	}
 	
 	protected ProcessEngine getTransactionProcessEngine(Object userId) throws SQLException{
-		if(connection!=null){
-			return FixFlowShellProxy.createProcessEngine(userId,connection);
-		}else{
-			return FixFlowShellProxy.createProcessEngine(userId,true);
+		ProcessEngine result = null;
+		if(processEngine==null){
+			if(connection!=null){
+				processEngine = FixFlowShellProxy.createProcessEngine(userId,connection);
+			}else{
+				processEngine = FixFlowShellProxy.createProcessEngine(userId,true);
+			}
+		}
+		
+		result = processEngine;
+		return result;
+	}
+	
+	
+	protected void closeProcessEngine(){
+		if(processEngine!=null){
+			boolean closeConnection = true;
+			if(connection!=null)
+				closeConnection = false;
+			FixFlowShellProxy.closeProcessEngine(processEngine,closeConnection);
 		}
 	}
+	
+	
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+	
 }

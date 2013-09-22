@@ -1254,14 +1254,19 @@ public class TaskServiceTest extends AbstractFixFlowTestCase {
 		taskEnd = taskQuery.listPage(1, 9);
 		//验证取到9条任务
 		assertEquals(9, taskEnd.size());
-		//获取流程追踪 
-		//创建一个流程实例查询
-		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
-		//查询这个流程定义的1200119390参与过的流程（流程追踪）
-		List<ProcessInstance> processInstances = processInstanceQuery.taskParticipants("1200119390").processDefinitionKey("Process_TaskServiceTest").list();
-		//验证是否为50
-		assertEquals(50, processInstances.size());
+		//重置任务查询
+		taskQuery = taskService.createTaskQuery();
+		//获取流程定义名称等于TaskServiceTest的任务实例
+		long count = taskQuery.processDefinitionName("TaskServiceTest").count();
+		//验证是否为150个
+		assertEquals(150, count);
 		
+		//重置任务查询
+		taskQuery = taskService.createTaskQuery();
+		//获取流程定义名称likeTaskServiceTest的人物实例
+		count = taskQuery.processDefinitionNameLike("TaskServiceTest").count();
+		//验证是否为150个
+		assertEquals(150, count);
 		
 	}
 	

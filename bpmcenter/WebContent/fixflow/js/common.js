@@ -20,16 +20,17 @@ Fix = {
 				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
 				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
 			}else if(selectedRow==1){
-				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
-				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
-				$("div[data-scope=single]").removeClass("btn-disable").addClass("btn-normal");
+				$("div[data-scope]").removeClass("btn-disable").addClass("btn-normal");
+				//$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
+				//$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
+				//$("div[data-scope=single]").removeClass("btn-disable").addClass("btn-normal");
 			}else{
 				$("div[data-scope]").addClass("btn-disable").removeClass("btn-normal");
 				$("div[data-scope=all]").removeClass("btn-disable").addClass("btn-normal");
 				$("div[data-scope=multi]").removeClass("btn-disable").addClass("btn-normal");
 			}
 		},
-		ClickTr:function($table,isMulti,hasBox,boxPosition){
+		ClickTr:function($table,isMulti,hasBox,boxPosition,fn){
 			if(!$table)$table = $("table.fix-table");
 			if(!isMulti)isMulti = false;
 			if(!hasBox)hasBox = false;
@@ -52,6 +53,9 @@ Fix = {
 						}
 						$(this).parents("tr").trigger("boxClick");
 						Fix.Util.CheckBtnStatus();
+						if(typeof fn == "function"){
+							fn($table);
+						}
 					});
 				});
 			}
@@ -60,7 +64,7 @@ Fix = {
 					$("tbody tr",$table).removeClass("selected");
 					$(this).addClass("selected");
 					if(hasBox){
-						$("td:eq("+boxPosition+") input",$(this)).click();
+						$("td:eq("+boxPosition+") input",$(this)).trigger("trClick");
 					}
 				}else{
 					if($(this).hasClass("selected")){
@@ -73,6 +77,9 @@ Fix = {
 					}
 				}
 				Fix.Util.CheckBtnStatus();
+				if(typeof fn == "function"){
+					fn($table);
+				}
 			}).bind("boxClick",function(){
 				var isChecked = $("td:eq("+boxPosition+") input",$(this)).attr("checked");
 				if(isChecked){
@@ -84,10 +91,11 @@ Fix = {
 		}
 	},
 	OpenMethod:{
-		openWindow:function(url, width, height){
+		openWindow:function(url, width, height, winName){
 			var _width = width || 800;
 			var _height = height || 600;
-			window.showModalDialog(url,{},"dialogWidth="+_width+"px;dialogHeight="+_height+"px");
+			var wn = winName || "nw";
+			window.open(url,wn);
 		}
 		
 	}	
@@ -101,14 +109,18 @@ $(function(){
 	Fix.Util.CheckBtnStatus();
 });
 
-function imgNotFound(url){ 
-    var img=event.srcElement; 
-    img.src= url+"/fixflow/images/temp/user-m.png";  
-    img.onerror=null;
+function checkButton(id){
+	return $("#"+id).hasClass("btn-disable");
+}
+
+function imgNotFound(url,that){ 
+    var img=$(that); 
+    img.attr("src",url+"/fixflow/images/temp/user-m.png");  
+    img.unbind("error");
 } 
 
-function miniImgNotFound(url){ 
-    var img=event.srcElement; 
-    img.src= url+"/fixflow/images/temp/user01.jpg";  
-    img.onerror=null;
+function miniImgNotFound(url,that){ 
+    var img=$(that); 
+    img.attr("src", url+"/fixflow/images/temp/user01.jpg");  
+    img.unbind("error");
 } 

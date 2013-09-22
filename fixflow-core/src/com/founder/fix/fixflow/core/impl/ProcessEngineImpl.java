@@ -349,6 +349,7 @@ public class ProcessEngineImpl implements ProcessEngine {
 			Context.removeAbstractScriptLanguageMgmt();
 			Context.removeLanguageType();
 			Context.removeQuartzTransactionAutoThreadLocal();
+			Context.removeConnectionManagement();
 
 		}
 

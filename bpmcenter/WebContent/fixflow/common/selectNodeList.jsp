@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>节点选择</title>
+<base target="_self" /> 
 <jsp:include page="../center/head.jsp" flush="true"/>
 </head>
 <body>
 <div style="padding:8px;">
 <div id="search" class="search">
-	<td><div class="btn-normal"><a href="#" id="ok">确定<em class="arrow-small"></em></a></div></td>
+	<td><div class="btn-normal"><a href="#" id="ok">确定</a></div></td>
 </div>
 <div class="content">
 	<table id="dataList" width="100%" class="fix-table">
@@ -32,6 +33,7 @@
 </body>
 <script>
 $(function(){
+	var obj = window.dialogArguments;
 	$("table#dataList tr").click(function(){
 		$("table#dataList tr.selected").removeClass("selected");
 		$(this).addClass("selected");
@@ -53,9 +55,27 @@ $(function(){
 			eval("var j = " + r)
 			rv[index] = j;
 		});
-		window.opener.rv = rv;
+		if(window.opener){
+		  window.opener.rv = rv;
+		}else if(obj.opener){
+		  obj.opener.rv = rv;
+		}else{
+		  obj.fn(obj.params,rv);
+		}
 		window.close();
 	});
+	var color = window.localStorage.getItem("color");
+	if(color){
+		var url = $("#color").attr("href");
+		url=url.substring(0,url.lastIndexOf("_")+1);
+		url+=color+".css";
+		$("#color").attr("href",url);
+	}else{
+		var url = $("#color").attr("href");
+		url=url.substring(0,url.lastIndexOf("_")+1);
+		url+="red.css";
+		$("#color").attr("href",url);
+	}
 })
 </script>
 </html>

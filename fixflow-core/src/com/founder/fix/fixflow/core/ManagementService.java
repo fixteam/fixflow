@@ -1,3 +1,20 @@
+/**
+ * Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.core;
 
 import java.util.Map;
@@ -53,7 +70,7 @@ public interface ManagementService extends ProcessService{
 
 
 	/**
-	 * 退回任务
+	 * 退回节点
 	 * @param taskId 操作的任务号
 	 * @param rollBackNodeId 退回的节点号
 	 * @param taskComment 处理意见
@@ -61,7 +78,14 @@ public interface ManagementService extends ProcessService{
 	 */
 	void rollBack(String taskId,String rollBackNodeId,String taskComment,Map<String, Object> transientVariables);
 	
-	
+	/**
+	 * 退回任务
+	 * @param taskId 操作的任务号
+	 * @param rollBackTaskId 退回的任务号
+	 * @param taskComment 处理意见
+	 * @param transientVariables 瞬态变量
+	 */
+	void rollBackByTaskId(String taskId,String rollBackTaskId,String taskComment,Map<String, Object> transientVariables);
 
 	
 	/**

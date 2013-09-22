@@ -31,6 +31,11 @@ public enum ProcessInstanceType {
 	RUNNING,
 	
 	/**
+	 * 暂停
+	 */
+	SUSPEND,
+	
+	/**
 	 * 正常结束
 	 */
 	COMPLETE,

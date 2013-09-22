@@ -8,53 +8,267 @@
   <section xml:id="tenmt.prerequisites">
     <title>先决条件</title>
     <para>
-      
+      阅读本章节之前，请确保你已经完成了<link linkend="GettingStarted">快速入门</link>和<link linkend="EclipseDesigner">Eclipse Designer</link>的安装。
     </para>
   </section>
   
-  
   <section xml:id="tenmt.goal">
     <title>目标</title>
-    <para>
-      
-    </para>
+    <para> 本章将通过一个实际的案例演示如何使用FixFlow的设计器和Bpmcenter项目，以及如果通过代码的方式驱动FixFlow引擎。 </para>
   </section>
   
   <section xml:id="tenmt.useCase">
     <title>用例</title>
-    <para>
-      
-    </para>
+    <para> 员工报销流程，当报销金额大于5000元时需要经理审批，小于5000元时需要部门主管审批。</para>
   </section>
   
   
   <section xml:id="tenmt.processDiagram">
     <title>设计流程</title>
-    <para>
-      
-    </para>
+    <orderedlist>
+      <listitem>
+        <para>打开设计器，选中一个文件夹，我这里选中了bpmcenter/WebContent/fixflow/bpmn，点击File->New->Other->飞鸿流程，点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.2.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>选择“默认模板”，点击“Next”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.3.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>输入路径（可以在点击new之前选中文件项目目录）、名称、编号信息，点击“Finish”</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.1.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem><para>完成可以看到FixFlow的设计界面，如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.4.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>删除人工任务节点和结束节点之间的线，从画板上拖两个活动/人工任务和一个排他网关到设计界面上，用连接/顺序流连接起来各个节点 做成如下图样子：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.5.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>先改流程整体的配置信息，点击流程空白处，打开eclipse的Properties窗口，如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.6.png"/>
+        </imageobject></mediaobject>
+        <para>点击任务标题，编辑表达式，如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.7.png"/>
+        </imageobject></mediaobject>
+        <para>点击默认表单（操作流程时打开的页面），编辑表达式（这里用FixFlow的Demo启动界面，详细集成请参考）如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.8.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>因为需求中需要判断报销金额的大小，所以我们创建一个流程变量amount,类型为整型：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.16.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>下面修改提交节点的配置，选中第一个节点“人工任务”，填写基本信息，名称和编号是必填项，这里我们在提交的时候将amount的值设置为4000
+        （当然实际项目中这个值可能是从表单上得到，或者通过数据库查询语句得到。）其他可暂时不填。</para>
+        <para>再增加一个按钮，类型选启动并提交，名称为“走经理审批”我们将amount的值设置为6000，设置方法如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.17.png"/>
+        </imageobject></mediaobject>
+       <para>配置完成之后如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.9.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>然后我们配置网关之后的线条条件，选中线条，打开Properties属性框，设置表单式，这里我们可以是简单的判断语句，也可以是经过复杂运算之后用return true的形式返回判断结果。简单配置如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.18.png"/>
+        </imageobject></mediaobject>
+        <para>同样的方法我们设置网关后面的另外一条线条条件为：amount&lt;=5000</para>
+      </listitem>
+      <listitem>
+        <para>最后配置User_Task2和User_Task3节点的信息，即审批节点的配置，点击节点，属性->常规，配置操作表单，如：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.10.png"/>
+        </imageobject></mediaobject>
+        <para>配置主要的处理命令，打开属性-处理命令，点击创建，如：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.11.png"/>
+        </imageobject></mediaobject>
+        <para>选择接收任务，其他属性暂时不配置，点击确定。</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.12.png"/>
+        </imageobject></mediaobject>
+        <para>同上面一样，再添加一个通用按钮，改名称为同意。</para>
+        <para>添加一个退回-上一步按钮，改名称为拒绝，最终效果如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.13.png"/>
+        </imageobject></mediaobject>
+        <para>下面配置任务分配，这一步可以暂时什么都不做，用FixFlow默认配置所有人。</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.14.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>点击“保存”。到这里，第一个报销流程基本上就结束了。点击流程空白处，打开属性->流程信息，点击“发布”
+        设计器端的最终效果如图：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.15.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+    </orderedlist>
   </section>
   
   <section xml:id="tenmt.xml">
-    <title>XML的表示</title>
-    <para>
-      
-    </para>
+    <title>XML的表示 </title>
+    <para>在设计器中右键流程空白处，选择显示源码可以看到此流程的xml内容。如下：</para>
+    <programlisting language="xml">
+&lt;bpmn2:process id="processExpense" fixflow:verification="true" fixflow:dbid="processExpense:1:b15331b2-0991-4bdc-b1b1-358850316ab1" name="财务报销流程">
+    &lt;bpmn2:extensionElements>
+      &lt;fixflow:taskSubject id="TaskSubject_1">
+        &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="&amp;quot;测试流程主题&amp;quot;">&amp;quot;测试流程主题&amp;quot;&lt;/fixflow:expression>
+      &lt;/fixflow:taskSubject>
+      &lt;fixflow:formUri>
+        &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&amp;quot;DemoServlet?action=startOneTask&amp;quot;">&amp;quot;DemoServlet?action=startOneTask&amp;quot;&lt;/fixflow:expression>
+      &lt;/fixflow:formUri>
+      &lt;fixflow:DataVariable id="amount" dataType="int" bizType="customVariable">
+        &lt;fixflow:documentation xsi:type="fixflow:Documentation">&lt;/fixflow:documentation>
+      &lt;/fixflow:DataVariable>
+    &lt;/bpmn2:extensionElements>
+    &lt;bpmn2:startEvent id="StartEvent_1" name="开始">
+      &lt;bpmn2:outgoing>SequenceFlow_1&lt;/bpmn2:outgoing>
+    &lt;/bpmn2:startEvent>
+    &lt;bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="提交申请">
+      &lt;bpmn2:extensionElements>
+        &lt;fixflow:assignPolicyType id="potentialOwner"/>
+        &lt;fixflow:skipStrategy/>
+        &lt;fixflow:expectedExecutionTime/>
+        &lt;fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="${amount}=4000;">${amount}=4000;&lt;/fixflow:expression>
+        &lt;/fixflow:taskCommand>
+        &lt;fixflow:taskCommand id="HandleCommand_3" name="提交" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_4" name="走经理审批" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="${amount}=6000;">${amount}=6000;&lt;/fixflow:expression>
+        &lt;/fixflow:taskCommand>
+        &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+      &lt;/bpmn2:extensionElements>
+      &lt;bpmn2:incoming>SequenceFlow_1&lt;/bpmn2:incoming>
+      &lt;bpmn2:outgoing>SequenceFlow_2&lt;/bpmn2:outgoing>
+      &lt;bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+        &lt;bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
+          &lt;bpmn2:formalExpression id="所有人">&amp;quot;fixflow_allusers&amp;quot;&lt;/bpmn2:formalExpression>
+        &lt;/bpmn2:resourceAssignmentExpression>
+      &lt;/bpmn2:potentialOwner>
+    &lt;/bpmn2:userTask>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
+    &lt;bpmn2:endEvent id="EndEvent_1" name="结束">
+      &lt;bpmn2:incoming>SequenceFlow_4&lt;/bpmn2:incoming>
+      &lt;bpmn2:incoming>SequenceFlow_7&lt;/bpmn2:incoming>
+    &lt;/bpmn2:endEvent>
+    &lt;bpmn2:userTask id="UserTask_2" name="经理审批">
+      &lt;bpmn2:extensionElements>
+        &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        &lt;fixflow:assignPolicyType id="potentialOwner"/>
+        &lt;fixflow:skipStrategy/>
+        &lt;fixflow:formUri>
+          &lt;fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&amp;quot;DemoServlet?action=doTask&amp;quot;">&amp;quot;DemoServlet?action=doTask&amp;quot;&lt;/fixflow:expression>
+        &lt;/fixflow:formUri>
+        &lt;fixflow:taskCommand id="HandleCommand_2" name="接收任务" commandType="claim" isVerification="false" isSaveData="false" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_3" name="同意" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_4" name="拒绝" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      &lt;/bpmn2:extensionElements>
+      &lt;bpmn2:incoming>SequenceFlow_5&lt;/bpmn2:incoming>
+      &lt;bpmn2:outgoing>SequenceFlow_4&lt;/bpmn2:outgoing>
+      &lt;bpmn2:potentialOwner id="PotentialOwner_2" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+        &lt;bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_2">
+          &lt;bpmn2:formalExpression id="所有人">&amp;quot;fixflow_allusers&amp;quot;&lt;/bpmn2:formalExpression>
+        &lt;/bpmn2:resourceAssignmentExpression>
+      &lt;/bpmn2:potentialOwner>
+    &lt;/bpmn2:userTask>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="UserTask_2" targetRef="EndEvent_1"/>
+    &lt;bpmn2:userTask id="UserTask_3" name="部门领导审批">
+      &lt;bpmn2:extensionElements>
+        &lt;fixflow:assignPolicyType id="potentialOwner"/>
+        &lt;fixflow:skipStrategy/>
+        &lt;fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        &lt;fixflow:taskCommand id="HandleCommand_2" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_4" name="接收任务" commandType="claim" isVerification="false" isSaveData="false" isSimulationRun="false"/>
+        &lt;fixflow:taskCommand id="HandleCommand_3" name="退回-上一步" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      &lt;/bpmn2:extensionElements>
+      &lt;bpmn2:incoming>SequenceFlow_6&lt;/bpmn2:incoming>
+      &lt;bpmn2:outgoing>SequenceFlow_7&lt;/bpmn2:outgoing>
+      &lt;bpmn2:potentialOwner fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+        &lt;bpmn2:resourceAssignmentExpression>
+          &lt;bpmn2:formalExpression id="所有人">&amp;quot;fixflow_allusers&amp;quot;&lt;/bpmn2:formalExpression>
+        &lt;/bpmn2:resourceAssignmentExpression>
+      &lt;/bpmn2:potentialOwner>
+    &lt;/bpmn2:userTask>
+    &lt;bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="Exclusive Gateway 1">
+      &lt;bpmn2:incoming>SequenceFlow_2&lt;/bpmn2:incoming>
+      &lt;bpmn2:outgoing>SequenceFlow_5&lt;/bpmn2:outgoing>
+      &lt;bpmn2:outgoing>SequenceFlow_6&lt;/bpmn2:outgoing>
+    &lt;/bpmn2:exclusiveGateway>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
+      &lt;bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${amount}>5000">${amount}>5000&lt;/bpmn2:conditionExpression>
+    &lt;/bpmn2:sequenceFlow>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_3">
+      &lt;bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="${amount}&amp;lt;=5000;">${amount}&amp;lt;=5000;&lt;/bpmn2:conditionExpression>
+    &lt;/bpmn2:sequenceFlow>
+    &lt;bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="UserTask_3" targetRef="EndEvent_1"/>
+  &lt;/bpmn2:process>
+    </programlisting>
   </section>
   
   
   <section xml:id="tenmt.StartingProcess">
     <title>启动一个流程实例</title>
-    <para>
-      
-    </para>
+    <para> 上一步，我们已经在设计器端将流程发布到数据库中了，所以我们现在可以直接用刚才发布的流程。</para>
+    <orderedlist>
+      <listitem><para>启动tomcat，访问bpmcenter，输入账号admin 密码1进入任务中心。</para></listitem>
+      <listitem><para>点击发起流程，找到刚才发布的流程“财务报销流程”。
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.1.png"/>
+        </imageobject></mediaobject>
+      </para></listitem>
+      <listitem><para>
+        业务关联键是流程正常运行中为了关联业务数据，这里和信息、审批意见都可随便填写。点击提交。
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.2.png"/>
+        </imageobject></mediaobject>
+      </para></listitem>
+      <listitem><para>因为流程审批人设置的所有人，所以点击待办，就可以看到刚才提交的流程了，并且这条流程的当前步骤为部门领导审批，当然在流程查询里面也可以看到。说明流程已经成功启动，
+          你可以点击查看看下流程的流程图以及处理过程等信息。
+        <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600"
+                fileref="images/tenmt.StartingProcess.3.png"/>
+            </imageobject>
+          </mediaobject>
+      </para>
+      </listitem>
+      <listitem>
+        <para>再以同样的步骤启动另外一个流程，这次点击“走经理审批”按钮，回去待办任务发现另外这条流程的当前步骤为“经理审批”：</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.7.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+    </orderedlist>
   </section>
   
   
   <section xml:id="tenmt.taskLists">
     <title>任务列表</title>
     <para>
-      
+      任务列表就是上面看到的任务列表，里面包含了需要当前登陆人处理的所有任务信息。
     </para>
   </section>
   
@@ -62,30 +276,153 @@
   <section xml:id="tenmt.claimingTask">
     <title>领取任务</title>
     <para>
-      
+      由于在上面的示例流程中，我们设置的处理人策略是共享，所以如果想处理对应流程，则需要先领取任务，被领取后的任务就只有领取人可以看到，其他人不可再领取。
     </para>
+    <para>点击任务主题，进入任务的处理界面，这个界面也是FixFlow的演示界面，真正业务中是需要和自己的业务进行集成的。
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.4.png"/>
+      </imageobject></mediaobject>
+    </para>
+    <para>点击接收任务，然后再次点击任务主题，进入处理界面，发现出现了“同意”和“拒绝”按钮。</para>
+    <mediaobject><imageobject>
+      <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.5.png"/>
+    </imageobject></mediaobject>
   </section>
   
   
   <section xml:id="tenmt.completingTask">
     <title>完成任务</title>
     <para>
-      
+     点击任务主题，进入处理界面，点击同意，即可处理完此任务，再次回到待办任务，发现任务已经不存在。 
     </para>
   </section>
   
   <section xml:id="tenmt.endingProcess">
     <title>结束流程</title>
     <para>
-      
+      完成上一步处理之后，流程已经结束，结束的流程可以在流程查询中查询到，并可点击查看查看流程状态和处理过程信息。
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="600" fileref="images/tenmt.StartingProcess.6.png"/>
+      </imageobject></mediaobject>
     </para>
   </section>
   
   <section xml:id="tenmt.codeOverview">
     <title>通过代码完成</title>
     <para>
-      
+      以上步骤均可通过FixFlow引擎的API来实现，具体代码如下：
     </para>
+    <programlisting language="java">/*********1.获取启动按钮及其表单 ***********************/
+//获取流程的启动表单
+String formUrl = formService.getStartFormByKey("processExpense");
+//验证表单是否为配置的“add”
+assertEquals("add", formUrl);
+/*********2.获取提交表单Toolbar***********************/
+List&lt;TaskCommandInst> commandList = taskService.getSubTaskTaskCommandByKey("processExpense");
+TaskCommandInst startAndSubmitCommand = null;
+for(int i = 0;i &lt; commandList.size(); i++){
+	if("startandsubmit".equals(commandList.get(i).getTaskCommandType())){
+		startAndSubmitCommand = commandList.get(i);
+	}
+}
+assertNotNull(startAndSubmitCommand);
+/*********3.处理提交表单toolbar***********************/
+//创建一个通用命令
+ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+//设置流程名
+expandTaskCommand.setProcessDefinitionKey("processExpense");
+//设置流程的业务关联键
+expandTaskCommand.setBusinessKey("bk_201309041528");
+//命令类型
+expandTaskCommand.setCommandType(startAndSubmitCommand.getTaskCommandType());
+//设置提交人
+expandTaskCommand.setInitiator("1200119390");
+//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+expandTaskCommand.setUserCommandId(startAndSubmitCommand.getId());
+//执行这个启动并提交的命令，返回启动的流程实例
+ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+String processInstanceId = processInstance.getId();
+//验证是否成功启动
+assertNotNull(processInstanceId);
+
+/*********4.获取第二个任务节点的任务【查询代办任务】***********************/
+// 创建任务查询
+TaskQuery taskQuery = taskService.createTaskQuery();
+// 查找 1200119390 的这个流程实例的当前独占任务
+List&lt;TaskInstance> taskInstances = taskQuery.taskAssignee("1200119390").processInstanceId(processInstanceId).taskNotEnd().list();
+// 获取一条任务
+TaskInstance taskInstance = taskInstances.get(0);
+//验证这个待办是否为空
+assertNotNull(taskInstance);
+String nodeId = taskInstance.getNodeId();
+//验证流程实例是否在第二个节点
+assertEquals(nodeId, "UserTask_2");
+
+/*********5.打开第二个任务节点表单***********************/
+
+//获取任务节点上的formUrl
+String taskFormUrl = taskInstance.getFormUri();
+//验证是否为配置的add
+assertEquals("add", taskFormUrl);
+
+/*********6.获取第二个任务节点toolbar***********************/
+//创建流程定义查询
+ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
+//获取流程定义
+ProcessDefinitionBehavior processDefinition = processDefinitionQuery.processDefinitionKey("processExpense").singleResult();
+//获取流程定义编号   页面上用的时候应该能拿到流程定义号，就不用这样取了。
+String processDefinitionId = processDefinition.getProcessDefinitionId();
+//获取节点上的处理命令
+List&lt;TaskCommandInst> taskCommandList= taskService.getTaskCommandById(processDefinitionId, nodeId);
+assertNotNull(taskCommandList);
+
+/*********7.完成第二个节点处理命令***********************/
+TaskCommandInst generalTaskCommand = null;
+for(int i = 0;i &lt; taskCommandList.size(); i++){
+	if("general".equals(taskCommandList.get(i).getTaskCommandType())){
+		generalTaskCommand = taskCommandList.get(i);
+	}
+}
+assertNotNull(generalTaskCommand);
+
+      //创建通用命令
+ExpandTaskCommand expandTaskCommandGeneral=new ExpandTaskCommand();
+//设置命令为领取任务
+expandTaskCommandGeneral.setCommandType("claim");
+//设置命令的ID，需和节点上配置的按钮编号对应，会执行其中脚本
+expandTaskCommandGeneral.setUserCommandId("HandleCommand_2");
+//设置命令的处理任务号
+expandTaskCommandGeneral.setTaskId(taskInstance.getId());
+//领取任务
+taskService.expandTaskComplete(expandTaskCommandGeneral, null);
+//创建通用命令
+ExpandTaskCommand expandTaskCommandGeneral=new ExpandTaskCommand();
+//设置命令为通用
+expandTaskCommandGeneral.setCommandType("general");
+//设置命令的ID，需和节点上配置的按钮编号对应，会执行其中脚本
+expandTaskCommandGeneral.setUserCommandId("HandleCommand_3");
+//设置命令的处理任务号
+expandTaskCommandGeneral.setTaskId(taskInstance.getId());
+//同意操作
+taskService.expandTaskComplete(expandTaskCommandGeneral, null);
+
+//创建流程实例查询
+ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+//获得上面的流程实例
+ProcessInstance process = processInstanceQuery.processInstanceId(processInstanceId).singleResult();
+//验证流程实例是否已经结束，结束说明通用按钮已经驱动流程离开当前节点。
+assertTrue(process.hasEnded());
+
+/*********8.流程结束,查询流程追踪。***********************/
+
+//重置任务实例查询
+processInstanceQuery = runtimeService.createProcessInstanceQuery();
+//查询1200119390参与的流程(流程追踪)
+List&lt;ProcessInstance> processInstances = processInstanceQuery.taskParticipants("1200119390").processDefinitionKey("processExpense").list();
+//验证是否查询正确
+assertNotNull(processInstances);
+      
+    </programlisting>
   </section>
   
 </chapter>

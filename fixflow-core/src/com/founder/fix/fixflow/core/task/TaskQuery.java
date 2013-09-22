@@ -155,6 +155,13 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	TaskQuery businessKey(String businessKey);
 	
 	/**
+	 * 根据业务主键查询
+	 * @param businessKey
+	 * @return
+	 */
+	TaskQuery businessKeyLike(String businessKey);
+	
+	/**
 	 * 任务类型
 	 * @param taskInstanceType
 	 * @return
@@ -326,6 +333,13 @@ public interface TaskQuery extends Query<TaskQuery, TaskInstance> {
 	 * @return
 	 */
 	TaskQuery processDefinitionName(String processDefinitionName);
+	
+	/**
+	 * 根据流程名称like查询
+	 * @param processDefinitionLike
+	 * @return
+	 */
+	TaskQuery processDefinitionNameLike(String processDefinitionLike);
 
 	/**
 	 * 

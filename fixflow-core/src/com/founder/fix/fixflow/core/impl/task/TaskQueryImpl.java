@@ -57,12 +57,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 	protected GroupTo candidateGroup;
 	protected String end;
 	protected String businessKey;
+	protected String businessKeyLike;
 	protected boolean isAgent=false;
-	
 	protected String nodeId;
-
-	
-
 	protected String processInstanceId;
 	protected String executionId;
 	protected Date createTime;
@@ -72,33 +69,22 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 	protected String keyLike;
 	protected String processDefinitionKey;
 	protected List<String> processDefinitionKeyList=new ArrayList<String>();
-	
 	protected String processDefinitionId;
 	protected String processDefinitionName;
-
+	protected String processDefinitionNameLike ;
 	protected Date dueDate;
 	protected Date dueBefore;
 	protected Date dueAfter;
-	
 	protected String initiator;
 	protected String initiatorLike;
 	protected boolean assigneeNotNull= false;
 	protected boolean candidateNotNull= false;
-	
 	protected String category;
-	
-	
 	protected String callActivityInstanceId;
-	
-
 	protected String isSuspended;
-	
 	protected String tokenId;
-
 	protected boolean isContainsSubProcess=false;
-
 	protected QueryLocation queryLocation = null;
-	
 	protected List<TaskInstanceType> taskTypeList=new ArrayList<TaskInstanceType>();
 
 	
@@ -200,6 +186,15 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		this.businessKey = businessKey;
 		return this;
 	}
+	
+	public TaskQueryImpl businessKeyLike(String businessKey) {
+		if (businessKey == null) {
+			throw new FixFlowException("业务关联键不能为空!");
+		}
+		this.businessKeyLike = businessKey;
+		return this;
+	}
+	
 	
 	public TaskQueryImpl addTaskType(TaskInstanceType taskInstanceType) {
 		
@@ -389,6 +384,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		this.processDefinitionName = processDefinitionName;
 		return this;
 	}
+	
+	public TaskQuery processDefinitionNameLike(String processDefinitionLike) {
+		this.processDefinitionNameLike = processDefinitionLike;
+		return this;
+	}
 
 	public TaskQuery dueDate(Date dueDate) {
 		this.dueDate = dueDate;
@@ -507,7 +507,35 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 		return businessKey;
 	}
 	
+	public Integer getMinPriority() {
+		return minPriority;
+	}
 
+	public Integer getMaxPriority() {
+		return maxPriority;
+	}
+
+	public String getInvolvedUser() {
+		return involvedUser;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public Date getDueBefore() {
+		return dueBefore;
+	}
+
+	public Date getDueAfter() {
+		return dueAfter;
+	}
 
 	public boolean getUnassigned() {
 		return unassigned;
@@ -571,6 +599,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public String getProcessDefinitionName() {
 		return processDefinitionName;
+	}
+	
+	public String getProcessDefinitionNameLike() {
+		return processDefinitionNameLike;
 	}
 
 	public  GroupTo getCandidateGroup() {
@@ -732,6 +764,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, TaskInstance> implem
 
 	public QueryLocation getQueryLocation() {
 		return queryLocation;
+	}
+	
+	public String getBusinessKeyLike() {
+		return businessKeyLike;
 	}
 
 }

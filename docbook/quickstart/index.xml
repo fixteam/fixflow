@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN' 'dtd/docbook.dtd'>
+<book xmlns="http://docbook.org/ns/docbook"
+  version="5.0"  
+  xml:lang="zh_cn">
+
+  <info><title>FixFlow 5.0 QuickStart</title></info>
+  
+  <toc/>
+  
+  <article xml:id="QuickStart">
+    <section xml:id="howto">
+      <title>快速入门</title>
+      <para>本文档的主要目的是引导用户使用FixBPM Center。</para>
+      <section xml:id="howto.menu">
+        <title>目录结构</title>
+        <para>
+          完整的一个FixBPM Engine是一个zip包，请请确认你获取的zip包里包括以下内容：
+          <itemizedlist>
+            <listitem><para>documentation文件夹，该文件夹包括所有的文档和帮助手册。</para></listitem>
+            <listitem><para>lib文件夹，该文件夹包括FixBPM Engine所有的jar包，包括引擎jar包和引擎依赖jar包。</para></listitem>
+            <listitem><para>plugin文件夹，该文件夹包括eclipse的插件，该插件需要使用eclipse或myeclipse的“安装新软件”功能来安装</para></listitem>
+            <listitem><para>project文件夹，该文件夹包括了eclipse项目，当用户需要深度集成时会用到这两个项目，具体集成可以参照帮助文档的“如何集成”章节</para></listitem>
+            <listitem><para>wars文件夹，该文件夹包括了FixBPM Engine的war包，该war包在修改了数据库连接后应该可以直接运行。</para></listitem>
+          </itemizedlist>
+        </para>
+      </section>
+      
+      <section xml:id="howto.guide">
+        <title>使用引导</title>
+        <para>
+          该部分将列举一些应用场景，用户可以根据自己应用场景选择不同的角度了解FixBPM Engine。
+          <itemizedlist>
+            <listitem><para>
+              当需要集成工作流引擎到本地代码里，建议阅读用户向导手册的
+             1、9、15这些章节
+            </para></listitem>
+            <listitem><para>
+              当需要了解如何安装和使用eclipse插件，建议阅读用户向导手册的
+            </para></listitem>
+            <listitem><para>
+              当需要了解如何加入fixflow流程引擎小组，建议阅读用户向导手册的
+              2章节
+            </para></listitem>
+            <listitem><para>
+              当需要了解流程引擎有哪些API可以调用，建议阅读用户向导手册的
+              6章节
+            </para></listitem>
+          </itemizedlist>
+        </para>
+      </section>
+      <section xml:id="howto.changeLog">
+        <title>changeLog</title>
+        <para>
+        </para>
+      </section>
+    </section>
+  </article>
+
+</book>

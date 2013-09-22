@@ -8,8 +8,95 @@
   <section xml:id="commonAPI.info">
     <title>CommonAPI</title>
     <para>
-      
+      FixFlow Engine会提供各种API以供用户使用工作流，这些API具体可以参照<link linkend="fixflowapi">FixFlow API</link>章节，那一章节比较类似于字典，当需要使用时才会去查询如何调用。
+      但是要使用这些API更需要一个入口和使用方法，这就是本章节要介绍的内容本章节的主要内容包括。
+      <itemizedlist>
+        <listitem><para>如何使用FixFlowShellProxy类</para></listitem>
+        <listitem><para>如何在FixFlowShellProxy里注入connection。</para></listitem>
+        <listitem><para>如何保证FixFlowShellProxy执行的事务</para></listitem>
+      </itemizedlist>
     </para>
+    <section xml:id="commonAPI.info.create">
+      <title>创建流程引擎</title>
+      <para>
+        使用FixFlow Engine的主要入口都是FixFlowShellProxy这个类，该类里面提供了各种静态方法。
+        最长使用的就是createProcessEngine这个方法，调用这个方法后之后拿到ProcessEngine对象就是使用流程的开始，从ProcessEngine对象里可以获取到操作流程的各个Service。
+        <itemizedlist>
+          <listitem><para>
+            最常用方法就是一下这个方法。该方法里要求传入一个用户id，当流程运行时会记录当前操作人是谁，记录的就是这个id。在这里会在方法里面打开一个连接，找到fixflowconfig.xml里设定的默认连接key，然后用这个key到spring容器里取寻找类型为com.founder.fix.fixflow.shell.DBConnFactory的对象。
+            <programlisting language="java">
+             ProcessEngine processEngine = FixFlowShellProxy.createProcessEngine("用户id");
+            </programlisting>
+          </para></listitem>
+          <listitem><para>
+            该方法多传入了一个参数，该参数是定义是否开启事务。其原理是在获取连接后将连接的autocommit设为false，这种操作在完成后结果不会提交，需要手动调用commitConnection或者closeEngine才能提交。
+            <programlisting language="java">
+            ProcessEngine processEngine = FixFlowShellProxy.createProcessEngine("用户id",boolean);
+            </programlisting>
+          </para></listitem>
+          <listitem><para>
+            该方法传入了一个connection，那么此时创建的engine将会使用这个连接进行操作，不管这个连接是否已将autocommit设为false，一切都由外部来决定。
+            <programlisting language="java">
+            ProcessEngine processEngine = FixFlowShellProxy.createProcessEngine("用户id",Connection);
+            </programlisting>
+          </para></listitem>
+          <listitem><para>
+            该方法传入多个connection，当流程里涉及跨数据源获取数据时该方法会发挥用处，connection的key为fixflowconfig.xml里设定的key。
+            <programlisting language="java">
+              <![CDATA[ 
+            ProcessEngine processEngine = FixFlowShellProxy.createProcessEngine("用户id",Map<String,Connection>);
+            ]]>
+            </programlisting>
+          </para></listitem>
+          <listitem><para>
+            该方法传入了一个ExternalContent对象，这样一切设置都由外部管控，该对象是对流程引擎的环境设置，具体设置请参照流程引擎API。
+            <programlisting language="java">
+            ProcessEngine processEngine = FixFlowShellProxy.createProcessEngine(ExternalContent);
+            </programlisting>
+          </para></listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    <section xml:id="commonAPI.info.close">
+      <title>关闭流程引擎</title>
+      <para>
+        有创建流程引擎就有关闭引擎，引擎的关闭是由手动进行的，请使用后务必关闭，这样可以保证每次使用后不会有连接泄漏。关闭引擎代码如下，将之前创建的engine当作参数传入即可，另一个参数是设定是否同时关闭连接，在关闭时会把没有提交的操作同时提交。
+        <programlisting language="java">
+            ProcessEngine processEngine = FixFlowShellProxy.createProcessEngine(ExternalContent);
+            FixFlowShellProxy.closeProcessEngine(processEngine,boolean);
+        </programlisting>
+      </para>
+    </section>
+    <section xml:id="commonAPI.info.auto">
+      <title>引擎自动化</title>
+      <para>
+        之前我们提到的这些办法都是手动创建连接，手动创建引擎，如果一个操作逻辑非常复杂，那么要不然频繁的创建，要不然就要把引擎作为参数来回传递在，这样效率并不高。所以我们提供了一种相对高效的解决方案。系统提供了一套线程池机制，确保了每次打开连接获取的都是同一个连接。
+        首先要先调用以下这个方法，这个方法代表了一个线程声明，声明了当前线程将会启用线程副本，此时以后就不需要再手动关闭连接了，所有的连接都会在线程副本有一个引用备份，这样其他代码需要获取连接时会优先从复本里获取连接，当获取不到，或者获取的连接已关闭才会再创建新连接。
+        当然，此时手动关闭依然是生效的。这个方法最好在刚进入后台的地方调用。
+        <programlisting language="java">
+            CurrentThread.init();
+        </programlisting>
+        下面这个方法是关闭所有的线程内连接，该方法最好在最外层调用。
+        <programlisting language="java">
+            CurrentThread.clear();
+        </programlisting>
+        
+        当然，这些方法其实还是有些复杂，比如在使用struts2的情况下，所有的连接都是散乱的，我们不能再每一个方法上都加上这一段。所以我们提供了一个过滤器com.founder.fix.fixflow.FixFlowEngineAutoHandler，将这个过滤器注册到Web.xml里，使其在Struts2过滤器之前执行即可。
+        <programlisting language="xml">
+              <![CDATA[ 
+                  <filter>
+                  <filter-name>fixFlowAuto</filter-name>
+                  <filter-class>com.founder.fix.fixflow.FixFlowEngineAutoHandler</filter-class>
+                  </filter>
+                  <filter-mapping>
+                  <filter-name>fixFlowAuto</filter-name>
+                  <servlet-name>对某路径进行过滤</servlet-name>
+                  </filter-mapping>
+            ]]>
+        </programlisting>
+        该过滤器只能过滤web情况下，在非web情况下请千万注意，打开了的连接务必要关闭。
+      </para>
+    </section>
   </section>
   
   

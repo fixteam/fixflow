@@ -45,6 +45,9 @@ public interface BaseElementEvent {
 	  public static final String EVENTTYPE_TASK_END = "task-end";
 	  public static final String EVENTTYPE_TIMER = "timer";
 	  
+	  public static final String EVENTTYPE_PROCESS_ABORT = "process-abort";
+	  
+	  
 	  
 	  
 	  

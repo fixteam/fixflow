@@ -22,8 +22,6 @@ import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.persistence.ProcessInstanceManager;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
-import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
-
 
 public class TerminatProcessInstanceCmd implements Command<Void> {
 
@@ -46,9 +44,8 @@ public class TerminatProcessInstanceCmd implements Command<Void> {
 		ProcessInstanceEntity processInstanceImpl = processInstanceManager.findProcessInstanceById(processInstanceId);
 
 		// 结束流程实例
-		processInstanceImpl.end();
-		// 更新实例状态为终止
-		processInstanceImpl.setInstanceType(ProcessInstanceType.TERMINATION);
+		processInstanceImpl.termination();
+	
 		try {
 			// 持久化实例
 			processInstanceManager.saveProcessInstance(processInstanceImpl);

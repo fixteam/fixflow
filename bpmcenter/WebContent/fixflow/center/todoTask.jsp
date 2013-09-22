@@ -54,7 +54,7 @@ $(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj);
+    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
   });
   $("a[name=doTask]").click(function(){
     var tii = $(this).attr("tii");
@@ -72,9 +72,30 @@ $(function(){
    	 url+="?";
     }
     url+="taskId="+tii+"&processInstanceId="+pii+"&bizKey="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
-   	window.showModalDialog(url,obj,"dialogWidth=800px;dialogHeight=600px");
+   	window.open(url);
   });
+	$("#selectUser").click(function(){
+		var obj = {
+		  type:"user"
+		};
+		var d = FixSelect(obj);
+		var userId = d[0].USERID;
+		var userName = d[0].USERNAME;
+		$("#initor").val(userId);
+		$("#initorName").val(userName);
+	});
 });
+
+function clearInfo(){
+		$("#title").val("");
+		$("#processDefinitionKey").val("");
+		$("#processDefinitionName").val("");
+		$("#bizKey").val("");
+		$("#initor").val("");
+		$("#initorName").val("");
+		$("#arrivalTimeS").val("");
+		$("#arrivalTimeE").val("");
+	}
 </script>
 </head>
 
@@ -88,14 +109,14 @@ $(function(){
 				<div class="left">
 					<div class="left-nav-box">
 						<div class="left-nav">
-							<a name="myTask" href="#">我的待办任务</a>
+							<a name="myTask" href="#">${applicationScope.appInfo["task.myTask"]}</a>
 						</div>
 						<div class="left-nav-orange-line">&nbsp;</div>
 
 
 
 						<div class="left-nav m-top">
-							<h1>代理人</h1>
+							<h1>${applicationScope.appInfo["task.agent"]}</h1>
 						</div>
 						<c:if
 							test="${result.agentUsers!= null && fn:length(result.agentUsers) != 0}">
@@ -104,13 +125,13 @@ $(function(){
 								<div class="left-nav">
 									<a name="agentUsers" userId="${agentUsers.userid}" href="#"><img
 										src="${agentUsers.userid}" height="30" width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');" />${agentUsers.username}</a>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />${agentUsers.username}</a>
 								</div>
 							</c:forEach>
 						</c:if>
 
 						<div class="left-nav m-top">
-							<h1>委托人</h1>
+							<h1>${applicationScope.appInfo["task.toAgent"]}</h1>
 						</div>
 						<c:if
 							test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
@@ -120,7 +141,7 @@ $(function(){
 									<a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img
 										src="icon/${agentToUsers.userid}_small.png" height="30"
 										width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');" />${agentToUsers.username}</a>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />${agentToUsers.username}</a>
 								</div>
 							</c:forEach>
 						</c:if>
@@ -132,27 +153,27 @@ $(function(){
 						<div class="message-content">
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />曹操：煮酒论英雄！谁一起吃饭啊
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />曹操：煮酒论英雄！谁一起吃饭啊
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 							<div class="msg">
 								<img src="images/temp/user01.jpg"
-									onerror="miniImgNotFound('${pageContext.request.contextPath}');" />张飞：今天还没吃午饭！
+									onerror="miniImgNotFound('${pageContext.request.contextPath}',this);" />张飞：今天还没吃午饭！
 								<div class="time">一小时前</div>
 							</div>
 						</div>
@@ -166,34 +187,55 @@ $(function(){
 						value="<c:out value="${result.agentType}"/>"><input
 						type="hidden" name="action" value="getMyTask" />
 					<div class="search">
-						<table width="100%">
+						<table>
 							<tr>
-								<td class="title-r">任务主题：</td>
-								<td style="width: 180px;"><input type="text" id="text_0"
-									name="title" class="fix-input" style="width: 160px;"
+								<td class="title-r">${applicationScope.appInfo["task.description"]}：</td>
+								<td><input type="text" id="title"
+									name="title" class="fix-input"
 									value="${result.title}" /></td>
-								<td class="title-r">流程变量：</td>
-								<td style="width: 180px;"><input type="text" id="text_1"
-									name="text_1" class="fix-input" style="width: 160px;" value="" /></td>
-								<td class="title-r">单 据 号：</td>
-								<td style="width: 180px;"><input type="text" id="text_2"
-									name="bizKey" class="fix-input" style="width: 160px;"
+								<td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
+								<td><input type="text" id="processDefinitionName"
+									name="processDefinitionName" class="fix-input"  value="${result.processDefinitionName}" /></td>
+								<td class="title-r">${applicationScope.appInfo["task.bizKey"]}：</td>
+								<td><input type="text" id="bizKey"
+									name="bizKey" class="fix-input"
 									value="${result.bizKey}" /></td>
-								<td><div class="btn-normal">
-										<a href="#" onclick="$('#subForm').submit();">查 找<em
-											class="arrow-small"></em></a>
-									</div></td>
+								<td>
+					                <table style="margin:0">
+					                <tr>
+					                <td>
+					                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">${applicationScope.appInfo["common.search"]}</a></div>
+					                </td>
+					                <td>
+					                <div class="btn-normal"><a href="#" onclick="clearInfo();">${applicationScope.appInfo["common.clear"]}</a></div>
+									</td>                
+					                </tr>
+					                </table>
+									</td>
 							</tr>
 							<tr>
-								<td class="title-r">发 起 人：</td>
-								<td><input type="text" id="text_3" name="initor"
-									class="fix-input" style="width: 160px;"
-									value="${result.initor}" /></td>
-								<td class="title-r">到达时间：</td>
-								<td><input type="text" id="text_4" name="arrivalTimeS"
+								<td class="title-r">${applicationScope.appInfo["task.initor"]}：</td>
+								<td>
+					                <table style="margin:0">
+					                <tr>
+					                <td>
+					                <input type="hidden" id="initor" name="initor" class="fix-input" value="${result.initor}"/>
+					                <input type="text" id="initorName" readonly="true" name="initorName" class="fix-input" style="width:94px;" value="${result.initorName}"/>
+					                </td>
+					                <td>
+					                <div class="btn-normal">
+															<a href="#" onclick="" id="selectUser">${applicationScope.appInfo["common.select"]}<em
+																class="arrow-small"></em></a>
+									</div>
+									</td>
+									</tr>
+									</table>
+								</td>
+								<td class="title-r">${applicationScope.appInfo["task.createTime"]}：</td>
+								<td><input type="text" id="arrivalTimeS" name="arrivalTimeS"
 									class="fix-input" style="width: 69px;"
 									value="${result.arrivalTimeS}" onClick="WdatePicker()" /> - <input
-									type="text" id="text_5" name="arrivalTimeE" class="fix-input"
+									type="text" id="arrivalTimeE" name="arrivalTimeE" class="fix-input"
 									style="width: 69px;" value="${result.arrivalTimeE}"
 									onClick="WdatePicker()" /></td>
 								<td></td>
@@ -205,25 +247,25 @@ $(function(){
 					<div class="content">
 						<table width="100%" class="fix-table">
 							<thead>
-								<th width="30">&nbsp;</th>
+								<th width="30">${applicationScope.appInfo["common.no"]}</th>
 								<th width="30"></th>
-								<th>流程</th>
-								<th>单据号</th>
-								<th>任务主题</th>
-								<th>发起人</th>
-								<th>发起时间</th>
-								<th>当前步骤</th>
-								<th width="160">到达时间</th>
-								<th width="60">流程状态</th>
+								<th>${applicationScope.appInfo["task.processDefinitionName"]}</th>
+								<th>${applicationScope.appInfo["task.bizKey"]}</th>
+								<th>${applicationScope.appInfo["task.description"]}</th>
+								<th>${applicationScope.appInfo["task.initor"]}</th>
+								<th>${applicationScope.appInfo["task.startTime"]}</th>
+								<th>${applicationScope.appInfo["task.nodeName"]}</th>
+								<th width="160">${applicationScope.appInfo["task.createTime"]}</th>
+								<th width="60">${applicationScope.appInfo["task.status"]}</th>
 							</thead>
 							<c:forEach items="${result.dataList}" var="dataList"
 								varStatus="index">
 								<tr>
-									<td style="text-align: center;"><c:out value="${index.index+1}" /></td>
+									<td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
 
 									<td><img src="icon/${dataList.PI_START_AUTHOR}_small.png"
 										height="30" width="30" alt="头像"
-										onerror="miniImgNotFound('${pageContext.request.contextPath}');"></td>
+										onerror="miniImgNotFound('${pageContext.request.contextPath}',this);"></td>
 									<td>${dataList.processDefinitionName}</td>
 									<td>${dataList.bizKey}</td>
 									<td><a name="doTask" href="#"
@@ -240,7 +282,7 @@ $(function(){
 									</td>
 									<td><a name="flowGraph" href="#"
 										pii="${dataList.processInstanceId}"
-										pdk="${dataList.processDefinitionKey}">查看</a></td>
+										pdk="${dataList.processDefinitionKey}">${applicationScope.appInfo["common.check"]}</a></td>
 								</tr>
 							</c:forEach>
 						</table>

@@ -34,26 +34,33 @@ import org.apache.commons.fileupload.FileItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
+import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
+import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
+import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
 import com.founder.fix.fixflow.util.FileUtil;
 import com.founder.fix.fixflow.util.ImageCutUtil;
 import com.founder.fix.fixflow.util.JSONUtil;
@@ -61,14 +68,6 @@ import com.founder.fix.fixflow.util.Pagination;
 @Scope("prototype")
 @Service
 public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCenterService {
-	
-	public Connection getConnection() {
-		return connection;
-	}
-
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-	}
 
 	/*
 	  * <p>Title: queryMyTaskNotEnd</p>
@@ -83,6 +82,12 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		Map<String,Object> result = new HashMap<String,Object>();
 		ProcessEngine engine = getProcessEngine(filter
 				.get("userId"));
+		
+		String whereSql = " 1=1 ";
+		String leftJoinStr = "";
+
+		QueryExpandTo queryExpandTo = new QueryExpandTo();
+		
 		try {
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
 			
@@ -96,11 +101,34 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			String initor	   = StringUtil.getString(filter.get("initor"));
 			if(StringUtil.isNotEmpty(initor))
-				tq.initiatorLike(initor);
+				tq.initiator(initor);
+			
+			//发起人模糊匹配
+			String initorName = StringUtil.getString(filter.get("initorName"));
+			if (StringUtil.isNotEmpty(initorName)) {
+				initorName = initorName.replace("'", "");
+				ProcessEngine processEngine = ProcessEngineManagement
+						.getDefaultProcessEngine();
+				AllUserInfo userInfoConfig = processEngine
+						.getProcessEngineConfiguration().getUserDefinition()
+						.getUserInfoConfig();
+				leftJoinStr += " LEFT JOIN (" + userInfoConfig.getSqlText()
+						+ ") UT on UT." + userInfoConfig.getUserIdField()
+						+ " = P.INITIATOR ";
+				whereSql += " and (UT." + userInfoConfig.getUserNameField()
+						+ " LIKE '%" + initorName + "%'  or UT."
+						+ userInfoConfig.getUserIdField() + " = '"
+						+ initorName + "')";
+			}
+
 			
 			String bizKey	   = StringUtil.getString(filter.get("bizKey"));
 			if(StringUtil.isNotEmpty(bizKey))
-				tq.businessKey(bizKey);
+				tq.businessKeyLike(bizKey);
+			
+			String processDefinitionName	   = StringUtil.getString(filter.get("processDefinitionName"));
+			if(StringUtil.isNotEmpty(processDefinitionName))
+				tq.processDefinitionNameLike(processDefinitionName);
 			
 			Date dates = null;
 			Date datee = null;
@@ -110,7 +138,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
 			}
 			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
 				tq.taskCreatedAfter(datee);
@@ -149,6 +179,13 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 			}
 			
+			
+			if (StringUtil.isNotEmpty(leftJoinStr)) {
+				queryExpandTo.setLeftJoinSql(leftJoinStr);
+			}
+			queryExpandTo.setWhereSql(whereSql);
+			tq.queryExpandTo(queryExpandTo);
+			
 			List<TaskInstance> lts = tq.orderByTaskCreateTime().desc().listPagination(pageIndex, rowNum);
 			Long count = tq.count();
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
@@ -173,9 +210,16 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 //				}
 				
 //				instances.put("icon", "icon/"+userId+"_small.png");
-				
-				UserTo user = identsvz.getUserTo(userId);
-				instances.put("userName", user.getUserName());
+				if(StringUtil.isNotEmpty(userId)){
+					UserTo user = identsvz.getUserTo(userId);
+					if(user!=null){
+						instances.put("userName", user.getUserName());
+					}else{
+						instances.put("userName", userId+"(未知用户)");
+					}
+				}else{
+					instances.put("userName", "(空用户名)");
+				}
 				instanceMaps.add(instances);
 			}
 			result.put("dataList", instanceMaps);
@@ -184,7 +228,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			result.put("agentUsers", getAgentUsers(engine,StringUtil.getString(filter.get("userId"))));
 			result.put("agentToUsers", getAgentToUsers(engine,StringUtil.getString(filter.get("userId"))));
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -202,13 +246,29 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		try {
 			result = engine.getModelService().getStartProcessByUserId(userId);
 			for(Map<String,String> tmp:result){
-				String pdkey = tmp.get("processDefinitionKey");
-				String formUrl = engine.getFormService().getStartFormByKey(pdkey);
+				String formUrl = tmp.get("startFormKey");
+				//String formUrl = engine.getFormService().getStartFormByKey(pdkey);
 				
 				tmp.put("formUrl", formUrl);
 			}
 		} finally {
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
+		}
+
+		return result;
+	}
+	
+	public List<Map<String, String>> queryLastestProcess(String userid) throws SQLException {
+		List<Map<String, String>> result = null;
+		ProcessEngine engine = getProcessEngine(userid);
+		try {
+			result = engine.getModelService().getUserSubmitProcess(userid,5);
+			for(Map<String,String> tmp:result){
+				String formUrl = tmp.get("startFormKey");
+				tmp.put("formUrl", formUrl);
+			}
+		} finally {
+			closeProcessEngine();
 		}
 
 		return result;
@@ -232,86 +292,110 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 	}
 
 	public Map<String,Object> queryTaskInitiator(Map<String,Object> filter) throws SQLException {
-		Map<String,Object> result = new HashMap<String,Object>();
-		String userId = (String) filter.get("userId");
-		String processType = StringUtil.getString(filter.get("processType"));
 		
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String userId = StringUtil.getString(filter.get("userId"));
 		ProcessEngine engine = getProcessEngine(userId);
+		RuntimeService runtimeService = engine.getRuntimeService();
+		IdentityService identityService = engine.getIdentityService();
+		FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
+		String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));
+		String processInstanceId    = StringUtil.getString(filter.get("processInstanceId"));
+		String title				= StringUtil.getString(filter.get("title"));
+//		String subject				= StringUtil.getString(filter.get("subject"));
+		String bizKey				= StringUtil.getString(filter.get("bizKey"));
+		String initor				= StringUtil.getString(filter.get("initor"));
+		String status				= StringUtil.getString(filter.get("status"));
+		String processType 			= StringUtil.getString(filter.get("processType"));
+		ProcessInstanceType processInstanceStatus = FlowUtilServiceImpl.getInstanceStaus(status);
 		try{
-			ProcessInstanceQuery tq = engine.getRuntimeService()
-					.createProcessInstanceQuery();
-			
-			String descritpion = StringUtil.getString(filter.get("title"));
-			if(StringUtil.isNotEmpty(descritpion))
-				tq.subjectLike(descritpion);
-			
-			String initor	   = StringUtil.getString(filter.get("initor"));
-			if(StringUtil.isNotEmpty(initor))
-				tq.initiatorLike(initor);
-			Date dates = null;
-			Date datee = null;
-			String dss = StringUtil.getString(filter.get("arrivalTimeS"));
-			String dse = StringUtil.getString(filter.get("arrivalTimeE"));
-			if(StringUtil.isNotEmpty(dss)){
-				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
-			}
-			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
-			}
-			if(dates!=null)
-				tq.startTimeAfter(dates);
-			
-			if(datee!=null)
-				tq.startTimeBefore(datee);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
-			String rowI = StringUtil.getString(filter.get("rowNum"));
-			
+			String rowI = StringUtil.getString(filter.get("pageSize"));
 			int pageIndex=1;
-			int rowNum   =20;
+			int rowNum   =10;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
 			if(StringUtil.isNotEmpty(rowI)){
 				rowNum = Integer.valueOf(rowI);
 			}
+			ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+			if(StringUtil.isNotEmpty(processDefinitionKey))
+				processInstanceQuery.processDefinitionKey(processDefinitionKey);
+			if(StringUtil.isNotEmpty(processInstanceId))
+				processInstanceQuery.processInstanceId(processInstanceId);
+			if(StringUtil.isNotEmpty(title))
+				processInstanceQuery.subjectLike(title);
+			if(StringUtil.isNotEmpty(bizKey))
+				processInstanceQuery.processInstanceBusinessKeyLike(bizKey);
+			if(processInstanceStatus !=null){
+				processInstanceQuery.processInstanceStatus(processInstanceStatus);
+			}
+			if(StringUtil.isNotEmpty(initor))
+				processInstanceQuery.initiator(initor);
 			
-			if(filter.get("ended")!=null)
-				tq.isEnd();
 			
-			List<ProcessInstance> instances = null;
 			if(StringUtil.isNotEmpty(processType)){
 				if(processType.equals("initor"))
-					tq.initiator(userId);
+					processInstanceQuery.initiator(userId);
 				else
-					tq.taskParticipants(userId);
+					processInstanceQuery.taskParticipants(userId);
 			}
-			instances = tq.listPagination(pageIndex, rowNum);
-
-			Long count = tq.count();
+			
+			String processDefinitionName	   = StringUtil.getString(filter.get("processDefinitionName"));
+			if(StringUtil.isNotEmpty(processDefinitionName))
+				processInstanceQuery.processDefinitionNameLike(processDefinitionName);
+			
+			processInstanceQuery.orderByUpdateTime().desc();
+			Date dates = null;
+			Date datee = null;
+			String dss = StringUtil.getString(filter.get("startTimeS"));
+			String dse = StringUtil.getString(filter.get("startTimeE"));
+			if(StringUtil.isNotEmpty(dss)){
+				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
+			}
+			if(StringUtil.isNotEmpty(dse)){
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
+			}
+			if(dates!=null)
+				processInstanceQuery.startTimeBefore(dates);
+			
+			if(datee!=null)
+				processInstanceQuery.startTimeAfter(datee);
+			
+			
+			List<ProcessInstance> processInstances = processInstanceQuery.listPagination(pageIndex, rowNum);
+			
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
+			for(ProcessInstance tmp: processInstances){
+				Map<String, Object> persistentState = tmp.getPersistentState();
+				String processDefinitionId = tmp.getProcessDefinitionId();
+				ProcessDefinitionBehavior processDefinitionBehavior = engine.getModelService().getProcessDefinition(processDefinitionId);
+				String processDefinitionName1 = processDefinitionBehavior.getName();
+				persistentState.put("processDefinitionName", processDefinitionName1);
+				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId()); 
+				persistentState.put("nowNodeInfo", nowNodeInfo);
+				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
+				if(user !=null){
+					persistentState.put("startAuthorName", user.getUserName());
+				}else{
+					persistentState.put("startAuthorName", tmp.getStartAuthor());
+				}
+				instanceMaps.add(persistentState);
+			}
+			Long count = processInstanceQuery.count();
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
-			
-			for(ProcessInstance tmp:instances){
-				Map<String, Object> persistentState = tmp.getPersistentState();
-				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
-				String processDefinitionId = tmp.getProcessDefinitionId();
-				ProcessDefinitionBehavior processDefinitionBehavior = processEngine.getModelService().getProcessDefinition(processDefinitionId);
-				String processDefinitionName = processDefinitionBehavior.getName();
-				persistentState.put("processDefinitionName", processDefinitionName);
-				
-				instanceMaps.add(persistentState);
-				
-				
-				
-			}
-			result.put("dataList", instanceMaps);
-			result.put("pageInfo", page);
+			resultMap.put("dataList", instanceMaps);
+			resultMap.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
-		return result;
+		return resultMap;
 	}
 	
 	/*
@@ -333,7 +417,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			
 			String initor = StringUtil.getString(filter.get("initor"));	//发起人
 			if(StringUtil.isNotEmpty(initor))
-				tq.initiatorLike(initor);
+				tq.initiator(initor);
 			
 			Date dates = null;
 			Date datee = null;
@@ -343,7 +427,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				dates = DateUtil.stringToDate(dss,"yyyy-MM-dd");
 			}
 			if(StringUtil.isNotEmpty(dse)){
-				datee = DateUtil.stringToDate(dse,"yyyy-MM-dd");
+				String endTime = "235959999";
+				dse += endTime;
+				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
 				tq.archiveTimeAfter(dates);
@@ -364,7 +450,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				tq.subjectLike(subject);
 			
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
-			String rowI = StringUtil.getString(filter.get("rowNum"));
+			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
 			int rowNum   =20;
@@ -392,7 +478,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 			Pagination page = new Pagination(pageIndex,rowNum);
 			page.setTotal(count.intValue());
-			
+			IdentityService identityService = engine.getIdentityService();
 			for(ProcessInstance tmp:instances){
 				Map<String, Object> persistentState = tmp.getPersistentState();
 				ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
@@ -401,15 +487,20 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				String processDefinitionName = processDefinitionBehavior.getName();
 				persistentState.put("processDefinitionName", processDefinitionName);
 				
+				
+				
+				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
+				if(user !=null){
+					persistentState.put("startAuthorName", user.getUserName());
+				}else{
+					persistentState.put("startAuthorName", tmp.getStartAuthor());
+				}
 				instanceMaps.add(persistentState);
-				
-				
-				
 			}
 			result.put("dataList", instanceMaps);
 			result.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -421,23 +512,55 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		if(StringUtil.isNotEmpty(processInstanceId)){
 			String userId = (String) filter.get("userId");
 			ProcessEngine engine = getProcessEngine(userId);
+			ProcessInstance processInstance = engine.getRuntimeService().getProcessInstance(processInstanceId);
+			String processName = processInstance.getProcessDefinition().getName();
 			try{
 				TaskQuery tq = engine.getTaskService().createTaskQuery();
-				
+				IdentityService identityService = engine.getIdentityService();
 				tq.processInstanceId(processInstanceId);
 				tq.taskIsEnd().orderByEndTime().asc();
 				List<TaskInstance> instances = tq.list();
 				List<Map<String,Object>> instanceMaps = new ArrayList<Map<String,Object>>();
 				for(TaskInstance tmp:instances){
-					instanceMaps.add(tmp.getPersistentState());
+					Map<String,Object> instanceMap = tmp.getPersistentState();
+					String assigneeUserId = tmp.getAssignee();
+					if(StringUtil.isNotEmpty(assigneeUserId)){
+						UserTo tmpUser = identityService.getUserTo(assigneeUserId);
+						if(tmpUser!=null){
+							instanceMap.put("assgneeUserName", tmpUser.getUserName());
+						}
+					}else{
+						instanceMap.put("assgneeUserName", "(空用户名)");
+					}
+					instanceMaps.add(instanceMap);
 				}
 				tq.taskNotEnd().orderByTaskCreateTime().asc();
 				List<TaskInstance> instancesNotEnd = tq.list();
-				result.put("notEnddataList", instancesNotEnd);
+				
+				List<Map<String,Object>> notEndInstanceMaps = new ArrayList<Map<String,Object>>();
+				for(TaskInstance tmp:instancesNotEnd){
+					Map<String,Object> instanceMap = tmp.getPersistentState();
+					String assigneeUserId = tmp.getAssignee();
+					if(StringUtil.isNotEmpty(assigneeUserId)){
+						UserTo tmpUser = identityService.getUserTo(assigneeUserId);
+						if(tmpUser!=null){
+							instanceMap.put("assgneeUserName", tmpUser.getUserName());
+						}
+					}else{
+						instanceMap.put("assgneeUserName", "(空用户名)");
+					}
+					notEndInstanceMaps.add(instanceMap);
+				}
+				Map<String,Map<String,Object>> postionMap = engine.getModelService().GetFlowGraphicsElementPosition(processInstance.getProcessDefinitionId());
+				result.put("notEnddataList", notEndInstanceMaps);
 				result.put("dataList", instanceMaps);
+				result.put("positionInfo", JSONUtil.parseObject2JSON(postionMap));
+				result.put("taskEndedJson", JSONUtil.parseObject2JSON(instanceMaps));
+				result.put("taskNotEndJson", JSONUtil.parseObject2JSON(instancesNotEnd));
+				result.put("processName", processName);
 				
 			}finally{
-				FixFlowShellProxy.closeProcessEngine(engine, false);
+				closeProcessEngine();
 			}
 		}
 		return result;
@@ -458,7 +581,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			else
 				result = engine.getModelService().GetFlowGraphicsImgStreamByDefKey(processDefinitionKey);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 		
 		return result;
@@ -472,7 +595,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		
 		String path = StringUtil.getString(filter.get("path"));
 		path = path+"/icon/";
-//		File newFile = new File(path);
 		String tuserId = (String)filter.get("targetUserId");
 		if(StringUtil.isNotEmpty(tuserId)){
 			userId = tuserId;
@@ -487,7 +609,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			result.put("user", user);
 			result.put("groups", groups);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(engine, false);
+			closeProcessEngine();
 		}
 		return result;
 	}
@@ -523,25 +645,27 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 	}
 	
 
-	@Override
 	public Map<String,Object> GetFlowRefInfo(Map<String,Object> filter) throws SQLException {
 		Map<String,Object> result = new HashMap<String,Object>();
 		List<Map<String,Object>> tmpres = new ArrayList<Map<String,Object>>();
 		ProcessEngine engine = getProcessEngine(filter.get("userId"));
-		String taskId = (String)filter.get("taskId");
-		String processDefinitionKey = (String)filter.get("processDefinitionKey");
-//		taskId.replaceAll(regex, replacement)
-		List<TaskCommandInst> list = null;
-		if(StringUtil.isNotEmpty(taskId)){
-			list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
-		}else{
-			list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
+		try{
+			String taskId = (String)filter.get("taskId");
+			String processDefinitionKey = (String)filter.get("processDefinitionKey");
+	//		taskId.replaceAll(regex, replacement)
+			List<TaskCommandInst> list = null;
+			if(StringUtil.isNotEmpty(taskId)){
+				list = engine.getTaskService().GetTaskCommandByTaskId(taskId, false);
+			}else{
+				list = engine.getTaskService().getSubTaskTaskCommandByKey(processDefinitionKey);
+			}
+			for(TaskCommandInst tmp:list){
+				tmpres.add(tmp.getPersistentState());
+			}
+			result.put("commandList", tmpres);
+		}finally{
+			closeProcessEngine();
 		}
-		for(TaskCommandInst tmp:list){
-			tmpres.add(tmp.getPersistentState());
-		}
-		result.put("commandList", tmpres);
-		
 		return result;
 	}
 	
@@ -580,8 +704,12 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		expandTaskCommand.setParamMap(taskParams);
 
 		ProcessEngine engine = getProcessEngine(userId);
-		ProcessInstance processInstance = engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
-		
+		ProcessInstance processInstance = null;
+		try{
+			processInstance = (ProcessInstance)engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
+		}finally{
+			closeProcessEngine();
+		}
 		return processInstance;
 	}
 	
@@ -611,7 +739,6 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		icu.cut();
 	}
 	
-	@Override
 	public Map<String, Object> getAllUsers(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
@@ -660,7 +787,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			resultMap.put("dataList", userList);
 			resultMap.put("pageInfo", page);
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 		return resultMap;
 	}
@@ -681,34 +808,41 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				resultList.add(nodeMap);
 			}
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			closeProcessEngine();
 		}
 		resultMap.put("dataList", resultList);
 		return resultMap;
 	}
 	
-	@Override
 	public Map<String, Object> getRollbackTask(Map<String, Object> params) throws SQLException {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String userId = StringUtil.getString(params.get("userId"));
 		String taskId = StringUtil.getString(params.get("taskId"));
 		ProcessEngine processEngine = getProcessEngine(userId);
 		TaskService taskService = processEngine.getTaskService();
+		IdentityService identityService = processEngine.getIdentityService();
 		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
 		try{
 			List<TaskInstance> taskInstances = taskService.getRollBackTask(taskId);
 			for(TaskInstance task :taskInstances){
 				Map<String,Object> taskMap = new HashMap<String,Object>();
 				taskMap.put("taskId", task.getId());
-				taskMap.put("nodeName", task.getNodeName());
+				taskMap.put("taskName", task.getName());
+				taskMap.put("startTime", task.getCreateTime());
 				taskMap.put("endTime", task.getEndTime());
+				UserTo user = identityService.getUserTo(task.getAssignee());
 				taskMap.put("assignee", task.getAssignee());
+				if(user !=null){
+					taskMap.put("assigneeUserName", user.getUserName());
+				}
 				resultList.add(taskMap);
 			}
 		}finally{
-			FixFlowShellProxy.closeProcessEngine(processEngine, false);
+			FixFlowShellProxy.closeProcessEngine(processEngine, true);
 		}
 		resultMap.put("dataList", resultList);
 		return resultMap;
 	}
+	
+	
 }

@@ -39,9 +39,11 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.founder.fix.fixflow.I18N.PropertiesUtil;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
+import com.founder.fix.fixflow.service.FlowIdentityService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.JSONUtil;
@@ -79,6 +81,7 @@ public class FlowCenter extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String userId = StringUtil.getString(request.getSession().getAttribute(
 				FlowCenterService.LOGIN_USER_ID));
+		
 		if (StringUtil.isEmpty(userId)) {
 			String context = request.getContextPath();
 			response.sendRedirect(context + "/");
@@ -140,6 +143,7 @@ public class FlowCenter extends HttpServlet {
 				try{
 					List<Map<String, String>> result = getFlowCenter()
 							.queryStartProcess(userId);
+					List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
 					Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
 					for(Map<String,String> tmp:result){
 						String category = tmp.get("category");
@@ -154,12 +158,14 @@ public class FlowCenter extends HttpServlet {
 						newResult.put(category, tlist);
 					}
 					request.setAttribute("result", newResult);
+					request.setAttribute("lastest", lastestProcess);
 					request.setAttribute("userId", userId); // 返回userId add Rex
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 			} else if (action.equals("getMyTask")) {
 				try{
 					filter.put("path", request.getSession().getServletContext()
@@ -172,8 +178,9 @@ public class FlowCenter extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
 			} else if (action.equals("getAllProcess")) {
@@ -186,8 +193,9 @@ public class FlowCenter extends HttpServlet {
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
 					throw e;
+				}finally{
+					rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
 				}
-				rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
 			} else if (action.equals("getPlaceOnFile")) {
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryPlaceOnFile(filter);
@@ -252,13 +260,23 @@ public class FlowCenter extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/selectStepList.jsp");
 			} else if(action.equals("viewDelegation")){	//选择步骤列表
-//				Map<String, Object> pageResult = getFlowCenter().getRollbackTask(filter);
-//				filter.putAll(pageResult);
+				Map<String, Object> pageResult = new HashMap<String, Object>();
+				
+				pageResult = this.getFlowIdentityService().getUserDelegationInfo(userId);
+				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
 			}
-			if (rd != null)
-				rd.forward(request, response);
+			else if(action.equals("saveDelegation")){	//选择步骤列表
+				
+				String agentInfoJson = StringUtil.getString(request.getParameter("insertAndUpdate"));
+				if(StringUtil.isNotEmpty(agentInfoJson)){
+					Map<String, Object> delegationInfo = JSONUtil.parseJSON2Map(agentInfoJson);
+					this.getFlowIdentityService().saveUserDelegationInfo(delegationInfo );
+				}
+				response.setContentType("text/html;charset=UTF-8"); 
+				response.getWriter().write("<script>alert('保存完成');window.close();</script>");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -277,11 +295,19 @@ public class FlowCenter extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		if (rd != null){
+			rd.forward(request, response);
+		}
 	}
 
 	public FlowCenterService getFlowCenter() {
 		return (FlowCenterService) SpringConfigLoadHelper
 				.getBean("flowCenterServiceImpl");
+	}
+	
+	public FlowIdentityService getFlowIdentityService(){
+		return (FlowIdentityService)SpringConfigLoadHelper
+				.getBean("flowIdentityServiceImpl");
 	}
 
 }

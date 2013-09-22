@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/form.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/reset.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>
+
 <title>流程发布</title>
 <%
 	String deploymentId = request.getParameter("deploymentId");
@@ -10,14 +17,40 @@
 		deploymentId = "";
 	}
 %>
-</head>
-<body>
-<form action="../FlowManager" method="post" ENCTYPE="multipart/form-data">
-<input type="file" name="ProcessFile" /><br>
-<input type="text" name="deploymentId" id="deploymentId" value="<%=deploymentId%>"><br>
-<input type="submit" value="发布" />
-<input type="hidden" name="action" value="deploy">
 
+<script type="text/javascript">
+	function sub(){
+		$("#subForm").submit();
+	}
+	
+	function bodyOnLoad(){
+		var deployId= $("#deploymentId").val();
+		if(deployId == ""){
+			$("#trDeploy").css("display","none");
+		}
+	}
+</script>
+</head>
+<body onload="bodyOnLoad();">
+<form action="../../FlowManager" method="post" id="subForm" ENCTYPE="multipart/form-data">
+<input type="hidden" name="action" value="deploy">
+<div class="tpl-form-border">
+			<table class="table-form">
+				<tr>
+					<td class="title-r">请选择文件：</td>
+					<td><input type="file" name="ProcessFile" /></td>
+				</tr>
+				<tr id="trDeploy">
+					<td class="title-r">发布号：</td>
+					<td><input type="text" name="deploymentId" id="deploymentId" readOnly value="<%=deploymentId%>"></td>
+				</tr>
+			</table>
+			<div class="toolbar">	
+					<div class="btn-normal" onclick="sub();">
+						<a href="#">发布</a>
+					</div>
+			</div>
+	</div>
 </form>
 </body>
 </html>

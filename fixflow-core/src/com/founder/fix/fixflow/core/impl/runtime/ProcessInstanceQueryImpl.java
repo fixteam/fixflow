@@ -30,6 +30,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.runtime.QueryLocation;
 
 
@@ -37,6 +38,8 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 
 	protected String executionId;
 	protected String businessKey;
+	protected String businessKeyLike;
+	
 	protected String processDefinitionId;
 	protected String processDefinitionKey;
 	protected String superProcessInstanceId;
@@ -46,9 +49,10 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected Date updateTime;
 	protected String isSuspended;
 	protected List<String> processDefinitionKeyList=new ArrayList<String>();
-
+	protected ProcessInstanceType status;
 	protected boolean isContainsSubProcess=false;
-	
+	protected String processDefinitionName;
+	protected String processDefinitionNameLike;
 
 
 	// Unused, see dynamic query
@@ -82,6 +86,14 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 			throw new FixFlowException("Business key is null");
 		}
 		this.businessKey = businessKey;
+		return this;
+	}
+	
+	public ProcessInstanceQuery processInstanceBusinessKeyLike(String businessKey) {
+		if (businessKey == null) {
+			throw new FixFlowException("Business key is null");
+		}
+		this.businessKeyLike = businessKey;
 		return this;
 	}
 
@@ -207,6 +219,21 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		this.orderProperty = ProcessInstanceQueryProperty.UPDATE_TIME;
 		return this;
 	}
+	
+	public ProcessInstanceQuery processInstanceStatus(ProcessInstanceType status) {
+		this.status = status;
+		return this;
+	}
+	
+	public ProcessInstanceQuery processDefinitionName(String definitionName) {
+		this.processDefinitionName = definitionName;
+		return this;
+	}
+	
+	public ProcessInstanceQuery processDefinitionNameLike(String definitionNameLike) {
+		this.processDefinitionNameLike = definitionNameLike;
+		return this;
+	}
 
 	// results /////////////////////////////////////////////////////////////////
 
@@ -248,6 +275,14 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	public String getActivityId() {
 		return null; // Unused, see dynamic query
 	}
+	
+	public String getProcessDefinitionName() {
+		return processDefinitionName;
+	}
+	
+	public String getProcessDefinitionNameLike() {
+		return processDefinitionNameLike;
+	}
 
 	public String getSuperProcessInstanceId() {
 		return superProcessInstanceId;
@@ -265,6 +300,10 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return taskParticipants;
 	}
 	
+	public ProcessInstanceType getStatus() {
+		return status;
+	}
+
 	protected String initiatorLike;
 
 	protected String subject;
@@ -458,7 +497,11 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 		return processInstanceVariableValueIsLike;
 	}
 	
-	
+	public String getBusinessKeyLike() {
+		return businessKeyLike;
+	}
+
+
 
 
 }

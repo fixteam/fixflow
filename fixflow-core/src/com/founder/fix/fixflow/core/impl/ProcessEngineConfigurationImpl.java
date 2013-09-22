@@ -34,6 +34,9 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -65,6 +68,13 @@ import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTableConfig;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Sql;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMapping;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMappingConfig;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigFactory;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigPackage;
 import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
@@ -77,6 +87,7 @@ import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
+import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.cache.CacheImpl;
@@ -100,6 +111,7 @@ import com.founder.fix.fixflow.core.impl.threadpool.FixThreadPoolExecutor;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.impl.util.XmlUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.variable.BizData;
 
@@ -141,6 +153,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected FixFlowResources fixFlowResources;
 
 	protected PigeonholeConfig pigeonholeConfig;
+	
+	protected DataBaseTableConfig dataBaseTableConfig;
+
+	
 
 	protected ExpandCmdConfig expandCmdConfig;
 
@@ -169,6 +185,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfigDefault;
 
 	protected List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs;
+	
+	protected SqlMappingConfig sqlMappingConfig;
+	
+	protected List<SqlMapping> sqlMappings;
+	
+	protected Map<String, Map<String, Sql>> sqlMap=new HashMap<String, Map<String, Sql>>();
+
+	
 
 	/**
 	 * 线程池
@@ -183,12 +207,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	protected void init() {
 		initEmfFile();
+		initSqlMappingFile();
 
 		initCommandContextFactory();
 		initCommandExecutors();
 		initConnectionManagementConfig();
 		initServices();
 		initConnection();
+		initDataBaseTable();
 		initCache();
 		initDeployers();
 		initGroupDefinitions();
@@ -220,6 +246,87 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 
 	
+
+	private void initSqlMappingFile() {
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
+
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml").toString();
+		Resource resource = null;
+		try {
+			if (!filePath.startsWith("jar")) {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml").getFile(), "utf-8");
+				resource = resourceSet.createResource(URI.createFileURI(filePath));
+			} else {
+				resource = resourceSet.createResource(URI.createURI(filePath));
+			}
+
+		} catch (UnsupportedEncodingException e2) {
+			e2.printStackTrace();
+			throw new FixFlowException("流程配置文件加载失败！", e2);
+		}
+
+		// register package in local resource registry
+		resourceSet.getPackageRegistry().put(SqlmappingconfigPackage.eINSTANCE.getNsURI(), SqlmappingconfigPackage.eINSTANCE);
+		// load resource
+		try {
+			resource.load(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("流程配置文件加载失败", e);
+		}
+
+		sqlMappingConfig= (SqlMappingConfig) resource.getContents().get(0);
+
+	}
+
+	
+	
+	private void initDataBaseTable() {
+		
+		this.sqlMappingConfig.eResource();
+		
+		
+		this.sqlMappings=this.sqlMappingConfig.getSqlMapping();
+		this.dataBaseTableConfig=this.sqlMappingConfig.getDataBaseTableConfig();
+		
+		
+		
+		Document document = null;
+		try {
+			document = XmlUtil.read(ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml"));
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("读取fixflow配置出错", e);
+		}
+		sqlMap.clear();
+		for (Object ele : document.getRootElement().elements("sqlMapping")) {
+			Element sqlMapping = (Element) ele;
+			Map<String, Sql> sqlMapNew=new HashMap<String, Sql>();
+			for (Object eleNew : sqlMapping.elements("sql")) {
+				Element sqlE = (Element) eleNew;
+				Sql sql=SqlmappingconfigFactory.eINSTANCE.createSql();
+				sql.setId(sqlE.attributeValue("id"));
+				sql.setSqlValue(sqlE.getText());
+				sqlMapNew.put(sql.getId(),sql );
+			}
+			sqlMap.put(sqlMapping.attributeValue("id"), sqlMapNew);
+			
+		}
+		
+		/*
+		for (SqlMapping sqlMapping : this.sqlMappings) {
+			for (Sql sql : sqlMapping.getSql()) {
+				sqlMap.put(sql.getId(), sql);
+			}
+		}*/
+		
+		
+	}
 
 	private void initImportDataVariableConfig() {
 		this.importDataVariableConfig = this.fixFlowConfig.getImportDataVariableConfig();
@@ -488,6 +595,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			if (dataBase.getId().equals(selectedDB)) {
 				selectedDatabase = dataBase;
 				ConnectionManagement.defaultDataBaseId = selectedDatabase.getId();
+				break;
 			}
 		}
 
@@ -1037,6 +1145,52 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	public AbstractAuthentication getAuthenticationInstance() {
 		return authenticationInstance;
+	}
+	
+	public DataBaseTableConfig getDataBaseTableConfig() {
+	
+		return dataBaseTableConfig;
+	}
+	
+	public List<SqlMapping> getSqlMappings() {
+		return sqlMappings;
+	}
+	
+	public SqlMapping getSqlMapping(String sqlMappingId) {
+		
+		for (SqlMapping sqlMapping : this.sqlMappings) {
+			if(sqlMapping.getId().equals(sqlMappingId)){
+				return sqlMapping;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 获取sql配置
+	 * @param sqlMappingId 分类编号
+	 * @param sqlId sql编号
+	 * @return
+	 */
+	public Sql getSql(String sqlMappingId,String sqlId) {
+		
+		return sqlMap.get(sqlMappingId).get(sqlId);
+
+	}
+	
+	
+	
+	public DataBaseTable getDataBaseTableConfig(DataBaseTableEnum dataBaseTableEnum) {
+		
+		List<DataBaseTable> dataBaseTables=dataBaseTableConfig.getDataBaseTable();
+		
+		for (DataBaseTable dataBaseTable : dataBaseTables) {
+			if(dataBaseTable.getTableId().toLowerCase().equals(dataBaseTableEnum.toString().toLowerCase())){
+				return dataBaseTable;
+			}
+		}
+		return null;
 	}
 
 }

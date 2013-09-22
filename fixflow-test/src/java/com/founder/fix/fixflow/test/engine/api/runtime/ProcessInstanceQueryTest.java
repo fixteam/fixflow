@@ -27,6 +27,7 @@ import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
@@ -157,6 +158,8 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 			assertTrue(firstStartTime.before(tmpStartTime));
 		}
 		
+		
+		
 		//需要重置查询，因为order by 有叠加效果
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		processInstanceQuery.processDefinitionKey(definitionKeys);
@@ -220,6 +223,13 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		
 		//重置查询
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询对应bizKey的流程实例
+		long count = processInstanceQuery.processDefinitionKey("Process_TaskServiceTest").processInstanceStatus(ProcessInstanceType.RUNNING).count();
+		//验证是否有10个
+		assertEquals(10, count);
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		//查询对应bizKey的流程实例(方法2)
 		processInstances = processInstanceQuery.processInstanceBusinessKey("BK_testStartProcessInstanceByKey","Process_TaskServiceTest").list();
 		//验证是否有10个
@@ -229,6 +239,20 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		processInstanceQuery = runtimeService.createProcessInstanceQuery();
 		//查询某人发起的流程实例
 		processInstances = processInstanceQuery.processDefinitionKey("Process_TaskServiceTest").initiator("1200119390").list();
+		//验证是否有10个
+		assertEquals(10, processInstances.size());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称like“TaskServiceTes”的流程实例
+		processInstances = processInstanceQuery.processDefinitionNameLike("TaskServiceTes").list();
+		//验证是否有10个
+		assertEquals(10, processInstances.size());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").list();
 		//验证是否有10个
 		assertEquals(10, processInstances.size());
 		
@@ -414,5 +438,7 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//验证是否为5个
 		assertEquals(5, processInstances.size());
 	}
+	
+	
 
 }

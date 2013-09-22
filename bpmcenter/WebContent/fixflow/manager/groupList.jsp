@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -9,11 +9,11 @@
 <jsp:include page="head.jsp" flush="true"/>
 <link rel="stylesheet" href="fixflow/css/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="fixflow/js/jquery.ztree.core-3.5.js"></script>
-<title>用户组查询</title>
+<title>组织机构</title>
 <script type="text/javascript">
 function viewGroupInfo(groupId,groupType){
 	var obj = {};
-	window.showModalDialog("FlowManager?action=getGroupInfo&viewGroupId="+groupId+"&viewGroupType="+groupType,obj,"dialogWidth=800px;dialogHeight=600px");
+	window.open("FlowManager?action=getGroupInfo&viewGroupId="+groupId+"&viewGroupType="+groupType);
 }
 </script>
 <SCRIPT type="text/javascript">
@@ -54,16 +54,21 @@ function viewGroupInfo(groupId,groupType){
     	<div class="left-nav"><a name="userList" href="FlowManager?action=getUserList">用户</a></div>
         <div class="left-nav-orange-line">&nbsp;</div>
         
-       	<div class="left-nav"><a name="group" href="#">组</a></div>
+       	<div class="left-nav"><a name="group" href="#" class="down-arrow">组</a></div>
        	  	<c:if test="${groupList!= null && fn:length(groupList) != 0}">
 			    <c:forEach items="${groupList}" var="group" varStatus="index">
-			      <div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
-			      <c:if test="${group.isTree!= null && group.isTree == true}">
-			      	<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>
-			      </c:if>
+			      <c:choose>
+				    <c:when test="${group.isTree!= null && group.isTree == true}">
+				    	<div class="left-nav"><a class="down-arrow" name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+						<div class="zTreeDiv" style="padding-left:25px;"><div class="jsonStr" style="display:none;">${group.groupJson}</div><ul class="ztree"></ul></div>				   
+				    </c:when>
+				    <c:otherwise>
+				    	<div class="left-nav"><a name="groupList" href="FlowManager?action=getGroupList&groupType=${group.typeId}"><img src="fixflow/images/man02.png" />${group.typeName}</a></div>
+				    </c:otherwise>
+				</c:choose>			   
 			    </c:forEach>
        	  	</c:if>
-        </div> 
+        </div>
 </div>
 <!-- 右-->
 	<div class="right">
@@ -76,7 +81,7 @@ function viewGroupInfo(groupId,groupType){
                 <td class="title-r">组名称：</td>
                 <td><input type="text" id="text_4" name="queryGroupName" class="fix-input" style="width:160px;" value="${result.queryGroupName}"/>
                 <td ></td>
-                <td ><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+                <td ><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找</a></div></td>
               </tr>
             </table>
         </div>

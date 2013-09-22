@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* 2013-8-13 */
-body { min-width:1000px;}
+/* body { min-width:1000px;} */
 .main-panel { width:100%; height:100%; display:table;}
 .header { display:table-row; width:100%; height:70px; overflow:hidden;}
 .top { height:22px; line-height:22px; overflow:hidden;}
@@ -28,8 +28,10 @@ body { min-width:1000px;}
 .left-nav-box .left-nav { padding:0; width:220px; height:32px; overflow:hidden;}
 .left-nav-box .left-nav h1 { margin-top:2px; padding:6px 20px; width:180px; height:20px; line-height:20px; color:#222; font-family:"微软雅黑"; font-size:15px;}
 .left-nav-box .left-nav a,.left-nav-box .left-nav a:hover { display:block; padding:6px 20px; width:180px; height:20px; line-height:20px; color:#222; font-family:"微软雅黑"; font-size:15px; text-decoration:none; background: url(../images/arrow.png) no-repeat 190px center;}
+.left-nav-box .left-nav a.down-arrow,.left-nav-box .left-nav a.down-arrow:hover { display:block; padding:6px 20px; width:180px; height:20px; line-height:20px; color:#222; font-family:"微软雅黑"; font-size:15px; text-decoration:none; background: url(../images/arrow2.png) no-repeat 185px center;}
 .left-nav-box .left-nav a img { display:inline-block; margin-right:12px; width:20px; height:20px; float:left;}
 .left-nav-box .left-nav a:hover { background-color:#cbcbcb;}
+.left-nav-box .left-nav a.down-arrow:hover { background-color:#cbcbcb;}
 .left-nav-box .left-nav-orange-line { margin:3px 20px; width:180px; height:4px; font-size:1px; line-height:1px; border-bottom:4px solid #10a7d9;}
 .left-nav-box .left-nav-gray-line { margin:3px 20px; width:180px; height:1px; font-size:1px; line-height:1px; border-bottom:1px solid #afafaf;}
 

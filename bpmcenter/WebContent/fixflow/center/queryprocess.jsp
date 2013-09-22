@@ -15,9 +15,34 @@ $("a[name=flowGraph]").click(function(){
     var pdk = $(this).attr("pdk");
     var pii = $(this).attr("pii");
     var obj = {};
-    window.showModalDialog("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii,obj,"dialogWidth=800px;dialogHeight=600px");
+    window.open("FlowCenter?action=getTaskDetailInfo&processDefinitionKey="+pdk+"&processInstanceId="+pii);
   });
+var status = '${result.status}';
+if(status!='')
+	$("#status").val(status);
+	
+$("#selectUser").click(function(){
+	var obj = {
+	  type:"user"
+	};
+	var d = FixSelect(obj);
+	var userId = d[0].USERID;
+	var userName = d[0].USERNAME;
+	$("#initor").val(userId);
+	$("#initorName").val(userName);
 });
+});
+function clearInfo(){
+	$("#title").val("");
+	$("#processDefinitionKey").val("");
+	$("#processDefinitionName").val("");
+	$("#bizKey").val("");
+	$("#initor").val("");
+	$("#initorName").val("");
+	$("#startTimeS").val("");
+	$("#startTimeE").val("");
+	$("#status").val("");
+}
 </script>
 </head>
 <body>
@@ -55,24 +80,60 @@ $("a[name=flowGraph]").click(function(){
 					<div id="search" class="search">
 					<input type="hidden" name="action" value="getAllProcess"/> 
 					<input type="hidden" id="processType" name="processType" value="${result.processType}"/> 
-						<table width="100%">
+						<table>
 			              <tr>
-			                <td class="title-r">任务主题：</td>
-			                <td style="width:180px;"><input type="text" id="text_0" name="title" class="fix-input" style="width:160px;" value="${result.title}"/></td>
-			                <td class="title-r">流程变量：</td>
-			                <td style="width:180px;"><input type="text" id="text_1" name="text_1" class="fix-input" style="width:160px;" value=""/></td>
-			                <td class="title-r">单 据 号：</td>
-			                <td style="width:180px;"><input type="text" id="text_2" name="bizKey" class="fix-input" style="width:160px;" value="${result.bizKey}"/></td>
-			                <td><div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">查 找<em class="arrow-small"></em></a></div></td>
+			                <td class="title-r">${applicationScope.appInfo["task.subject"]}：</td>
+			                <td><input type="text" id="title" name="title" class="fix-input" value="${result.title}"/></td>
+			                <td class="title-r">${applicationScope.appInfo["task.processDefinitionName"]}：</td>
+			                <td><input type="text" id="processDefinitionName" name="processDefinitionName" class="fix-input" value="${result.processDefinitionName}"/></td>
+			                <td class="title-r">${applicationScope.appInfo["task.bizKey"]}：</td>
+			                <td><input type="text" id="bizKey" name="bizKey" class="fix-input" value="${result.bizKey}"/></td>
+			                <td>
+				                <table style="margin:0">
+				                <tr>
+				                <td>
+				                <div class="btn-normal"><a href="#" onclick="$('#subForm').submit();">${applicationScope.appInfo["common.search"]}</a></div>
+				                </td>
+				                <td>
+				                <div class="btn-normal"><a href="#" onclick="clearInfo();">${applicationScope.appInfo["common.clear"]}</a></div>
+								</td>                
+				                </tr>
+				                </table>
+			                </td>
 			              </tr>
 			              <tr>
-			                <td class="title-r">发 起 人：</td>
-			                <td><input type="text" id="text_3" name="initor" class="fix-input" style="width:160px;" value="${result.initor}"/></td>
-			                <td class="title-r">发起时间：</td>
-			                <td><input type="text" id="text_4" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
-			                 - <input type="text" id="text_5" name="startlTimeE" class="fix-input" style="width:69px;" value="${result.startlTimeE}" onClick="WdatePicker()"/></td>
-			                <td></td>
-			                <td></td>
+			              	
+			                <td class="title-r">${applicationScope.appInfo["task.initor"]}：</td>
+			               <td>
+									<table style="margin: 0">
+										<tr>
+											<td><input type="hidden" id="initor" name="initor"
+												class="fix-input" value="${result.initor}" /> <input
+												type="text" id="initorName" readonly="true"
+												name="initorName" class="fix-input" style="width: 94px;"
+												value="${result.initorName}" /></td>
+											<td>
+												<div class="btn-normal">
+													<a href="#" onclick="" id="selectUser">${applicationScope.appInfo["common.select"]}<em
+														class="arrow-small"></em></a>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+			                <td class="title-r">${applicationScope.appInfo["task.startTime"]}：</td>
+			                <td><input type="text" id="startTimeS" name="startTimeS" class="fix-input" style="width:69px;" value="${result.startTimeS}" onClick="WdatePicker()"/>
+			                 - <input type="text" id="startTimeE"  name="startTimeE" class="fix-input" style="width:69px;" value="${result.startTimeE}" onClick="WdatePicker()"/></td>
+			                <td class="title-r">${applicationScope.appInfo["task.status"]}：</td>
+			                <td>
+		                    <select id="status" name="status" class="fix-input" style="width:172px;">
+			                  <option value ="">请选择</option>
+							  <option value ="SUSPEND">暂停</option>
+							  <option value ="RUNNING">运行中</option>
+							  <option value ="COMPLETE">完成</option>
+							  <option value ="TERMINATION">终止</option>
+							</select>
+			                </td>
 			                <td></td>
 			              </tr>
 			            </table>
@@ -81,26 +142,36 @@ $("a[name=flowGraph]").click(function(){
 						<!-- 表 -->
 						<table width="100%" class="fix-table">
 							<thead>
-								<th>单据号</th>
-								<th>流程名称</th>
-								<th>任务主题</th>
-								<th>发起人</th>
-								<th>发起时间</th>
-								<th>更新时间</th>
-								<th>当前步骤</th>
-								<th>流程状态</th>
+							<th width="30px">${applicationScope.appInfo["common.no"]}</th>
+								<th>${applicationScope.appInfo["task.bizKey"]}</th>
+								<th>${applicationScope.appInfo["task.processDefinitionName"]}</th>
+								<th>${applicationScope.appInfo["task.subject"]}</th>
+								<c:if test="${result.processType != 'initor'}"><th>${applicationScope.appInfo["task.initor"]}</th> </c:if>
+								
+								<th width="130">${applicationScope.appInfo["task.startTime"]}</th>
+								<th width="130">${applicationScope.appInfo["task.updateTime"]}</th>
+								<th>${applicationScope.appInfo["task.nodeName"]}</th>
+								<th>${applicationScope.appInfo["task.status"]}</th>
+								<th>${applicationScope.appInfo["common.operation"]}</th>
 							</thead>
 							<tbody>
 								<c:forEach items="${result.dataList}" var="dataList"
 									varStatus="index">
 									<tr>
+									<td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
 										<td>${dataList.BIZ_KEY}</td>
 										<td>${dataList.processDefinitionName}</td>
 										<td>${dataList.subject}</td>
-										<td>${dataList.startAuthor}</td>
+										<c:if test="${result.processType != 'initor'}"><td>${dataList.startAuthorName}</td></c:if>
 										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
-										<td>${dataList.processLocation}</td>
+										<td>${dataList.nowNodeInfo}</td>
+										<td>
+											<c:if test="${dataList.instanceStatus == 'SUSPEND'}" var="runStatue">暂停</c:if>
+											<c:if test="${dataList.instanceStatus == 'RUNNING'}" var="runStatue">运行中</c:if>
+											<c:if test="${dataList.instanceStatus == 'COMPLETE'}" var="runStatue">完成</c:if>
+											<c:if test="${dataList.instanceStatus == 'TERMINATION'}" var="runStatue">终止</c:if>
+										</td>
 										<td><a name="flowGraph" href="#" pii="${dataList.processInstanceId}" pdk="${dataList.processDefinitionKey}">查看</a></td>
 									</tr>
 								</c:forEach>

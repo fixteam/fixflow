@@ -25,6 +25,7 @@ import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.MailInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
+import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -56,10 +57,20 @@ public class FixMailEngine {
 		}
 
 		List<Object> pObjects = new ArrayList<Object>();
-		pObjects.add(MailStatus.COMPLETE.toString());
-		pObjects.add(MailStatus.FAILURE.toString());
+		//pObjects.add(MailStatus.COMPLETE.toString());
+		//pObjects.add(MailStatus.FAILURE.toString());
+		pObjects.add(MailStatus.NOSEND.toString());
 		SqlCommand sqlCommand = new SqlCommand(Context.getDbConnection());
-		List<Map<String, Object>> dataList = sqlCommand.queryForList("SELECT * FROM FIXFLOW_MAIL WHERE MAIL_STATUS!=? AND MAIL_STATUS!=?", pObjects);
+		
+		Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
+		
+		
+		
+		
+		String sqlText=pagination.getPaginationSql("SELECT * FROM FIXFLOW_MAIL WHERE MAIL_STATUS=?", 0, 10, "*", null);
+		
+		List<Map<String, Object>> dataList = sqlCommand.queryForList(sqlText, pObjects);
+		
 		for (Map<String, Object> mapData : dataList) {
 
 			try {

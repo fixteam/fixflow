@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+               
+<chapter xml:id="newfeatures">
+  <title>新功能介绍</title>
+
+  <section xml:id="newfeatures.engine">
+    <title>流程引擎</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="newfeatures.designer">
+    <title>流程设计器</title>
+    <para>
+      
+    </para>
+  </section>
+  
+  <section xml:id="newfeatures.other">
+    <title>外围功能</title>
+    <para>
+      
+    </para>
+  </section>
+ 
+  
+</chapter>

@@ -52,6 +52,7 @@ import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 import com.founder.fix.fixflow.core.objkey.VariableObjKey;
+import com.founder.fix.fixflow.core.runtime.QueryLocation;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class ProcessInstancePersistence {
@@ -418,6 +419,9 @@ public class ProcessInstancePersistence {
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
 			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
 		}
+		if((processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName()))||(processInstanceQuery.getProcessDefinitionNameLike() !=null && !"".equals(processInstanceQuery.getProcessDefinitionNameLike()))){
+			sqlString += "left join FIXFLOW_DEF_PROCESSDEFINITION PD on pd.process_id = E.processdefinition_id";
+		}
 		sqlString = sqlString + " WHERE 1=1";
 		//自定义扩展查询
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getWhereSql()!=null&&!processInstanceQuery.getQueryExpandTo().getWhereSql().equals("")){
@@ -426,10 +430,24 @@ public class ProcessInstancePersistence {
 				objectParamWhere.addAll(processInstanceQuery.getQueryExpandTo().getWhereSqlObj());
 			}
 		}
+		if(processInstanceQuery.getProcessDefinitionNameLike() !=null && !"".equals(processInstanceQuery.getProcessDefinitionNameLike())){
+			sqlString += " and PD.process_name like ?";
+			objectParamWhere.add("%"+processInstanceQuery.getProcessDefinitionNameLike()+"%");
+		}
+		if(processInstanceQuery.getProcessDefinitionName() !=null && !"".equals(processInstanceQuery.getProcessDefinitionName())){
+			sqlString += " and PD.process_name = ?";
+			objectParamWhere.add(processInstanceQuery.getProcessDefinitionName());
+		}
 		if (processInstanceQuery.getBusinessKey() != null) {
 			sqlString = sqlString + " and E.BIZ_KEY=? ";
 			objectParamWhere.add(processInstanceQuery.getBusinessKey());
 		}
+		
+		if (processInstanceQuery.getBusinessKeyLike() != null) {
+			sqlString = sqlString + " and E.BIZ_KEY LIKE '%"+processInstanceQuery.getBusinessKeyLike()+"%'";
+			//objectParamWhere.add(processInstanceQuery.getBusinessKeyLike());
+		}
+		
 		if (processInstanceQuery.getIsPigeonhole() != null) {
 			sqlString = sqlString + " and (E.ISPIGEONHOLE=? or E.ISPIGEONHOLE IS NULL) ";
 			objectParamWhere.add(processInstanceQuery.getIsPigeonhole());
@@ -548,6 +566,10 @@ public class ProcessInstancePersistence {
 				objectParamWhere.add(processInstanceQuery.getProcessInstanceVariableValue());
 			}
 		}
+		if(processInstanceQuery.getStatus() !=null){
+			sqlString += " AND INSTANCE_STATUS = ? ";
+			objectParamWhere.add(processInstanceQuery.getStatus().toString());
+		}
 		return sqlString;
 	}
 	
@@ -639,7 +661,23 @@ public class ProcessInstancePersistence {
 		}
 		return processInstancePersistenceToList;
 	}
-
+	
+	/**
+	 * 根据流程定义Id查询所有实例
+	 * @param processDefinitionId
+	 * @return
+	 */
+	public List<String> selectProcessInstanceIdByDefinitionId(String processDefinitionId){
+		List<String> processInstanceIds = new ArrayList<String>();
+		String sql = "select processinstance_id from "+ProcessInstanceObjKey.getTableName(QueryLocation.RUN_HIS)+" p where p.processdefinition_id =?";
+		List<Object> objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(processDefinitionId);
+		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sql, objectParamWhere);
+		for(Map<String, Object> tmp :dataObj){
+			processInstanceIds.add(StringUtil.getString(tmp.get("PROCESSINSTANCE_ID")));
+		}
+		return processInstanceIds;
+	}
 	/**
 	 * 
 	 * @param processInstanceQuery
@@ -1086,5 +1124,6 @@ public class ProcessInstancePersistence {
 	public void deleteProcessInstanceByProcessInstanceId(String processInstanceId){
 		Object[] objectParamWhere = { processInstanceId };
 		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
+		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 	}
 }

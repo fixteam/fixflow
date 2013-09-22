@@ -85,6 +85,15 @@ public interface ProcessEngine {
 	ScheduleService getScheduleService();
 	
 
+
+	/**
+	 * 流程管理服务
+	 * (用于对流程干预)
+	 * @return
+	 */
+	ManagementService getManagementService();
+	
+
 	/**
 	 * 关闭流程引擎
 	 * (关注销引擎对象、关闭定时服务、数据库连接、脚本语言)

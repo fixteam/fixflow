@@ -9,24 +9,24 @@ xmlns:context="http://www.springframework.org/schema/context"
     http://www.springframework.org/schema/context/spring-context-2.5.xsd                      
 					http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 					http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+	<!-- 注解配置，如果有新的注解在后逗号分隔，这一段务必保留 -->
+	<context:component-scan base-package="com.founder.fix.fixflow" />
+	
+	<!-- 读取数据库配置所在 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
-	   	<property name="location" value="classpath:/testjdbc.properties"/>        
-	</bean> 
-	 	<bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
+	   	<property name="location" value="classpath:/jdbc.properties"/>        
+	</bean>
+	<!-- 数据源配置，该数据源可以是spring连接池也可以是来自服务器连接池 -->
+	<bean id="fix_biz_base_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
 	    <property name="driverClassName" value="${idbase.driverClassName}" />        
 	    <property name="url" value="${idbase.url}" />        
 	    <property name="username" value="${idbase.username}" />        
 	    <property name="password" value="${idbase.password}" />        
-	</bean>     
+	</bean>
+	<!-- 平台本身的连接配置，DB_FIX_BIZ_BASE是连接名称，改名称与fixflowconfig.xml里的可用连接一一对应-->
 	<bean id="DB_FIX_BIZ_BASE" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
 	  <property name="dataSource"> 
 	    <ref bean="fix_biz_base_dataSource"/> 
-	  </property>  
-	  <property name="transactionName" value="TransactionManager"/> 
-	</bean>  
-  <bean id="TransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
-    <property name="dataSource"> 
-      <ref bean="fix_biz_base_dataSource"/> 
-    </property> 
-  </bean>  
+	  </property>
+	</bean>
 </beans>

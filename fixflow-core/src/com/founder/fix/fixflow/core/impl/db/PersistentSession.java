@@ -243,6 +243,11 @@ public class PersistentSession {
 			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
 			return processInstancePersistence.selectProcessInstanceByQueryCriteria((ProcessInstanceQueryImpl) parameter, page);
 		}
+		
+		if(statement.equals("selectProcessInstanceIdsByProcessDefinitionId")){
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
+			return processInstancePersistence.selectProcessInstanceIdByDefinitionId(StringUtil.getString(parameter));
+		}
 
 		if (statement.equals("selectTokenByQueryCriteria")) {
 			TokenPersistence tokenPersistence = ProcessObjectFactory.FACTORYINSTANCE.createTokenPersistence(connection);
@@ -292,6 +297,14 @@ public class PersistentSession {
 			return processDefinitionPersistence.selectProcessDefinitionByDeploymentAndKey(parameter);
 		}
 		
+		
+		if (statement.equals("findUserSubmitProcess")) {
+			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);
+			Map<String, String> strmap = (Map<String, String>) parameter;
+			String userId = strmap.get("userId");
+			int number = StringUtil.getInt(strmap.get("number"));
+			return processDefinitionPersistence.findUserSubmitProcess(userId,number);
+		}
 		
 		
 

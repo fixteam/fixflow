@@ -13,7 +13,7 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 		$("#"+formId).append(cprocessDefinitionKey);
 		$("#"+formId).append(ctaskId);
 
-		$("div[commandType]").click(function() {
+		$("div[commandType],button[commandType]").click(function() {
 			var id = $(this).attr("commandId");
 			var type = $(this).attr("commandType");
 			$("#commandId").val(id);
@@ -24,42 +24,54 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				var pii = processInstanceId;
 				var pdk = processDefinitionKey;
 				var obj = {};
-				window.showModalDialog(
+				window.open(
 						"FlowCenter?action=getTaskDetailInfo&processInstanceId="
 								+ pii+"&processDefinitionKey="
-								+ pdk+"", obj,
-						"dialogWidth=800px;dialogHeight=600px");
+								+ pdk+"");
 				return false;
 			}else if(type=="transfer"){
 				var obj = {
 						  type:"user"
 						};
-				var d = FixSelect(obj);
-				params={
+				var fn = function(params,d){
+					params['transferUserId'] = d[0].USERID;
+				};
+				var d = FixSelect(obj,fn,params);
+				/*params={
 						//被转发的UserId，这里设定了就是管理员
 						transferUserId:d[0].USERID
-				};
+				};*/
 			}else if(type=="pending"){//转办
 				var obj = {type:"user"};
-			  	var d = FixSelect(obj);
-			  	if(d&&d.length>0){
+				var fn = function(params,d){
+					if(d&&d.length>0){
+						params['recoverNodeId'] = d[0].nodeId;
+				  	}else{
+				  		return;
+				  	}
+				};
+			  	var d = FixSelect(obj,fn,params);
+			  	/*if(d&&d.length>0){
 					params={
 							//转办的任务编号
 						pendingUserId:d[0].USERID
 					};
 			  	}else{
 			  		return;
-			  	}
+			  	}*/
 			}else if(type=="recover"){
 				var obj = {
 						  type:"node",
 						taskId:taskId
 						};
-				var d = FixSelect(obj);
-				params={
+				var fn = function(params,d){
+					params['recoverNodeId'] = d[0].nodeId;
+				};
+				var d = FixSelect(obj,fn,params);
+				/*params={
 						//追回的任务编号
 					recoverNodeId:d[0].nodeId
-				};
+				};*/
 			}else if(type=="reminders"){
 				params={
 						//提醒某一个用户
@@ -75,7 +87,10 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						  type:"node",
 						taskId:taskId
 						};
-				var d = FixSelect(obj);
+				var fn = function(params,d){
+					params['rollBackNodeId'] = d[0].nodeId;
+				};
+				var d = FixSelect(obj,fn,params);
 				params={
 						//退回到某个节点
 					rollBackNodeId:d[0].nodeId
@@ -86,20 +101,24 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 						type:"step",
 						taskId:taskId
 						};
-				var d = FixSelect(obj);
+				var fn = function(params,d){
+					params['rollBackTaskId'] = d[0].taskId;
+				};
+				var d = FixSelect(obj,fn,params);
 				params={
 						//退回到某个节点
 					rollBackTaskId:d[0].taskId
 						
 				};
 			}
-			
-			if(confirm("确认提交?")){
-				var ss = JSON.stringify(params);
-				$("#taskParams").val(ss);
-				$("#"+formId).submit();
-			}else 
-				return false;
+			if(params!={}){
+				if(confirm("确认提交?")){
+					var ss = JSON.stringify(params);
+					$("#taskParams").val(ss);
+					$("#"+formId).submit();
+				}else 
+					return false;
+			}
 		});
 	}
 
@@ -107,8 +126,8 @@ function requestUrlParam(paras)
 { 
     var url = location.href; 
     var paraString = url.substring(url.indexOf("?")+1,url.length).split("&"); 
-    var paraObj = {} 
-    for (i=0; j=paraString[i]; i++){ 
+    var paraObj = {};
+    for (var i=0; j=paraString[i]; i++){ 
     paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length); 
     } 
     var returnValue = paraObj[paras.toLowerCase()]; 

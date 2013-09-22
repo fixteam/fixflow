@@ -17,114 +17,80 @@
  */
 package com.founder.fix.fixflow.expand.cmd;
 
+import org.eclipse.bpmn2.impl.FlowNodeImpl;
+
+import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
-import com.founder.fix.fixflow.core.impl.Context;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.AbstractExpandTaskCmd;
-import com.founder.fix.fixflow.core.impl.filter.AbstractCommandFilter;
-import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
-import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.expand.command.TransferTaskCommand;
 
-public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand, Void>{
+public class TransferTaskCmd extends AbstractExpandTaskCmd<TransferTaskCommand, Void> {
 	/**
 	 * 转发的用户编号
 	 */
 	protected String transferUserId;
-	
-	
+
 	public TransferTaskCmd(TransferTaskCommand transferTaskCommand) {
-		
+
 		super(transferTaskCommand);
-		this.transferUserId=transferTaskCommand.getTransferUserId();
+		this.transferUserId = transferTaskCommand.getTransferUserId();
 
 	}
 
 	public Void execute(CommandContext commandContext) {
-		
-		if (taskId == null||taskId.equals("")) {
-			throw new FixFlowException("任务编号为空！");
-		}
 
-		TaskInstanceEntity taskInstance = Context.getCommandContext().getTaskManager().findTaskById(taskId);
-
-		if (taskInstance == null) {
-			throw new FixFlowException("无法找到编号为: " + taskId + " 的任务!");
-		}
 		if (transferUserId != null) {
-			
-			if(AbstractCommandFilter.isAutoClaim()){
-				taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-			}
-			if (taskInstance.getAssignee() == null) {
 
-				
-				
-				
-				
-				throw new FixFlowException("任务 " + taskId + " 无代理人!");
+			// 初始化任务命令执行所需要的常用对象
+			loadProcessParameter(commandContext);
 
-			} else {
+			// 将外部变量注册到流程实例运行环境中
+			addVariable();
 
-				String nodeId = taskInstance.getNodeId();
-				String processDefinitionId = taskInstance.getProcessDefinitionId();
+			// 执行处理命令中的开发人员设置的表达式
+			runCommandExpression();
 
-				ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
+			// 获取正在操作的任务实例对象
+			TaskInstanceEntity taskInstance = getTaskInstanceEntity();
 
-				ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
+			// 获取正在操作的任务命令对象实例
+			TaskCommandInst taskCommand = getTaskCommandInst();
 
-				UserTaskBehavior userTask = (UserTaskBehavior) processDefinition.getDefinitions().getElement(nodeId);
-				
-				TaskCommandInst taskCommand=null;
-				
-				String taskCommandType = expandTaskCommand.getCommandType();
-				
-				if (StringUtil.isNotEmpty(this.admin) && StringUtil.isEmpty(this.userCommandId) && StringUtil.isNotEmpty(taskCommandType)) {
+			taskInstance.customEnd(taskCommand, taskComment);
 
-					String taskCommandName = commandContext.getProcessEngineConfigurationImpl().getTaskCommandDefMap().get(taskCommandType).getName();
+			// 拷贝出一个新的任务
+			TaskInstanceEntity taskInstanceNew = taskInstance.clone();
 
-					taskCommand = new TaskCommandInst(taskCommandType, taskCommandName, null, taskCommandType, true);
+			taskInstanceNew.setIdWithoutCascade(GuidUtil.CreateGuid());
+			taskInstanceNew.setAssigneeWithoutCascade(transferUserId);
+			taskInstanceNew.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
+			taskInstanceNew.setEndTimeWithoutCascade(null);
+			taskInstanceNew.setCommandId(null);
+			taskInstanceNew.setCommandType(null);
+			taskInstanceNew.setCommandMessage(null);
+			taskInstanceNew.setTaskComment(null);
+			taskInstanceNew.setAgent(null);
+			taskInstanceNew.setAdmin(null);
+			taskInstanceNew.setDraft(false);
 
-				} else {
-					taskCommand = userTask.getTaskCommandsMap().get(this.userCommandId);
-				}
-				
-				/*
-				if(this.agent!=null&&!this.agent.equals("")){
-					taskInstance.setAgent(Authentication.getAuthenticatedUserId());
-					taskInstance.setAssigneeWithoutCascade(this.agent);
-				}else{
-					taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-					taskInstance.setAgent(null);
-				}*/
-			
-				taskInstance.customEnd(taskCommand, taskComment, this.agent, this.admin);
+			// 获取当前正在操作的流程实例对象
+			ProcessInstanceEntity processInstance = getProcessInstance();
+			// 将新创建的出的任务插入任务管理器中
+			processInstance.getTaskMgmtInstance().addTaskInstanceEntity(taskInstanceNew);
+			// 获取流程上下文
+			ExecutionContext executionContext = getExecutionContext();
+			// 触发节点的任务分配事件
+			((FlowNodeImpl) executionContext.getToken().getFlowNode()).fireEvent(BaseElementEvent.EVENTTYPE_TASK_ASSIGN, executionContext, taskInstanceNew);
 
-				//taskInstance.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
-				//taskInstance.setCommandMessage(taskCommand.getName());
-				
-				
-				Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(taskInstance);
+			saveProcessInstance(commandContext);
 
-				taskInstance.setIdWithoutCascade(GuidUtil.CreateGuid());
-				taskInstance.setAssigneeWithoutCascade(transferUserId);
-				taskInstance.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
-				taskInstance.setEndTimeWithoutCascade(null);
-				taskInstance.setCommandId(null);
-				taskInstance.setCommandType(null);
-				taskInstance.setCommandMessage(null);
-				taskInstance.setTaskComment(null);
-				taskInstance.setAgent(null);
-				taskInstance.setAdmin(null);
-				Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(taskInstance);
-			}
 		} else {
 			throw new FixFlowException("转发人不能为空!");
 		}
@@ -132,5 +98,4 @@ public class TransferTaskCmd  extends AbstractExpandTaskCmd<TransferTaskCommand,
 		return null;
 	}
 
-	
 }

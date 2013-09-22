@@ -12,13 +12,13 @@
 <script type="text/javascript">
 	function openUserIcon() {
 		var obj = {};
-		window.showModalDialog("FlowCenter?action=getUserIcon",obj,"dialogWidth=800px;dialogHeight=600px");
+		window.open("FlowCenter?action=getUserIcon");
 	}
 </script>
 <body>
 <div class="userinfo">
 	<div class="head-info">
-        <img src="${result.icon}" onerror="imgNotFound('${pageContext.request.contextPath}');"/>
+        <img src="${result.icon}" onerror="imgNotFound('${pageContext.request.contextPath}',this);"/>
         <div class="name">
         	<h1>${result.user.userName}</h1>
             <h5></h5>

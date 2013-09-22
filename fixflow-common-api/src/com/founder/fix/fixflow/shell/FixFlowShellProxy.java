@@ -31,6 +31,12 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
 
+/**
+  * @ClassName: FixFlowShellProxy
+  * @Description: 流程引擎代理入口
+  * @author shao
+  *
+  */
 public class FixFlowShellProxy {
 	
 	/**
@@ -61,16 +67,34 @@ public class FixFlowShellProxy {
 			DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean(beanId);
 			DBConnection dbconn = dbcf.createDBConnection();
 			connection = dbconn.getConnection();
-			setDBConn(beanId,dbconn);
 		}
 		
 		return connection;
 	}
 	
+	/**
+	  * createProcessEngine
+	
+	  * @Title: createProcessEngine
+	  * @Description: 拿到流程引擎
+	  * @param operator
+	  * @return
+	  * @throws SQLException
+	  */
 	public static ProcessEngine createProcessEngine(Object operator) throws SQLException{
 		return createProcessEngine(operator,false);
 	}
 	
+	/**
+	  * createProcessEngine
+	
+	  * @Title: createProcessEngine
+	  * @Description: 拿到流程引擎，同时打开事务
+	  * @param operator
+	  * @param needTransaction
+	  * @return
+	  * @throws SQLException
+	  */
 	public static ProcessEngine createProcessEngine(Object operator,boolean needTransaction) throws SQLException{
 		Connection connection = getConnection(ConnectionManagement.defaultDataBaseId);
 		if(needTransaction){
@@ -79,12 +103,30 @@ public class FixFlowShellProxy {
 		return createProcessEngine(operator,connection);
 	}
 	
+	/**
+	  * createProcessEngine
+	
+	  * @Title: createProcessEngine
+	  * @Description: 拿到流程引擎，并使用外部连接
+	  * @param operator
+	  * @param connection
+	  * @return
+	  */
 	public static ProcessEngine createProcessEngine(Object operator,Connection connection){
 		Map<String,Connection> tmp = new HashMap<String,Connection>();
 		tmp.put("null", connection);
 		return createProcessEngine(operator,tmp);
 	}
 	
+	/**
+	  * createProcessEngine
+	
+	  * @Title: createProcessEngine
+	  * @Description: 拿到流程引擎，使用多个流程引擎
+	  * @param operator
+	  * @param connections
+	  * @return
+	  */
 	public static ProcessEngine createProcessEngine(Object operator,Map<String,Connection> connections){
 		ExternalContent externalContent=new ExternalContent();
 		externalContent.setAuthenticatedUserId(StringUtil.getString(operator));
@@ -98,6 +140,14 @@ public class FixFlowShellProxy {
 		return createProcessEngine(externalContent);
 	}
 	
+	/**
+	  * createProcessEngine
+	
+	  * @Title: createProcessEngine
+	  * @Description: 拿到流程引擎，配置完全依靠外部
+	  * @param externalContext
+	  * @return
+	  */
 	public static ProcessEngine createProcessEngine(ExternalContent externalContext){
 		ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
 		processEngine.setExternalContent(externalContext);
@@ -105,6 +155,14 @@ public class FixFlowShellProxy {
 		return processEngine;
 	}
 	
+	/**
+	  * closeProcessEngine
+	
+	  * @Title: closeProcessEngine
+	  * @Description: 关闭流程引擎，并决定是否关闭连接
+	  * @param engine
+	  * @param closeConnection
+	  */
 	public static void closeProcessEngine(ProcessEngine engine,boolean closeConnection){
 		engine.contextClose(true, closeConnection);
 	}
@@ -117,6 +175,13 @@ public class FixFlowShellProxy {
 		(CurrentThread.getThreadDBPool().get()).put(key,dbconn);
 	}
 	
+	/**
+	  * isPoolConn
+	
+	  * @Title: isPoolConn
+	  * @Description: 当前是否开启了线程池
+	  * @return
+	  */
 	public static boolean isPoolConn(){
 		return CurrentThread.getThreadDBPool().get()!=null;
 	}
