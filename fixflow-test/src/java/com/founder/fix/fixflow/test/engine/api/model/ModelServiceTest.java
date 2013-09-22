@@ -25,11 +25,13 @@ import java.util.zip.ZipInputStream;
 import org.eclipse.bpmn2.FlowElement;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
+import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
 import com.founder.fix.fixflow.test.Deployment;
 
@@ -485,6 +487,38 @@ public class ModelServiceTest extends AbstractFixFlowTestCase {
 			//验证资源文件的大字段不为空
 			assertNotNull(resourceEntity.getBytes());
 		}
+	}
+	/**
+	 * 测试获取用户最近提交流程
+	 */
+	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/task/TaskServiceNewTest.bpmn"})
+	public void testGetUserSubmitProcess(){
+		//创建一个通用命令
+		ExpandTaskCommand expandTaskCommand = new ExpandTaskCommand();
+		//设置流程名
+		expandTaskCommand.setProcessDefinitionKey("TaskServiceNewTest");
+		//设置流程的业务关联键
+		expandTaskCommand.setBusinessKey("BK_testStartProcessInstanceByKey");
+		//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
+		expandTaskCommand.setCommandType("startandsubmit");
+		//设置提交人
+		expandTaskCommand.setInitiator("1200119390");
+		//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
+		expandTaskCommand.setUserCommandId("HandleCommand_2");
+		//执行这个启动并提交的命令，返回启动的流程实例
+		ProcessInstance processInstance = (ProcessInstance)taskService.expandTaskComplete(expandTaskCommand, null);
+		//获取流程实例编号
+		String processInstanceId = processInstance.getId();
+		//获取流程定义编号
+		String processDefinitionId = processInstance.getProcessDefinitionId();
+		//验证是否成功启动
+		assertNotNull(processInstanceId);
+		//获取用户1200119390最近提交的第一个流程
+		List<Map<String,String>> processDefinitonMap = modelService.getUserSubmitProcess("1200119390", 1);
+		//获取取到的流程定义编号
+		String tmpProcessDefinitionId = processDefinitonMap.get(0).get("processDefinitionId");
+		//验证是否为上面提交的定义编号
+		assertEquals(processDefinitionId, tmpProcessDefinitionId);
 	}
 	
 }
