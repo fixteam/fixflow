@@ -31,6 +31,7 @@
           <bpmn2:formalExpression id="所有人">&quot;fixflow_allusers&quot;</bpmn2:formalExpression>
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:potentialOwner>
+      <bpmn2:multiInstanceLoopCharacteristics/>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
     <bpmn2:endEvent id="EndEvent_1" name="结束">
