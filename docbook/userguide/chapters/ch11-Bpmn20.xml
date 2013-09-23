@@ -220,7 +220,7 @@ processDefinition.getFlowElements();]]></programlisting>
       
     </para>
     
-    <para>
+    <para xml:id="bpmn.process.subject">
       <emphasis role="bold">流程任务主题</emphasis>:
     </para>
     <para>
@@ -1228,6 +1228,11 @@ taskInstance.getBizKey();
 taskInstance.getPriority();]]></programlisting>
           
         </para>
+      </section>
+      <section xml:id="bpmn.UserTask.taskInfo">
+        <title>任务信息</title>
+        <para>动态主题</para>
+        <para>动态主题:用来显示在代办任务上任务的显示主题,如果这里不填写的话,将自动从流程实例主题获取。<link linkend="bpmn.process.subject">流程任务主题</link></para>
       </section>
       
       
