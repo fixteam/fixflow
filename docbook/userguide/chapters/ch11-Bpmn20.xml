@@ -1812,7 +1812,7 @@ String taskSubject = processInstance.getSubject();             </programlisting>
       <para><emphasis role="bold">XML描述</emphasis></para>
       <programlisting language="xml"> &lt;fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
      &lt;fixflow:parameterExpression xsi:type="fixflow:Expression" name="System.out.println("启动命令执行啦。");">System.out.println("启动命令执行啦。");&lt;/fixflow:parameterExpression>
-     &lt;/fixflow:taskCommand>             </programlisting>
+ &lt;/fixflow:taskCommand>             </programlisting>
       <itemizedlist>
         <listitem><para>fixflow:taskCommand：任务命令定义</para></listitem>
         <listitem><para> fixflow:parameterExpression：任务命令执行时需要执行的表达式或代码。</para></listitem>
@@ -1846,7 +1846,7 @@ expandTaskCommand.setUserCommandId("HandleCommand_2");      </programlisting>
     <section xml:id="bpmn.ExtensionElements.assignPolicy">
       <title>分配策略</title>
       <para>
-        <link linkend="bpmn.UserTask.assignment">见分配策略</link>
+        <link linkend="bpmn.UserTask.assignment">见任务分配</link>
       </para>
       
     </section>
