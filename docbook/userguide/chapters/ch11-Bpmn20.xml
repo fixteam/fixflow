@@ -259,7 +259,7 @@ processInstance.getSubject();]]></programlisting>
     </para>
     
     
-    <para>
+    <para xml:id="bpmn.process.defaultForm">
       <emphasis role="bold">默认表单</emphasis>:
     </para>
     <para>
@@ -1736,7 +1736,7 @@ Object variableValue = runtimeService.getProcessInstanceVariable(processInstance
         <title>描述</title>
         <para> 任务大致分为两种，流程默认表单，任务级别表单。
         <orderedlist>
-          <listitem><para>默认表单：<link linkend="">默认表单</link></para></listitem>
+          <listitem><para>默认表单：<link linkend="bpmn.process.defaultForm">默认表单</link></para></listitem>
           <listitem><para>任务级别表单：<link linkend="bpmn.UserTask.commonConfig">任务表单</link></para></listitem>
         </orderedlist>
           
