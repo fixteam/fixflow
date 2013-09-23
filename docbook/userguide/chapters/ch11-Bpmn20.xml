@@ -357,12 +357,12 @@ processInstance.getProcessDefinition().getDefaultFormUri();]]></programlisting>
       <itemizedlist>
         <listitem>
           <para>
-            <emphasis role="bold">捕捉(Catching)：</emphasis>:  执行过程中的事件到达时，它会等待一个触发发生。是指由不同的触发器内的图标或XML中的类型声明。捕获事件在视觉上区别于图标不填（即它是白色的）由内投掷事件。
+            <emphasis role="bold">捕捉(Catching)</emphasis>:  执行过程中的事件到达时，它会等待一个触发发生。是指由不同的触发器内的图标或XML中的类型声明。捕获事件在视觉上区别于图标不填（即它是白色的）由内投掷事件。
           </para>
         </listitem>
         <listitem>
           <para>
-            <emphasis role="bold">抛出(Throwing)：</emphasis>:  执行过程中的事件到达时，触发器被触发。是指由不同的触发器内的图标或XML中的类型声明。投掷项目在视觉上区别从一个醒目的事件内的图标，用黑色填充。
+            <emphasis role="bold">抛出(Throwing)</emphasis>:  执行过程中的事件到达时，触发器被触发。是指由不同的触发器内的图标或XML中的类型声明。投掷项目在视觉上区别从一个醒目的事件内的图标，用黑色填充。
           </para>
         </listitem>
       </itemizedlist>

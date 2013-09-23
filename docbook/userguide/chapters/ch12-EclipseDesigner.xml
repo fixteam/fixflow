@@ -216,4 +216,60 @@ model_description 用默认流程模板创建一个新的流程 //流程模板�
       </orderedlist>
     </para>
   </section>
+  <section xml:id="eclipse.connector">
+    <title>管理连接器</title>
+    <para></para>
+    
+  </section>
+  <section xml:id="eclipse.dataVariable">
+    <title>配置数据变量</title>
+    <para></para>
+    
+  </section>
+  <section xml:id="eclipse.processEngine">
+    <title>流程引擎配置</title>
+    <para></para>
+    
+  </section>
+  <section xml:id="eclipse.time">
+    <title>定时任务管理</title>
+    <para></para>
+    
+  </section>
+  <section xml:id="eclipse.def">
+    <title>流程定义管理</title>
+    <para></para>
+    
+  </section>
+  
+  <section xml:id="eclipse.theme">
+    <title>设计器主题</title>
+    <para></para>
+    
+  </section>
+  
+  <section xml:id="eclipse.cache">
+    <title>设计器缓存</title>
+    <para></para>
+    
+  </section>
+  
+  <section xml:id="eclipse.automaticConnection">
+    <title>自动连线</title>
+    <para></para>
+    
+  </section>
+  
+  <section xml:id="eclipse.lane">
+    <title>Lane的技巧</title>
+    <para></para>
+    
+  </section>
+  
+  <section xml:id="eclipse.subprocesses">
+    <title>子流程技巧</title>
+    <para></para>
+    
+  </section>
+  
 </chapter>
