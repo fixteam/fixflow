@@ -1231,8 +1231,19 @@ taskInstance.getPriority();]]></programlisting>
       </section>
       <section xml:id="bpmn.UserTask.taskInfo">
         <title>任务信息</title>
-        <para>动态主题</para>
-        <para>动态主题:用来显示在代办任务上任务的显示主题,如果这里不填写的话,将自动从流程实例主题获取。<link linkend="bpmn.process.subject">流程任务主题</link></para>
+        
+       
+        <para> <emphasis role="bold">动态主题</emphasis>:用来显示在代办任务上任务的显示主题,如果这里不填写的话,将自动从流程实例主题获取。<link linkend="bpmn.process.subject">流程任务主题</link></para>
+        <para>
+          <emphasis role="bold">XML描述</emphasis>:有了表单地址和BizKey我们就可以打开相应的表单。
+          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="人工任务">
+          <bpmn2:extensionElements>
+            <fixflow:taskSubject>
+              <fixflow:expression xsi:type="fixflow:Expression">"任务主题"</fixflow:expression>
+            </fixflow:taskSubject>
+          </bpmn2:extensionElements>
+         </bpmn2:userTask>]]></programlisting>
+        </para>
       </section>
       
       
