@@ -96,6 +96,16 @@
       有时感觉它的结构或做事方式有点太麻烦了,并且很多工作流产品必须的流转配置信息,在标准里边没有很好的定义出来,所以,我们在bpmn2.0的基础之上遵循官方对bpmn2.0的扩展原则,
       对标准做了一些自己的扩展,FixFlow引擎的扩展都以"fixflow:"开头。
     </para>
+    <para>
+      BPMN标准是个开放的标准,它为每个元素都提供了扩展的方式,extensionElements可以包含在任务BPMN官方的元素里。
+      <programlisting language="xml"><![CDATA[
+      <bpmn2:extensionElements>
+        <fixflow:taskSubject>
+          <fixflow:expression xsi:type="fixflow:Expression" >"编号为: "+${编号}+" 的测试流程任务主题"</fixflow:expression>
+        </fixflow:taskSubject>
+      </bpmn2:extensionElements>
+      ]]></programlisting>
+    </para>
     <para>开发者也可以给我们反馈对扩展的意见<link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>,或提出自定义扩展的新思路。谁知道,有一天,你的想法可能会出现在FixFlow引擎中哦。</para>
   </section>
   
@@ -129,34 +139,215 @@
   
   <section xml:id="bpmn.process">
     <title>Process</title>
-    <para>在FixFlow引擎中,一个流程定义实际指的就是一个Process元素,FixFlow现在并不支持多Process的交互式流程图。</para>
-
+    <para>在FixFlow引擎中,一个流程定义实际指的就是一个Process元素,FixFlow现在并不支持多Process的交互式流程图,设计完流程定义之后需要发布到数据库中才能供引擎使用,FixFlow支持多流程版本功能,新启动的流程自动走新的版本,老的流程继续跑在老的版本上,相互不会产生影响。</para>
     <para>
       <emphasis role="bold">XML定义</emphasis>:      
-      <programlisting language="xml"><![CDATA[<<bpmn2:process id="process_demotest" 
+      <programlisting language="xml"><![CDATA[<bpmn2:process id="process_demotest" 
   fixflow:verification="true" 
   fixflow:dbid="process_demotest:1:73189bfc-59cf-4ecf-b425-051cff44de3a" 
-  name="测试流程">
+  name="测试流程" fixflow:category="测试分类" >
     ........
 </bpmn2:process>]]></programlisting>
     </para>
+    
+    
+    <itemizedlist>
+      
+      <listitem>
     <para>
-      <emphasis role="bold">流程编号(id)</emphasis>:
+      <emphasis role="bold">流程编号(id)</emphasis>:也叫流程Key 用来标识一个流程,但是一个流程里会有多个版本,所以通过Key找流程,不能定位到唯一的一个。 
+    </para>
+        </listitem>
+        <listitem>
+    <para>
+      <emphasis role="bold">流程唯一编号(dbid)</emphasis>:流程唯一编号,由流程Key、版本号、GIUD组合而成的唯一编号。   
+    </para>
+        </listitem>
+          <listitem>
+    <para>
+      <emphasis role="bold">流程名称(name)</emphasis>:流程的名称。
+    </para>
+          </listitem>
+            <listitem>
+    <para>
+      <emphasis role="bold">是否验证发布(verification)</emphasis>:设计器在发布的时候是否强制验证流程。
+    </para>
+            </listitem>
+              <listitem>
+    <para>
+      <emphasis role="bold">分类(category)</emphasis>:用于流程定义的归类。
+    </para>
+              </listitem>
+      </itemizedlist>
+        
+    <para>
+      <emphasis role="bold">Java代码</emphasis>:  
+      <programlisting language="java"><![CDATA[
+//查询所有流程定义
+List<ProcessDefinitionBehavior> processDefinitions=modelService.createProcessDefinitionQuery().list();
+
+//获取其中的一个流程定义
+ProcessDefinitionBehavior processDefinition=processDefinitions.get(0);
+
+//流程唯一编号
+processDefinition.getProcessDefinitionId();
+
+//流程编号
+processDefinition.getProcessDefinitionKey();
+
+//流程名称
+processDefinition.getName();
+
+//版本号
+processDefinition.getVersion();
+
+//流程分类
+processDefinition.getCategory();
+
+//流程定义里的所有元素
+processDefinition.getFlowElements();]]></programlisting>
+     
+      
+    </para>
+    
+    <para>
+      
+      <emphasis role="bold">设计器配置</emphasis>:
+      <mediaobject ><imageobject>
+        <imagedata contentwidth="800"  align="center" fileref="images/bpmn.process.1.png"/>
+      </imageobject></mediaobject>
+      
+      
+    </para>
+    
+    <para>
+      <emphasis role="bold">流程任务主题</emphasis>:
+    </para>
+    <para>
+      流程任务主题是用来标识一个流程实例的说明,不同于人工任务(UserTask)的任务主题,流程的任务主题是用来显示在流程实例上的实例主题,一般情况下我们在流程中只需要设置这个流程任务
+      主题就可以了,一但设置了流程任务主题,流程中的所有人工任务(UserTask)的任务主题在没有配置的情况下就会默认从这里取。
+    </para>
+    <para>
+      <emphasis role="bold">XML描述</emphasis>:
+      <programlisting language="xml"><![CDATA[
+<bpmn2:process id="process_demotest" 
+fixflow:verification="true" 
+fixflow:dbid="process_demotest:1:e9701a99-3814-48d4-b7f5-a64144c439a1" 
+fixflow:category="测试分类" 
+name="测试流程">
+  <bpmn2:extensionElements>
+    <fixflow:taskSubject>
+        <fixflow:expression xsi:type="fixflow:Expression" >"编号为: "+${编号}+" 的测试流程任务主题"</fixflow:expression>
+    </fixflow:taskSubject>
+  </bpmn2:extensionElements>
+</bpmn2:process>]]></programlisting>
       
     </para>
     <para>
-      <emphasis role="bold">流程唯一编号(dbid)</emphasis>:
+      可以看到上面的 fixflow:taskSubject 是一个扩展元素,它存放在 bpmn2:extensionElements 中,这个元素是扩展元素的根元素,更多请查看 <link linkend="bpmn.extensions">扩展元素</link>。
+    </para>
+    <para>
+      <emphasis role="bold">Java代码</emphasis>:
+      <programlisting language="java"><![CDATA[//查询所有流程实例
+List<ProcessInstance> processInstances=runtimeService.createProcessInstanceQuery().list();
+
+//取第一个流程实例
+ProcessInstance processInstance=processInstances.get(0);
+
+//获取流程实例主题
+processInstance.getSubject();]]></programlisting>
+    </para>
+    
+    
+    <para>
+      <emphasis role="bold">默认表单</emphasis>:
+    </para>
+    <para>
+      默认表单是用来查看流程实例的浏览表单,FixFlow引擎的一条流程记录会有一个流程实例和多个任务组成,当UserTask的操作表单没有配置的时候,会
+      自动去流程实例默认表单去寻找。当我们想查看一个流程实例的数据的时候一般都是以这个默认表单打开。
+    </para>
+    <para>
+      <emphasis role="bold">XML描述</emphasis>:
+      <programlisting language="xml"><![CDATA[
+<bpmn2:process id="process_demotest" 
+fixflow:verification="true" 
+fixflow:dbid="process_demotest:1:e9701a99-3814-48d4-b7f5-a64144c439a1" 
+fixflow:category="测试分类" 
+name="测试流程">
+  <bpmn2:extensionElements>
+    <fixflow:formUri>
+        <fixflow:expression xsi:type="fixflow:Expression" >"view.html"</fixflow:expression>
+    </fixflow:formUri>
+  </bpmn2:extensionElements>
+</bpmn2:process>]]></programlisting>
       
     </para>
     <para>
-      <emphasis role="bold">流程名称(name)</emphasis>:
-      
-    </para>
-    <para>
-      <emphasis role="bold">是否验证发布(verification)</emphasis>:
-      
+      <emphasis role="bold">Java代码</emphasis>:
+      <programlisting language="java"><![CDATA[//查询所有流程实例
+List<ProcessInstance> processInstances=runtimeService.createProcessInstanceQuery().list();
+
+//取第一个流程实例
+ProcessInstance processInstance=processInstances.get(0);
+
+//获取默认表单
+processInstance.getProcessDefinition().getDefaultFormUri();]]></programlisting>
     </para>
    
+   
+    <itemizedlist>
+
+  <listitem>
+   <para>
+     <emphasis role="bold">发布定时任务</emphasis>:       发布流程定义的时候同时发布定时启动任务。参见<link linkend="bpmn.event.TimerStartEvent">时间开始事件</link>
+   </para>
+  </listitem>
+      <listitem>
+    <para>
+      <emphasis role="bold">发布校验</emphasis>:在流程定义发布的时候检查一些常用配置,不正确的话将禁止发布,如果去掉的话,流程将不验证发布正确性。
+    </para>
+      </listitem>
+        <listitem>
+    <para>
+      <emphasis role="bold">验证</emphasis>:触发一次验证,检查流程定义正确性。
+    </para>
+        </listitem>
+          <listitem>
+    <para>
+      <emphasis role="bold">发布</emphasis>:发布一个新的流程定义。
+    </para>
+          </listitem>
+            <listitem>
+    <para>
+      <emphasis role="bold">更新</emphasis>:将当前设计区的流程定义更新到数据库一个选定的版本上。
+    </para>
+            </listitem>
+              <listitem>
+    <para>
+      <emphasis role="bold">删除</emphasis>:删除数据库中一个流程定义版本。
+    </para>
+              </listitem>
+                <listitem>
+    <para>
+      <emphasis role="bold">获取</emphasis>:将数据库中选中的一个版本覆盖掉当前工作区的流程版本。
+    </para>
+                </listitem>
+                  <listitem>
+    <para>
+      <emphasis role="bold">下载定义</emphasis>:将选中的流程定义打包下载到本地。
+    </para>
+                  </listitem>
+      </itemizedlist>
+        
+    <para>
+      <emphasis role="bold">其他内容请参见相应章节</emphasis>:
+    </para>
+    <para>
+      
+      <link linkend="bpmn.ExtensionElements.dataVariable">数据变量</link>
+      <link linkend="bpmn.ExtensionElements.connector">连接器</link>
+      <link linkend="bpmn.ExtensionElements.connector">国际化</link>
+    </para>
   </section>
   
   <section xml:id="bpmn.event">
