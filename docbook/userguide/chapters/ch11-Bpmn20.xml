@@ -1233,19 +1233,68 @@ taskInstance.getPriority();]]></programlisting>
         <title>任务信息</title>
         
        
-        <para> <emphasis role="bold">动态主题</emphasis>:用来显示在代办任务上任务的显示主题,如果这里不填写的话,将自动从流程实例主题获取。<link linkend="bpmn.process.subject">流程任务主题</link></para>
+        <para> <emphasis role="bold">动态主题</emphasis>:</para>
+        <para>用来显示在代办任务上任务的显示主题,如果这里不填写的话,将自动从流程实例主题获取。<link linkend="bpmn.process.subject">流程任务主题</link></para>
+        <para> <emphasis role="bold">任务类型</emphasis>:</para>
+        <para>用来区别不同的任务分类,例如,通知任务、提醒任务等等,任务类型默认提供3种,FIXFLOWTASK 是默认的任务类型,其他两种用户可以自由选择。通过任务类型的区分之后,就
+        可以在任务查询的时候通过指定的类型来分类任务。</para>
+        <para> <emphasis>注意</emphasis>: 任务类型现在只有写死的三种,在以后的版本中我们会对这里做出扩展能让开发人员自定义任务类型。</para>
+        <para> <emphasis role="bold">预计执行时间</emphasis>:</para>
+        <para>设置任务的预计执行时间,只用来显示用并不用做超时处理,超时处理请参见<link linkend="bpmn.ExtensionElements.connector">连接器</link>章节</para>
         <para>
-          <emphasis role="bold">XML描述</emphasis>:有了表单地址和BizKey我们就可以打开相应的表单。
+          <emphasis role="bold">XML描述</emphasis>:
           <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="人工任务">
-          <bpmn2:extensionElements>
-            <fixflow:taskSubject>
-              <fixflow:expression xsi:type="fixflow:Expression">"任务主题"</fixflow:expression>
-            </fixflow:taskSubject>
-          </bpmn2:extensionElements>
-         </bpmn2:userTask>]]></programlisting>
+  <bpmn2:extensionElements>
+    <fixflow:taskSubject>
+      <fixflow:expression xsi:type="fixflow:Expression">"任务主题"</fixflow:expression>
+    </fixflow:taskSubject>
+  </bpmn2:extensionElements>
+</bpmn2:userTask>]]></programlisting>
         </para>
+        <para>
+          <emphasis role="bold">设计器界面</emphasis>:
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.UserTask.taskInfo.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+        <para>
+          <emphasis role="bold">Java代码</emphasis>:
+          <programlisting language="java"><![CDATA[//获取任务查询对象
+TaskQuery taskQuery=taskService.createTaskQuery();
+
+//设置查询的任务类型(默认任务),可以设置多个之间是or的关系。
+taskQuery.addTaskType(TaskInstanceType.FIXFLOWTASK);
+
+//通知型任务
+taskQuery.addTaskType(TaskInstanceType.FIXNOTICETASK);
+
+//提醒任务
+taskQuery.addTaskType(TaskInstanceType.FIXREMIND);
+
+//查询出一个任务
+TaskInstance taskInstance=taskQuery.singleResult();
+
+//获取任务主题
+taskInstance.getDescription();
+
+//获取任务类型
+taskInstance.getTaskInstanceType();
+
+//获取任务的预计执行时间(毫秒)
+taskInstance.getExpectedExecutionTime();
+]]></programlisting>
+        </para>
+        
+        
       </section>
-      
+      <section xml:id="bpmn.UserTask.advancedProperties">
+        <title>高级属性</title>
+        <para>高级属性中的多实例,是用来完成一个for循环的动作,出发多次不同参数的执行,并将结果收集起来。BPMN官方对多实例是使用Multi-instance元素,来实现的,
+          关于多实例的使用请参见<link linkend="bpmn.foreach">Multi-instance (for each)</link>章节。
+        </para>
+        <para><emphasis>注意</emphasis>: 用于人工任务(UserTask)来说,多实例一般就是用来完成并行会签功能,也可以作用在子流程等其他节点上起到不同的效果。</para>
+        <para><emphasis>注意</emphasis>: 串行的多实例,在这个版本的FixFlow中并没有实现,我们将会在今后的版本中引入这个功能。</para>
+      </section>
       
     </section>
     
