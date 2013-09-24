@@ -1301,31 +1301,145 @@ taskInstance.getExpectedExecutionTime();
    
     <section xml:id="bpmn.ScriptTask">
       <title>Script Task</title>
-      <para>
+      <section xml:id="bpmn.ScriptTask.Description">
+        <title>描述</title>
+        <para>
+          脚本任务(ScriptTask)是一个自动的活动。当一个流程执行到脚本任务的时候相应的脚本被会被执行。 
+        </para>
+      </section>
+      <section xml:id="bpmn.ScriptTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          脚本任务是图形为一个圆角矩形,有一个小的脚本图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.ScriptTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:scriptTask id="ScriptTask_1" name="ScriptTask" scriptFormat="Groovy">
+  <bpmn2:script>System.out.print("测试脚本");</bpmn2:script>
+</bpmn2:scriptTask>]]></programlisting>
+        </para>
+        <para>
+          FixFlow自带两种脚本语言,Groovy、BeanShell开发人员也可以扩展自己的脚本语言,这里我们推荐使用Groovy做为默认的脚本引擎,关于Groovy请查看<link xlink:href="http://groovy.codehaus.org">Groovy官网</link>
+        </para>
+        <para>
+          关于扩展脚本语言请参见<link linkend="config.scriptConfig">脚本语言配置</link>
+        </para>
+        
+      </section>
+      
+      <section xml:id="bpmn.ScriptTask.script">
+        <title>脚本使用技巧</title>
+        
+        <para>
+          如果在表达式中使用数据变量:
+          <programlisting language="xml"><![CDATA[        
+def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
+            ]]></programlisting>
+        </para>
+        <para>
+          关于脚本语言更多使用介绍请参见<link linkend="bpmn.FixFlow.ProcessEngine.Script">脚本语言</link>
+        </para>
+      </section>
+      
     </section>
     
     
     <section xml:id="bpmn.ServiceTask">
       <title>Service Task</title>
-      <para>
+      <section xml:id="bpmn.ServiceTask.Description">
+        <title>描述</title>
+        <para>
+          BPMN官方定义,服务任务(ServiceTask)专门被用来调用服务用的,FixFlow将这里指的服务解释为连接器,服务任务
+          可以通过连接器完成调用功能。 
+        </para>
+      </section>
+      <section xml:id="bpmn.ServiceTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          服务任务是图形为一个圆角矩形,有一个小的齿轮图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.ServiceTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:serviceTask id="ServiceTask_1" name="ServiceTask"/>]]></programlisting>
+        </para>
+      </section>
     </section>
     
     <section xml:id="bpmn.BusinessRuleTask">
       <title>Business Rule Task</title>
-      <para>
+      <section xml:id="bpmn.BusinessRuleTask.Description">
+        <title>描述</title>
+        <para>
+          业务规则任务(BusinessRuleTask)用来执行一段业务规则脚本,这个节点FixFlow引擎是采用连接器的方式去执行的。
+        </para>
+      </section>
+      <section xml:id="bpmn.BusinessRuleTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          服务任务是图形为一个圆角矩形,有一个小的表格图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.BusinessRuleTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:businessRuleTask id="BusinessRuleTask_1" name="BusinessRuleTask"/>]]></programlisting>
+        </para>
+      </section>
     </section>
     
     <section xml:id="bpmn.SendTask">
       <title>Send Task</title>
-      <para>
+      <section xml:id="bpmn.SendTask.Description">
+        <title>描述</title>
+        <para>
+          发送任务(SendTask)用来发送邮件、短信、通知等等消息,FixFlow使用连接器来完成这个节点的功能。
+          发送任务中一般使用发送邮件的连接器。
+        </para>
+      </section>
+      <section xml:id="bpmn.SendTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          发送任务是图形为一个圆角矩形,有一个小的邮件图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.SendTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:sendTask id="SendTask_1" name="SendTask"/>]]></programlisting>
+        </para>
+      </section>
     </section>
     
     <section xml:id="bpmn.ReceiveTask">
@@ -1917,6 +2031,14 @@ expandTaskCommand.setUserCommandId("HandleCommand_2");      </programlisting>
     <title>FixFlow Engine 运行机制及原理</title>
     <section xml:id="bpmn.FixFlow.ProcessEngine.Event">
       <title>FixFlow Event</title>
+      <para>
+        
+      </para>
+      
+    </section>
+    
+    <section xml:id="bpmn.FixFlow.ProcessEngine.Script">
+      <title>脚本语言</title>
       <para>
         
       </para>
