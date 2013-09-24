@@ -553,11 +553,6 @@
                 <entry>VARCHAR2(64)</entry>
                 <entry>唯一编号</entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -617,11 +612,6 @@
                 <entry>VARCHAR2(64)</entry>
                 <entry>预留2</entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -661,11 +651,6 @@
                 <entry>VARCHAR2(256)</entry>
                 <entry>发布编号</entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -694,11 +679,6 @@
                 <entry>DEPLOY_TIME</entry>
                 <entry>TIMESTAMP(6)</entry>
                 <entry>发布时间</entry>
-              </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
               </row>
             </tbody>
           </tgroup>
@@ -778,11 +758,6 @@
                 <entry>SUB_TASK_ID</entry>
                 <entry>VARCHAR2(128)</entry>
                 <entry>提交节点编号</entry>
-              </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
               </row>
             </tbody>
           </tgroup>
@@ -1368,11 +1343,6 @@
                 <entry>VARCHAR2(64)</entry>
                 <entry>结束时间(12:00:00)</entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -1421,11 +1391,6 @@
                 <entry>MINUTES</entry>
                 <entry>NUMBER(38,0)</entry>
                 <entry>工作时间长度,单位为分钟(结束时间-开始时间)</entry>
-              </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
               </row>
             </tbody>
           </tgroup>
@@ -1481,11 +1446,6 @@
                 <entry>VARCHAR2(64)</entry>
                 <entry></entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -1525,11 +1485,6 @@
                 <entry>VARCHAR2(64)</entry>
                 <entry>时间段类型(上午、下午、上班夜、下班夜)</entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -1563,11 +1518,6 @@
                 <entry>AM_PM</entry>
                 <entry>VARCHAR2(64)</entry>
                 <entry>时间段类型(上午、下午、上班夜、下班夜)</entry>
-              </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
               </row>
             </tbody>
           </tgroup>
@@ -1648,11 +1598,6 @@
                 <entry>VARCHAR2(4000)</entry>
                 <entry></entry>
               </row>
-              <row>
-                <entry>ARCHIVE_TIME</entry>
-                <entry>TIMESTAMP(6)</entry>
-                <entry>归档时间</entry>
-              </row>
             </tbody>
           </tgroup>
         </table>
@@ -1731,11 +1676,6 @@
               <entry>ORGPATH</entry>
               <entry>VARCHAR2(800)</entry>
               <entry></entry>
-            </row>
-            <row>
-              <entry>ARCHIVE_TIME</entry>
-              <entry>TIMESTAMP(6)</entry>
-              <entry>归档时间</entry>
             </row>
           </tbody>
         </tgroup>
@@ -1820,11 +1760,6 @@
               <entry>ENAME</entry>
               <entry>VARCHAR2(128)</entry>
               <entry>角色级别</entry>
-            </row>
-            <row>
-              <entry>ARCHIVE_TIME</entry>
-              <entry>TIMESTAMP(6)</entry>
-              <entry>归档时间</entry>
             </row>
           </tbody>
         </tgroup>
@@ -1960,11 +1895,6 @@
               <entry>VARCHAR2(64)</entry>
               <entry></entry>
             </row>
-            <row>
-              <entry>ARCHIVE_TIME</entry>
-              <entry>TIMESTAMP(6)</entry>
-              <entry>归档时间</entry>
-            </row>
           </tbody>
         </tgroup>
       </table>
@@ -2028,11 +1958,6 @@
               <entry>UPDATE_BY</entry>
               <entry>VARCHAR2(50)</entry>
               <entry></entry>
-            </row>
-            <row>
-              <entry>ARCHIVE_TIME</entry>
-              <entry>TIMESTAMP(6)</entry>
-              <entry>归档时间</entry>
             </row>
           </tbody>
         </tgroup>
