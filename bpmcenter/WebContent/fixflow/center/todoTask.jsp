@@ -146,7 +146,7 @@ function clearInfo(){
 							</c:forEach>
 						</c:if>
 					</div>
-					<div class="message">
+					<div class="message" style="display:none">
 						<div class="title">
 							<a href="#"><em class="icon-message"></em>消息中心</a>
 						</div>
