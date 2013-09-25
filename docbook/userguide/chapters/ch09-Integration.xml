@@ -64,10 +64,8 @@
           <listitem><para>
             配置文件集成，bpmcenter的conf目录下存放着几个配置文件，这几个配置文件就是需要集成进去的文件，请将这几个文件拷贝至本地工程目录，并保证该目录下的文件最终会发布到WEB-INF/classes/目录下。
             <itemizedlist>
-              <listitem><para>
-                applicationContext_resource.xml文件，该文件是FixFlow Engine的数据库和运行引擎的重要部分。请留意本配置文件，在实际项目中可能会用到多个数据源，如果希望流程引擎连接多个数据源也需要在本文件里增加内容。
-                <programlisting language="xml">
-                  <![CDATA[ 
+              <listitem><para> applicationContext_resource.xml文件，该文件是FixFlow
+                    Engine的数据库和运行引擎的重要部分。请留意本配置文件，在实际项目中可能会用到多个数据源，如果希望流程引擎连接多个数据源也需要在本文件里增加内容。 <programlisting language="xml"><![CDATA[ 
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 xmlns:context="http://www.springframework.org/schema/context"       
@@ -100,19 +98,16 @@ xmlns:context="http://www.springframework.org/schema/context"
     </property>
   </bean>
 </beans>
-                  ]]>
-                  </programlisting>
-              </para></listitem>
+]]>                 </programlisting>
+                  </para></listitem>
               <listitem><para>
                 log4j.dtd文件，该文件是log4j的规范文件，这里不对其做解释，将该文件放入系统即可。
               </para></listitem>
               <listitem><para>
                 log4j.xml文件，该文件是log4j的配置文件，里面的配置项目可供参考，这里不做重点。
               </para></listitem>
-              <listitem><para>
-                jdbc.xml文件，该文件是数据库配置文件，里面记录被连接数据库的配置信息。
-                <programlisting language="xml">
-##########
+              <listitem><para> jdbc.xml文件，该文件是数据库配置文件，里面记录被连接数据库的配置信息。
+                    <programlisting language="xml">##########
 # Oracle #
 ##########
 idbase.driverClassName=oracle.jdbc.driver.OracleDriver
@@ -126,9 +121,8 @@ idbase.password=idbase2
 #idbase.driverClassName=com.mysql.jdbc.Driver
 #idbase.url=jdbc:mysql://127.0.0.1/fixbpm
 #idbase.username=root
-#idbase.password=root
-                 </programlisting>
-              </para></listitem>
+#idbase.password=root                 </programlisting>
+                  </para></listitem>
             </itemizedlist>
           </para></listitem>
           <listitem>
@@ -137,10 +131,8 @@ idbase.password=idbase2
             </para>
           </listitem>
           <listitem>
-            <para>
-              激活FixFlow Engine，FixFlow Engine所需要的文件已经准备就绪，现在需要让他工作起来，现在打开本地系统的web.xml，确保里有如下内容。其中在里面的流程管理中心默认版本并不附带，请确认自己拥有流程管理中心功能再激活他。
-              <programlisting language="xml">
-                  <![CDATA[
+            <para> 激活FixFlow Engine，FixFlow
+              Engine所需要的文件已经准备就绪，现在需要让他工作起来，现在打开本地系统的web.xml，确保里有如下内容。其中在里面的流程管理中心默认版本并不附带，请确认自己拥有流程管理中心功能再激活他。 <programlisting language="xml"><![CDATA[
         <?xml version="1.0" encoding="UTF-8"?>
         <web-app 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -213,8 +205,7 @@ idbase.password=idbase2
               <url-pattern>/DemoServlet</url-pattern>
             </servlet-mapping>
         </web-app>
-                  ]]>
-                </programlisting>
+]]>               </programlisting>
             </para>
           </listitem>
         </orderedlist>
@@ -229,10 +220,7 @@ idbase.password=idbase2
         <orderedlist>
           <listitem>
           <para>
-            开发一个流程发起页面，该页面分为两部分，后台部分和前台部分。本地项目时Struts2作为前台框架，因此此处以struts2的代码为示例，用户会先访问到struts2的代码，然后跳转到前台页面，前台页面根据后台代码返回的结果绘制流程命令按钮。从流程任务处理中心发起的流程会附带很多信息，比如processDefinitionKey，这些信息会拼在url上，如果不是从任务处理中心发起，那么该信息就需要自己准备。
-            <programlisting language="java">
-              <![CDATA[
-/**
+              开发一个流程发起页面，该页面分为两部分，后台部分和前台部分。本地项目时Struts2作为前台框架，因此此处以struts2的代码为示例，用户会先访问到struts2的代码，然后跳转到前台页面，前台页面根据后台代码返回的结果绘制流程命令按钮。从流程任务处理中心发起的流程会附带很多信息，比如processDefinitionKey，这些信息会拼在url上，如果不是从任务处理中心发起，那么该信息就需要自己准备。 <programlisting language="java"><![CDATA[/**
  * @ClassName: TestAction
  * @Description: 测试类
  * @author shao
@@ -299,13 +287,8 @@ public class TestAction extends ActionSupport implements ServletContextAware,Ser
 		return "success";
 	}
 	}
-              ]]>
-             </programlisting>
-            
-            上面的代码会在执行完毕后跳转到add.jsp页面，同时过去的还有之前传过来的参数，以及为其准备好的按钮数据。下面贴出页面里的代码，在这里可以去阅读flowcommand.js里的代码，里面的内容非常简单。他会获取当前页面的form，然后为其多添加一个hidden的标签并填充值，最后在将这个form提交。
-            <programlisting language="html">
-              <![CDATA[
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+ ]]>           </programlisting>
+              上面的代码会在执行完毕后跳转到add.jsp页面，同时过去的还有之前传过来的参数，以及为其准备好的按钮数据。下面贴出页面里的代码，在这里可以去阅读flowcommand.js里的代码，里面的内容非常简单。他会获取当前页面的form，然后为其多添加一个hidden的标签并填充值，最后在将这个form提交。 <programlisting language="html"> <![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -352,12 +335,7 @@ public class TestAction extends ActionSupport implements ServletContextAware,Ser
 </form>
 </body>
 </html>
-              ]]>
-            </programlisting>
-            前台提交后，逻辑继续回到后台，上面的form将会提交至doAdd，下面给出doAdd的逻辑代码，这里的代码只有控制部分。
-            <programlisting language="java">
-              <![CDATA[
-	@Action(value = "doAdd", 
+]]>        </programlisting> 前台提交后，逻辑继续回到后台，上面的form将会提交至doAdd，下面给出doAdd的逻辑代码，这里的代码只有控制部分。 <programlisting language="java"><![CDATA[@Action(value = "doAdd", 
 			results = { 
 			@Result(name = "success", location = "/info.jsp")})
 	public String doAdd() throws Exception{
@@ -375,12 +353,8 @@ public class TestAction extends ActionSupport implements ServletContextAware,Ser
 		}
 		return "success";
 	}
-              ]]>
-            </programlisting>
-            
-            <programlisting language="java">
-              <![CDATA[
-/**
+]]>           </programlisting>
+              <programlisting language="java"><![CDATA[/**
  *  Copyright 1996-2013 Founder International Co.,Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -494,17 +468,12 @@ public class TestService {
 		
 		return result;
 	}
-}
-              ]]>
-             </programlisting>
-          </para>
+}]]>         </programlisting>
+            </para>
           </listitem>
           <listitem>
             <para>
-              审批步骤，流程在发起以后将会流转到第二个人手中，第二个人在任务处理中心点击待办任务可以看到之前人提交的数据，此时点击进入审批环节。点击进入的表单是在流程上设定的，从以下代码可以看出，其内容与之前的发起并无太大区别，唯一的区别在于此处要多传一个taskId。
-              <programlisting language="java">
-              <![CDATA[
-	@Action(value = "toView", 
+              审批步骤，流程在发起以后将会流转到第二个人手中，第二个人在任务处理中心点击待办任务可以看到之前人提交的数据，此时点击进入审批环节。点击进入的表单是在流程上设定的，从以下代码可以看出，其内容与之前的发起并无太大区别，唯一的区别在于此处要多传一个taskId。 <programlisting language="java"><![CDATA[@Action(value = "toView", 
 			results = { 
 			@Result(name = "success", location = "/info.jsp")}) 
 	public String toView(){
@@ -528,15 +497,7 @@ public class TestService {
 			e.printStackTrace();
 		}
 		return "success";
-	}
-              ]]>
-              
-              
-              </programlisting>
-              
-              完成上面的代码后，页面会跳转到info.jsp，可以看出在流程按钮部分，这里的代码和提交环节完全一致。
-              <programlisting language="html">
-              <![CDATA[
+	}]]>              </programlisting> 完成上面的代码后，页面会跳转到info.jsp，可以看出在流程按钮部分，这里的代码和提交环节完全一致。 <programlisting language="html"><![CDATA[
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -583,15 +544,7 @@ public class TestService {
 </div>
 </form>
 </body>
-</html>
-              ]]>
-              
-              
-              </programlisting>
-              最后，调用审批代码，代码里调用的completeTask代码在之前已经贴出。
-              <programlisting language="java">
-              <![CDATA[
-	@Action(value = "completeTask", 
+</html> ]]>        </programlisting> 最后，调用审批代码，代码里调用的completeTask代码在之前已经贴出。 <programlisting language="java"><![CDATA[@Action(value = "completeTask", 
 			results = { 
 			@Result(name = "success", location = "/info.jsp")}) 
 	public String completeTask() throws SQLException{
@@ -604,13 +557,7 @@ public class TestService {
 		
 		testService.completeTask(userId, taskId, commandId, commandType, _taskComment, processDefinitionKey, user.getUserId(), flowMaps);
 		return "success";
-	}
-              ]]>
-              
-              
-              </programlisting>
-              至此，流程完成了与框架之间的整合。
-            </para>
+	}]]>             </programlisting> 至此，流程完成了与框架之间的整合。 </para>
             </listitem>
           </orderedlist>
       </para>
@@ -620,11 +567,8 @@ public class TestService {
   
   <section xml:id="integration.transaction">
     <title>数据库事务控制</title>
-    <para>
-      FixFlow Engine的事务集成是交给外部的，其本身就是只接收一个connection，并且不对其进行关闭。目前测试可以使用Spring事务，可以与Ibatis进行无缝集成，Hibernate和其他ORM框架还待测试。下面贴出一段集成事务的配置部分，这些配置文件需要在spring容器里才会生效，这段配置在本章节里提到的SSI框架集成时用到过。
-      <programlisting language="xml">
-         <![CDATA[
-    <tx:advice id="txAdvice" transaction-manager="TransactionManager">  
+    <para> FixFlow
+      Engine的事务集成是交给外部的，其本身就是只接收一个connection，并且不对其进行关闭。目前测试可以使用Spring事务，可以与Ibatis进行无缝集成，Hibernate和其他ORM框架还待测试。下面贴出一段集成事务的配置部分，这些配置文件需要在spring容器里才会生效，这段配置在本章节里提到的SSI框架集成时用到过。 <programlisting language="xml"><![CDATA[<tx:advice id="txAdvice" transaction-manager="TransactionManager">  
 	    <tx:attributes>
 	    	<!-- 对save开头的public方法进行事务处理，传播级别为随时加入 -->
 	        <tx:method name="save*" propagation="REQUIRED" read-only="false"
@@ -637,8 +581,7 @@ public class TestService {
 		<aop:pointcut id="pc" expression="execution(public * com.founder.test.service.*.*(..))" />
 	    <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config> 
-              ]]>
-       </programlisting>
+]]>   </programlisting>
     </para>
   </section>
   <section xml:id="integration.org">

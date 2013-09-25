@@ -10,7 +10,13 @@
     <para>下面列表列出了FixFlow引擎所支持的经过测试的数据库</para>
     <table xml:id="dataBase.support.table">
       <title>数据库支持列表</title>
-      <tgroup cols='3'>
+      <tgroup cols='6'>
+        <colspec colnum="1" colname="c1" colwidth="1*"/>
+        <colspec colnum="2" colname="c2" colwidth="0.5*"/>
+        <colspec colnum="3" colname="c3" colwidth="3*"/>
+        <colspec colnum="4" colname="c4" colwidth="3*"/>
+        <colspec colnum="5" colname="c5" colwidth="2*"/>
+        <colspec colnum="6" colname="c6" colwidth="0.5*"/>
         <thead>
           <row>
             <entry>数据库</entry>
@@ -25,7 +31,7 @@
           <row>
             <entry>mysql</entry>
             <entry>5+</entry>
-            <entry>jdbc:mysql://127.0.0.1:3306/fixflow?characterEncoding=UTF-8</entry>
+            <entry >jdbc:mysql://127.0.0.1:3306/fixflow?characterEncoding=UTF-8</entry>
             <entry>mysql-connector-java-5.1.17-bin.jar</entry>
             <entry>MySqlPaginationImpl</entry>
             <entry></entry>
@@ -124,12 +130,16 @@
     <table xml:id="dataBase.table.info.def">
       <title>【FIXFLOW_DEF_*】【定义相关表】</title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -159,12 +169,16 @@
     <table xml:id="dataBase.table.info.run">
       <title>【FIXFLOW_RUN_*】【运行相关表】</title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -206,12 +220,16 @@
     <table xml:id="dataBase.table.info.his">
       <title>【FIXFLOW_HIS_*】【实例相关表】</title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -253,12 +271,16 @@
     <table xml:id="dataBase.table.info.agent">
       <title>【FIXFLOW_AGENT_*】【委托授权相关表】</title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -281,12 +303,16 @@
     <table xml:id="dataBase.table.info.mail">
       <title>【FIXFLOW_MAIL】【邮件表】</title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -304,12 +330,16 @@
     <table xml:id="dataBase.table.info.quartz">
       <title>【QRZT_*】【定时任务相关表】<link xlink:href="http://quartz-scheduler.org/documentation">详细信息请参阅Quartz官方网站</link></title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -385,12 +415,16 @@
     <table xml:id="dataBase.table.info.workDate">
       <title>【FIXFLOW_WORKDATE_*】【工作日历表】</title>
       <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="4*"/>
+        <colspec colnum="2" colname="c2" colwidth="1*"/>
+        <colspec colnum="3" colname="c3" colwidth="4*"/>
+        <colspec colnum="4" colname="c4" colwidth="1*"/>
         <thead>
           <row>
             <entry>表名</entry>
             <entry>类型</entry>
             <entry>备注</entry>
-            <entry>字段</entry>
+            <entry align="center">字段</entry>
           </row>
         </thead>
         <tbody>
@@ -436,8 +470,7 @@
     <para>要支持新的数据库,需要实现数据库方言接口,并在fixflowconfig.xml文件中添加一行新的数据源。<link linkend="config.dataBaseConfig">数据源配置</link></para>
     <para>数据库方言实现类位于:fixflow-expand/src/com/founder/fix/fixflow/expand/database/pagination</para>
     <para>数据库方言接口:</para>
-    <programlisting language="java">   
-<![CDATA[
+    <programlisting language="java">   <![CDATA[
   /**
    * 数据库方言接口
    * @author kenshin
@@ -493,8 +526,7 @@
   String getLocalismSql(String localismKey,String localismValue);
 
 }
-]]> 
-    </programlisting>
+]]>    </programlisting>
   </section>
   
   <section xml:id="dataBase.dataDictionary">
