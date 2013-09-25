@@ -1423,7 +1423,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
       <section xml:id="bpmn.SendTask.GraphicalNotation">
         <title>图形符号</title>
         <para> 
-          发送任务是图形为一个圆角矩形,有一个小的邮件图标在左上角。
+          发送任务是图形为一个圆角矩形,有一个小的黑色邮件图标在左上角。
           <mediaobject ><imageobject>
             <imagedata align="center" contentwidth="600" fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
@@ -1443,23 +1443,114 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
     
     <section xml:id="bpmn.ReceiveTask">
       <title>Receive Task</title>
-      <para>
+      <section xml:id="bpmn.ReceiveTask.Description">
+        <title>描述</title>
+        <para>
+          接收任务(ReceiveTask)当流程走到这个节点的时候,令牌(Token)会暂停在这个节点等待一个命令来激活它。
+        </para>
+      </section>
+      <section xml:id="bpmn.ReceiveTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          发送任务是图形为一个圆角矩形,有一个小的白色邮件图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="images/bpmn.ReceiveTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.ReceiveTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:receiveTask id="ReceiveTask_1" name="ReceiveTask"/>]]></programlisting>
+        </para>
+      </section>
+      
+      <section xml:id="bpmn.ReceiveTask.Java">
+        <title>Java代码:</title>
+        
+        <para>
+          <programlisting language="java"><![CDATA[//获取流程实例对象
+ProcessInstanceEntity processInstance=(ProcessInstanceEntity)runtimeService.getProcessInstance("processInstanceId");
+
+//驱动根令牌向下运行
+processInstance.signal();
+
+//驱动指定的令牌向下运转
+processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
+        </para>
+        <para>
+          <emphasis>注意</emphasis>:一般这个节点,运用在流程走到某个步骤之后停止,等待别人事情完成之后,接到通知,再继续进行下去的功能。
+        </para>
+      </section>
     </section>
     
     <section xml:id="bpmn.ManualTask">
       <title>Manual Task</title>
-      <para>
+      <section xml:id="bpmn.ManualTask.Description">
+        <title>描述</title>
+        <para>
+          手工任务(ManualTask)这个节点,用于描述线下完成的工作,在FixFlow引擎遇到这个节点会直接忽略过去,这个节点只具有图形的含义。
+        </para>
+      </section>
+      <section xml:id="bpmn.ManualTask.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          发送任务是图形为一个圆角矩形,有一个手的图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="imagesbpmn.ManualTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.ManualTask.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:manualTask id="ManualTask_1" name="ManualTask"/>]]></programlisting>
+        </para>
+      </section>
+
     </section>
     
     <section xml:id="bpmn.foreach">
-      <title>Multi-instance (for each)</title>
-      <para>
+      <title>Multi-instance (for each、会签)</title>
+      <section xml:id="bpmn.foreach.Description">
+        <title>描述</title>
+        <para>
+          　　一个多实例活动(multi-instance activity)是一种定义为一个特定的步骤完成一些操作的功能。
+          在编程的概念,一个多实例匹配每个构造:它允许执行一个特定的步骤或甚至一个完整的子流程中每个项目的一个给定的集合,串行或并行。
+          　　
+          　　一个多实例是一个常规的活动,有额外的属性定义(所谓的“多实例特征”),导致活动是在运行时执行多次。以下活动可以成为一个多实例活动:
+          
+          
+          
+        </para>
+      </section>
+      <section xml:id="bpmn.foreach.GraphicalNotation">
+        <title>图形符号</title>
+        <para> 
+          发送任务是图形为一个圆角矩形,有一个手的图标在左上角。
+          <mediaobject ><imageobject>
+            <imagedata align="center"  fileref="imagesbpmn.ManualTask.GraphicalNotation.1.png"/>
+          </imageobject></mediaobject>
+        </para>
+      </section>
+      
+      
+      <section xml:id="bpmn.foreach.XMLRepresentation">
+        <title>XML描述</title>
         
-      </para>
+        <para>
+          XML元素表示如下:
+          <programlisting language="xml"><![CDATA[<bpmn2:manualTask id="ManualTask_1" name="ManualTask"/>]]></programlisting>
+        </para>
+      </section>
     </section>
     
     
