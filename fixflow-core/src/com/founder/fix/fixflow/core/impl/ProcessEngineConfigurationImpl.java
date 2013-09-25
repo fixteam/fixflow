@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.core.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -253,11 +255,21 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
 
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml").toString();
+		
+
+		InputStream inputStream = null;
+		String classPath="com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml";
+		inputStream = ReflectUtil.getResourceAsStream("sqlmappingconfig.xml");
+		if(inputStream!=null){
+			classPath="sqlmappingconfig.xml";
+		}
+		
+		
+		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
 		try {
 			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml").getFile(), "utf-8");
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
 				resource = resourceSet.createResource(URI.createFileURI(filePath));
 			} else {
 				resource = resourceSet.createResource(URI.createURI(filePath));
@@ -364,12 +376,23 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		ResourceSet resourceSet = new ResourceSetImpl();
 
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
+		
+		
+		
+		InputStream inputStream = null;
+		String classPath="com/founder/fix/fixflow/expand/config/fixflowconfig.xml";
+		inputStream = ReflectUtil.getResourceAsStream("fixflowconfig.xml");
+		if(inputStream!=null){
+			classPath="fixflowconfig.xml";
+		}
 
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").toString();
+		
+
+		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
 		try {
 			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowconfig.xml").getFile(), "utf-8");
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
 				resource = resourceSet.createResource(URI.createFileURI(filePath));
 			} else {
 				resource = resourceSet.createResource(URI.createURI(filePath));
@@ -612,6 +635,16 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		 * SchedulerFactory schedulerFactory =
 		 * QuartzUtil.createSchedulerFactory(); Scheduler scheduler = null;
 		 */
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		this.quartzConfig = fixFlowConfig.getQuartzConfig();
 
@@ -694,6 +727,49 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.dataSource.fixDS.user", username);
 		props.put("org.quartz.dataSource.fixDS.password", password);
 		props.put("org.quartz.dataSource.fixDS.maxConnections", "5");
+		
+		
+		
+		Properties prop= new Properties();
+		InputStream inputStream = null;
+		
+		
+		try {
+			inputStream = ReflectUtil.getResourceAsStream("quartz.properties");
+			if(inputStream!=null){
+				prop.load(inputStream);
+				inputStream.close();
+				Set<Object> objects=prop.keySet();
+				for (Object object : objects) {
+					props.put(StringUtil.getString(object), prop.getProperty(StringUtil.getString(object)));
+				}
+				
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Scr根目录未找到quartz.properties文件");
+		}
+		
+		if(inputStream==null){
+			try {
+				inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/expand/config/quartz.properties");
+				if(inputStream!=null){
+					prop.load(inputStream);
+					inputStream.close();
+					Set<Object> objects=prop.keySet();
+					for (Object object : objects) {
+						props.put(StringUtil.getString(object), prop.getProperty(StringUtil.getString(object)));
+					}
+					
+				}
+			} catch (IOException e) {
+				System.out.println("com/founder/fix/fixflow/expand/config/根目录未找到quartz.properties文件");
+			}
+		}
+		
+
+		props.putAll(prop);
+		
 
 		schedulerFactory = null;
 		schedulerFactory = QuartzUtil.createSchedulerFactory(props);
