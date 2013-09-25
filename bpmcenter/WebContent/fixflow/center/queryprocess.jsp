@@ -30,6 +30,8 @@ $("#selectUser").click(function(){
 	$("#initor").val(userId);
 	$("#initorName").val(userName);
 });
+
+$("#processType_"+$("#processType").val()).css("background-color","#ffffff");
 });
 function clearInfo(){
 	$("#title").val("");
@@ -52,19 +54,19 @@ function clearInfo(){
 				<!-- 左 -->
 				<div class="left">
 					<div class="left-nav-box">
-						<div class="left-nav">
+						<div class="left-nav" id="processType_">
 							<a id="getAllProcess" name="getAllProcess" target="_self"
 								href="#" onclick="$('#processType').val('');$('#subForm').submit();"
 								 style="display: block;">全部流程</a>
 						</div>
             			<div class="left-nav-orange-line">&nbsp;</div>
-						<div class="left-nav">
+						<div class="left-nav" id="processType_initor">
 							<a id="getInitorTask" name="getInitorTask" target="_self"
 								href="#" onclick="$('#processType').val('initor');$('#subForm').submit();"
 								style="display: block;">我发起的流程</a>
 						</div>
             			<div class="left-nav-orange-line">&nbsp;</div>
-						<div class="left-nav">
+						<div class="left-nav" id="processType_participants">
 							<a id="getInitorTask" name="getParticipantsTask" target="_self"
 								href="#" onclick="$('#processType').val('participants');$('#subForm').submit();"
 								style="display: block;">我参与的流程</a>
