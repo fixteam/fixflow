@@ -1524,6 +1524,10 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
         <title>描述</title>
         <para>
           　　一个多实例活动(multi-instance activity)是一种定义为一个特定的步骤完成一些操作的功能。
+          
+          
+          
+          
           在编程的概念,一个多实例匹配每个构造:它允许执行一个特定的步骤或甚至一个完整的子流程中每个项目的一个给定的集合,串行或并行。
           　　
           　　一个多实例是一个常规的活动,有额外的属性定义(所谓的“多实例特征”),导致活动是在运行时执行多次。以下活动可以成为一个多实例活动:
