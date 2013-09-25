@@ -9,11 +9,20 @@
     <title>任务命令配置</title>
     <para> FixFlow的任务命令均可在fixflowconfig.xml文件中配置，方便用户修改和扩展。用户可以直接在设计器中修改，或者直接修改XML文件。    </para>
     <para><emphasis role="bold">XML描述</emphasis></para>
-    <programlisting language="xml">
- &lt;taskCommandConfig commandType="manualclaim">
-    &lt;taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-    &lt;taskCommandDef id="startandsubmit" name="启动并提交" command="com.founder.fix.fixflow.expand.command.StartAndSubmitTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.StartAndSubmitTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.StartAndSubmitTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>      
-    &lt;/taskCommandConfig>   </programlisting>
+    <programlisting language="xml">&lt;taskCommandConfig commandType="manualclaim">
+		&lt;taskCommandDef id="general" name="通用"
+			command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand"
+			cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd"
+			isEnabled="true" type="toDoTasks"
+			filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter"
+			isVerification="true" isSaveData="true" isSimulationRun="false" />
+		&lt;taskCommandDef id="startandsubmit" name="启动并提交"
+			command="com.founder.fix.fixflow.expand.command.StartAndSubmitTaskCommand"
+			cmd="com.founder.fix.fixflow.expand.cmd.StartAndSubmitTaskCmd"
+			isEnabled="true" type="toDoTasks"
+			filter="com.founder.fix.fixflow.expand.filter.StartAndSubmitTaskFilter"
+			isVerification="true" isSaveData="true" isSimulationRun="false" />
+&lt;/taskCommandConfig>   </programlisting>
     
       <itemizedlist>
         <listitem>
@@ -32,7 +41,7 @@
       <para><emphasis role="bold">设计器上如何配置</emphasis></para>
     <para>设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 数据库
       <mediaobject><imageobject>
-        <imagedata align="center" fileref="images/config.taskCommsndConfig.1.png"/>
+        <imagedata align="center" contentwidth="600" fileref="images/config.taskCommsndConfig.1.png"/>
       </imageobject></mediaobject>
     </para>
   </section>
@@ -43,49 +52,123 @@
     <para><emphasis role="bold"> XML描述 </emphasis></para>
     <programlisting language="xml">
 &lt;assignPolicyConfig>
-    &lt;assignPolicy id="potentialOwner" name="共享   (默认策略)" classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerAssignmentImpl" remarks="系统默认策略,需要接收任务才能处理,不能删除。"/>
-    &lt;assignPolicy id="humanPerformer" name="独占   (默认策略)" classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerAssignmentImpl" remarks="系统默认策略,只能分配给一个处理者,不能删除。"/>
-    &lt;assignPolicy id="humanPerformer_TaskAtLeast" name="独占   (资源中任务最少者)" classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerTaskAtLeastAssignmentImpl" remarks=""/>
-    &lt;assignPolicy id="humanPerformer_Random" name="独占   (在资源中随机分配任务)" classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerRandomAssignmentImpl" remarks=""/>
-    &lt;assignPolicy id="potentialOwner_One" name="共享   (当只有一人时采用独占策略)" classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerOneAssignmentImpl" remarks=""/>
-    &lt;assignPolicy id="simulationRun" name="虚拟运行策略" classImpl="com.founder.fix.fixflow.expand.assignment.SimulationRunAssignmentImpl" remarks=""/>
-    &lt;assignPolicy id="custom" name="动态   (根据策略表达式动态分配策略)" classImpl="com.founder.fix.fixflow.expand.assignment.CustomAssignmentImpl" remarks=""/>
-  &lt;/assignPolicyConfig>      
+		&lt;assignPolicy id="potentialOwner" name="共享   (默认策略)"
+			classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerAssignmentImpl"
+			remarks="系统默认策略,需要接收任务才能处理,不能删除。" />
+		&lt;assignPolicy id="humanPerformer" name="独占   (默认策略)"
+			classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerAssignmentImpl"
+			remarks="系统默认策略,只能分配给一个处理者,不能删除。" />
+		&lt;assignPolicy id="humanPerformer_TaskAtLeast" name="独占   (资源中任务最少者)"
+			classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerTaskAtLeastAssignmentImpl"
+			remarks="" />
+		&lt;assignPolicy id="humanPerformer_Random" name="独占   (在资源中随机分配任务)"
+			classImpl="com.founder.fix.fixflow.expand.assignment.HumanPerformerRandomAssignmentImpl"
+			remarks="" />
+		&lt;assignPolicy id="potentialOwner_One" name="共享   (当只有一人时采用独占策略)"
+			classImpl="com.founder.fix.fixflow.expand.assignment.PotentialOwnerOneAssignmentImpl"
+			remarks="" />
+		&lt;assignPolicy id="simulationRun" name="虚拟运行策略"
+			classImpl="com.founder.fix.fixflow.expand.assignment.SimulationRunAssignmentImpl"
+			remarks="" />
+		&lt;assignPolicy id="custom" name="动态   (根据策略表达式动态分配策略)"
+			classImpl="com.founder.fix.fixflow.expand.assignment.CustomAssignmentImpl"
+			remarks="" />
+	&lt;/assignPolicyConfig>     
     </programlisting>
     <para><emphasis role="bold">设计器上如何配置</emphasis></para>
     <mediaobject><imageobject>
-      <imagedata align="center" fileref="images/config.assignPolicyConfig.1.png"/>
+      <imagedata align="center" contentwidth="600" fileref="images/config.assignPolicyConfig.1.png"/>
     </imageobject></mediaobject>
   </section>
   
   <section xml:id="config.expandClassConfig">
     <title>引擎扩展配置</title>
     <para>对于引擎中的持久化，查询类，FixFlow提供了相应的接口或者父类，在不满足用户需求的情况下，可以自己实现此接口或者实现类来扩展FixFlow以满足自己的需求。</para>
-    <para>
-      XML描述
-    </para>
-    <programlisting language="xml">&lt;expandClassConfig>
-    &lt;expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>
-    &lt;expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
-    &lt;expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
-    &lt;expandClass classId="Authentication" className="用户信息" classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication" classImpl="com.founder.fix.fixflow.expand.identity.CommonAuthenticationImpl" remarks="获取用户信息"/>
-    &lt;expandClass classId="TaskInstancePersistence" className="任务实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence" remarks="任务任务实例的数据库存储类"/>
-    &lt;expandClass classId="ProcessInstancePersistence" className="流程实例持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence" remarks="流程实例的数据库存储类"/>
-    &lt;expandClass classId="IdentityLinkPersistence" className="任务候选人持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence" remarks="任务候选人持久化"/>
-    &lt;expandClass classId="JobPersistence" className="定时任务持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence" remarks="定时任务持久化"/>
-    &lt;expandClass classId="TokenPersistence" className="令牌持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence" remarks="令牌持久化"/>
-    &lt;expandClass classId="VariablePersistence" className="变量持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence" remarks="变量持久化"/>
-    &lt;expandClass classId="DeploymentPersistence" className="流程发布持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence" remarks="流程发布持久化"/>
-    &lt;expandClass classId="ResourcePersistence" className="资源持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence" remarks="资源持久化"/>
-    &lt;expandClass classId="HistoryPersistence" className="归档持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence" remarks="归档持久化"/>
-    &lt;expandClass classId="ProcessDefinitionPersistence" className="流程定义持久化" classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence" classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence" remarks="流程定义持久化"/>
-    &lt;expandClass classId="DeploymentQuery" className="流程发布查询" classInterface="com.founder.fix.fixflow.core.model.DeploymentQuery" classImpl="com.founder.fix.fixflow.core.impl.model.DeploymentQueryImpl" remarks="流程发布查询"/>
-    &lt;expandClass classId="ProcessInstanceQuery" className="流程实例查询" classInterface="com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl" remarks="流程实例查询"/>
-    &lt;expandClass classId="TaskQuery" className="任务查询" classInterface="com.founder.fix.fixflow.core.task.TaskQuery" classImpl="com.founder.fix.fixflow.core.impl.task.TaskQueryImpl" remarks="任务查询"/>
-    &lt;expandClass classId="IdentityLinkQuery" className="任务候选人查询" classInterface="com.founder.fix.fixflow.core.runtime.IdentityLinkQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl" remarks="任务候选人查询"/>
-    &lt;expandClass classId="TokenQuery" className="令牌查询" classInterface="com.founder.fix.fixflow.core.runtime.TokenQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl" remarks="令牌查询"/>
-    &lt;expandClass classId="ProcessDefinitionQuery" className="流程定义查询" classInterface="com.founder.fix.fixflow.core.model.ProcessDefinitionQuery" classImpl="com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl" remarks="流程定义查询"/>
-    &lt;/expandClassConfig></programlisting>
+    <para><emphasis role="bold"> XML描述 </emphasis></para>
+    <programlisting language="xml" width="900">&lt;expandClassConfig>
+		&lt;expandClass classId="TaskMgmtInstance" className="任务管理器"
+			classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance"
+			classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl"
+			remarks="任务管理器负责任务分配" />
+		&lt;expandClass classId="FixFlowResources" className="国际化资源处理"
+			classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources"
+			classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl"
+			remarks="国际化资源处理" />
+		&lt;expandClass classId="BizData" className="业务数据操作对象"
+			classInterface="com.founder.fix.fixflow.core.variable.BizData"
+			classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl"
+			remarks="业务数据操作对象" />
+		&lt;expandClass classId="Authentication" className="用户信息"
+			classInterface="com.founder.fix.fixflow.core.impl.identity.AbstractAuthentication"
+			classImpl="com.founder.fix.fixflow.expand.identity.CommonAuthenticationImpl"
+			remarks="获取用户信息" />
+		&lt;expandClass classId="TaskInstancePersistence" className="任务实例持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence"
+			remarks="任务任务实例的数据库存储类" />
+		&lt;expandClass classId="ProcessInstancePersistence"
+			className="流程实例持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.ProcessInstancePersistence"
+			remarks="流程实例的数据库存储类" />
+		&lt;expandClass classId="IdentityLinkPersistence" className="任务候选人持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence"
+			remarks="任务候选人持久化" />
+		&lt;expandClass classId="JobPersistence" className="定时任务持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.JobPersistence"
+			remarks="定时任务持久化" />
+		&lt;expandClass classId="TokenPersistence" className="令牌持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.TokenPersistence"
+			remarks="令牌持久化" />
+		&lt;expandClass classId="VariablePersistence" className="变量持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence"
+			remarks="变量持久化" />
+		&lt;expandClass classId="DeploymentPersistence" className="流程发布持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentPersistence"
+			remarks="流程发布持久化" />
+		&lt;expandClass classId="ResourcePersistence" className="资源持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ResourcePersistence"
+			remarks="资源持久化" />
+		&lt;expandClass classId="HistoryPersistence" className="归档持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.instance.HistoryPersistence"
+			remarks="归档持久化" />
+		&lt;expandClass classId="ProcessDefinitionPersistence"
+			className="流程定义持久化"
+			classInterface="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence"
+			classImpl="com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence"
+			remarks="流程定义持久化" />
+		&lt;expandClass classId="DeploymentQuery" className="流程发布查询"
+			classInterface="com.founder.fix.fixflow.core.model.DeploymentQuery"
+			classImpl="com.founder.fix.fixflow.core.impl.model.DeploymentQueryImpl"
+			remarks="流程发布查询" />
+		&lt;expandClass classId="ProcessInstanceQuery" className="流程实例查询"
+			classInterface="com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery"
+			classImpl="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl"
+			remarks="流程实例查询" />
+		&lt;expandClass classId="TaskQuery" className="任务查询"
+			classInterface="com.founder.fix.fixflow.core.task.TaskQuery"
+			classImpl="com.founder.fix.fixflow.core.impl.task.TaskQueryImpl"
+			remarks="任务查询" />
+		&lt;expandClass classId="IdentityLinkQuery" className="任务候选人查询"
+			classInterface="com.founder.fix.fixflow.core.runtime.IdentityLinkQuery"
+			classImpl="com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl"
+			remarks="任务候选人查询" />
+		&lt;expandClass classId="TokenQuery" className="令牌查询"
+			classInterface="com.founder.fix.fixflow.core.runtime.TokenQuery"
+			classImpl="com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl"
+			remarks="令牌查询" />
+		&lt;expandClass classId="ProcessDefinitionQuery" className="流程定义查询"
+			classInterface="com.founder.fix.fixflow.core.model.ProcessDefinitionQuery"
+			classImpl="com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl"
+			remarks="流程定义查询" />
+	&lt;/expandClassConfig></programlisting>
     <itemizedlist>
       <listitem><para>classId：类的唯一标识，不可更改。</para></listitem>
       <listitem><para>classInterface：父类或接口名，表名后面的实现类必须继承此父类或者实现此接口，不可更改。</para></listitem>
@@ -95,7 +178,7 @@
     
     <para><emphasis role="bold">设计器如何配置</emphasis></para>
     <mediaobject><imageobject>
-      <imagedata align="center" fileref="images/config.expandClassConfig.1.png"/>
+      <imagedata align="center" contentwidth="600" fileref="images/config.expandClassConfig.1.png"/>
     </imageobject></mediaobject>
   </section>
   

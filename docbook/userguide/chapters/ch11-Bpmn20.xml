@@ -892,13 +892,13 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
+            <imagedata align="center"  contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
         
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -910,7 +910,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -932,7 +932,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           包容网关(ExclusiveGateway)图形为一个菱形里边有一个"o"圆圈。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1004,7 +1004,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para>
           下面这样做法FixFLow引擎是支持的,但是不推荐这么用。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1015,7 +1015,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.designer.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.designer.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1033,7 +1033,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       
       <emphasis role="bold">BPMN2.0 Task类型元素图:</emphasis>
       <mediaobject ><imageobject>
-        <imagedata  align="center" fileref="images/bpmn.Tasks.1.png"/>
+        <imagedata  align="center" contentwidth="600" fileref="images/bpmn.Tasks.1.png"/>
       </imageobject></mediaobject>
     </para>
     
@@ -1051,7 +1051,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           一个人工任务是图形为一个圆角矩形,有一个小的用户图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1080,13 +1080,12 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           BPMN2.0 标准中定义的UserTask节点的功能过于简单,没有办法描述复杂人工任务,所以FixFlow引擎对UserTask节点做了很多的扩展。
         </para>
         
-        <para>
-          下面这段XML表示,UserTask_1这个人工节点的任务处理者为"所有人",任务的分配策略为共享方式。
-          <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" name="User Task 1">
+        <para> 下面这段XML表示,UserTask_1这个人工节点的任务处理者为"所有人",任务的分配策略为共享方式。 <programlisting language="xml"><![CDATA[<bpmn2:userTask id="UserTask_1" name="User Task 1">
   <bpmn2:extensionElements>
     <fixflow:assignPolicyType id="potentialOwner"/>
   </bpmn2:extensionElements>
-  <bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+  <bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" 
+    fixflow:isContainsSub="false" name="所有人">
     <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
       <bpmn2:formalExpression id="所有人">"quot;fixflow_allusers"</bpmn2:formalExpression>
     </bpmn2:resourceAssignmentExpression>
@@ -1097,7 +1096,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           对应的设计器图形表示:
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.UserTask.assignment.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.assignment.1.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1136,7 +1135,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           <emphasis role="bold">resourceAssignmentExpression-formalExpression</emphasis>:人员或者组信息的表达式,
           可以是"人员编号"、也可以 return "人员编号"、或者 "人员1,人员2,人员3"、或者是个 List(String) 、也可以直接在这里调用java代码返回人员信息。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.UserTask.assignment.2.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.assignment.2.png"/>
           </imageobject></mediaobject>
         </para>
         <para>
@@ -1254,7 +1253,7 @@ taskInstance.getPriority();]]></programlisting>
         <para>
           <emphasis role="bold">设计器界面</emphasis>:
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.UserTask.taskInfo.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.taskInfo.1.png"/>
           </imageobject></mediaobject>
         </para>
         <para>
@@ -1312,7 +1311,7 @@ taskInstance.getExpectedExecutionTime();
         <para> 
           脚本任务是图形为一个圆角矩形,有一个小的脚本图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1367,7 +1366,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           服务任务是图形为一个圆角矩形,有一个小的齿轮图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1396,7 +1395,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           服务任务是图形为一个圆角矩形,有一个小的表格图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
+            <imagedata align="center" contentwidth="600"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1426,7 +1425,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           发送任务是图形为一个圆角矩形,有一个小的黑色邮件图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1625,25 +1624,25 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
           <listitem>
             <para>打开设计器，点击流程设置->创建连接器</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.1.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.1.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
             <para>填写连接器ID，名称，描述等信息，分类可选择新建或者原有分类。</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.2.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.2.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
             <para>发送短信需要配置收件人号码和信息内容，所以创建一个页面，填写页面ID，标题，描述等，并创建两个参数：收件人号码和信息内容。</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.3.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.3.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
             <para>配置输出参数，这里可以将发送短信之后的结果返回给FixFlow在流程中使用,当然，实际使用中我们可能会返回更复杂的数据结构，如List、Map等，如：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.6.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.6.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
@@ -1654,7 +1653,7 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
             <para>查看生成的java代码，其中receiveId和messageInfo是我们刚才创建的变量ID，execute方法是最终执行的方法，这里的业务逻辑可能要调用第三方的短信猫接口，需要自己去补充。
               我们这里仅仅做简单的输出，表明我们拿到了相关的参数，可以进行复杂的业务计算等：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.create.5.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.5.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
@@ -1776,13 +1775,13 @@ public class TestSendMessage implements ConnectorHandler {
           <listitem> 
             <para>打开设计器，打开一个简单流程，打开Properties属性页，点击流程空白处，在属性页中选择连接器，如图：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.1.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.use.1.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
             <para>点击添加->选择TestFixFlow分类下TestSendMessage连接器，如图：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.2.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.use.2.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
@@ -1820,12 +1819,12 @@ return triggers;
             </itemizedlist>
             <para>这里我们只设置简单的当流程启动时给指定人员发送短信，点击下一步，如：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.3.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.use.3.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem><para>填写我们创建的两个参数：收件人号码和短信内容，点击下一步：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.4.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.use.4.png"/>
             </imageobject></mediaobject>
             <para>当然我们这里的号码和短信内容和FixFlow流程中的其他配置一样，都可以写复杂的java代码的。</para>
           </listitem>
@@ -1838,7 +1837,7 @@ return triggers;
           <listitem>
             <para>启动tomcat，访问bpmcenter，启动此流程，查看控制台输出：</para>
             <mediaobject ><imageobject>
-              <imagedata align="center"  fileref="images/bpmn.ExtensionElements.connector.use.5.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.use.5.png"/>
             </imageobject></mediaobject>
           </listitem>
         </orderedlist>
@@ -1944,7 +1943,7 @@ return triggers;&lt;/fixflow:expression>
         <para>
           <emphasis role="bold">设计器使用</emphasis>
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.dataVariable.designer.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.dataVariable.designer.1.png"/>
           </imageobject></mediaobject>
         </para>
       <para> <emphasis role="bold">XML描述</emphasis></para>
@@ -1975,7 +1974,7 @@ Object variableValue = runtimeService.getProcessInstanceVariable(processInstance
         <para>
           选中节点，点击properties属性框，选择跳过策略。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.skip.designer.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.skip.designer.1.png"/>
           </imageobject></mediaobject>
         </para>
         <para> <emphasis role="bold">XML描述</emphasis></para>
@@ -2012,10 +2011,10 @@ Object variableValue = runtimeService.getProcessInstanceVariable(processInstance
         <title>设计器配置</title>
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.form.designer.1.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.form.designer.1.png"/>
           </imageobject></mediaobject>
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ExtensionElements.form.designer.2.png"/>
+            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.form.designer.2.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -2037,7 +2036,7 @@ Object variableValue = runtimeService.getProcessInstanceVariable(processInstance
       <para> <emphasis role="bold">设计器配置</emphasis></para>
       <para>
         <mediaobject ><imageobject>
-          <imagedata align="center"  fileref="images/bpmn.ExtensionElements.taskTopic.1.png"/>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.taskTopic.1.png"/>
         </imageobject></mediaobject>
       </para>
       <para> <emphasis role="bold">XML描述</emphasis></para>
@@ -2054,7 +2053,7 @@ String taskSubject = processInstance.getSubject();             </programlisting>
       <para> 任务命令是一组预先配置的，能够驱动流程走向的命令的集合。</para>
       <para>任务命令的配置如图：
         <mediaobject ><imageobject>
-          <imagedata align="center"  fileref="images/bpmn.ExtensionElements.taskCommand.1.png"/>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.taskCommand.1.png"/>
         </imageobject></mediaobject>
       </para>
       <para>其中每一个任务命令都会对应三个Java实现类：参数对象、执行器、过滤器。<itemizedlist>
@@ -2071,7 +2070,7 @@ String taskSubject = processInstance.getSubject();             </programlisting>
       <para>当FixFlow提供的默认命令不满足用户需求的时候，用户可以很方便的自定义自己的任务命令按钮，只要实现上述三个类即可。</para>
       <para>流程中配置如图：
         <mediaobject ><imageobject>
-          <imagedata align="center"  fileref="images/bpmn.ExtensionElements.taskCommand.2.png"/>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.taskCommand.2.png"/>
         </imageobject></mediaobject>
       </para>
       <para><emphasis role="bold">XML描述</emphasis></para>
