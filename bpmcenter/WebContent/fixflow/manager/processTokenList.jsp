@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>流程令牌管理</title>
 <jsp:include page="head.jsp" flush="true"/>
 </head>
 

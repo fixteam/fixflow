@@ -5,6 +5,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";    
 pageContext.setAttribute("basePath",basePath);    
 %>   
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/fixflow/images/favicon.ico" type="image/x-icon">
+<title>${applicationScope.appInfo["product.title"]}</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/common.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/select.js"></script>
