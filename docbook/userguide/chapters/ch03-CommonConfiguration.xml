@@ -396,10 +396,10 @@
 	<importDataVariableConfig>
 		<importDataVariable id="FixCSForm" name="FixCS平台表单变量"
 			expression="formInfo.getData(&quot;#{FieldName}&quot;)" />
-		<importDataVariable id="FixCSDB" name="FixCS平台数据库变量"
-			expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)" />
-		<importDataVariable id="GeneralDB" name="通用数据库变量"
-			expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);" />
+		<importDataVariable id="FixCSDB" name="FixCS平台数据库变量" 
+          expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)" />
+		<importDataVariable id="GeneralDB" name="通用数据库变量" 
+          expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);" />
 	</importDataVariableConfig>
 </coreconfig:FixFlowConfig>
 
@@ -499,9 +499,7 @@
       数据库配置例子：
     </para>
     <para>
-      <programlisting language="xml">
-<![CDATA[   
-<dataBaseConfig selected="oracle" mode="internal" isEnableDesCon="false">
+      <programlisting language="xml"><![CDATA[ <dataBaseConfig selected="oracle" mode="internal" isEnableDesCon="false">
     <dataBase 
     id="oracle" 
     name="oracle" 
@@ -514,9 +512,7 @@
     maxWait="10000" 
     paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" 
     dbtype="oracle"/>   
-</dataBaseConfig>
-]]>        
-      </programlisting>
+</dataBaseConfig>]]>            </programlisting>
     </para>
     
     <para>
@@ -526,7 +522,7 @@
       设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 数据库
     </para>
     <mediaobject><imageobject>
-      <imagedata align="center"  contentwidth="800" fileref="images/config.dataBaseConfig.1.png"/>
+      <imagedata align="center"  contentwidth="400" fileref="images/config.dataBaseConfig.1.png"/>
     </imageobject></mediaobject>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="800"  fileref="images/config.dataBaseConfig.2.png"/>
@@ -665,15 +661,27 @@
     </para>
       <programlisting language="xml">   
 <![CDATA[       
-<designerOrgConfig dataBaseId="oracle">
-  <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
-  <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="true" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
-    <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID from au_userinfo t1,  FIX_GROUP_RELATION t2 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org'"/>
-  </groupInfo>
-  <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
-    <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID from au_userinfo t1,  FIX_GROUP_RELATION t2 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role'"/>
-  </groupInfo>
-</designerOrgConfig>
+<designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE"
+		isDefaultConfig="true">
+		<allUserInfo isEnabled="false" userIdField="USERID"
+			userNameField="USERNAME" sqlText="select * from au_userinfo" />
+		<groupInfo groupId="dept" groupName="部门" isEnabled="true"
+			isDisplayUser="false" groupIdField="ORGID" groupNameField="ORGNAME"
+			supGroupIdField="SUPORGID" sqlText="select * from au_orginfo"
+			groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
+			<userInfo userIdField="USERID" userNameField="USERNAME"
+				groupIdField="ORGID"
+				sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from au_userinfo t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID" />
+		</groupInfo>
+		<groupInfo groupId="role" groupName="角色" isEnabled="true"
+			isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME"
+			supGroupIdField="ROLEID" sqlText="select * from au_roleinfo"
+			groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
+			<userInfo userIdField="USERID" userNameField="USERNAME"
+				groupIdField="ROLEID"
+				sqlText="select t1.*, t2.GROUP_ID AS ROLEID ,t3.name as name from au_userinfo t1,  FIX_GROUP_RELATION t2, au_roleinfo t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role' and t2.group_id =t3.roleid" />
+		</groupInfo>
+	</designerOrgConfig>
 ]]> 
     </programlisting>
     <para>
@@ -834,14 +842,12 @@
     <para>
       脚本语言配置的例子：
     </para>
-    <programlisting language="xml">   
-<![CDATA[       
-<scriptLanguageConfig selected="Groovy">
-  <scriptLanguage id="BeanShell" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl"/>
-  <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>
-</scriptLanguageConfig>
-]]> 
-    </programlisting>
+    <programlisting language="xml">&lt;scriptLanguageConfig selected="Groovy">
+		&lt;scriptLanguage id="BeanShell"
+			classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl" />
+		&lt;scriptLanguage id="Groovy"
+			classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl" />
+&lt;/scriptLanguageConfig>     </programlisting>
     
     <para>
       设计器上如何配置
@@ -857,6 +863,5 @@
   
  
 </chapter>
-
 
 
