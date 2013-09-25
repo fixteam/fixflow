@@ -11,8 +11,10 @@
     <para><emphasis role="bold">XML描述</emphasis></para>
     <programlisting language="xml">
  &lt;taskCommandConfig commandType="manualclaim">
-    &lt;taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-    &lt;taskCommandDef id="startandsubmit" name="启动并提交" command="com.founder.fix.fixflow.expand.command.StartAndSubmitTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.StartAndSubmitTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.StartAndSubmitTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>      
+    &lt;taskCommandDef id="general" name="通用" command="com.founder.fix.fixflow.expand.command.GeneralTaskCommand"
+         cmd="com.founder.fix.fixflow.expand.cmd.CompleteGeneralTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.CompleteGeneralTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+    &lt;taskCommandDef id="startandsubmit" name="启动并提交" command="com.founder.fix.fixflow.expand.command.StartAndSubmitTaskCommand" 
+         cmd="com.founder.fix.fixflow.expand.cmd.StartAndSubmitTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.StartAndSubmitTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>      
     &lt;/taskCommandConfig>   </programlisting>
     
       <itemizedlist>
@@ -32,7 +34,7 @@
       <para><emphasis role="bold">设计器上如何配置</emphasis></para>
     <para>设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 数据库
       <mediaobject><imageobject>
-        <imagedata align="center" fileref="images/config.taskCommsndConfig.1.png"/>
+        <imagedata align="center" contentwidth="600" fileref="images/config.taskCommsndConfig.1.png"/>
       </imageobject></mediaobject>
     </para>
   </section>
@@ -54,17 +56,15 @@
     </programlisting>
     <para><emphasis role="bold">设计器上如何配置</emphasis></para>
     <mediaobject><imageobject>
-      <imagedata align="center" fileref="images/config.assignPolicyConfig.1.png"/>
+      <imagedata align="center" contentwidth="600" fileref="images/config.assignPolicyConfig.1.png"/>
     </imageobject></mediaobject>
   </section>
   
   <section xml:id="config.expandClassConfig">
     <title>引擎扩展配置</title>
     <para>对于引擎中的持久化，查询类，FixFlow提供了相应的接口或者父类，在不满足用户需求的情况下，可以自己实现此接口或者实现类来扩展FixFlow以满足自己的需求。</para>
-    <para>
-      XML描述
-    </para>
-    <programlisting language="xml">&lt;expandClassConfig>
+    <para><emphasis role="bold"> XML描述 </emphasis></para>
+    <programlisting language="xml" width="900">&lt;expandClassConfig>
     &lt;expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>
     &lt;expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
     &lt;expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
@@ -95,7 +95,7 @@
     
     <para><emphasis role="bold">设计器如何配置</emphasis></para>
     <mediaobject><imageobject>
-      <imagedata align="center" fileref="images/config.expandClassConfig.1.png"/>
+      <imagedata align="center" contentwidth="600" fileref="images/config.expandClassConfig.1.png"/>
     </imageobject></mediaobject>
   </section>
   
