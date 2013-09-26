@@ -1,0 +1,20 @@
+
+/* ±íµ¥ */
+.table-form { margin:0; color:#444; background:#fff; width:100%;}
+.table-form td { padding:2px 5px; font-family:"Î¢ÈíÑÅºÚ"; text-align:left;}
+.table-form td.title-r { text-align:right; color:#666; padding-right:10px;}
+.table-form input[inputType=text], .table-form input[type=text], .table-form select { padding:4px 5px; width:100%; box-sizing:border-box; background:#f2f2f2; border:none; font-size:12px; line-height:12px; color:#888;}
+.table-form textarea { padding:4px 5px; width:100%; box-sizing:border-box; background:#f2f2f2; border:none; font-size:12px; line-height:18px; color:#888;}
+
+
+/* ÁÐ±í */
+.table-list { margin:8px 0; color:#444; background:#fff; width:100%;}
+.table-list th { padding:5px 0; background:#f8ddd5; font-family:"Î¢ÈíÑÅºÚ"; font-size:12px; font-weight:bold; color:#666; border-right: 1px solid #fff; text-align:center;}
+.table-list td { padding:6px 0; border-bottom:1px solid #fff; text-align:center;}
+.table-list tr.gray { background:#f7f7f7;}
+.table-list td.left { text-align:left; color:#666; padding-left:10px;}
+.table-list td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
+.table-list td.checkbox { text-align:center; width:30px;}
+.table-list td.center { text-align:center;}
+
+
