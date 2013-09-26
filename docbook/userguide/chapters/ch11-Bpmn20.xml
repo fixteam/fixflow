@@ -1501,7 +1501,7 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
         <para> 
           发送任务是图形为一个圆角矩形,有一个手的图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="imagesbpmn.ManualTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ManualTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1523,25 +1523,56 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
       <section xml:id="bpmn.foreach.Description">
         <title>描述</title>
         <para>
-          　　一个多实例活动(multi-instance activity)是一种定义为一个特定的步骤完成一些操作的功能。
-          
-          
-          
-          
-          在编程的概念,一个多实例匹配每个构造:它允许执行一个特定的步骤或甚至一个完整的子流程中每个项目的一个给定的集合,串行或并行。
-          　　
-          　　一个多实例是一个常规的活动,有额外的属性定义(所谓的“多实例特征”),导致活动是在运行时执行多次。以下活动可以成为一个多实例活动:
-          
-          
-          
+          一个多实例活动(multi-instance activity)是一种被定义为一个特定的步骤重复完成一些操作。
+          在编程的概念里,这个多实例相当于一个for循环,每次将输入数据集(loopDataInputCollection)中的集合遍历出来,
+          放置到输入项编号(inputDataItem)所指定的变量中,这样在这个活动(activity)中变可以使用这个输入项编号,
+          每次循环中,我们可以对输出项编号(outputDataItem)里边所指定的变量赋值,引擎会自动将这次循环中对输出项编号变量赋的值插入到输出数据集(loopDataOutputCollection)在每次循环完成的时候,
+          会触发完成表达式(completionCondition),用来判断是否够能离开这个节点。
         </para>
+        <para>
+          以下活动支持多实例:
+        </para>
+        <para>
+          <itemizedlist>
+            <listitem><para><link linkend="bpmn.UserTask">User Task</link></para></listitem>
+            <listitem><para><link  linkend="bpmn.ScriptTask">Script Task</link></para></listitem>
+            <listitem><para><link linkend="bpmn.ServiceTask">Service Task</link></para></listitem>
+            <listitem><para><link linkend="bpmn.SendTask">Send Task</link></para></listitem>
+            <listitem><para><link linkend="bpmn.BusinessRuleTask">Business Rule Task</link></para></listitem>
+            <listitem><para><link linkend="bpmn.ManualTask">Manual Task</link></para></listitem>
+            <listitem><para><link linkend="bpmn.Sub-Process">(Embedded) Sub-Process</link></para></listitem>
+            <listitem><para><link linkend="bpmn.CallActivity">Call Activity</link></para></listitem>
+          </itemizedlist>
+          <link  linkend="bpmn.Gateways">Gateway</link> 和 <link linkend="bpmn.event">Event</link>
+          <emphasis role="bold">不能</emphasis> 使用多实例。
+        </para>
+        
+        <para>
+          <itemizedlist>
+            <listitem>
+              <para><emphasis role="bold">输入数据集(loopDataInputCollection)</emphasis>: 
+              <![CDATA[用来设置并行数的来源,接收类型:List<String> 、"人员ID1,人员ID2,人员ID3"、List<Object>、String[],例如: 在并行的人工任务中,集合可以用:"人员ID1,人员ID2,人员ID3"。]]>
+              </para>
+            </listitem>
+            <listitem><para><emphasis role="bold">输入项编号(inputDataItem)</emphasis>: 
+              <![CDATA[每个并行的分支都会将自己从输入数据集中获得到的一个变量放置在输入数据项中,在节点内部的配置中便可以使用这个输入项,例如 在并行的人工任务中,处理者可以使用 ${输入数据项变量}。]]>
+            </para></listitem>
+            <listitem><para><emphasis role="bold">输出项编号(outputDataItem)</emphasis>: 
+              <![CDATA[并行的每次执行中将执行的一些数据放到输出数据集中,在这个分支结束的时候输出数据集里边的变量就会被add到输出数据集中持久化存储。]]></para></listitem>
+            <listitem><para><emphasis role="bold">输出数据集(loopDataOutputCollection)</emphasis>: 
+              <![CDATA[用来记录每次并行执行的结果,类型是个List集合。]]>
+            </para></listitem>
+          </itemizedlist>
+        </para>
+ 
+        
       </section>
       <section xml:id="bpmn.foreach.GraphicalNotation">
         <title>图形符号</title>
         <para> 
           发送任务是图形为一个圆角矩形,有一个手的图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="imagesbpmn.ManualTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ManualTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1552,7 +1583,32 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
         
         <para>
           XML元素表示如下:
-          <programlisting language="xml"><![CDATA[<bpmn2:manualTask id="ManualTask_1" name="ManualTask"/>]]></programlisting>
+          <programlisting language="xml"><![CDATA[
+            
+<bpmn2:multiInstanceLoopCharacteristics>
+        <bpmn2:extensionElements>
+          <fixflow:loopDataInputCollection>
+            <fixflow:expression>输入数据集</fixflow:expression>
+          </fixflow:loopDataInputCollection>
+          <fixflow:loopDataOutputCollection>
+            <fixflow:expression>输出数据集</fixflow:expression>
+          </fixflow:loopDataOutputCollection>
+        </bpmn2:extensionElements>
+        <bpmn2:inputDataItem>
+          <bpmn2:extensionElements>
+            <fixflow:expression>输入项编号</fixflow:expression>
+          </bpmn2:extensionElements>
+        </bpmn2:inputDataItem>
+        <bpmn2:outputDataItem>
+          <bpmn2:extensionElements>
+            <fixflow:expression>输出项编号</fixflow:expression>
+          </bpmn2:extensionElements>
+        </bpmn2:outputDataItem>
+        <bpmn2:completionCondition>完成表达式</bpmn2:completionCondition>
+</bpmn2:multiInstanceLoopCharacteristics>            
+            
+            
+            ]]></programlisting>
         </para>
       </section>
     </section>
