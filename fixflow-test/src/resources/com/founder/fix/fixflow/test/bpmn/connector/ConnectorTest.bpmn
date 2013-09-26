@@ -44,21 +44,18 @@
         <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_2" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:expectedExecutionTime/>
-        <fixflow:connectorInstance connectorId="RunExpression" packageName="com.founder.fix.fixflow.expand.connector.RunExpression" className="RunExpression" connectorInstanceId="d837dfd3-8bb4-42f7-b520-1217013575c4" connectorInstanceName="测试" eventType="node-enter" errorHandling="抛出异常" errorCode="">
+        <fixflow:connectorInstance connectorId="RunExpression" packageName="com.founder.fix.fixflow.expand.connector.RunExpression" className="RunExpression" connectorInstanceId="868a6585-2a17-498d-8578-ee4324beee7e" connectorInstanceName="测试进入" eventType="node-enter" errorHandling="抛出异常" errorCode="">
           <documentation xsi:type="fixflow:Documentation"></documentation>
-          <fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="expressionText" name="表达式" dataType="java.lang.String">
-            <fixflow:expression xsi:type="fixflow:Expression" name="println(测试变量);&#xD;&#xA;测试变量=&quot;我是赋值后的测试变量&quot;;&#xD;&#xA;println(测试变量);&#xD;&#xA;&quot;return测试变量;&quot;">println(测试变量);&#xD;
+          <fixflow:connectorParameterInputs xsi:type="fixflow:ConnectorParameterInputs" id="expressionText" name="表达式" dataType="java.lang.Object">
+            <fixflow:expression xsi:type="fixflow:Expression" name="println(测试变量);&#xD;&#xA;测试变量=&quot;我是赋值后的测试变量&quot;;&#xD;&#xA;println(测试变量);&#xD;&#xA;return测试变量;">println(测试变量);&#xD;
 测试变量=&quot;我是赋值后的测试变量&quot;;&#xD;
 println(测试变量);&#xD;
-&quot;return 测试变量;&quot;</fixflow:expression>
+return 测试变量;</fixflow:expression>
           </fixflow:connectorParameterInputs>
           <fixflow:connectorParameterOutputs xsi:type="fixflow:ConnectorParameterOutputs" variableTarget="${输出变量}">
             <fixflow:expression xsi:type="fixflow:Expression">outputObj</fixflow:expression>
           </fixflow:connectorParameterOutputs>
           <fixflow:connectorParameterOutputsDef xsi:type="fixflow:ConnectorParameterOutputsDef" id="outputObj" name="脚本返回值" dataType="java.lang.Object"/>
-          <fixflow:skipComment xsi:type="fixflow:SkipComment">
-            <fixflow:expression xsi:type="fixflow:Expression" name="连接器跳过策略条件">连接器跳过策略条件</fixflow:expression>
-          </fixflow:skipComment>
         </fixflow:connectorInstance>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
