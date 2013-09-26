@@ -4564,12 +4564,12 @@ a.ui-button-sblue {
 }
 /* 默认有方角 */
 .ui-list-item {
-    font-size: 9px;
+    font-size: 9pt;
     line-height: 20px;
     color: #08c;
 }
 .ui-list-item a {
-    font-size: 12px;
+    font-size: 12pt;
     line-height: 20px;
     text-decoration: none;
     vertical-align: middle;
