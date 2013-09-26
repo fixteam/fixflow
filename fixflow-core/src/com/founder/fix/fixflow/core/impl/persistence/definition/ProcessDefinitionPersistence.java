@@ -526,7 +526,7 @@ public class ProcessDefinitionPersistence {
 		objectParamWhere.add(userId);
 		
 		
-		sqlTextString = pagination.getPaginationSql(sqlTextString, 1,1+number, " processdefinition_key ", "");
+		sqlTextString = pagination.getPaginationSql(sqlTextString, 1,number, " processdefinition_key ", "");
 		
 		
 		
