@@ -10,6 +10,13 @@ body { min-width:1000px;}
 .menu li a,.menu li a.select { display:block; padding:15px 20px; color:#f2f2f2; height:16px; text-decoration:none; background:#AAA; font-size:16px; font-family:"微软雅黑"; line-height:16px;}
 .menu li a:hover { color:#f2f2f2; background:#9a9a9a;}
 .menu li a.select { color:#000; background:#FFF;}
+.icon-home,.icon-learn,.icon-develop,.icon-chat
+{ float:left; margin-right:10px; display:block; width:16px; height:16px; background:url(../images/icon-home.png) no-repeat;}
+.icon-learn { background:url(../images/icon-book.png) no-repeat;}
+.icon-develop { background:url(../images/icon-develop.png) no-repeat;}
+.icon-chat { background:url(../images/icon-chat.png) no-repeat;}
+.menu li a.select .icon-home,.menu li a.select .icon-learn,
+.menu li a.select .icon-develop,.menu li a.select .icon-chat { background-position: 0 -16px;}
 
 .main { margin:20px auto; width:940px; height:auto; overflow:hidden;}
 .top { padding:290px 175px 0 175px; width:590px; height:160px; background:url(../images/bg.png) no-repeat;}
@@ -29,3 +36,16 @@ body { min-width:1000px;}
 .content div.info2 h1 { margin-bottom:15px; font-size:22pt; font-family:"微软雅黑"; color:#000;}
 .content-bg { background-color:#f5f5f5 !important;}
 
+.footer { width:100%; height:70px; overflow:hidden; background:#DDD; color:#666;}
+.container { margin:20px auto; width:940px; height:auto; overflow:hidden;}
+
+.jqmenu {
+	position: absolute;
+	display: none;
+	left: 0;
+	top: 0;
+	background-color: #bcd5e6;
+	text-align: center;
+	width: 200px;
+    height: 75px;
+}

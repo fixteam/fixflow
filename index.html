@@ -6,7 +6,22 @@
 <link rel="stylesheet" type="text/css" href="css/global.css">
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <link rel="stylesheet" type="text/css" href="css/one-debug.css">
-<title>Founder Fix BPM</title>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<title>fixflow - Libra Team</title>
+<script>
+$(function(){
+	$(".jqmenu").hide();
+	$(".menu li").hover(function(){
+			var p = $(this).offset();
+			$(".jqmenu", this).css({left:p.left - 1, top:p.top + $(this).height()});
+			$(".jqmenu", this).show();
+		}, 
+		function(){
+			$(".jqmenu", this).hide();
+	});
+		
+});
+</script>
 </head>
 
 <body>
@@ -14,17 +29,43 @@
     <div class="logo"></div>
     <div class="menu">
         <ul>
-        <li><a href="#" class="select">首 页</a></li>
-        <li><a href="#">学 习</a></li>
-        <li><a href="#">开 发</a></li>
-        <li><a href="#">讨 论</a></li>
+        <li><a href="#" class="select"><em class="icon-home"></em>首 页</a></li>
+        <li><a href="#"><em class="icon-learn"></em>学 习</a>
+			<div class="jqmenu">
+				<div><a href="https://github.com/fixteam/fixflow/wiki/产品及开发社区介绍">介绍</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#GettingStarted">快速入门</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e2315">入门：10分钟教程</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#EclipseDesigner">Eclipse Designer</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e3580">任务中心</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e3603">管控中心</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e2060">部署</a></div>
+			</div>
+		</li>
+        <li><a href="#"><em class="icon-develop"></em>开 发</a>
+			<div class="jqmenu">
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e180">常用配置</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e410">高级配置</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e479">数据库说明</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#fixflowapi">FixFlow API</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e3623">CommonAPI</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e3665">REST API</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#bpmn_chapter">BPMN2.0</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e2217">如何扩展</a></div>
+				<div><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html#d5e2222">如何集成</a></div>
+			</div>
+		</li>
+        <li><a href="#"><em class="icon-chat"></em>讨 论</a></li>
         </ul>
     </div>
 </div>
 <div class="main">
 	<div class="top">
-    	<div class="btn-view"><a href="https://github.com/fixteam/fixflow"></a></div>
-    	<div class="btn-download"><a href="#"></a></div>
+    	<div class="btn-view"><a href="https://github.com/fixteam/fixflow" target="_blank"></a></div>
+    	<div class="btn-download"><a href="http://pan.baidu.com/s/1FZ1IS" target="_blank"></a></div>
+		<div style="display:block;float: right;">
+			<p><a href="http://pan.baidu.com/s/15kgyr" target="_blank">下载 Fixflow Desginer（310MB）</a></p>
+			<p><a href="http://pan.baidu.com/s/1xcAMX" target="_blank">下载 Runtime（42MB）</a></p>
+		</div>
     </div>
 	<div class="content">
 		<div class="info">
@@ -79,11 +120,11 @@
 			<ul class="ui-list ui-list-gray">
 				<li class="ui-list-item"><a href="#">开发者交流社区QQ群: 152654373</a></li>
 
-				<li class="ui-list-item"><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html">用户向导</a></li>
+				<li class="ui-list-item"><a href="http://fixteam.github.io/fixflow/userguide/out/html/index.html" target="_blank">用户向导</a></li>
 
-				<li class="ui-list-item"><a href="https://github.com/fixteam/fixflow/wiki">学习怎样使用和集成FixFlow</a></li>
+				<li class="ui-list-item"><a href="https://github.com/fixteam/fixflow/wiki" target="_blank">学习怎样使用和集成FixFlow</a></li>
 
-				<li class="ui-list-item"><a href="http://fixteam.github.io/fixflow/">团队Blog地址</a></li>
+				<li class="ui-list-item"><a href="http://fixteam.github.io/fixflow/" target="_blank">团队Blog地址</a></li>
 			</ul>
         </div>
     	<div class="info">
@@ -102,6 +143,16 @@
 				<li class="ui-list-item">1.0.0（2000-05-10）ES平台 1.0版本发布.内置fixflow1.0版本流程引擎</li>
 			</ul>
         </div>
+    </div>
+</div>
+<div class="footer">
+	<div class="container">
+      <p class="pull-right" style="float: right;"><a href="#" target="_self">Back to top</a></p>
+      <p>powered by Libra Team ©2013</p>
+      <p>Code licensed under the
+        <a href="https://raw.github.com/fixteam/fixflow/master/LICENSE" target="_blank">Apache License
+Version 2.0</a>. 
+      </p>
     </div>
 </div>
 </body>
