@@ -251,7 +251,7 @@ IdentityLinkQuery identityLinkQuery = taskService.createIdentityLinkQuery();
         <para>TaskQuery：任务实例的Query对象。</para>
       </listitem>
       <listitem>
-        <para>IdentityLinkQuery：组织机构的Query对象。</para>
+        <para>IdentityLinkQuery：任务候选人的Query对象。</para>
       </listitem>
     </itemizedlist>
     <para>查询的方法根据表的不同方法名也不同，下面以ProcessInstanceQuery为例简单介绍Query的使用方法。</para>
