@@ -45,6 +45,10 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 **更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
 
+
+
+
+
 #分支介绍
 * develop 最新开发版
 * master 最新稳定版
@@ -63,6 +67,17 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * 设计器相关项目: **eclipse**
 
 * 最终成果物项目: **release**
+
+
+#如何选择？
+### Fixflow提供两种方式的集成:
+### 1.完整集成版本,提供任务处理中心、流程管控中心、引擎内核、扩展项目、Junit测试库
+### 2.核心集成版本,只提供引擎内核、扩展项目、Junit测试库
+
+### 第一种适合不想在自己开发任务处理和管控中心的用户,用户可以将Fixflow的web和自己的web集成到一起。
+### 第二种适合对界面需要大量订制的用户,通过流程提供的Api自己开发任务处理、管控界面。
+
+### 注意：Fixflow自带的任务处理中心,在应用到实际项目中之前需要对其进行集成开发来使用用户各自系统的要求。
 
 #如何操作流程引擎
 * [代码调用流程引擎示例](http://fixteam.github.io/fixflow/userguide/out/html/index.html#api.connection)
