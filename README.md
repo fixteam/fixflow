@@ -18,6 +18,12 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * 4.专门用于集成的BPM产品
 * 5.符合中国式的流程功能
 * 6.强大灵活的扩展模式
+* 
+
+
+#代码打包下载
+* [Fixflow内置任务、管控中心版本](http://pan.baidu.com/s/1xcAMX)
+* [Fixflow内核版本](http://pan.baidu.com/s/187TEz)
 
 #流程设计器
 (国内最强大的BPMN设计器)
