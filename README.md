@@ -97,7 +97,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * [如何参与DocBook文档开发](https://github.com/fixteam/fixflow/wiki/如何参与DocBook文档)
 * [如何参与FixFlow社区开发](https://github.com/fixteam/fixflow/wiki/如何参与FixFlow社区开发)
 * [开发人员Blog文章列表](#)
-* [团队及Blog](#)
+* [团队及Blog](http://www.fixflow.org/blog/)
 * [FAQ](#)
 
 
