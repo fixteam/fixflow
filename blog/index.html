@@ -12,7 +12,7 @@ layout: page
   {% endif %}
   <li class="listing-item">
     <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+    <a href="{{ site.baseurl }}/blog{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
   </li>
 {% endfor %}
 </ul>
@@ -21,7 +21,7 @@ layout: page
 
   {% if paginator.previous_page %}
     {% if paginator.previous_page == 1 %}
-    <a href="{{ site.baseurl }}"><前页</a>
+    <a href="{{ site.baseurl }}/blog"><前页</a>
     {% else %}
     <a href="{{ site.baseurl }}/page{{paginator.previous_page}}"><前页</a>
     {% endif %}
