@@ -1,4 +1,4 @@
-CREATE TABLE FIXFLOW_WORKDATE_WEEKNUM
+﻿CREATE TABLE FIXFLOW_WORKDATE_WEEKNUM
 (
   WEEK_NUM         VARCHAR(64) NOT NULL,
   AMPM             VARCHAR(64) NOT NULL,
@@ -728,7 +728,12 @@ primary key (sched_name,lock_name)
 )
 ;
 
-
+-- Create table
+create table DEMOTABLE
+(
+  col1 VARCHAR(50),
+  col2 VARCHAR(50)
+);
 
 
 delete from AU_USERINFO
