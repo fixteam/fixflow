@@ -19,10 +19,18 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * 5.符合中国式的流程功能
 * 6.强大灵活的扩展模式
 
+
+#代码打包下载
+内核版本不带web环境,用户需要自己开发web展现界面,内置Web版本自带任务、管控中心。
+* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1FZ1IS)
+* [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/15kgyr)
+
 #流程设计器
 (国内最强大的BPMN设计器)
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
-设计器暂未发布,敬请期待....
+* [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/1xcAMX)
+* [插件下载(百度网盘)](http://pan.baidu.com/s/187TEz)
+
 
 
 #资源介绍
@@ -36,6 +44,10 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 **团队Blog地址**: [http://fixteam.github.io/fixflow/](http://fixteam.github.io/fixflow/)
 
 **更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
+
+
+
+
 
 #分支介绍
 * develop 最新开发版
@@ -55,6 +67,20 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * 设计器相关项目: **eclipse**
 
 * 最终成果物项目: **release**
+
+
+#如何选择？
+* Fixflow提供两种方式的集成:
+* 1.完整集成版本,提供任务处理中心、流程管控中心、引擎内核、扩展项目、Junit测试库
+* 2.核心集成版本,只提供引擎内核、扩展项目、Junit测试库
+
+* 第一种适合不想在自己开发任务处理和管控中心的用户,用户可以将Fixflow的web和自己的web集成到一起。
+* 第二种适合对界面需要大量订制的用户,通过流程提供的Api自己开发任务处理、管控界面。
+
+* 注意：Fixflow自带的任务处理中心,在应用到实际项目中之前需要对其进行集成开发来使用用户各自系统的要求。
+
+#如何操作流程引擎
+* [代码调用流程引擎示例](http://fixteam.github.io/fixflow/userguide/out/html/index.html#api.connection)
 
 
 #文档说明
@@ -82,6 +108,8 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 #如何提交bug或者问题
 在Fixteam/FixFlow项目上点击Issues->New Issue提交bug,在标签栏选择bug、优先级、状态（未解决）三个标签，然后提交。我们会根据bug内容反馈相关信息给您。
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Bug20130917093746.png)
+
+
 #Changelog
 
 ### 5.0.0（2013-07-?）
