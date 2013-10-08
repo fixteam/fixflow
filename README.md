@@ -22,14 +22,14 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 #代码打包下载
 内核版本不带web环境,用户需要自己开发web展现界面,内置Web版本自带任务、管控中心。
-* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1881zxS)
-* [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/144HDx)
+* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1881zx)
+* [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/1BWpgv)
 
 #流程设计器
 (国内最强大的BPMN设计器)
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
-* [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/1zKXyUX)
-* [插件下载(百度网盘)](http://pan.baidu.com/s/1klVhq)
+* [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/13OKHM)
+* [插件下载(百度网盘)](http://pan.baidu.com/s/1sZx6J)
 
 
 
