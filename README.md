@@ -22,7 +22,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 #代码打包下载
 内核版本不带web环境,用户需要自己开发web展现界面,内置Web版本自带任务、管控中心。
-* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1FZ1IS)
+* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/15QBgOS)
 * [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/15kgyr)
 
 #流程设计器
