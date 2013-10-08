@@ -432,10 +432,11 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				datee = DateUtil.stringToDate(dse,"yyyy-MM-ddHHmmssSSS");
 			}
 			if(dates!=null)
-				tq.archiveTimeAfter(dates);
+				tq.archiveTimeBefore(dates);
+				
 			
 			if(datee!=null)
-				tq.archiveTimeBefore(datee);
+				tq.archiveTimeAfter(datee);
 			
 			String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));  //流程定义
 			if(StringUtil.isNotEmpty(processDefinitionKey))
