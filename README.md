@@ -46,7 +46,8 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 **更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
 
 
-
+#教学视频
+视频制作中敬请期待.....
 
 
 #分支介绍
