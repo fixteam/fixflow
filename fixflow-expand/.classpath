@@ -6,38 +6,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fixflow-core"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/bsh-2.0b4.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/drools-api-5.1.1.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/jakarta-oro.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/com.founder.fix.fixflow.bpmn2.extensions.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/com.founder.fix.model.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.contenttype_3.4.100.v20110423-0524.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.jobs_3.5.101.v20120113-1953.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.runtime_3.7.0.v20110110.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf_2.6.0.v20120130-0943.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.common_2.7.0.v20120127-1122.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore_2.7.0.v20120127-1122.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.change_2.7.1.v20120127-1122.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.xmi_2.7.0.v20120127-1122.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.edit_2.7.2.v20120130-0943.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.app_1.3.100.v20110321.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.common_3.6.0.v20110523.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.preferences_3.4.2.v20120111-2020.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.osgi_3.7.2.v20120110-1415.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/org.eclipse.xsd_2.7.1.v20120130-0943.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/runtime_registry_compatibility.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/webcore"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/groovy-all-2.0.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fl"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/cxf-2.6.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/apputil"/>
 	<classpathentry kind="src" path="/fixflow-api"/>
 	<classpathentry kind="src" path="/dbcore"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/quartz-all-2.1.5.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="/fixweb/WebRoot/WEB-INF/lib/ojdbc5.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container/fixweb"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
