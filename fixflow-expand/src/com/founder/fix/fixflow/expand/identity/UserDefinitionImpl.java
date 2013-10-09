@@ -111,10 +111,10 @@ public class UserDefinitionImpl extends UserDefinition {
 		String countSql = "SELECT count(*) FROM ("+sqlText+") USERTABLE WHERE 1=1";
 		String whereSql = "";
 		if(queryMap != null && queryMap.containsKey("USERID")){
-			whereSql += "AND ("+userIdField+" LIKE '%"+queryMap.get("USERID")+"%'";
+			whereSql += " AND "+userIdField+" LIKE '%"+queryMap.get("USERID")+"%'";
 		}
 		if(queryMap != null && queryMap.containsKey("USERNAME")){
-			whereSql += "OR "+userNameField+" LIKE '%"+queryMap.get("USERNAME")+"%')";
+			whereSql += " AND "+userNameField+" LIKE '%"+queryMap.get("USERNAME")+"%' ";
 		}
 		sql += whereSql;
 		countSql += whereSql;
