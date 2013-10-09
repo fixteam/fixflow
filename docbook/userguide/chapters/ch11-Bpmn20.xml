@@ -20,9 +20,9 @@
     </para>
     <para> <emphasis role="bold">BPMN2.0元素图</emphasis></para>
     <para>
-      <link xlink:href="../../images/BPMN2_0_Poster_EN.png">查看完整图片</link>
+      <link xlink:href="../../images/BPMN2_0_Poster_EN_big.png">查看完整图片</link>
       <mediaobject ><imageobject>
-        <imagedata align="center" contentwidth="900"  fileref="images/BPMN2_0_Poster_EN.png"/>
+        <imagedata align="center" contentwidth="800"  fileref="images/BPMN2_0_Poster_EN.png"/>
       </imageobject></mediaobject>
     </para>
 
@@ -98,13 +98,11 @@
     </para>
     <para>
       BPMN标准是个开放的标准,它为每个元素都提供了扩展的方式,extensionElements可以包含在任务BPMN官方的元素里。
-      <programlisting language="xml"><![CDATA[
-      <bpmn2:extensionElements>
-        <fixflow:taskSubject>
-          <fixflow:expression xsi:type="fixflow:Expression" >"编号为: "+${编号}+" 的测试流程任务主题"</fixflow:expression>
-        </fixflow:taskSubject>
-      </bpmn2:extensionElements>
-      ]]></programlisting>
+      <programlisting language="xml"><![CDATA[<bpmn2:extensionElements>
+  <fixflow:taskSubject>
+    <fixflow:expression xsi:type="fixflow:Expression" >"编号为: "+${编号}+" 的测试流程任务主题"</fixflow:expression>
+  </fixflow:taskSubject>
+</bpmn2:extensionElements>]]></programlisting>
     </para>
     <para>开发者也可以给我们反馈对扩展的意见<link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>,或提出自定义扩展的新思路。谁知道,有一天,你的想法可能会出现在FixFlow引擎中哦。</para>
   </section>
@@ -1583,32 +1581,27 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
         
         <para>
           XML元素表示如下:
-          <programlisting language="xml"><![CDATA[
-            
-<bpmn2:multiInstanceLoopCharacteristics>
-        <bpmn2:extensionElements>
-          <fixflow:loopDataInputCollection>
-            <fixflow:expression>输入数据集</fixflow:expression>
-          </fixflow:loopDataInputCollection>
-          <fixflow:loopDataOutputCollection>
-            <fixflow:expression>输出数据集</fixflow:expression>
-          </fixflow:loopDataOutputCollection>
-        </bpmn2:extensionElements>
-        <bpmn2:inputDataItem>
-          <bpmn2:extensionElements>
-            <fixflow:expression>输入项编号</fixflow:expression>
-          </bpmn2:extensionElements>
-        </bpmn2:inputDataItem>
-        <bpmn2:outputDataItem>
-          <bpmn2:extensionElements>
-            <fixflow:expression>输出项编号</fixflow:expression>
-          </bpmn2:extensionElements>
-        </bpmn2:outputDataItem>
-        <bpmn2:completionCondition>完成表达式</bpmn2:completionCondition>
-</bpmn2:multiInstanceLoopCharacteristics>            
-            
-            
-            ]]></programlisting>
+          <programlisting language="xml"><![CDATA[<bpmn2:multiInstanceLoopCharacteristics>
+  <bpmn2:extensionElements>
+    <fixflow:loopDataInputCollection>
+      <fixflow:expression>输入数据集</fixflow:expression>
+    </fixflow:loopDataInputCollection>
+    <fixflow:loopDataOutputCollection>
+      <fixflow:expression>输出数据集</fixflow:expression>
+    </fixflow:loopDataOutputCollection>
+  </bpmn2:extensionElements>
+  <bpmn2:inputDataItem>
+    <bpmn2:extensionElements>
+      <fixflow:expression>输入项编号</fixflow:expression>
+    </bpmn2:extensionElements>
+  </bpmn2:inputDataItem>
+  <bpmn2:outputDataItem>
+    <bpmn2:extensionElements>
+      <fixflow:expression>输出项编号</fixflow:expression>
+    </bpmn2:extensionElements>
+  </bpmn2:outputDataItem>
+  <bpmn2:completionCondition>完成表达式</bpmn2:completionCondition>
+</bpmn2:multiInstanceLoopCharacteristics>]]></programlisting>
         </para>
       </section>
     </section>
