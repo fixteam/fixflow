@@ -22,14 +22,14 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 #代码打包下载
 内核版本不带web环境,用户需要自己开发web展现界面,内置Web版本自带任务、管控中心。
-* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1FZ1IS)
-* [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/15kgyr)
+* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1881zx)
+* [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/1BWpgv)
 
 #流程设计器
 (国内最强大的BPMN设计器)
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
-* [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/1xcAMX)
-* [插件下载(百度网盘)](http://pan.baidu.com/s/187TEz)
+* [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/13OKHM)
+* [插件下载(百度网盘)](http://pan.baidu.com/s/1sZx6J)
 
 
 
@@ -41,18 +41,23 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 **学习怎样使用和集成FixFlow**: [https://github.com/fixteam/fixflow/wiki](https://github.com/fixteam/fixflow/wiki)
 
-**团队Blog地址**: [http://fixteam.github.io/fixflow/](http://fixteam.github.io/fixflow/)
+**团队Blog地址**: [http://fixteam.github.io/fixflow/blog/](http://fixteam.github.io/fixflow/blog/)
 
 **更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
 
 
-
+#教学视频
+视频制作中敬请期待.....
 
 
 #分支介绍
 * develop 最新开发版
 * master 最新稳定版
 * v4.7 FixCS平台集成版本
+* Tags 5.0  5.0正式版本
+* release-*  发布分支为准备新的产品版本发布做支持
+* hotfix-*   当产品版本的重大bug需要立即解决的时候，我们从对应版本的标签创建出一个热补丁分支。
+* feature-*  特性分支是用来为下一发布版本开发新特性
 
 #项目介绍
 
