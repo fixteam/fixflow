@@ -1,4 +1,5 @@
 baseurl: http://www.fixflow.org
+url: http://www.fixflow.org
 name: FixTeam主页
 markdown: redcarpet
 safe: true
