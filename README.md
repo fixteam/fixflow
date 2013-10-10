@@ -47,14 +47,17 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 
 #教学视频
-视频制作中敬请期待.....
+[系列教学视频](http://www.youku.com/playlist_show/id_20321320.html)
+![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20131010_2.png)
 
 
 #分支介绍
 * develop 最新开发版
 * master 最新稳定版
 * v4.7 FixCS平台集成版本
-* Tags 5.0  5.0正式版本
+* 5.0.0-Final-master  5.0正式版本
+* *-cs CS开发平台专用版本
+* 
 * release-*  发布分支为准备新的产品版本发布做支持
 * hotfix-*   当产品版本的重大bug需要立即解决的时候，我们从对应版本的标签创建出一个热补丁分支。
 * feature-*  特性分支是用来为下一发布版本开发新特性
