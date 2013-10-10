@@ -47,8 +47,8 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 
 #教学视频
-[教学视频](http://www.youku.com/playlist_show/id_20321320.html)
-
+[系列教学视频](http://www.youku.com/playlist_show/id_20321320.html)
+![系统截图](http://fixteam.github.io/fixflow/images/Snip20131010_2.png)
 
 #分支介绍
 * develop 最新开发版
