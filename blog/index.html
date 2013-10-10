@@ -10,9 +10,9 @@ layout: page
     {% assign year = y %}
     <li class="listing-seperator">{{ y }}</li>
   {% endif %}
-  <li class="listing-item">
-    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+   <li class="listing-item">
+  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+  <a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
   </li>
 {% endfor %}
 </ul>
@@ -21,7 +21,7 @@ layout: page
 
   {% if paginator.previous_page %}
     {% if paginator.previous_page == 1 %}
-    <a href="{{ site.baseurl }}"><前页</a>
+    <a href="{{ site.url }}"><前页</a>
     {% else %}
     <a href="{{ site.baseurl }}/page{{paginator.previous_page}}"><前页</a>
     {% endif %}
@@ -32,7 +32,7 @@ layout: page
       {% if paginator.page == 1 %}
       <span class="current-page">1</span>
       {% else %}
-      <a href="{{ site.baseurl }}">1</a>
+      <a href="{{ site.url }}">1</a>
       {% endif %}
 
     {% for count in (2..paginator.total_pages) %}
