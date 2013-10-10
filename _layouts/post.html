@@ -10,9 +10,9 @@ layout: default
 <br/>
 <br/>
 <span>
-	<a {% if page.previous %} href="{{ site.baseurl }}{{ site.url }}{{ page.previous.url }}" class="pageNav"{% endif %} {% unless page.previous %} class="pageNavInvalid" {% endunless %} >Previous</a>
+	<a {% if page.previous %} href="{{ site.url }}{{ page.previous.url }}" class="pageNav"{% endif %} {% unless page.previous %} class="pageNavInvalid" {% endunless %} >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a {% if page.next %} href="{{ site.baseurl }}{{ site.url }}{{ page.next.url }}" class="pageNav"{% endif %} {% unless page.next %} class="pageNavInvalid" {% endunless %} >Next</a>
+	<a {% if page.next %} href="{{ site.url }}{{ page.next.url }}" class="pageNav"{% endif %} {% unless page.next %} class="pageNavInvalid" {% endunless %} >Next</a>
 </span>
 <hr>
 <span class="author">
@@ -30,7 +30,7 @@ layout: default
 <span class="categories">
   in categories
   {% for cat in page.categories %}
-  <a href="{{ site.baseurl }}/categories/#{{ cat }}" title="{{ cat }}">{{ cat }}</a>&nbsp;
+  <a href="/categories/#{{ cat }}" title="{{ cat }}">{{ cat }}</a>&nbsp;
   {% endfor %}
 </span>
 {% endif %}
@@ -38,7 +38,7 @@ layout: default
 <span class="tags">
   tagged with 
   {% for tag in page.tags %}
-  <a href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>&nbsp;
+  <a href="/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>&nbsp;
   {% endfor %}
 </span>
 {% endif %}
@@ -51,12 +51,12 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             {% if page.previous %}
-        url = '{{ site.baseurl }}{{ site.url }}{{ page.previous.url }}';
+        url = '{{ site.url }}{{ page.previous.url }}';
         {% endif %}
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             {% if page.next %}
-        url = '{{ site.baseurl }}{{ site.url }}{{ page.next.url }}';
+        url = '{{ site.url }}{{ page.next.url }}';
         {% endif %}
         }
         if (url) {
