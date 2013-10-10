@@ -1568,9 +1568,9 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
       <section xml:id="bpmn.foreach.GraphicalNotation">
         <title>图形符号</title>
         <para> 
-          发送任务是图形为一个圆角矩形,有一个手的图标在左上角。
+          还有并行多实例的活动节点下面都会出现三道竖线。(串行是三道横线)
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ManualTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.foreach.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
