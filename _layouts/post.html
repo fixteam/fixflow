@@ -10,9 +10,9 @@ layout: default
 <br/>
 <br/>
 <span>
-	<a {% if page.previous %} href="{{ site.url }}{{ page.previous.url }}" class="pageNav"{% endif %} {% unless page.previous %} class="pageNavInvalid" {% endunless %} >Previous</a>
+	<a {% if page.previous %} href="{{ site.baseurl }}{{ page.previous.url }}" class="pageNav"{% endif %} {% unless page.previous %} class="pageNavInvalid" {% endunless %} >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a {% if page.next %} href="{{ site.url }}{{ page.next.url }}" class="pageNav"{% endif %} {% unless page.next %} class="pageNavInvalid" {% endunless %} >Next</a>
+	<a {% if page.next %} href="{{ site.baseurl }}{{ page.next.url }}" class="pageNav"{% endif %} {% unless page.next %} class="pageNavInvalid" {% endunless %} >Next</a>
 </span>
 <hr>
 <span class="author">
@@ -51,12 +51,12 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             {% if page.previous %}
-        url = '{{ site.url }}{{ page.previous.url }}';
+        url = '{{ site.baseurl }}{{ page.previous.url }}';
         {% endif %}
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             {% if page.next %}
-        url = '{{ site.url }}{{ page.next.url }}';
+        url = '{{ site.baseurl }}{{ page.next.url }}';
         {% endif %}
         }
         if (url) {
