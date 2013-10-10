@@ -890,13 +890,13 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center"  contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
         
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -908,7 +908,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -930,7 +930,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           包容网关(ExclusiveGateway)图形为一个菱形里边有一个"o"圆圈。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
+            <imagedata align="center"   fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1002,7 +1002,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para>
           下面这样做法FixFLow引擎是支持的,但是不推荐这么用。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1013,7 +1013,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.designer.png"/>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.designer.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1031,7 +1031,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       
       <emphasis role="bold">BPMN2.0 Task类型元素图:</emphasis>
       <mediaobject ><imageobject>
-        <imagedata  align="center" contentwidth="600" fileref="images/bpmn.Tasks.1.png"/>
+        <imagedata  align="center"   fileref="images/bpmn.Tasks.1.png"/>
       </imageobject></mediaobject>
     </para>
     
@@ -1049,7 +1049,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           一个人工任务是图形为一个圆角矩形,有一个小的用户图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1094,7 +1094,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           对应的设计器图形表示:
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.assignment.1.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.assignment.1.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1133,7 +1133,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           <emphasis role="bold">resourceAssignmentExpression-formalExpression</emphasis>:人员或者组信息的表达式,
           可以是"人员编号"、也可以 return "人员编号"、或者 "人员1,人员2,人员3"、或者是个 List(String) 、也可以直接在这里调用java代码返回人员信息。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.assignment.2.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.assignment.2.png"/>
           </imageobject></mediaobject>
         </para>
         <para>
@@ -1251,7 +1251,7 @@ taskInstance.getPriority();]]></programlisting>
         <para>
           <emphasis role="bold">设计器界面</emphasis>:
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.taskInfo.1.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.taskInfo.1.png"/>
           </imageobject></mediaobject>
         </para>
         <para>
@@ -1309,7 +1309,7 @@ taskInstance.getExpectedExecutionTime();
         <para> 
           脚本任务是图形为一个圆角矩形,有一个小的脚本图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
+            <imagedata align="center" fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1364,7 +1364,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           服务任务是图形为一个圆角矩形,有一个小的齿轮图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1393,7 +1393,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           服务任务是图形为一个圆角矩形,有一个小的表格图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1423,7 +1423,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           发送任务是图形为一个圆角矩形,有一个小的黑色邮件图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
