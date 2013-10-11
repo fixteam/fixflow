@@ -118,7 +118,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Bug20130917093746.png)
 
 
-#Changelog
+#历史的脚印
 
 ### 5.0.0（2013-10）
 1. FixFlow引擎成为独立项目,从CS SOA中间件中剥离,贡献给开源社区。
