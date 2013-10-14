@@ -68,12 +68,12 @@
 		<link>
 			<name>flowmanageservletsrc</name>
 			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-servlet/src</locationURI>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-manage-servlet/src</locationURI>
 		</link>
 		<link>
 			<name>flowmanagesrc</name>
 			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-manage-api/src</locationURI>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-manage-api/src</locationURI>
 		</link>
 
 		<link>
