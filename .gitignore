@@ -1,5 +1,6 @@
 *.class
 .DS_Store
+/.metadata
 /bpmcenter
 /database
 /docbook
