@@ -16,17 +16,20 @@
     </imageobject></mediaobject>
     <para>
       <programlisting language="java">
-        ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
-        ModelService modelService = processEngine.getModelService();
-        RuntimeService runtimeService = processEngine.getRuntimeService();
-        TaskService taskService = processEngine.getTaskService();
-        FormService formService = processEngine.getFormService();
-        HistoryService historyService = processEngine.getHistoryService();
-        IdentityService identityService = processEngine.getIdentityService();
-        ScheduleService scheduleService = processEngine.getScheduleService();
-      </programlisting>
+ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
+ModelService modelService = processEngine.getModelService();
+RuntimeService runtimeService = processEngine.getRuntimeService();
+TaskService taskService = processEngine.getTaskService();
+FormService formService = processEngine.getFormService();
+HistoryService historyService = processEngine.getHistoryService();
+IdentityService identityService = processEngine.getIdentityService();
+ScheduleService scheduleService = processEngine.getScheduleService();</programlisting>
     </para>
     <para>这些服务的名称都十分直观的。引擎的所有API使用说明请参见fixflow-test测试项目。下面我们只做简单的介绍。</para>
+    <para>用过activiti的都会说,这个API跟activiti的很像,的确我们在FixFlow新版本设计时候参考了activiti的API层,使用过activiti的
+    开发人员可以更加轻松的掌握FixFlow的API,虽然API层非常相似,但是引擎内核的驱动方式和存储方式可以说是完全不一样,关于引擎的原理请参考
+      <link linkend="bpmn.FixFlow.ProcessEngine">FixFlow Engine 运行机制及原理</link>
+    </para>
     <itemizedlist>
       <listitem>
         <para>ModelService 获取模型服务</para>
@@ -248,7 +251,7 @@ IdentityLinkQuery identityLinkQuery = taskService.createIdentityLinkQuery();
         <para>TaskQuery：任务实例的Query对象。</para>
       </listitem>
       <listitem>
-        <para>IdentityLinkQuery：组织机构的Query对象。</para>
+        <para>IdentityLinkQuery：任务候选人的Query对象。</para>
       </listitem>
     </itemizedlist>
     <para>查询的方法根据表的不同方法名也不同，下面以ProcessInstanceQuery为例简单介绍Query的使用方法。</para>

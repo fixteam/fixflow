@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>发起流程</title>
 <jsp:include page="head.jsp" flush="true"/>
 <style>
 a{text-decoration: none;}

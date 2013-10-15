@@ -194,7 +194,15 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 			if (StringUtil.isNotEmpty(this.admin)) {
 				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(this.admin);
 			} else {
-				throw new FixFlowException("任务 " + taskId + " 无代理人!");
+
+				if(this.taskCommandInstAbstract!=null&&this.taskCommandInstAbstract.getTaskCommandDefType()!=null){
+					if(!this.taskCommandInstAbstract.getTaskCommandDefType().equals("processInstanceInfo")){
+						throw new FixFlowException("任务 " + taskId + " 无代理人!");
+					}
+				}else{
+					throw new FixFlowException("任务 " + taskId + " 无代理人!");
+				}
+				
 			}
 
 		}

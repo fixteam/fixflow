@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/login.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/common.js"></script>
-<title>Founder Fix BPM</title>
+<title>${applicationScope.appInfo["product.title"]}</title>
 </head>  
 
 <body>

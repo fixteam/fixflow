@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>归档任务</title>
 <jsp:include page="head.jsp" flush="true"/>
 <script type="text/javascript">
 function clearInfo(){
@@ -102,23 +101,23 @@ $(function(){
 								<th>${applicationScope.appInfo["task.processDefinitionName"]}</th>
 								<th>${applicationScope.appInfo["task.description"]}</th>
 								<th>${applicationScope.appInfo["task.initor"]}</th>
-								<th>${applicationScope.appInfo["task.startTime"]}</th>
-								<th>${applicationScope.appInfo["task.updateTime"]}</th>
 								<th>${applicationScope.appInfo["task.bizKey"]}</th>
+								<th>${applicationScope.appInfo["task.startTime"]}</th>
 								<th>${applicationScope.appInfo["task.endTime"]}</th>
+								<th>${applicationScope.appInfo["task.archiveTime"]}</th>
 							</thead>
 							<tbody>
 								<c:forEach items="${result.dataList}" var="dataList" varStatus="index">
 									<tr>
 										<td style="text-align:center;">${(index.index+1)+pageInfo.pageSize*(pageInfo.pageIndex-1)}</td>
-										<td>${dataList.BIZ_KEY}</td>
-										<td>${dataList.processDefinitionKey}</td>
+										<td>${dataList.processInstanceId}</td>
+										<td>${dataList.processDefinitionName}</td>
 										<td>${dataList.subject}</td>
 										<td>${dataList.startAuthorName}</td>
-										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
-										<td><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 										<td>${dataList.BIZ_KEY}</td>
+										<td><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 										<td><fmt:formatDate value="${dataList.endTime}" type="both"/></td>
+										<td><fmt:formatDate value="${dataList.archiveTime}" type="both"/></td>
 									</tr>
 								</c:forEach>
 							</tbody>

@@ -60,6 +60,8 @@ public class TaskCommandInst implements UserCommandQueryTo{
 	boolean isVerification=true;
 	boolean isSaveData=true;
 	boolean isSimulationRun=false;
+	
+	protected String taskCommandDefType;
 
 	
 
@@ -151,6 +153,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 			isVerification=StringUtil.getBoolean(taskCommandDef.getIsEnabled());
 			isSaveData=StringUtil.getBoolean(taskCommandDef.getIsSaveData());
 			isSimulationRun=StringUtil.getBoolean(taskCommandDef.getIsSimulationRun());
+			taskCommandDefType=taskCommandDef.getType();
 		}
 		
 		
@@ -257,6 +260,10 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		return persistentState;
 	}
 
-	
+
+	public String getTaskCommandDefType() {
+		return taskCommandDefType;
+	}
+
 
 }

@@ -537,15 +537,15 @@ public class ProcessInstancePersistence {
 			objectParamWhere.add(processInstanceQuery.getStartTimeAfter());
 		}
 		if (processInstanceQuery.getArchiveTime() != null) {
-			sqlString = sqlString + " and  (E.ARCHIVE_TIME =? OR ARCHIVE_TIME IS NULL)";
+			sqlString = sqlString + " and  E.ARCHIVE_TIME =?";
 			objectParamWhere.add(processInstanceQuery.getArchiveTime());
 		}
 		if (processInstanceQuery.getArchiveTimeAfter() != null) {
-			sqlString = sqlString + " and  (E.ARCHIVE_TIME<=? OR ARCHIVE_TIME IS NULL)";
+			sqlString = sqlString + " and  E.ARCHIVE_TIME<=?";
 			objectParamWhere.add(processInstanceQuery.getArchiveTimeAfter());
 		}
 		if (processInstanceQuery.getArchiveTimeBefore() != null) {
-			sqlString = sqlString + " and (E.START_TIME>=? OR ARCHIVE_TIME IS NULL)";
+			sqlString = sqlString + " and E.ARCHIVE_TIME>=?";
 			objectParamWhere.add(processInstanceQuery.getArchiveTimeBefore());
 		}
 		if(processInstanceQuery.getTaskParticipants() !=null ){

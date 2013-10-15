@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>待办任务</title>
+<title>${applicationScope.appInfo["product.title"]}</title>
 <jsp:include page="head.jsp" flush="true" />
 <script type="text/javascript">
 /*  
@@ -84,6 +84,7 @@ $(function(){
 		$("#initor").val(userId);
 		$("#initorName").val(userName);
 	});
+	$("#agent_"+$("#agentUserId").val()).css("background-color","#ffffff");
 });
 
 function clearInfo(){
@@ -137,7 +138,7 @@ function clearInfo(){
 							test="${result.agentToUsers!= null && fn:length(result.agentToUsers) != 0}">
 							<c:forEach items="${result.agentToUsers}" var="agentToUsers"
 								varStatus="index">
-								<div class="left-nav">
+								<div class="left-nav" id="agent_${agentToUsers.userid}">
 									<a name="agentToUsers" userId="${agentToUsers.userid}" href="#"><img
 										src="icon/${agentToUsers.userid}_small.png" height="30"
 										width="30" alt="头像"
@@ -146,7 +147,7 @@ function clearInfo(){
 							</c:forEach>
 						</c:if>
 					</div>
-					<div class="message">
+					<div class="message" style="display:none">
 						<div class="title">
 							<a href="#"><em class="icon-message"></em>消息中心</a>
 						</div>

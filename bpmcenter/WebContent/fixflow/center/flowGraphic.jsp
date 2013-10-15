@@ -51,25 +51,26 @@
 	//标记节点
 	function markSvg(){
 		$.each(taskListEnd, function(i, task) {
-			markImg(task.nodeId, "green", 2)
-		})
+			markImg(task.nodeId, "green", 2,0);
+		});
 		$.each(taskListIng, function(i, task) {
 			if(task.taskType=="FIXCALLACTIVITYTASK"){
-				markImg(task.nodeId, "#ff6000", 4)
+				//如果是正在运行的，则将z-idnex设为最大，因为子流程如果折叠起来，会有重叠的DIV
+				markImg(task.nodeId, "#ff6000", 4,999);
 			}
 			else{
-				markImg(task.nodeId, "#ff6000", 2)
+				markImg(task.nodeId, "#ff6000", 2,999);
 			}
-			
-		})
+		});
 	}
 	
 	//标记单个节点
-	function markImg(svgNodeId, color, width) {
+	function markImg(svgNodeId, color, width,zIndex) {
 		var svgElement = $("#"+svgNodeId);
 		if (svgElement) {
 			svgElement.css('display','block');
 			svgElement.css('border','2px solid '+color);
+			svgElement.css('z-index',zIndex);
 		}
 	}
 	

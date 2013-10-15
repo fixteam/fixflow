@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <jsp:include page="head.jsp" flush="true"/>
-<title>定时任务</title>
 <script type="text/javascript">
 $(function(){
   $("a[name=viewInfo]").click(function(){

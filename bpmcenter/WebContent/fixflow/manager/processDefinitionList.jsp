@@ -15,7 +15,6 @@ a{text-decoration: none;}
    color:red;
 }
 </style>
-<title>流程定义列表</title>
 <script type="text/javascript">
 	function deployment(){
 		var obj = {};

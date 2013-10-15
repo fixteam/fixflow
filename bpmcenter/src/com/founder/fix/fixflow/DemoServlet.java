@@ -164,8 +164,9 @@ public class DemoServlet extends HttpServlet {
 					params.add(filter.get("bizKey"));
 					List<Map<String, Object>> res = sc.queryForList(
 							"select * from DEMOTABLE where COL1=?", params);
-
-					filter.put("demoObject", res.get(0));
+					
+					if(res!=null && res.size()>0)
+						filter.put("demoObject", res.get(0));
 
 					FlowCenterService fcs = getFlowCenter();
 					Map<String, Object> list = fcs.GetFlowRefInfo(filter);

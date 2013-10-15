@@ -9,8 +9,8 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/reset.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/jquery.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/fixflow/js/My97DatePicker/WdatePicker.js"></script>
-
-<title>流程发布</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/fixflow/images/favicon.ico" type="image/x-icon">
+<title>${applicationScope.appInfo["product.title"]}</title>
 <%
 	String deploymentId = request.getParameter("deploymentId");
 	if(deploymentId == null){

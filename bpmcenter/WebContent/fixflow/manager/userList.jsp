@@ -9,7 +9,6 @@
 <jsp:include page="head.jsp" flush="true"/>
 <link rel="stylesheet" href="fixflow/css/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="fixflow/js/jquery.ztree.core-3.5.js"></script>
-<title>组织机构</title>
 <script type="text/javascript">
 	function viewUser(userid){
 		var obj = {};
