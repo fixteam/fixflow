@@ -1,0 +1,12 @@
+check.project.nature=true
+default.model.enablement.profile=
+eclipse.preferences.version=1
+is.expanded=USE_DI_VALUE
+is.horizontal=USE_DI_VALUE
+is.marker.visible=USE_DI_VALUE
+is.message.visible=USE_DI_VALUE
+override.model.enablements=false
+show.advanced.properties=false
+show.descriptions=true
+show.id.attribute=false
+target.runtime=com.founder.fix.fixflow.designer.fixflow
