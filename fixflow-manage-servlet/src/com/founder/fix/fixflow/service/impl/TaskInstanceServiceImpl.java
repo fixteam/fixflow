@@ -256,11 +256,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 					.getProcessInstanceId();
 			return getShareTaskNowNodeInfo(processInstanceId,engine);
 		}
-
 		return null;
-		// String processInstanceId =
-		// taskInstanceQueryTo.getProcessInstanceId();
-		// return getShareTaskNowNodeInfo(processInstanceId);
 
 	}
 	
@@ -269,26 +265,14 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			String taskInfo = "";
 			ProcessInstance processInstanceQueryTo = engine.getRuntimeService().getProcessInstance(processInstanceId);
 			if (processInstanceQueryTo.getEndTime() != null) {
-
-//				OnlineUser onlineUser = Current.getDataView().getUser();
-//				String languageId = StringUtil.getString(onlineUser
-//						.getItem("local"));
-//				if (languageId.equals("en_US")) {
-//					return "Finish";
-//				} else {
-					return "完成";
-//				}
+				return "完成";
 			}
 
 			List<TaskInstance> taskInstanceQueryTos = new ArrayList<TaskInstance>();
-//			taskInstanceQueryTos = TaskInterface
-//					.getProcessInstanceDoneByUser(processInstanceId);
 			TaskQuery tq = engine.getTaskService().createTaskQuery();
 			tq.processInstanceId(processInstanceId);
 			tq.taskNotEnd();
 			taskInstanceQueryTos = tq.list();
-			
-			
 			for (TaskInstance taskInstanceQueryTo2 : taskInstanceQueryTos) {
 				if (taskInfo.equals("") && taskInstanceQueryTos.size() == 1) {
 					taskInfo = taskInfo + processState(taskInstanceQueryTo2,engine);
@@ -309,9 +293,6 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			throws Exception {
 		String taskInfo = "";
 		String assignee = taskInstanceQueryTo.getAssignee();
-//		OnlineUser onlineUser = Current.getDataView().getUser();
-//		String languageId = StringUtil.getString(onlineUser.getItem("local"));
-		
 		ProcessDefinitionBehavior processDefinition = engine.getModelService().getProcessDefinition(taskInstanceQueryTo
 				.getProcessDefinitionId());
 		String nodeName = processDefinition.getFlowElement(
@@ -319,32 +300,19 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		taskInfo = taskInfo + nodeName;
 		IdentityService identityService = engine.getIdentityService();
 		if (assignee == null) {
-			// Map<String, List<Object>> groupMap = new HashMap<String,
-			// List<Object>>();
-
 			List<UserTo> userTos = new ArrayList<UserTo>();
-
 			Map<String, List<GroupTo>> groupTosMap = new HashMap<String, List<GroupTo>>();
-
-			// List<GroupTo> groupTos=new ArrayList<GroupTo>();
-
-			// groupMap.put(USER_GROUP_TYPE_ID, new ArrayList<Object>());
-			// List<GroupTo>
-
 			List<IdentityLink> identityLinkQueryToList = taskInstanceQueryTo.getIdentityLinkQueryToList();
 			for (IdentityLink identityLinkQueryTo : identityLinkQueryToList) {
 				String userId = identityLinkQueryTo.getUserId();
 				if (userId == null) {
 					String groupTypeId = identityLinkQueryTo.getGroupType();
-
 					String groupId = identityLinkQueryTo.getGroupId();
-
 					GroupTo groupTo = identityService.getGroup(groupId,
 							groupTypeId);
 					if (groupTo == null) {
 						continue;
 					}
-					// String groupName = groupTo.getGroupName();
 					if (groupTosMap.get(groupTypeId) != null) {
 						groupTosMap.get(groupTypeId).add(groupTo);
 					} else {
@@ -352,41 +320,22 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 						groupTos.add(groupTo);
 						groupTosMap.put(groupTypeId, groupTos);
 					}
-
 				} else {
 					UserTo userTo = null;
 					if (userId.equals("fixflow_allusers")) {
-//						if (languageId.equals("en_US")) {
-//							userTo = new UserTo("fixflow_allusers", "AllUser",
-//									null);
-//						} else {
 							userTo = new UserTo("fixflow_allusers", "所有人", null);
-//						}
-
-						// username = "所有人";
 					} else {
 						userTo = getUserTo(userId,engine);
-						// username = getUsername(userId);
 					}
-					// List<String> groupNameList =
-					// groupMap.get(USER_GROUP_TYPE_ID);
 					if (userTo != null) {
 						userTos.add(userTo);
 					}
-
 				}
 			}
-
 			if (userTos.size() > 0) {
 				String groupTypeName = "";
-//				if (languageId.equals("en_US")) {
-//					groupTypeName = "User";
-//					taskInfo += "(Sharing " + groupTypeName + " : ";
-//				} else {
-					groupTypeName = "用户";
-					taskInfo += "(共享 " + groupTypeName + " : ";
-//				}
-
+				groupTypeName = "用户";
+				taskInfo += "(共享 " + groupTypeName + " : ";
 				for (int i = 0; i < userTos.size(); i++) {
 					UserTo userTo = userTos.get(i);
 					if (i == userTos.size() - 1) {
@@ -394,59 +343,32 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 					} else {
 						taskInfo += userTo.getUserName() + ",";
 					}
-
 				}
 				taskInfo = taskInfo + ")";
-
 			}
-
 			for (String groupToKey : groupTosMap.keySet()) {
-
 				List<GroupTo> groupTos = groupTosMap.get(groupToKey);
-				GroupDefinition groupDefinition = identityService
-						.getGroupDefinition(groupToKey);
-
+				GroupDefinition groupDefinition = identityService.getGroupDefinition(groupToKey);
 				String groupTypeName = "";
-
 				groupTypeName = groupDefinition.getName();
-
-//				if (languageId.equals("en_US")) {
-//					taskInfo += "(Sharing " + groupTypeName + " : ";
-//				} else {
-					taskInfo += "(共享 " + groupTypeName + " : ";
-//				}
-
+				taskInfo += "(共享 " + groupTypeName + " : ";
 				taskInfo += listToStr(groupTos, ",", groupDefinition) + ")";
-
 			}
-
 		} else {
 			String username = getUsername(assignee,engine);
-
-			username = "<span title='" + username + "(" + assignee + ")'>"
-					+ username + "</span>";
-
-//			if (languageId.equals("en_US")) {
-//				taskInfo = taskInfo + " (Handler : " + username + ") ";
-//			} else {
+			username = "<span title='" + username + "(" + assignee + ")'>" + username + "</span>";
 				taskInfo = taskInfo + " (处理者 ： " + username + ") ";
-//			}
-
 		}
-
 		return taskInfo;
 	}
 	
 	protected static UserTo getUserTo(String userId,ProcessEngine engine) {
-
 		try {
 			UserTo user = engine.getIdentityService().getUserTo(userId);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// userInfoMap.put(userId, assigneeName);
-
 		return null;
 	}
 	
@@ -456,9 +378,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		if (groupTos == null || groupTos.size() == 0 || joinChar == null) {
 			return "";
 		}
-
 		String listStr = "";
-
 		for (GroupTo groupTo : groupTos) {
 
 			List<UserTo> userTos = groupDefinition
@@ -470,30 +390,22 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 				userTos = userTos.subList(0, y);
 				x = 1;
 			}
-
 			for (int i = 0; i < userTos.size(); i++) {
 				UserTo userTo = userTos.get(i);
 				if (i == userTos.size() - 1) {
 					nameList = nameList + userTo.getUserName() + "("
 							+ userTo.getUserId() + ")";
 				} else {
-					nameList = nameList + userTo.getUserName() + "("
-							+ userTo.getUserId() + "),  ";
+					nameList = nameList + userTo.getUserName() + "(" + userTo.getUserId() + "),  ";
 				}
-
 			}
 			if (x == 1) {
 				nameList = nameList + " .......";
 			}
-
-			listStr = listStr + "<span title='" + nameList + "'>"
-					+ groupTo.getGroupName() + "</span>" + joinChar;
+			listStr = listStr + "<span title='" + nameList + "'>" + groupTo.getGroupName() + "</span>" + joinChar;
 		}
-
 		listStr = listStr.substring(0, listStr.length() - joinChar.length());
-
 		return listStr;
-
 	}
 	
 	protected static String getUsername(String userId,ProcessEngine engine) {
