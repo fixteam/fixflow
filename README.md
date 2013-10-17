@@ -98,6 +98,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 
 * [查看用户向导文档](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
+* [用户向导文档离线版本](http://pan.baidu.com/s/1tGkiM)
 * [产品及开发社区介绍](https://github.com/fixteam/fixflow/wiki/产品及开发社区介绍)
 * [FixFlow功能介绍](https://github.com/fixteam/fixflow/wiki/Fixflow功能介绍)
 * [如何从GitHub中获取FixFlow代码](#)
