@@ -39,6 +39,8 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 **用户向导**: [http://fixteam.github.io/fixflow/userguide/out/html/index.html](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
 
+**用户向导离线版本**: [http://pan.baidu.com/s/1tGkiM](http://pan.baidu.com/s/1tGkiM)
+
 **学习怎样使用和集成FixFlow**: [https://github.com/fixteam/fixflow/wiki](https://github.com/fixteam/fixflow/wiki)
 
 **团队Blog地址**: [http://fixteam.github.io/fixflow/blog/](http://fixteam.github.io/fixflow/blog/)
@@ -98,7 +100,6 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 
 * [查看用户向导文档](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
-* [用户向导文档离线版本](http://pan.baidu.com/s/1tGkiM)
 * [产品及开发社区介绍](https://github.com/fixteam/fixflow/wiki/产品及开发社区介绍)
 * [FixFlow功能介绍](https://github.com/fixteam/fixflow/wiki/Fixflow功能介绍)
 * [如何从GitHub中获取FixFlow代码](#)
