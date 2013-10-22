@@ -297,6 +297,24 @@ public class PersistentSession {
 			return processDefinitionPersistence.selectProcessDefinitionByDeploymentAndKey(parameter);
 		}
 		
+		if (statement.equals("findSubProcessInstanceById")) {
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
+			return processInstancePersistence.findSubProcessInstanceById(StringUtil.getString(parameter));
+			
+		}
+		
+		if (statement.equals("findSubProcessInstanceByIdAndToken")) {
+			ProcessInstancePersistence processInstancePersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessInstancePersistence(connection);
+			Map<String, String> strmap = (Map<String, String>) parameter;
+			String processInstanceId = strmap.get("processInstanceId");
+			String tokenId = strmap.get("tokenId");
+			
+
+			return processInstancePersistence.findSubProcessInstanceByIdAndToken(processInstanceId,tokenId);
+			
+		}
+		
+		
 		
 		if (statement.equals("findUserSubmitProcess")) {
 			ProcessDefinitionPersistence processDefinitionPersistence = ProcessObjectFactory.FACTORYINSTANCE.createProcessDefinitionPersistence(connection);

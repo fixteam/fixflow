@@ -68,4 +68,8 @@
   	</sql>
   	<sql id="variable_delete"><![CDATA["delete from FIXFLOW_RUN_VARIABLE WHERE processinstance_id  in ("+whereSql+")"]]></sql>
   </sqlMapping>
+  <sqlMapping id="processInstance">
+  	<sql id="findSubProcessInstanceById"><![CDATA["SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID  = '"+processInstanceId+"' AND END_TIME IS NULL"]]></sql>
+  	<sql id="findSubProcessInstanceByIdAndToken"><![CDATA["SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID  = '"+processInstanceId+"' AND END_TIME IS NULL AND PARENT_INSTANCE_TOKEN_ID='"+tokenId+"'"]]></sql>
+  </sqlMapping>
 </sqlmappingconfig:SqlMappingConfig>

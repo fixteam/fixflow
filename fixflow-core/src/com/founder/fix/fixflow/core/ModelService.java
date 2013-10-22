@@ -106,7 +106,7 @@ public interface ModelService extends ProcessService{
 	String getDefaultFromUri(String processDefinitionId);
 	
 	/**
-	 * 获取流程定义
+	 * 获取流程定义(内置缓存)
 	 * @param processDefinitionId 流程唯一编号
 	 * @return 获取流程定义
 	 */

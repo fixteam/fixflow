@@ -72,6 +72,22 @@ public class ProcessInstanceManager extends AbstractManager {
 		return (ProcessInstanceEntity) getDbSqlSession().selectOne("selectProcessInstance", parameters);
 
 	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<ProcessInstanceEntity> findSubProcessInstanceById(String processInstanceId) {
+
+		return (List) getDbSqlSession().selectOne("findSubProcessInstanceById", processInstanceId);
+
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<ProcessInstanceEntity> findSubProcessInstanceByIdAndToken(String processInstanceId,String tokenId) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("processInstanceId", processInstanceId);
+		parameters.put("tokenId", tokenId);
+		return (List) getDbSqlSession().selectOne("findSubProcessInstanceByIdAndToken",parameters);
+
+	}
 
 	public ProcessInstanceEntity findProcessInstanceById(String processInstanceId, ProcessDefinitionBehavior processDefinition) {
 
@@ -120,6 +136,7 @@ public class ProcessInstanceManager extends AbstractManager {
 		//添加更新时间的操作
 		processInstance.setUpdateTime(new Date());
 		processInstance.setProcessLocation(processLocation);
+		
 		
 		getDbSqlSession().save("saveProcessInstance", processInstance);
 		

@@ -23,12 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.UserTask;
 
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Sql;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -40,6 +42,7 @@ import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableMgmtInstance;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
+import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ProcessDefinitionPersistence;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
@@ -1125,5 +1128,57 @@ public class ProcessInstancePersistence {
 		Object[] objectParamWhere = { processInstanceId };
 		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
+	}
+
+	public List<ProcessInstanceEntity> findSubProcessInstanceById(String processInstanceId) {
+
+
+		
+		Map<String,Object> variableMap = new HashMap<String,Object>();
+		variableMap.put("processInstanceId", processInstanceId);
+		
+		Sql sqlMap=Context.getProcessEngineConfiguration().getSql("processInstance","findSubProcessInstanceById");
+		String processInstanceSql = (String)ExpressionMgmt.execute(sqlMap, variableMap);
+
+		ProcessDefinitionPersistence persistence=new ProcessDefinitionPersistence(connection);
+		
+
+		List<Map<String, Object>> dataList=sqlCommand.queryForList(processInstanceSql);
+		List<ProcessInstanceEntity> processInstanceEntities=new ArrayList<ProcessInstanceEntity>();
+		
+		for (Map<String, Object> map : dataList) {
+			String processDefinitionId=StringUtil.getString(map.get(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey()));
+			ProcessDefinitionBehavior processDefinitionBehavior=persistence.selectProcessDefinitionById(processDefinitionId);
+			ProcessInstanceEntity processInstanceEntity=getProcessInstance(processInstanceId, processDefinitionBehavior);
+			processInstanceEntities.add(processInstanceEntity);
+		}
+		
+		
+		return processInstanceEntities;
+	}
+
+	public Object findSubProcessInstanceByIdAndToken(String processInstanceId, String tokenId) {
+		Map<String,Object> variableMap = new HashMap<String,Object>();
+		variableMap.put("processInstanceId", processInstanceId);
+		variableMap.put("tokenId", tokenId);
+		
+		Sql sqlMap=Context.getProcessEngineConfiguration().getSql("processInstance","findSubProcessInstanceByIdAndToken");
+		String processInstanceSql = (String)ExpressionMgmt.execute(sqlMap, variableMap);
+
+		ProcessDefinitionPersistence persistence=new ProcessDefinitionPersistence(connection);
+		
+
+		List<Map<String, Object>> dataList=sqlCommand.queryForList(processInstanceSql);
+		List<ProcessInstanceEntity> processInstanceEntities=new ArrayList<ProcessInstanceEntity>();
+		
+		for (Map<String, Object> map : dataList) {
+			String processDefinitionId=StringUtil.getString(map.get(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey()));
+			ProcessDefinitionBehavior processDefinitionBehavior=persistence.selectProcessDefinitionById(processDefinitionId);
+			ProcessInstanceEntity processInstanceEntity=getProcessInstance(processInstanceId, processDefinitionBehavior);
+			processInstanceEntities.add(processInstanceEntity);
+		}
+		
+		
+		return processInstanceEntities;
 	}
 }
