@@ -37,7 +37,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 **开发者交流社区QQ群**: 152654373
 
-**演示系统地址**: [http://218.107.242.90:9633/bpmcenter/](http://218.107.242.90:9633/bpmcenter/)
+**演示系统地址**: [http://218.107.242.90:9633/bpmcenter/ 用户名:admin 密码:1](http://218.107.242.90:9633/bpmcenter/) 
 
 **用户向导**: [http://fixteam.github.io/fixflow/userguide/out/html/index.html](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
 
