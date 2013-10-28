@@ -128,13 +128,17 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			for(TaskInstance tmp:lts){ 
 				Map<String,Object> instances = tmp.getPersistentState();
 				String userId = StringUtil.getString(instances.get("PI_INITIATOR"));
-				
-				UserTo user = identsvz.getUserTo(userId);
-				if(user!=null){
-					instances.put("userName", user.getUserName());
+				if(StringUtil.isEmpty(userId)){
+					instances.put("userName", "(未知用户)");
 				}else{
-					instances.put("userName", userId+"(未知用户)");
+					UserTo user = identsvz.getUserTo(userId);
+					if(user!=null){
+						instances.put("userName", user.getUserName());
+					}else{
+						instances.put("userName", userId+"(未知用户)");
+					}
 				}
+				
 				
 				String nowproc = getShareTaskNowNodeInfo(tmp,engine);
 				instances.put("nowProc", nowproc);
