@@ -372,7 +372,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 				if (dataObj.get(0).get(groupIdField) == null) {
 					return null;
 				}
-				GroupTo groupTo = new GroupTo(groupId, StringUtil.getString(dataObj.get(0).get(groupNameField)), getId(), dataObj.get(0));
+				GroupTo groupTo = new GroupTo(StringUtil.getString(dataObj.get(0).get(groupIdField)), StringUtil.getString(dataObj.get(0).get(groupNameField)), getId(), dataObj.get(0));
 				cache.putCacheData(getId() + "_findParentGroupByGroupId_" + groupId, groupTo);
 				return groupTo;
 			} catch (Exception e) {
