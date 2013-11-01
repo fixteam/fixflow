@@ -363,7 +363,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 				SqlCommand sqlCommand = getSqlCommand();
 				List<Object> objectParamWhere = new ArrayList<Object>();
 				objectParamWhere.add(groupId);
-				List<Map<String, Object>> dataObj = sqlCommand.queryForList("SELECT USERTABLENEW.* FROM (" + sqlText
+				List<Map<String, Object>> dataObj = sqlCommand.queryForList(" SELECT USERTABLENEW.* FROM (" + sqlText
 						+ ") USERTABLENEW WHERE USERTABLENEW." + groupIdField + " IN (SELECT USERTABLE." + supGroupIdField + " FROM (" + sqlText
 						+ ") USERTABLE where USERTABLE." + groupIdField + "=?)", objectParamWhere);
 				if (dataObj.size() == 0) {
