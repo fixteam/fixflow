@@ -2,6 +2,8 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="bpmcenter">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorsrc"/>
+        <wb-resource deploy-path="/" source-path="/fixfloweditorwebcontent"/>    
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/apisrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/restsrc"/>
@@ -15,6 +17,8 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowcoreconf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanagesrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanageservletsrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorsrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorwebcontent"/>
         <property name="context-root" value="bpmcenter"/>
         <property name="java-output-path" value="/bpmcenter/build/classes"/>
     </wb-module>

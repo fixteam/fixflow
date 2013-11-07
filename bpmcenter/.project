@@ -91,5 +91,15 @@
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-ws/src</locationURI>
 		</link>
+		<link>
+			<name>fixfloweditorsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/src</locationURI>
+		</link>
+		<link>
+			<name>fixfloweditorwebcontent</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/WebContent</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
