@@ -17,8 +17,8 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowcoreconf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanagesrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanageservletsrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorsrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorwebcontent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowbpasrc"/>
+        <wb-resource deploy-path="/" source-path="/fixflowbpawebcontent"/>
         <property name="context-root" value="bpmcenter"/>
         <property name="java-output-path" value="/bpmcenter/build/classes"/>
     </wb-module>

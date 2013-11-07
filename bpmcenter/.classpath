@@ -15,6 +15,8 @@
 	<classpathentry kind="src" path="flowmanageservletsrc"/>	
 	<classpathentry kind="src" path="fixfloweditorsrc"/>
 	<classpathentry kind="src" path="fixfloweditorwebcontent"/>
+	<classpathentry kind="src" path="fixflowbpasrc"/>
+	<classpathentry kind="src" path="fixflowbpawebcontent"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>

@@ -101,5 +101,16 @@
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/WebContent</locationURI>
 		</link>
+		
+		<link>
+			<name>fixflowbpasrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-bpa/src</locationURI>
+		</link>
+		<link>
+			<name>fixflowbpawebcontent</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-bpa/WebContent</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
