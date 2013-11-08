@@ -1,16 +1,2 @@
 /bin
 .DS_Store
-/build
-/apisrc
-/apisrc
-/apiconf
-/restsrc
-/servletsrc
-/wssrc
-/internationalization
-/flowexpandsrc
-/fixflowdiagram
-/flowcoresrc
-/fixflowcoreconf
-/flowmanagesrc
-/flowmanageservletsrc
