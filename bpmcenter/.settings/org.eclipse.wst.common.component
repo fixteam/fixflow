@@ -22,6 +22,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorersrc"/>
         <wb-resource deploy-path="/" source-path="/fixflowexplorerwebcontent"/>
         <wb-resource deploy-path="/" source-path="/fixflowresourcewebcontent"/>
+        <wb-resource deploy-path="/" source-path="/fixflowrepositorywebcontent"/>
 
         
         

@@ -20,6 +20,8 @@
 	<classpathentry kind="src" path="fixflowexplorersrc"/>
 	<classpathentry kind="src" path="fixflowexplorerwebcontent"/>
 	<classpathentry kind="src" path="fixflowresourcewebcontent"/>
+	<classpathentry kind="src" path="fixflowrepositorywebcontent"/>
+	
 	
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0">
 		<attributes>

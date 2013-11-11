@@ -84,6 +84,13 @@
 			<type>2</type>
 			<location>/Users/kenshin/GIT/fixflow/fixflow-resource/WebContent</location>
 		</link>
+		
+		<link>
+			<name>fixflowrepositorywebcontent</name>
+			<type>2</type>
+			<location>/Users/kenshin/GIT/fixflow/fixflow-repository/WebContent</location>
+		</link>
+		
 		<link>
 			<name>flowcoresrc</name>
 			<type>2</type>
