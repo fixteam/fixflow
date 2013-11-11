@@ -112,5 +112,19 @@
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa/WebContent</locationURI>
 		</link>
+		
+		<link>
+			<name>fixflowexplorersrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-explorer/src</locationURI>
+		</link>
+		<link>
+			<name>fixflowexplorerwebcontent</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-explorer/WebContent</locationURI>
+		</link>
+		 
+		
+		
 	</linkedResources>
 </projectDescription>
