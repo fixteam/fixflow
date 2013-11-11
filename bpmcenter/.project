@@ -77,18 +77,18 @@
 		<link>
 			<name>fixflowexplorerwebcontent</name>
 			<type>2</type>
-			<location>/Users/kenshin/GIT/fixflow/fixflow-explorer/WebContent</location>
+			<location>GIT_FIXFLOW_HOME/fixflow-explorer/WebContent</location>
 		</link>
 		<link>
 			<name>fixflowresourcewebcontent</name>
 			<type>2</type>
-			<location>/Users/kenshin/GIT/fixflow/fixflow-resource/WebContent</location>
+			<location>GIT_FIXFLOW_HOME/fixflow-resource/WebContent</location>
 		</link>
 		
 		<link>
 			<name>fixflowrepositorywebcontent</name>
 			<type>2</type>
-			<location>/Users/kenshin/GIT/fixflow/fixflow-repository/WebContent</location>
+			<location>GIT_FIXFLOW_HOME/fixflow-repository/WebContent</location>
 		</link>
 		
 		<link>
