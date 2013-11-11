@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow.editor;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +34,12 @@ public class ModelConverter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String t1 = request.getParameter("t1");
-		System.out.println(t1);
-		response.getWriter().write(t1);
-		// TODO Auto-generated method stub
+		response.setContentType("text/html");  
+		 PrintWriter out = response.getWriter();  
+		 out.println("<html><head><title>Hello World!</title></head>");  
+		 out.println("<body>");  
+		 out.println("<p>333333</p>");  
+		 out.println("<h1>Hello World!</h1></body></html>");  
 	}
 
 }
