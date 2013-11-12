@@ -20,7 +20,9 @@ public class FileAndDirectoryServlet extends BaseServlet {
 	 */
     public void loadTree(){
     	try {
-			success(FileAndDirectoryUtils.buildLevelJsonDataWithLoginPerson(request("userId"),getBasePath()));
+    		String json = FileAndDirectoryUtils.buildLevelJsonDataWithLoginPerson(request("userId"),getBasePath());
+    		FileAndDirectoryUtils.clear();
+			success(json);
 		} catch (Exception e) {
 			error("初始化参数出错!");
 		}

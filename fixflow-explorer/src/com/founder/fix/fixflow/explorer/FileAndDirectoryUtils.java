@@ -29,6 +29,10 @@ public class FileAndDirectoryUtils {
 	    return json;
 	}
 	
+	public static void clear(){
+		 key = 0;json = "[{id:-1,pId:0,name:'private',type:'dir'},{id:-2,pId:0,name:'shared',type:'dir'}";
+	}
+	
 	/**
 	 * 迭代目录层级提取json数据
 	 * @param file 跟目录
