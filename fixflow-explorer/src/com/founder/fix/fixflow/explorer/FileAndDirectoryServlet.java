@@ -66,7 +66,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
 					path = node[i]+"/"+request("userId");
 					continue;
 				}
-				if(state != null && (node.length-1) == i){
+				if(state.length != 0 && (node.length-1) == i){
 					path += "/"+request("newFileName");
 					continue;
 				}
@@ -74,4 +74,5 @@ public class FileAndDirectoryServlet extends BaseServlet {
 			}
     		return path;
     }
+     
 }
