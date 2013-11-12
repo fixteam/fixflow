@@ -55,14 +55,42 @@
     <servlet-name>DemoServlet</servlet-name>
     <url-pattern>/DemoServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
+  <!-- fixflow-editor Servlet开始 -->
+   <servlet>
     <description></description>
     <display-name>ModelConverter</display-name>
     <servlet-name>ModelConverter</servlet-name>
     <servlet-class>com.founder.fix.fixflow.editor.ModelConverter</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>ModelConverter</servlet-name>
     <url-pattern>/ModelConverter</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>PluginServlet</display-name>
+    <servlet-name>PluginServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.editor.PluginServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PluginServlet</servlet-name>
+    <url-pattern>/PluginServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>StencilsetServlet</display-name>
+    <servlet-name>StencilsetServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.editor.StencilsetServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StencilsetServlet</servlet-name>
+    <url-pattern>/StencilsetServlet</url-pattern>
+  </servlet-mapping>
+  
+  <!-- fixflow-editor Servlet结束 -->
 </web-app>
