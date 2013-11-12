@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.4">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
   <display-name>bpmcenter</display-name>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -65,4 +65,18 @@
     <servlet-name>ModelConverter</servlet-name>
     <url-pattern>/ModelConverter</url-pattern>
   </servlet-mapping>
+ 
+  <!-- 徐海洋start -->
+  <servlet>
+    <description></description>
+    <display-name>FileAndDirectoryServlet</display-name>
+    <servlet-name>FileAndDirectoryServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.explorer.FileAndDirectoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileAndDirectoryServlet</servlet-name>
+    <url-pattern>/FileAndDirectoryServlet</url-pattern>
+  </servlet-mapping>
+  
+    <!-- 徐海洋end -->
 </web-app>
