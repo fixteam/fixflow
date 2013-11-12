@@ -1,4 +1,6 @@
 package com.founder.fix.fixflow.explorer;
+
+import java.io.File;
  
 /**
  * 文件目录管理类
@@ -51,23 +53,19 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void reName(){
     	try {
-    		FileAndDirectoryUtils.renameFile(buildPath(),buildPath("newName"),getBasePath());
+    		FileAndDirectoryUtils.renameFile(buildPath()+File.separator+request("oldFileName"),buildPath()+File.separator+request("newFileName"),getBasePath());
     			success("重命名成功!");
     	} catch (Exception e) {
     		error("重命名失败!");
     	}
     }
     
-    public String buildPath(String...state){
+    public String buildPath(){
     		String[] node = request("path").split(",");
     		String path = "";
     		for (int i = 0; i < node.length; i++) {
 				if(i == 0){
 					path = node[i]+"/"+request("userId");
-					continue;
-				}
-				if(state.length != 0 && (node.length-1) == i){
-					path += "/"+request("newFileName");
 					continue;
 				}
 				path += "/"+node[i];
