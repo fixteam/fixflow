@@ -116,7 +116,9 @@ public class FileAndDirectoryUtils {
 	
 	public static void main(String[] args) {
 		try {
-			System.out.println(buildLevelJsonDataWithLoginPerson("1", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/"));
+			//renameFile("private/1/2222", "private/1/xuhaiyang", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter");
+			
+			//System.out.println(buildLevelJsonDataWithLoginPerson("1", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
