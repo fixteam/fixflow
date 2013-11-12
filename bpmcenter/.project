@@ -40,15 +40,19 @@
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-api/src</locationURI>
 		</link>
 		<link>
+			<name>fixflowbpasrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa/src</locationURI>
+		</link>
+		<link>
+			<name>fixflowbpawebcontent</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa/WebContent</locationURI>
+		</link>
+		<link>
 			<name>fixflowcoreconf</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/conf</locationURI>
-		</link>
-
-		<link>
-			<name>flowcoresrc</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/src</locationURI>
 		</link>
 		<link>
 			<name>fixflowdiagram</name>
@@ -56,14 +60,46 @@
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/fixflowdiagram</locationURI>
 		</link>
 		<link>
+			<name>fixfloweditorsrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/src</locationURI>
+		</link>
+		<link>
+			<name>fixfloweditorwebcontent</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/WebContent</locationURI>
+		</link>
+		<link>
+			<name>fixflowexplorersrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-explorer/src</locationURI>
+		</link>
+		<link>
+			<name>fixflowexplorerwebcontent</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-explorer/WebContent</location>
+		</link>
+		<link>
+			<name>fixflowresourcewebcontent</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-resource/WebContent</location>
+		</link>
+		
+		<link>
+			<name>fixflowrepositorywebcontent</name>
+			<type>2</type>
+			<location>GIT_FIXFLOW_HOME/fixflow-repository/WebContent</location>
+		</link>
+		
+		<link>
+			<name>flowcoresrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/src</locationURI>
+		</link>
+		<link>
 			<name>flowexpandsrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/src</locationURI>
-		</link>
-		<link>
-			<name>internationalization</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/internationalization</locationURI>
 		</link>
 		<link>
 			<name>flowmanageservletsrc</name>
@@ -75,7 +111,11 @@
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-manage-api/src</locationURI>
 		</link>
-
+		<link>
+			<name>internationalization</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-expand/internationalization</locationURI>
+		</link>
 		<link>
 			<name>restsrc</name>
 			<type>2</type>
@@ -90,27 +130,6 @@
 			<name>wssrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-ws/src</locationURI>
-		</link>
-		<link>
-			<name>fixfloweditorsrc</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/src</locationURI>
-		</link>
-		<link>
-			<name>fixfloweditorwebcontent</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-editor/WebContent</locationURI>
-		</link>
-		
-		<link>
-			<name>fixflowbpasrc</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa/src</locationURI>
-		</link>
-		<link>
-			<name>fixflowbpawebcontent</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa/WebContent</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

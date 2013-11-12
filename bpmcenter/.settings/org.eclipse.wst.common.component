@@ -18,7 +18,15 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanagesrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanageservletsrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowbpasrc"/>
-        <wb-resource deploy-path="/" source-path="/fixflowbpawebcontent"/> 
+        <wb-resource deploy-path="/" source-path="/fixflowbpawebcontent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorersrc"/>
+        <wb-resource deploy-path="/" source-path="/fixflowexplorerwebcontent"/>
+        <wb-resource deploy-path="/" source-path="/fixflowresourcewebcontent"/>
+        <wb-resource deploy-path="/" source-path="/fixflowrepositorywebcontent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorerwebcontent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowresourcewebcontent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowrepositorywebcontent"/>
+
         
         
         

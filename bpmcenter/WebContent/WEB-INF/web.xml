@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
-	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.4">
   <display-name>bpmcenter</display-name>
-  <!-- Spring加载配置 -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:applicationContext*.xml</param-value>
   </context-param>
-  <!-- 登录用servlet -->
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
@@ -27,7 +22,6 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
-  <!-- 任务处理中心配置 -->
   <servlet>
     <description></description>
     <display-name>FlowCenter</display-name>
@@ -38,32 +32,37 @@
     <servlet-name>FlowCenter</servlet-name>
     <url-pattern>/FlowCenter</url-pattern>
   </servlet-mapping>
-  	<welcome-file-list>
-		<welcome-file>/fixflow/login.jsp</welcome-file>
-	</welcome-file-list>
-  
-  
-  <!-- 流程管理中心配置，激活之前请确认所使用版本包括流程管理中心这个功能 -->
-	  <servlet>
-	    <description></description>
-	    <display-name>FlowManager</display-name>
-	    <servlet-name>FlowManager</servlet-name>
-	    <servlet-class>com.founder.fix.fixflow.FlowManager</servlet-class>
-	  </servlet>
-	  <servlet-mapping>
-	    <servlet-name>FlowManager</servlet-name>
-	    <url-pattern>/FlowManager</url-pattern>
-	  </servlet-mapping>
-  
-    <!-- 演示模块配置 -->
-	  <servlet>
-	    <description></description>
-	    <display-name>DemoServlet</display-name>
-	    <servlet-name>DemoServlet</servlet-name>
-	    <servlet-class>com.founder.fix.fixflow.DemoServlet</servlet-class>
-	  </servlet>
-	  <servlet-mapping>
-	    <servlet-name>DemoServlet</servlet-name>
-	    <url-pattern>/DemoServlet</url-pattern>
-	  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>/fixflow/login.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>FlowManager</display-name>
+    <servlet-name>FlowManager</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.FlowManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlowManager</servlet-name>
+    <url-pattern>/FlowManager</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DemoServlet</display-name>
+    <servlet-name>DemoServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.DemoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DemoServlet</servlet-name>
+    <url-pattern>/DemoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ModelConverter</display-name>
+    <servlet-name>ModelConverter</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.editor.ModelConverter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModelConverter</servlet-name>
+    <url-pattern>/ModelConverter</url-pattern>
+  </servlet-mapping>
 </web-app>
