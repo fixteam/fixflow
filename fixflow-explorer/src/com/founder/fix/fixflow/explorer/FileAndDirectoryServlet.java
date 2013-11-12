@@ -48,12 +48,26 @@ public class FileAndDirectoryServlet extends BaseServlet {
     	}
     }
     
-    public String buildPath(){
+    
+    public void reName(){
+    	try {
+    		FileAndDirectoryUtils.renameFile(buildPath(),buildPath("newName"),getBasePath());
+    			success("重命名成功!");
+    	} catch (Exception e) {
+    		error("重命名失败!");
+    	}
+    }
+    
+    public String buildPath(String...state){
     		String[] node = request("path").split(",");
     		String path = "";
     		for (int i = 0; i < node.length; i++) {
 				if(i == 0){
 					path = node[i]+"/"+request("userId");
+					continue;
+				}
+				if(state != null && (node.length-1) == i){
+					path += "/"+request("newFileName");
 					continue;
 				}
 				path += "/"+node[i];

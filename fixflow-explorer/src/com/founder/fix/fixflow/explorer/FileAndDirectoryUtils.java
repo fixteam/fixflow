@@ -86,11 +86,32 @@ public class FileAndDirectoryUtils {
 				subJson += ",{name:'"+FList[i].getName()+"',type:'file'}";
 			}
 		}
+ 
 		if(subJson.equals("")){
 			return "[]";
 		}
+ 
 		return "["+subJson.substring(1)+"]";
 	}
+	
+	 /** 
+     * 重命名文件或文件夹 
+     *  
+     * @param resFilePath 
+     *            源文件路径 
+     * @param newFilePath 
+     *            重命名 文件路径 
+     *            
+     * @param basePath 
+     *            webcontent目录
+     *            
+     * @return 操作成功标识 
+     */  
+    public static boolean renameFile(String resFilePath, String newFilePath,String basePath) throws Exception{
+        File resFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+resFilePath);  
+        File newFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+newFilePath);  
+        return resFile.renameTo(newFile);  
+    }  
 	
 	
 	public static void main(String[] args) {
