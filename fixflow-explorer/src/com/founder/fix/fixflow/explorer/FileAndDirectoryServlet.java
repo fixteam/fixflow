@@ -38,6 +38,16 @@ public class FileAndDirectoryServlet extends BaseServlet {
 		}
     }
     
+    public void readSubFileAndDirectory(){
+    	try {
+    		String subJson = FileAndDirectoryUtils.readSubFileAndDirectory(buildPath(),getBasePath());
+    		FileAndDirectoryUtils.clear();
+    		success(subJson);
+    	} catch (Exception e) {
+    		error("下属文件及文件夹读取失败!");
+    	}
+    }
+    
     public String buildPath(){
     		String[] node = request("path").split(",");
     		String path = "";
