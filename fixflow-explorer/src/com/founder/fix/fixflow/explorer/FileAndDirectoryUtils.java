@@ -86,9 +86,11 @@ public class FileAndDirectoryUtils {
 				subJson += ",{name:'"+FList[i].getName()+"',type:'file'}";
 			}
 		}
+ 
 		if(subJson.equals("")){
 			return "[]";
 		}
+ 
 		return "["+subJson.substring(1)+"]";
 	}
 	
