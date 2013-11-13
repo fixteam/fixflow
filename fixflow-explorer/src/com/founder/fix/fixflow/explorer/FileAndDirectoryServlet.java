@@ -33,7 +33,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
 	 
     public void create(){
     	try {
-			FileAndDirectoryUtils.createFileOrDirectory(buildPath(),getBasePath());
+			FileAndDirectoryUtils.createFileOrDirectory(buildPath()+"/"+request("newFileName"),getBasePath());
 			success("创建成功!");
 		} catch (Exception e) {
 			error("创建失败!");
