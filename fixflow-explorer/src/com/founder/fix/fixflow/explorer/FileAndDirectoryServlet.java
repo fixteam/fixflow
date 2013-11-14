@@ -1,4 +1,6 @@
 package com.founder.fix.fixflow.explorer;
+
+import java.io.File;
  
 /**
  * 文件目录管理类
@@ -20,7 +22,9 @@ public class FileAndDirectoryServlet extends BaseServlet {
 	 */
     public void loadTree(){
     	try {
-			success(FileAndDirectoryUtils.buildLevelJsonDataWithLoginPerson(request("userId"),getBasePath()));
+    		String json = FileAndDirectoryUtils.buildLevelJsonDataWithLoginPerson(request("userId"),getBasePath());
+    		FileAndDirectoryUtils.clear();
+			success(json);
 		} catch (Exception e) {
 			error("初始化参数出错!");
 		}
@@ -29,11 +33,31 @@ public class FileAndDirectoryServlet extends BaseServlet {
 	 
     public void create(){
     	try {
-			FileAndDirectoryUtils.createFileOrDirectory(buildPath(),getBasePath());
+			FileAndDirectoryUtils.createFileOrDirectory(buildPath()+"/"+request("newFileName"),getBasePath());
 			success("创建成功!");
 		} catch (Exception e) {
 			error("创建失败!");
 		}
+    }
+    
+    public void readSubFileAndDirectory(){
+    	try {
+    		String subJson = FileAndDirectoryUtils.readSubFileAndDirectory(buildPath(),getBasePath());
+    		FileAndDirectoryUtils.clear();
+    		success(subJson);
+    	} catch (Exception e) {
+    		error("下属文件及文件夹读取失败!");
+    	}
+    }
+    
+    
+    public void reName(){
+    	try {
+    		FileAndDirectoryUtils.renameFile(buildPath()+File.separator+request("oldFileName"),buildPath()+File.separator+request("newFileName"),getBasePath());
+    			success("重命名成功!");
+    	} catch (Exception e) {
+    		error("重命名失败!");
+    	}
     }
     
     public String buildPath(){
@@ -48,4 +72,5 @@ public class FileAndDirectoryServlet extends BaseServlet {
 			}
     		return path;
     }
+     
 }

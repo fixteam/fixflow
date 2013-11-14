@@ -120,5 +120,6 @@
   	<resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-repository" src="WebContent/fixflow-repository"/>
   	<resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-repository" src="WebContent/fixflow-repository/flow-template"/>
   	<resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-repository" src="WebContent/fixflow-repository/node-template"/>
+ 	<resourcePath id="system-template" name="system-template" projectName="fixflow-repository" src="WebContent/fixflow-repository/system-template"/>
   </resourcePathConfig>
 </coreconfig:FixFlowConfig>
