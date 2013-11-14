@@ -18,9 +18,9 @@
 <script type="text/javascript" src="js/flowLibrary.js"></script>
 
 <style>
-	div.right { position: relative; }
+	div.right { position: relative; background-color: #f2f2f2;}
 	div.center-panel { background-color: #FFFFFF; }
-	div.content { height: 100%; }
+	div.content { height: 100%; background-color: #f2f2f2;}
 	.listBtn { display:inline-block;margin-left:5px; }
 	.x-breadcrumb-wrapper .details a { cursor: pointer;font-weight: bold;padding: 15px 5px; line-height:40px; }
 	div.dialog { position: absolute; top: 250px; left: 100px; }
@@ -52,7 +52,12 @@
 	<div style="margin-top:1px;" class="center-panel">
 		<!-- 左侧树 -->
 		<div class="left">
+			<div class="left-nav-box">
+			<div class="left-nav m-top">
+				<h1>流程梳理库</h1>
+			</div>
 		   	<ul class="ztree" id="folderTree"></ul>
+		   	</div>
 		</div>
 		
 		<!-- 右侧展示区 -->
@@ -81,7 +86,7 @@
 	  		</div>
 			
 			<!-- thumbView -->
-			<div class="view_plugin">
+			<div class="view_plugin" style="background-color: #ffffff;">
 			
 			  <!-- <div class="thumb-wrap">
 				<div class="thumb">
