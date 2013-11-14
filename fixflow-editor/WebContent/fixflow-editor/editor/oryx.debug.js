@@ -24811,7 +24811,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		
 		var modelMeta = this.facade.getModelMetaData();
 		
-		new Ajax.Request("../service/model/" + modelMeta.modelId + "/json", {
+		new Ajax.Request("../../TestServlet", {
             method: 'get',
             asynchronous: true,
 			requestHeaders: {
@@ -24870,7 +24870,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		
 		var saveUri;
 		if(forceNew == false) {
-			saveUri = "../service/model/" + params.id + "/save";
+			saveUri = "../../ModelSaveServlet";
 		} else {
 			saveUri = "../service/model/new";
 		}
@@ -24878,7 +24878,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		// Send the request to the server.
 		Ext.Ajax.request({
 			url				: saveUri,
-			method			: method,
+			method			: "POST",
 			timeout			: 1800000,
 			disableCaching	: true,
 			headers			: {'Accept':"application/json", 'Content-Type':'charset=UTF-8'},

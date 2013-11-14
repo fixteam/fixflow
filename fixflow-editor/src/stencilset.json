@@ -1096,7 +1096,95 @@
     "groups" : [ "Start Events" ],
     "propertyPackages" : [ "elementbase", "baseattributes", "errorrefdefinition", "executionlistenersbase" ],
     "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
-  }, {
+  },
+  {
+			"type" : 			"node",
+			"id" :				"Lane",
+			"title" :			"Lane",
+			"groups" :			["Structural"],
+			"description" :		"Pools and lanes represent responsibilities for activities in a process. A pool or a lane can be an organization, a role or a system. Lanes subdivide pools or other lanes hierarchically.",
+			"view" :			"swimlane/lane.svg",
+			"icon" :			"swimlane/lane.png",
+			"propertyPackages": [
+				"baseAttributes",
+				"borderColor"
+			],
+			"properties" : 		[
+				{
+					"id":"parentpool",
+					"type":"String",
+					"title":"Parent pool",
+					"title_de":"Elternpool",
+					"value":"",
+					"description":"The specified pool the lane belongs to.",
+					"description_de":"Der 眉bergeordnete Pool, zu dem die Lane ge枚rt.",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"length":"30"
+				},
+				{
+					"id":"parentlane",
+					"type":"String",
+					"title":"Parent lane",
+					"title_de":"Elternlane",
+					"value":"",
+					"description":"The specified lane the lane belongs to.",
+					"description_de":"Die 脺bergeordnete Lane, zu der die Lane geh枚rt.",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"30"
+				},
+				{
+					"id":"showcaption",
+					"type":"Boolean",
+					"title":"Show caption",
+					"title_de":"Zeige Beschriftung",
+					"value":"true",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView": ["caption", "captionDisableAntialiasing", "text_name"],
+					"fill":true,
+					"visible":false,
+					"stroke":false,
+					"hidden":true
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"Background color",
+					"title_de":"Hintergrundfarbe",
+					"value":"",
+					"description":"Change the background color for a visual differentiation.",
+					"description_de":"Ver盲ndern Sie die Hintergrundfarbe f眉r eine visuelle Unterscheidung.",
+					"readonly":false,
+					"optional":true,
+					"refToView":["fill_el"],
+					"fill":true,
+					"stroke":false,
+					"lightness": 0.5
+				},
+				{
+					"id":"bordercolor",
+					"type":"Color",
+					"title":"Border color",
+					"title_de":"Rahmenfarbe",
+					"value":"#000000",
+					"description":"Change the border color for a visual differentiation.",
+					"description_de":"脛ndern Sie die Rahmenfarbe f眉r eine visuelle Unterscheidung.",
+					"readonly":false,
+					"optional":false,
+					"refToView":["border", "captionDisableAntialiasing"],
+					"fill":false,
+					"stroke":true
+				}
+				
+			],
+			 "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
+},
+   {
     "type" : "node",
     "id" : "UserTask",
     "title" : "User task",
@@ -1176,7 +1264,7 @@
     "groups" : [ "Structural" ],
     "propertyPackages" : [ "elementbase", "baseattributes", "asynchronousbase", "executionlistenersbase", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
-  }, {
+  }, {	
     "type" : "node",
     "id" : "EventSubProcess",
     "title" : "Event sub process",
@@ -1415,7 +1503,20 @@
     "containmentRules" : [ {
       "role" : "BPMNDiagram",
       "contains" : [ "all" ]
-    }, {
+    }, 
+    {
+				"role" : "Lane",
+				"contains" : [
+					"Lane",
+					"sequence_start",
+					"sequence_end",
+					"DataObjectMorph",
+					"TextAnnotationMorph",
+					"from_participant",
+					"EventSubprocess",
+					"CollapsedEventSubprocess"
+				]
+			},{
       "role" : "SubProcess",
       "contains" : [ "sequence_start", "sequence_end", "from_task_event", "to_task_event", "EventSubprocess", "TextAnnotation" ]
     }, {
