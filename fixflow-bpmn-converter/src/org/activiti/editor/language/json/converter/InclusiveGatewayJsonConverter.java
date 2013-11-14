@@ -14,11 +14,12 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.InclusiveGateway;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.InclusiveGateway;
 
 /**
  * @author Tijs Rademakers
@@ -48,7 +49,7 @@ public class InclusiveGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    InclusiveGateway gateway = new InclusiveGateway();
+    InclusiveGateway gateway = Bpmn2Factory.eINSTANCE.createInclusiveGateway();// InclusiveGateway();
     return gateway;
   }
 }

@@ -14,11 +14,12 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.EventGateway;
-import org.activiti.bpmn.model.FlowElement;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.EventBasedGateway;
+import org.eclipse.bpmn2.FlowElement;
 
 /**
  * @author Tijs Rademakers
@@ -37,7 +38,7 @@ public class EventGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(EventGateway.class, EventGatewayJsonConverter.class);
+    convertersToJsonMap.put(EventBasedGateway.class, EventGatewayJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -48,7 +49,7 @@ public class EventGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    EventGateway gateway = new EventGateway();
+    EventBasedGateway gateway = Bpmn2Factory.eINSTANCE.createEventBasedGateway();// EventGateway();
     return gateway;
   }
 }

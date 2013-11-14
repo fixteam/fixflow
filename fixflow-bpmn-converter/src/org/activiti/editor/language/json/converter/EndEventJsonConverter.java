@@ -15,13 +15,14 @@ package org.activiti.editor.language.json.converter;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.EndEvent;
-import org.activiti.bpmn.model.ErrorEventDefinition;
-import org.activiti.bpmn.model.EventDefinition;
-import org.activiti.bpmn.model.FlowElement;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.EndEvent;
+import org.eclipse.bpmn2.ErrorEventDefinition;
+import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.FlowElement;
 
 /**
  * @author Tijs Rademakers
@@ -65,7 +66,7 @@ public class EndEventJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    EndEvent endEvent = new EndEvent();
+    EndEvent endEvent = Bpmn2Factory.eINSTANCE.createEndEvent();// EndEvent();
     String stencilId = BpmnJsonConverterUtil.getStencilId(elementNode);
     if (STENCIL_EVENT_END_ERROR.equals(stencilId)) {
       convertJsonToErrorDefinition(elementNode, endEvent);

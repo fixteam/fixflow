@@ -14,11 +14,12 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.ParallelGateway;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.ParallelGateway;
 
 /**
  * @author Tijs Rademakers
@@ -48,7 +49,7 @@ public class ParallelGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    ParallelGateway gateway = new ParallelGateway();
+    ParallelGateway gateway = Bpmn2Factory.eINSTANCE.createParallelGateway();// ParallelGateway();
     return gateway;
   }
 }

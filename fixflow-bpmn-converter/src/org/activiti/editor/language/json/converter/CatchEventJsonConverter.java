@@ -15,14 +15,15 @@ package org.activiti.editor.language.json.converter;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.EventDefinition;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.IntermediateCatchEvent;
-import org.activiti.bpmn.model.MessageEventDefinition;
-import org.activiti.bpmn.model.SignalEventDefinition;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.IntermediateCatchEvent;
+import org.eclipse.bpmn2.MessageEventDefinition;
+import org.eclipse.bpmn2.SignalEventDefinition;
 
 /**
  * @author Tijs Rademakers
@@ -70,7 +71,7 @@ public class CatchEventJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    IntermediateCatchEvent catchEvent = new IntermediateCatchEvent();
+    IntermediateCatchEvent catchEvent = Bpmn2Factory.eINSTANCE.createIntermediateCatchEvent();// IntermediateCatchEvent();
     String stencilId = BpmnJsonConverterUtil.getStencilId(elementNode);
     if (STENCIL_EVENT_CATCH_TIMER.equals(stencilId)) {
       convertJsonToTimerDefinition(elementNode, catchEvent);

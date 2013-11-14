@@ -16,32 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.bpmn.model.ActivitiListener;
-import org.activiti.bpmn.model.Activity;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BoundaryEvent;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ErrorEventDefinition;
-import org.activiti.bpmn.model.Event;
-import org.activiti.bpmn.model.EventDefinition;
-import org.activiti.bpmn.model.FieldExtension;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.FlowNode;
-import org.activiti.bpmn.model.FormProperty;
-import org.activiti.bpmn.model.FormValue;
-import org.activiti.bpmn.model.GraphicInfo;
-import org.activiti.bpmn.model.ImplementationType;
-import org.activiti.bpmn.model.Lane;
-import org.activiti.bpmn.model.MessageEventDefinition;
-import org.activiti.bpmn.model.MultiInstanceLoopCharacteristics;
-import org.activiti.bpmn.model.Process;
-import org.activiti.bpmn.model.SequenceFlow;
-import org.activiti.bpmn.model.ServiceTask;
-import org.activiti.bpmn.model.SignalEventDefinition;
-import org.activiti.bpmn.model.StartEvent;
-import org.activiti.bpmn.model.SubProcess;
-import org.activiti.bpmn.model.TimerEventDefinition;
-import org.activiti.bpmn.model.UserTask;
 import org.activiti.editor.constants.EditorJsonConstants;
 import org.activiti.editor.constants.StencilConstants;
 import org.activiti.editor.language.json.converter.util.JsonConverterUtil;
@@ -50,8 +24,35 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.Activity;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.BoundaryEvent;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.CatchEvent;
+import org.eclipse.bpmn2.Definitions;
+import org.eclipse.bpmn2.ErrorEventDefinition;
+import org.eclipse.bpmn2.Event;
+import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.FlowNode;
+import org.eclipse.bpmn2.Lane;
+import org.eclipse.bpmn2.MessageEventDefinition;
+import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
+import org.eclipse.bpmn2.SequenceFlow;
+import org.eclipse.bpmn2.ServiceTask;
+import org.eclipse.bpmn2.SignalEventDefinition;
+import org.eclipse.bpmn2.StartEvent;
+import org.eclipse.bpmn2.SubProcess;
+import org.eclipse.bpmn2.ThrowEvent;
+import org.eclipse.bpmn2.TimerEventDefinition;
+import org.eclipse.bpmn2.UserTask;
+import org.eclipse.bpmn2.Process;
+import org.eclipse.bpmn2.di.BPMNShape;
+import org.eclipse.dd.dc.Bounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 /**
  * @author Tijs Rademakers
@@ -62,13 +63,13 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
   
   protected ObjectMapper objectMapper = new ObjectMapper();
   protected ActivityProcessor processor;
-  protected BpmnModel model;
+  protected Definitions model;
   protected ObjectNode flowElementNode;
   protected double subProcessX;
   protected double subProcessY;
   protected ArrayNode shapesArrayNode;
 
-  public void convertToJson(FlowElement flowElement, ActivityProcessor processor, BpmnModel model,
+  public void convertToJson(FlowElement flowElement, ActivityProcessor processor, Definitions model,
       ArrayNode shapesArrayNode, double subProcessX, double subProcessY) {
     
     this.model = model;
@@ -76,9 +77,13 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     this.subProcessX = subProcessX;
     this.subProcessY = subProcessY;
     this.shapesArrayNode = shapesArrayNode;
-    GraphicInfo graphicInfo = model.getGraphicInfo(flowElement.getId());
+   // GraphicInfo graphicInfo = model.getGraphicInfo(flowElement.getId());
     
+    BPMNShape bpmnShape=BpmnModelUtil.getBpmnShape(model, flowElement.getId());
+    Bounds bounds=bpmnShape.getBounds();
     String stencilId = null;
+    /*
+    
     if (flowElement instanceof ServiceTask) {
       ServiceTask serviceTask = (ServiceTask) flowElement;
       if ("mail".equalsIgnoreCase(serviceTask.getType())) {
@@ -88,12 +93,14 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       }
     } else {
       stencilId = getStencilId(flowElement);
-    }
+    }*/
+    
+    stencilId = getStencilId(flowElement);
     
     flowElementNode = BpmnJsonConverterUtil.createChildShape(flowElement.getId(), stencilId, 
-        graphicInfo.getX() - subProcessX + graphicInfo.getWidth(), 
-        graphicInfo.getY() - subProcessY + graphicInfo.getHeight(), 
-        graphicInfo.getX() - subProcessX, graphicInfo.getY() - subProcessY);
+    		bounds.getX() - subProcessX + bounds.getWidth(), 
+    		bounds.getY() - subProcessY + bounds.getHeight(), 
+    		bounds.getX() - subProcessX, bounds.getY() - subProcessY);
     shapesArrayNode.add(flowElementNode);
     ObjectNode propertiesNode = objectMapper.createObjectNode();
     propertiesNode.put(PROPERTY_OVERRIDE_ID, flowElement.getId());
@@ -101,8 +108,8 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       propertiesNode.put(PROPERTY_NAME, flowElement.getName());
     }
     
-    if (StringUtils.isNotEmpty(flowElement.getDocumentation())) {
-      propertiesNode.put(PROPERTY_DOCUMENTATION, flowElement.getDocumentation());
+    if (StringUtils.isNotEmpty(BpmnModelUtil.getDocumentation(flowElement))) {
+      propertiesNode.put(PROPERTY_DOCUMENTATION, BpmnModelUtil.getDocumentation(flowElement));
     }
     
     convertElementToJson(propertiesNode, flowElement);
@@ -112,7 +119,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     
     if (flowElement instanceof FlowNode) {
       FlowNode flowNode = (FlowNode) flowElement;
-      for (SequenceFlow sequenceFlow : flowNode.getOutgoingFlows()) {
+      for (SequenceFlow sequenceFlow : flowNode.getOutgoing()) {
         outgoingArrayNode.add(BpmnJsonConverterUtil.createResourceNode(sequenceFlow.getId()));
       }
     }
@@ -120,20 +127,21 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     if (flowElement instanceof Activity) {
       
       Activity activity = (Activity) flowElement;
-      for (BoundaryEvent boundaryEvent : activity.getBoundaryEvents()) {
+      for (BoundaryEvent boundaryEvent : activity.getBoundaryEventRefs()) {
         outgoingArrayNode.add(BpmnJsonConverterUtil.createResourceNode(boundaryEvent.getId()));
       }
-      
+      /*
       if (activity.isAsynchronous()) {
         propertiesNode.put(PROPERTY_ASYNCHRONOUS, PROPERTY_VALUE_YES);
       }
       
       if (activity.isNotExclusive()) {
         propertiesNode.put(PROPERTY_EXCLUSIVE, PROPERTY_VALUE_NO);
-      }
+      }*/
       
+      /* 这里注释掉内容以后需要恢复过来
       if (activity.getLoopCharacteristics() != null) {
-        MultiInstanceLoopCharacteristics loopDef = activity.getLoopCharacteristics();
+        MultiInstanceLoopCharacteristics loopDef = (MultiInstanceLoopCharacteristics)activity.getLoopCharacteristics();//.getLoopCharacteristics();
         if (StringUtils.isNotEmpty(loopDef.getLoopCardinality()) || StringUtils.isNotEmpty(loopDef.getInputDataItem()) ||
             StringUtils.isNotEmpty(loopDef.getCompletionCondition())) {
           
@@ -153,13 +161,13 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
             propertiesNode.put(PROPERTY_MULTIINSTANCE_CONDITION, loopDef.getCompletionCondition());
           }
         }
-      }
-      
+      }*/
+      /* 
       if (activity instanceof UserTask) {
         addListeners(((UserTask) activity).getTaskListeners(), false,  propertiesNode);
       } else {
         addListeners(activity.getExecutionListeners(), true,  propertiesNode);
-      }
+      }*/
     }
     
     flowElementNode.put("outgoing", outgoingArrayNode);
@@ -173,14 +181,16 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     FlowElement flowElement = convertJsonToElement(elementNode, modelNode, shapeMap);
     flowElement.setId(BpmnJsonConverterUtil.getElementId(elementNode));
     flowElement.setName(getPropertyValueAsString(PROPERTY_NAME, elementNode));
-    flowElement.setDocumentation(getPropertyValueAsString(PROPERTY_DOCUMENTATION, elementNode));
+    BpmnModelUtil.setDocumentation(flowElement, getPropertyValueAsString(PROPERTY_DOCUMENTATION, elementNode));
     
+    
+    
+    /* 这里注释掉内容以后需要恢复过来
     convertJsonToListeners(elementNode, flowElement);
-    
     if (flowElement instanceof Activity) {
       Activity activity = (Activity) flowElement;
-      activity.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
-      activity.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
+      //activity.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
+      //activity.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
       
       String multiInstanceCardinality = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CARDINALITY, elementNode);
       String multiInstanceCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_COLLECTION, elementNode);
@@ -191,7 +201,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
         
         String multiInstanceVariable = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_VARIABLE, elementNode);
         
-        MultiInstanceLoopCharacteristics multiInstanceObject = new MultiInstanceLoopCharacteristics();
+        MultiInstanceLoopCharacteristics multiInstanceObject = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
         multiInstanceObject.setSequential(getPropertyValueAsBoolean(PROPERTY_MULTIINSTANCE_SEQUENTIAL, elementNode));
         multiInstanceObject.setLoopCardinality(multiInstanceCardinality);
         multiInstanceObject.setInputDataItem(multiInstanceCollection);
@@ -199,15 +209,18 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
         multiInstanceObject.setCompletionCondition(multiInstanceCondition);
         activity.setLoopCharacteristics(multiInstanceObject);
       }
-    }
+    }*/
     if (parentElement instanceof Process) {
-      ((Process) parentElement).addFlowElement(flowElement);
+      ((Process) parentElement).getFlowElements().add(flowElement);
     } else if (parentElement instanceof SubProcess) {
-      ((SubProcess) parentElement).addFlowElement(flowElement);
+      ((SubProcess) parentElement).getFlowElements().add(flowElement);
     } else if (parentElement instanceof Lane) {
+    	
+    	 /* 这里注释掉内容以后需要恢复过来
       Lane lane = (Lane) parentElement;
       lane.getFlowReferences().add(flowElement.getId());
       lane.getParentProcess().addFlowElement(flowElement);
+      */
     }
   }
   
@@ -223,6 +236,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     }
   }
   
+  /*
   protected void addFormProperties(List<FormProperty> formProperties, ObjectNode propertiesNode) {
     ObjectNode formPropertiesNode = objectMapper.createObjectNode();
     ArrayNode itemsNode = objectMapper.createArrayNode();
@@ -265,8 +279,10 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     formPropertiesNode.put("totalCount", itemsNode.size());
     formPropertiesNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
     propertiesNode.put("formproperties", formPropertiesNode);
-  }
+  }*/
   
+  
+  /*
   protected void addListeners(List<ActivitiListener> listeners, boolean isExecutionListener, ObjectNode propertiesNode) {
     
     String propertyName = null;
@@ -312,7 +328,8 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     listenersNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
     propertiesNode.put(propertyName, listenersNode);
   }
-  
+  */
+  /*
   protected void addFieldExtensions(List<FieldExtension> extensions, ObjectNode propertiesNode) {
     ObjectNode fieldExtensionsNode = objectMapper.createObjectNode();
     ArrayNode itemsNode = objectMapper.createArrayNode();
@@ -331,40 +348,49 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     fieldExtensionsNode.put("totalCount", itemsNode.size());
     fieldExtensionsNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
     propertiesNode.put(PROPERTY_SERVICETASK_FIELDS, fieldExtensionsNode);
-  }
+  }*/
   
   protected void addEventProperties(Event event, ObjectNode propertiesNode) {
-    List<EventDefinition> eventDefinitions = event.getEventDefinitions();
+	  List<EventDefinition> eventDefinitions=null;
+	  if(event instanceof CatchEvent){
+		  eventDefinitions=((CatchEvent)event).getEventDefinitions();
+	  }
+	  
+	  if(event instanceof ThrowEvent){
+		  eventDefinitions=((ThrowEvent)event).getEventDefinitions();
+	  }
+
     if (eventDefinitions.size() == 1) {
     
       EventDefinition eventDefinition = eventDefinitions.get(0);
       if (eventDefinition instanceof ErrorEventDefinition) {
         ErrorEventDefinition errorDefinition = (ErrorEventDefinition) eventDefinition;
-        if (StringUtils.isNotEmpty(errorDefinition.getErrorCode())) {
-          propertiesNode.put(PROPERTY_ERRORREF, errorDefinition.getErrorCode());
+        if (StringUtils.isNotEmpty(errorDefinition.getErrorRef().getErrorCode())) {
+          propertiesNode.put(PROPERTY_ERRORREF, errorDefinition.getErrorRef().getErrorCode());
         }
         
       } else if (eventDefinition instanceof SignalEventDefinition) {
         SignalEventDefinition signalDefinition = (SignalEventDefinition) eventDefinition;
-        if (StringUtils.isNotEmpty(signalDefinition.getSignalRef())) {
-          propertiesNode.put(PROPERTY_SIGNALREF, signalDefinition.getSignalRef());
+        if (StringUtils.isNotEmpty(signalDefinition.getSignalRef().getId())) {
+          propertiesNode.put(PROPERTY_SIGNALREF, signalDefinition.getSignalRef().getId());
         }
         
       } else if (eventDefinition instanceof TimerEventDefinition) {
         TimerEventDefinition timerDefinition = (TimerEventDefinition) eventDefinition;
-        if (StringUtils.isNotEmpty(timerDefinition.getTimeDuration())) {
-          propertiesNode.put(PROPERTY_TIMER_DURATON, timerDefinition.getTimeDuration());
+        if (StringUtils.isNotEmpty(BpmnModelUtil.getExpression(timerDefinition.getTimeDuration()))) {
+          propertiesNode.put(PROPERTY_TIMER_DURATON, BpmnModelUtil.getExpression(timerDefinition.getTimeDuration()));
         }
-        if (StringUtils.isNotEmpty(timerDefinition.getTimeCycle())) {
-          propertiesNode.put(PROPERTY_TIMER_CYCLE, timerDefinition.getTimeCycle());
+        if (StringUtils.isNotEmpty(BpmnModelUtil.getExpression(timerDefinition.getTimeCycle()))) {
+          propertiesNode.put(PROPERTY_TIMER_CYCLE, BpmnModelUtil.getExpression(timerDefinition.getTimeCycle()));
         }
-        if (StringUtils.isNotEmpty(timerDefinition.getTimeDate())) {
-          propertiesNode.put(PROPERTY_TIMER_DATE, timerDefinition.getTimeDate());
+        if (StringUtils.isNotEmpty(BpmnModelUtil.getExpression(timerDefinition.getTimeDate()))) {
+          propertiesNode.put(PROPERTY_TIMER_DATE,BpmnModelUtil.getExpression( timerDefinition.getTimeDate()));
         }
       }
     }
   }
   
+  /*
   protected void convertJsonToFormProperties(JsonNode objectNode, BaseElement element) {
     
     JsonNode formPropertiesNode = getProperty(PROPERTY_FORM_PROPERTIES, objectNode);
@@ -434,7 +460,9 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       }
     }
   }
+  */
   
+  /*
   protected void convertJsonToListeners(JsonNode objectNode, BaseElement element) {
     JsonNode listenersNode = null;
     
@@ -547,6 +575,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       }
     }
   }
+  */
   
   protected void convertJsonToTimerDefinition(JsonNode objectNode, Event event) {
     
@@ -556,18 +585,27 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     
     if (StringUtils.isNotEmpty(timeDate) || StringUtils.isNotEmpty(timeCycle) || StringUtils.isNotEmpty(timeDuration)) {
     
-      TimerEventDefinition eventDefinition = new TimerEventDefinition();
+      TimerEventDefinition eventDefinition = Bpmn2Factory.eINSTANCE.createTimerEventDefinition();// TimerEventDefinition();
       if (StringUtils.isNotEmpty(timeDate)) {
-        eventDefinition.setTimeDate(timeDate);
+        eventDefinition.setTimeDate(BpmnModelUtil.getExpressionByString(timeDate));
         
       } else if (StringUtils.isNotEmpty(timeCycle)) {
-        eventDefinition.setTimeCycle(timeCycle);
+        eventDefinition.setTimeCycle(BpmnModelUtil.getExpressionByString(timeCycle));
         
       } else if (StringUtils.isNotEmpty(timeDuration)) {
-        eventDefinition.setTimeDuration(timeDuration);
+        eventDefinition.setTimeDuration(BpmnModelUtil.getExpressionByString(timeDuration));
       }
       
-      event.getEventDefinitions().add(eventDefinition);
+      if(event instanceof CatchEvent){
+		  ((CatchEvent)event).getEventDefinitions().add(eventDefinition);
+	  }
+	  
+	  if(event instanceof ThrowEvent){
+		  ((ThrowEvent)event).getEventDefinitions().add(eventDefinition);
+	  }
+
+      
+      //event.getEventDefinitions().add(eventDefinition);
     }
   }
   
@@ -575,9 +613,9 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     String signalRef = getPropertyValueAsString(PROPERTY_SIGNALREF, objectNode);
     
     if (StringUtils.isNotEmpty(signalRef)) {
-      SignalEventDefinition eventDefinition = new SignalEventDefinition();
-      eventDefinition.setSignalRef(signalRef);
-      event.getEventDefinitions().add(eventDefinition);
+      SignalEventDefinition eventDefinition = Bpmn2Factory.eINSTANCE.createSignalEventDefinition();// SignalEventDefinition();
+      //eventDefinition.setSignalRef(signalRef);
+      //event.getEventDefinitions().add(eventDefinition);
     }
   }
   
@@ -585,19 +623,20 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     String messageRef = getPropertyValueAsString(PROPERTY_MESSAGEREF, objectNode);
     
     if (StringUtils.isNotEmpty(messageRef)) {
-      MessageEventDefinition eventDefinition = new MessageEventDefinition();
-      eventDefinition.setMessageRef(messageRef);
-      event.getEventDefinitions().add(eventDefinition);
+      MessageEventDefinition eventDefinition = Bpmn2Factory.eINSTANCE.createMessageEventDefinition();// MessageEventDefinition();
+      //这里注释掉内容以后需要恢复过来 eventDefinition.setMessageRef(messageRef);
+      //这里注释掉内容以后需要恢复过来 event.getEventDefinitions().add(eventDefinition);
     }
   }
+  
   
   protected void convertJsonToErrorDefinition(JsonNode objectNode, Event event) {
     String errorRef = getPropertyValueAsString(PROPERTY_ERRORREF, objectNode);
     
     if (StringUtils.isNotEmpty(errorRef)) {
-      ErrorEventDefinition eventDefinition = new ErrorEventDefinition();
-      eventDefinition.setErrorCode(errorRef);
-      event.getEventDefinitions().add(eventDefinition);
+      ErrorEventDefinition eventDefinition = Bpmn2Factory.eINSTANCE.createErrorEventDefinition();// ErrorEventDefinition();
+      //这里注释掉内容以后需要恢复过来 eventDefinition.setErrorCode(errorRef);
+      //这里注释掉内容以后需要恢复过来 event.getEventDefinitions().add(eventDefinition);
     }
   }
   

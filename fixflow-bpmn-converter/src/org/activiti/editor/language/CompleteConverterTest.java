@@ -4,41 +4,45 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.IntermediateCatchEvent;
-import org.activiti.bpmn.model.ReceiveTask;
-import org.activiti.bpmn.model.SignalEventDefinition;
-import org.activiti.bpmn.model.SubProcess;
-import org.activiti.bpmn.model.UserTask;
+import org.eclipse.bpmn2.Definitions;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.IntermediateCatchEvent;
+import org.eclipse.bpmn2.ReceiveTask;
+import org.eclipse.bpmn2.SignalEventDefinition;
+import org.eclipse.bpmn2.SubProcess;
+import org.eclipse.bpmn2.UserTask;
 import org.junit.Test;
+
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 public class CompleteConverterTest extends AbstractConverterTest {
   
   @Test
   public void connvertJsonToModel() throws Exception {
-    BpmnModel bpmnModel = readJsonFile();
+    Definitions bpmnModel = readJsonFile();
     validateModel(bpmnModel);
   }
   
   @Test 
   public void doubleConversionValidation() throws Exception {
-    BpmnModel bpmnModel = readJsonFile();
+	  Definitions bpmnModel = readJsonFile();
     bpmnModel = convertToJsonAndBack(bpmnModel);
     validateModel(bpmnModel);
   }
   
   protected String getResource() {
-    return "test.completemodel.json";
+    return "org/activiti/editor/language/test.completemodel.json";
   }
   
-  private void validateModel(BpmnModel model) {
-    FlowElement flowElement = model.getMainProcess().getFlowElement("userTask1");
+  private void validateModel(Definitions model) {
+	  
+	
+    FlowElement flowElement = BpmnModelUtil.getElement(model, "userTask1", FlowElement.class);
     assertNotNull(flowElement);
     assertTrue(flowElement instanceof UserTask);
     assertEquals("userTask1", flowElement.getId());
     
-    flowElement = model.getMainProcess().getFlowElement("catchsignal");
+    flowElement = BpmnModelUtil.getElement(model, "catchsignal", FlowElement.class);
     assertNotNull(flowElement);
     assertTrue(flowElement instanceof IntermediateCatchEvent);
     assertEquals("catchsignal", flowElement.getId());
@@ -48,13 +52,13 @@ public class CompleteConverterTest extends AbstractConverterTest {
     SignalEventDefinition signalEvent = (SignalEventDefinition) catchEvent.getEventDefinitions().get(0);
     assertEquals("testSignal", signalEvent.getSignalRef());
     
-    flowElement = model.getMainProcess().getFlowElement("subprocess");
+    flowElement = BpmnModelUtil.getElement(model, "subprocess", FlowElement.class);//model.getMainProcess().getFlowElement("subprocess");
     assertNotNull(flowElement);
     assertTrue(flowElement instanceof SubProcess);
     assertEquals("subprocess", flowElement.getId());
     SubProcess subProcess = (SubProcess) flowElement;
     
-    flowElement = subProcess.getFlowElement("receiveTask");
+    flowElement =  BpmnModelUtil.getElement(model, "receiveTask", FlowElement.class);
     assertNotNull(flowElement);
     assertTrue(flowElement instanceof ReceiveTask);
     assertEquals("receiveTask", flowElement.getId());

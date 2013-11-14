@@ -14,14 +14,16 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.EventSubProcess;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.GraphicInfo;
-import org.activiti.bpmn.model.SubProcess;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.SubProcess;
+import org.eclipse.dd.dc.Bounds;
+
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 /**
  * @author Tijs Rademakers
@@ -40,7 +42,7 @@ public class EventSubProcessJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(EventSubProcess.class, EventSubProcessJsonConverter.class);
+    convertersToJsonMap.put(SubProcess.class, EventSubProcessJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -52,14 +54,15 @@ public class EventSubProcessJsonConverter extends BaseBpmnJsonConverter {
     propertiesNode.put("activitytype", "Event-Sub-Process");
     propertiesNode.put("subprocesstype", "Embedded");
     ArrayNode subProcessShapesArrayNode = objectMapper.createArrayNode();
-    GraphicInfo graphicInfo = model.getGraphicInfo(flowElement.getId());
+    Bounds graphicInfo = BpmnModelUtil.getBpmnShape(model, flowElement.getId()).getBounds();
     processor.processFlowElements(subProcess.getFlowElements(), model, subProcessShapesArrayNode, 
         graphicInfo.getX() + subProcessX, graphicInfo.getY() + subProcessY);
     flowElementNode.put("childShapes", subProcessShapesArrayNode);
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    EventSubProcess subProcess = new EventSubProcess();
+    SubProcess subProcess = Bpmn2Factory.eINSTANCE.createSubProcess();
+
     JsonNode childShapesArray = elementNode.get(EDITOR_CHILD_SHAPES);
     processor.processJsonElements(childShapesArray, modelNode, subProcess, shapeMap);
     return subProcess;

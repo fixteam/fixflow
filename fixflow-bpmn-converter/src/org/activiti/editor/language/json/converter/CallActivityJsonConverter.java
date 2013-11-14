@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.CallActivity;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.IOParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.CallActivity;
+import org.eclipse.bpmn2.FlowElement;
 
 /**
  * @author Tijs Rademakers
@@ -51,14 +51,14 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
     CallActivity callActivity = (CallActivity) flowElement;
-  	if (StringUtils.isNotEmpty(callActivity.getCalledElement())) {
-  	  propertiesNode.put(PROPERTY_CALLACTIVITY_CALLEDELEMENT, callActivity.getCalledElement());
+  	if (StringUtils.isNotEmpty(callActivity.getCalledElementRef().getId())) {
+  	  propertiesNode.put(PROPERTY_CALLACTIVITY_CALLEDELEMENT, callActivity.getCalledElementRef().getId());
   	}
   	
-  	addJsonParameters(PROPERTY_CALLACTIVITY_IN, callActivity.getInParameters(), propertiesNode);
-  	addJsonParameters(PROPERTY_CALLACTIVITY_OUT, callActivity.getOutParameters(), propertiesNode);
+  	//addJsonParameters(PROPERTY_CALLACTIVITY_IN, callActivity.getInParameters(), propertiesNode);
+  	//addJsonParameters(PROPERTY_CALLACTIVITY_OUT, callActivity.getOutParameters(), propertiesNode);
   }
-  
+  /*
   private void addJsonParameters(String propertyName, List<IOParameter> parameterList, ObjectNode propertiesNode) {
     ObjectNode parametersNode = objectMapper.createObjectNode();
     ArrayNode itemsNode = objectMapper.createArrayNode();
@@ -86,20 +86,20 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
     parametersNode.put("totalCount", itemsNode.size());
     parametersNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
     propertiesNode.put(propertyName, parametersNode);
-  }
+  }*/
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    CallActivity callActivity = new CallActivity();
+    CallActivity callActivity = Bpmn2Factory.eINSTANCE.createCallActivity();// CallActivity();
     if (StringUtils.isNotEmpty(getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode))) {
-      callActivity.setCalledElement(getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode));
+      //callActivity.setCalledElement(getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode));
     } 
     
-    callActivity.getInParameters().addAll(convertToIOParameters(PROPERTY_CALLACTIVITY_IN, elementNode));
-    callActivity.getOutParameters().addAll(convertToIOParameters(PROPERTY_CALLACTIVITY_OUT, elementNode));
+    //callActivity.getInParameters().addAll(convertToIOParameters(PROPERTY_CALLACTIVITY_IN, elementNode));
+    //callActivity.getOutParameters().addAll(convertToIOParameters(PROPERTY_CALLACTIVITY_OUT, elementNode));
     
     return callActivity;
   }
-  
+  /*
   private List<IOParameter> convertToIOParameters(String propertyName, JsonNode elementNode) {
     List<IOParameter> ioParameters = new ArrayList<IOParameter>();
     JsonNode parametersNode = getProperty(propertyName, elementNode);
@@ -128,5 +128,5 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
       }
     }
     return ioParameters;
-  }
+  }*/
 }

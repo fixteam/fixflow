@@ -14,11 +14,12 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BusinessRuleTask;
-import org.activiti.bpmn.model.FlowElement;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.BusinessRuleTask;
+import org.eclipse.bpmn2.FlowElement;
 
 /**
  * @author Tijs Rademakers
@@ -46,22 +47,22 @@ public class BusinessRuleTaskJsonConverter extends BaseBpmnJsonConverter {
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
     BusinessRuleTask ruleTask = (BusinessRuleTask) flowElement;
-  	propertiesNode.put(PROPERTY_RULETASK_CLASS, ruleTask.getClassName());
+  	/*propertiesNode.put(PROPERTY_RULETASK_CLASS, ruleTask.getClassName());
   	propertiesNode.put(PROPERTY_RULETASK_VARIABLES_INPUT, convertListToCommaSeparatedString(ruleTask.getInputVariables()));
   	propertiesNode.put(PROPERTY_RULETASK_RESULT, ruleTask.getResultVariableName());
   	propertiesNode.put(PROPERTY_RULETASK_RULES, convertListToCommaSeparatedString(ruleTask.getRuleNames()));
   	if (ruleTask.isExclude()) {
       propertiesNode.put(PROPERTY_RULETASK_EXCLUDE, PROPERTY_VALUE_YES);
-    }
+    }*/
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    BusinessRuleTask task = new BusinessRuleTask();
-    task.setClassName(getPropertyValueAsString(PROPERTY_RULETASK_CLASS, elementNode));
+    BusinessRuleTask task = Bpmn2Factory.eINSTANCE.createBusinessRuleTask();// BusinessRuleTask();
+    /*task.setClassName(getPropertyValueAsString(PROPERTY_RULETASK_CLASS, elementNode));
     task.setInputVariables(getPropertyValueAsList(PROPERTY_RULETASK_VARIABLES_INPUT, elementNode));
     task.setResultVariableName(getPropertyValueAsString(PROPERTY_RULETASK_RESULT, elementNode));
     task.setRuleNames(getPropertyValueAsList(PROPERTY_RULETASK_RULES, elementNode));
-    task.setExclude(getPropertyValueAsBoolean(PROPERTY_RULETASK_EXCLUDE, elementNode));
+    task.setExclude(getPropertyValueAsBoolean(PROPERTY_RULETASK_EXCLUDE, elementNode));*/
     return task;
   }
 }

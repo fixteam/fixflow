@@ -14,11 +14,12 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.ExclusiveGateway;
-import org.activiti.bpmn.model.FlowElement;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.ExclusiveGateway;
+import org.eclipse.bpmn2.FlowElement;
 
 /**
  * @author Tijs Rademakers
@@ -48,7 +49,7 @@ public class ExclusiveGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    ExclusiveGateway gateway = new ExclusiveGateway();
+    ExclusiveGateway gateway = Bpmn2Factory.eINSTANCE.createExclusiveGateway();// ExclusiveGateway();
     return gateway;
   }
 }

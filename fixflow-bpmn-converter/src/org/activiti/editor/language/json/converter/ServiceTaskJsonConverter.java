@@ -14,14 +14,13 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.FieldExtension;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.ImplementationType;
-import org.activiti.bpmn.model.ServiceTask;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.ServiceTask;
 
 /**
  * @author Tijs Rademakers
@@ -50,7 +49,7 @@ public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
   	ServiceTask serviceTask = (ServiceTask) flowElement;
   	
-  	if ("mail".equalsIgnoreCase(serviceTask.getType())) {
+  	/*if ("mail".equalsIgnoreCase(serviceTask.getType())) {
   	  
   	  setPropertyFieldValue(PROPERTY_MAILTASK_TO, serviceTask, propertiesNode);
   	  setPropertyFieldValue(PROPERTY_MAILTASK_FROM, serviceTask, propertiesNode);
@@ -76,12 +75,12 @@ public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
     	}
     	
     	addFieldExtensions(serviceTask.getFieldExtensions(), propertiesNode);
-  	}
+  	}*/
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    ServiceTask task = new ServiceTask();
-    if (StringUtils.isNotEmpty(getPropertyValueAsString(PROPERTY_SERVICETASK_CLASS, elementNode))) {
+    ServiceTask task = Bpmn2Factory.eINSTANCE.createServiceTask();// ServiceTask();
+   /* if (StringUtils.isNotEmpty(getPropertyValueAsString(PROPERTY_SERVICETASK_CLASS, elementNode))) {
       task.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
       task.setImplementation(getPropertyValueAsString(PROPERTY_SERVICETASK_CLASS, elementNode));
       
@@ -117,13 +116,13 @@ public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
           }
         }
       }
-    }
+    }*/
     
     return task;
   }
   
   protected void setPropertyFieldValue(String name, ServiceTask task, ObjectNode propertiesNode) {
-    for (FieldExtension extension : task.getFieldExtensions()) {
+    /*for (FieldExtension extension : task.getFieldExtensions()) {
       if (name.substring(8).equalsIgnoreCase(extension.getFieldName())) {
         if (StringUtils.isNotEmpty(extension.getStringValue())) {
           setPropertyValue(name, extension.getStringValue(), propertiesNode);
@@ -131,6 +130,6 @@ public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
           setPropertyValue(name, extension.getExpression(), propertiesNode);
         }
       }
-    }
+    }*/
   }
 }

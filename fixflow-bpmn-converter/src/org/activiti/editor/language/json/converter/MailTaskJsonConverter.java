@@ -14,13 +14,13 @@ package org.activiti.editor.language.json.converter;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.FieldExtension;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.ServiceTask;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.ServiceTask;
 
 /**
  * @author Tijs Rademakers
@@ -51,9 +51,9 @@ public class MailTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-  	ServiceTask task = new ServiceTask();
-  	task.setType(ServiceTask.MAIL_TASK);
-  	addField(PROPERTY_MAILTASK_TO, elementNode, task);
+  	ServiceTask task = Bpmn2Factory.eINSTANCE.createServiceTask();
+  	//task.setType(ServiceTask.MAIL_TASK);
+  	/*addField(PROPERTY_MAILTASK_TO, elementNode, task);
   	addField(PROPERTY_MAILTASK_FROM, elementNode, task);
   	addField(PROPERTY_MAILTASK_SUBJECT, elementNode, task);
   	addField(PROPERTY_MAILTASK_CC, elementNode, task);
@@ -61,10 +61,10 @@ public class MailTaskJsonConverter extends BaseBpmnJsonConverter {
   	addField(PROPERTY_MAILTASK_TEXT, elementNode, task);
   	addField(PROPERTY_MAILTASK_HTML, elementNode, task);
   	addField(PROPERTY_MAILTASK_CHARSET, elementNode, task);
-    
+    */
     return task;
   }
-  
+  /*
   protected void addField(String name, JsonNode elementNode, ServiceTask task) {
     FieldExtension field = new FieldExtension();
     field.setFieldName(name.substring(8));
@@ -77,5 +77,5 @@ public class MailTaskJsonConverter extends BaseBpmnJsonConverter {
       }
       task.getFieldExtensions().add(field);
     }
-  }
+  }*/
 }

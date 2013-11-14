@@ -15,16 +15,20 @@ package org.activiti.editor.language.json.converter;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BoundaryEvent;
-import org.activiti.bpmn.model.ErrorEventDefinition;
-import org.activiti.bpmn.model.EventDefinition;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.GraphicInfo;
-import org.activiti.bpmn.model.SignalEventDefinition;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.Activity;
+import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.BoundaryEvent;
+import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.ErrorEventDefinition;
+import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.SignalEventDefinition;
+import org.eclipse.bpmn2.di.BPMNShape;
+
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 /**
  * @author Tijs Rademakers
@@ -70,10 +74,12 @@ public class BoundaryEventJsonConverter extends BaseBpmnJsonConverter {
     BoundaryEvent boundaryEvent = (BoundaryEvent) flowElement;
     ArrayNode dockersArrayNode = objectMapper.createArrayNode();
     ObjectNode dockNode = objectMapper.createObjectNode();
-    GraphicInfo graphicInfo = model.getGraphicInfo(boundaryEvent.getId());
-    GraphicInfo parentGraphicInfo = model.getGraphicInfo(boundaryEvent.getAttachedToRef().getId());
-    dockNode.put(EDITOR_BOUNDS_X, graphicInfo.getX() + graphicInfo.getWidth() - parentGraphicInfo.getX());
-    dockNode.put(EDITOR_BOUNDS_Y, graphicInfo.getY() - parentGraphicInfo.getY());
+    
+    
+    BPMNShape graphicInfo = BpmnModelUtil.getBpmnShape(model, boundaryEvent.getId());;
+    BPMNShape parentGraphicInfo = BpmnModelUtil.getBpmnShape(model,boundaryEvent.getAttachedToRef().getId());
+    dockNode.put(EDITOR_BOUNDS_X, graphicInfo.getBounds().getX() + graphicInfo.getBounds().getWidth() - parentGraphicInfo.getBounds().getX());
+    dockNode.put(EDITOR_BOUNDS_Y, graphicInfo.getBounds().getY() - parentGraphicInfo.getBounds().getY());
     dockersArrayNode.add(dockNode);
     flowElementNode.put("dockers", dockersArrayNode);
     
@@ -85,7 +91,7 @@ public class BoundaryEventJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    BoundaryEvent boundaryEvent = new BoundaryEvent();
+    BoundaryEvent boundaryEvent = Bpmn2Factory.eINSTANCE.createBoundaryEvent();// BoundaryEvent();
     String stencilId = BpmnJsonConverterUtil.getStencilId(elementNode);
     if (STENCIL_EVENT_BOUNDARY_TIMER.equals(stencilId)) {
       boundaryEvent.setCancelActivity(getPropertyValueAsBoolean(PROPERTY_CANCEL_ACTIVITY, elementNode));
@@ -96,7 +102,10 @@ public class BoundaryEventJsonConverter extends BaseBpmnJsonConverter {
       boundaryEvent.setCancelActivity(getPropertyValueAsBoolean(PROPERTY_CANCEL_ACTIVITY, elementNode));
       convertJsonToSignalDefinition(elementNode, boundaryEvent);
     }
-    boundaryEvent.setAttachedToRefId(lookForAttachedRef(elementNode.get(EDITOR_SHAPE_ID).asText(), modelNode.get(EDITOR_CHILD_SHAPES)));
+    
+    Activity activityRef=BpmnModelUtil.getElement(model, lookForAttachedRef(elementNode.get(EDITOR_SHAPE_ID).asText(), modelNode.get(EDITOR_CHILD_SHAPES)),Activity.class);
+    
+    boundaryEvent.setAttachedToRef(activityRef);
     return boundaryEvent;
   }
   
