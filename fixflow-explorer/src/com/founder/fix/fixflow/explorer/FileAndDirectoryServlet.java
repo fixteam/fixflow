@@ -34,7 +34,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     public void create(){
     	try {
 			FileAndDirectoryUtils.createFileOrDirectory(buildPath(),getBasePath());
-			success("创建成功!");
+			success("创建成功!","string");
 		} catch (Exception e) {
 			error(e.getMessage());
 		}
@@ -54,7 +54,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     public void reName(){
     	try {
     		FileAndDirectoryUtils.renameFile(buildPath()+File.separator+request("oldFileName"),buildPath()+File.separator+request("newFileName"),getBasePath());
-    			success("重命名成功!");
+    			success("重命名成功!","string");
     	} catch (Exception e) {
     		error("重命名失败!");
     	}

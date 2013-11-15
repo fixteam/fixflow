@@ -75,11 +75,14 @@ public class BaseServlet extends HttpServlet {
 	}
 	
 	public  void error(String desc){
-		ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"error\",\"result\":" + desc +" }");
+		ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"error\",\"result\":\"" + desc +"\" }");
 	}
  
-	public  void success(String desc){
-		ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"success\",\"result\":" + desc +" }");
+	public  void success(String desc,String... flag ){
+		if(flag.length == 0)
+			ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"success\",\"result\":" + desc +" }");
+		else
+			ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"success\",\"result\":\"" + desc +"\" }");
 	}
 	
 	public  String[] requests(String name){
