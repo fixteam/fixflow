@@ -1,12 +1,16 @@
 var breadcrumbList = new Array();
 var currentTreeNode;
+var currentTreeChildrenNodes;
 var zTreeSetting = {
 	data: { simpleData: { enable: true}},
 	callback: {
+		beforeClick: function(){
+			$("a.curSelectedNode").removeClass("curSelectedNode");
+		},
 		onClick: function(event, treeId, treeNode){
 			currentTreeNode = treeNode;
 			breadcrumbList = new Array();
-			breadcrumbList.push(treeNode.name);
+			breadcrumbList.push({name:treeNode.name, treeNodeId:treeNode.id});
 			getBreadcrumb(treeNode, breadcrumbList);
 			breadcrumbList.reverse();
 			/*$("span.details").empty();
@@ -27,6 +31,9 @@ var zTreeSetting = {
 			});*/
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
+			currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
+				return true;
+			}, false, currentTreeNode);
 		}
 	}
 };
@@ -45,7 +52,7 @@ $(document).ready(function(){
 			tree = $.fn.zTree.init($("div.left ul.ztree"), zTreeSetting, d.result);
 			$("#folderTree_1_a").click();
 			var node = tree.getNodeByTId("folderTree_1");
-			tree.expandNode(node);
+			tree.expandNode(node, true);
 		}
 	});
 	
@@ -61,7 +68,8 @@ $(document).ready(function(){
 			switch($(this).attr("btn-type")){
 				case "createFolder":
 					$("div.thumb-wrap[dirType=empty]").remove();
-					var $newFolder = $('<div class="thumb-wrap" dirType="dir"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
+					var guid = FixFlow.Utils.createGuid();
+					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+guid+'"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
 					$newFolder.appendTo($("div.view_plugin"));
 					var $newFolderName = $('<span class="editable"><input type="text" class="editName" style="width:90px;" oldValue="未命名"/></span>').appendTo($newFolder);
 					var $input = $("input", $newFolderName);
@@ -77,12 +85,12 @@ $(document).ready(function(){
 								data: {
 									method: "create",
 									userId: "1",
-									path: breadcrumbList.join(","),
+									path: getBreadcrumbNameList(breadcrumbList),
 									newFileName: name
 								},
 								success: function(data){
 									$input.parent("span").replaceWith("<span>"+name+"</span>");
-									tree.addNodes(currentTreeNode,{name:name, isParent:true});
+									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
 								}
 							});
 						};
@@ -105,7 +113,7 @@ $(document).ready(function(){
 								data: {
 									method: "reName",
 									userId: "1",
-									path: breadcrumbList.join(","),
+									path: getBreadcrumbNameList(breadcrumbList),
 									oldFileName: $(this).attr("oldValue"),
 									newFileName: name
 								},
@@ -120,11 +128,10 @@ $(document).ready(function(){
 											userId: "1"
 										},
 										success: function(data){
-											eval("var d = " + data);
-											tree = $.fn.zTree.init($("div.left>ul.ztree"), zTreeSetting, d.result);
-											var node = tree.getNodeByTId(currentTreeNode.tId);
-											tree.expandNode(node);
-											
+											var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
+											var node = tree.getNodeByParam("id", treeNodeId);
+											node.name = name;
+											$("#"+node.tId+" >a").html(name);
 										}
 									});
 								}
@@ -165,12 +172,20 @@ $(document).ready(function(){
 	$("div.thumb-wrap[dirType!=empty]").live("dblclick",function(){
 		var dirType = $(this).attr("dirType"),
 			treeNodeId = $(this).attr("treeNodeId");
+		currentTreeNode  = tree.getNodeByParam("id",treeNodeId);
+		currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
+			return true;
+		}, false, currentTreeNode);
 		//dir | file | other
 		if(dirType == "dir"){
 			var name = $("span", $(this)).html();
-			breadcrumbList.push(name);
+			breadcrumbList.push({name:name, treeNodeId:treeNodeId});
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
+			$("a.curSelectedNode").removeClass("curSelectedNode");
+			$("#"+currentTreeNode.tId+" >a").addClass("curSelectedNode");
+			tree.expandNode(currentTreeNode, true);
+			
 		}else if(dirType == "file"){
 			window.open("http://127.0.0.1:8080/bpmcenter/fixflow-editor/editor/editor.html");
 		}else{
@@ -202,7 +217,7 @@ $(document).ready(function(){
 				data: {
 					method: "create",
 					userId: "1",
-					path: breadcrumbList.join(","),
+					path: getBreadcrumbNameList(breadcrumbList),
 					newFileName: newName
 				},
 				success: function(data){
@@ -222,13 +237,13 @@ function updateMyself(){
 function getBreadcrumb(treeNode, breadcrumbList){
 	var parentNode = treeNode.getParentNode();
 	if(parentNode){
-		breadcrumbList.push(parentNode.name);
+		breadcrumbList.push({name:parentNode.name, treeNodeId:parentNode.id});
 		getBreadcrumb(parentNode, breadcrumbList);
 	}
 	return breadcrumbList;
 }
 
-function readSubFileAndDirectory(breadcrumbList){
+function readSubFileAndDirectory(bcList){
 	$.ajax({
 		url: "/bpmcenter/FileAndDirectoryServlet",
 		type: "POST",
@@ -236,7 +251,7 @@ function readSubFileAndDirectory(breadcrumbList){
 		data: {
 			method: "readSubFileAndDirectory",
 			userId: "1",
-			path: breadcrumbList.join(",")
+			path: getBreadcrumbNameList(bcList)
 		},
 		success: function(data){
 			$("div.view_plugin").empty();
@@ -247,8 +262,15 @@ function readSubFileAndDirectory(breadcrumbList){
 			}else{
 				$.each(d.result, function(index, value){
 					var $thumb_wrap;
+					var treeNodeId;
 					if(value.type == "dir"){
-						$thumb_wrap = $('<div class="thumb-wrap" dirType="dir"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">'+value.name+'</span></div>');
+						for(var i=0; i<currentTreeChildrenNodes.length; i++){
+							if(value.name == currentTreeChildrenNodes[i].name){
+								treeNodeId = currentTreeChildrenNodes[i].id;
+								break;
+							}
+						}
+						$thumb_wrap = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+treeNodeId+'"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">'+value.name+'</span></div>');
 					}else{
 						$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="">'+value.name+'</span></div>');
 					}
@@ -259,21 +281,36 @@ function readSubFileAndDirectory(breadcrumbList){
 	});
 }
 
-function createBreadcrumbList(breadcrumbList){
+function createBreadcrumbList(bcList){
 	$("span.details").empty();
-	$.each(breadcrumbList, function(index, value){
+	$.each(bcList, function(index, value){
 		$("span.details").append($('<span>»</span>'));
-		var $a = $('<a href="#"> '+value+'</a>');
+		var $a = $('<a href="#" treeNodeId="'+value.treeNodeId+'"> '+value.name+'</a>');
 		$a.click(function(){
+			var treeNodeId = $(this).attr("treeNodeId");
+			currentTreeNode = tree.getNodeByParam("id",treeNodeId);
+			$("a.curSelectedNode").removeClass("curSelectedNode");
+			$("#"+currentTreeNode.tId+" >a").addClass("curSelectedNode");
+			currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
+				return true;
+			}, false, currentTreeNode);
 			breadcrumbList = [];
-			breadcrumbList.unshift($.trim($(this).html()));
+			breadcrumbList.unshift({name:$.trim($(this).html()), treeNodeId:treeNodeId});
 			var breadcrumb_a = $(this).prevAll("a");
 			breadcrumb_a.each(function(){
-				breadcrumbList.unshift($.trim($(this).html()));
+				breadcrumbList.unshift({name:$.trim($(this).html()), treeNodeId:$(this).attr("treeNodeId")});
 			});
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
 		})
 		$("span.details").append($a);
 	});
+}
+
+function getBreadcrumbNameList(bcList){
+	var a = new Array();
+	for(var i=0; i<bcList.length; i++){
+		a.push(bcList[i].name);
+	}
+	return a.join(",");
 }

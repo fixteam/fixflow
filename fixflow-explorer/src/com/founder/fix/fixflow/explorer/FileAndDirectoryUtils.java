@@ -64,6 +64,8 @@ public class FileAndDirectoryUtils {
 		File file = new File( basePath+File.separator+"fixflow-repository"+File.separator+fileLeveStr);
 		if(!file.exists()){
 			file.mkdirs();
+		}else{
+			throw new Exception("当前文件或文件夹已存在!");
 		}
 	}
 	

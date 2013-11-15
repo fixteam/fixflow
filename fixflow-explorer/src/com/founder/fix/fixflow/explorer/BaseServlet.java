@@ -46,6 +46,8 @@ public class BaseServlet extends HttpServlet {
 			method.invoke(this, args);
 		} catch (Exception e) {
 			e.printStackTrace();
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('您没有权限,请登入！');window.location.href='"+request.getContextPath()+"/fixflow/login.jsp';</script>");
 		}
     }
 
