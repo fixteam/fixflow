@@ -79,6 +79,9 @@ public class FileAndDirectoryUtils {
 	 */
 	public static String readSubFileAndDirectory(String fileLeveStr, String basePath) throws Exception{
 		File file = new File( basePath+File.separator+"fixflow-repository"+File.separator+fileLeveStr);
+		if(!file.exists()){
+			file.mkdirs();
+		}
 		File[] FList = file.listFiles();
 		for (int i = 0; i < FList.length; i++){
 			if (FList[i].isDirectory()==true){
