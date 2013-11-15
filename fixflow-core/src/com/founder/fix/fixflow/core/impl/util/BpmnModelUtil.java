@@ -13,6 +13,9 @@ import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.di.BPMNEdge;
 import org.eclipse.bpmn2.di.BPMNShape;
 import org.eclipse.dd.di.DiagramElement;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
+
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
 
 public class BpmnModelUtil {
 	
@@ -73,10 +76,13 @@ public class BpmnModelUtil {
 		
 		for (DiagramElement diagramElement : diagramElements) {
 			if(diagramElement instanceof BPMNShape){
-				String bpmnId=((BPMNShape)diagramElement).getBpmnElement().getId();
-				if(elementId.equals(bpmnId)){
-			
-					return (BPMNShape)diagramElement;
+				BPMNShape bpmnShape = (BPMNShape) diagramElement;
+				BaseElement bpmnElement=getBaseElement((DefinitionsBehavior)definitions,bpmnShape.getBpmnElement());
+				if(bpmnElement==null){
+					continue;
+				}
+				if(elementId.equals(bpmnElement.getId())){
+					return bpmnShape;
 				}
 			}
 		}
@@ -86,6 +92,25 @@ public class BpmnModelUtil {
 		  
 		
 		
+	}
+	
+	public static  BaseElement getBaseElement(DefinitionsBehavior definitions,BaseElement baseElement){
+		if(baseElement==null){
+			return null;
+		}
+		if(baseElement.getId()==null){
+			BasicEObjectImpl basicEObjectImpl=(BasicEObjectImpl)baseElement;
+			if(basicEObjectImpl!=null&&basicEObjectImpl.eProxyURI()!=null){
+				String elementId=basicEObjectImpl.eProxyURI().fragment();
+				BaseElement bpmnElement=definitions.getElement(elementId);
+				return bpmnElement;
+			}
+			else{
+				return null;
+			}
+		}else{
+			return baseElement;
+		}
 	}
 	
 	public static BPMNEdge getBpmnEdge(Definitions definitions,String elementId){

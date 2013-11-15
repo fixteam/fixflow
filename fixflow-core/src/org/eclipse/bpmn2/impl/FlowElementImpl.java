@@ -242,8 +242,13 @@ public abstract class FlowElementImpl extends BaseElementImpl implements FlowEle
      */
     public String getName() {
     	
-    	Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-    	
+    	Boolean booleanTemp = false;
+    	//修改如果读不到国际化配置时直接返回name,使webeditor不依赖引擎
+    	try{
+    		booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+    	}catch(Exception ex){
+    		
+    	}
     	
     	if(booleanTemp){
     		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) this.eResource().getContents().get(0).eContents().get(0);
