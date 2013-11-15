@@ -23,6 +23,7 @@
        <li><a id="UserGroup" href="FlowManager?action=getUserList"><h1>组织机构</h1><h4>organization</h4></a></li>
         <li><a id="jobManager" href="FlowManager?action=getJobList"><h1>定时任务</h1><h4>schedule</h4></a></li>
         <li><a href="#"><h1>系统配置</h1><h4>system</h4></a></li>
+        <li><a id="flowLibrary" href="FlowManager?action=flowLibrary"><h1>流程梳理库</h1><h4>Flow Library</h4></a></li>
         </ul>
     </div>
 </div>
