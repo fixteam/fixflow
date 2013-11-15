@@ -197,7 +197,7 @@ a.x-button-plain:active,
 .x-ipad .north_view .x-toolbar .x-btn-click .x-btn-right,
 .x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-right,
 .x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-right {
-	background-image: url("../images/signavio/24x24/tb-btn-sprite.gif");
+	background-image: url("/bpmcenter/fixflow-explorer/images/signavio/24x24/tb-btn-sprite.gif");
 }
 
 
@@ -358,7 +358,7 @@ a.x-button-plain:active,
 
 /** UX **/
 .x-form-add-trigger {
-	background-image:url(../images/signavio/trigger-add.png) !important
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/trigger-add.png) !important
 }
 
 .x-form-textfield-list ol {
@@ -457,7 +457,7 @@ table-layout:fixed;
 }
 
 .item-large {
-	background-image:url(../images/signavio/list-item-large.gif);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/list-item-large.gif);
 	background-repeat: repeat-x;
 	background-position:top;
 }
@@ -473,7 +473,7 @@ table-layout:fixed;
 }
 
 .x-menu-large {
-	background: #c4c4c4 url(../images/signavio/menu-large.gif) repeat-y scroll 0 0;
+	background: #c4c4c4 url(/bpmcenter/fixflow-explorer/images/signavio/menu-large.gif) repeat-y scroll 0 0;
 }
 
 input.x-tree-node-cb {
@@ -502,19 +502,19 @@ input.x-tree-node-cb {
 }
 
 .x-window-dlg .ext-mb-question {
-	background:transparent url(../images/nuvola/32x32/actions/help.png) no-repeat scroll left top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/help.png) no-repeat scroll left top;
 }
 
 .x-window-dlg .ext-mb-warning {
-	background:transparent url(../images/nuvola/32x32/actions/messagebox_warning.png) no-repeat scroll left top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/messagebox_warning.png) no-repeat scroll left top;
 }
 
 .x-window-dlg .ext-mb-info {
-	background:transparent url(../images/nuvola/32x32/actions/messagebox_info.png) no-repeat scroll left top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/messagebox_info.png) no-repeat scroll left top;
 }
 
 .x-window-dlg .ext-mb-error {
-	background:transparent url(../images/nuvola/32x32/actions/no.png) no-repeat scroll left top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/no.png) no-repeat scroll left top;
 }
 
 
@@ -671,7 +671,7 @@ input.x-tree-node-cb {
  */
 
 #header {
-	background-image:url(../images/signavio/header_logo.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/header_logo.png);
 	background-position:center bottom;
 	background-repeat:repeat-x;
 	padding:5px 0 30px;
@@ -709,13 +709,13 @@ input.x-tree-node-cb {
 }*/
 
 #signavio_repository_header {
-	background:transparent url(../images/signavio/header_background2.png) repeat-x scroll center 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/header_background2.png) repeat-x scroll center 0;
 	height:100%;
 	width:100%;
 }
 
 .signavio_repository_header_shadow, .signavio_repository_header_shadow2  {
-	background:transparent url(../images/signavio/header_background2.png) repeat-x scroll center bottom;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/header_background2.png) repeat-x scroll center bottom;
 	width:100%;
 	height:10px;
 	position:absolute;
@@ -753,7 +753,7 @@ input.x-tree-node-cb {
 }
 
 #signavio_repository_header #signavio_repository_logo {
-	background:transparent url(../images/signavio/logo2.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/logo2.png) no-repeat scroll 0 0;
 	height:34px;
 	margin-left:20px;
 	margin-top:0;
@@ -852,7 +852,7 @@ input.x-tree-node-cb {
 
 
 .x-toolbar.north_view {
-	background:transparent url(../images/signavio/header_background2.png) repeat-x scroll left -40px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/header_background2.png) repeat-x scroll left -40px;
 	border:none;
 	height:24px !important;
 }
@@ -870,7 +870,7 @@ input.x-tree-node-cb {
 
 
 .x-toolbar.north_view .ytb-sep {
-	background-image: url(../images/signavio/vLine.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/vLine.png);
 	margin:0 6px;
 }
 
@@ -879,7 +879,7 @@ input.x-tree-node-cb {
 }
 
 .x-window .x-window-info {
-	background: transparent url(../images/nuvola/48x48/apps/kworldclock.png) no-repeat scroll left top;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/48x48/apps/kworldclock.png) no-repeat scroll left top;
 	width:48px;
 	height:48px;
 	margin-right:10px;
@@ -1094,11 +1094,11 @@ input.x-tree-node-cb {
 }
 
 .view_plugin .thumb.model {
-	background:transparent url(../images/signavio/icon-model-background.png) no-repeat scroll center center;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/icon-model-background.png) no-repeat scroll center center;
 }
 
 .view_plugin .thumb.view {
-    background:transparent url(../images/signavio/icon-view-background.png) no-repeat scroll center center;
+    background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/icon-view-background.png) no-repeat scroll center center;
 }
 
 .view_plugin .thumb img{
@@ -1366,25 +1366,25 @@ input.x-tree-node-cb {
 
 .x-tableview-plugin .folder.x-tree-node-collapsed .x-tree-node-icon,
 .folder.x-tree-node-collapsed .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .folder.x-tree-node-icon,
 .folder.x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .folder.x-tree-node-expanded .x-tree-node-icon,
 .folder.x-tree-node-expanded .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey_open.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_open.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .x-glossary .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/book_silver.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/book_silver.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .folder.x-tree-node-leaf.x-disabled .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
 	opacity:0.6;
 	color:silver;
 }
@@ -1397,47 +1397,47 @@ input.x-tree-node-cb {
 
 .x-tableview-plugin .folder.x-locked.x-tree-node-leaf.x-disabled .x-tree-node-icon,
 .x-tableview-plugin .folder.x-locked.x-tree-node-collapsed .x-tree-node-icon {
-	background-image:url(../images/nuvola/16x16/filesystems/folder_grey_locked.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_locked.png);
 }
 
 .x-tableview-plugin .folder.x-locked .x-tree-node-icon {
-	background-image:url(../images/nuvola/16x16/filesystems/folder_grey_open_locked.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_open_locked.png);
 }
 
 
 .x-tableview-plugin .model.x-tree-node-leaf .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .model.model-bpmn.x-tree-node-leaf .x-tree-node-icon {
-	background-image: url(../images/diagrams/bpmn-16x16-2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/bpmn-16x16-2.png);
 }
 
 .x-tableview-plugin .model.model-epc.x-tree-node-leaf .x-tree-node-icon {
-	background-image: url(../images/diagrams/epc-16x16-2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/epc-16x16-2.png);
 }
 
 .x-tableview-plugin .model.model-processmap.x-tree-node-leaf .x-tree-node-icon {
-	background-image: url(../images/diagrams/processmap-16x16-2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/processmap-16x16-2.png);
 }
 
 .x-tableview-plugin .model.model-organigram.x-tree-node-leaf .x-tree-node-icon {
-	background-image: url(../images/diagrams/organigram-16x16-2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/organigram-16x16-2.png);
 }
 
 .x-tableview-plugin .model.model-empty.x-tree-node-leaf .x-tree-node-icon {
-	background-image: url(../images/famfamfam/page_white.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white.png);
 }
 
 .x-tableview-plugin .model-isPublished.x-tree-node-leaf .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/apps/browser.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/browser.png) no-repeat scroll 0 0;
 }
 .x-tableview-plugin .model-oldPublished.x-tree-node-leaf .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/apps/browser_black.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/browser_black.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .x-no-directory.x-tree-node-leaf .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
 	opacity:0.5;
 	filter: alpha(opacity=50);
 }
@@ -1448,36 +1448,36 @@ input.x-tree-node-cb {
 }
 
 .x-tableview-plugin .file-word .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_word_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_word_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-picture .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_picture_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_picture_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-pdf .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_pdf_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_pdf_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-zip .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_zip_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_zip_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-excel .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_excel_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_excel_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-powerpoint .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_powerpoint_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_powerpoint_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-file .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white_file_sw.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_file_sw.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .file-empty .x-tree-node-icon,
 .x-tableview-plugin .file-undefined .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/page_white.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white.png) no-repeat scroll 0 0;
 }
 
 .x-tableview-plugin .x-tree-node-icon {
@@ -1567,7 +1567,7 @@ input.x-tree-node-cb {
 .x-info {
 	position:absolute;
 	top:100%;
-	background:transparent url(../images/signavio/bgr_left_small.png) repeat-y left;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left_small.png) repeat-y left;
 	bottom: 0;
 }
 
@@ -1618,7 +1618,7 @@ input.x-tree-node-cb {
 }
 
 .x-info-box .x-info-name.x-editable {
-	background-image:url(../images/famfamfam/pencil_small.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/famfamfam/pencil_small.png);
 	background-position:right center;
 	background-repeat:no-repeat;
 	padding-right:15px;
@@ -1725,7 +1725,7 @@ div.x-info-box div.x-info-details div.x-info-model {
 /* INFO - FILES */
 
 #signavio_repository_header span.y-file-quota-warning {
-    background: url("../images/famfamfam/error.png") no-repeat scroll 0 0 transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/famfamfam/error.png") no-repeat scroll 0 0 transparent;
     margin-right: 100px;
     padding-left: 20px;
 }
@@ -1756,7 +1756,7 @@ div.x-info-box div.x-info-details div.x-info-model {
 .x-info-fullview .x-info-model .y-file-container .y-file-image {
 	margin:auto;
 	position:relative;
-	background:url('../images/signavio/icon-model-background.png') no-repeat scroll -1px 0 transparent;
+	background:url('/bpmcenter/fixflow-explorer/images/signavio/icon-model-background.png') no-repeat scroll -1px 0 transparent;
 }
 
 .x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer a:link,
@@ -1817,7 +1817,7 @@ div.x-info-box div.x-info-details div.x-info-model {
 }
 
 .x-info .x-header-info .x-tool.x-tool-toggle {
-	background: url('../images/signavio/drawer_bg.png') repeat-x scroll 0 0 transparent;
+	background: url('/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png') repeat-x scroll 0 0 transparent;
 	border: 1px solid lightgray;
 	color: #AD0F5B;
 	height:17px;
@@ -1833,7 +1833,7 @@ div.x-info-box div.x-info-details div.x-info-model {
 
 .x-info .x-header-info .x-tool.x-tool-toggle img {
 	background-color: transparent;
-    background-image: url('../images/signavio/arrow-move-up-no-shadow.png');
+    background-image: url('/bpmcenter/fixflow-explorer/images/signavio/arrow-move-up-no-shadow.png');
     height: 24px;
     left: 1px;
     position: absolute;
@@ -1843,7 +1843,7 @@ div.x-info-box div.x-info-details div.x-info-model {
 }
 
 .x-info .x-header-info .x-tool.x-tool-toggle.y-close-diagram-preview img {
-	background-image: url('../images/signavio/arrow-move-down-no-shadow.png');
+	background-image: url('/bpmcenter/fixflow-explorer/images/signavio/arrow-move-down-no-shadow.png');
 }
 
 .x-info .x-header-info .x-tool.x-tool-toggle.x-disabled img {
@@ -1889,12 +1889,12 @@ div.x-info-box div.x-info-details div.x-info-model {
 .x-info .x-header-info.x-panel-header {
 	height:10px;
 	padding:0;
-	background:transparent url(../images/signavio/bgr_top_small.png) repeat-x top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/bgr_top_small.png) repeat-x top;
 	overflow: visible;
 }
 
 .x-info .x-header-info.x-panel-header span {
-	background:white url(../images/signavio/bgr_lefttop_small.png) no-repeat left top;
+	background:white url(/bpmcenter/fixflow-explorer/images/signavio/bgr_lefttop_small.png) no-repeat left top;
 	display:block;
 	height:9px;
 	width:9px;
@@ -1907,7 +1907,7 @@ div.x-info-box div.x-info-details div.x-info-model {
 }
 
 .x-info .x-tool.x-tool-expand-east {
-	background:transparent url(../images/signavio/revision.png) no-repeat left top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/revision.png) no-repeat left top;
 	height:100px;
 	position:absolute;
 	right:0px;
@@ -1958,7 +1958,7 @@ body .ext-overlay-model div div{
 }
 
 .left_view .x-panel-body {
-	background:#b1b1b1 url(../images/signavio/bgr_left.png) repeat-y right;
+	background:#b1b1b1 url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png) repeat-y right;
 }
 
 .left_view .x-panel-body .x-tree-root-ct {
@@ -1970,7 +1970,7 @@ body .ext-overlay-model div div{
 }
 
 .x-panel.right_view .x-panel .x-panel-body {
-    background: url("../images/signavio/bgr_right_small.png") repeat-y scroll -1px 0 transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_right_small.png") repeat-y scroll -1px 0 transparent;
 }
 
 #folder_plugin .x-tree-node-el {
@@ -2021,11 +2021,11 @@ body .ext-overlay-model div div{
 
 
 #folder_plugin .folder.x-tree-node-collapsed .x-tree-node-icon {
-	background:transparent url(../images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
 }
 
 #folder_plugin .folder .x-tree-node-icon {
-	background:transparent url(../images/nuvola/22x22/filesystems/folder_grey_open.png) no-repeat scroll 0 2px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/folder_grey_open.png) no-repeat scroll 0 2px;
 }
 
 #folder_plugin .x-tree-node-loading .x-tree-node-icon {
@@ -2034,7 +2034,7 @@ body .ext-overlay-model div div{
 
 
 #folder_plugin .folder.x-tree-node-leaf.x-disabled .x-tree-node-icon {
-	background:transparent url(../images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
 	opacity:0.6;
 	filter: alpha(opacity=60);
 	color:silver;
@@ -2042,24 +2042,24 @@ body .ext-overlay-model div div{
 
 #folder_plugin .x-tree-arrows .x-tree-elbow-plus,
 #folder_plugin .x-tree-arrows .x-tree-elbow-end-plus {
-	background:transparent url(../images/signavio/arrows.png) no-repeat 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/arrows.png) no-repeat 0 0;
 }
 
 #folder_plugin .x-tree-arrows .x-tree-elbow-minus,
 #folder_plugin .x-tree-arrows .x-tree-elbow-end-minus {
-	background:transparent url(../images/signavio/arrows.png) no-repeat -19px 0px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/arrows.png) no-repeat -19px 0px;
 }
 
 #folder_plugin .trash .x-tree-node-icon {
-	background:transparent url(../images/nuvola/22x22/filesystems/trashcan_grey_full.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/trashcan_grey_full.png) no-repeat scroll 0 0;
 }
 
 #folder_plugin .internal .x-tree-node-icon {
-	background:transparent url(../images/nuvola/22x22/filesystems/notebook.png) no-repeat scroll -2px -1px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/notebook.png) no-repeat scroll -2px -1px;
 }
 
 #folder_plugin .x-glossary .x-tree-node-icon {
-	background:transparent url(../images/nuvola/22x22/filesystems/glossary.add.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/glossary.add.png) no-repeat scroll 0 0;
 }
 
 #folder_plugin .x-glossary .x-tree-node-anchor span img {
@@ -2100,11 +2100,11 @@ body .ext-overlay-model div div{
 */
 
 #folder_plugin .x-tree-node .x-tree-node-over{
-	background:rgb(189, 189, 189) url(../images/signavio/bgr_left.png) repeat-y scroll right center;
+	background:rgb(189, 189, 189) url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png) repeat-y scroll right center;
 }
 
 #folder_plugin .x-tree-node .x-tree-selected {
-	background:rgb(200, 200, 200) url(../images/signavio/bgr_left.png) repeat-y scroll right center;
+	background:rgb(200, 200, 200) url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png) repeat-y scroll right center;
 }
 
 /** ***********************************
@@ -2202,7 +2202,7 @@ body .ext-overlay-model div div{
 div.x-cb-enabled {
 	width:10px;
 	height:10px;
-	background:transparent url(../images/nuvola/16x16/actions/ok_small.png) no-repeat scroll center center;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok_small.png) no-repeat scroll center center;
 	margin:auto;
 }
 
@@ -2217,7 +2217,7 @@ div.x-cb-enabled {
 
 
 .x-tree-admin-user.x-tree-access .x-checked .x-tree-node-icon {
-	background:transparent url(../images/nuvola/16x16/actions/ok_small.png) no-repeat scroll center center;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok_small.png) no-repeat scroll center center;
 }
 
 .x-tree-admin-user.x-tree-access .x-tree-node-icon {
@@ -2394,7 +2394,7 @@ div.x-cb-enabled {
 }
 
 .drawer_plugin .x-btn {
-	background:url("../images/signavio/drawer_bg.png") repeat-x scroll 0 0 white;
+	background:url("/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png") repeat-x scroll 0 0 white;
 	border-color:gray;
 	border-style:solid solid none;
 	border-width:1px;
@@ -2430,11 +2430,11 @@ div.x-cb-enabled {
 
 .drawer_plugin .x-btn:hover {
 	color:gray;
-	background: url(../images/signavio/drawer_bg.png) 0 -18px repeat-x;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png) 0 -18px repeat-x;
 }
 
 .drawer_plugin .x-btn.x-disabled:hover {
-	background:url("../images/signavio/drawer_bg.png") repeat-x scroll 0 0 white;
+	background:url("/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png") repeat-x scroll 0 0 white;
 }
 
 
@@ -2474,19 +2474,19 @@ div.x-cb-enabled {
 
 
 .search_plugin .x-table-layout-cell {
-	background: url(../images/signavio/search_background2.png) repeat-x 0 -80px;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_background2.png) repeat-x 0 -80px;
 }
 
 .search_plugin .x-table-layout-cell .search_field_left {
 	height:22px;
 	padding-top:3px;
-	background: url(../images/signavio/search_background2.png) no-repeat 0px -54px;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_background2.png) no-repeat 0px -54px;
 }
 
 .search_plugin .x-table-layout-cell .search_field_right {
 	height:22px;
 	padding-top:3px;
-	background: url(../images/signavio/search_background2.png) no-repeat -40px -54px;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_background2.png) no-repeat -40px -54px;
 }
 
 
@@ -2516,7 +2516,7 @@ div.search_plugin.activated .x-table-layout-cell div.search_field_left {
 .search_plugin .x-btn {
 	height:22px;
 	margin-top:-3px;
-	background: url(../images/signavio/search_button.png) no-repeat 0 0;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_button.png) no-repeat 0 0;
 }
 
 .search_plugin .x-btn.x-btn-over {
@@ -2597,7 +2597,7 @@ div.search_plugin.activated .x-table-layout-cell div.search_field_left {
 
 .x-panel.x-revision {
 	padding-top: 58px;
-	background:url("../images/signavio/bgr_right_small_fade.png") repeat-y scroll -1px 0 white;
+	background:url("/bpmcenter/fixflow-explorer/images/signavio/bgr_right_small_fade.png") repeat-y scroll -1px 0 white;
 }
 
 .x-revision .x-panel-header {
@@ -2874,27 +2874,27 @@ div.search_plugin.activated .x-table-layout-cell div.search_field_left {
 }
 
 .administration_plugin_tree .folder.x-tree-node-collapsed .x-tree-node-icon.x-tree-node-inline-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
 }
 
 .administration_plugin_tree .folder.x-tree-node-expanded .x-tree-node-icon.x-tree-node-inline-icon {
-	background:transparent url(../images/nuvola/16x16/filesystems/folder_grey_open.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_open.png) no-repeat scroll 0 0;
 }
 
 
 .administration_plugin_tree .user.x-tree-node-leaf .x-tree-node-icon,
 .administration_plugin_tree .user.x-tree-node-el .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/user.png) no-repeat scroll 0 2px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/user.png) no-repeat scroll 0 2px;
 }
 
 .administration_plugin_tree .userapiaccess.x-tree-node-leaf .x-tree-node-icon,
 .administration_plugin_tree .userapiaccess.x-tree-node-el .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/server.png) no-repeat scroll 0 2px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/server.png) no-repeat scroll 0 2px;
 }
 
 .administration_plugin_tree .userquickmodel.x-tree-node-leaf .x-tree-node-icon,
 .administration_plugin_tree .userquickmodel.x-tree-node-el .x-tree-node-icon {
-	background:transparent url(../images/famfamfam/vcard.png) no-repeat scroll 0 2px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/vcard.png) no-repeat scroll 0 2px;
 }
 
 .administration_plugin_tree .y-user-select-empty-text {
@@ -2912,12 +2912,12 @@ div.search_plugin.activated .x-table-layout-cell div.search_field_left {
 
 .administration_plugin_tree .group.x-tree-node-leaf .x-tree-node-icon,
 .administration_plugin_tree .group.x-tree-node-el .x-tree-node-icon  {
-	background:transparent url(../images/famfamfam/group.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/group.png) no-repeat scroll 0 0;
 }
 
 .administration_plugin_tree .application.x-tree-node-leaf .x-tree-node-icon,
 .administration_plugin_tree .application.x-tree-node-el .x-tree-node-icon  {
-	background:transparent url(../images/famfamfam/application.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/application.png) no-repeat scroll 0 0;
 }
 
 
@@ -2945,7 +2945,7 @@ div.search_plugin.activated .x-table-layout-cell div.search_field_left {
 
 .x-manage-user-register-new-user .x-panel-body a {
 	padding-left: 20px;
-	background: url('../images/famfamfam/group.png') no-repeat left center transparent;
+	background: url('/bpmcenter/fixflow-explorer/images/famfamfam/group.png') no-repeat left center transparent;
 }
 
 
@@ -2977,11 +2977,11 @@ div.search_plugin.activated .x-table-layout-cell div.search_field_left {
 }
 
 .x-admin-btn img.x-ok{
-	background:white url(../images/nuvola/16x16/actions/ok.png) no-repeat scroll center center;
+	background:white url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok.png) no-repeat scroll center center;
 }
 
 .x-admin-btn img.x-failed{
-	background:white url(../images/nuvola/16x16/actions/button_cancel.png) no-repeat scroll center center;
+	background:white url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/button_cancel.png) no-repeat scroll center center;
 }
 
 .x-admin-purchaseHint {
@@ -3282,7 +3282,7 @@ input.x-plain {
 
 .x-talkabout .x-tool-close {
 	position:absolute;
-	background:transparent url(../images/signavio/btn_sprite.png) no-repeat scroll 0 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/btn_sprite.png) no-repeat scroll 0 0;
 	height:30px;
 	width:30px;
 	right:40px;
@@ -3298,47 +3298,47 @@ input.x-plain {
 }
 
 .x-talkabout .x-window-tl {
-	background-image:url(../images/signavio/bgr_lefttop.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_lefttop.png);
 	padding-left:18px;
 	z-index:1000;
 }
 
 .x-talkabout .x-window-tr {
-	background-image:url(../images/signavio/bgr_righttop.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_righttop.png);
 	padding-right:18px;
 }
 
 .x-talkabout .x-window-tc {
-	background-image:url(../images/signavio/bgr_top.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_top.png);
 	height:13px;
 }
 
 .x-talkabout .x-window-ml {
-	background-image:url(../images/signavio/bgr_left.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png);
 	background-position:left center;
 	padding-left:15px;
 }
 
 .x-talkabout .x-window-mr {
-	background-image:url(../images/signavio/bgr_right.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_right.png);
 	padding-right:17px;
 }
 
 .x-talkabout .x-window-bl {
-	background-image:url(../images/signavio/bgr_leftbottom.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_leftbottom.png);
 	background-position:-1px 50%;
 	height:14px;
 	padding-left:17px;
 }
 
 .x-talkabout .x-window-br {
-	background-image:url(../images/signavio/bgr_rightbottom.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_rightbottom.png);
 	height:14px;
 	padding-right:18px;
 }
 
 .x-talkabout .x-window-bc {
-	background-image:url(../images/signavio/bgr_bottom.png);
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_bottom.png);
 	height:14px;
 }
 
@@ -3367,7 +3367,7 @@ input.x-plain {
  * ************************************
  **/
 .x-window .x-window-ffonly {
-	background:transparent url(../images/nuvola/48x48/actions/fileclose.png) no-repeat scroll left top;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/48x48/actions/fileclose.png) no-repeat scroll left top;
 	height:48px;
 	margin-right:10px;
 	width:48px;
@@ -3667,7 +3667,7 @@ input.x-plain {
 
 
 .x-purchase-link {
-	background:transparent url(../images/signavio/purchase3.png) no-repeat scroll center center;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/purchase3.png) no-repeat scroll center center;
 	color:white;
 	margin-right:-100px;
 	padding:15px 30px;
@@ -3687,7 +3687,7 @@ a.x-purchase-link:hover, a.x-purchase-link:active, a.x-purchase-link:focus {
 }
 
 .x-purchase-link img {
-	background:transparent url(../images/signavio/purchase.png) no-repeat scroll left 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/purchase.png) no-repeat scroll left 0;
 	height:49px;
 	width:170px;
 }
@@ -3711,7 +3711,7 @@ a.x-purchase-link:hover, a.x-purchase-link:active, a.x-purchase-link:focus {
 }
 
 .en .x-purchase-link img {
-	background:transparent url(../images/signavio/purchase.png) no-repeat scroll right 0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/purchase.png) no-repeat scroll right 0;
 }
 
 
@@ -4314,7 +4314,7 @@ border: 0px;
 }
 
 .x-sharepoint-connector .x-success {
-	background: url(../images/nuvola/16x16/actions/ok.png) no-repeat 0 0 transparent;
+	background: url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok.png) no-repeat 0 0 transparent;
     height: 16px;
     margin-left: 5px;
     position: relative;
@@ -4323,15 +4323,15 @@ border: 0px;
 }
 
 .x-sharepoint-connector .x-failed {
-	background-image: url(../images/famfamfam/cross.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/cross.png) !important;
 }
 
 .x-sharepoint-connector .x-warning {
-	background-image: url(../images/famfamfam/error.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/error.png) !important;
 }
 
 .x-sharepoint-connector .x-loading {
-	background-image: url(../images/famfamfam/loading.gif) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/loading.gif) !important;
 }
 
 .x-layout-split.x-layout-split-east {
@@ -4802,7 +4802,7 @@ border: 0px;
 }
 
 .y-second-personal-dialog-field-panel-hint {
-	background-image: url("../images/famfamfam/information.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/information.png");
     height: 16px;  
     position: absolute;   
     width: 16px;
@@ -4839,7 +4839,7 @@ border: 0px;
 }
 
 .x-url-link-field-list ol li a {
-    background: url("../images/signavio/external-link-ltr-icon.png") no-repeat scroll right center transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/external-link-ltr-icon.png") no-repeat scroll right center transparent;
     padding-right: 13px;
     font-size: 11px;
     margin-right: 5px;
@@ -4879,29 +4879,29 @@ border: 0px;
 }
 
 .x-form-textfield-list .x-smaller.x-icons a.x-move-up {
-	background-image: url("../images/glyphicons/small/up_arrow.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/up_arrow.png");
 	width: 12px;
 }
 
 .x-form-textfield-list .x-smaller.x-icons a.x-move-down {
-	background-image: url("../images/glyphicons/small/down_arrow.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/down_arrow.png");
 	width: 12px;
 }
 
 .x-form-textfield-list .x-smaller.x-icons a.x-edit {
-	background-image: url("../images/glyphicons/small/pencil.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/pencil.png");
 }
 
 .x-form-textfield-list .x-smaller.x-icons a.x-remove {
-	background-image: url("../images/glyphicons/small/bin.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/bin.png");
 }
 
 .x-form-textfield-list .x-smaller.x-icons a.x-star {
-	background-image: url("../images/glyphicons/small/star_empty.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/star_empty.png");
 }
 
 .x-form-textfield-list .x-smaller.x-icons a.x-star.x-stared {
-	background-image: url("../images/glyphicons/small/star.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/star.png");
 }
 
 .x-form-textfield-list ol li {
@@ -5159,12 +5159,12 @@ html.x-ie-6-0  div.df-conf-topicpanel div{
 .x-license-saperion .signavio_repository_header_shadow,
 .x-license-saperion .signavio_repository_header_shadow2,
 .x-license-saperion .x-toolbar.north_view  {
-	background-image:url(../images/signavio/templates/saperion/header_background2.png) !important;
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/header_background2.png) !important;
 }
 
 
 .x-license-saperion div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/signavio/templates/saperion/header_background2.png',sizingMethod='scale') !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/header_background2.png',sizingMethod='scale') !important;
 }
 
 .x-license-saperion div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
@@ -5172,7 +5172,7 @@ html.x-ie-6-0  div.df-conf-topicpanel div{
 }
 
 .x-license-saperion #signavio_repository_header #signavio_repository_logo {
-	background-image: url(../images/signavio/templates/saperion/logo2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/logo2.png);
 	margin-left: 6px;
 	width: 355px;
 }
@@ -5180,23 +5180,23 @@ html.x-ie-6-0  div.df-conf-topicpanel div{
 .x-license-saperion .search_plugin .x-table-layout-cell,
 .x-license-saperion .search_plugin .x-table-layout-cell .search_field_left,
 .x-license-saperion .search_plugin .x-table-layout-cell .search_field_right {
-	background-image: url(../images/signavio/templates/saperion/search_background2.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/search_background2.png) !important;
 }
 
 .x-license-saperion .x-toolbar.north_view .ytb-sep {
-	background-image: url(../images/signavio/templates/saperion/vLine.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/vLine.png);
 }
 
 .x-license-saperion .search_plugin .search_field_right img {
-	background-image: url(../images/signavio/templates/saperion/cross-search.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/cross-search.png) !important;
 }
 
 body.x-license-saperion  div .searching div.search_field_right img {
-	background-image:url("../images/signavio/loading.gif") !important;
+	background-image:url("/bpmcenter/fixflow-explorer/images/signavio/loading.gif") !important;
 }
 
 .x-license-saperion div.search_plugin.x-search-predefined .x-table-layout-cell div.x-panel.search_field_left {
-	background-image: url("../images/signavio/templates/saperion/clear-search.png") !important;
+	background-image: url("/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/clear-search.png") !important;
 }
 
 .x-license-saperion .x-toolbar-model-name span {
@@ -5239,7 +5239,7 @@ body.x-license-saperion  div .searching div.search_field_right img {
 }
 
 .x-license-saperion .mask-logo div {
-    background: url("../images/signavio/templates/saperion/SAPERION_ECM_Logo.png") no-repeat scroll center top transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/SAPERION_ECM_Logo.png") no-repeat scroll center top transparent;
     border-bottom: 1px solid #506372;
     height: 95px;
 }
@@ -5306,7 +5306,7 @@ body.x-license-saperion  div .searching div.search_field_right img {
 }
 
 .x-license-saperion .left_view .x-panel-body {
-    background: url("../images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
 }
 
 
@@ -5327,7 +5327,7 @@ body.x-license-saperion  div .searching div.search_field_right img {
 }
 
 .x-window-saperion .x-window-header-text {
-    background: url("../images/misc/saperion.png") no-repeat scroll 0 -1px transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/misc/saperion.png") no-repeat scroll 0 -1px transparent;
     padding: 1px 20px 0;
 }
 
@@ -5342,12 +5342,12 @@ body.x-license-saperion  div .searching div.search_field_right img {
 .x-license-commed .signavio_repository_header_shadow,
 .x-license-commed .signavio_repository_header_shadow2,
 .x-license-commed .x-toolbar.north_view  {
-	background-image:url(../images/signavio/templates/commed/header_background2.png) !important;
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/header_background2.png) !important;
 }
 
 
 .x-license-commed div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/signavio/templates/commed/header_background2.png',sizingMethod='scale') !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/commed/header_background2.png',sizingMethod='scale') !important;
 }
 
 .x-license-commed div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
@@ -5355,7 +5355,7 @@ body.x-license-saperion  div .searching div.search_field_right img {
 }
 
 .x-license-commed #signavio_repository_header #signavio_repository_logo {
-	background-image: url(../images/signavio/templates/commed/logo2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/logo2.png);
 	margin-left: 6px;
 	width: 220px;
 }
@@ -5363,23 +5363,23 @@ body.x-license-saperion  div .searching div.search_field_right img {
 .x-license-commed .search_plugin .x-table-layout-cell,
 .x-license-commed .search_plugin .x-table-layout-cell .search_field_left,
 .x-license-commed .search_plugin .x-table-layout-cell .search_field_right {
-	background-image: url(../images/signavio/templates/commed/search_background2.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/search_background2.png) !important;
 }
 
 .x-license-commed .x-toolbar.north_view .ytb-sep {
-	background-image: url(../images/signavio/templates/commed/vLine.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/vLine.png);
 }
 
 .x-license-commed .search_plugin .search_field_right img {
-	background-image: url(../images/signavio/templates/commed/cross-search.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/cross-search.png) !important;
 }
 
 body.x-license-commed  div .searching div.search_field_right img {
-	background-image:url("../images/signavio/loading.gif") !important;
+	background-image:url("/bpmcenter/fixflow-explorer/images/signavio/loading.gif") !important;
 }
 
 .x-license-commed div.search_plugin.x-search-predefined .x-table-layout-cell div.x-panel.search_field_left {
-	background-image: url("../images/signavio/templates/commed/clear-search.png") !important;
+	background-image: url("/bpmcenter/fixflow-explorer/images/signavio/templates/commed/clear-search.png") !important;
 }
 
 .x-license-commed .x-toolbar-model-name span {
@@ -5446,7 +5446,7 @@ body.x-license-commed  div .searching div.search_field_right img {
 }
 
 .x-license-commed .mask-logo div {
-    background: url("../images/signavio/templates/commed/logo.png") no-repeat scroll center top transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/commed/logo.png") no-repeat scroll center top transparent;
     border-bottom: 1px solid #F07D00;
     height: 170px;
 }
@@ -5488,7 +5488,7 @@ body.x-license-commed  div .searching div.search_field_right img {
 }
 
 .x-license-commed .left_view .x-panel-body {
-    background: url("../images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
 }
 
 
@@ -5523,12 +5523,12 @@ body.x-license-commed  div .searching div.search_field_right img {
 .x-license-deploy2tim .signavio_repository_header_shadow,
 .x-license-deploy2tim .signavio_repository_header_shadow2,
 .x-license-deploy2tim .x-toolbar.north_view  {
-	background-image:url(../images/signavio/templates/tim/header_background2.png) !important;
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/header_background2.png) !important;
 }
 
 
 .x-license-deploy2tim div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/signavio/templates/tim/header_background2.png',sizingMethod='scale') !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/tim/header_background2.png',sizingMethod='scale') !important;
 }
 
 .x-license-deploy2tim div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
@@ -5536,7 +5536,7 @@ body.x-license-commed  div .searching div.search_field_right img {
 }
 
 .x-license-deploy2tim #signavio_repository_header #signavio_repository_logo {
-	background-image: url(../images/signavio/templates/tim/logo2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/logo2.png);
 	margin-left: 15px;
 	width: 150px;
 }
@@ -5544,15 +5544,15 @@ body.x-license-commed  div .searching div.search_field_right img {
 .x-license-deploy2tim .search_plugin .x-table-layout-cell,
 .x-license-deploy2tim .search_plugin .x-table-layout-cell .search_field_left,
 .x-license-deploy2tim .search_plugin .x-table-layout-cell .search_field_right {
-	background-image: url(../images/signavio/templates/tim/search_background2.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/search_background2.png) !important;
 }
 
 .x-license-deploy2tim .x-toolbar.north_view .ytb-sep {
-	background-image: url(../images/signavio/templates/tim/vLine.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/vLine.png);
 }
 
 body.x-license-deploy2tim  div .searching div.search_field_right img {
-	background-image:url("../images/signavio/loading.gif") !important;
+	background-image:url("/bpmcenter/fixflow-explorer/images/signavio/loading.gif") !important;
 }
 
 .x-license-deploy2tim .x-toolbar-model-name span {
@@ -5595,7 +5595,7 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 }
 
 .x-license-deploy2tim .mask-logo div {
-    background: url("../images/signavio/templates/tim/signavio_logo.jpg") no-repeat scroll center top transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/tim/signavio_logo.jpg") no-repeat scroll center top transparent;
     border-bottom: 1px solid #9DB72F;
     height: 164px;
 }
@@ -5643,7 +5643,7 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 }
 
 .x-license-deploy2tim .left_view .x-panel-body {
-    background: url("../images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
 }
 
 
@@ -5689,12 +5689,12 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 
 .x-license-veureka #signavio_repository_header #signavio_repository_logo {
 	width: 280px;
-	background-image: url(../images/signavio/templates/veureka/logo2.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/veureka/logo2.png);
 	margin-left: 14px;
 }
 
 .x-license-veureka .mask-logo div {
-    background: url("../images/signavio/templates/veureka/signavio_logo.jpg") no-repeat scroll center top transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/veureka/signavio_logo.jpg") no-repeat scroll center top transparent;
 	border-bottom: 1px solid #ad0f5b;
     height: 226px;
     width: 361px;
@@ -5747,12 +5747,12 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 .x-license-camunda .signavio_repository_header_shadow,
 .x-license-camunda .signavio_repository_header_shadow2,
 .x-license-camunda .x-toolbar.north_view  {
-	background-image:url(../images/signavio/templates/camunda/header_background2.png) !important;
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/header_background2.png) !important;
 }
 
 
 .x-license-camunda div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/signavio/templates/camunda/header_background2.png',sizingMethod='scale') !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/header_background2.png',sizingMethod='scale') !important;
 }
 
 .x-license-camunda div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
@@ -5760,7 +5760,7 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 }
 
 .x-license-camunda #signavio_repository_header #signavio_repository_logo {
-	background-image: url(../images/signavio/templates/camunda/logo.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/logo.png);
     background-position: 0 4px;
     margin-left: 15px;
     width: 320px;
@@ -5769,11 +5769,11 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 .x-license-camunda .search_plugin .x-table-layout-cell,
 .x-license-camunda .search_plugin .x-table-layout-cell .search_field_left,
 .x-license-camunda .search_plugin .x-table-layout-cell .search_field_right {
-	background-image: url(../images/signavio/templates/camunda/search_background2.png) !important;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/search_background2.png) !important;
 }
 
 .x-license-camunda .x-toolbar.north_view .ytb-sep {
-	background-image: url(../images/signavio/templates/camunda/vLine.png);
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/vLine.png);
 }
 
 .x-license-camunda .x-toolbar-model-name span {
@@ -5816,7 +5816,7 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 }
 
 .x-license-camunda .mask-logo div {
-    background: url("../images/signavio/templates/camunda/FoxModeler_rgb_w.png") no-repeat scroll center top transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/FoxModeler_rgb_w.png") no-repeat scroll center top transparent;
     border-bottom: 1px solid #B41A28;
     height: 190px;
 }
@@ -5864,7 +5864,7 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 }
 
 .x-license-camunda .left_view .x-panel-body {
-    background: url("../images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
 }
 
 
@@ -5951,27 +5951,27 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 
 
 .y-wizard-filter img.x-org_unit, .x-org_unit .x-tree-node-icon, .x-org_unit.x-image {
-	background: transparent url(../images/famfamfam/building.png) no-repeat center center;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/building.png) no-repeat center center;
 }
 
 .y-wizard-filter img.x-document, .x-document .x-tree-node-icon, .x-document.x-image {
-	background: transparent url(../images/famfamfam/page.png) no-repeat center center;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page.png) no-repeat center center;
 }
 
 .y-wizard-filter img.x-it_system, .x-it_system .x-tree-node-icon, .x-it_system.x-image {
-	background: transparent url(../images/nuvola/16x16/apps/mycomputer.png) no-repeat center center;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/mycomputer.png) no-repeat center center;
 }
 
 .y-wizard-filter img.x-activity, .x-activity .x-tree-node-icon, .x-activity.x-image {
-	background: transparent url(../images/nuvola/16x16/apps/kcmdf.png) no-repeat center center;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/kcmdf.png) no-repeat center center;
 }
 
 .y-wizard-filter img.x-state, .x-state .x-tree-node-icon, .x-state.x-image {
-	background: transparent url(../images/nuvola/16x16/apps/ksysv.png) no-repeat center center;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/ksysv.png) no-repeat center center;
 }
 
 .y-wizard-filter img.x-search, .x-search .x-tree-node-icon, .x-search.x-image {
-	background: transparent url(../images/nuvola/16x16/actions/viewmag.png) no-repeat center center;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/viewmag.png) no-repeat center center;
 }
 
 .y-filter-grid-no-background {
@@ -6013,7 +6013,7 @@ body.x-license-deploy2tim  div .searching div.search_field_right img {
 .y-wizard-filter-link {
     padding-left: 20px;
 
-    background: transparent url(../images/famfamfam/filter.png) no-repeat;
+    background: transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/filter.png) no-repeat;
 }
 
 .y-filter-combo-list {
@@ -6163,11 +6163,11 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-list-sort-ascending.ak-security-center-mail-sort-button  {
-	background: transparent url(../images/fugue/icons/sort-alphabet.png) no-repeat;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/fugue/icons/sort-alphabet.png) no-repeat;
 }
 
 .ak-list-sort-descending.ak-security-center-mail-sort-button  {
-	background: transparent url(../images/fugue/icons/sort-alphabet-descending.png) no-repeat;
+	background: transparent url(/bpmcenter/fixflow-explorer/images/fugue/icons/sort-alphabet-descending.png) no-repeat;
 }
 
 .ak-security-center-mail-sort-button:hover {
@@ -6324,7 +6324,7 @@ img.x-checkbox-image.x-checked {
 	background-attachment: scroll;
     background-clip: border-box;
     background-color: transparent;
-    background-image: url("../images/famfamfam/cross_small.png");
+    background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_small.png");
     background-origin: padding-box;
     background-position: 4px 3px;
     background-repeat: no-repeat;
@@ -6347,7 +6347,7 @@ img.x-checkbox-image.x-checked {
 	opacity: 0.5;
 	color: gray !important;
 	cursor: not-allowed;
-	background-image: url("../images/famfamfam/cross_disabled.png") !important;
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_disabled.png") !important;
 	display: none;
 }
 
@@ -6489,7 +6489,7 @@ img.x-checkbox-image.x-checked {
 
 
 .ak-guide-lines-add-config-link {
-	background-image: url("../images/famfamfam/add.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/add.png");
     background-position: 1px -1px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -6664,7 +6664,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-modelling-guidelines-column-remove {
-	background-image: url("../images/famfamfam/page_white_remove.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/page_white_remove.png");
     background-repeat: no-repeat;
     color: white;
     float: right;
@@ -6687,7 +6687,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-modelling-guidelines-column-menu BUTTON.x-btn-text {
-	background-image: url("../images/famfamfam/wrench_orange.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/wrench_orange.png");
     background-repeat: no-repeat;
     padding-left: 10px;
 }
@@ -6983,7 +6983,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-icon-edit {
-	background-image: url("../images/famfamfam/pencil_small.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/pencil_small.png");
 }
 
 .add-custom-rule-link {
@@ -6999,7 +6999,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-icon-view {
-	background-image: url("../images/famfamfam/magnifier_small.png");		
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/magnifier_small.png");		
 }
 
 .ak-mapping-rule-link {
@@ -7106,7 +7106,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-complex-type-grid-attributes-remove-link {
-	background: url("../images/glyphicons/small/bin.png") no-repeat scroll 0 4px transparent;
+	background: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/bin.png") no-repeat scroll 0 4px transparent;
     cursor: pointer;
     height: 22px;
     float: left;
@@ -7118,7 +7118,7 @@ img.x-checkbox-image.x-checked {
 
 
 .ak-complex-type-grid-attributes-top-arrow-link {
-	background: url("../images/glyphicons/small/up_arrow.png") no-repeat scroll 0 4px transparent;
+	background: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/up_arrow.png") no-repeat scroll 0 4px transparent;
     cursor: pointer;
     float: left;
     height: 22px;
@@ -7129,7 +7129,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-complex-type-grid-attributes-bottom-arrow-link {
-	background: url("../images/glyphicons/small/down_arrow.png") no-repeat scroll 0 4px transparent;
+	background: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/down_arrow.png") no-repeat scroll 0 4px transparent;
     cursor: pointer;
     height: 22px;
     margin-right: 5px; 
@@ -7197,7 +7197,7 @@ img.x-checkbox-image.x-checked {
 	background-attachment: scroll;
     background-clip: border-box;
     background-color: transparent;
-    background-image: url("../images/famfamfam/cross_small.png");
+    background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_small.png");
     background-origin: padding-box;
     background-position: 4px 3px;
     background-repeat: no-repeat;
@@ -7220,7 +7220,7 @@ img.x-checkbox-image.x-checked {
 	opacity: 0.5;
 	color: gray !important;
 	cursor: not-allowed;
-	background-image: url("../images/famfamfam/cross_disabled.png") !important;
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_disabled.png") !important;
 	display: none;
 }
 
@@ -7361,7 +7361,7 @@ img.x-checkbox-image.x-checked {
 
 
 .ak-guide-lines-add-config-link {
-	background-image: url("../images/famfamfam/add.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/add.png");
     background-position: 1px -1px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -7536,7 +7536,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-modelling-guidelines-column-remove {
-	background-image: url("../images/famfamfam/page_white_remove.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/page_white_remove.png");
     background-repeat: no-repeat;
     color: white;
     float: right;
@@ -7559,7 +7559,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-modelling-guidelines-column-menu BUTTON.x-btn-text {
-	background-image: url("../images/famfamfam/wrench_orange.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/wrench_orange.png");
     background-repeat: no-repeat;
     padding-left: 10px;
 }
@@ -7855,7 +7855,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-icon-edit {
-	background-image: url("../images/famfamfam/pencil_small.png");
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/pencil_small.png");
 }
 
 .add-custom-rule-link {
@@ -7871,7 +7871,7 @@ img.x-checkbox-image.x-checked {
 }
 
 .ak-icon-view {
-	background-image: url("../images/famfamfam/magnifier_small.png");		
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/magnifier_small.png");		
 }
 
 .ak-mapping-rule-link {
@@ -8357,7 +8357,7 @@ End Fixes for IE10
 
 /** Effektif specific template */
 .x-window-effektif .x-window-header-text {
-    background: url("../images/effektif/effektif.png") no-repeat scroll 0 -1px transparent;
+    background: url("/bpmcenter/fixflow-explorer/images/effektif/effektif.png") no-repeat scroll 0 -1px transparent;
     padding: 1px 20px 0;
 }
 

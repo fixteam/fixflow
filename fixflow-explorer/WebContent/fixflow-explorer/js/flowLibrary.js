@@ -13,22 +13,6 @@ var zTreeSetting = {
 			breadcrumbList.push({name:treeNode.name, treeNodeId:treeNode.id});
 			getBreadcrumb(treeNode, breadcrumbList);
 			breadcrumbList.reverse();
-			/*$("span.details").empty();
-			$.each(breadcrumbList, function(index, value){
-				$("span.details").append($('<span>»</span>'));
-				var $a = $('<a href="#"> '+value+'</a>');
-				$a.click(function(){
-					breadcrumbList = [];
-					breadcrumbList.unshift($.trim($(this).html()));
-					var breadcrumb_a = $(this).prevAll("a");
-					breadcrumb_a.each(function(){
-						breadcrumbList.unshift($.trim($(this).html()));
-					});
-					createBreadcrumbList(breadcrumbList);
-					readSubFileAndDirectory(breadcrumbList);
-				})
-				$("span.details").append($a);
-			});*/
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
 			currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
@@ -44,8 +28,8 @@ $(document).ready(function(){
 		type: "POST",
 		dataType: "text",
 		data: {
-			method: "loadTree",
-			userId: "1"
+			method: "loadTree"//,
+			//userId: "1"
 		},
 		success: function(data){
 			eval("var d = " + data);
@@ -69,7 +53,7 @@ $(document).ready(function(){
 				case "createFolder":
 					$("div.thumb-wrap[dirType=empty]").remove();
 					var guid = FixFlow.Utils.createGuid();
-					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+guid+'"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
+					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+guid+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
 					$newFolder.appendTo($("div.view_plugin"));
 					var $newFolderName = $('<span class="editable"><input type="text" class="editName" style="width:90px;" oldValue="未命名"/></span>').appendTo($newFolder);
 					var $input = $("input", $newFolderName);
@@ -84,7 +68,7 @@ $(document).ready(function(){
 								dataType: "text",
 								data: {
 									method: "create",
-									userId: "1",
+									//userId: "1",
 									path: getBreadcrumbNameList(breadcrumbList),
 									newFileName: name
 								},
@@ -119,7 +103,7 @@ $(document).ready(function(){
 								dataType: "text",
 								data: {
 									method: "reName",
-									userId: "1",
+									//userId: "1",
 									path: getBreadcrumbNameList(breadcrumbList),
 									oldFileName: $(this).attr("oldValue"),
 									newFileName: name
@@ -131,8 +115,8 @@ $(document).ready(function(){
 										type: "POST",
 										dataType: "text",
 										data: {
-											method: "loadTree",
-											userId: "1"
+											method: "loadTree"//,
+											//userId: "1"
 										},
 										success: function(data){
 											var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
@@ -164,13 +148,13 @@ $(document).ready(function(){
 		
 		$("div.thumb-wrap").attr("select", "false");
 		$("div.thumb").css("background-color","#FFFFFF");
-		$("div.thumb > img").attr("src", "images/nuvola/64x64/filesystems/folder_grey.png");
-		$("div.model").css("background-image", "url(images/signavio/icon-model-background.png)");
+		$("div.thumb > img").attr("src", "/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png");
+		$("div.model").css("background-image", "url(/bpmcenter/fixflow-explorer/images/signavio/icon-model-background.png)");
 		
 		$(this).attr("select", "true");
 		$("div.thumb", $(this)).css("background-color","#10a7d9");
-		$("img", $(this)).attr("src", "images/nuvola/64x64/filesystems/folder_grey_selected.png");
-		$("div.model", $(this)).css("background-image", "url(images/signavio/icon-model-background_selected.png)");
+		$("img", $(this)).attr("src", "/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_selected.png");
+		$("div.model", $(this)).css("background-image", "url(/bpmcenter/fixflow-explorer/images/signavio/icon-model-background_selected.png)");
 		
 		$("div.toolbar > div.btn-disable").addClass("btn-normal").removeClass("btn-disable");
 	});
@@ -223,7 +207,7 @@ $(document).ready(function(){
 				dataType: "text",
 				data: {
 					method: "create",
-					userId: "1",
+					//userId: "1",
 					path: getBreadcrumbNameList(breadcrumbList),
 					newFileName: newName
 				},
@@ -265,14 +249,14 @@ function readSubFileAndDirectory(bcList){
 		dataType: "text",
 		data: {
 			method: "readSubFileAndDirectory",
-			userId: "1",
+			//userId: "1",
 			path: getBreadcrumbNameList(bcList)
 		},
 		success: function(data){
 			$("div.view_plugin").empty();
 			eval("var d = " + data);
 			if(d.result.length==0){
-				var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey_white.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
+				var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_white.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
 				$("div.view_plugin").append($thumb_wrap);
 			}else{
 				$.each(d.result, function(index, value){
@@ -285,7 +269,7 @@ function readSubFileAndDirectory(bcList){
 								break;
 							}
 						}
-						$thumb_wrap = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+treeNodeId+'"><div class="thumb"><img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">'+value.name+'</span></div>');
+						$thumb_wrap = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+treeNodeId+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">'+value.name+'</span></div>');
 					}else{
 						$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="">'+value.name+'</span></div>');
 					}
