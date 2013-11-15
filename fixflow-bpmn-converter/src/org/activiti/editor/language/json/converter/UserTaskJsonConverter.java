@@ -24,6 +24,8 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.UserTask;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -41,7 +43,7 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(UserTask.class, UserTaskJsonConverter.class);
+    convertersToJsonMap.put(UserTaskBehavior.class, UserTaskJsonConverter.class);
   }
   
   @Override

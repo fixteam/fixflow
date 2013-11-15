@@ -28,6 +28,8 @@ import org.eclipse.bpmn2.SignalEventDefinition;
 import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.bpmn2.TimerEventDefinition;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -49,7 +51,7 @@ public class StartEventJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(StartEvent.class, StartEventJsonConverter.class);
+    convertersToJsonMap.put(StartEventBehavior.class, StartEventJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {

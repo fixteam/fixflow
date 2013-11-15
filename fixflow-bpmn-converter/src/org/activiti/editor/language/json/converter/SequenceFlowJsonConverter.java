@@ -28,6 +28,7 @@ import org.eclipse.bpmn2.SequenceFlow;
 import org.eclipse.bpmn2.di.BPMNEdge;
 import org.eclipse.dd.dc.Point;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 /**
@@ -47,7 +48,7 @@ public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(SequenceFlow.class, SequenceFlowJsonConverter.class);
+    convertersToJsonMap.put(SequenceFlowBehavior.class, SequenceFlowJsonConverter.class);
   }
   
   @Override

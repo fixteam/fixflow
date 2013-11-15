@@ -24,6 +24,8 @@ import org.eclipse.bpmn2.ErrorEventDefinition;
 import org.eclipse.bpmn2.EventDefinition;
 import org.eclipse.bpmn2.FlowElement;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -42,7 +44,7 @@ public class EndEventJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(EndEvent.class, EndEventJsonConverter.class);
+    convertersToJsonMap.put(EndEventBehavior.class, EndEventJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {

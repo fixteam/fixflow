@@ -279,6 +279,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
               subProcessX, subProcessY);
         } catch (Exception e) {
           LOGGER.error("Error converting {}", flowElement, e);
+          e.printStackTrace();
         }
       }
     }
