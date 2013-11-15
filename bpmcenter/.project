@@ -127,6 +127,11 @@
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-servlet/src</locationURI>
 		</link>
 		<link>
+			<name>fixflowconvertersrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_HOME/fixflow-bpmn-converter/src</locationURI>
+		</link>
+		<link>
 			<name>wssrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-ws/src</locationURI>
