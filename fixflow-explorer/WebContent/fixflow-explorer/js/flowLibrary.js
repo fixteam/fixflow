@@ -89,6 +89,13 @@ $(document).ready(function(){
 									newFileName: name
 								},
 								success: function(data){
+									eval("var d = " + data);
+									if(d.state == "error"){
+										alert("文件夹重名！");
+										$input.focus();
+										$input.select();
+										return;
+									}
 									$input.parent("span").replaceWith("<span>"+name+"</span>");
 									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
 								}
@@ -207,9 +214,9 @@ $(document).ready(function(){
 			}else{
 				newName = $("input.editName").val();
 			}
-			//var oldValue = $("input.editName").attr("oldValue");
-			$("input.editName").parent("span").replaceWith($('<span class="editable">'+newName+'</span>'));
-			tree.addNodes(currentTreeNode,{name:newName, isParent:true});
+			var guid = $("input.editName").attr("id");
+			//$("input.editName").parent("span").replaceWith($('<span class="editable">'+newName+'</span>'));
+			//tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
 			$.ajax({
 				url: "/bpmcenter/FileAndDirectoryServlet",
 				type: "POST",
@@ -221,7 +228,15 @@ $(document).ready(function(){
 					newFileName: newName
 				},
 				success: function(data){
-					
+					eval("var d = " + data);
+					if(d.state == "error"){
+						alert("文件夹重名！");
+						$("input.editName").focus();
+						$("input.editName").select();
+						return;
+					}
+					$("input.editName").parent("span").replaceWith("<span>"+newName+"</span>");
+					tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
 				}
 			});
 		}

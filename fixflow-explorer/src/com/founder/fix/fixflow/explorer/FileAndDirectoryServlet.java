@@ -1,6 +1,8 @@
 package com.founder.fix.fixflow.explorer;
 
 import java.io.File;
+
+import com.founder.fix.fixflow.service.FlowCenterService;
  
 /**
  * 文件目录管理类
@@ -22,7 +24,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
 	 */
     public void loadTree(){
     	try {
-    		String json = FileAndDirectoryUtils.buildLevelJsonDataWithLoginPerson(request("userId"),getBasePath());
+    		String json = FileAndDirectoryUtils.buildLevelJsonDataWithLoginPerson(session(FlowCenterService.LOGIN_USER_ID),getBasePath());
     		FileAndDirectoryUtils.clear();
 			success(json);
 		} catch (Exception e) {
@@ -65,7 +67,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		String path = "";
     		for (int i = 0; i < node.length; i++) {
 				if(i == 0){
-					path = node[i]+"/"+request("userId");
+					path = node[i]+"/"+session(FlowCenterService.LOGIN_USER_ID);
 					continue;
 				}
 				path += "/"+node[i];
