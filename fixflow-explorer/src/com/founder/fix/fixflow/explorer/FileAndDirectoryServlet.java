@@ -62,17 +62,35 @@ public class FileAndDirectoryServlet extends BaseServlet {
     	}
     }
     
+    public void moveFileOrDirectory(){
+    	try {
+    		FileAndDirectoryUtils.moveFileAndDirectory(getMoveResource()[0], getMoveResource()[1], getBasePath(),request("fileName"));
+    		success("重命名成功!","string");
+    	} catch (Exception e) {
+    		error("重命名失败!");
+    	}
+    }
+    
+    
     public String buildPath(){
     		String[] node = request("path").split(",");
     		String path = "";
     		for (int i = 0; i < node.length; i++) {
 				if(i == 0){
-					path = node[i]+"/"+session(FlowCenterService.LOGIN_USER_ID);
+					path = node[i]+File.separator+session(FlowCenterService.LOGIN_USER_ID);
 					continue;
 				}
 				path += "/"+node[i];
 			}
     		return path;
     }
-     
+    
+    
+    public String[] getMoveResource(){
+    	String[] resutl = new String[2];
+    	String[] node = request("path").split(",");
+    	resutl[0] = buildPath()+File.separator+ request("fileName");
+    	resutl[1] = node[0]+File.separator+"resolvent"+File.separator+session(FlowCenterService.LOGIN_USER_ID);
+    	return resutl;
+    }
 }
