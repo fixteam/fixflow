@@ -10,7 +10,7 @@ import java.io.File;
 public class FileAndDirectoryUtils {
 	
 	private static int key = 0;
-	private static String json = "[",subJson = "";
+	private static String json = "",subJson = "";
 	 
 	/**
 	 * 构建文件及文件夹的层次结构对应的体现数据（json data）
@@ -27,7 +27,8 @@ public class FileAndDirectoryUtils {
 			iterationRead(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId),0);
 		}catch(Exception e){
 		}
-		 json += "]";
+		
+		 json ="[" +json.substring(1)+ "]";
 	    return json;
 	}
 	
@@ -36,7 +37,7 @@ public class FileAndDirectoryUtils {
 	}
 	
 	public static void clear(){
-		 key = 0;json = "[";subJson="";
+		 key = 0;json = "";subJson="";
 	}
 	
 	/**
