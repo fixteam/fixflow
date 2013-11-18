@@ -33,7 +33,7 @@ public class FileAndDirectoryUtils {
 	}
 	
 	public static void clear(){
-		 key = 0;json = "[{id:-1,pId:0,name:'private',type:'dir',isParent:true},{id:-2,pId:0,name:'shared',type:'dir',isParent:true}";subJson="";
+		 key = 0;json = "[{id:-1,pId:0,name:'private',type:'dir',isParent:true},{id:-11,pId:-1,name:'resolvent',type:'dir',isParent:true},{id:-2,pId:0,name:'shared',type:'dir',isParent:true},{id:-21,pId:-2,name:'resolvent',type:'dir',isParent:true}";subJson="";
 	}
 	
 	/**
