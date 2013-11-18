@@ -28,8 +28,7 @@ $(document).ready(function(){
 		type: "POST",
 		dataType: "text",
 		data: {
-			method: "loadTree"//,
-			//userId: "1"
+			method: "loadTree"
 		},
 		success: function(data){
 			eval("var d = " + data);
@@ -68,7 +67,6 @@ $(document).ready(function(){
 								dataType: "text",
 								data: {
 									method: "create",
-									//userId: "1",
 									path: getBreadcrumbNameList(breadcrumbList),
 									newFileName: name
 								},
@@ -103,7 +101,6 @@ $(document).ready(function(){
 								dataType: "text",
 								data: {
 									method: "reName",
-									//userId: "1",
 									path: getBreadcrumbNameList(breadcrumbList),
 									oldFileName: $(this).attr("oldValue"),
 									newFileName: name
@@ -115,14 +112,13 @@ $(document).ready(function(){
 										type: "POST",
 										dataType: "text",
 										data: {
-											method: "loadTree"//,
-											//userId: "1"
+											method: "loadTree"
 										},
 										success: function(data){
 											var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
 											var node = tree.getNodeByParam("id", treeNodeId);
 											node.name = name;
-											$("#"+node.tId+" >a").html(name);
+											$("#"+node.tId+" >a>span:last").html(name);
 										}
 									});
 								}
@@ -132,7 +128,30 @@ $(document).ready(function(){
 					break;
 					
 				case "delete":
-					
+					var $selectThumbWrap = $("div.thumb-wrap[select=true]");
+					var $span = $("span", $selectThumbWrap);
+					var fileName = $span.html();
+					$.ajax({
+						url: "/bpmcenter/FileAndDirectoryServlet",
+						type: "POST",
+						dataType: "text",
+						data: {
+							method: "moveFileOrDirectory",
+							path: getBreadcrumbNameList(breadcrumbList),
+							fileName: fileName,
+						},
+						success: function(data){
+							var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
+							var node = tree.getNodeByParam("id", treeNodeId);
+							tree.removeNode(node);
+							$selectThumbWrap.remove();
+							if($("div.thumb-wrap").length == 0){
+								var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_white.png" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
+								$("div.view_plugin").append($thumb_wrap);
+							}
+							alert("删除成功！");
+						}
+					});
 					break;
 				default:
 					break;
@@ -184,7 +203,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#updateCache").click(function(){ 
+	$("#updateCache").click(function(){
 		$.get("FlowManager?action=updateCache",function(msg){
 			alert(msg);
 		})
@@ -207,7 +226,6 @@ $(document).ready(function(){
 				dataType: "text",
 				data: {
 					method: "create",
-					//userId: "1",
 					path: getBreadcrumbNameList(breadcrumbList),
 					newFileName: newName
 				},
@@ -249,14 +267,13 @@ function readSubFileAndDirectory(bcList){
 		dataType: "text",
 		data: {
 			method: "readSubFileAndDirectory",
-			//userId: "1",
 			path: getBreadcrumbNameList(bcList)
 		},
 		success: function(data){
 			$("div.view_plugin").empty();
 			eval("var d = " + data);
 			if(d.result.length==0){
-				var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_white.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
+				var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_white.png" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
 				$("div.view_plugin").append($thumb_wrap);
 			}else{
 				$.each(d.result, function(index, value){
