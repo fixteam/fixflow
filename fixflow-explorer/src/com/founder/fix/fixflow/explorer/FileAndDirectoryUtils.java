@@ -50,6 +50,9 @@ public class FileAndDirectoryUtils {
 		for (int i = 0; i < FList.length; i++){
 			key ++;
 			if (FList[i].isDirectory()==true){
+				if(FList[i].getName().equals("resolvent")){
+					json += ",{id:"+key+",pId:"+pid+",name:'"+FList[i].getName()+"',type:'dir',isParent:false}";
+				}else
 				json += ",{id:"+key+",pId:"+pid+",name:'"+FList[i].getName()+"',type:'dir',isParent:true}";
 				iterationRead(FList[i],key);
 			}else{

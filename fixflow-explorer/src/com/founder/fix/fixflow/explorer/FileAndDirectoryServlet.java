@@ -80,11 +80,6 @@ public class FileAndDirectoryServlet extends BaseServlet {
 		return path;
     }
     
-    public static void main(String[] args) {
-		System.out.println("aa,bb".replace(",", File.separator));
-	}
-    
-    
     public String[] getMoveResource(){
     	String[] resutl = new String[2];
     	String[] node = request("path").split(",");
