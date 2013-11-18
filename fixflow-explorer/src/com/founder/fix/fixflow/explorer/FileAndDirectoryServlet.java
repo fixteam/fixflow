@@ -71,26 +71,20 @@ public class FileAndDirectoryServlet extends BaseServlet {
     	}
     }
     
-    
     public String buildPath(){
-    		String[] node = request("path").split(",");
-    		String path = "";
-    		for (int i = 0; i < node.length; i++) {
-				if(i == 0){
-					path = node[i]+File.separator+session(FlowCenterService.LOGIN_USER_ID);
-					continue;
-				}
-				path += "/"+node[i];
-			}
-    		return path;
+		String[] node = request("path").split(",");
+		String path = session(FlowCenterService.LOGIN_USER_ID);
+		for (int i = 0; i < node.length; i++) {
+			path += File.separator+node[i];
+		}
+		return path;
     }
-    
     
     public String[] getMoveResource(){
     	String[] resutl = new String[2];
     	String[] node = request("path").split(",");
     	resutl[0] = buildPath()+File.separator+ request("fileName");
-    	resutl[1] = node[0]+File.separator+"resolvent"+File.separator+session(FlowCenterService.LOGIN_USER_ID);
+    	resutl[1] =session(FlowCenterService.LOGIN_USER_ID)+File.separator+ node[0]+File.separator+"resolvent";
     	return resutl;
     }
 }
