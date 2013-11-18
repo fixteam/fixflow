@@ -130,6 +130,16 @@
     <servlet-name>FileAndDirectoryServlet</servlet-name>
     <url-pattern>/FileAndDirectoryServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FlowWebManagerServlet</display-name>
+    <servlet-name>FlowWebManagerServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.editor.FlowWebManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlowWebManagerServlet</servlet-name>
+    <url-pattern>/FlowWebManagerServlet</url-pattern>
+  </servlet-mapping>
   
     <!-- 徐海洋end -->
 </web-app>
