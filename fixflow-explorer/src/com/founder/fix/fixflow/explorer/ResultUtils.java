@@ -22,7 +22,7 @@ public class ResultUtils {
 
     // -- Content Type 定义 --//
     public static final String TEXT_TYPE = "text/plain";
-    public static final String JSON_TYPE = "application/json";
+    public static final String JSON_TYPE = "application/x-json";
     public static final String XML_TYPE = "text/xml";
     public static final String HTML_TYPE = "text/html";
     public static final String JS_TYPE = "text/javascript";
