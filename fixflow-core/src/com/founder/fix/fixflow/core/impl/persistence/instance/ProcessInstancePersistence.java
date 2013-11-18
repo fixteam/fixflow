@@ -539,6 +539,19 @@ public class ProcessInstancePersistence {
 			sqlString = sqlString + " and  E.START_TIME<=? ";
 			objectParamWhere.add(processInstanceQuery.getStartTimeAfter());
 		}
+		if (processInstanceQuery.getEndTime() != null) {
+			sqlString = sqlString + " and  E.END_TIME =?";
+			objectParamWhere.add(processInstanceQuery.getEndTime());
+		}
+		if (processInstanceQuery.getEndTimeAfter() != null) {
+			sqlString = sqlString + " and  E.END_TIME<=?";
+			objectParamWhere.add(processInstanceQuery.getEndTimeAfter());
+		}
+		if (processInstanceQuery.getEndTimeBefore() != null) {
+			sqlString = sqlString + " and E.END_TIME>=?";
+			objectParamWhere.add(processInstanceQuery.getEndTimeBefore());
+		}
+		
 		if (processInstanceQuery.getArchiveTime() != null) {
 			sqlString = sqlString + " and  E.ARCHIVE_TIME =?";
 			objectParamWhere.add(processInstanceQuery.getArchiveTime());

@@ -316,6 +316,12 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	
 	protected Date startTimeAfter;
 	
+	protected Date endTime;
+	
+	protected Date endTimeBefore;
+	
+	protected Date endTimeAfter;
+	
 	protected Date archiveTime;
 	
 	protected Date archiveTimeBefore;
@@ -323,6 +329,18 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	protected Date archiveTimeAfter;
 	
 	protected QueryLocation queryLocation = null;
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public Date getEndTimeBefore() {
+		return endTimeBefore;
+	}
+
+	public Date getEndTimeAfter() {
+		return endTimeAfter;
+	}
 
 	public ProcessInstanceQuery initiatorLike(String initiatorLike) {
 		this.initiatorLike=initiatorLike;
@@ -366,6 +384,21 @@ public class ProcessInstanceQueryImpl extends AbstractQuery<ProcessInstanceQuery
 	
 	public ProcessInstanceQuery archiveTimeBefore(Date archiveTimeBefore) {
 		this.archiveTimeBefore = archiveTimeBefore;
+		return this;
+	}
+	
+	public ProcessInstanceQuery endTimeOn(Date endTime) {
+		this.endTime = endTime;
+		return this;
+	}
+	
+	public ProcessInstanceQuery endTimeBefore(Date endTimeBefore) {
+		this.endTimeBefore = endTimeBefore;
+		return this;
+	}
+	
+	public ProcessInstanceQuery endTimeAfter(Date endTimeAfter) {
+		this.endTimeAfter = endTimeAfter;
 		return this;
 	}
 	

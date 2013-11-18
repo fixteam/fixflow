@@ -256,6 +256,68 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//验证是否有10个
 		assertEquals(10, processInstances.size());
 		
+		
+		String processInstanceId = processInstances.get(0).getId();
+		TaskQuery taskQuery = taskService.createTaskQuery();
+		taskQuery.processInstanceId(processInstanceId).taskNotEnd();
+		TaskInstance taskInstance = taskQuery.list().get(0);
+		
+		Date begin = new Date();
+		//创建通用命令
+		ExpandTaskCommand expandTaskCommandGeneral=new ExpandTaskCommand();
+		//设置命令为处理
+		expandTaskCommandGeneral.setCommandType("general");
+		//设置命令的ID，需和节点上配置的按钮编号对应，会执行其中脚本
+		expandTaskCommandGeneral.setUserCommandId("Normal_1");
+		//设置命令的处理任务号
+		expandTaskCommandGeneral.setTaskId(taskInstance.getId());
+		//领取任务
+		taskService.expandTaskComplete(expandTaskCommandGeneral, null);
+		Date end = new Date();
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processInstanceId(processInstanceId).list();
+		//验证是否有10个
+		assertTrue(processInstances.get(0).hasEnded());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").endTimeAfter(end).list();
+		
+		assertEquals(1, processInstances.size());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").endTimeAfter(begin).list();
+		
+		assertEquals(0, processInstances.size());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").endTimeBefore(begin).list();
+		
+		assertEquals(1, processInstances.size());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").endTimeBefore(end).list();
+		
+		assertEquals(0, processInstances.size());
+		
+		//重置查询
+		processInstanceQuery = runtimeService.createProcessInstanceQuery();
+		//查询流程定义名称等于“TaskServiceTest”的流程实例
+		processInstances = processInstanceQuery.processDefinitionName("TaskServiceTest").endTimeOn(end).list();
+		
+		assertEquals(0, processInstances.size());
+		
+		
 	}
 	
 	/**
