@@ -10,8 +10,7 @@ import java.io.File;
 public class FileAndDirectoryUtils {
 	
 	private static int key = 0;
-	private static String json = "[{id:-1,pId:0,name:'private',type:'dir',isParent:true},{id:-2,pId:0,name:'shared',type:'dir',isParent:true}";
-	private static String subJson = "";
+	private static String json = "[",subJson = "";
 	 
 	/**
 	 * 构建文件及文件夹的层次结构对应的体现数据（json data）
@@ -22,20 +21,26 @@ public class FileAndDirectoryUtils {
 	 */
 	public static String buildLevelJsonDataWithLoginPerson(String loginUserId, String basePath) throws Exception{
 		try{
-			iterationRead(new File(basePath+File.separator+"fixflow-repository"+File.separator+"private"+File.separator+loginUserId),-1);
-			iterationRead(new File(basePath+File.separator+"fixflow-repository"+File.separator+"shared"+File.separator+loginUserId),-2);
+			createLeve(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId+File.separator+"private"+File.separator+"resolvent"));
+			createLeve(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId+File.separator+"shared"+File.separator+"resolvent"));
+			
+			iterationRead(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId),0);
 		}catch(Exception e){
 		}
 		 json += "]";
 	    return json;
 	}
 	
+	private static void createLeve(File file){
+		if(!file.exists())  file.mkdirs();
+	}
+	
 	public static void clear(){
-		 key = 0;json = "[{id:-1,pId:0,name:'private',type:'dir',isParent:true},{id:-2,pId:0,name:'shared',type:'dir',isParent:true}";subJson="";
+		 key = 0;json = "[";subJson="";
 	}
 	
 	/**
-	 * 迭代目录层级提取json数据
+	 *迭代目录层级提取json数据
 	 * @param file 跟目录
 	 * @param pid 树型结构的父节点
 	 */
@@ -79,9 +84,11 @@ public class FileAndDirectoryUtils {
 	 */
 	public static String readSubFileAndDirectory(String fileLeveStr, String basePath) throws Exception{
 		File file = new File( basePath+File.separator+"fixflow-repository"+File.separator+fileLeveStr);
+		
 		if(!file.exists()){
 			file.mkdirs();
 		}
+		
 		File[] FList = file.listFiles();
 		for (int i = 0; i < FList.length; i++){
 			if (FList[i].isDirectory()==true){
@@ -117,13 +124,46 @@ public class FileAndDirectoryUtils {
         File newFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+newFilePath);  
         return resFile.renameTo(newFile);  
     }  
-	
+    
+    /** 
+     * 移动文件或文件夹 
+     *  
+     * @param resFileOrDirectory 
+     *            源文件及文件夹
+     * @param newFilePOrDirectory
+     *            新文件及文件夹
+     *            
+     * @param basePath 
+     *            webcontent目录
+     *            
+     * @return 操作成功标识 
+     */  
+    public static boolean moveFileAndDirectory(String resFileOrDirectory, String newFilePOrDirectory,String basePath,String fileName) throws Exception{
+    	  File resf = new File(basePath+File.separator+"fixflow-repository"+File.separator+resFileOrDirectory);
+	      String newf = basePath+File.separator+"fixflow-repository"+File.separator+newFilePOrDirectory;
+	      File fnewpath = new File(newf);
+	      if(!fnewpath.exists())
+	        fnewpath.mkdirs();
+	      File fnew = new File(newf+File.separator+fileName);
+	      return  resf.renameTo(fnew);
+    }  
+  
 	
 	public static void main(String[] args) {
 		try {
+			 /** File fold = new File("/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/fixflow-repository/private/1/dep1");//某路径下的文件
+		      String strNewPath = "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/fixflow-repository/private";//新路径
+		      File fnewpath = new File(strNewPath);
+		      if(!fnewpath.exists())
+		        fnewpath.mkdirs();
+		      File fnew = new File(strNewPath+File.separator+"dep1");
+		      fold.renameTo(fnew);*/
+			
+			
+			
 			//renameFile("private/1/2222", "private/1/xuhaiyang", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter");
 			
-			//System.out.println(buildLevelJsonDataWithLoginPerson("1", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/"));
+			System.out.println(buildLevelJsonDataWithLoginPerson("1", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
