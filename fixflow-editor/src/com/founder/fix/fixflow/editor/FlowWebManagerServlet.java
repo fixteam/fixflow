@@ -25,7 +25,7 @@ public class FlowWebManagerServlet extends BaseServlet {
 	 */
     public void loadBPMWeb(){
     	try {
-            InputStream input = new FileInputStream(new File(session(FlowCenterService.LOGIN_USER_ID)+File.separator+request("path")+File.separator+request("fileName"))); 
+            InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+session(FlowCenterService.LOGIN_USER_ID)+File.separator+request("path")+File.separator+request("fileName"))); 
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ajaxResultObj(on);
 		} catch (Exception e) {
