@@ -92,6 +92,7 @@ public class BaseServlet extends HttpServlet {
 		PrintWriter out = null;
 		try {
 			responseParm.setContentType("application/x-json"); 
+			responseParm.setCharacterEncoding("utf-8");
 			out = responseParm.getWriter();
 			out.print(on);
 		} catch (Exception e) {

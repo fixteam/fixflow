@@ -5,7 +5,7 @@
   "propertyPackages" : [ {
     "name" : "fixflowbase",
     "properties" : [ {
-      "id" : "id",
+      "id" : "overrideid",
       "type" : "String",
       "title" : "编号",
       "value" : "",
@@ -17,7 +17,8 @@
       "title" : "名称",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : true,
+      "refToView" : "text_name"
     },{
       "id" : "formuri",
       "type" : "Text",
@@ -86,11 +87,121 @@
     "name" : "commandinfobase",
     "properties" : [ {
       "id" : "taskcommand",
-      "type" : "String",
+      "type" : "Complex",
       "title" : "处理命令",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : true,
+      "complexItems" : [ {
+        "id" : "id",
+        "name" : "编号",
+        "type" : "String",
+        "description" : "Listener expression definition.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      },{
+        "id" : "name",
+        "name" : "名称",
+        "type" : "String",
+        "description" : "Listener expression definition.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      },{
+        "id" : "commandtype",
+        "name" : "类型",
+        "type" : "Choice",
+        "value" : "",
+        "width" : 85,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "Start",
+          "value" : "start",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "End",
+          "value" : "end",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "Take (only sequence flows)",
+          "value" : "take",
+          "refToView" : ""
+        } ]
+      }, {
+        "id" : "isverification",
+        "name" : "验证",
+        "type" : "Choice",
+        "value" : "",
+        "width" : 50,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "是",
+          "value" : "是",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "否",
+          "value" : "否",
+          "refToView" : ""
+        }]
+      }, {
+        "id" : "issaveData",
+        "name" : "保存",
+        "type" : "Choice",
+        "value" : "",
+        "width" : 50,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "是",
+          "value" : "是",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "否",
+          "value" : "否",
+          "refToView" : ""
+        }]
+      }, {
+        "id" : "issimulationrun",
+        "name" : "虚拟运行",
+        "type" : "Choice",
+        "value" : "",
+        "width" : 65,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "0",
+          "value" : "是",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "1",
+          "value" : "否",
+          "refToView" : ""
+        }]
+      },{
+        "id" : "expression",
+        "name" : "执行表达式",
+        "type" : "String",
+        "description" : "Listener class.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      }, {
+        "id" : "parameterexpression",
+        "name" : "参数表达式",
+        "type" : "String",
+        "description" : "Listener expression definition.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      } ]
     }]
   },{
     "name" : "taskassignbase",
@@ -110,6 +221,63 @@
 	    "title" : "2",
 	    "value" : "2"
 	  }]
+    }, {
+      "id" : "assignexpression",
+      "type" : "Text",
+      "title" : "分配表达式",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "potentialowner",
+      "type" : "Complex",
+      "title" : "完成人表达式",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true,
+      "complexItems" : [ {
+        "id" : "resourceassignmentexpression",
+        "name" : "完成人表达式",
+        "type" : "String",
+        "description" : "Listener expression definition.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      },{
+        "id" : "resourceype",
+        "name" : "资源类型",
+        "type" : "String",
+        "description" : "Listener expression definition.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      },{
+        "id" : "isContainsSub",
+        "name" : "包含子集",
+        "type" : "Choice",
+        "value" : "",
+        "width" : 100,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "是",
+          "value" : "是",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "否",
+          "value" : "否",
+          "refToView" : ""
+        }]
+      }, {
+        "id" : "name",
+        "name" : "名称",
+        "type" : "String",
+        "description" : "Listener class.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      }]
     }]
   },{
     "name" : "skipstrategybase",
@@ -1341,7 +1509,7 @@
     "view" : "activity/usertask.svg",
     "icon" : "activity/list/type.user.png",
     "groups" : [ "Activities" ],
-    "propertyPackages" : [ "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase" ],
+    "propertyPackages" : [ "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "activity", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",
