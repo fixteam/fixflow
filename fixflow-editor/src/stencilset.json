@@ -5,136 +5,152 @@
   "propertyPackages" : [ {
     "name" : "fixflowbase",
     "properties" : [ {
-      "id" : "overrideid",
+      "id" : "id",
       "type" : "String",
+      "title" : "编号",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "name",
+      "type" : "String",
+      "title" : "名称",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "formuri",
+      "type" : "Text",
       "title" : "操作表单",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
     },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "formuriview",
+      "type" : "Text",
       "title" : "浏览表单",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
     },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "taskpriority",
+      "type" : "Choice",
       "title" : "优先级",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "1",
+	    "value" : "1"
+	  }, {
+	    "id" : "2",
+	    "title" : "2",
+	    "value" : "2"
+	  }]
     },{
-    "name" : "fixflowbase",
+      "id" : "documentation",
+      "type" : "Text",
+      "title" : "描述",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    }]
+  },{
+    "name" : "taskinfobase",
     "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "tasksubject",
+      "type" : "Text",
       "title" : "动态主题",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
     },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "tasktype",
+      "type" : "Choice",
       "title" : "任务类型",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
-    },{
-    "name" : "fixflowbase",
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "1",
+	    "value" : "1"
+	  }, {
+	    "id" : "2",
+	    "title" : "2",
+	    "value" : "2"
+	  }]
+    }]
+  },{
+    "name" : "commandinfobase",
     "properties" : [ {
-      "id" : "overrideid",
+      "id" : "taskcommand",
       "type" : "String",
       "title" : "处理命令",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
-    },{
-    "name" : "fixflowbase",
+    }]
+  },{
+    "name" : "taskassignbase",
     "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "assignpolicytype",
+      "type" : "Choice",
       "title" : "分配策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
-    },{
-    "name" : "fixflowbase",
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "1",
+	    "value" : "1"
+	  }, {
+	    "id" : "2",
+	    "title" : "2",
+	    "value" : "2"
+	  }]
+    }]
+  },{
+    "name" : "skipstrategybase",
     "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
-      "title" : "分配表达式",
-      "value" : "",
-      "description" : "Unique identifier of the element.",
-      "popular" : true
-    },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
-      "title" : "完成人表达式",
-      "value" : "",
-      "description" : "Unique identifier of the element.",
-      "popular" : true
-    },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "skipstrategy",
+      "type" : "Choice",
       "title" : "启用跳过策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "1",
+	    "value" : "1"
+	  }, {
+	    "id" : "2",
+	    "title" : "2",
+	    "value" : "2"
+	  }]
     },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
-      "title" : "生成跳过记录",
-      "value" : "",
-      "description" : "Unique identifier of the element.",
-      "popular" : true
-    },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "expression",
+      "type" : "Text",
       "title" : "跳过策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
     },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "skipassignee",
+      "type" : "Text",
       "title" : "处理者",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
     },{
-    "name" : "fixflowbase",
-    "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
+      "id" : "skipcomment",
+      "type" : "Text",
       "title" : "跳过意见",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true
-    } ]
-    
-    
-    
-    
-    
-    
+    }]
   },{
     "name" : "elementbase",
     "properties" : [ {
@@ -1325,7 +1341,7 @@
     "view" : "activity/usertask.svg",
     "icon" : "activity/list/type.user.png",
     "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "usertaskbase", "usertaskassignment", "formdefinition", "tasklistenersbase", "asynchronousbase", "loopcharacteristics", "activity" ],
+    "propertyPackages" : [ "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",

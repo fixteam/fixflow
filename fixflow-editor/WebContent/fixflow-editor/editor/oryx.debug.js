@@ -11201,8 +11201,8 @@ var passObj = window.dialogArguments;
         ORYX.Editor.createByUrl(modelUrl, {
             id: modelUrl,
 						parameters:{
-							path: passObj.path,
-							fileName: passObj.fileName,
+							path: "private,test", //passObj.path,
+							fileName: "process_testych.bpmn", //passObj.fileName,
 							method: "loadBPMWeb"
 						}
         });
