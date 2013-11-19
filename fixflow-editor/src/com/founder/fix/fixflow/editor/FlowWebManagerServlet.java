@@ -33,6 +33,18 @@ public class FlowWebManagerServlet extends BaseServlet {
 		}
     }
     
+	/**
+	 * 任务：将流文件写入到指定的目录下的指定文件
+	 */
+    public void writeFile2Address(){
+    	try {
+             request("upload");
+		} catch (Exception e) {
+			error("加载web流程图，返回json格式对象出错!");
+		}
+    }
+    
+    
     public String buildPath(){
 		String[] node = request("path").split(",");
 		String path = session(FlowCenterService.LOGIN_USER_ID);
