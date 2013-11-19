@@ -27,9 +27,10 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorerwebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowresourcewebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowrepositorywebcontent"/>
-		
         
-        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysissrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysisconf"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatafeedssrc"/>
         
         
         <property name="context-root" value="bpmcenter"/>

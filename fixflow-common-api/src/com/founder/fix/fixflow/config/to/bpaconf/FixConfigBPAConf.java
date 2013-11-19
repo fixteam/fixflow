@@ -17,7 +17,9 @@
  */
 package com.founder.fix.fixflow.config.to.bpaconf;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -30,6 +32,9 @@ import javax.xml.bind.annotation.XmlElements;
  */
 public class FixConfigBPAConf {
 	private List<FixConfigBPAAnlysisEngine> analysisEngine;
+	
+	private Map<String,FixConfigBPAAnlysisEngine> mapAnalysisEngine = new HashMap<String,FixConfigBPAAnlysisEngine>();
+
 
 	@XmlElements(value = { @XmlElement (name="analysisEngine",type=FixConfigBPAAnlysisEngine.class)})
 	public List<FixConfigBPAAnlysisEngine> getAnalysisEngine() {
@@ -38,5 +43,12 @@ public class FixConfigBPAConf {
 
 	public void setAnalysisEngine(List<FixConfigBPAAnlysisEngine> analysisEngine) {
 		this.analysisEngine = analysisEngine;
+		for(FixConfigBPAAnlysisEngine tmp:analysisEngine){
+			mapAnalysisEngine.put(tmp.getId(), tmp);
+		}
+	}
+	
+	public FixConfigBPAAnlysisEngine getEngine(String key){
+		return mapAnalysisEngine.get(key);
 	}
 }

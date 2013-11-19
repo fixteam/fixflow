@@ -136,5 +136,20 @@
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-common-ws/src</locationURI>
 		</link>
+		<link>
+			<name>bpaanalysissrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-dataanalysis/src</locationURI>
+		</link>
+		<link>
+			<name>bpaanalysisconf</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-dataanalysis/conf</locationURI>
+		</link>
+		<link>
+			<name>bpadatafeedssrc</name>
+			<type>2</type>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datafeeds/src</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
