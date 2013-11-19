@@ -3,6 +3,139 @@
   "namespace" : "http://b3mn.org/stencilset/bpmn2.0#",
   "description" : "This is the BPMN 2.0 stencil set specification.",
   "propertyPackages" : [ {
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "操作表单",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "浏览表单",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "优先级",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "动态主题",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "任务类型",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "处理命令",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "分配策略",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "分配表达式",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "完成人表达式",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "启用跳过策略",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "生成跳过记录",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "跳过策略",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "处理者",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+    "name" : "fixflowbase",
+    "properties" : [ {
+      "id" : "overrideid",
+      "type" : "String",
+      "title" : "跳过意见",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    } ]
+    
+    
+    
+    
+    
+    
+  },{
     "name" : "elementbase",
     "properties" : [ {
       "id" : "overrideid",

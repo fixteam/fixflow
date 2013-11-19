@@ -244,9 +244,9 @@ public class FlowManager extends HttpServlet {
 				}finally{
 					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
 				}
-			}/*else if(action.equals("flowLibrary")){
+			}else if(action.equals("flowLibrary")){
 				rd = request.getRequestDispatcher("/fixflow-explorer/flowLibrary.jsp");
-			}*/
+			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
 				String message = "操作成功！";

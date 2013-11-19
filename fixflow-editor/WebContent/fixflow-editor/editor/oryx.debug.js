@@ -11195,11 +11195,16 @@ function init() {
 			modelUrl = modelUrl.replace("/self","/json");
 		} else {
 			var modelId = window.location.search.substring(4);
-			modelUrl = "../../ModelConverter";
+			modelUrl = "../../FlowWebManagerServlet";
 		}
-
+var passObj = window.dialogArguments;
         ORYX.Editor.createByUrl(modelUrl, {
-            id: modelUrl
+            id: modelUrl,
+						parameters:{
+							path: passObj.path,
+							fileName: passObj.fileName,
+							method: "loadBPMWeb"
+						}
         });
     }
 }
@@ -13105,6 +13110,7 @@ ORYX.Editor.createByUrl = function(modelUrl, config){
     
     new Ajax.Request(modelUrl, {
       method: 'GET',
+			parameters: config.parameters,
       onSuccess: function(transport) {
         var editorConfig = Ext.decode(transport.responseText);
         editorConfig = Ext.applyIf(editorConfig, config);
