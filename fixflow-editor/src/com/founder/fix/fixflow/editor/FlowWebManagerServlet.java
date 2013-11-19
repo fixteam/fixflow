@@ -25,11 +25,20 @@ public class FlowWebManagerServlet extends BaseServlet {
 	 */
     public void loadBPMWeb(){
     	try {
-            InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+session(FlowCenterService.LOGIN_USER_ID)+File.separator+request("path")+File.separator+request("fileName"))); 
+            InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ajaxResultObj(on);
 		} catch (Exception e) {
 			error("加载web流程图，返回json格式对象出错!");
 		}
+    }
+    
+    public String buildPath(){
+		String[] node = request("path").split(",");
+		String path = session(FlowCenterService.LOGIN_USER_ID);
+		for (int i = 0; i < node.length; i++) {
+			path += File.separator+node[i];
+		}
+		return path;
     }
 }
