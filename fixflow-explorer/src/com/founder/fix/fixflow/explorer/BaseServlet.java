@@ -1,6 +1,7 @@
 package com.founder.fix.fixflow.explorer;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -8,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.codehaus.jackson.node.ObjectNode;
  
 /**
  * servlet基类
@@ -83,6 +86,20 @@ public class BaseServlet extends HttpServlet {
 			ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"success\",\"result\":" + desc +" }");
 		else
 			ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"success\",\"result\":\"" + desc +"\" }");
+	}
+ 
+	public  void ajaxResultObj(ObjectNode on) throws Exception{
+		PrintWriter out = null;
+		try {
+			responseParm.setContentType("application/x-json"); 
+			out = responseParm.getWriter();
+			out.print(on);
+		} catch (Exception e) {
+			out.flush();
+        	out.close();
+        	throw new  Exception("打印json格式对象回页面出错!");
+		}
+       
 	}
 	
 	public  String[] requests(String name){

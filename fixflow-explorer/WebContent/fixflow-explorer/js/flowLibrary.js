@@ -187,8 +187,8 @@ $(document).ready(function(){
 			return true;
 		}, false, currentTreeNode);
 		//dir | file | other
+		var name = $("span", $(this)).html();
 		if(dirType == "dir"){
-			var name = $("span", $(this)).html();
 			breadcrumbList.push({name:name, treeNodeId:treeNodeId});
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
@@ -197,7 +197,11 @@ $(document).ready(function(){
 			tree.expandNode(currentTreeNode, true);
 			
 		}else if(dirType == "file"){
-			window.open("http://127.0.0.1:8080/bpmcenter/fixflow-editor/editor/editor.html");
+			var passObj = {
+				path: getBreadcrumbNameList(breadcrumbList),
+				fileName: name
+			}
+			window.showModalDialog("/bpmcenter/fixflow-editor/editor/editor.html", passObj, "dialogTop=10px;dialogWidth="+(screen.width-80)+";dialogHeight="+(screen.height-150));
 		}else{
 			
 		}
