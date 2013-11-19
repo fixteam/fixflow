@@ -53,10 +53,15 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
   
   @Override
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
-    UserTask userTask = (UserTask) flowElement;
+	UserTaskBehavior userTask = (UserTaskBehavior) flowElement;
     String assignee = "";//userTask.getAssignee();
     String candidateUsers =""; //convertListToCommaSeparatedString(userTask.getCandidateUsers());
     String candidateGroups = "";//convertListToCommaSeparatedString(userTask.getCandidateGroups());
+    userTask.getProperties();
+    userTask.getAssignmentActionClassName();
+    userTask.getAssignPolicyType();
+    userTask.getTaskDefinition();
+    userTask.getResources();
     
     if (StringUtils.isNotEmpty(assignee) || StringUtils.isNotEmpty(candidateUsers) || StringUtils.isNotEmpty(candidateGroups)) {
       ObjectNode assignmentNode = objectMapper.createObjectNode();
@@ -88,10 +93,11 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
       propertiesNode.put(PROPERTY_USERTASK_ASSIGNMENT, assignmentNode);
     }
     
-    //if (userTask.getPriority() != null) {
-   //   setPropertyValue(PROPERTY_PRIORITY, userTask.getPriority().toString(), propertiesNode);
-   // }
-    //setPropertyValue(PROPERTY_FORMKEY, userTask.getFormKey(), propertiesNode);
+    if (userTask.getTaskPriority() != null) {
+      setPropertyValue(PROPERTY_PRIORITY, userTask.getTaskPriority().toString(), propertiesNode);
+    }
+    setPropertyValue(PROPERTY_FORMURI, userTask.getFormUri(), propertiesNode);
+    setPropertyValue(PROPERTY_FORMURI_VIEW, userTask.getFormUriView(), propertiesNode);
    // setPropertyValue(PROPERTY_DUEDATE, userTask.getDueDate(), propertiesNode);
     
     //addFormProperties(userTask.getFormProperties(), propertiesNode);

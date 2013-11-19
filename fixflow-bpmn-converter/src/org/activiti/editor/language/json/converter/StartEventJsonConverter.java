@@ -29,6 +29,7 @@ import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.bpmn2.TimerEventDefinition;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author Tijs Rademakers
@@ -75,10 +76,10 @@ public class StartEventJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
-    StartEvent startEvent = (StartEvent) flowElement;
+    StartEventBehavior startEvent = (StartEventBehavior) flowElement;
 
     //setPropertyValue(PROPERTY_NONE_STARTEVENT_INITIATOR, startEvent.getInitiator(), propertiesNode);
-    //setPropertyValue(PROPERTY_FORMKEY, startEvent.getFormKey(), propertiesNode);
+    setPropertyValue(PROPERTY_START_EVENT_ISPERSISTENCE, StringUtil.getString(startEvent.isPersistence()), propertiesNode);
     
     //addFormProperties(startEvent.getFormProperties(), propertiesNode);
     //addEventProperties(startEvent, propertiesNode);

@@ -121,9 +121,10 @@ public interface StencilConstants {
         final String PROPERTY_EXECUTION_LISTENER_FIELD_VALUE = "execution_listener_field_value";
         final String PROPERTY_EXECUTION_LISTENER_FIELD_EXPRESSION = "execution_listener_field_expression";
 	
-	final String PROPERTY_FORMKEY = "formkeydefinition";
+	final String PROPERTY_FORMURI = "formuri";
+	final String PROPERTY_FORMURI_VIEW = "formuriview";
 	final String PROPERTY_DUEDATE = "duedatedefinition";
-	final String PROPERTY_PRIORITY = "prioritydefinition";
+	final String PROPERTY_PRIORITY = "taskpriority";
 	
 	final String PROPERTY_USERTASK_ASSIGNMENT = "usertaskassignment";
   final String PROPERTY_USERTASK_ASSIGNMENT_TYPE = "assignment_type";
@@ -180,4 +181,11 @@ public interface StencilConstants {
   final String PROPERTY_IOPARAMETER_TARGET = "ioparameter_target";
 	
 	final String PROPERTY_SEQUENCEFLOW_CONDITION = "conditionsequenceflow";
+	
+	
+	/***fixflow属性***************/
+	
+	final String PROPERTY_START_EVENT_ISPERSISTENCE = "isPersistence";
+	final String PROPERTY_SEQUENCEFLOW_ORDERID = "orderid";
+
 }
