@@ -236,6 +236,14 @@
       "description" : "Unique identifier of the element.",
       "popular" : true,
       "complexItems" : [ {
+        "id" : "name",
+        "name" : "名称",
+        "type" : "String",
+        "description" : "Listener class.",
+        "value" : "",
+        "width" : 100,
+        "optional" : true
+      },{
         "id" : "resourceassignmentexpression",
         "name" : "完成人表达式",
         "type" : "String",
@@ -244,7 +252,7 @@
         "width" : 100,
         "optional" : true
       },{
-        "id" : "resourceype",
+        "id" : "resourcetype",
         "name" : "资源类型",
         "type" : "String",
         "description" : "Listener expression definition.",
@@ -252,7 +260,7 @@
         "width" : 100,
         "optional" : true
       },{
-        "id" : "isContainsSub",
+        "id" : "iscontainssub",
         "name" : "包含子集",
         "type" : "Choice",
         "value" : "",
@@ -269,20 +277,12 @@
           "value" : "false",
           "refToView" : ""
         }]
-      }, {
-        "id" : "name",
-        "name" : "名称",
-        "type" : "String",
-        "description" : "Listener class.",
-        "value" : "",
-        "width" : 100,
-        "optional" : true
       }]
     }]
   },{
     "name" : "skipstrategybase",
     "properties" : [ {
-      "id" : "skipstrategy",
+      "id" : "skipenable",
       "type" : "Choice",
       "title" : "启用跳过策略",
       "value" : "",
@@ -290,12 +290,28 @@
       "popular" : true,
       "items" : [ {
 	    "id" : "1",
-	    "title" : "1",
-	    "value" : "1"
+	    "title" : "是",
+	    "value" : "true"
 	  }, {
 	    "id" : "2",
-	    "title" : "2",
-	    "value" : "2"
+	    "title" : "否",
+	    "value" : "false"
+	  }]
+    },{
+      "id" : "iscreateskipprocess",
+      "type" : "Choice",
+      "title" : "生成跳过策略",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "是",
+	    "value" : "true"
+	  }, {
+	    "id" : "2",
+	    "title" : "否",
+	    "value" : "false"
 	  }]
     },{
       "id" : "expression",
