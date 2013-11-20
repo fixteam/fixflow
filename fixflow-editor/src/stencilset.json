@@ -75,11 +75,11 @@
       "popular" : true,
       "items" : [ {
 	    "id" : "1",
-	    "title" : "1",
+	    "title" : "任务类型1",
 	    "value" : "1"
 	  }, {
 	    "id" : "2",
-	    "title" : "2",
+	    "title" : "任务类型2",
 	    "value" : "2"
 	  }]
     }]
@@ -141,16 +141,16 @@
         "items" : [ {
           "id" : "c1",
           "title" : "是",
-          "value" : "是",
+          "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
           "title" : "否",
-          "value" : "否",
+          "value" : "false",
           "refToView" : ""
         }]
       }, {
-        "id" : "issaveData",
+        "id" : "issavedata",
         "name" : "保存",
         "type" : "Choice",
         "value" : "",
@@ -159,12 +159,12 @@
         "items" : [ {
           "id" : "c1",
           "title" : "是",
-          "value" : "是",
+          "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
           "title" : "否",
-          "value" : "否",
+          "value" : "false",
           "refToView" : ""
         }]
       }, {
@@ -176,13 +176,13 @@
         "optional" : false,
         "items" : [ {
           "id" : "c1",
-          "title" : "0",
-          "value" : "是",
+          "title" : "是",
+          "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
-          "title" : "1",
-          "value" : "否",
+          "title" : "否",
+          "value" : "false",
           "refToView" : ""
         }]
       },{
@@ -261,12 +261,12 @@
         "items" : [ {
           "id" : "c1",
           "title" : "是",
-          "value" : "是",
+          "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
           "title" : "否",
-          "value" : "否",
+          "value" : "false",
           "refToView" : ""
         }]
       }, {
