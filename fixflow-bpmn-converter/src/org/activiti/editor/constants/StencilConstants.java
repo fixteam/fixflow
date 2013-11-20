@@ -214,5 +214,5 @@ public interface StencilConstants {
 	  final String PROPERTY_MULTIINSTANCE_OUTPUT_ITEM = "outputdataitem";
 	  final String PROPERTY_MULTIINSTANCE_CONDITION = "multiinstance_condition";
 	
-	
+	final String PROPERTY_GATEWAT_DIRECTION = "gatewaydirection";
 }

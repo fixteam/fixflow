@@ -21,6 +21,8 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.ExclusiveGateway;
 import org.eclipse.bpmn2.FlowElement;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -38,7 +40,7 @@ public class ExclusiveGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ExclusiveGateway.class, ExclusiveGatewayJsonConverter.class);
+    convertersToJsonMap.put(ExclusiveGatewayBehavior.class, ExclusiveGatewayJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
