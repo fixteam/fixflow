@@ -24,6 +24,7 @@ import org.eclipse.bpmn2.UserTask;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -147,8 +148,10 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		Object isSimulationRunObject=taskCommand.getIsSimulationRun();
 		
 		
-		
-		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+		//ych修改不从context取引擎
+		//TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+		TaskCommandDef taskCommandDef=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+
 		if(taskCommandDef!=null){
 			isVerification=StringUtil.getBoolean(taskCommandDef.getIsEnabled());
 			isSaveData=StringUtil.getBoolean(taskCommandDef.getIsSaveData());
@@ -173,9 +176,10 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		
 		this.taskCommandType=taskCommand.getCommandType();
 		
-		booleanInternationalization=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+		//ych修改，不读取国际化配置，暂时修改用于展现web流程图
+		//booleanInternationalization=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
     	
-    	
+		booleanInternationalization = false;
     	
 
 	}
