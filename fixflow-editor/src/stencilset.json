@@ -336,6 +336,76 @@
       "popular" : true
     }]
   },{
+  	"name": "multiinstancebase",
+  	"properties": [{
+  	  "id":  "multiinstance",
+  	  "type" : "Choice",
+      "title" : "启动多实例",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "是",
+	    "value" : "true"
+	  }, {
+	    "id" : "2",
+	    "title" : "否",
+	    "value" : "false"
+	  }]
+  	},{
+  	 "id":  "multiinstance_seq",
+  	  "type" : "Choice",
+      "title" : "串行多实例",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true,
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "是",
+	    "value" : "true"
+	  }, {
+	    "id" : "2",
+	    "title" : "否",
+	    "value" : "false"
+	  }]
+  	},{
+      "id" : "loopdatainputcollection",
+      "type" : "Text",
+      "title" : "输入数据集",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "loopdataoutputcollection",
+      "type" : "Text",
+      "title" : "输出数据集",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "inputdataitem",
+      "type" : "Text",
+      "title" : "输入项",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "outputdataitem",
+      "type" : "Text",
+      "title" : "输出项",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    },{
+      "id" : "multiinstance_condition",
+      "type" : "Text",
+      "title" : "完成表达式",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true
+    }]
+  },{
     "name" : "elementbase",
     "properties" : [ {
       "id" : "overrideid",
@@ -1525,7 +1595,7 @@
     "view" : "activity/usertask.svg",
     "icon" : "activity/list/type.user.png",
     "groups" : [ "Activities" ],
-    "propertyPackages" : [ "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "propertyPackages" : [ "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "multiinstancebase", "activity", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",
