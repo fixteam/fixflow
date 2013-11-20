@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <fixConfig>
 	<bpaConf>
-		<analysisEngine id="flowProcessAnalysis" engine="flowProcessAnalysis">
+		<analysisEngine id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
 			<tigger value="234"/>
 			<workspace>
 				<source key="bpmDB" value="DB_BPA_BASE"/>

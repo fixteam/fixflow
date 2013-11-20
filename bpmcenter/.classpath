@@ -22,6 +22,12 @@
 	<classpathentry kind="src" path="fixflowexplorerwebcontent"/>
 	<classpathentry kind="src" path="fixflowresourcewebcontent"/>
 	<classpathentry kind="src" path="fixflowrepositorywebcontent"/>
+	
+	<classpathentry kind="src" path="bpaanalysissrc"/>
+	<classpathentry kind="src" path="bpaanalysisconf"/>
+	<classpathentry kind="src" path="bpadatafeedssrc"/>
+	<classpathentry kind="src" path="bpadatapushersrc"/>
+	<classpathentry kind="src" path="bpadatapusherpage"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
