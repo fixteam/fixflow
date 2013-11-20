@@ -34,7 +34,7 @@ public class FixConfigBPAAnlysisEngine {
 	
 	private String engine;
 	
-	private List<FixConfigBPAWorkspace> workspace;
+	private FixConfigBPAWorkspace workspace;
 	
 	private FixConfigBPATigger tigger;
 	
@@ -58,12 +58,12 @@ public class FixConfigBPAAnlysisEngine {
 		this.engine = engine;
 	}
 
-	@XmlElements(value = { @XmlElement (name="workspace",type=FixConfigBPAWorkspace.class)})
-	public List<FixConfigBPAWorkspace> getWorkspace() {
+	@XmlElement
+	public FixConfigBPAWorkspace getWorkspace() {
 		return workspace;
 	}
 
-	public void setWorkspace(List<FixConfigBPAWorkspace> workspace) {
+	public void setWorkspace(FixConfigBPAWorkspace workspace) {
 		this.workspace = workspace;
 	}
 
