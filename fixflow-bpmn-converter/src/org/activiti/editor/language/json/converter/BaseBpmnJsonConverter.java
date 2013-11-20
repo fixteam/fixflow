@@ -48,11 +48,13 @@ import org.eclipse.bpmn2.TimerEventDefinition;
 import org.eclipse.bpmn2.UserTask;
 import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.di.BPMNShape;
+import org.eclipse.bpmn2.impl.ActivityImpl;
 import org.eclipse.dd.dc.Bounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author Tijs Rademakers
@@ -126,7 +128,8 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     
     if (flowElement instanceof Activity) {
       
-      Activity activity = (Activity) flowElement;
+    	//为什么要改成impl???
+      ActivityImpl activity = (ActivityImpl) flowElement;
       for (BoundaryEvent boundaryEvent : activity.getBoundaryEventRefs()) {
         outgoingArrayNode.add(BpmnJsonConverterUtil.createResourceNode(boundaryEvent.getId()));
       }
@@ -139,29 +142,49 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
         propertiesNode.put(PROPERTY_EXCLUSIVE, PROPERTY_VALUE_NO);
       }*/
       
-      /* 这里注释掉内容以后需要恢复过来
+      
       if (activity.getLoopCharacteristics() != null) {
         MultiInstanceLoopCharacteristics loopDef = (MultiInstanceLoopCharacteristics)activity.getLoopCharacteristics();//.getLoopCharacteristics();
-        if (StringUtils.isNotEmpty(loopDef.getLoopCardinality()) || StringUtils.isNotEmpty(loopDef.getInputDataItem()) ||
-            StringUtils.isNotEmpty(loopDef.getCompletionCondition())) {
-          
-          if (loopDef.isSequential() == false) {
-            propertiesNode.put(PROPERTY_MULTIINSTANCE_SEQUENTIAL, PROPERTY_VALUE_NO);
-          }
-          if (StringUtils.isNotEmpty(loopDef.getLoopCardinality())) {
-            propertiesNode.put(PROPERTY_MULTIINSTANCE_CARDINALITY, loopDef.getLoopCardinality());
-          }
-          if (StringUtils.isNotEmpty(loopDef.getInputDataItem())) {
-            propertiesNode.put(PROPERTY_MULTIINSTANCE_COLLECTION, loopDef.getInputDataItem());
-          }
-          if (StringUtils.isNotEmpty(loopDef.getElementVariable())) {
-            propertiesNode.put(PROPERTY_MULTIINSTANCE_VARIABLE, loopDef.getElementVariable());
-          }
-          if (StringUtils.isNotEmpty(loopDef.getCompletionCondition())) {
-            propertiesNode.put(PROPERTY_MULTIINSTANCE_CONDITION, loopDef.getCompletionCondition());
-          }
-        }
-      }*/
+        propertiesNode.put(PROPERTY_MULTIINSTANCE, StringUtil.getString(true));
+        	propertiesNode.put(PROPERTY_MULTIINSTANCE_SEQUENTIAL, StringUtil.getString(loopDef.isIsSequential()));
+        	if(activity.getLoopDataInputCollectionExpression() != null){
+        		propertiesNode.put(PROPERTY_MULTIINSTANCE_INPUT_COLLECTION, activity.getLoopDataInputCollectionExpression());
+        	}
+        	if(activity.getLoopDataOutputCollectionExpression() !=null){
+        		propertiesNode.put(PROPERTY_MULTIINSTANCE_OUTPUT_COLLECTION, activity.getLoopDataOutputCollectionExpression());
+        	}
+        	
+        	if(loopDef.getInputDataItem()!=null){
+        		propertiesNode.put(PROPERTY_MULTIINSTANCE_INPUT_ITEM, activity.getInputDataItemExpression());
+        	}
+        	if(loopDef.getOutputDataItem() !=null){
+        		propertiesNode.put(PROPERTY_MULTIINSTANCE_OUTPUT_ITEM, activity.getOutputDataItemExpression());
+        	}
+        	if(BpmnModelUtil.getExpression(loopDef.getCompletionCondition()) !=null){
+        		propertiesNode.put(PROPERTY_MULTIINSTANCE_CONDITION, BpmnModelUtil.getExpression(loopDef.getCompletionCondition()));
+        	}
+      }
+        
+//        if (StringUtils.isNotEmpty(loopDef.getLoopCardinality()) || StringUtils.isNotEmpty(loopDef.getInputDataItem()) ||
+//            StringUtils.isNotEmpty(loopDef.getCompletionCondition())) {
+//          
+//          if (loopDef.isSequential() == false) {
+//            propertiesNode.put(PROPERTY_MULTIINSTANCE_SEQUENTIAL, PROPERTY_VALUE_NO);
+//          }
+//          if (StringUtils.isNotEmpty(loopDef.getLoopCardinality())) {
+//            propertiesNode.put(PROPERTY_MULTIINSTANCE_CARDINALITY, loopDef.getLoopCardinality());
+//          }
+//          if (StringUtils.isNotEmpty(loopDef.getInputDataItem())) {
+//            propertiesNode.put(PROPERTY_MULTIINSTANCE_COLLECTION, loopDef.getInputDataItem());
+//          }
+//          if (StringUtils.isNotEmpty(loopDef.getElementVariable())) {
+//            propertiesNode.put(PROPERTY_MULTIINSTANCE_VARIABLE, loopDef.getElementVariable());
+//          }
+//          if (StringUtils.isNotEmpty(loopDef.getCompletionCondition())) {
+//            propertiesNode.put(PROPERTY_MULTIINSTANCE_CONDITION, loopDef.getCompletionCondition());
+//          }
+//        }
+      
       /* 
       if (activity instanceof UserTask) {
         addListeners(((UserTask) activity).getTaskListeners(), false,  propertiesNode);

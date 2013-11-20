@@ -13,6 +13,7 @@
 package org.activiti.editor.language.json.converter;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,9 +23,19 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.PotentialOwner;
+import org.eclipse.bpmn2.ResourceRole;
 import org.eclipse.bpmn2.UserTask;
 
+import com.founder.fix.bpmn2extensions.fixflow.Expression;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.bpmn2extensions.fixflow.SkipAssignee;
+import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
+import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author Tijs Rademakers
@@ -54,53 +65,98 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
   @Override
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
 	UserTaskBehavior userTask = (UserTaskBehavior) flowElement;
-    String assignee = "";//userTask.getAssignee();
-    String candidateUsers =""; //convertListToCommaSeparatedString(userTask.getCandidateUsers());
-    String candidateGroups = "";//convertListToCommaSeparatedString(userTask.getCandidateGroups());
-    userTask.getProperties();
-    userTask.getAssignmentActionClassName();
-    userTask.getAssignPolicyType();
-    userTask.getTaskDefinition();
-    userTask.getResources();
+    List<ResourceRole> resources = userTask.getResources();
     
-    if (StringUtils.isNotEmpty(assignee) || StringUtils.isNotEmpty(candidateUsers) || StringUtils.isNotEmpty(candidateGroups)) {
-      ObjectNode assignmentNode = objectMapper.createObjectNode();
-      ArrayNode itemsNode = objectMapper.createArrayNode();
-      
-      if (StringUtils.isNotEmpty(assignee)) {
-        ObjectNode assignmentItemNode = objectMapper.createObjectNode();
-        assignmentItemNode.put(PROPERTY_USERTASK_ASSIGNMENT_TYPE, PROPERTY_USERTASK_ASSIGNEE);
-        assignmentItemNode.put(PROPERTY_USERTASK_ASSIGNMENT_EXPRESSION, assignee);
-        itemsNode.add(assignmentItemNode);
-      }
-      
-      if (StringUtils.isNotEmpty(candidateUsers)) {
-        ObjectNode assignmentItemNode = objectMapper.createObjectNode();
-        assignmentItemNode.put(PROPERTY_USERTASK_ASSIGNMENT_TYPE, PROPERTY_USERTASK_CANDIDATE_USERS);
-        assignmentItemNode.put(PROPERTY_USERTASK_ASSIGNMENT_EXPRESSION, candidateUsers);
-        itemsNode.add(assignmentItemNode);
-      }
-      
-      if (StringUtils.isNotEmpty(candidateGroups)) {
-        ObjectNode assignmentItemNode = objectMapper.createObjectNode();
-        assignmentItemNode.put(PROPERTY_USERTASK_ASSIGNMENT_TYPE, PROPERTY_USERTASK_CANDIDATE_GROUPS);
-        assignmentItemNode.put(PROPERTY_USERTASK_ASSIGNMENT_EXPRESSION, candidateGroups);
-        itemsNode.add(assignmentItemNode);
-      }
-      
-      assignmentNode.put("totalCount", itemsNode.size());
-      assignmentNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
-      propertiesNode.put(PROPERTY_USERTASK_ASSIGNMENT, assignmentNode);
+    //任务分配
+    setPropertyValue(PROPERTY_USERTASK_POLICYTYPE, userTask.getAssignPolicyType().getId(), propertiesNode);
+    Expression assigneeExpression = userTask.getAssignPolicyType().getExpression();
+    if(assigneeExpression != null){
+    	setPropertyValue(PROPERTY_USERTASK_ASSIGNEXPRESSION, assigneeExpression.getValue(), propertiesNode);
     }
     
+    if(resources != null){
+    	ObjectNode assignmentNode = objectMapper.createObjectNode();
+    	ArrayNode itemsNode = objectMapper.createArrayNode();
+    	for(ResourceRole resource :resources){
+    		if(resource != null){
+    			String resourceType = StringUtil.getString(resource.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__RESOURCE_TYPE, true));
+    			String isContainsSub = StringUtil.getString(resource.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__IS_CONTAINS_SUB, true));
+    	    	String resourceExpression = BpmnModelUtil.getExpression(resource.getResourceAssignmentExpression().getExpression());
+    	    	String resourceName = resource.getName();
+    	    	ObjectNode assignmentItemNode = objectMapper.createObjectNode();
+    	        assignmentItemNode.put(PROPERTY_USERTASK_RESOURCE_TYPE, resourceType);
+    	        assignmentItemNode.put(PROPERTY_USERTASK_RESOURCE_IS_CONTAINSSUB, isContainsSub);
+    	        assignmentItemNode.put(PROPERTY_USERTASK_RESOURCE_EXPRESSION, resourceExpression);
+    	        assignmentItemNode.put(PROPERTY_USERTASK_RESOURCE_NAME, resourceName);
+    	        itemsNode.add(assignmentItemNode);
+    		}
+	    }
+    	 assignmentNode.put("totalCount", itemsNode.size());
+         assignmentNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
+         propertiesNode.put(PROPERTY_USERTASK_ASSIGNMENT, assignmentNode);
+    }
+    
+    //跳过策略
+    SkipStrategy skipStrategy = userTask.getSkipStrategy();
+    if(skipStrategy !=null){
+    	setPropertyValue(PROPERTY_USERTASK_SKIPSTRATEGY, StringUtil.getString(skipStrategy.isIsEnable()), propertiesNode);
+    	setPropertyValue(PROPERTY_USERTASK_IS_CREATE_SKIP_PROCESS, StringUtil.getString(skipStrategy.isIsCreateSkipProcess()), propertiesNode);
+    	SkipAssignee skipAssignee = skipStrategy.getSkipAssignee();
+    	if(skipAssignee != null){
+    		setPropertyValue(PROPERTY_USERTASK_SKIPASSIGNEE, skipAssignee.getExpression().getValue(), propertiesNode);
+    	}
+    	SkipComment skipComment = skipStrategy.getSkipComment();
+    	if(skipComment !=null){
+    		setPropertyValue(PROPERTY_USERTASK_SKIPCOMMENT, skipComment.getExpression().getValue(), propertiesNode);
+    	}
+    	Expression skipExpression = skipStrategy.getExpression();
+    	if(skipExpression !=null){
+    		setPropertyValue(PROPERTY_USERTASK_SKIPEXPRESSION, skipExpression.getValue(), propertiesNode);
+    	}
+    }
+    
+    //处理命令
+    
+    List<TaskCommandInst> commandList =  userTask.getTaskCommands();
+    if(commandList != null){
+    	ObjectNode commandNode = objectMapper.createObjectNode();
+    	ArrayNode itemsNode = objectMapper.createArrayNode();
+    	for(TaskCommandInst command :commandList){
+    		String commandId = command.getId();
+    		String commandType = command.getTaskCommandType();
+    		String commandName = command.getName();
+    		String commandExpression = command.getExpression();
+    		String isSaveData = StringUtil.getString(command.isSaveData());
+    		String isVerification = StringUtil.getString(command.isVerification());
+    		String isSimulationRun = StringUtil.getString(command.isSimulationRun());
+    		String parameterExpression = command.getExpressionParam();
+    		
+    		ObjectNode taskCommandNode = objectMapper.createObjectNode();
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_ID, commandId);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_NAME, commandName);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_TYPE, commandType);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_EXPRESSION, commandExpression);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_IS_SAVEDATA, isSaveData);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_IS_SIMULATION_RUN, isSimulationRun);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_IS_VERIFICATION, isVerification);
+    		taskCommandNode.put(PROPERTY_TASKCOMMAND_PARA_EXPRESSION, parameterExpression);
+    		itemsNode.add(taskCommandNode);
+    	}
+    	commandNode.put("totalCount", itemsNode.size());
+    	commandNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
+        propertiesNode.put(PROPERTY_TASKCOMMAND, commandNode);
+    }
+    if(userTask.getTaskSubject() !=null){
+    	setPropertyValue(PROPERTY_USERTASK_SUBJECT, userTask.getTaskSubject().getExpressionValue(), propertiesNode);
+    }
+    if(userTask.getTaskInstanceType() != null){
+    	setPropertyValue(PROPERTY_USERTASK_TASKTYPE, StringUtil.getString(userTask.getTaskInstanceType()), propertiesNode);
+    }
     if (userTask.getTaskPriority() != null) {
-      setPropertyValue(PROPERTY_PRIORITY, userTask.getTaskPriority().toString(), propertiesNode);
+      setPropertyValue(PROPERTY_PRIORITY, userTask.getTaskPriority(), propertiesNode);
     }
     setPropertyValue(PROPERTY_FORMURI, userTask.getFormUri(), propertiesNode);
     setPropertyValue(PROPERTY_FORMURI_VIEW, userTask.getFormUriView(), propertiesNode);
-   // setPropertyValue(PROPERTY_DUEDATE, userTask.getDueDate(), propertiesNode);
-    
-    //addFormProperties(userTask.getFormProperties(), propertiesNode);
   }
   
   @Override

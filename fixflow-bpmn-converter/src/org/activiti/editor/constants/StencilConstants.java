@@ -94,11 +94,7 @@ public interface StencilConstants {
 	final String PROPERTY_ASYNCHRONOUS = "asynchronousdefinition";
 	final String PROPERTY_EXCLUSIVE = "exclusivedefinition";
 	
-	final String PROPERTY_MULTIINSTANCE_SEQUENTIAL = "multiinstance_sequential";
-  final String PROPERTY_MULTIINSTANCE_CARDINALITY = "multiinstance_cardinality";
-  final String PROPERTY_MULTIINSTANCE_COLLECTION = "multiinstance_collection";
-  final String PROPERTY_MULTIINSTANCE_VARIABLE = "multiinstance_variable";
-  final String PROPERTY_MULTIINSTANCE_CONDITION = "multiinstance_condition";
+	
 	
 	final String PROPERTY_TASK_LISTENERS = "tasklisteners";
 	final String PROPERTY_TASK_LISTENER_EVENT = "task_listener_event_type";
@@ -126,7 +122,6 @@ public interface StencilConstants {
 	final String PROPERTY_DUEDATE = "duedatedefinition";
 	final String PROPERTY_PRIORITY = "taskpriority";
 	
-	final String PROPERTY_USERTASK_ASSIGNMENT = "usertaskassignment";
   final String PROPERTY_USERTASK_ASSIGNMENT_TYPE = "assignment_type";
   final String PROPERTY_USERTASK_ASSIGNMENT_EXPRESSION = "resourceassignmentexpr";
   final String PROPERTY_USERTASK_ASSIGNEE = "assignee";
@@ -184,8 +179,40 @@ public interface StencilConstants {
 	
 	
 	/***fixflow属性***************/
-	
 	final String PROPERTY_START_EVENT_ISPERSISTENCE = "isPersistence";
 	final String PROPERTY_SEQUENCEFLOW_ORDERID = "orderid";
-
+	final String PROPERTY_USERTASK_RESOURCE_TYPE="resourcetype";
+	final String PROPERTY_USERTASK_RESOURCE_EXPRESSION = "resourceassignmentexpression";
+	final String PROPERTY_USERTASK_RESOURCE_IS_CONTAINSSUB = "iscontainssub";
+	final String PROPERTY_USERTASK_RESOURCE_NAME = "name";
+	final String PROPERTY_USERTASK_POLICYTYPE = "assignpolicytype";
+	final String PROPERTY_USERTASK_ASSIGNEXPRESSION = "assignexpression";
+	final String PROPERTY_USERTASK_ASSIGNMENT = "potentialowner";
+	final String PROPERTY_USERTASK_TASKTYPE = "tasktype";
+	final String PROPERTY_USERTASK_SUBJECT = "tasksubject";
+	final String PROPERTY_USERTASK_SKIPSTRATEGY = "skipenable";
+	final String PROPERTY_USERTASK_IS_CREATE_SKIP_PROCESS = "iscreateskipprocess";
+	final String PROPERTY_USERTASK_SKIPEXPRESSION = "skipexpression";
+	final String PROPERTY_USERTASK_SKIPASSIGNEE = "skipassignee";
+	final String PROPERTY_USERTASK_SKIPCOMMENT = "skipcomment";
+	
+	final String PROPERTY_TASKCOMMAND = "taskcommand";
+	final String PROPERTY_TASKCOMMAND_ID = "id";
+	final String PROPERTY_TASKCOMMAND_NAME = "name";
+	final String PROPERTY_TASKCOMMAND_TYPE = "commandtype";
+	final String PROPERTY_TASKCOMMAND_IS_VERIFICATION = "isverification";
+	final String PROPERTY_TASKCOMMAND_IS_SAVEDATA = "issavedata";
+	final String PROPERTY_TASKCOMMAND_EXPRESSION = "expression";
+	final String PROPERTY_TASKCOMMAND_PARA_EXPRESSION = "parameterexpression";
+	final String PROPERTY_TASKCOMMAND_IS_SIMULATION_RUN = "issimulationrun";
+	
+	  final String PROPERTY_MULTIINSTANCE = "multiinstance";
+	  final String PROPERTY_MULTIINSTANCE_SEQUENTIAL = "multiinstance_seq";
+	  final String PROPERTY_MULTIINSTANCE_INPUT_COLLECTION = "loopdatainputcollection";
+	  final String PROPERTY_MULTIINSTANCE_OUTPUT_COLLECTION = "loopdataoutputcollection";
+	  final String PROPERTY_MULTIINSTANCE_INPUT_ITEM = "inputdataitem";
+	  final String PROPERTY_MULTIINSTANCE_OUTPUT_ITEM = "outputdataitem";
+	  final String PROPERTY_MULTIINSTANCE_CONDITION = "multiinstance_condition";
+	
+	
 }
