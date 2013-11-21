@@ -21,6 +21,9 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.ParallelGateway;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
+
 /**
  * @author Tijs Rademakers
  */
@@ -38,7 +41,7 @@ public class ParallelGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ParallelGateway.class, ParallelGatewayJsonConverter.class);
+    convertersToJsonMap.put(ParallelGatewayBehavior.class, ParallelGatewayJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -46,6 +49,8 @@ public class ParallelGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
+	  ParallelGatewayBehavior parallelGatewayBehavior = (ParallelGatewayBehavior)flowElement;
+	  setPropertyValue(PROPERTY_GATEWAT_DIRECTION, StringUtil.getString(parallelGatewayBehavior.getGatewayDirection()), propertiesNode);
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {

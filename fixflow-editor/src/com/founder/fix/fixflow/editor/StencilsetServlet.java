@@ -26,7 +26,8 @@ public class StencilsetServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		InputStream stencilsetStream = this.getClass().getClassLoader().getResourceAsStream("stencilset.json");
 		StringBuffer document = new StringBuffer();
-		resp.setContentType("application/x-json");   
+		resp.setContentType("application/x-json");
+		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
         try 
         {

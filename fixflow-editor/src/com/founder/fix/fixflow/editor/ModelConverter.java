@@ -40,7 +40,8 @@ public class ModelConverter extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		InputStream input = this.getClass().getClassLoader().getResourceAsStream("process_testych.bpmn");
 		ObjectNode o = new FixFlowConverter().convertBpmn2Json("process_testych", input);
-		response.setContentType("application/x-json");   
+		response.setContentType("application/x-json");
+		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
         try 
         {

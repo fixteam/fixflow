@@ -27,10 +27,14 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorerwebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowresourcewebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowrepositorywebcontent"/>
-		
         
-        
-        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysissrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysisconf"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatafeedssrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapushersrc"/>
+        <wb-resource deploy-path="/" source-path="/bpadatapusherpage"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapusherpage"/>
+       
         
         <property name="context-root" value="bpmcenter"/>
         <property name="java-output-path" value="/bpmcenter/build/classes"/>

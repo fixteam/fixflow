@@ -51,22 +51,37 @@ public class FixFlowShellProxy {
 	  * @throws
 	  */
 	public static Connection getConnection(String beanId) throws SQLException{
-		Connection connection = null;
+		return getDBConnection(beanId).getConnection();
+	}
+	
+	/**
+	  * getConnection
+	
+	  * @Title: getConnection
+	  * @Description: 获取数据库连接，连接来源是来自于spring配置的数据源
+	  * @param @param beanId
+	  * @param @return
+	  * @param @throws SQLException    设定文件
+	  * @return Connection    返回类型
+	  * @throws
+	  */
+	public static DBConnection getDBConnection(String beanId) throws SQLException{
+		DBConnection connection = null;
 
 		if(isPoolConn()){
 			DBConnection conn = getDBConn(beanId);
 			if(conn!=null && conn.getConnection()!=null && conn.getConnection().isClosed()!=true){
-				connection = conn.getConnection();
+				connection = conn;
 			}else{
 				DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean(beanId);
 				DBConnection dbconn = dbcf.createDBConnection();
-				connection = dbconn.getConnection();
+				connection = dbconn;
 				setDBConn(beanId,dbconn);
 			}
 		}else{
 			DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean(beanId);
 			DBConnection dbconn = dbcf.createDBConnection();
-			connection = dbconn.getConnection();
+			connection = dbconn;
 		}
 		
 		return connection;

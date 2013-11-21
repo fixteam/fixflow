@@ -15,43 +15,36 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to;
+package com.founder.fix.fixflow.config.to.bpaconf;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import com.founder.fix.fixflow.config.to.bpaconf.FixConfigBPAConf;
+import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * @ClassName: FixConfigTo
+ * @ClassName: FixConfigBPASource
  * @Description: TODO
  * @author shao
  *
  */
-@XmlRootElement(name="fixConfig")
-@XmlAccessorType(XmlAccessType.PROPERTY)
-public class FixConfigTo {
+public class FixConfigBPASource {
+	private String key;
 	
-	private FixConfigItems items;
+	private String value;
 	
-	private FixConfigBPAConf bpaConf;
-	
-
-	public FixConfigBPAConf getBpaConf() {
-		return bpaConf;
+	@XmlAttribute
+	public String getKey() {
+		return key;
 	}
 
-	public void setBpaConf(FixConfigBPAConf bpaConf) {
-		this.bpaConf = bpaConf;
-	}
-
-	public FixConfigItems getItems() {
-		return items;
-	}
-
-	public void setItems(FixConfigItems items) {
-		this.items = items;
+	public void setKey(String key) {
+		this.key = key;
 	}
 	
+	@XmlAttribute
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

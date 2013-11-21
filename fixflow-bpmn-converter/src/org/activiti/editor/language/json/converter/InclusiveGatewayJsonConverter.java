@@ -21,6 +21,8 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.InclusiveGateway;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -38,7 +40,7 @@ public class InclusiveGatewayJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(InclusiveGateway.class, InclusiveGatewayJsonConverter.class);
+    convertersToJsonMap.put(InclusiveGatewayBehavior.class, InclusiveGatewayJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {

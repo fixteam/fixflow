@@ -15,43 +15,32 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to;
+package com.founder.fix.fixflow.config.to.bpaconf;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
-import com.founder.fix.fixflow.config.to.bpaconf.FixConfigBPAConf;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 
 /**
- * @ClassName: FixConfigTo
+ * @ClassName: FixConfigBPAWorkspace
  * @Description: TODO
  * @author shao
  *
  */
-@XmlRootElement(name="fixConfig")
-@XmlAccessorType(XmlAccessType.PROPERTY)
-public class FixConfigTo {
+public class FixConfigBPAWorkspace {
 	
-	private FixConfigItems items;
 	
-	private FixConfigBPAConf bpaConf;
+	private List<FixConfigBPASource> source;
+
+	@XmlElements(value = { @XmlElement (name="source",type=FixConfigBPASource.class)})
+	public List<FixConfigBPASource> getSource() {
+		return source;
+	}
+
+	public void setSource(List<FixConfigBPASource> source) {
+		this.source = source;
+	}
 	
-
-	public FixConfigBPAConf getBpaConf() {
-		return bpaConf;
-	}
-
-	public void setBpaConf(FixConfigBPAConf bpaConf) {
-		this.bpaConf = bpaConf;
-	}
-
-	public FixConfigItems getItems() {
-		return items;
-	}
-
-	public void setItems(FixConfigItems items) {
-		this.items = items;
-	}
 	
 }

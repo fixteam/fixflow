@@ -30,6 +30,7 @@ import org.eclipse.dd.dc.Point;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author Tijs Rademakers
@@ -60,7 +61,7 @@ public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
   public void convertToJson(FlowElement flowElement, ActivityProcessor processor,
       Definitions model, ArrayNode shapesArrayNode, double subProcessX, double subProcessY) {
     
-    SequenceFlow sequenceFlow = (SequenceFlow) flowElement;
+    SequenceFlowBehavior sequenceFlow = (SequenceFlowBehavior) flowElement;
     ObjectNode flowNode = BpmnJsonConverterUtil.createChildShape(sequenceFlow.getId(), STENCIL_SEQUENCE_FLOW, 172, 212, 128, 212);
     ArrayNode dockersArrayNode = objectMapper.createArrayNode();
     ObjectNode dockNode = objectMapper.createObjectNode();
@@ -103,6 +104,7 @@ public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
     if (StringUtils.isNotEmpty(BpmnModelUtil.getExpression(sequenceFlow.getConditionExpression()))) {
       propertiesNode.put(PROPERTY_SEQUENCEFLOW_CONDITION, BpmnModelUtil.getExpression(sequenceFlow.getConditionExpression()));
     }
+    propertiesNode.put(PROPERTY_SEQUENCEFLOW_ORDERID, sequenceFlow.getOrderId());
     
     flowNode.put(EDITOR_SHAPE_PROPERTIES, propertiesNode);
     

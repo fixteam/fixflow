@@ -11195,11 +11195,16 @@ function init() {
 			modelUrl = modelUrl.replace("/self","/json");
 		} else {
 			var modelId = window.location.search.substring(4);
-			modelUrl = "../../ModelConverter";
+			modelUrl = "../../FlowWebManagerServlet";
 		}
-
+var passObj = window.dialogArguments;
         ORYX.Editor.createByUrl(modelUrl, {
-            id: modelUrl
+            id: modelUrl,
+						parameters:{
+							path: "private,test", //passObj.path,
+							fileName: "process_testych.bpmn", //passObj.fileName,
+							method: "loadBPMWeb"
+						}
         });
     }
 }
@@ -13105,6 +13110,7 @@ ORYX.Editor.createByUrl = function(modelUrl, config){
     
     new Ajax.Request(modelUrl, {
       method: 'GET',
+			parameters: config.parameters,
       onSuccess: function(transport) {
         var editorConfig = Ext.decode(transport.responseText);
         editorConfig = Ext.applyIf(editorConfig, config);
@@ -21767,9 +21773,9 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 			} else if (type == ORYX.CONFIG.TYPE_CHOICE) {				
 				var items = this.items[i].items();
 				var select = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", parent, ['select', {style:'display:none'}]);
-				var optionTmpl = new Ext.Template('<option value="{value}">{value}</option>');
+				var optionTmpl = new Ext.Template('<option value="{value}">{title}</option>');
 				items.each(function(value){ 
-					optionTmpl.append(select, {value:value.value()}); 
+					optionTmpl.append(select, {value:value.value(), title:value.title()}); 
 				});				
 				
 				editor = new Ext.form.ComboBox(
@@ -22236,9 +22242,9 @@ Ext.extend(Ext.form.MultipleComplexListField, Ext.form.TriggerField,  {
 				} else if (type == ORYX.CONFIG.TYPE_CHOICE) {				
 					var items = complexItems[j].items();
 					var select = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", parent, ['select', {style:'display:none'}]);
-					var optionTmpl = new Ext.Template('<option value="{value}">{value}</option>');
+					var optionTmpl = new Ext.Template('<option value="{value}">{title}</option>');
 					items.each(function(value){ 
-						optionTmpl.append(select, {value:value.value()}); 
+						optionTmpl.append(select, {value:value.value(),title:value.title()}); 
 					});				
 					
 					editor = new Ext.form.ComboBox(

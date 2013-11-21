@@ -3,6 +3,7 @@
 <div class="header">
     <div class="top-right">
         <ul>
+        <li><a href="#" onclick="bpa();">BPA分析</a></li>
         <li><a id="updateCache" href="#">${applicationScope.appInfo["common.clearCache"]}</a></li>
         <li><a id="setAgent" href="#">${applicationScope.appInfo["common.agent"]}</a></li>
         <li><a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
@@ -75,6 +76,11 @@
 	function updateMyself(){
 		var obj = {};
 		window.open("FlowCenter?action=getUserInfo&isUpdate=true");
+	}
+	
+	function bpa(){
+		var obj = {};
+		window.open("FixFlowBPACenter?action=doBPMAnalysis");
 	}
 	
 	function chooseSelect(){
