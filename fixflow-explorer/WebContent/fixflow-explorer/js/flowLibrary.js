@@ -218,6 +218,11 @@ $(document).ready(function(){
 			tree.expandNode(currentTreeNode, true);
 			
 		}else if(dirType == "file"){
+			var fileType = name.substring(name.lastIndexOf(".")+1);
+			if(fileType!="bpmn"){
+				alert("该文件不是流程定义文件");
+				return false;
+			}
 			var passObj = {
 				path: getBreadcrumbNameList(breadcrumbList),
 				fileName: name

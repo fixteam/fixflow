@@ -95,7 +95,7 @@
 			
 			</div>
 			
-			<form id="uploadFile" action="/bpmcenter/FlowWebManagerServlet"  enctype="multipart/form-data" method="post" target="hidden_frame">
+			<form style='display:none' id="uploadFile" action="/bpmcenter/FlowWebManagerServlet"  enctype="multipart/form-data" method="post" target="hidden_frame">
 			  	<input type="file" id="upload" name="upload" />
 			  	<input type="text" id="fileName" name="fileName" />
 			  	<input type="text" id="path" name="path" />
