@@ -20,6 +20,8 @@
         <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>${applicationScope.appInfo["module.schedule"]}</h1><h4>to do task</h4></a></li>
         <li><a id="getAllProcess" href="FlowCenter?action=getAllProcess"><h1>${applicationScope.appInfo["module.flowQuery"]}</h1><h4>flow query</h4></a></li>
         <li><a id="getPlaceOnFile" href="FlowCenter?action=getPlaceOnFile"><h1>${applicationScope.appInfo["module.placeOnFile"]}</h1><h4>archiving flow</h4></a></li>
+        
+        <li><a id="getBPA" href="FixFlowBPACenter?action=getBPA"><h1>BPA测试</h1></li>
         </ul>
     </div>
 </div>
