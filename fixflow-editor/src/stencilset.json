@@ -3,6 +3,150 @@
   "namespace" : "http://b3mn.org/stencilset/bpmn2.0#",
   "description" : "This is the BPMN 2.0 stencil set specification.",
   "propertyPackages" : [ {
+		"name": "flowbase",
+		"properties": [{
+	      "id" : "process_id",
+	      "type" : "String",
+	      "title" : "编号",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : true
+    	},{
+	      "id" : "name",
+	      "type" : "String",
+	      "title" : "名称",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : true
+    	},{
+	      "id" : "process_subject",
+	      "type" : "String",
+	      "title" : "主题",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : true
+    	},{
+	      "id" : "process_default_formuri",
+	      "type" : "String",
+	      "title" : "默认列表",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : true
+    	},{
+	      "id" : "process_category",
+	      "type" : "String",
+	      "title" : "分类",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : true
+    	},{
+    	  "id" : "process_datavariable",
+	      "type" : "Complex",
+	      "title" : "数据变量",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : true,
+	      "complexItems" : [ {
+	        "id" : "id",
+	        "name" : "名称",
+	        "type" : "String",
+	        "description" : "Listener expression definition.",
+	        "value" : "",
+	        "width" : 100,
+	        "optional" : true
+	      },{
+	        "id" : "datatype",
+	        "name" : "数据类型",
+	        "type" : "Choice",
+	        "value" : "",
+	        "width" : 85,
+	        "optional" : false,
+	        "items" : [ {
+	          "id" : "c1",
+	          "title" : "是",
+	          "value" : "true",
+	          "refToView" : ""
+	        }, {
+	          "id" : "c2",
+	          "title" : "否",
+	          "value" : "false",
+	          "refToView" : ""
+	        }]
+	      },{
+	        "id" : "biztype",
+	        "name" : "业务类型",
+	        "type" : "Choice",
+	        "value" : "",
+	        "width" : 85,
+	        "optional" : false,
+	        "items" : [ {
+	          "id" : "c1",
+	          "title" : "是",
+	          "value" : "true",
+	          "refToView" : ""
+	        }, {
+	          "id" : "c2",
+	          "title" : "否",
+	          "value" : "false",
+	          "refToView" : ""
+	        }]
+	      },{
+	        "id" : "ispersistence",
+	        "name" : "持久化",
+	        "type" : "Choice",
+	        "value" : "",
+	        "width" : 85,
+	        "optional" : false,
+	        "items" : [ {
+	          "id" : "c1",
+	          "title" : "是",
+	          "value" : "true",
+	          "refToView" : ""
+	        }, {
+	          "id" : "c2",
+	          "title" : "否",
+	          "value" : "false",
+	          "refToView" : ""
+	        }]
+	      },{
+	        "id" : "expression",
+	        "name" : "默认值",
+	        "type" : "String",
+	        "description" : "Listener expression definition.",
+	        "value" : "",
+	        "width" : 100,
+	        "optional" : true
+	      },{
+	        "id" : "documentation",
+	        "name" : "描述",
+	        "type" : "String",
+	        "description" : "Listener expression definition.",
+	        "value" : "",
+	        "width" : 100,
+	        "optional" : true
+	      }]
+
+    	}]
+	},{
+		"name": "gatewaybase",
+		"properties": [{
+			"id" : "gatewaydirection",
+      "type" : "Choice",
+      "title" : "进出类型",
+      "value" : "",
+      "description" : "Unique identifier of the element.",
+      "popular" : true,
+      "items" : [ {
+				"id" : "1",
+				"title" : "合并",
+				"value" : "Converging"
+			}, {
+				"id" : "2",
+				"title" : "分散",
+				"value" : "Diverging"
+			}]
+		}]
+	},{
     "name" : "fixflowbase",
     "properties" : [ {
       "id" : "overrideid",
@@ -1457,7 +1601,7 @@
     "groups" : [ "Diagram" ],
     "mayBeRoot" : true,
     "hide" : true,
-    "propertyPackages" : [ "baseattributes", "diagrambase", "executionlistenersbase" ],
+    "propertyPackages" : [ "flowbase" ],
     "roles" : [ ]
   }, {
     "type" : "node",
@@ -1705,7 +1849,7 @@
     "view" : "gateway/parallel.svg",
     "icon" : "gateway/parallel.png",
     "groups" : [ "Gateways" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "propertyPackages" : [ "elementbase", "baseattributes", "gatewaybase" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
