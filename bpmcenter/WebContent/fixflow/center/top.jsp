@@ -4,6 +4,7 @@
     <div class="top-right">
         <ul>
         <li><a href="#" onclick="bpa();">BPA分析</a></li>
+        <li><a href="#" onclick="bpaShow();">BPA展现</a></li>
         <li><a id="updateCache" href="#">${applicationScope.appInfo["common.clearCache"]}</a></li>
         <li><a id="setAgent" href="#">${applicationScope.appInfo["common.agent"]}</a></li>
         <li><a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
@@ -20,8 +21,6 @@
         <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>${applicationScope.appInfo["module.schedule"]}</h1><h4>to do task</h4></a></li>
         <li><a id="getAllProcess" href="FlowCenter?action=getAllProcess"><h1>${applicationScope.appInfo["module.flowQuery"]}</h1><h4>flow query</h4></a></li>
         <li><a id="getPlaceOnFile" href="FlowCenter?action=getPlaceOnFile"><h1>${applicationScope.appInfo["module.placeOnFile"]}</h1><h4>archiving flow</h4></a></li>
-        
-        <li><a id="getBPA" href="FixFlowBPACenter?action=getBPA"><h1>BPA测试</h1></li>
         </ul>
     </div>
 </div>
@@ -83,6 +82,11 @@
 	function bpa(){
 		var obj = {};
 		window.open("FixFlowBPACenter?action=doBPMAnalysis");
+	}
+	
+	function bpaShow(){
+		var obj = {};
+		window.open("FixFlowBPACenter?action=getBPA");
 	}
 	
 	function chooseSelect(){
