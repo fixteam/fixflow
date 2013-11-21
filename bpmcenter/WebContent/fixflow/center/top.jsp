@@ -4,7 +4,7 @@
     <div class="top-right">
         <ul>
         <li><a href="#" onclick="bpa();">BPA分析</a></li>
-        <li><a href="#" onclick="bpaShow();">BPA展现</a></li>
+        <li><a href="FixFlowBPACenter?action=getBPA">BPA展现</a></li>
         <li><a id="updateCache" href="#">${applicationScope.appInfo["common.clearCache"]}</a></li>
         <li><a id="setAgent" href="#">${applicationScope.appInfo["common.agent"]}</a></li>
         <li><a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
@@ -82,11 +82,6 @@
 	function bpa(){
 		var obj = {};
 		window.open("FixFlowBPACenter?action=doBPMAnalysis");
-	}
-	
-	function bpaShow(){
-		var obj = {};
-		window.open("FixFlowBPACenter?action=getBPA");
 	}
 	
 	function chooseSelect(){
