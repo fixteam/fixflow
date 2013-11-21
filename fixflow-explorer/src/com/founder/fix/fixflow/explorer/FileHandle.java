@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class FileHandle {
 				if (fileItem.isFormField()) { // 是否是表单提交域，可以分区是否上传的附件
 					String name = fileItem.getFieldName(); // input标签的name
 					String value = fileItem.getString(); // input表单的value
-					request.setAttribute(name, value);
+					request.setAttribute(filterEncoding(name),filterEncoding(value));
 				}else{
 					fi.add(fileItem);
 				}
@@ -77,7 +78,6 @@ public class FileHandle {
 	
 	public static Iterator<FileItem>  createFactory(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try{
-		response.setContentType("text/html;charset=UTF-8");
 		// 创建一个磁盘文件的工厂，然后将它 传递到servletFileUplaod的实例中
 		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
 		ServletFileUpload servletFileUpload = new ServletFileUpload(
@@ -89,5 +89,9 @@ public class FileHandle {
 		e.printStackTrace();
 		throw new Exception("磁盘文件的工厂创建失败!");
 	}
+	}
+	
+	public static String filterEncoding(String param) throws UnsupportedEncodingException{
+		return  new String(param.getBytes("ISO-8859-1"), "utf-8");
 	}
 }
