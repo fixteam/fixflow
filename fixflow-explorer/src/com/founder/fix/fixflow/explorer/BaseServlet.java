@@ -41,7 +41,13 @@ public class BaseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
        setRequestParm(request);setResponseParm(response);
-       String command = request.getParameter("method");
+       String command  = request.getParameter("method");
+       if(null == command){
+    	   try {
+   			FileHandle.whenUploadFileBindParameter(request, response);
+   			command = request.getAttribute("method").toString();
+	   		} catch (Exception e) {}
+       }
        Method method = null;
        method = getMethod(command);
        Object []args = {};
@@ -71,6 +77,9 @@ public class BaseServlet extends HttpServlet {
     
 	public  String request(String name){
 		return requestParm.getParameter(name);
+	}
+	public  String requestAttribute(String name){
+		return requestParm.getAttribute(name).toString();
 	}
 	
 	public  String session(String name){
