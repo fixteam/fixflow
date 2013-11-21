@@ -47,7 +47,12 @@ public class FlowWebManagerServlet extends BaseServlet {
     
     
     public String buildPath(){
-		String[] node = request("path").split(",");
+		String[] node = null;
+		try{
+			node = request("path").split(",");
+		}catch(Exception e){
+			node = requestAttribute("path").split(",");
+		}
 		String path = session(FlowCenterService.LOGIN_USER_ID);
 		for (int i = 0; i < node.length; i++) {
 			path += File.separator+node[i];
