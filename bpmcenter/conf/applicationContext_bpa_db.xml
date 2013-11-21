@@ -13,4 +13,8 @@ xmlns:context="http://www.springframework.org/schema/context"
 	<bean id="DB_BPA_BASE" scope="prototype" class="com.founder.fix.bpa.db.impl.FixFlowDataSourceImpl"> 
 		<property name="dbId" value="DB_FIX_BIZ_BASE" />
 	</bean>
+	
+	<bean id="DB_BPA_BASE2" scope="prototype" class="com.founder.fix.bpa.db.impl.FixFlowDataSourceImpl"> 
+		<property name="dbId" value="DB_FIX_BPA_BASE" />
+	</bean>
 </beans>

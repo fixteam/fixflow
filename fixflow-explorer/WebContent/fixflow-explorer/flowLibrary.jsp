@@ -76,10 +76,7 @@
 				<span class="x-breadcrumb-wrapper" id="ext-gen466">
 					<span id="ext-gen467">
 						<span class="details">
-							<span>»</span>
-							<a rel="/directory/09a3c14509a44992a287ec193ebd06b9"> 公有流程</a>
-							<span>»</span> 
-							<a rel="/directory/e7bd5482c48245d39624998afb6a8802"> 我的公有流程</a>  
+							
 						</span>
 					</span>
 				</span>
@@ -90,39 +87,24 @@
 		  		<div class="btn-normal listBtn" btn-type="createFolder" btn-scope=all><a href="#" >新建文件夹</a></div>
 		  		<div class="btn-normal listBtn" btn-type="rename" btn-scope=single><a href="#" >重命名</a></div>
 		  		<div class="btn-normal listBtn" btn-type="delete" btn-scope=single><a href="#" >删除</a></div>
+		  		<div class="btn-normal listBtn" btn-type="upload" btn-scope=all><a href="#" >上传</a></div>
 	  		</div>
 			
 			<!-- thumbView -->
 			<div class="view_plugin" style="background-color: #ffffff;">
 			
-			  <!-- <div class="thumb-wrap">
-				<div class="thumb">
-					<img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon">
-				</div>
-				<span class="editable">
-					文件夹1
-				</span>
-			  </div>
-			  
-			  <div class="thumb-wrap">
-				<div class="thumb">
-					<img src="images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes2" class="x-thumb-icon">
-				</div>
-				<span class="editable">
-					文件夹2
-				</span>
-			  </div>
-			  
-			  <div class="thumb-wrap " storeindex="4" unselectable="on">
-			  	<div class="thumb model"></div>
-				<span class="x-editable" title="">报销流程v1.0</span>
-			  </div> -->
-			  
 			</div>
+			
+			<form style='display:none' id="uploadFile" action="/bpmcenter/FlowWebManagerServlet"  enctype="multipart/form-data" method="post" target="hidden_frame">
+			  	<input type="file" id="upload" name="upload" />
+			  	<input type="text" id="fileName" name="fileName" />
+			  	<input type="text" id="path" name="path" />
+			  	<input type="submit" id="uploadSubmit"/>
+				<input type="hidden" name="method" value="writeFile2Address"/>
+				<iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
+			</form>
 		  </div>
 		  
-		  <!-- Block 
-		  <div class="block"></div> -->
 		</div> 
 	</div>
 </div>

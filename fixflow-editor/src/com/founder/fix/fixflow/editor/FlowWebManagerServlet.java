@@ -8,8 +8,8 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.explorer.BaseServlet;
+import com.founder.fix.fixflow.explorer.FileHandle;
 import com.founder.fix.fixflow.service.FlowCenterService;
-
 
 /**
  * 
@@ -38,17 +38,22 @@ public class FlowWebManagerServlet extends BaseServlet {
 	 */
     public void writeFile2Address(){
     	try {
-             request("upload");
-		} catch (Exception e) {
-			error("加载web流程图，返回json格式对象出错!");
+    		String msg =  FileHandle.updload(requestParm, responseParm, getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath(), requestAttribute("fileName"));
+    		success(msg, "string");
+    	} catch (Exception e) {
+			error("文件写入到指定的目录下出错!");
 		}
     }
     
     
     public String buildPath(){
-		String[] node = request("path").split(",");
-		//String path = session(FlowCenterService.LOGIN_USER_ID);
-		String path = "1200119390";
+		String[] node = null;
+		try{
+			node = request("path").split(",");
+		}catch(Exception e){
+			node = requestAttribute("path").split(",");
+		}
+		String path = session(FlowCenterService.LOGIN_USER_ID);
 		for (int i = 0; i < node.length; i++) {
 			path += File.separator+node[i];
 		}

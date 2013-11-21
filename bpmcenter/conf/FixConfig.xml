@@ -4,7 +4,7 @@
 		<analysisEngine id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
 			<tigger value="234"/>
 			<workspace>
-				<source key="bpmDB" value="DB_BPA_BASE"/>
+				<source key="bpmDB" value="DB_BPA_BASE2"/>
 			</workspace>
 			<outPutDB value="DB_BPA_BASE"/>
 		</analysisEngine>

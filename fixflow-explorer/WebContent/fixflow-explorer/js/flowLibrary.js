@@ -23,6 +23,22 @@ var zTreeSetting = {
 };
 var tree;
 $(document).ready(function(){
+	$("#upload").change(function(){
+		var fileName = $(this).val();
+		var fName = fileName.substring(fileName.lastIndexOf("\\")+1);
+		$("#fileName").val(fName);
+		$("#path").val(getBreadcrumbNameList(breadcrumbList));
+		try{
+			$("#uploadFile").submit();
+			alert("上传成功！");
+			var guid = FixFlow.Utils.createGuid();
+			$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="">'+fName+'</span></div>');
+			$thumb_wrap.appendTo($("div.view_plugin"));
+		}catch(e){
+			alert("上传失败！");
+		}
+	});
+	
 	$.ajax({
 		url: "/bpmcenter/FileAndDirectoryServlet",
 		type: "POST",
@@ -153,6 +169,9 @@ $(document).ready(function(){
 						}
 					});
 					break;
+				case "upload":
+					$("#upload").click();
+					break;
 				default:
 					break;
 			}
@@ -164,7 +183,9 @@ $(document).ready(function(){
 	
 	//Click Event
 	$("div.thumb-wrap[dirType!=empty]").live("click",function(){
-		
+		if($("span.editable",$(this)).html() == "resolvent"){
+			return false;
+		}
 		$("div.thumb-wrap").attr("select", "false");
 		$("div.thumb").css("background-color","#FFFFFF");
 		$("div.thumb > img").attr("src", "/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png");
@@ -197,6 +218,11 @@ $(document).ready(function(){
 			tree.expandNode(currentTreeNode, true);
 			
 		}else if(dirType == "file"){
+			var fileType = name.substring(name.lastIndexOf(".")+1);
+			if(fileType!="bpmn"){
+				alert("该文件不是流程定义文件");
+				return false;
+			}
 			var passObj = {
 				path: getBreadcrumbNameList(breadcrumbList),
 				fileName: name
