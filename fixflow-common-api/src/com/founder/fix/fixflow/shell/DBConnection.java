@@ -73,7 +73,7 @@ public class DBConnection {
 			String dbms = connection.getMetaData().getDatabaseProductName();
 			if ( dbms == null || dbms.equals("") ){
 				pageination = (Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl").newInstance();
-			}else if ( dbms.toLowerCase().equals("Oracle") ){
+			}else if ( dbms.equals("Oracle") ){
 				pageination = (Pagination)(Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl").newInstance();
 			}else if ( dbms.equals("Microsoft SQL Server")){
 				pageination = (Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl").newInstance();

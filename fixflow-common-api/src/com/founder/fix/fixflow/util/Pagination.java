@@ -124,7 +124,7 @@ public class Pagination<T> implements Serializable {
 	 * @return
 	 */
 	public int getEndRow() {
-		if(endRow>getTotal()){
+		if(endRow>getTotal() && getTotal()>0){
 			return getTotal();
 		}
 		return endRow;
