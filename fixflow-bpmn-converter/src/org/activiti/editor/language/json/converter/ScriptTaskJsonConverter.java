@@ -21,6 +21,8 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.ScriptTask;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -38,7 +40,7 @@ public class ScriptTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ScriptTask.class, ScriptTaskJsonConverter.class);
+    convertersToJsonMap.put(ScriptTaskBehavior.class, ScriptTaskJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -47,7 +49,7 @@ public class ScriptTaskJsonConverter extends BaseBpmnJsonConverter {
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
   	ScriptTask scriptTask = (ScriptTask) flowElement;
-  	propertiesNode.put(PROPERTY_SCRIPT_FORMAT, scriptTask.getScriptFormat());
+  	//propertiesNode.put(PROPERTY_SCRIPT_FORMAT, scriptTask.getScriptFormat());
   	propertiesNode.put(PROPERTY_SCRIPT_TEXT, scriptTask.getScript());
   }
   

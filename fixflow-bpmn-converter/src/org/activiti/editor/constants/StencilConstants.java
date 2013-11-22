@@ -71,11 +71,7 @@ public interface StencilConstants {
 	final String PROPERTY_NAME = "name";
 	final String PROPERTY_DOCUMENTATION = "documentation";
 	
-	final String PROPERTY_PROCESS_ID = "process_id";
-	final String PROPERTY_PROCESS_EXECUTABLE = "process_executable";
-	final String PROPERTY_PROCESS_VERSION = "process_version";
-	final String PROPERTY_PROCESS_AUTHOR = "process_author";
-	final String PROPERTY_PROCESS_NAMESPACE = "process_namespace";
+	
 	
 	final String PROPERTY_CANCEL_ACTIVITY = "cancelactivity";
         
@@ -151,7 +147,7 @@ public interface StencilConstants {
   final String PROPERTY_FORM_FORM_VALUE_NAME = "formproperty_formvalue_name";
 
 	final String PROPERTY_SCRIPT_FORMAT = "scriptformat";
-	final String PROPERTY_SCRIPT_TEXT = "scripttext";
+	
 	
 	final String PROPERTY_RULETASK_CLASS = "ruletask_class";
 	final String PROPERTY_RULETASK_VARIABLES_INPUT = "ruletask_variables_input";
@@ -190,11 +186,13 @@ public interface StencilConstants {
 	final String PROPERTY_USERTASK_ASSIGNMENT = "potentialowner";
 	final String PROPERTY_USERTASK_TASKTYPE = "tasktype";
 	final String PROPERTY_USERTASK_SUBJECT = "tasksubject";
-	final String PROPERTY_USERTASK_SKIPSTRATEGY = "skipenable";
-	final String PROPERTY_USERTASK_IS_CREATE_SKIP_PROCESS = "iscreateskipprocess";
-	final String PROPERTY_USERTASK_SKIPEXPRESSION = "skipexpression";
-	final String PROPERTY_USERTASK_SKIPASSIGNEE = "skipassignee";
-	final String PROPERTY_USERTASK_SKIPCOMMENT = "skipcomment";
+	
+	
+	final String PROPERTY_ACTIVITY_SKIPSTRATEGY = "skipenable";
+	final String PROPERTY_ACTIVITY_IS_CREATE_SKIP_PROCESS = "iscreateskipprocess";
+	final String PROPERTY_ACTIVITY_SKIPEXPRESSION = "skipexpression";
+	final String PROPERTY_ACTIVITY_SKIPASSIGNEE = "skipassignee";
+	final String PROPERTY_ACTIVITY_SKIPCOMMENT = "skipcomment";
 	
 	final String PROPERTY_TASKCOMMAND = "taskcommand";
 	final String PROPERTY_TASKCOMMAND_ID = "id";
@@ -215,4 +213,22 @@ public interface StencilConstants {
 	  final String PROPERTY_MULTIINSTANCE_CONDITION = "multiinstance_condition";
 	
 	final String PROPERTY_GATEWAT_DIRECTION = "gatewaydirection";
+	
+	final String PROPERTY_PROCESS_ID = "process_id";
+	final String PROPERTY_PROCESS_EXECUTABLE = "process_executable";
+	final String PROPERTY_PROCESS_VERSION = "process_version";
+	final String PROPERTY_PROCESS_AUTHOR = "process_author";
+	final String PROPERTY_PROCESS_NAMESPACE = "process_namespace";
+	final String PROPERTY_PROCESS_SUBJECT = "process_subject";
+	final String PROPERTY_PROCESS_DEFAULT_FORMURI = "process_default_formuri";
+	final String PROPERTY_PROCESS_CATEGORY ="process_category";
+	final String PROPERTY_PROCESS_DATAVARIABLE = "process_datavariable";
+	
+	final String PROPERTY_DATAVARIABLE_ID = "id";
+	final String PROPERTY_DATAVARIABLE_TYPE = "datatype";
+	final String PROPERTY_DATAVARIABLE_BIZTYPE =  "biztype";
+	final String PROPERTY_DATAVARIABLE_IS_PERSISTENCE = "ispersistence";
+	final String PROPERTY_DATAVARIABLE_DEFAULT_VALUE = "expression";
+	
+	final String PROPERTY_SCRIPT_TEXT = "scripttext";
 }

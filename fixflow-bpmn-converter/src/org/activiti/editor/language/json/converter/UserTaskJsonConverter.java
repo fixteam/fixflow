@@ -96,25 +96,6 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
          propertiesNode.put(PROPERTY_USERTASK_ASSIGNMENT, assignmentNode);
     }
     
-    //跳过策略
-    SkipStrategy skipStrategy = userTask.getSkipStrategy();
-    if(skipStrategy !=null){
-    	setPropertyValue(PROPERTY_USERTASK_SKIPSTRATEGY, StringUtil.getString(skipStrategy.isIsEnable()), propertiesNode);
-    	setPropertyValue(PROPERTY_USERTASK_IS_CREATE_SKIP_PROCESS, StringUtil.getString(skipStrategy.isIsCreateSkipProcess()), propertiesNode);
-    	SkipAssignee skipAssignee = skipStrategy.getSkipAssignee();
-    	if(skipAssignee != null){
-    		setPropertyValue(PROPERTY_USERTASK_SKIPASSIGNEE, skipAssignee.getExpression().getValue(), propertiesNode);
-    	}
-    	SkipComment skipComment = skipStrategy.getSkipComment();
-    	if(skipComment !=null){
-    		setPropertyValue(PROPERTY_USERTASK_SKIPCOMMENT, skipComment.getExpression().getValue(), propertiesNode);
-    	}
-    	Expression skipExpression = skipStrategy.getExpression();
-    	if(skipExpression !=null){
-    		setPropertyValue(PROPERTY_USERTASK_SKIPEXPRESSION, skipExpression.getValue(), propertiesNode);
-    	}
-    }
-    
     //处理命令
     
     List<TaskCommandInst> commandList =  userTask.getTaskCommands();

@@ -53,6 +53,10 @@ import org.eclipse.dd.dc.Bounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.founder.fix.bpmn2extensions.fixflow.Expression;
+import com.founder.fix.bpmn2extensions.fixflow.SkipAssignee;
+import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
+import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
@@ -128,7 +132,8 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     
     if (flowElement instanceof Activity) {
       
-    	//为什么要改成impl???
+    	//为什么要改成impl???很多方法都封装在impl里？
+    	
       ActivityImpl activity = (ActivityImpl) flowElement;
       for (BoundaryEvent boundaryEvent : activity.getBoundaryEventRefs()) {
         outgoingArrayNode.add(BpmnJsonConverterUtil.createResourceNode(boundaryEvent.getId()));
@@ -164,6 +169,26 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
         		propertiesNode.put(PROPERTY_MULTIINSTANCE_CONDITION, BpmnModelUtil.getExpression(loopDef.getCompletionCondition()));
         	}
       }
+      
+    //跳过策略
+      SkipStrategy skipStrategy = activity.getSkipStrategy();
+      if(skipStrategy !=null){
+      	setPropertyValue(PROPERTY_ACTIVITY_SKIPSTRATEGY, StringUtil.getString(skipStrategy.isIsEnable()), propertiesNode);
+      	setPropertyValue(PROPERTY_ACTIVITY_IS_CREATE_SKIP_PROCESS, StringUtil.getString(skipStrategy.isIsCreateSkipProcess()), propertiesNode);
+      	SkipAssignee skipAssignee = skipStrategy.getSkipAssignee();
+      	if(skipAssignee != null){
+      		setPropertyValue(PROPERTY_ACTIVITY_SKIPASSIGNEE, skipAssignee.getExpression().getValue(), propertiesNode);
+      	}
+      	SkipComment skipComment = skipStrategy.getSkipComment();
+      	if(skipComment !=null){
+      		setPropertyValue(PROPERTY_ACTIVITY_SKIPCOMMENT, skipComment.getExpression().getValue(), propertiesNode);
+      	}
+      	Expression skipExpression = skipStrategy.getExpression();
+      	if(skipExpression !=null){
+      		setPropertyValue(PROPERTY_ACTIVITY_SKIPEXPRESSION, skipExpression.getValue(), propertiesNode);
+      	}
+      }
+      
         
 //        if (StringUtils.isNotEmpty(loopDef.getLoopCardinality()) || StringUtils.isNotEmpty(loopDef.getInputDataItem()) ||
 //            StringUtils.isNotEmpty(loopDef.getCompletionCondition())) {

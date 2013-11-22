@@ -25,6 +25,8 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.CallActivity;
 import org.eclipse.bpmn2.FlowElement;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
+
 /**
  * @author Tijs Rademakers
  */
@@ -42,7 +44,7 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(CallActivity.class, CallActivityJsonConverter.class);
+    convertersToJsonMap.put(CallActivityBehavior.class, CallActivityJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -51,9 +53,9 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
     CallActivity callActivity = (CallActivity) flowElement;
-  	if (StringUtils.isNotEmpty(callActivity.getCalledElementRef().getId())) {
-  	  propertiesNode.put(PROPERTY_CALLACTIVITY_CALLEDELEMENT, callActivity.getCalledElementRef().getId());
-  	}
+//  	if (StringUtils.isNotEmpty(callActivity.getCalledElementRef().getId())) {
+//  	  propertiesNode.put(PROPERTY_CALLACTIVITY_CALLEDELEMENT, callActivity.getCalledElementRef().getId());
+//  	}
   	
   	//addJsonParameters(PROPERTY_CALLACTIVITY_IN, callActivity.getInParameters(), propertiesNode);
   	//addJsonParameters(PROPERTY_CALLACTIVITY_OUT, callActivity.getOutParameters(), propertiesNode);

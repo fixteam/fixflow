@@ -23,6 +23,7 @@ import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.dd.dc.Bounds;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 /**
@@ -42,7 +43,7 @@ public class SubProcessJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(SubProcess.class, SubProcessJsonConverter.class);
+    convertersToJsonMap.put(SubProcessBehavior.class, SubProcessJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
