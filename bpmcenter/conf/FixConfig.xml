@@ -11,8 +11,34 @@
 	</bpaConf>
 	<items>
 		<item>
-			<key>1</key>
-			<value>a</value>
+			<key>FIXBPA_FLOW_PROCESSINSTANCE</key>
+			<value>
+				CREATE TABLE FIXBPA_FLOW_PROCESSINSTANCE
+				(
+				  PROCESSINSTANCE_ID       VARCHAR2(64) NOT NULL primary key,
+				  PROCESSDEFINITION_ID     VARCHAR2(512),
+				  PROCESS_NAME             VARCHAR2(255),
+				  VERSION                  INTEGER,
+				  SUBJECT                  VARCHAR2(4000),
+				  START_TIME               TIMESTAMP(6),
+				  END_TIME                 TIMESTAMP(6),
+				  DEFINITION_ID            VARCHAR2(64),
+				  ROOTTOKEN_ID             VARCHAR2(64),
+				  BIZ_KEY                  VARCHAR2(64),
+				  INITIATOR                VARCHAR2(64),
+				  ISSUSPENDED              VARCHAR2(20),
+				  PROCESSDEFINITION_KEY    VARCHAR2(512),
+				  PARENT_INSTANCE_ID       VARCHAR2(64),
+				  PARENT_INSTANCE_TOKEN_ID VARCHAR2(64),
+				  UPDATE_TIME              TIMESTAMP(6),
+				  START_AUTHOR             VARCHAR2(64),
+				  PROCESSLOCATION          VARCHAR2(2048),
+				  ISPIGEONHOLE             VARCHAR2(1),
+				  INSTANCE_STATUS          VARCHAR2(45),
+				  ARCHIVE_TIME             TIMESTAMP(6),
+				  WORK_TIME                NUMBER
+				)
+			 </value>
 		</item>
 		<item>
 			<key>2</key>
