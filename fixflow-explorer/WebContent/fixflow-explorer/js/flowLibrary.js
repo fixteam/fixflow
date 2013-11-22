@@ -1,6 +1,7 @@
 var breadcrumbList = new Array();
 var currentTreeNode;
 var currentTreeChildrenNodes;
+var currentOperationType;
 var zTreeSetting = {
 	data: { simpleData: { enable: true}},
 	callback: {
@@ -18,6 +19,11 @@ var zTreeSetting = {
 			currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
 				return true;
 			}, false, currentTreeNode);
+			if(breadcrumbList[1] && breadcrumbList[1].name == "resolvent"){
+				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
+			}else{
+				resetToolbarState();
+			}
 		}
 	}
 };
@@ -55,10 +61,9 @@ $(document).ready(function(){
 		}
 	});
 	
+	resetToolbarState();
 	$("div.toolbar > div.listBtn").each(function(){
-		if($(this).attr("btn-scope") == "single"){
-			$(this).removeClass("btn-normal").addClass("btn-disable");
-		}
+		
 		$(this).click(function(event){
 			if($(this).hasClass("btn-disable")){
 				return;
@@ -66,6 +71,7 @@ $(document).ready(function(){
 			var $selectTarget = $("div.thumb-wrap[select=true]");
 			switch($(this).attr("btn-type")){
 				case "createFolder":
+					currentOperationType = "create";
 					$("div.thumb-wrap[dirType=empty]").remove();
 					var guid = FixFlow.Utils.createGuid();
 					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+guid+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
@@ -103,11 +109,15 @@ $(document).ready(function(){
 					break;
 					
 				case "rename":
+					currentOperationType = "rename";
 					var $selectThumbWrap = $("div.thumb-wrap[select=true]");
 					var $span = $("span", $selectThumbWrap);
 					var $editInput = $("<input class='editName' type='text' style='width:90px;' oldValue='"+$span.html()+"' value='"+$span.html()+"'/>");
 					$span.empty().append($editInput);
 					$editInput.focus();
+					$editInput.click(function(){
+						return false;
+					})
 					$editInput.keydown(function(event){
 						if(event.keyCode == 13){
 							var name = $(this).val();
@@ -144,30 +154,32 @@ $(document).ready(function(){
 					break;
 					
 				case "delete":
-					var $selectThumbWrap = $("div.thumb-wrap[select=true]");
-					var $span = $("span", $selectThumbWrap);
-					var fileName = $span.html();
-					$.ajax({
-						url: "/bpmcenter/FileAndDirectoryServlet",
-						type: "POST",
-						dataType: "text",
-						data: {
-							method: "moveFileOrDirectory",
-							path: getBreadcrumbNameList(breadcrumbList),
-							fileName: fileName,
-						},
-						success: function(data){
-							var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
-							var node = tree.getNodeByParam("id", treeNodeId);
-							tree.removeNode(node);
-							$selectThumbWrap.remove();
-							if($("div.thumb-wrap").length == 0){
-								var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_white.png" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
-								$("div.view_plugin").append($thumb_wrap);
+					if(window.confirm('确定删除？')){
+						var $selectThumbWrap = $("div.thumb-wrap[select=true]");
+						var $span = $("span", $selectThumbWrap);
+						var fileName = $span.html();
+						$.ajax({
+							url: "/bpmcenter/FileAndDirectoryServlet",
+							type: "POST",
+							dataType: "text",
+							data: {
+								method: "moveFileOrDirectory",
+								path: getBreadcrumbNameList(breadcrumbList),
+								fileName: fileName,
+							},
+							success: function(data){
+								var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
+								var node = tree.getNodeByParam("id", treeNodeId);
+								tree.removeNode(node);
+								$selectThumbWrap.remove();
+								if($("div.thumb-wrap").length == 0){
+									var $thumb_wrap = $('<div class="thumb-wrap" dirType="empty"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_white.png" class="x-thumb-icon"></div><span class="editable">空文件夹</span></div>');
+									$("div.view_plugin").append($thumb_wrap);
+								}
+								alert("删除成功！");
 							}
-							alert("删除成功！");
-						}
-					});
+						});
+					}
 					break;
 				case "upload":
 					$("#upload").click();
@@ -183,6 +195,7 @@ $(document).ready(function(){
 	
 	//Click Event
 	$("div.thumb-wrap[dirType!=empty]").live("click",function(){
+		
 		if($("span.editable",$(this)).html() == "resolvent"){
 			return false;
 		}
@@ -196,7 +209,10 @@ $(document).ready(function(){
 		$("img", $(this)).attr("src", "/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_selected.png");
 		$("div.model", $(this)).css("background-image", "url(/bpmcenter/fixflow-explorer/images/signavio/icon-model-background_selected.png)");
 		
-		$("div.toolbar > div.btn-disable").addClass("btn-normal").removeClass("btn-disable");
+		if(!(breadcrumbList[1] && breadcrumbList[1].name == "resolvent")){
+			$("div.toolbar > div.btn-disable").addClass("btn-normal").removeClass("btn-disable");
+		}
+		
 	});
 	
 	//DblClick Event
@@ -214,8 +230,13 @@ $(document).ready(function(){
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
 			$("a.curSelectedNode").removeClass("curSelectedNode");
-			$("#"+currentTreeNode.tId+" >a").addClass("curSelectedNode");
-			tree.expandNode(currentTreeNode, true);
+			if(breadcrumbList[1] && breadcrumbList[1].name == "resolvent"){
+				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
+			}else{
+				$("#"+currentTreeNode.tId+" >a").addClass("curSelectedNode");
+				tree.expandNode(currentTreeNode, true);
+				resetToolbarState();
+			}
 			
 		}else if(dirType == "file"){
 			var fileType = name.substring(name.lastIndexOf(".")+1);
@@ -248,29 +269,59 @@ $(document).ready(function(){
 				newName = $("input.editName").val();
 			}
 			var guid = $("input.editName").attr("id");
-			//$("input.editName").parent("span").replaceWith($('<span class="editable">'+newName+'</span>'));
-			//tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
-			$.ajax({
-				url: "/bpmcenter/FileAndDirectoryServlet",
-				type: "POST",
-				dataType: "text",
-				data: {
-					method: "create",
-					path: getBreadcrumbNameList(breadcrumbList),
-					newFileName: newName
-				},
-				success: function(data){
-					eval("var d = " + data);
-					if(d.state == "error"){
-						alert("文件夹重名！");
-						$("input.editName").focus();
-						$("input.editName").select();
-						return;
+			if(currentOperationType == "create"){
+				$.ajax({
+					url: "/bpmcenter/FileAndDirectoryServlet",
+					type: "POST",
+					dataType: "text",
+					data: {
+						method: "create",
+						path: getBreadcrumbNameList(breadcrumbList),
+						newFileName: newName
+					},
+					success: function(data){
+						eval("var d = " + data);
+						if(d.state == "error"){
+							alert("文件夹重名！");
+							$("input.editName").focus();
+							$("input.editName").select();
+							return;
+						}
+						$("input.editName").parent("span").replaceWith("<span>"+newName+"</span>");
+						tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
 					}
-					$("input.editName").parent("span").replaceWith("<span>"+newName+"</span>");
-					tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
-				}
-			});
+				});
+			}else if(currentOperationType == "rename"){
+				var name = $("input.editName").val();
+				$.ajax({
+					url: "/bpmcenter/FileAndDirectoryServlet",
+					type: "POST",
+					dataType: "text",
+					data: {
+						method: "reName",
+						path: getBreadcrumbNameList(breadcrumbList),
+						oldFileName: $("input.editName").attr("oldValue"),
+						newFileName: name
+					},
+					success: function(data){
+						$("input.editName").parent("span").replaceWith("<span>"+name+"</span>");
+						$.ajax({
+							url: "/bpmcenter/FileAndDirectoryServlet",
+							type: "POST",
+							dataType: "text",
+							data: {
+								method: "loadTree"
+							},
+							success: function(data){
+								var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
+								var node = tree.getNodeByParam("id", treeNodeId);
+								node.name = name;
+								$("#"+node.tId+" >a>span:last").html(name);
+							}
+						});
+					}
+				});
+			}
 		}
 	});
 	
@@ -348,6 +399,11 @@ function createBreadcrumbList(bcList){
 			});
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
+			if(breadcrumbList[1] && breadcrumbList[1].name == "resolvent"){
+				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
+			}else{
+				resetToolbarState();
+			}
 		})
 		$("span.details").append($a);
 	});
@@ -359,4 +415,14 @@ function getBreadcrumbNameList(bcList){
 		a.push(bcList[i].name);
 	}
 	return a.join(",");
+}
+
+function resetToolbarState(){
+	$("div.toolbar > div.listBtn").each(function(){
+		if($(this).attr("btn-scope") == "single"){
+			$(this).removeClass("btn-normal").addClass("btn-disable");
+		}else{
+			$(this).addClass("btn-normal").removeClass("btn-disable");
+		}
+	})
 }
