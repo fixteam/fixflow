@@ -19,7 +19,7 @@ var zTreeSetting = {
 			currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
 				return true;
 			}, false, currentTreeNode);
-			if(breadcrumbList[1] && breadcrumbList[1].name == "resolvent"){
+			if(checkIsResolvent()){
 				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
 			}else{
 				resetToolbarState();
@@ -209,7 +209,7 @@ $(document).ready(function(){
 		$("img", $(this)).attr("src", "/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey_selected.png");
 		$("div.model", $(this)).css("background-image", "url(/bpmcenter/fixflow-explorer/images/signavio/icon-model-background_selected.png)");
 		
-		if(!(breadcrumbList[1] && breadcrumbList[1].name == "resolvent")){
+		if(!(checkIsResolvent())){
 			$("div.toolbar > div.btn-disable").addClass("btn-normal").removeClass("btn-disable");
 		}
 		
@@ -230,7 +230,7 @@ $(document).ready(function(){
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
 			$("a.curSelectedNode").removeClass("curSelectedNode");
-			if(breadcrumbList[1] && breadcrumbList[1].name == "resolvent"){
+			if(checkIsResolvent()){
 				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
 			}else{
 				$("#"+currentTreeNode.tId+" >a").addClass("curSelectedNode");
@@ -399,7 +399,7 @@ function createBreadcrumbList(bcList){
 			});
 			createBreadcrumbList(breadcrumbList);
 			readSubFileAndDirectory(breadcrumbList);
-			if(breadcrumbList[1] && breadcrumbList[1].name == "resolvent"){
+			if(checkIsResolvent()){
 				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
 			}else{
 				resetToolbarState();
@@ -425,4 +425,8 @@ function resetToolbarState(){
 			$(this).addClass("btn-normal").removeClass("btn-disable");
 		}
 	})
+}
+
+function checkIsResolvent(){
+	return (breadcrumbList[1] && breadcrumbList[1].name == "resolvent");
 }
