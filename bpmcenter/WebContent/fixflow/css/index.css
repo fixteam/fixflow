@@ -21,7 +21,12 @@ body { background-color: #f2f2f2;}
 .menu li a.select { color:#FFF; background-image:url(../images/menu-selected.png); background-repeat:no-repeat;}
 .menu li a h1 { font-size:18px; font-family:"微软雅黑"; line-height:20px;}
 .menu li a h4 { margin-top:4px; font-size:12px; font-family:Arial, Helvetica, sans-serif; line-height:12px;}
-
+.second-nav { padding:4px 0; height:28px; overflow:hidden; background:#a8a9ad;}
+.second-nav ul {}
+.second-nav li { padding:0 10px; float:left;}
+.second-nav li a { display:block; padding:0 15px; color:#f1f1f1; line-height:26px; height:28px; font-family:"微软雅黑"; font-size:14px; text-decoration:none;}
+.second-nav li a:hover { color:#333; background:#fff;}
+.second-nav li a.select { color:#fff; background:#10a7d9; font-weight:bold;}
 .center-panel { display:table-row; width:100%; height:100%; background:#F2F2F2; position:relative;}
 
 

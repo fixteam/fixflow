@@ -15,15 +15,33 @@
       </ul>
     </div>
     <div class="menu">
-        <div class="logo"></div>
+		<div class="logo"></div>
         <ul>
-        <li><a id="processDefinitionList" href="FlowManager?action=processDefinitionList"><h1>定义管理</h1><h4>definition</h4></a></li>
-       <li><a id="processManageList" href="FlowManager?action=processManageList"><h1>实例管理</h1><h4>instance</h4></a></li>
-       <li><a id="taskInstanceList" href="FlowManager?action=taskInstanceList"><h1>任务管理</h1><h4>task manager</h4></a></li>
-       <li><a id="UserGroup" href="FlowManager?action=getUserList"><h1>组织机构</h1><h4>organization</h4></a></li>
-        <li><a id="jobManager" href="FlowManager?action=getJobList"><h1>定时任务</h1><h4>schedule</h4></a></li>
-        <li><a href="#"><h1>系统配置</h1><h4>system</h4></a></li>
-        <li><a id="flowLibrary" href="FlowManager?action=flowLibrary"><h1>流程梳理库</h1><h4>Flow Library</h4></a></li>
+        	<li><a id="tg1" href="#" class="select"><h1>流程库</h1><h4>Liu Cheng Ku</h4></a></li>
+       		<li><a id="tg2" href="#"><h1>组织机构</h1><h4>Zu Zhi Ji Gou</h4></a></li>
+      		<li><a id="tg3" href="#"><h1>业务管理</h1><h4>Ye Wu Guan Li</h4></a></li>
+       		<li><a id="tg4" href="#"><h1>运维管理</h1><h4>Yun Wei Guan Li</h4></a></li>
+        	<li><a id="tg5" href="#"><h1>系统配置</h1><h4>System</h4></a></li>
+       </ul>
+    </div>
+    <div class="second-nav">
+    	<ul tg="tg1">
+	        <li><a id="processDefinitionList" href="FlowManager?action=processDefinitionList">流程定义</a></li>
+	        <li><a id="flowLibrary" href="FlowManager?action=flowLibrary">归档库</a></li>
+        </ul>
+        <ul tg="tg2" style="display:none;">
+	        <li><a id="UserGroup" href="FlowManager?action=getUserList">架构定义</a></li>
+	        <li><a href="#">权限定义</a></li>
+        </ul>
+        <ul tg="tg3" style="display:none;">
+	        <li><a href="#">业务规则</a></li>
+	        <li><a href="#">业务监控</a></li>
+	        <li><a href="#">流程分析</a></li>
+        </ul>
+        <ul tg="tg4" style="display:none;">
+	        <li><a id="processManageList" href="FlowManager?action=processManageList">流程实例管理</a></li>
+	        <li><a href="#">任务干预</a></li>
+	        <li><a id="jobManager" href="FlowManager?action=getJobList">定时任务</a></li>
         </ul>
     </div>
 </div>
@@ -73,8 +91,19 @@ $(function(){
 		$(this).css("border","1px solid #fff");
 		return false;
 	});
+	
+	$(".menu > ul li > a").click(function(){
+		$(".menu > ul li > a").removeClass("select");
+		$(this).addClass("select");
+		var tg = $(this).attr("id");
+		$(".second-nav > ul").hide();
+		$("ul[tg="+tg+"]").show();
+	});
+	
+	chooseSelect();
 })
-chooseSelect();
+
+
 function updateMyself(){
 	var obj = {};
 	window.open("FlowCenter?action=getUserInfo&isUpdate=true");
@@ -83,5 +112,7 @@ function updateMyself(){
 function chooseSelect(){
 	var now = '${nowAction}';
 	$("#"+now).addClass("select");
+	var tg = $("#"+now).parents("ul").attr("tg");
+	$("#"+tg).click();
 }
 </script>
