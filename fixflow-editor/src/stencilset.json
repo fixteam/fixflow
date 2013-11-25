@@ -3,22 +3,74 @@
   "namespace" : "http://b3mn.org/stencilset/bpmn2.0#",
   "description" : "This is the BPMN 2.0 stencil set specification.",
   "propertyPackages" : [ {
+		"name": "fixcallactivitybase",
+		"properties": [{
+			"id": "callableelementid",
+			"type": "String",
+			"title": "流程号",
+			"value": "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		},{
+			"id": "callableelementversion",
+			"type": "String",
+			"title": "版本",
+			"value": "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		},{
+			"id": "isasync",
+			"type": "String",
+			"title": "异步",
+			"value": "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		},{
+			"id": "callableelementbizkey",
+			"type": "String",
+			"title": "关联值",
+			"value": "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		}]
+	},{
+		"name": "fixscripttaskbase",
+		"properties": [{
+			"id": "scripttext",
+			"type": "Text",
+			"title": "脚本",
+			"value": "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		}]
+	},{
+		"name": "fixflowcommonbase",
+		"properties": [{
+			"id" : "process_id",
+			"type" : "String",
+			"title" : "编号",
+			"value" : "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		},{
+			"id" : "name",
+			"type" : "String",
+			"title" : "名称",
+			"value" : "",
+			"description" : "Unique identifier of the element.",
+			"popular" : true
+		},{
+			"id" : "documentation",
+			"name" : "描述",
+			"type" : "String",
+			"description" : "Listener expression definition.",
+			"value" : "",
+			"width" : 100,
+			"optional" : true
+		}]
+	},{
 		"name": "flowbase",
 		"properties": [{
-	      "id" : "process_id",
-	      "type" : "String",
-	      "title" : "编号",
-	      "value" : "",
-	      "description" : "Unique identifier of the element.",
-	      "popular" : true
-    	},{
-	      "id" : "name",
-	      "type" : "String",
-	      "title" : "名称",
-	      "value" : "",
-	      "description" : "Unique identifier of the element.",
-	      "popular" : true
-    	},{
 	      "id" : "process_subject",
 	      "type" : "String",
 	      "title" : "主题",
@@ -116,14 +168,6 @@
 	        "value" : "",
 	        "width" : 100,
 	        "optional" : true
-	      },{
-	        "id" : "documentation",
-	        "name" : "描述",
-	        "type" : "String",
-	        "description" : "Listener expression definition.",
-	        "value" : "",
-	        "width" : 100,
-	        "optional" : true
 	      }]
 
     	}]
@@ -149,21 +193,6 @@
 	},{
     "name" : "fixflowbase",
     "properties" : [ {
-      "id" : "overrideid",
-      "type" : "String",
-      "title" : "编号",
-      "value" : "",
-      "description" : "Unique identifier of the element.",
-      "popular" : true
-    },{
-      "id" : "name",
-      "type" : "String",
-      "title" : "名称",
-      "value" : "",
-      "description" : "Unique identifier of the element.",
-      "popular" : true,
-      "refToView" : "text_name"
-    },{
       "id" : "formuri",
       "type" : "Text",
       "title" : "操作表单",
@@ -184,22 +213,15 @@
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true,
-      "items" : [ {
-	    "id" : "1",
-	    "title" : "1",
-	    "value" : "1"
-	  }, {
-	    "id" : "2",
-	    "title" : "2",
-	    "value" : "2"
-	  }]
-    },{
-      "id" : "documentation",
-      "type" : "Text",
-      "title" : "描述",
-      "value" : "",
-      "description" : "Unique identifier of the element.",
-      "popular" : true
+      "items" : [{
+				"id" : "1",
+				"title" : "1",
+				"value" : "1"
+			}, {
+				"id" : "2",
+				"title" : "2",
+				"value" : "2"
+			}]
     }]
   },{
     "name" : "taskinfobase",
@@ -217,15 +239,15 @@
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : true,
-      "items" : [ {
-	    "id" : "1",
-	    "title" : "任务类型1",
-	    "value" : "1"
-	  }, {
-	    "id" : "2",
-	    "title" : "任务类型2",
-	    "value" : "2"
-	  }]
+      "items" : [{
+				"id" : "1",
+				"title" : "任务类型1",
+				"value" : "1"
+			}, {
+				"id" : "2",
+				"title" : "任务类型2",
+				"value" : "2"
+			}]
     }]
   },{
     "name" : "commandinfobase",
@@ -259,7 +281,7 @@
         "value" : "",
         "width" : 85,
         "optional" : false,
-        "items" : [ {
+        "items" : [{
           "id" : "c1",
           "title" : "Start",
           "value" : "start",
@@ -274,7 +296,7 @@
           "title" : "Take (only sequence flows)",
           "value" : "take",
           "refToView" : ""
-        } ]
+        }]
       }, {
         "id" : "isverification",
         "name" : "验证",
@@ -1601,7 +1623,7 @@
     "groups" : [ "Diagram" ],
     "mayBeRoot" : true,
     "hide" : true,
-    "propertyPackages" : [ "flowbase" ],
+    "propertyPackages" : [ "fixflowcommonbase", "flowbase" ],
     "roles" : [ ]
   }, {
     "type" : "node",
@@ -1739,7 +1761,7 @@
     "view" : "activity/usertask.svg",
     "icon" : "activity/list/type.user.png",
     "groups" : [ "Activities" ],
-    "propertyPackages" : [ "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "multiinstancebase", "activity", "loopcharacteristics" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "multiinstancebase", "activity", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",
@@ -1759,7 +1781,7 @@
     "view" : "activity/scripttask.svg",
     "icon" : "activity/list/type.script.png",
     "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "scripttaskbase", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixscripttaskbase", "multiinstancebase", "skipstrategybase" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",
@@ -1809,7 +1831,7 @@
     "view" : "activity/subprocess.expanded.svg",
     "icon" : "activity/expanded.subprocess.png",
     "groups" : [ "Structural" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "asynchronousbase", "executionlistenersbase", "loopcharacteristics" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
   }, {	
     "type" : "node",
@@ -1829,7 +1851,7 @@
     "view" : "activity/callactivity.svg",
     "icon" : "activity/task.png",
     "groups" : [ "Structural" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "callactivitybase", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixcallactivitybase" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
   }, {
     "type" : "node",
