@@ -1670,7 +1670,7 @@
     "description" : "A start event that catches a thrown BPMN error",
     "view" : "startevent/error.svg",
     "icon" : "startevent/error.png",
-    "groups" : [ "Start Events" ],
+    "groups" : [ "Start Events" ], 
     "propertyPackages" : [ "elementbase", "baseattributes", "errorrefdefinition", "executionlistenersbase" ],
     "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
   },
