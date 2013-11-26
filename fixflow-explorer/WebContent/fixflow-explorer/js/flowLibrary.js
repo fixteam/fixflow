@@ -38,7 +38,7 @@ $(document).ready(function(){
 			$("#uploadFile").submit();
 			alert("上传成功！");
 			var guid = FixFlow.Utils.createGuid();
-			$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="">'+fName+'</span></div>');
+			$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="'+fName+'">'+fName+'</span></div>');
 			$thumb_wrap.appendTo($("div.view_plugin"));
 		}catch(e){
 			alert("上传失败！");
@@ -287,7 +287,7 @@ $(document).ready(function(){
 							$("input.editName").select();
 							return;
 						}
-						$("input.editName").parent("span").replaceWith("<span>"+newName+"</span>");
+						$("input.editName").parent("span").replaceWith("<span title="+newName+">"+newName+"</span>");
 						tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
 					}
 				});
@@ -304,7 +304,7 @@ $(document).ready(function(){
 						newFileName: name
 					},
 					success: function(data){
-						$("input.editName").parent("span").replaceWith("<span>"+name+"</span>");
+						$("input.editName").parent("span").replaceWith("<span title="+name+">"+name+"</span>");
 						$.ajax({
 							url: "/bpmcenter/FileAndDirectoryServlet",
 							type: "POST",
@@ -367,9 +367,9 @@ function readSubFileAndDirectory(bcList){
 								break;
 							}
 						}
-						$thumb_wrap = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+treeNodeId+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable">'+value.name+'</span></div>');
+						$thumb_wrap = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+treeNodeId+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div><span class="editable" title="'+value.name+'">'+value.name+'</span></div>');
 					}else{
-						$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="">'+value.name+'</span></div>');
+						$thumb_wrap = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="'+value.name+'">'+value.name+'</span></div>');
 					}
 					$("div.view_plugin").append($thumb_wrap);
 				});

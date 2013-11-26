@@ -1133,7 +1133,7 @@ input.x-tree-node-cb {
 	-moz-user-select:none !important;
 	display:block;
 	font-size:11px;
-	overflow:visible;
+	overflow:hidden;
 	text-align:center;
 	width:90px;
 	white-space:nowrap;

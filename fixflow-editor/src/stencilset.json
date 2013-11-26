@@ -1764,7 +1764,7 @@
    {
     "type" : "node",
     "id" : "UserTask",
-    "title" : "User task",
+    "title" : "人工任务",
     "description" : "A manual task assigned to a specific person",
     "view" : "activity/usertask.svg",
     "icon" : "activity/list/type.user.png",
@@ -1784,7 +1784,7 @@
   }, {
     "type" : "node",
     "id" : "ScriptTask",
-    "title" : "Script task",
+    "title" : "脚本任务",
     "description" : "An automatic task with script logic",
     "view" : "activity/scripttask.svg",
     "icon" : "activity/list/type.script.png",
@@ -1864,41 +1864,41 @@
   }, {
     "type" : "node",
     "id" : "ExclusiveGateway",
-    "title" : "Exclusive gateway",
+    "title" : "排他网关",
     "description" : "A choice gateway",
     "view" : "gateway/exclusive.databased.svg",
     "icon" : "gateway/exclusive.databased.png",
-    "groups" : [ "Gateways" ],
+    "groups" : [ "网关" ],
     "propertyPackages" : [ "elementbase", "baseattributes" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
     "id" : "ParallelGateway",
-    "title" : "Parallel gateway",
+    "title" : "并行网关",
     "description" : "A parallel gateway",
     "view" : "gateway/parallel.svg",
     "icon" : "gateway/parallel.png",
-    "groups" : [ "Gateways" ],
+    "groups" : [ "网关" ],
     "propertyPackages" : [ "elementbase", "baseattributes", "gatewaybase" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
     "id" : "InclusiveGateway",
-    "title" : "Inclusive gateway",
+    "title" : "包容网关",
     "description" : "An inclusive gateway",
     "view" : "gateway/inclusive.svg",
     "icon" : "gateway/inclusive.png",
-    "groups" : [ "Gateways" ],
+    "groups" : [ "网关" ],
     "propertyPackages" : [ "elementbase", "baseattributes" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
     "id" : "EventGateway",
-    "title" : "Event gateway",
+    "title" : "事件网关",
     "description" : "An event gateway",
     "view" : "gateway/eventbased.svg",
     "icon" : "gateway/eventbased.png",
-    "groups" : [ "Gateways" ],
+    "groups" : [ "网关" ],
     "propertyPackages" : [ "elementbase", "baseattributes" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
