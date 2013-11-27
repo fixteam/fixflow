@@ -1,6 +1,6 @@
 ORYX.I18N.PropertyWindow.dateFormat = "d/m/y";
 
-ORYX.I18N.View.East = "Attributes";
+ORYX.I18N.View.East = "属性";
 ORYX.I18N.View.West = "Modeling Elements";
 
 ORYX.I18N.Oryx.title	= "Signavio";
@@ -72,8 +72,8 @@ ORYX.I18N.PropertyWindow.btnDown = "Move down";
 ORYX.I18N.PropertyWindow.createNew = "Create new";
 
 if(!ORYX.I18N.PropertyWindow) ORYX.I18N.PropertyWindow = {};
-ORYX.I18N.PropertyWindow.oftenUsed = "Main attributes";
-ORYX.I18N.PropertyWindow.moreProps = "More attributes";
+ORYX.I18N.PropertyWindow.oftenUsed = "主要属性";
+ORYX.I18N.PropertyWindow.moreProps = "更多属性";
 ORYX.I18N.PropertyWindow.characteristicNr = "Cost &amp; Resource Analysis";
 ORYX.I18N.PropertyWindow.meta = "Custom attributes";
 

@@ -70,12 +70,11 @@
 			"refToView" : "text_name"
 		},{
 			"id" : "documentation",
-			"name" : "描述",
-			"type" : "String",
-			"description" : "Listener expression definition.",
+			"type" : "Text",
+			"title" : "描述",
 			"value" : "",
-			"width" : 100,
-			"optional" : true
+			"description" : "Listener expression definition.",
+			"popular" : true
 		}]
 	},{
 		"name": "flowbase",
@@ -1676,7 +1675,7 @@
     "view" : "gateway/exclusive.databased.svg",
     "icon" : "gateway/exclusive.databased.png",
     "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
@@ -1686,7 +1685,7 @@
     "view" : "gateway/parallel.svg",
     "icon" : "gateway/parallel.png",
     "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "gatewaybase" ],
+    "propertyPackages" : [ "fixflowcommonbase", "gatewaybase" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
@@ -1696,7 +1695,7 @@
     "view" : "gateway/inclusive.svg",
     "icon" : "gateway/inclusive.png",
     "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   }, {
     "type" : "node",
@@ -1706,7 +1705,7 @@
     "view" : "gateway/eventbased.svg",
     "icon" : "gateway/eventbased.png",
     "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
     "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
   },{
     "type" : "node",

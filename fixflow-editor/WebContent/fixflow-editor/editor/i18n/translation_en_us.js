@@ -171,8 +171,8 @@ ORYX.I18N.Loading.waiting ="Please wait...";
 
 if(!ORYX.I18N.PropertyWindow) ORYX.I18N.PropertyWindow = {};
 
-ORYX.I18N.PropertyWindow.name = "Name";
-ORYX.I18N.PropertyWindow.value = "Value";
+ORYX.I18N.PropertyWindow.name = "名称";
+ORYX.I18N.PropertyWindow.value = "值";
 ORYX.I18N.PropertyWindow.selected = "selected";
 ORYX.I18N.PropertyWindow.clickIcon = "Click Icon";
 ORYX.I18N.PropertyWindow.add = "Add";
@@ -226,10 +226,10 @@ ORYX.I18N.View.zoomFitToModelDesc = "Zoom to fit the model size";
 
 /** New Language Properties: 08.12.2008 */
 
-ORYX.I18N.PropertyWindow.title = "Properties";
+ORYX.I18N.PropertyWindow.title = "属性";
 
 if(!ORYX.I18N.ShapeRepository) ORYX.I18N.ShapeRepository = {};
-ORYX.I18N.ShapeRepository.title = "Shape Repository";
+ORYX.I18N.ShapeRepository.title = "图形库";
 
 ORYX.I18N.Save.dialogDesciption = "Please enter a name, a description and a comment.";
 ORYX.I18N.Save.dialogLabelTitle = "Title";
