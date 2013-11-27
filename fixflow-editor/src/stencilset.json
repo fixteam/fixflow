@@ -62,7 +62,7 @@
 			"popular" : true
 		},{ 
 			"id" : "name",
-			"type" : "String",
+			"type" : "String", 
 			"title" : "名称",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
