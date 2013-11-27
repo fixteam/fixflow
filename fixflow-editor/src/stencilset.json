@@ -53,20 +53,21 @@
 		}]
 	},{
 		"name": "fixflowcommonbase",
-		"properties": [{
+		"properties": [{ 
 			"id" : "process_id",
 			"type" : "String",
 			"title" : "编号",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
 			"popular" : true
-		},{
+		},{ 
 			"id" : "name",
 			"type" : "String",
 			"title" : "名称",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : true,
+			"refToView" : "text_name"
 		},{
 			"id" : "documentation",
 			"name" : "描述",
