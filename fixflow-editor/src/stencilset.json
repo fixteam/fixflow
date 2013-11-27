@@ -53,7 +53,7 @@
 		}]
 	},{
 		"name": "fixflowcommonbase",
-		"properties": [{
+		"properties": [{ 
 			"id" : "process_id",
 			"type" : "String",
 			"title" : "编号",
@@ -66,7 +66,8 @@
 			"title" : "名称",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : true,
+			"refToView" : "text_name"
 		},{
 			"id" : "documentation",
 			"name" : "描述",
@@ -1621,64 +1622,117 @@
       "refToView" : "compensation"
     } ]
   } ],
-  "stencils" : [ {
+  "stencils" : [{
+    "type" : "edge",
+    "id" : "SequenceFlow",
+    "title" : "序列流",
+    "description" : "Sequence flow defines the execution order of activities.",
+    "view" : "connector/sequenceflow.svg",
+    "icon" : "connector/sequenceflow.png",
+    "groups" : [ "连接" ],
+    "layout" : [ {
+      "type" : "layout.bpmn2_0.sequenceflow"
+    } ],
+    "propertyPackages" : [ "elementbase", "baseattributes", "sequenceflowbase" ],
+    "roles" : [ "ConnectingObjectsMorph", "all" ]
+  }, {
+    "type" : "edge",
+    "id" : "Association",
+    "title" : "关联线",
+    "description" : "Associates a text annotation with an element.",
+    "view" : "connector/association.undirected.svg",
+    "icon" : "connector/association.undirected.png",
+    "groups" : [ "连接" ],
+    "layout" : [ {
+      "type" : "layout.bpmn2_0.sequenceflow"
+    } ],
+    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "roles" : [ "ConnectingObjectsMorph", "all" ]
+  },{
     "type" : "node",
-    "id" : "BPMNDiagram",
-    "title" : "BPMN-Diagram",
-    "description" : "A BPMN 2.0 diagram.",
-    "view" : "diagram.svg",
-    "icon" : "diagram.png",
-    "groups" : [ "Diagram" ],
-    "mayBeRoot" : true,
-    "hide" : true,
-    "propertyPackages" : [ "fixflowcommonbase", "flowbase" ],
-    "roles" : [ ]
+    "id" : "UserTask",
+    "title" : "人工任务",
+    "description" : "A manual task assigned to a specific person",
+    "view" : "activity/usertask.svg",
+    "icon" : "activity/list/type.user.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "multiinstancebase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+},{
+    "type" : "node",
+    "id" : "ScriptTask",
+    "title" : "脚本任务",
+    "description" : "An automatic task with script logic",
+    "view" : "activity/scripttask.svg",
+    "icon" : "activity/list/type.script.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixscripttaskbase", "multiinstancebase", "skipstrategybase" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",
+    "id" : "ExclusiveGateway",
+    "title" : "排他网关",
+    "description" : "A choice gateway",
+    "view" : "gateway/exclusive.databased.svg",
+    "icon" : "gateway/exclusive.databased.png",
+    "groups" : [ "网关" ],
+    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
+  }, {
+    "type" : "node",
+    "id" : "ParallelGateway",
+    "title" : "并行网关",
+    "description" : "A parallel gateway",
+    "view" : "gateway/parallel.svg",
+    "icon" : "gateway/parallel.png",
+    "groups" : [ "网关" ],
+    "propertyPackages" : [ "elementbase", "baseattributes", "gatewaybase" ],
+    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
+  }, {
+    "type" : "node",
+    "id" : "InclusiveGateway",
+    "title" : "包容网关",
+    "description" : "An inclusive gateway",
+    "view" : "gateway/inclusive.svg",
+    "icon" : "gateway/inclusive.png",
+    "groups" : [ "网关" ],
+    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
+  }, {
+    "type" : "node",
+    "id" : "EventGateway",
+    "title" : "复杂网关",
+    "description" : "An event gateway",
+    "view" : "gateway/eventbased.svg",
+    "icon" : "gateway/eventbased.png",
+    "groups" : [ "网关" ],
+    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
+  },{
+    "type" : "node",
     "id" : "StartNoneEvent",
-    "title" : "Start event",
+    "title" : "开始事件",
     "description" : "A start event without a specific trigger",
     "view" : "startevent/none.svg",
     "icon" : "startevent/none.png",
-    "groups" : [ "Start Events" ],
+    "groups" : [ "事件" ],
     "propertyPackages" : [ "elementbase", "baseattributes", "formdefinition", "nonestarteventbase", "executionlistenersbase" ],
     "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
   }, {
     "type" : "node",
-    "id" : "StartTimerEvent",
-    "title" : "Start timer event",
-    "description" : "A start event with a timer trigger",
-    "view" : "startevent/timer.svg",
-    "icon" : "startevent/timer.png",
-    "groups" : [ "Start Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "timerdefinition", "executionlistenersbase" ],
-    "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
+    "id" : "EndNoneEvent",
+    "title" : "结束事件",
+    "description" : "An end event without a specific trigger",
+    "view" : "endevent/none.svg",
+    "icon" : "endevent/none.png",
+    "groups" : [ "事件" ],
+    "propertyPackages" : [ "elementbase", "baseattributes", "executionlistenersbase" ],
+    "roles" : [ "EndEventsMorph", "sequence_end", "all" ]
   }, {
-    "type" : "node",
-    "id" : "StartMessageEvent",
-    "title" : "Start message event",
-    "description" : "A start event with a message trigger",
-    "view" : "startevent/message.svg",
-    "icon" : "startevent/message.png",
-    "groups" : [ "Start Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "messagerefdefinition", "executionlistenersbase" ],
-    "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "StartErrorEvent",
-    "title" : "Start error event",
-    "description" : "A start event that catches a thrown BPMN error",
-    "view" : "startevent/error.svg",
-    "icon" : "startevent/error.png",
-    "groups" : [ "Start Events" ], 
-    "propertyPackages" : [ "elementbase", "baseattributes", "errorrefdefinition", "executionlistenersbase" ],
-    "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
-  },
-  {
 			"type" : 			"node",
 			"id" :				"Lane",
-			"title" :			"Lane",
-			"groups" :			["Structural"],
+			"title" :			"泳道",
+			"groups" :			["其他"],
 			"description" :		"Pools and lanes represent responsibilities for activities in a process. A pool or a lane can be an organization, a role or a system. Lanes subdivide pools or other lanes hierarchically.",
 			"view" :			"swimlane/lane.svg",
 			"icon" :			"swimlane/lane.png",
@@ -1760,284 +1814,19 @@
 				
 			],
 			 "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
-},
-   {
+}, {
     "type" : "node",
-    "id" : "UserTask",
-    "title" : "人工任务",
-    "description" : "A manual task assigned to a specific person",
-    "view" : "activity/usertask.svg",
-    "icon" : "activity/list/type.user.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "fixflowcommonbase", "fixflowbase", "taskinfobase", "commandinfobase", "taskassignbase", "skipstrategybase", "multiinstancebase", "activity", "loopcharacteristics" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ServiceTask",
-    "title" : "Service task",
-    "description" : "An automatic task with service logic",
-    "view" : "activity/servicetask.svg",
-    "icon" : "activity/list/type.service.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "servicetaskbase", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ScriptTask",
-    "title" : "脚本任务",
-    "description" : "An automatic task with script logic",
-    "view" : "activity/scripttask.svg",
-    "icon" : "activity/list/type.script.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "fixflowcommonbase", "fixscripttaskbase", "multiinstancebase", "skipstrategybase" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "BusinessRule",
-    "title" : "Business rule task",
-    "description" : "An automatic task with rule logic",
-    "view" : "activity/businessruletask.svg",
-    "icon" : "activity/list/type.business.rule.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "ruletaskbase", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ReceiveTask",
-    "title" : "Receive task",
-    "description" : "An task that waits for a signal",
-    "view" : "activity/receivetask.svg",
-    "icon" : "activity/list/type.receive.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ManualTask",
-    "title" : "Manual task",
-    "description" : "An automatic task with no logic",
-    "view" : "activity/manualtask.svg",
-    "icon" : "activity/list/type.manual.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "MailTask",
-    "title" : "Mail task",
-    "description" : "An mail task",
-    "view" : "activity/sendtask.svg",
-    "icon" : "activity/list/type.send.png",
-    "groups" : [ "Activities" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "mailtaskbase", "asynchronousbase", "executionlistenersbase", "loopcharacteristics", "activity" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "SubProcess",
-    "title" : "Sub process",
-    "description" : "A sub process scope",
-    "view" : "activity/subprocess.expanded.svg",
-    "icon" : "activity/expanded.subprocess.png",
-    "groups" : [ "Structural" ],
-    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
-  }, {	
-    "type" : "node",
-    "id" : "EventSubProcess",
-    "title" : "Event sub process",
-    "description" : "A event sub process scope",
-    "view" : "activity/event.subprocess.svg",
-    "icon" : "activity/event.subprocess.png",
-    "groups" : [ "Structural" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "asynchronousbase", "executionlistenersbase" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "CallActivity",
-    "title" : "Call activity",
-    "description" : "A call activity",
-    "view" : "activity/callactivity.svg",
-    "icon" : "activity/task.png",
-    "groups" : [ "Structural" ],
-    "propertyPackages" : [ "fixflowcommonbase", "fixcallactivitybase" ],
-    "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ExclusiveGateway",
-    "title" : "排他网关",
-    "description" : "A choice gateway",
-    "view" : "gateway/exclusive.databased.svg",
-    "icon" : "gateway/exclusive.databased.png",
-    "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
-    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ParallelGateway",
-    "title" : "并行网关",
-    "description" : "A parallel gateway",
-    "view" : "gateway/parallel.svg",
-    "icon" : "gateway/parallel.png",
-    "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "gatewaybase" ],
-    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "InclusiveGateway",
-    "title" : "包容网关",
-    "description" : "An inclusive gateway",
-    "view" : "gateway/inclusive.svg",
-    "icon" : "gateway/inclusive.png",
-    "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
-    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "EventGateway",
-    "title" : "事件网关",
-    "description" : "An event gateway",
-    "view" : "gateway/eventbased.svg",
-    "icon" : "gateway/eventbased.png",
-    "groups" : [ "网关" ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
-    "roles" : [ "sequence_start", "sequence_end", "GatewaysMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "BoundaryErrorEvent",
-    "title" : "Boundary error event",
-    "description" : "A boundary event that catches a BPMN error",
-    "view" : "intermediateevent/error.svg",
-    "icon" : "catching/error.png",
-    "groups" : [ "Boundary Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "errorrefdefinition" ],
-    "roles" : [ "sequence_start", "BoundaryEventsMorph", "IntermediateEventOnActivityBoundary" ]
-  }, {
-    "type" : "node",
-    "id" : "BoundaryTimerEvent",
-    "title" : "Boundary timer event",
-    "description" : "A boundary event with a timer trigger",
-    "view" : "intermediateevent/timer.svg",
-    "icon" : "catching/timer.png",
-    "groups" : [ "Boundary Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "cancelactivityattribute", "timerdefinition" ],
-    "roles" : [ "sequence_start", "BoundaryEventsMorph", "IntermediateEventOnActivityBoundary" ]
-  }, {
-    "type" : "node",
-    "id" : "BoundarySignalEvent",
-    "title" : "Boundary signal event",
-    "description" : "A boundary event with a signal trigger",
-    "view" : "intermediateevent/signal.catching.svg",
-    "icon" : "catching/signal.png",
-    "groups" : [ "Boundary Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "cancelactivityattribute", "signalrefdefinition" ],
-    "roles" : [ "sequence_start", "BoundaryEventsMorph", "IntermediateEventOnActivityBoundary" ]
-  }, {
-    "type" : "node",
-    "id" : "CatchTimerEvent",
-    "title" : "Intermediate timer catching event",
-    "description" : "An intermediate catching event with a timer trigger",
-    "view" : "intermediateevent/timer.svg",
-    "icon" : "catching/timer.png",
-    "groups" : [ "Intermediate Catching Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "timerdefinition", "executionlistenersbase" ],
-    "roles" : [ "sequence_start", "sequence_end", "CatchEventsMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "CatchSignalEvent",
-    "title" : "Intermediate signal catching event",
-    "description" : "An intermediate catching event with a signal trigger",
-    "view" : "intermediateevent/signal.catching.svg",
-    "icon" : "catching/signal.png",
-    "groups" : [ "Intermediate Catching Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "signalrefdefinition", "executionlistenersbase" ],
-    "roles" : [ "sequence_start", "sequence_end", "CatchEventsMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "CatchMessageEvent",
-    "title" : "Intermediate message catching event",
-    "description" : "An intermediate catching event with a message trigger",
-    "view" : "intermediateevent/message.catching.svg",
-    "icon" : "catching/message.png",
-    "groups" : [ "Intermediate Catching Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "messagerefdefinition", "executionlistenersbase" ],
-    "roles" : [ "sequence_start", "sequence_end", "CatchEventsMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ThrowNoneEvent",
-    "title" : "Intermediate none throwing event",
-    "description" : "An intermediate event without a specific trigger",
-    "view" : "intermediateevent/none.svg",
-    "icon" : "throwing/none.png",
-    "groups" : [ "Intermediate Throwing Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "executionlistenersbase" ],
-    "roles" : [ "sequence_start", "ThrowEventsMorph", "sequence_end", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "ThrowSignalEvent",
-    "title" : "Intermediate signal throwing event",
-    "description" : "An intermediate event with a signal trigger",
-    "view" : "intermediateevent/signal.throwing.svg",
-    "icon" : "throwing/signal.png",
-    "groups" : [ "Intermediate Throwing Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "signalrefdefinition", "executionlistenersbase" ],
-    "roles" : [ "sequence_start", "ThrowEventsMorph", "sequence_end", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "EndNoneEvent",
-    "title" : "End event",
-    "description" : "An end event without a specific trigger",
-    "view" : "endevent/none.svg",
-    "icon" : "endevent/none.png",
-    "groups" : [ "End Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "executionlistenersbase" ],
-    "roles" : [ "EndEventsMorph", "sequence_end", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "EndErrorEvent",
-    "title" : "End error event",
-    "description" : "An end event that throws an error event",
-    "view" : "endevent/error.svg",
-    "icon" : "endevent/error.png",
-    "groups" : [ "End Events" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "errorrefdefinition", "executionlistenersbase" ],
-    "roles" : [ "EndEventsMorph", "sequence_end", "all" ]
-  }, {
-    "type" : "edge",
-    "id" : "SequenceFlow",
-    "title" : "Sequence flow",
-    "description" : "Sequence flow defines the execution order of activities.",
-    "view" : "connector/sequenceflow.svg",
-    "icon" : "connector/sequenceflow.png",
-    "groups" : [ "Connecting Objects" ],
-    "layout" : [ {
-      "type" : "layout.bpmn2_0.sequenceflow"
-    } ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "sequenceflowbase" ],
-    "roles" : [ "ConnectingObjectsMorph", "all" ]
-  }, {
-    "type" : "edge",
-    "id" : "Association",
-    "title" : "Association",
-    "description" : "Associates a text annotation with an element.",
-    "view" : "connector/association.undirected.svg",
-    "icon" : "connector/association.undirected.png",
-    "groups" : [ "Connecting Objects" ],
-    "layout" : [ {
-      "type" : "layout.bpmn2_0.sequenceflow"
-    } ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
-    "roles" : [ "ConnectingObjectsMorph", "all" ]
-  }, {
-    "type" : "node",
-    "id" : "TextAnnotation",
-    "title" : "Text annotation",
-    "description" : "Annotates elements with description text.",
-    "view" : "artifact/text.annotation.svg",
-    "icon" : "artifact/text.annotation.png",
-    "groups" : [ "Artifacts" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "textannotationbase" ],
-    "roles" : [ "all" ]
-  } ],
+    "id" : "BPMNDiagram",
+    "title" : "BPMN-Diagram",
+    "description" : "A BPMN 2.0 diagram.",
+    "view" : "diagram.svg",
+    "icon" : "diagram.png",
+    "groups" : [ "Diagram" ],
+    "mayBeRoot" : true,
+    "hide" : true,
+    "propertyPackages" : [ "fixflowcommonbase", "flowbase" ],
+    "roles" : [ ]
+  }],
   "rules" : {
     "cardinalityRules" : [ {
       "role" : "Startevents_all",
