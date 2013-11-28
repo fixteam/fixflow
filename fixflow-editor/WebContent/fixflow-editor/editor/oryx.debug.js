@@ -11577,11 +11577,6 @@ ORYX.Editor = {
                   (unescape(user)) + 
                   maModelAuthI + 
                 "</span>" + 
-                "<div id='header_close_image'>" +
-                  "<a href=\""+ORYX.CONFIG.WEB_URL+"\" target=\"_self\" title=\"close modeler\">" +
-                    "<img src='../editor/images/close_button.png' border=\"0\" />" + 
-                  "</a>" +
-                "</div>" + 
               "</div>";
 			
 			if( headerPanel.body ){
