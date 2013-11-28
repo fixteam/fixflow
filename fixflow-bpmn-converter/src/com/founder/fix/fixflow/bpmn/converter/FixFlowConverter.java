@@ -8,7 +8,9 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.Definitions;
+import org.eclipse.bpmn2.DocumentRoot;
 import org.eclipse.bpmn2.di.BpmnDiPackage;
+import org.eclipse.bpmn2.util.Bpmn2Resource;
 import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
 import org.eclipse.dd.dc.DcPackage;
 import org.eclipse.dd.di.DiPackage;
@@ -36,6 +38,18 @@ public class FixFlowConverter {
 		return jsonNode;
 	}
 	
+	public void save(Definitions defintion){
+		ResourceSet resourceSet = getResourceSet();
+		Bpmn2Resource resource = (Bpmn2Resource) resourceSet.getResource(URI.createFileURI("d:\\node_template.bpmn"), true);
+		DocumentRoot documentRoot = (DocumentRoot) resource.getContents().get(0);
+		documentRoot.setDefinitions(defintion);
+		try {
+			resource.save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 根据流程key和bpmn文件流获取definitions
 	 * @param processKey流程定义key
@@ -44,11 +58,11 @@ public class FixFlowConverter {
 	 */
 	public Definitions getDefinitions(String processKey,InputStream input){
 		ResourceSet resourceSet = getResourceSet();
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/bpmn/converter/fixflowfile.bpmn").toString();
 		Resource ddddResource = null;
 		if (!filePath.startsWith("jar")) {
 			try {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(),
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/bpmn/converter/fixflowfile.bpmn").getFile(),
 						"utf-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -66,7 +80,7 @@ public class FixFlowConverter {
 			throw new FixFlowException("定义文件加载失败!", e);
 		}
 		DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
-		definitions.setProcessId("process_testych:1:0ddfb246-4451-454f-b81b-14c4b38c3964");
+		definitions.setProcessId(processKey);
 		return definitions;
 	}
 	/**

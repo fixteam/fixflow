@@ -123,15 +123,15 @@ public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
     String sourceRef = lookForSourceRef(elementNode.get(EDITOR_SHAPE_ID).asText(), modelNode.get(EDITOR_CHILD_SHAPES));
     
     if (sourceRef != null) {
-      flow.setSourceRef(BpmnModelUtil.getElement(model, sourceRef,FlowNode.class));
-      String targetId = elementNode.get("target").get(EDITOR_SHAPE_ID).asText();
-      flow.setTargetRef(BpmnModelUtil.getElement(model, BpmnJsonConverterUtil.getElementId(shapeMap.get(targetId)),FlowNode.class));
+//      flow.setSourceRef(BpmnModelUtil.getElement(model, sourceRef,FlowNode.class));
+//      String targetId = elementNode.get("target").get(EDITOR_SHAPE_ID).asText();
+//      flow.setTargetRef(BpmnModelUtil.getElement(model, BpmnJsonConverterUtil.getElementId(shapeMap.get(targetId)),FlowNode.class));
     }
     
-    FormalExpression formalExpression=Bpmn2Factory.eINSTANCE.createFormalExpression();
-    formalExpression.setBody(getPropertyValueAsString(PROPERTY_SEQUENCEFLOW_CONDITION, elementNode));
+//    FormalExpression formalExpression=Bpmn2Factory.eINSTANCE.createFormalExpression();
+//    formalExpression.setBody(getPropertyValueAsString(PROPERTY_SEQUENCEFLOW_CONDITION, elementNode));
     
-    flow.setConditionExpression(formalExpression);
+    flow.setConditionExpression(null);
     
     return flow;
   }

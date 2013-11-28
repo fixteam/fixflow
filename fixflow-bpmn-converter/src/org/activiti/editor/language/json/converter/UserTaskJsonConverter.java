@@ -66,7 +66,7 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
 	UserTaskBehavior userTask = (UserTaskBehavior) flowElement;
     List<ResourceRole> resources = userTask.getResources();
-    
+
     //任务分配
     setPropertyValue(PROPERTY_USERTASK_POLICYTYPE, userTask.getAssignPolicyType().getId(), propertiesNode);
     Expression assigneeExpression = userTask.getAssignPolicyType().getExpression();
@@ -169,7 +169,7 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
         }
       }
     }
-   // convertJsonToFormProperties(elementNode, task);
+//    convertJsonToFormProperties(elementNode, task);
     return task;
   }
 }

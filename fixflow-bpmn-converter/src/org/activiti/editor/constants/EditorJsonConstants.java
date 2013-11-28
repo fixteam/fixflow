@@ -28,6 +28,9 @@ public interface EditorJsonConstants {
   final String EDITOR_BOUNDS_X = "x";
   final String EDITOR_BOUNDS_Y = "y";
   final String EDITOR_DOCKERS = "dockers";
-  
   final String EDITOR_PROPERTIES_GENERAL_ITEMS = "items";
+  
+  //shapeid前缀
+  final String SHAPE_ID_PREFIX = "BPMNShape_";
+  final String EDGE_ID_PREFIX = "BPMNEdge_";
 }

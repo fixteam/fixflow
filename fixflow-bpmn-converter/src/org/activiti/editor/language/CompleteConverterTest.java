@@ -13,6 +13,7 @@ import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.UserTask;
 import org.junit.Test;
 
+import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 public class CompleteConverterTest extends AbstractConverterTest {
@@ -20,15 +21,16 @@ public class CompleteConverterTest extends AbstractConverterTest {
   @Test
   public void connvertJsonToModel() throws Exception {
     Definitions bpmnModel = readJsonFile();
-    validateModel(bpmnModel);
+    new FixFlowConverter().save(bpmnModel);
+    //validateModel(bpmnModel);
   }
   
-  @Test 
-  public void doubleConversionValidation() throws Exception {
-	  Definitions bpmnModel = readJsonFile();
-    bpmnModel = convertToJsonAndBack(bpmnModel);
-    validateModel(bpmnModel);
-  }
+//  @Test 
+//  public void doubleConversionValidation() throws Exception {
+//	  Definitions bpmnModel = readJsonFile();
+//    bpmnModel = convertToJsonAndBack(bpmnModel);
+//    validateModel(bpmnModel);
+//  }
   
   protected String getResource() {
     return "org/activiti/editor/language/test.completemodel.json";

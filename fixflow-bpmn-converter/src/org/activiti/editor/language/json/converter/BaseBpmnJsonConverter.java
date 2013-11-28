@@ -229,7 +229,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     FlowElement flowElement = convertJsonToElement(elementNode, modelNode, shapeMap);
     flowElement.setId(BpmnJsonConverterUtil.getElementId(elementNode));
     flowElement.setName(getPropertyValueAsString(PROPERTY_NAME, elementNode));
-    BpmnModelUtil.setDocumentation(flowElement, getPropertyValueAsString(PROPERTY_DOCUMENTATION, elementNode));
+    //BpmnModelUtil.setDocumentation(flowElement, getPropertyValueAsString(PROPERTY_DOCUMENTATION, elementNode));
     
     
     

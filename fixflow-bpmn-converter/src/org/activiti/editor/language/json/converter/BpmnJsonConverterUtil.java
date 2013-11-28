@@ -19,6 +19,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.junit.internal.matchers.SubstringMatcher;
 
 /**
  * @author Tijs Rademakers
@@ -97,4 +98,29 @@ public class BpmnJsonConverterUtil implements EditorJsonConstants, StencilConsta
     return propertyNode;
   }
   
+  /**
+   * 根据elementid 获取对应的shapeId
+   * @param elementId
+   * @return
+   */
+  protected static String getFormatShapeId(String elementId){
+	  return SHAPE_ID_PREFIX + elementId;
+  }
+  
+  /**
+   * 根据对应的shapeId 获取elementId
+   * @param shapeId
+   * @return
+   */
+  protected static String getElementIdFromShapeId(String shapeId){
+	  return shapeId.substring(SHAPE_ID_PREFIX.length());
+  }
+  
+  protected static String getFormatEdgeId(String elementId){
+	  return EDGE_ID_PREFIX + elementId;
+  }
+  
+  protected static String getElementIdFromEdgeId(String edgeId){
+	  return edgeId.substring(EDGE_ID_PREFIX.length());
+  }
 }

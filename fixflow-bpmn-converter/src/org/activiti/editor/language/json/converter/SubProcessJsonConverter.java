@@ -65,7 +65,7 @@ public class SubProcessJsonConverter extends BaseBpmnJsonConverter {
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
     SubProcess subProcess = Bpmn2Factory.eINSTANCE.createSubProcess();// SubProcess();
     JsonNode childShapesArray = elementNode.get(EDITOR_CHILD_SHAPES);
-    processor.processJsonElements(childShapesArray, modelNode, subProcess, shapeMap);
+    //processor.processJsonElements(childShapesArray, modelNode, subProcess, shapeMap);
     return subProcess;
   }
 }
