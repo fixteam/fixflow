@@ -116,7 +116,7 @@ public class LaneSetImpl extends BaseElementImpl implements LaneSet {
      * @generated
      */
     public String getName() {
-    	Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+    	Boolean booleanTemp=false;
     	
     	
     	if(booleanTemp){
