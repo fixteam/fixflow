@@ -225,6 +225,8 @@ public interface FlowCenterService {
 	  */
 	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter) throws SQLException;
 
+	
+	public Map<String,Object> getTaskDetailInfoSVG(Map<String,Object> filter) throws SQLException;
 	/**
 	  * getFlowGraph
 	  * @Title: getFlowGraph

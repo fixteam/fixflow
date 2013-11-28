@@ -129,7 +129,11 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	
 	public String getFlowGraphicsSvg(String processDefinitionId) {
-		return commandExecutor.execute(new GetFlowGraphicsSvgCmd(processDefinitionId));
+		return commandExecutor.execute(new GetFlowGraphicsSvgCmd(processDefinitionId,null));
+	}
+	
+	public String getFlowGraphicsSvgByDefKey(String processDefinitionKey) {
+		return commandExecutor.execute(new GetFlowGraphicsSvgCmd(null,processDefinitionKey));
 	}
 
 	
@@ -140,7 +144,12 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 
 	public Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId) {
 
-		return commandExecutor.execute(new GetFlowGraphicsElementPositionCmd(processDefinitionId));
+		return commandExecutor.execute(new GetFlowGraphicsElementPositionCmd(processDefinitionId,null));
+	}
+	
+	public Map<String, Map<String, Object>> GetFlowGraphicsElementPositionByKey(String processDefinitionKey) {
+
+		return commandExecutor.execute(new GetFlowGraphicsElementPositionCmd(null,processDefinitionKey));
 	}
 
 	public String getModelInternationalizationResources(String resourcesType, String resourceKey) {

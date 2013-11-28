@@ -506,6 +506,32 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		return result;
 	}
 	
+	public Map<String,Object> getTaskDetailInfoSVG(Map<String,Object> filter) throws SQLException{
+		Map<String,Object> result = new HashMap<String,Object>();
+		Map<String,Object> tmpMap = getTaskDetailInfo(filter);
+		result.putAll(tmpMap);
+		
+		String processInstanceId = StringUtil.getString(filter.get("processDefinitionId"));
+		String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));
+		
+		String userId = (String) filter.get("userId");
+		ProcessEngine engine = getProcessEngine(userId);
+		String svgFlow = null;
+		
+		try{
+			if(StringUtil.isNotEmpty(processInstanceId))
+				svgFlow = engine.getModelService().getFlowGraphicsSvg(processInstanceId);
+			else
+				svgFlow = engine.getModelService().getFlowGraphicsSvgByDefKey(processDefinitionKey);
+			
+			result.put("flowGraph", svgFlow);
+		}finally{
+			closeProcessEngine();
+		}
+		
+		return result;
+	}
+	
 	public Map<String,Object> getTaskDetailInfo(Map<String,Object> filter) throws SQLException{
 		String processInstanceId = StringUtil.getString(filter.get("processInstanceId"));
 		

@@ -66,6 +66,7 @@ import org.eclipse.dd.dc.Point;
 import org.eclipse.dd.di.DiagramElement;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 
+import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
@@ -114,25 +115,38 @@ public class GetFlowGraphicsSvgCmd implements Command<String> {
 	 * 流程定义编号
 	 */
 	protected String processDefinitionId;
+	protected String processDefinitionKey;
 	
 	
 	protected DefinitionsBehavior definitions;
 
-	public GetFlowGraphicsSvgCmd(String processDefinitionId) {
+	public GetFlowGraphicsSvgCmd(String processDefinitionId,String processDefinitionKey) {
 		
 		
 		this.processDefinitionId = processDefinitionId;
-		
+		this.processDefinitionKey= processDefinitionKey;
 		
 	}
 
 	public String execute(CommandContext commandContext) {
 
-		ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
+		ProcessDefinitionBehavior processDefinitionBehavior=null;
 		
-		ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
+		if(this.processDefinitionId!=null&&!this.processDefinitionId.equals("")){
+			
+			processDefinitionBehavior=commandContext.getProcessDefinitionManager().findLatestProcessDefinitionById(this.processDefinitionId);
+			
+			
+		}else{
+			if(this.processDefinitionKey!=null&&!this.processDefinitionKey.equals("")){
+				processDefinitionBehavior=commandContext.getProcessDefinitionManager().findLatestProcessDefinitionByKey(processDefinitionKey);
+			}
+			else{
+				throw new FixFlowBizException("查询流程图的processDefinitionId、processDefinitionKey不能都为空!");
+			}
+		}
 		
-		definitions = processDefinition.getDefinitions();
+		definitions = processDefinitionBehavior.getDefinitions();
 		
 		List<BPMNDiagram> BPMNDiagramList = definitions.getDiagrams();
 

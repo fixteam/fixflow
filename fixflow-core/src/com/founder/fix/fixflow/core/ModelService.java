@@ -97,6 +97,12 @@ public interface ModelService extends ProcessService{
 	 */
 	String getFlowGraphicsSvg(String processDefinitionId);
 	
+	@Deprecated
+	/**
+	 * 获取流程图(SVG格式)
+	 */
+	String getFlowGraphicsSvgByDefKey(String processDefinitionKey);
+	
 	
 	/**
 	 * 获取流程定义的默认表单
@@ -135,6 +141,8 @@ public interface ModelService extends ProcessService{
 	 */
 	Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId);
 	
+	
+	Map<String, Map<String, Object>> GetFlowGraphicsElementPositionByKey(String processDefinitionKey);
 	/**
 	 * 获取资源国际化信息
 	 * @param resourcesType 资源的类型 (FixFlowResources.FlowNameResource)
