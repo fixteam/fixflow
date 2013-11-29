@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://www.founderfix.com">
+  <bpmn2:process id="node_template" fixflow:verification="true" name="节点模板"/>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="节点模板">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="node_template"/>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
