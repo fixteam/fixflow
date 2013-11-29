@@ -411,40 +411,24 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
           subjectExpression.setValue(processSubject.asText());
           taskSubject.setExpression(subjectExpression);
           taskSubject.setId("TaskSubject_1");
-          final FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT, taskSubject);
-          if (process.getExtensionValues().size() > 0) {
-        	  process.getExtensionValues().get(0).getValue().add(extensionElementEntry);
-          }else{
-        	  ExtensionAttributeValue extensionElement = Bpmn2Factory.eINSTANCE.createExtensionAttributeValue();
-        	  extensionElement.getValue().add(extensionElementEntry);
-        	  process.getExtensionValues().add(extensionElement);
-          } 
+          BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT, taskSubject);
       }
       
       //流程分类
       JsonNode processCategory = JsonConverterUtil.getProperty(PROPERTY_PROCESS_CATEGORY, modelNode);
       if(processCategory != null && StringUtil.isNotEmpty(processCategory.asText())){
-    	  final FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY, processCategory.asText());
-    	  process.getAnyAttribute().add(extensionElementEntry);
+    	  BpmnModelUtil.addExtensionAttribute(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY, processCategory.asText());
       }
       
       //默认表单
       JsonNode processFormUri = JsonConverterUtil.getProperty(PROPERTY_PROCESS_DEFAULT_FORMURI, modelNode);
       if(processFormUri != null && StringUtil.isNotEmpty(processFormUri.asText())){
-    	  
     	  FormUri formUri = FixFlowFactory.eINSTANCE.createFormUri();
     	  Expression expression = FixFlowFactory.eINSTANCE.createExpression();
     	  expression.setName(processFormUri.asText());
     	  expression.setValue(processFormUri.asText());
     	  formUri.setExpression(expression);
-    	  final FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI, formUri);
-    	  if (process.getExtensionValues().size() > 0) {
-        	  process.getExtensionValues().get(0).getValue().add(extensionElementEntry);
-          }else{
-        	  ExtensionAttributeValue extensionElement = Bpmn2Factory.eINSTANCE.createExtensionAttributeValue();
-        	  extensionElement.getValue().add(extensionElementEntry);
-        	  process.getExtensionValues().add(extensionElement);
-          } 
+    	  BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__FORM_URI, formUri);
       }
       
       //流程变量
@@ -470,14 +454,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     	        	variableExpression.setValue(expression);
     	        	variableExpression.setName(expression);
     	        	dataVariableObj.setExpression(variableExpression);
-    	        	final FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__DATA_VARIABLE, dataVariableObj);
-    	      	  	if(process.getExtensionValues().size() > 0) {
-    	          	  process.getExtensionValues().get(0).getValue().add(extensionElementEntry);
-    	            }else{
-    	          	  ExtensionAttributeValue extensionElement = Bpmn2Factory.eINSTANCE.createExtensionAttributeValue();
-    	          	  extensionElement.getValue().add(extensionElementEntry);
-    	          	  process.getExtensionValues().add(extensionElement);
-    	            } 
+    	        	BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__DATA_VARIABLE, dataVariableObj);
     	        }
     	  }
       }

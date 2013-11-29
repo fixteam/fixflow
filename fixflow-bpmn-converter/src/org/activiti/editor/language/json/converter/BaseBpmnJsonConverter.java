@@ -29,13 +29,18 @@ import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.BoundaryEvent;
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.CatchEvent;
+import org.eclipse.bpmn2.DataInput;
+import org.eclipse.bpmn2.DataOutput;
 import org.eclipse.bpmn2.Definitions;
 import org.eclipse.bpmn2.ErrorEventDefinition;
 import org.eclipse.bpmn2.Event;
 import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.ExtensionAttributeValue;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.FlowNode;
+import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.Lane;
+import org.eclipse.bpmn2.LoopCharacteristics;
 import org.eclipse.bpmn2.MessageEventDefinition;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 import org.eclipse.bpmn2.SequenceFlow;
@@ -50,10 +55,16 @@ import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.di.BPMNShape;
 import org.eclipse.bpmn2.impl.ActivityImpl;
 import org.eclipse.dd.dc.Bounds;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.SimpleFeatureMapEntry;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.bpmn2extensions.fixflow.LoopDataInputCollection;
+import com.founder.fix.bpmn2extensions.fixflow.LoopDataOutputCollection;
 import com.founder.fix.bpmn2extensions.fixflow.SkipAssignee;
 import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
@@ -233,31 +244,86 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     
     
     
-    /* 这里注释掉内容以后需要恢复过来
-    convertJsonToListeners(elementNode, flowElement);
+    // 这里注释掉内容以后需要恢复过来
+    //convertJsonToListeners(elementNode, flowElement);
     if (flowElement instanceof Activity) {
-      Activity activity = (Activity) flowElement;
+      ActivityImpl activity = (ActivityImpl) flowElement;
       //activity.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
       //activity.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
-      
-      String multiInstanceCardinality = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CARDINALITY, elementNode);
-      String multiInstanceCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_COLLECTION, elementNode);
-      String multiInstanceCondition = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CONDITION, elementNode);
-      
-      if (StringUtils.isNotEmpty(multiInstanceCardinality) || StringUtils.isNotEmpty(multiInstanceCollection) ||
-          StringUtils.isNotEmpty(multiInstanceCondition)) {
-        
-        String multiInstanceVariable = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_VARIABLE, elementNode);
-        
-        MultiInstanceLoopCharacteristics multiInstanceObject = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
-        multiInstanceObject.setSequential(getPropertyValueAsBoolean(PROPERTY_MULTIINSTANCE_SEQUENTIAL, elementNode));
-        multiInstanceObject.setLoopCardinality(multiInstanceCardinality);
-        multiInstanceObject.setInputDataItem(multiInstanceCollection);
-        multiInstanceObject.setElementVariable(multiInstanceVariable);
-        multiInstanceObject.setCompletionCondition(multiInstanceCondition);
-        activity.setLoopCharacteristics(multiInstanceObject);
+      boolean isMulti = getProperty(PROPERTY_MULTIINSTANCE, elementNode).asBoolean();
+      if(isMulti){
+    	  MultiInstanceLoopCharacteristics newLoopCharacteristics = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
+    	  String inputDataCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_INPUT_COLLECTION, elementNode);
+    	  String inputDataItem = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_INPUT_ITEM, elementNode);
+    	  String outputDataCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_OUTPUT_COLLECTION, elementNode);
+    	  String outputDataItem = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_OUTPUT_ITEM, elementNode);
+    	  String completeExpression = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CONDITION, elementNode);
+    	  //activity.loopDataInputCollectionExpression
+    	  
+    	  //输出变量
+    	  DataOutput dataOutput = Bpmn2Factory.eINSTANCE.createDataOutput();
+    	  Expression dataOutputExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  dataOutputExpression.setName(outputDataItem);
+    	  dataOutputExpression.setValue(outputDataItem);
+    	  BpmnModelUtil.addExtensionElement(dataOutput, FixFlowPackage.Literals.RESOURCE_FILTER__EXPRESSION, dataOutputExpression);
+    	  newLoopCharacteristics.setOutputDataItem(dataOutput);
+    	  
+    	  //输入变量
+    	  DataInput dataInput = Bpmn2Factory.eINSTANCE.createDataInput();
+    	  Expression dataInputExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  dataInputExpression.setName(inputDataItem);
+    	  dataInputExpression.setValue(inputDataItem);
+    	  BpmnModelUtil.addExtensionElement(dataInput, FixFlowPackage.Literals.RESOURCE_FILTER__EXPRESSION, dataInputExpression);
+    	  newLoopCharacteristics.setInputDataItem(dataInput);
+    	  
+    	  //输入数据集
+    	  LoopDataInputCollection loopDataInputCollection = FixFlowFactory.eINSTANCE.createLoopDataInputCollection();
+    	  Expression inputCollectionExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  inputCollectionExpression.setId(inputDataCollection);
+    	  inputCollectionExpression.setValue(inputDataCollection);
+    	  loopDataInputCollection.setExpression(inputCollectionExpression);
+    	  BpmnModelUtil.addExtensionElement(newLoopCharacteristics, FixFlowPackage.Literals.DOCUMENT_ROOT__LOOP_DATA_INPUT_COLLECTION, loopDataInputCollection);
+
+    	  //输出数据集
+    	  LoopDataOutputCollection loopDataOutputCollection = FixFlowFactory.eINSTANCE.createLoopDataOutputCollection();
+    	  Expression outputCollectionExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  outputCollectionExpression.setName(outputDataCollection);
+    	  outputCollectionExpression.setValue(outputDataCollection);
+    	  loopDataOutputCollection.setExpression(outputCollectionExpression);
+    	  BpmnModelUtil.addExtensionElement(newLoopCharacteristics, FixFlowPackage.Literals.DOCUMENT_ROOT__LOOP_DATA_OUTPUT_COLLECTION, loopDataOutputCollection);
+
+    	  //完成表达式
+    	  FormalExpression formalExpression= Bpmn2Factory.eINSTANCE.createFormalExpression();
+    	  formalExpression.setId(completeExpression);
+    	  formalExpression.setBody(completeExpression);
+    	  newLoopCharacteristics.setCompletionCondition(formalExpression);
+    	  
+    	  activity.setLoopCharacteristics(newLoopCharacteristics);
+    	  
       }
-    }*/
+      
+      //跳过策略
+      
+      
+      
+//      String multiInstanceCardinality = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CARDINALITY, elementNode);
+//      String multiInstanceCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_COLLECTION, elementNode);
+//      String multiInstanceCondition = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CONDITION, elementNode);
+//      
+//      if (StringUtils.isNotEmpty(multiInstanceCardinality) || StringUtils.isNotEmpty(multiInstanceCollection) ||
+//          StringUtils.isNotEmpty(multiInstanceCondition)) {
+//        
+//        String multiInstanceVariable = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_VARIABLE, elementNode);
+//        
+//        MultiInstanceLoopCharacteristics multiInstanceObject = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
+//        multiInstanceObject.setSequential(getPropertyValueAsBoolean(PROPERTY_MULTIINSTANCE_SEQUENTIAL, elementNode));
+//        multiInstanceObject.setLoopCardinality(multiInstanceCardinality);
+//        multiInstanceObject.setInputDataItem(multiInstanceCollection);
+//        multiInstanceObject.setElementVariable(multiInstanceVariable);
+//        multiInstanceObject.setCompletionCondition(multiInstanceCondition);
+//        activity.setLoopCharacteristics(multiInstanceObject);
+//      }
+    }
     if (parentElement instanceof Process) {
       ((Process) parentElement).getFlowElements().add(flowElement);
     } else if (parentElement instanceof SubProcess) {

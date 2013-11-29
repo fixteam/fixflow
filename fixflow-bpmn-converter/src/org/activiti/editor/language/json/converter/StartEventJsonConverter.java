@@ -27,81 +27,80 @@ import org.eclipse.bpmn2.MessageEventDefinition;
 import org.eclipse.bpmn2.SignalEventDefinition;
 import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.bpmn2.TimerEventDefinition;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.SimpleFeatureMapEntry;
+import org.eclipse.emf.ecore.util.FeatureMap;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author Tijs Rademakers
  */
 public class StartEventJsonConverter extends BaseBpmnJsonConverter {
-
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
+	public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
+			Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
     
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
-  }
+		fillJsonTypes(convertersToBpmnMap);
+		fillBpmnTypes(convertersToJsonMap);
+	}
   
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_EVENT_START_NONE, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_TIMER, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_ERROR, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_MESSAGE, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_SIGNAL, StartEventJsonConverter.class);
-  }
+	public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
+		convertersToBpmnMap.put(STENCIL_EVENT_START_NONE, StartEventJsonConverter.class);
+		convertersToBpmnMap.put(STENCIL_EVENT_START_TIMER, StartEventJsonConverter.class);
+		convertersToBpmnMap.put(STENCIL_EVENT_START_ERROR, StartEventJsonConverter.class);
+		convertersToBpmnMap.put(STENCIL_EVENT_START_MESSAGE, StartEventJsonConverter.class);
+		convertersToBpmnMap.put(STENCIL_EVENT_START_SIGNAL, StartEventJsonConverter.class);
+	}
   
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(StartEventBehavior.class, StartEventJsonConverter.class);
-  }
+	public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
+		convertersToJsonMap.put(StartEventBehavior.class, StartEventJsonConverter.class);
+	}
   
-  protected String getStencilId(FlowElement flowElement) {
-    CatchEvent event = (CatchEvent) flowElement;
-    
-    
-    
-    if (event.getEventDefinitions().size() > 0) {
-      EventDefinition eventDefinition = event.getEventDefinitions().get(0);
-      if (eventDefinition instanceof TimerEventDefinition) {
-        return STENCIL_EVENT_START_TIMER;
-      } else if (eventDefinition instanceof ErrorEventDefinition) {
-        return STENCIL_EVENT_START_ERROR;
-      } else if (eventDefinition instanceof MessageEventDefinition) {
-        return STENCIL_EVENT_START_MESSAGE;
-      } else if (eventDefinition instanceof SignalEventDefinition) {
-        return STENCIL_EVENT_START_SIGNAL;
-      } 
-    }
-    return STENCIL_EVENT_START_NONE;
-  }
+	protected String getStencilId(FlowElement flowElement) {
+		CatchEvent event = (CatchEvent) flowElement;
+		if (event.getEventDefinitions().size() > 0) {
+			EventDefinition eventDefinition = event.getEventDefinitions().get(0);
+			if(eventDefinition instanceof TimerEventDefinition) {
+				return STENCIL_EVENT_START_TIMER;
+			}else if(eventDefinition instanceof ErrorEventDefinition) {
+				return STENCIL_EVENT_START_ERROR;
+			}else if(eventDefinition instanceof MessageEventDefinition) {
+				return STENCIL_EVENT_START_MESSAGE;
+			}else if(eventDefinition instanceof SignalEventDefinition) {
+				return STENCIL_EVENT_START_SIGNAL;
+			}
+		}
+		return STENCIL_EVENT_START_NONE;
+	}
   
-  protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
-    StartEventBehavior startEvent = (StartEventBehavior) flowElement;
-
-    //setPropertyValue(PROPERTY_NONE_STARTEVENT_INITIATOR, startEvent.getInitiator(), propertiesNode);
-    setPropertyValue(PROPERTY_START_EVENT_ISPERSISTENCE, StringUtil.getString(startEvent.isPersistence()), propertiesNode);
-    
-    //addFormProperties(startEvent.getFormProperties(), propertiesNode);
-    //addEventProperties(startEvent, propertiesNode);
-  }
+	protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
+		StartEventBehavior startEvent = (StartEventBehavior) flowElement;
+		setPropertyValue(PROPERTY_START_EVENT_ISPERSISTENCE, StringUtil.getString(startEvent.isPersistence()), propertiesNode);
+	}
   
-  protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-	  
-    StartEvent startEvent = Bpmn2Factory.eINSTANCE.createStartEvent();;
-    //startEvent.setInitiator(getPropertyValueAsString(PROPERTY_NONE_STARTEVENT_INITIATOR, elementNode));
-    //startEvent.setFormKey(getPropertyValueAsString(PROPERTY_FORMKEY, elementNode));
-    String stencilId = BpmnJsonConverterUtil.getStencilId(elementNode);
-    if (STENCIL_EVENT_START_NONE.equals(stencilId)) {
-      //convertJsonToFormProperties(elementNode, startEvent);
-    } else if (STENCIL_EVENT_START_TIMER.equals(stencilId)) {
-      convertJsonToTimerDefinition(elementNode, startEvent);
-    } else if (STENCIL_EVENT_START_ERROR.equals(stencilId)) {
-      convertJsonToErrorDefinition(elementNode, startEvent);
-    } else if (STENCIL_EVENT_START_MESSAGE.equals(stencilId)) {
-      convertJsonToMessageDefinition(elementNode, startEvent);
-    } else if (STENCIL_EVENT_START_SIGNAL.equals(stencilId)) {
-      convertJsonToSignalDefinition(elementNode, startEvent);
-    }
-    return startEvent;
-  }
+	protected FlowElement convertJsonToElement(JsonNode elementNode,JsonNode modelNode, Map<String, JsonNode> shapeMap) {
+		StartEvent startEvent = Bpmn2Factory.eINSTANCE.createStartEvent();
+		String stencilId = BpmnJsonConverterUtil.getStencilId(elementNode);
+		if (STENCIL_EVENT_START_NONE.equals(stencilId)) {
+			boolean isPersistence = true;
+			JsonNode isPersistenceNode = BpmnJsonConverterUtil.getProperty(PROPERTY_START_EVENT_ISPERSISTENCE, elementNode);
+			if (isPersistenceNode != null) {
+				isPersistence = isPersistenceNode.asBoolean();
+			}
+			if (!isPersistence) {
+				BpmnModelUtil.addExtensionAttribute(startEvent, FixFlowPackage.Literals.DOCUMENT_ROOT__IS_PERSISTENCE, isPersistence);
+			}
+		} else if (STENCIL_EVENT_START_TIMER.equals(stencilId)) {
+			convertJsonToTimerDefinition(elementNode, startEvent);
+		} else if (STENCIL_EVENT_START_ERROR.equals(stencilId)) {
+			convertJsonToErrorDefinition(elementNode, startEvent);
+		} else if (STENCIL_EVENT_START_MESSAGE.equals(stencilId)) {
+			convertJsonToMessageDefinition(elementNode, startEvent);
+		} else if (STENCIL_EVENT_START_SIGNAL.equals(stencilId)) {
+			convertJsonToSignalDefinition(elementNode, startEvent);
+		}
+		return startEvent;
+	}
 }
