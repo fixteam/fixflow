@@ -64,7 +64,7 @@ public class BpmnModelUtil {
 	 * @return
 	 */
 	public static boolean addExtensionAttribute(BaseElement baseElement,EAttribute eAttribute,Object o){
-		final FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY, o);
+		final FeatureMap.Entry extensionElementEntry = new SimpleFeatureMapEntry((org.eclipse.emf.ecore.EStructuralFeature.Internal) eAttribute, o);
 		baseElement.getAnyAttribute().add(extensionElementEntry);
 		return false;
 	}

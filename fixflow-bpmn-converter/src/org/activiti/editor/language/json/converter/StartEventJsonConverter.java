@@ -90,7 +90,7 @@ public class StartEventJsonConverter extends BaseBpmnJsonConverter {
 				isPersistence = isPersistenceNode.asBoolean();
 			}
 			if (!isPersistence) {
-				BpmnModelUtil.addExtensionAttribute(startEvent, FixFlowPackage.Literals.DOCUMENT_ROOT__IS_PERSISTENCE, isPersistence);
+				BpmnModelUtil.addExtensionAttribute(startEvent, FixFlowPackage.Literals.DOCUMENT_ROOT__IS_PERSISTENCE, StringUtil.getString(isPersistence));
 			}
 		} else if (STENCIL_EVENT_START_TIMER.equals(stencilId)) {
 			convertJsonToTimerDefinition(elementNode, startEvent);

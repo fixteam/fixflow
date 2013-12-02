@@ -43,6 +43,7 @@ import com.founder.fix.bpmn2extensions.fixflow.SkipAssignee;
 import com.founder.fix.bpmn2extensions.fixflow.SkipComment;
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
+import com.founder.fix.bpmn2extensions.fixflow.TaskPriority;
 import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
@@ -133,16 +134,21 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
 	    	commandNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
 	        propertiesNode.put(PROPERTY_TASKCOMMAND, commandNode);
 	    }
+	    //任务主题
 	    if(userTask.getTaskSubject() !=null){
 	    	setPropertyValue(PROPERTY_USERTASK_SUBJECT, userTask.getTaskSubject().getExpressionValue(), propertiesNode);
 	    }
+	    //任务类型
 	    if(userTask.getTaskInstanceType() != null){
 	    	setPropertyValue(PROPERTY_USERTASK_TASKTYPE, StringUtil.getString(userTask.getTaskInstanceType()), propertiesNode);
 	    }
+	    //任务优先级
 	    if (userTask.getTaskPriority() != null) {
 	    	setPropertyValue(PROPERTY_PRIORITY, userTask.getTaskPriority(), propertiesNode);
 	    }
+	    //操作表单
 	    setPropertyValue(PROPERTY_FORMURI, userTask.getFormUri(), propertiesNode);
+	    //浏览表单
 	    setPropertyValue(PROPERTY_FORMURI_VIEW, userTask.getFormUriView(), propertiesNode);
 	  }
   
@@ -166,7 +172,18 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
 		  if(taskTypeNode != null){
 			  BpmnModelUtil.addExtensionAttribute(task, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_TYPE, taskTypeNode.asText());
 		  }
-	    
+		  
+		  //任务优先级
+		  JsonNode taskPriorityNode = getProperty(PROPERTY_PRIORITY, elementNode);
+		  if(taskPriorityNode != null){
+			  TaskPriority taskPriority = FixFlowFactory.eINSTANCE.createTaskPriority();
+			  Expression taskPriorityExpression = FixFlowFactory.eINSTANCE.createExpression();
+			  taskPriorityExpression.setName(taskPriorityNode.asText());
+			  taskPriorityExpression.setValue(taskPriorityNode.asText());
+			  taskPriority.setExpression(taskPriorityExpression);
+			  BpmnModelUtil.addExtensionElement(task, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_PRIORITY, taskPriority);
+		  }
+		  
 		  //任务命令
 		  JsonNode taskCommandNode = getProperty(PROPERTY_TASKCOMMAND, elementNode);
 		  if(taskCommandNode != null){
@@ -255,9 +272,10 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
 					  BpmnModelUtil.addExtensionAttribute(potentialOwner, FixFlowPackage.Literals.DOCUMENT_ROOT__INCLUDE_EXCLUSION, includeExclusion);
 					  BpmnModelUtil.addExtensionAttribute(potentialOwner, FixFlowPackage.Literals.DOCUMENT_ROOT__IS_CONTAINS_SUB, isContainSub);
 					  ResourceAssignmentExpression resourceAssignmentExpression = Bpmn2Factory.eINSTANCE.createResourceAssignmentExpression();
+					  potentialOwner.setName(resourceName);
 					  FormalExpression formalExpression = Bpmn2Factory.eINSTANCE.createFormalExpression();
 					  formalExpression.setBody(expressionBody);
-					  formalExpression.setId(resourceName);
+					  formalExpression.setId(expressionBody);
 					  resourceAssignmentExpression.setExpression(formalExpression);
 					  potentialOwner.setResourceAssignmentExpression(resourceAssignmentExpression);
 					  task.getResources().add(potentialOwner);

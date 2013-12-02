@@ -35,28 +35,21 @@ import org.eclipse.bpmn2.Definitions;
 import org.eclipse.bpmn2.ErrorEventDefinition;
 import org.eclipse.bpmn2.Event;
 import org.eclipse.bpmn2.EventDefinition;
-import org.eclipse.bpmn2.ExtensionAttributeValue;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.Lane;
-import org.eclipse.bpmn2.LoopCharacteristics;
 import org.eclipse.bpmn2.MessageEventDefinition;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 import org.eclipse.bpmn2.SequenceFlow;
-import org.eclipse.bpmn2.ServiceTask;
 import org.eclipse.bpmn2.SignalEventDefinition;
-import org.eclipse.bpmn2.StartEvent;
 import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.ThrowEvent;
 import org.eclipse.bpmn2.TimerEventDefinition;
-import org.eclipse.bpmn2.UserTask;
 import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.di.BPMNShape;
 import org.eclipse.bpmn2.impl.ActivityImpl;
 import org.eclipse.dd.dc.Bounds;
-import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.SimpleFeatureMapEntry;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -234,22 +227,17 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
   
   public void convertToBpmnModel(JsonNode elementNode, JsonNode modelNode, 
       ActivityProcessor processor, BaseElement parentElement, Map<String, JsonNode> shapeMap) {
-    
     this.processor = processor;
-    
     FlowElement flowElement = convertJsonToElement(elementNode, modelNode, shapeMap);
     flowElement.setId(BpmnJsonConverterUtil.getElementId(elementNode));
     flowElement.setName(getPropertyValueAsString(PROPERTY_NAME, elementNode));
-    //BpmnModelUtil.setDocumentation(flowElement, getPropertyValueAsString(PROPERTY_DOCUMENTATION, elementNode));
-    
-    
-    
+    String documentation = getPropertyValueAsString(PROPERTY_DOCUMENTATION, elementNode);
+    if(StringUtil.isNotEmpty(documentation)){
+    	BpmnModelUtil.setDocumentation(flowElement, documentation);
+    }
     // 这里注释掉内容以后需要恢复过来
-    //convertJsonToListeners(elementNode, flowElement);
     if (flowElement instanceof Activity) {
       ActivityImpl activity = (ActivityImpl) flowElement;
-      //activity.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
-      //activity.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
       boolean isMulti = getProperty(PROPERTY_MULTIINSTANCE, elementNode).asBoolean();
       if(isMulti){
     	  MultiInstanceLoopCharacteristics newLoopCharacteristics = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
@@ -258,7 +246,6 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     	  String outputDataCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_OUTPUT_COLLECTION, elementNode);
     	  String outputDataItem = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_OUTPUT_ITEM, elementNode);
     	  String completeExpression = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CONDITION, elementNode);
-    	  //activity.loopDataInputCollectionExpression
     	  
     	  //输出变量
     	  DataOutput dataOutput = Bpmn2Factory.eINSTANCE.createDataOutput();
@@ -279,7 +266,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     	  //输入数据集
     	  LoopDataInputCollection loopDataInputCollection = FixFlowFactory.eINSTANCE.createLoopDataInputCollection();
     	  Expression inputCollectionExpression = FixFlowFactory.eINSTANCE.createExpression();
-    	  inputCollectionExpression.setId(inputDataCollection);
+    	  inputCollectionExpression.setName(inputDataCollection);
     	  inputCollectionExpression.setValue(inputDataCollection);
     	  loopDataInputCollection.setExpression(inputCollectionExpression);
     	  BpmnModelUtil.addExtensionElement(newLoopCharacteristics, FixFlowPackage.Literals.DOCUMENT_ROOT__LOOP_DATA_INPUT_COLLECTION, loopDataInputCollection);
@@ -303,26 +290,39 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       }
       
       //跳过策略
-      
-      
-      
-//      String multiInstanceCardinality = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CARDINALITY, elementNode);
-//      String multiInstanceCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_COLLECTION, elementNode);
-//      String multiInstanceCondition = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CONDITION, elementNode);
-//      
-//      if (StringUtils.isNotEmpty(multiInstanceCardinality) || StringUtils.isNotEmpty(multiInstanceCollection) ||
-//          StringUtils.isNotEmpty(multiInstanceCondition)) {
-//        
-//        String multiInstanceVariable = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_VARIABLE, elementNode);
-//        
-//        MultiInstanceLoopCharacteristics multiInstanceObject = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
-//        multiInstanceObject.setSequential(getPropertyValueAsBoolean(PROPERTY_MULTIINSTANCE_SEQUENTIAL, elementNode));
-//        multiInstanceObject.setLoopCardinality(multiInstanceCardinality);
-//        multiInstanceObject.setInputDataItem(multiInstanceCollection);
-//        multiInstanceObject.setElementVariable(multiInstanceVariable);
-//        multiInstanceObject.setCompletionCondition(multiInstanceCondition);
-//        activity.setLoopCharacteristics(multiInstanceObject);
-//      }
+      boolean isSkipEnabled = getProperty(PROPERTY_ACTIVITY_SKIPSTRATEGY,elementNode).asBoolean();
+      if(isSkipEnabled){
+    	  SkipStrategy skipStrategy = FixFlowFactory.eINSTANCE.createSkipStrategy();
+    	  skipStrategy.setIsEnable(isSkipEnabled);
+    	  String skipExpressionValue = getPropertyValueAsString(PROPERTY_ACTIVITY_SKIPEXPRESSION, elementNode);
+    	  String skipAssigneeValue = getPropertyValueAsString(PROPERTY_ACTIVITY_SKIPASSIGNEE, elementNode);
+    	  String skipCommentValue = getPropertyValueAsString(PROPERTY_ACTIVITY_SKIPCOMMENT, elementNode);
+    	  Expression skipExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  skipExpression.setName(skipExpressionValue);
+    	  skipExpression.setValue(skipExpressionValue);
+    	  skipStrategy.setExpression(skipExpression);
+    	  
+    	  boolean isCreateSkipProcess = getProperty(PROPERTY_ACTIVITY_IS_CREATE_SKIP_PROCESS, elementNode).asBoolean();
+    	  if(isCreateSkipProcess){
+    		  skipStrategy.setIsCreateSkipProcess(isCreateSkipProcess);
+    	  }
+    	  
+    	  Expression skipAssigneeExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  skipAssigneeExpression.setName(skipAssigneeValue);
+    	  skipAssigneeExpression.setValue(skipAssigneeValue);
+    	  SkipAssignee skipAssignee = FixFlowFactory.eINSTANCE.createSkipAssignee();
+    	  skipAssignee.setExpression(skipAssigneeExpression);
+    	  skipStrategy.setSkipAssignee(skipAssignee);
+    	  
+    	  Expression skipCommentExpression = FixFlowFactory.eINSTANCE.createExpression();
+    	  skipCommentExpression.setName(skipCommentValue);
+    	  skipCommentExpression.setValue(skipCommentValue);
+    	  SkipComment skipComment = FixFlowFactory.eINSTANCE.createSkipComment();
+    	  skipComment.setExpression(skipCommentExpression);
+    	  skipStrategy.setSkipComment(skipComment);
+    	  
+    	  BpmnModelUtil.addExtensionElement(activity, FixFlowPackage.Literals.DOCUMENT_ROOT__SKIP_STRATEGY, skipStrategy);
+      }
     }
     if (parentElement instanceof Process) {
       ((Process) parentElement).getFlowElements().add(flowElement);
