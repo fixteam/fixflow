@@ -2,7 +2,6 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="bpmcenter">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorsrc"/>
         <wb-resource deploy-path="/" source-path="/fixfloweditorwebcontent"/>    
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/apisrc"/>
@@ -15,25 +14,11 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowdiagram"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowcoresrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowcoreconf"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanagesrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/flowmanageservletsrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowbpasrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowconvertersrc"/>
         <wb-resource deploy-path="/" source-path="/fixflowbpawebcontent"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorersrc"/>
         <wb-resource deploy-path="/" source-path="/fixflowexplorerwebcontent"/>
         <wb-resource deploy-path="/" source-path="/fixflowresourcewebcontent"/>
         <wb-resource deploy-path="/" source-path="/fixflowrepositorywebcontent"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorerwebcontent"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowresourcewebcontent"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowrepositorywebcontent"/>
-        
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysissrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysisconf"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatafeedssrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapushersrc"/>
         <wb-resource deploy-path="/" source-path="/bpadatapusherpage"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapusherpage"/>
        <wb-resource deploy-path="/WEB-INF/lib" source-path="/bpadatapusherlib"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapusherlib"/>
         
