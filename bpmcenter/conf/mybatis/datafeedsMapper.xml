@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+    <!DOCTYPE mapper 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fixbpa">
+	<select id="testMethod" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select * from DEMOTABLE where 1=1
+		<if test="col1 != null">  
+        	and COL1 like '%'||#{col1}||'%'  
+    	</if>
+		<if test="col2 != null">  
+        	and COL2 like '%${col2}%'  
+    	</if>  
+    </select>
+</mapper> 

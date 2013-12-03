@@ -26,6 +26,7 @@
 	<classpathentry kind="src" path="bpaanalysissrc"/>
 	<classpathentry kind="src" path="bpaanalysisconf"/>
 	<classpathentry kind="src" path="bpadatafeedssrc"/>
+	<classpathentry kind="lib" path="bpadatafeedslib"/>
 	<classpathentry kind="src" path="bpadatapushersrc"/>
 	<classpathentry kind="src" path="bpadatapusherpage"/>
 	<classpathentry kind="src" path="bpadatapusherlib"/>

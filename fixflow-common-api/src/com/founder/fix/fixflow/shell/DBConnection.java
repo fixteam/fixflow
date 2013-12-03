@@ -65,10 +65,11 @@ public class DBConnection {
 
 	public void setConnection(Connection connection){
 		this.connection = connection;
-		initDialet();
+		pageination = initDialet(connection);
 	}
 	
-	public void initDialet(){
+	public static Pagination initDialet(Connection connection){
+		Pagination pageination = null;
 		try{
 			String dbms = connection.getMetaData().getDatabaseProductName();
 			if ( dbms == null || dbms.equals("") ){
@@ -85,6 +86,8 @@ public class DBConnection {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		return pageination;
 	}
 
 	public Pagination getPageination() {
