@@ -20,7 +20,7 @@
 			"popular" : true
 		},{
 			"id" : "isasync",
-			"name" : "异步",
+			"title" : "异步",
 			"type" : "Choice",
 			"value" : "",
 			"popular" : true,
@@ -1825,6 +1825,26 @@
     "hide" : true,
     "propertyPackages" : [ "fixflowcommonbase", "flowbase" ],
     "roles" : [ ]
+  }, {
+    "type" : "node",
+    "id" : "CallActivity",
+    "title" : "外部子流程",
+    "description" : "A call activity",
+    "view" : "activity/callactivity.svg",
+    "icon" : "activity/task.png",
+    "groups" : [ "其他" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixcallactivitybase", "skipstrategybase", "multiinstancebase" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
+  }, {
+    "type" : "node",
+    "id" : "SubProcess",
+    "title" : "内部子流程",
+    "description" : "A sub process scope",
+    "view" : "activity/subprocess.expanded.svg",
+    "icon" : "activity/expanded.subprocess.png",
+    "groups" : [ "其他" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
   }],
   "rules" : {
     "cardinalityRules" : [ {
