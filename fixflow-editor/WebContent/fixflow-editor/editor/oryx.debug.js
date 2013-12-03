@@ -24659,7 +24659,8 @@ ORYX.Plugins.Save = Clazz.extend({
 		        		description: summary,
 		        		glossary_xml: glossary,
 		        		namespace: modelMeta.namespace,
-		        		views: Ext.util.JSON.encode(modelMeta.views || [])
+		        		views: Ext.util.JSON.encode(modelMeta.views || []),
+						method:"save"
 		        };
 		        
 				var success = false;
@@ -24871,7 +24872,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		
 		var saveUri;
 		if(forceNew == false) {
-			saveUri = "../../ModelSaveServlet";
+			saveUri = "../../FlowWebManagerServlet";
 		} else {
 			saveUri = "../service/model/new";
 		}
