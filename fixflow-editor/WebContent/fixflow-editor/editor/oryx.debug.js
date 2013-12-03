@@ -24649,8 +24649,10 @@ ORYX.Plugins.Save = Clazz.extend({
 				          
 				// Parse dom to string
 		        var svgDOM 	= DataManager.serialize(svgClone);
-				
+						var passObj = window.dialogArguments || {};
 		        var params = {
+								fileName: passObj.fileName,
+								path: passObj.path,
 		        		json_xml: json,
 		        		svg_xml: svgDOM,
 		        		name: title,
@@ -24659,8 +24661,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		        		description: summary,
 		        		glossary_xml: glossary,
 		        		namespace: modelMeta.namespace,
-		        		views: Ext.util.JSON.encode(modelMeta.views || []),
-						method:"save"
+		        		views: Ext.util.JSON.encode(modelMeta.views || [])
 		        };
 		        
 				var success = false;
@@ -24812,10 +24813,15 @@ ORYX.Plugins.Save = Clazz.extend({
 		}
 		
 		var modelMeta = this.facade.getModelMetaData();
-		
-		new Ajax.Request("../../TestServlet", {
+		var passObj = window.dialogArguments || {};
+		new Ajax.Request("../../FlowWebManagerServlet", {
             method: 'get',
             asynchronous: true,
+						parameters:{
+							path: passObj.path || "private,test",
+							fileName: passObj.fileName || "process_testych.bpmn",
+							method: "reTryModelInfo"
+						},
 			requestHeaders: {
 				"Accept":"application/json"
 			},
