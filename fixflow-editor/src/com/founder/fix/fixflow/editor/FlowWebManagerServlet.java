@@ -65,7 +65,6 @@ public class FlowWebManagerServlet extends BaseServlet {
     
     public void save() throws JsonProcessingException, IOException{
     	ObjectMapper objectMapper = new ObjectMapper();
-    	ObjectNode modelNode = objectMapper.createObjectNode();
     	String body;
 		body = getBody(requestParm);
 		body = URLDecoder.decode(body);

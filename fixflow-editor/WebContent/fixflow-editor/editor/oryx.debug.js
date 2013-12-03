@@ -24872,7 +24872,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		
 		var saveUri;
 		if(forceNew == false) {
-			saveUri = "../../FlowWebManagerServlet";
+			saveUri = "../../ModelSaveServlet";
 		} else {
 			saveUri = "../service/model/new";
 		}

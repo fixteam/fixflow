@@ -20,6 +20,11 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.eclipse.emf.common.util.URI;
+
+import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 public class ModelSaveServlet extends HttpServlet {
 
 	@Override
@@ -41,6 +46,11 @@ public class ModelSaveServlet extends HttpServlet {
 		InputStream svgStream = new ByteArrayInputStream(svg_xml.getBytes("utf-8"));
 	    TranscoderInput input = new TranscoderInput(svgStream);
 	    FileOutputStream outputStream = null;
+	    ObjectMapper objectMapper = new ObjectMapper();
+    	JsonNode objectNode = objectMapper.readTree(json_xml);
+    	new FixFlowConverter().save(objectNode,URI.createFileURI("d:\\node_template.bpmn"));
+    	
+    	
 	    try {
 	    	file.createNewFile();
 	    	outputStream = new FileOutputStream(file);
