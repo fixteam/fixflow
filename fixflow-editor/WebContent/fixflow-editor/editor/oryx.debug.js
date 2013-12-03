@@ -11197,12 +11197,12 @@ function init() {
 			var modelId = window.location.search.substring(4);
 			modelUrl = "../../FlowWebManagerServlet";
 		}
-var passObj = window.dialogArguments;
+var passObj = window.dialogArguments || {};
         ORYX.Editor.createByUrl(modelUrl, {
             id: modelUrl,
 						parameters:{
-							path: passObj.path,
-							fileName: passObj.fileName,
+							path: passObj.path || "private,test",
+							fileName: passObj.fileName || "process_testych.bpmn",
 							method: "loadBPMWeb"
 						}
         });
