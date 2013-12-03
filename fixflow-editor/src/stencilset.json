@@ -54,7 +54,7 @@
 	},{
 		"name": "fixflowcommonbase",
 		"properties": [{ 
-			"id" : "process_id",
+			"id" : "overrideid",
 			"type" : "String",
 			"title" : "编号",
 			"value" : "",
