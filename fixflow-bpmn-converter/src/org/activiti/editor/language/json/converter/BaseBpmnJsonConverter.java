@@ -238,7 +238,8 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     // 这里注释掉内容以后需要恢复过来
     if (flowElement instanceof Activity) {
       ActivityImpl activity = (ActivityImpl) flowElement;
-      boolean isMulti = getProperty(PROPERTY_MULTIINSTANCE, elementNode).asBoolean();
+      
+      boolean isMulti = getPropertyValueAsBoolean(PROPERTY_MULTIINSTANCE, elementNode);
       if(isMulti){
     	  MultiInstanceLoopCharacteristics newLoopCharacteristics = Bpmn2Factory.eINSTANCE.createMultiInstanceLoopCharacteristics();
     	  String inputDataCollection = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_INPUT_COLLECTION, elementNode);

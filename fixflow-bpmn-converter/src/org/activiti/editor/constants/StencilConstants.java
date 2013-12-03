@@ -12,6 +12,8 @@
  */
 package org.activiti.editor.constants;
 
+import org.apache.cxf.ws.rm.v200702.SequenceAcknowledgement.Final;
+
 /**
  * @author Tijs Rademakers
  */
@@ -63,8 +65,8 @@ public interface StencilConstants {
   
   final String STENCIL_TEXT_ANNOTATION = "TextAnnotation";
 	
-  final String PROPERTY_VALUE_YES = "Yes";
-  final String PROPERTY_VALUE_NO = "No";
+  final String PROPERTY_VALUE_YES = "true";
+  final String PROPERTY_VALUE_NO = "false";
   
   //stencil properties
   final String PROPERTY_OVERRIDE_ID = "overrideid";
@@ -164,7 +166,7 @@ public interface StencilConstants {
 	final String PROPERTY_MAILTASK_HTML= "mailtaskhtml";
 	final String PROPERTY_MAILTASK_CHARSET= "mailtaskcharset";
 	
-	final String PROPERTY_CALLACTIVITY_CALLEDELEMENT = "callactivitycalledelement";
+	
   final String PROPERTY_CALLACTIVITY_IN = "callactivityinparameters";
   final String PROPERTY_CALLACTIVITY_OUT = "callactivityoutparameters";
   final String PROPERTY_IOPARAMETER_SOURCE = "ioparameter_source";
@@ -231,4 +233,8 @@ public interface StencilConstants {
 	final String PROPERTY_DATAVARIABLE_DEFAULT_VALUE = "expression";
 	
 	final String PROPERTY_SCRIPT_TEXT = "scripttext";
+	final String PROPERTY_CALLACTIVITY_CALLEDELEMENT = "callableelementid";
+	final String PROPERTY_CALLACTIVITY_ELEMENTVERSION = "callableelementversion";
+	final String PROPERTY_CALLACTIVITY_ISASYNC = "isasync";
+	final String PROPERTY_CALLACTIVITY_BIZKEY = "callableelementbizkey";
 }

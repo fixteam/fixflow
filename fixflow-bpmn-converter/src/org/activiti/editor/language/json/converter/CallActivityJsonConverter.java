@@ -25,7 +25,10 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.CallActivity;
 import org.eclipse.bpmn2.FlowElement;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @author Tijs Rademakers
@@ -52,83 +55,43 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
-    CallActivity callActivity = (CallActivity) flowElement;
-//  	if (StringUtils.isNotEmpty(callActivity.getCalledElementRef().getId())) {
-//  	  propertiesNode.put(PROPERTY_CALLACTIVITY_CALLEDELEMENT, callActivity.getCalledElementRef().getId());
-//  	}
-  	
-  	//addJsonParameters(PROPERTY_CALLACTIVITY_IN, callActivity.getInParameters(), propertiesNode);
-  	//addJsonParameters(PROPERTY_CALLACTIVITY_OUT, callActivity.getOutParameters(), propertiesNode);
-  }
-  /*
-  private void addJsonParameters(String propertyName, List<IOParameter> parameterList, ObjectNode propertiesNode) {
-    ObjectNode parametersNode = objectMapper.createObjectNode();
-    ArrayNode itemsNode = objectMapper.createArrayNode();
-    for (IOParameter parameter : parameterList) {
-      ObjectNode parameterItemNode = objectMapper.createObjectNode();
-      if (StringUtils.isNotEmpty(parameter.getSource())) {
-        parameterItemNode.put(PROPERTY_IOPARAMETER_SOURCE, parameter.getSource());
-      } else {
-        parameterItemNode.putNull(PROPERTY_IOPARAMETER_SOURCE);
-      }
-      if (StringUtils.isNotEmpty(parameter.getTarget())) {
-        parameterItemNode.put(PROPERTY_IOPARAMETER_TARGET, parameter.getTarget());
-      } else {
-        parameterItemNode.putNull(PROPERTY_IOPARAMETER_TARGET);
-      }
-      if (StringUtils.isNotEmpty(parameter.getSourceExpression())) {
-        parameterItemNode.put(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION, parameter.getSourceExpression());
-      } else {
-        parameterItemNode.putNull(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION);
-      }
-      
-      itemsNode.add(parameterItemNode);
+    CallActivityBehavior callActivity = (CallActivityBehavior) flowElement;
+    String callElementId = callActivity.getCallableElementId();
+    String callElementVersion = callActivity.getCallableElementVersion();
+    String callElementBizKey = callActivity.getCallableElementBizKey();
+    boolean isAsync = callActivity.isAsync();
+    if(StringUtil.isNotEmpty(callElementId)){
+    	propertiesNode.put(PROPERTY_CALLACTIVITY_CALLEDELEMENT,callElementId);
     }
-    
-    parametersNode.put("totalCount", itemsNode.size());
-    parametersNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
-    propertiesNode.put(propertyName, parametersNode);
-  }*/
+    if(StringUtil.isNotEmpty(callElementVersion)){
+    	propertiesNode.put(PROPERTY_CALLACTIVITY_ELEMENTVERSION,callElementVersion);
+    }
+    if(StringUtil.isNotEmpty(callElementBizKey)){
+    	propertiesNode.put(PROPERTY_CALLACTIVITY_BIZKEY, callElementBizKey);
+    }
+    propertiesNode.put(PROPERTY_CALLACTIVITY_ISASYNC, isAsync);
+  }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
-    CallActivity callActivity = Bpmn2Factory.eINSTANCE.createCallActivity();// CallActivity();
-    if (StringUtils.isNotEmpty(getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode))) {
-      //callActivity.setCalledElement(getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode));
+    CallActivity callActivity = Bpmn2Factory.eINSTANCE.createCallActivity();
+    if(StringUtils.isNotEmpty(getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode))){
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__CALLABLE_ELEMENT_ID, getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode));
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__CALLABLE_ELEMENT_NAME, getPropertyValueAsString(PROPERTY_CALLACTIVITY_CALLEDELEMENT, elementNode));
     } 
-    
-    //callActivity.getInParameters().addAll(convertToIOParameters(PROPERTY_CALLACTIVITY_IN, elementNode));
-    //callActivity.getOutParameters().addAll(convertToIOParameters(PROPERTY_CALLACTIVITY_OUT, elementNode));
-    
+    String callElementVersion = getPropertyValueAsString(PROPERTY_CALLACTIVITY_ELEMENTVERSION, elementNode);
+    if(StringUtil.isNotEmpty(callElementVersion)){
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__CALLABLE_ELEMENT_VERSION, callElementVersion);
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__CALLABLE_ELEMENT_VERSION_NAME, callElementVersion);
+    }
+    String callElementBizKey = getPropertyValueAsString(PROPERTY_CALLACTIVITY_BIZKEY, elementNode);
+    if(StringUtil.isNotEmpty(callElementBizKey)){
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__CALLABLE_ELEMENT_BIZ_KEY, callElementBizKey);
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__CALLABLE_ELEMENT_BIZ_KEY_NAME, callElementBizKey);
+    }
+    boolean isAsync = getPropertyValueAsBoolean(PROPERTY_CALLACTIVITY_ISASYNC, elementNode);
+    if(isAsync){
+    	BpmnModelUtil.addExtensionAttribute(callActivity, FixFlowPackage.Literals.DOCUMENT_ROOT__IS_ASYNC, StringUtil.getString(isAsync));
+    }
     return callActivity;
   }
-  /*
-  private List<IOParameter> convertToIOParameters(String propertyName, JsonNode elementNode) {
-    List<IOParameter> ioParameters = new ArrayList<IOParameter>();
-    JsonNode parametersNode = getProperty(propertyName, elementNode);
-    if (parametersNode != null) {
-      JsonNode itemsArrayNode = parametersNode.get(EDITOR_PROPERTIES_GENERAL_ITEMS);
-      if (itemsArrayNode != null) {
-        for (JsonNode itemNode : itemsArrayNode) {
-          JsonNode sourceNode = itemNode.get(PROPERTY_IOPARAMETER_SOURCE);
-          JsonNode sourceExpressionNode = itemNode.get(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION);
-          if ((sourceNode != null && StringUtils.isNotEmpty(sourceNode.asText())) ||
-              (sourceExpressionNode != null && StringUtils.isNotEmpty(sourceExpressionNode.asText()))) {
-            
-            IOParameter parameter = new IOParameter();
-            if (StringUtils.isNotEmpty(getValueAsString(PROPERTY_IOPARAMETER_SOURCE, itemNode))) {
-              parameter.setSource(getValueAsString(PROPERTY_IOPARAMETER_SOURCE, itemNode));
-            }
-            if (StringUtils.isNotEmpty(getValueAsString(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION, itemNode))) {
-              parameter.setSourceExpression(getValueAsString(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION, itemNode));
-            }
-            if (StringUtils.isNotEmpty(getValueAsString(PROPERTY_IOPARAMETER_TARGET, itemNode))) {
-              parameter.setTarget(getValueAsString(PROPERTY_IOPARAMETER_TARGET, itemNode));
-            }
-            ioParameters.add(parameter);
-          }
-        }
-      }
-    }
-    return ioParameters;
-  }*/
 }
