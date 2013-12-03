@@ -21,7 +21,11 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.ScriptTask;
 
+import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior;
+import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 
 /**
  * @author Tijs Rademakers
@@ -49,13 +53,15 @@ public class ScriptTaskJsonConverter extends BaseBpmnJsonConverter {
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
   	ScriptTask scriptTask = (ScriptTask) flowElement;
-  	//propertiesNode.put(PROPERTY_SCRIPT_FORMAT, scriptTask.getScriptFormat());
   	propertiesNode.put(PROPERTY_SCRIPT_TEXT, scriptTask.getScript());
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
     ScriptTask task = Bpmn2Factory.eINSTANCE.createScriptTask();// ScriptTask();
-    task.setScriptFormat(getPropertyValueAsString(PROPERTY_SCRIPT_FORMAT, elementNode));
+    //String scriptFormat = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getScriptLanguageConfig().getSelected();
+    String scriptFormat = "Groovy";
+    task.setScriptFormat(scriptFormat);
+    BpmnModelUtil.addExtensionAttribute(task, FixFlowPackage.Literals.DOCUMENT_ROOT__SCRIPT_NAME, getPropertyValueAsString(PROPERTY_SCRIPT_TEXT, elementNode));
     task.setScript(getPropertyValueAsString(PROPERTY_SCRIPT_TEXT, elementNode));
     return task;
   }

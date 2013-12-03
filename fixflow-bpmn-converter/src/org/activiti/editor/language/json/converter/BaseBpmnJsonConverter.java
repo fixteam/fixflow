@@ -290,7 +290,11 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       }
       
       //跳过策略
-      boolean isSkipEnabled = getProperty(PROPERTY_ACTIVITY_SKIPSTRATEGY,elementNode).asBoolean();
+      JsonNode skipEnabled = getProperty(PROPERTY_ACTIVITY_SKIPSTRATEGY,elementNode);
+      boolean isSkipEnabled = false;
+      if(skipEnabled !=null){
+    	  isSkipEnabled = getProperty(PROPERTY_ACTIVITY_SKIPSTRATEGY,elementNode).asBoolean();
+      }
       if(isSkipEnabled){
     	  SkipStrategy skipStrategy = FixFlowFactory.eINSTANCE.createSkipStrategy();
     	  skipStrategy.setIsEnable(isSkipEnabled);

@@ -123,7 +123,7 @@ public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
 		String conditionString = getPropertyValueAsString(PROPERTY_SEQUENCEFLOW_CONDITION, elementNode);
 		if (conditionString != null && StringUtil.isNotEmpty(conditionString)) {
 			FormalExpression formalExpression = Bpmn2Factory.eINSTANCE.createFormalExpression();
-			formalExpression.setId("aaaaa");
+			//formalExpression.setId("aaaaa");
 			formalExpression.setBody(conditionString);
 			flow.setConditionExpression(formalExpression);
 		}

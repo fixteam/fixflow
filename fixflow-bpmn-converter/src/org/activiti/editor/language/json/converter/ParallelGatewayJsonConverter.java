@@ -19,7 +19,9 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.GatewayDirection;
 import org.eclipse.bpmn2.ParallelGateway;
+import org.eclipse.bpmn2.impl.GatewayImpl;
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -55,6 +57,11 @@ public class ParallelGatewayJsonConverter extends BaseBpmnJsonConverter {
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
     ParallelGateway gateway = Bpmn2Factory.eINSTANCE.createParallelGateway();// ParallelGateway();
+    String direction = getPropertyValueAsString(PROPERTY_GATEWAT_DIRECTION, elementNode);
+    if(StringUtil.isNotEmpty(direction)){
+    	GatewayDirection gatewayDirection = GatewayDirection.getByName(direction);
+    	gateway.setGatewayDirection(gatewayDirection);
+    }
     return gateway;
   }
 }
