@@ -106,7 +106,7 @@ public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
 			propertiesNode.put(PROPERTY_SEQUENCEFLOW_CONDITION, BpmnModelUtil.getExpression(sequenceFlow.getConditionExpression()));
 		}
 		propertiesNode.put(PROPERTY_SEQUENCEFLOW_ORDERID, sequenceFlow.getOrderId());
-    
+		propertiesNode.put("testProperties", "测试属性");
 		flowNode.put(EDITOR_SHAPE_PROPERTIES, propertiesNode);
     
 		shapesArrayNode.add(flowNode);
