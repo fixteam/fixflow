@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.Definitions;
@@ -41,6 +42,19 @@ public class FixFlowConverter {
 	public void save(Definitions defintion){
 		ResourceSet resourceSet = getResourceSet();
 		Bpmn2Resource resource = (Bpmn2Resource) resourceSet.getResource(URI.createFileURI("d:\\node_template.bpmn"), true);
+		DocumentRoot documentRoot = (DocumentRoot) resource.getContents().get(0);
+		documentRoot.setDefinitions(defintion);
+		try {
+			resource.save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void save(JsonNode modelNode,URI uri){
+		Definitions defintion = new BpmnJsonConverter().convertToBpmnModel(modelNode);
+		ResourceSet resourceSet = getResourceSet();
+		Bpmn2Resource resource = (Bpmn2Resource) resourceSet.getResource(uri, true);
 		DocumentRoot documentRoot = (DocumentRoot) resource.getContents().get(0);
 		documentRoot.setDefinitions(defintion);
 		try {
