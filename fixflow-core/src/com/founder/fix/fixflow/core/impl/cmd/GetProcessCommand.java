@@ -54,7 +54,7 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 		List<Map<String, Object>> listMap=new ArrayList<Map<String,Object>>();
 		
 		
-		
+		/*
 		List<TaskInstance> taskInstancesNotEndA=taskService.createTaskQuery().processInstanceId(processInstanceId).taskAssignee(userId).taskNotEnd().list();
 		
 		List<TaskInstance> taskInstancesNotEndC=taskService.createTaskQuery().processInstanceId(processInstanceId).taskCandidateUser(userId).taskNotEnd().list();
@@ -114,7 +114,7 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 			}
 			
 		}
-		
+		*/
 		int x=0;
 		for (Map<String, Object>  map : listMap) {
 			if(map.get("type").equals("processStatus")){
