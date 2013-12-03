@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
@@ -28,6 +29,23 @@ public class FlowWebManagerServlet extends BaseServlet {
             InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ajaxResultObj(on);
+		} catch (Exception e) {
+			error("加载web流程图，返回json格式对象出错!");
+		}
+    }
+    
+    public void reTryModelInfo(){
+    	try {
+    		ObjectMapper objectMapper = new ObjectMapper();
+            InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
+    		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
+    		ObjectNode rootNode = objectMapper.createObjectNode();
+    		rootNode.put("name", "testName");
+    		rootNode.put("revision", 2);
+    		rootNode.put("description", "测试流程实例");
+    		rootNode.put("modelId", "11212");
+    		rootNode.put("model", on);
+    		ajaxResultObj(rootNode);
 		} catch (Exception e) {
 			error("加载web流程图，返回json格式对象出错!");
 		}
