@@ -509,13 +509,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 				BaseElement bpmnElement = BpmnModelUtil.getElement(bpmnModel,elementId,BaseElement.class);
 				bpmnShape.setBpmnElement(bpmnElement);
 			}
-//			if(diagram instanceof BPMNEdge){
-//				BPMNEdge bpmnEdge = (BPMNEdge)diagram;
-//				String edgeId = bpmnEdge.getId();
-//				String elementId = BpmnJsonConverterUtil.getElementIdFromShapeId(edgeId);
-//				BaseElement bpmnElement = BpmnModelUtil.getElement(bpmnModel,elementId,BaseElement.class);
-//				bpmnEdge.setBpmnElement(bpmnElement);
-//			}
 		}
 		readEdgeDI(edgeMap, sourceAndTargetMap, bpmnModel);
 		return bpmnModel;

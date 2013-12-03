@@ -37,35 +37,13 @@ public class ModelSaveServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		File file = new File("D:\\a.png");
 		String body = getBody(req);
 		body = URLDecoder.decode(body);
 		String json_xml = getBodyFromPayload(body,"json_xml");
-		String svg_xml = getBodyFromPayload(body,"svg_xml");
-		InputStream svgStream = new ByteArrayInputStream(svg_xml.getBytes("utf-8"));
-	    TranscoderInput input = new TranscoderInput(svgStream);
-	    FileOutputStream outputStream = null;
 	    ObjectMapper objectMapper = new ObjectMapper();
     	JsonNode objectNode = objectMapper.readTree(json_xml);
     	new FixFlowConverter().save(objectNode,URI.createFileURI("d:\\node_template.bpmn"));
-    	
-    	
-	    try {
-	    	file.createNewFile();
-	    	outputStream = new FileOutputStream(file);
-		    PNGTranscoder transcoder = new PNGTranscoder();
-		    TranscoderOutput output = new TranscoderOutput(outputStream);
-			transcoder.transcode(input, output);
-			outputStream.flush();
-		} catch (TranscoderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			if(outputStream !=null){
-				outputStream.close();	
-			}
-		}
+ 
 	   
 	}
 	
