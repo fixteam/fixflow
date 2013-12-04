@@ -82,28 +82,28 @@ $(document).ready(function(){
 					$input.keydown(function(event){
 						if(event.keyCode == 13){
 							var name = $(this).val();
-							$input.parent("span").replaceWith("<span>"+name+"</span>");
-							/*$.ajax({
-								url: "/bpmcenter/FileAndDirectoryServlet",
+							$.ajax({
+								url: "/bpmcenter/FlowWebManagerServlet",
 								type: "POST",
 								dataType: "text",
 								data: {
-									method: "create",
+									method: "createBPMNFile",
 									path: getBreadcrumbNameList(breadcrumbList),
-									newFileName: name
+									name: "abc",
+									id:name+".bpmn"
 								},
 								success: function(data){
-									eval("var d = " + data);
+									/*eval("var d = " + data);
 									if(d.state == "error"){
 										alert("文件夹重名！");
 										$input.focus();
 										$input.select();
 										return;
-									}
-									$input.parent("span").replaceWith("<span>"+name+"</span>");
-									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
+									}*/
+									$input.parent("span").replaceWith("<span>"+name+".bpmn</span>");
+									//tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
 								}
-							});*/
+							});
 						};
 					});
 					break;
