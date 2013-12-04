@@ -70,6 +70,43 @@ $(document).ready(function(){
 			}
 			var $selectTarget = $("div.thumb-wrap[select=true]");
 			switch($(this).attr("btn-type")){
+				case "createFile":
+					currentOperationType = "createFile";
+					$("div.thumb-wrap[dirType=empty]").remove();
+					var guid = FixFlow.Utils.createGuid();
+					var $newFile = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div></div>');
+					$newFile.appendTo($("div.view_plugin"));
+					var $newFileName = $('<span class="editable"><input type="text" class="editName" style="width:90px;" oldValue="未命名"/></span>').appendTo($newFile);
+					var $input = $("input", $newFileName);
+					$input.focus();
+					$input.keydown(function(event){
+						if(event.keyCode == 13){
+							var name = $(this).val();
+							$input.parent("span").replaceWith("<span>"+name+"</span>");
+							/*$.ajax({
+								url: "/bpmcenter/FileAndDirectoryServlet",
+								type: "POST",
+								dataType: "text",
+								data: {
+									method: "create",
+									path: getBreadcrumbNameList(breadcrumbList),
+									newFileName: name
+								},
+								success: function(data){
+									eval("var d = " + data);
+									if(d.state == "error"){
+										alert("文件夹重名！");
+										$input.focus();
+										$input.select();
+										return;
+									}
+									$input.parent("span").replaceWith("<span>"+name+"</span>");
+									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
+								}
+							});*/
+						};
+					});
+					break;
 				case "createFolder":
 					currentOperationType = "create";
 					$("div.thumb-wrap[dirType=empty]").remove();
@@ -270,6 +307,28 @@ $(document).ready(function(){
 			}
 			var guid = $("input.editName").attr("id");
 			if(currentOperationType == "create"){
+				$.ajax({
+					url: "/bpmcenter/FileAndDirectoryServlet",
+					type: "POST",
+					dataType: "text",
+					data: {
+						method: "create",
+						path: getBreadcrumbNameList(breadcrumbList),
+						newFileName: newName
+					},
+					success: function(data){
+						eval("var d = " + data);
+						if(d.state == "error"){
+							alert("文件夹重名！");
+							$("input.editName").focus();
+							$("input.editName").select();
+							return;
+						}
+						$("input.editName").parent("span").replaceWith("<span title="+newName+">"+newName+"</span>");
+						tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
+					}
+				});
+			}else if(currentOperationType == "createFile"){
 				$.ajax({
 					url: "/bpmcenter/FileAndDirectoryServlet",
 					type: "POST",
