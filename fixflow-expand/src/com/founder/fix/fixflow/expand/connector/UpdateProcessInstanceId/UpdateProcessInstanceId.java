@@ -18,6 +18,8 @@
 package com.founder.fix.fixflow.expand.connector.UpdateProcessInstanceId;
 
 
+import com.founder.fix.apputil.to.bizobj.BizObjTo;
+import com.founder.fix.apputil.util.BizObjectUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.action.ConnectorHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -34,6 +36,8 @@ public class UpdateProcessInstanceId implements ConnectorHandler {
 		SqlCommand sqlCommand=new SqlCommand(Context.getDbConnection());
 
 		String Fix_BizName=StringUtil.getString(Context.getAbstractScriptLanguageMgmt().execute("${Fix_BizName}", executionContext));
+		BizObjTo bizObjTo = BizObjectUtil.getBizObject(Fix_BizName);
+		String tableName = bizObjTo.getTableName();
 		String Fix_BizKeyFile=StringUtil.getString(Context.getAbstractScriptLanguageMgmt().execute("${Fix_BizKeyFile}", executionContext));
 		if(Fix_BizName==null||Fix_BizName.equals("")){
 			throw new FixFlowException("数据变量${Fix_BizName}为空");
@@ -44,7 +48,7 @@ public class UpdateProcessInstanceId implements ConnectorHandler {
 		
 		String processInstId=executionContext.getProcessInstance().getId();
 		
-		String sqlText="UPDATE "+Fix_BizName+" SET  FIX_PROCESSINSTANCE_ID='"+processInstId+"' WHERE "+Fix_BizKeyFile+"='"+executionContext.getBizKey()+"'";
+		String sqlText="UPDATE "+tableName+" SET  FIX_PROCESSINSTANCE_ID='"+processInstId+"' WHERE "+Fix_BizKeyFile+"='"+executionContext.getBizKey()+"'";
 		
 		sqlCommand.execute(sqlText);
 
