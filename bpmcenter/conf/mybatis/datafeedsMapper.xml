@@ -17,21 +17,53 @@
     
     <select id="flowInfo" resultType="java.util.Map"
 		parameterType="java.util.Map">
-		select PROCESSDEFINITION_KEY,PROCESS_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME 
-		from 
-			(select PROCESSDEFINITION_KEY,PROCESS_NAME,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
-			from FIXBPA_FLOW_PROCESSINSTANCE 
-			where 1=1
-			<if test="procName != null">  
-        		and PROCESS_NAME like '%${procName}%' 
-    		</if>
-    		<if test="dateStart != null">  
-        		and START_TIME >= #{dateStart}
-    		</if>
-    		<if test="dateEnd != null">  
-        		<![CDATA[and START_TIME <= #{dateEnd}]]>
-    		</if>
-			group by PROCESSDEFINITION_KEY,PROCESS_NAME) tb
+		
+	  select a.PROCESSDEFINITION_KEY,PROCESS_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME,TERMINATION_COUNT  
+	  from      
+      ((select PROCESSDEFINITION_KEY,PROCESS_NAME,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
+	      from FIXBPA_FLOW_PROCESSINSTANCE 
+		  where 1=1
+		  	<if test="procName != null">  
+	    		and PROCESS_NAME like '%${procName}%' 
+			</if>
+			<if test="dateStart != null">  
+	    		and START_TIME >= #{dateStart}
+			</if>
+			<if test="dateEnd != null">  
+				<![CDATA[and START_TIME <= #{dateEnd}]]>
+			</if>
+	      group by PROCESSDEFINITION_KEY,PROCESS_NAME) a 
+  
+      left join
+      
+      (select PROCESSDEFINITION_KEY,count(1) AS TERMINATION_COUNT
+      from FIXBPA_FLOW_PROCESSINSTANCE 
+      where INSTANCE_STATUS = 'TERMINATION'
+        <if test="procName != null">  
+	   		and PROCESS_NAME like '%${procName}%' 
+		</if>
+		<if test="dateStart != null">  
+	   		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+      group by PROCESSDEFINITION_KEY) b
+      on a.PROCESSDEFINITION_KEY=b.PROCESSDEFINITION_KEY)
+      
+		<if test="timeOrder != null">  
+			order by AVG_TIME ${timeOrder}
+  		</if>
+  		<if test="doneOrder != null">  
+			order by DONE_COUNT ${doneOrder}
+  		</if>
+  		<if test="undoneOrder != null">  
+     		order by UNDONE_COUNT ${undoneOrder}
+  		</if>
+  		<if test="allOrder != null">  
+     		order by ALL_COUNT ${allOrder}
+  		</if>
+      
     </select>
     
     <select id="flowInfo_page" resultType="java.lang.Integer"
