@@ -28,3 +28,5 @@
 /*分类配色*/
 .type-box .type a { color:#dc562e;}
 .type-box .type a:hover { border:3px solid #dc562e;}
+
+.second-nav li a.select { background:#dc562e;}
