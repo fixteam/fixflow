@@ -19,8 +19,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
-import org.junit.internal.matchers.SubstringMatcher;
-
 /**
  * @author Tijs Rademakers
  */

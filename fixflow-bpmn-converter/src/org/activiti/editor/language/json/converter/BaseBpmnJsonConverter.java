@@ -78,6 +78,7 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
   protected double subProcessX;
   protected double subProcessY;
   protected ArrayNode shapesArrayNode;
+  protected Map<String, List<JsonNode>> sourceAndTargetMap;
 
   public void convertToJson(FlowElement flowElement, ActivityProcessor processor, Definitions model,
       ArrayNode shapesArrayNode, double subProcessX, double subProcessY) {
@@ -226,8 +227,11 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
   }
   
   public void convertToBpmnModel(JsonNode elementNode, JsonNode modelNode, 
-      ActivityProcessor processor, BaseElement parentElement, Map<String, JsonNode> shapeMap) {
-    this.processor = processor;
+      ActivityProcessor processor, BaseElement parentElement, Map<String, JsonNode> shapeMap, Map<String, List<JsonNode>> sourceAndTargetMap, Definitions model2) {
+    //subProcess使用
+	  this.processor = processor;
+	  this.model = model2;
+	  this.sourceAndTargetMap = sourceAndTargetMap;
     FlowElement flowElement = convertJsonToElement(elementNode, modelNode, shapeMap);
     flowElement.setId(BpmnJsonConverterUtil.getElementId(elementNode));
     flowElement.setName(getPropertyValueAsString(PROPERTY_NAME, elementNode));

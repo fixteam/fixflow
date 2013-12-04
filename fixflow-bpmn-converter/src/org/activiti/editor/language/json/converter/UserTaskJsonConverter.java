@@ -246,11 +246,13 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
 		  if(policyTypeNode != null){
 			  AssignPolicyType assignPolicyType = FixFlowFactory.eINSTANCE.createAssignPolicyType();
 			  assignPolicyType.setId(policyTypeNode.asText());
-			  String expressionBody = getProperty(PROPERTY_USERTASK_ASSIGNEXPRESSION, elementNode).asText();
-			  Expression policyExpression = FixFlowFactory.eINSTANCE.createExpression();
-			  policyExpression.setValue(expressionBody);
-			  policyExpression.setName(expressionBody);
-			  assignPolicyType.setExpression(policyExpression);
+			  String expressionBody = getPropertyValueAsString(PROPERTY_USERTASK_ASSIGNEXPRESSION, elementNode);
+			  if(StringUtil.isNotEmpty(expressionBody)){
+				  Expression policyExpression = FixFlowFactory.eINSTANCE.createExpression();
+				  policyExpression.setValue(expressionBody);
+				  policyExpression.setName(expressionBody);
+				  assignPolicyType.setExpression(policyExpression);
+			  }
 			  BpmnModelUtil.addExtensionElement(task, FixFlowPackage.Literals.DOCUMENT_ROOT__ASSIGN_POLICY_TYPE, assignPolicyType);
 		  }
 		  //转换处理人

@@ -13,6 +13,7 @@
 package org.activiti.editor.language.json.converter;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
@@ -29,5 +30,5 @@ public interface ActivityProcessor {
   public void processFlowElements(Collection<FlowElement> flowElements, Definitions model, ArrayNode shapesArrayNode, 
       double subProcessX, double subProcessY);
   
-  //public void processJsonElements(JsonNode shapesArrayNode, JsonNode modelNode, BaseElement parentElement, Map<String, JsonNode> shapeMap);
+  public void processJsonElements(JsonNode shapesArrayNode, JsonNode modelNode, BaseElement parentElement, Map<String, JsonNode> shapeMapMap,Map<String, List<JsonNode>> sourceAndTargetMap,Definitions model);
 }

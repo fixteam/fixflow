@@ -66,6 +66,7 @@ import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -521,7 +522,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       Class<? extends BaseBpmnJsonConverter> converter = convertersToBpmnMap.get(BpmnJsonConverterUtil.getStencilId(shapeNode));
       if (converter != null) {
         try {
-          converter.newInstance().convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap);
+          converter.newInstance().convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap,sourceAndTargetMap,model);
         } catch (Exception e) {
           LOGGER.error("Error converting {}", BpmnJsonConverterUtil.getStencilId(shapeNode), e);
         }
@@ -531,19 +532,27 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     //fixflow线条处理
     if (parentElement instanceof Process) {
         ProcessDefinitionBehavior process = (ProcessDefinitionBehavior) parentElement;
-        process.getDefinitions();
-        for(FlowElement flowElement:process.getFlowElements()){
-        	if(flowElement instanceof SequenceFlowBehavior){
-        		List<JsonNode> sourceAndTarget = sourceAndTargetMap.get(BpmnJsonConverterUtil.getFormatEdgeId(flowElement.getId()));
-        		String sourceRef = BpmnJsonConverterUtil.getElementId(sourceAndTarget.get(0));
-        		String target = BpmnJsonConverterUtil.getElementId(sourceAndTarget.get(1));
-        		FlowElement sourceRefNode = BpmnModelUtil.getElement(model, sourceRef, FlowNode.class);
-        		FlowElement targetNode = BpmnModelUtil.getElement(model, target, FlowNode.class);
-        		((SequenceFlowBehavior)flowElement).setSourceRef((FlowNode)sourceRefNode);
-        		((SequenceFlowBehavior)flowElement).setTargetRef((FlowNode)targetNode);
-        	}
-        }
+        addSourceAndTarget(process.getFlowElements(),sourceAndTargetMap,model);
     }
+  }
+  
+  //给线条增加source和target元素
+  private void addSourceAndTarget(Collection<FlowElement> flowElements,Map<String, List<JsonNode>> sourceAndTargetMap,Definitions model){
+	  for(FlowElement flowElement:flowElements){
+      	if(flowElement instanceof SequenceFlowBehavior){
+      		List<JsonNode> sourceAndTarget = sourceAndTargetMap.get(BpmnJsonConverterUtil.getFormatEdgeId(flowElement.getId()));
+      		String sourceRef = BpmnJsonConverterUtil.getElementId(sourceAndTarget.get(0));
+      		String target = BpmnJsonConverterUtil.getElementId(sourceAndTarget.get(1));
+      		FlowElement sourceRefNode = BpmnModelUtil.getElement(model, sourceRef, FlowNode.class);
+      		FlowElement targetNode = BpmnModelUtil.getElement(model, target, FlowNode.class);
+      		((SequenceFlowBehavior)flowElement).setSourceRef((FlowNode)sourceRefNode);
+      		((SequenceFlowBehavior)flowElement).setTargetRef((FlowNode)targetNode);
+      	}
+      	if(flowElement instanceof SubProcessBehavior){
+      		SubProcessBehavior subProcessBehavior = (SubProcessBehavior)flowElement;
+      		addSourceAndTarget(subProcessBehavior.getFlowElements(),sourceAndTargetMap,model);
+      	}
+      }
   }
   /*
   private List<ActivitiListener> convertJsonToListeners(JsonNode listenersNode) {
