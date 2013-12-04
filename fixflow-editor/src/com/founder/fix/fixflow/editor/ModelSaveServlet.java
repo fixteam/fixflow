@@ -39,9 +39,13 @@ public class ModelSaveServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String body = getBody(req);
 		body = URLDecoder.decode(body);
+		String path = "";
 		String json_xml = getBodyFromPayload(body,"json_xml");
 	    ObjectMapper objectMapper = new ObjectMapper();
     	JsonNode objectNode = objectMapper.readTree(json_xml);
+    	//保存temp
+    	
+    	
     	new FixFlowConverter().save(objectNode,URI.createFileURI("d:\\node_template.bpmn"));
  
 	   
