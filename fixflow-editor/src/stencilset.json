@@ -1236,7 +1236,7 @@
     "properties" : [ {
       "id" : "conditionsequenceflow",
       "type" : "Text",
-      "title" : "Flow condition",
+      "title" : "条件",
       "value" : "",
       "description" : "The condition of the sequence flow",
       "popular" : true
@@ -1568,50 +1568,6 @@
   }, {
     "name" : "activity",
     "properties" : [ {
-      "id" : "multiinstance_sequential",
-      "type" : "Choice",
-      "title" : "Sequential (Multi-instance)",
-      "value" : "Yes",
-      "description" : "Define the multi instance as sequential.",
-      "popular" : true,
-      "items" : [ {
-        "id" : "no",
-        "title" : "No",
-        "value" : "No"
-      }, {
-        "id" : "yes",
-        "title" : "Yes",
-        "value" : "Yes"
-      } ]
-    }, {
-      "id" : "multiinstance_cardinality",
-      "type" : "String",
-      "title" : "Cardinality (Multi-instance)",
-      "value" : "",
-      "description" : "Define the cardinality of multi instance.",
-      "popular" : true
-    }, {
-      "id" : "multiinstance_collection",
-      "type" : "String",
-      "title" : "Collection (Multi-instance)",
-      "value" : "",
-      "description" : "Define the collection for the multi instance.",
-      "popular" : true
-    }, {
-      "id" : "multiinstance_variable",
-      "type" : "String",
-      "title" : "Element variable (Multi-instance)",
-      "value" : "",
-      "description" : "Define the element variable for the multi instance.",
-      "popular" : true
-    }, {
-      "id" : "multiinstance_condition",
-      "type" : "String",
-      "title" : "Completion condition (Multi-instance)",
-      "value" : "",
-      "description" : "Define the completion condition for the multi instance.",
-      "popular" : true
-    }, {
       "id" : "isforcompensation",
       "type" : "Boolean",
       "title" : "Is for compensation",
@@ -1632,7 +1588,7 @@
     "layout" : [ {
       "type" : "layout.bpmn2_0.sequenceflow"
     } ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "sequenceflowbase" ],
+    "propertyPackages" : [ "fixflowcommonbase", "sequenceflowbase" ],
     "roles" : [ "ConnectingObjectsMorph", "all" ]
   }, {
     "type" : "edge",
@@ -1645,7 +1601,7 @@
     "layout" : [ {
       "type" : "layout.bpmn2_0.sequenceflow"
     } ],
-    "propertyPackages" : [ "elementbase", "baseattributes" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
     "roles" : [ "ConnectingObjectsMorph", "all" ]
   },{
     "type" : "node",
@@ -1715,7 +1671,7 @@
     "view" : "startevent/none.svg",
     "icon" : "startevent/none.png",
     "groups" : [ "事件" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "formdefinition", "nonestarteventbase", "executionlistenersbase" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
     "roles" : [ "Startevents_all", "sequence_start", "StartEventsMorph", "all" ]
   }, {
     "type" : "node",
@@ -1725,7 +1681,7 @@
     "view" : "endevent/none.svg",
     "icon" : "endevent/none.png",
     "groups" : [ "事件" ],
-    "propertyPackages" : [ "elementbase", "baseattributes", "executionlistenersbase" ],
+    "propertyPackages" : [ "fixflowcommonbase" ],
     "roles" : [ "EndEventsMorph", "sequence_end", "all" ]
   }, {
 			"type" : 			"node",
