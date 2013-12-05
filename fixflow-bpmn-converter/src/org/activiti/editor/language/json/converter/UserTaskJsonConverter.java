@@ -188,36 +188,38 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
 		  JsonNode taskCommandNode = getProperty(PROPERTY_TASKCOMMAND, elementNode);
 		  if(taskCommandNode != null){
 			  JsonNode itemsNode = taskCommandNode.get(EDITOR_PROPERTIES_GENERAL_ITEMS);
-			  Iterator<JsonNode> taskcommandIterator = itemsNode.getElements();
-			  while(taskcommandIterator.hasNext()) {
-				  JsonNode taskCommandItemNode = taskcommandIterator.next();
-				  TaskCommand taskCommand = FixFlowFactory.eINSTANCE.createTaskCommand();
-				  String commandName = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_NAME).asText();
-				  String commandId = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_ID).asText();
-				  String commandType = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_TYPE).asText();
-				  String isSaveData = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_IS_SAVEDATA).asText();
-				  String isSimulation =  taskCommandItemNode.get(PROPERTY_TASKCOMMAND_IS_SIMULATION_RUN).asText();
-				  String isVerify = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_IS_VERIFICATION).asText();
-				  String paraExpression = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_PARA_EXPRESSION).asText();
-				  String expression = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_EXPRESSION).asText();
-	        	
-				  taskCommand.setCommandType(commandType);
-				  taskCommand.setId(commandId);
-				  taskCommand.setName(commandName);
-				  taskCommand.setIsSimulationRun(isSimulation);
-				  taskCommand.setIsSaveData(isSaveData);
-				  taskCommand.setIsVerification(isVerify);
-				  //执行表达式
-				  Expression expression2 = FixFlowFactory.eINSTANCE.createExpression();
-				  expression2.setName(expression);
-				  expression2.setValue(expression);
-				  taskCommand.setExpression(expression2);
-				  //参数表达式
-				  Expression expression3 = FixFlowFactory.eINSTANCE.createExpression();
-				  expression3.setName(paraExpression);
-				  expression3.setValue(paraExpression);
-				  taskCommand.setParameterExpression(expression3);
-				  BpmnModelUtil.addExtensionElement(task, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, taskCommand);
+			  if(itemsNode !=null){
+				  Iterator<JsonNode> taskcommandIterator = itemsNode.getElements();
+				  while(taskcommandIterator.hasNext()) {
+					  JsonNode taskCommandItemNode = taskcommandIterator.next();
+					  TaskCommand taskCommand = FixFlowFactory.eINSTANCE.createTaskCommand();
+					  String commandName = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_NAME).asText();
+					  String commandId = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_ID).asText();
+					  String commandType = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_TYPE).asText();
+					  String isSaveData = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_IS_SAVEDATA).asText();
+					  String isSimulation =  taskCommandItemNode.get(PROPERTY_TASKCOMMAND_IS_SIMULATION_RUN).asText();
+					  String isVerify = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_IS_VERIFICATION).asText();
+					  String paraExpression = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_PARA_EXPRESSION).asText();
+					  String expression = taskCommandItemNode.get(PROPERTY_TASKCOMMAND_EXPRESSION).asText();
+		        	
+					  taskCommand.setCommandType(commandType);
+					  taskCommand.setId(commandId);
+					  taskCommand.setName(commandName);
+					  taskCommand.setIsSimulationRun(isSimulation);
+					  taskCommand.setIsSaveData(isSaveData);
+					  taskCommand.setIsVerification(isVerify);
+					  //执行表达式
+					  Expression expression2 = FixFlowFactory.eINSTANCE.createExpression();
+					  expression2.setName(expression);
+					  expression2.setValue(expression);
+					  taskCommand.setExpression(expression2);
+					  //参数表达式
+					  Expression expression3 = FixFlowFactory.eINSTANCE.createExpression();
+					  expression3.setName(paraExpression);
+					  expression3.setValue(paraExpression);
+					  taskCommand.setParameterExpression(expression3);
+					  BpmnModelUtil.addExtensionElement(task, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_COMMAND, taskCommand);
+				  }
 			  }
 		  }
 	    
