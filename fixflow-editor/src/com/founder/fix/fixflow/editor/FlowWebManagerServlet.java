@@ -41,6 +41,7 @@ public class FlowWebManagerServlet extends BaseServlet {
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ajaxResultObj(on);
 		} catch (Exception e) {
+			e.printStackTrace();
 			error("加载web流程图，返回json格式对象出错!");
 		}
     }
@@ -62,6 +63,26 @@ public class FlowWebManagerServlet extends BaseServlet {
 		}
     }
     
+    
+    public void createBPMNFile(){
+    	try{
+    		String processId = request("id");
+        	String fileName = "";
+        	if(processId.endsWith(".bpmn")){
+        		fileName = processId;
+        		processId = processId.substring(0, processId.indexOf("."));
+        	}else{
+        		fileName = processId + ".bpmn";
+        	}
+        	String processName = request("name");
+        	String path = getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath()+File.separator+fileName;
+        	new FixFlowConverter().createBPMNFile(path, processId, processName);
+        	success("创建成功","String");
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    		error("创建文件失败");
+    	}
+    }
     
     public void save() throws JsonProcessingException, IOException{
     	ObjectMapper objectMapper = new ObjectMapper();

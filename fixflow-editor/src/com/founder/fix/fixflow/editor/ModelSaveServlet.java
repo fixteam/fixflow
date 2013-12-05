@@ -1,30 +1,24 @@
 package com.founder.fix.fixflow.editor;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLDecoder;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.batik.transcoder.TranscoderException;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.emf.common.util.URI;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
+import com.founder.fix.fixflow.service.FlowCenterService;
+import com.founder.fix.fixflow.util.FileUtil;
 public class ModelSaveServlet extends HttpServlet {
 
 	@Override
@@ -34,21 +28,40 @@ public class ModelSaveServlet extends HttpServlet {
 		doGet(req, resp);
 	}
 	
+	  public String buildPath(HttpServletRequest request,String filePath){
+			String[] node = filePath.split(",");
+			String path = request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID).toString();
+			for (int i = 0; i < node.length; i++) {
+				path += File.separator+node[i];
+			}
+			return path;
+	    }
+	
+	 
+	public String getBasePath(HttpServletRequest request){
+		return request.getSession().getServletContext().getRealPath("/")+File.separator+"fixflow-repository"+File.separator;
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String body = getBody(req);
 		body = URLDecoder.decode(body);
-		String path = "";
 		String json_xml = getBodyFromPayload(body,"json_xml");
+		String path = getBodyFromPayload(body,"path");
+		String fileName = getBodyFromPayload(body,"fileName");
 	    ObjectMapper objectMapper = new ObjectMapper();
     	JsonNode objectNode = objectMapper.readTree(json_xml);
-    	//保存temp
-    	
-    	
-    	new FixFlowConverter().save(objectNode,URI.createFileURI("d:\\node_template.bpmn"));
- 
-	   
+    	String resFilePath = getBasePath(req)+"temp"+File.separator+"node_template.bpmn";;
+    	String newFilePath = getBasePath(req)+buildPath(req,path)+File.separator+fileName;
+    	String staticFilePath = getBasePath(req)+"system-template"+File.separator+"node_template.bpmn";
+    	try{
+    		FileUtil.copyFile(staticFilePath, resFilePath);
+    		new FixFlowConverter().save(objectNode,URI.createFileURI(getBasePath(req)+"temp"+File.separator+"node_template.bpmn"));
+    	    FileUtil.copyFile(resFilePath, newFilePath);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
 	}
 	
 	public String getBodyFromPayload(String content,String title){

@@ -252,4 +252,49 @@
 		select node_name from FIXBPA_FLOW_NODE 
 		where processdefinition_key = #{procKey} and node_id = #{nodeID}	
     </select>
+    
+    <select id="top10NodeDetail" resultType="java.util.Map" parameterType="java.util.Map">
+    	SELECT * FROM (SELECT PROCESSDEFINITION_KEY,USER_NAME,NODE_ID,NODE_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) AS UNDONE_COUNT,CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME FROM 
+        (SELECT PROCESSDEFINITION_KEY,USER_NAME,NODE_ID,NODE_NAME,COUNT(1) AS ALL_COUNT,COUNT(END_TIME) AS DONE_COUNT, SUM(WORK_TIME) AS SUM_TIME 
+        FROM FIXBPA_FLOW_TASKINSTANCE WHERE 1=1
+		<if test="procID != null">
+			and PROCESSDEFINITION_ID = #{procID}
+		</if>	
+		<if test="procKey != null">
+			and PROCESSDEFINITION_KEY = #{procKey}
+		</if>
+		<if test="nodeID != null">
+			and NODE_ID = #{nodeID}
+		</if>
+        GROUP BY USER_NAME,PROCESSDEFINITION_KEY,NODE_ID,NODE_NAME) TB ) TB2 
+        ORDER BY ${orderColum} ${orderType}
+    </select>
+    <select id="getFixFlowNodeDetailAvgTime" resultType="java.util.Map" parameterType="java.util.Map">
+    	SELECT  CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME,'平均处理时间' AS AVG_TIME_NAME FROM (SELECT PROCESSDEFINITION_KEY,COUNT(1) AS ALL_COUNT,COUNT(END_TIME) AS DONE_COUNT, SUM(WORK_TIME) AS SUM_TIME 
+        FROM FIXBPA_FLOW_TASKINSTANCE WHERE 1=1
+        <if test="procID != null">
+			and PROCESSDEFINITION_ID = #{procID}
+		</if>	
+		<if test="procKey != null">
+			and PROCESSDEFINITION_KEY = #{procKey}
+		</if>
+		<if test="nodeID != null">
+			and NODE_ID = #{nodeID}
+		</if>
+        GROUP BY PROCESSDEFINITION_KEY)
+    </select>
+    <select id="getFixFlowNodeDetailAvgDoneCount" resultType="java.util.Map" parameterType="java.util.Map">
+    	SELECT SUM(DONE_COUNT)/COUNT(USER_NAME) AS AVG_DONE_COUNT, '平均完成次数' AS AVG_DONE_COUNT_NAME FROM (SELECT USER_NAME ,COUNT(END_TIME) DONE_COUNT
+            FROM FIXBPA_FLOW_TASKINSTANCE WHERE 1=1 
+        <if test="procID != null">
+			and PROCESSDEFINITION_ID = #{procID}
+		</if>	
+		<if test="procKey != null">
+			and PROCESSDEFINITION_KEY = #{procKey}
+		</if>
+		<if test="nodeID != null">
+			and NODE_ID = #{nodeID}
+		</if>
+        GROUP BY USER_NAME)
+    </select>
 </mapper> 
