@@ -89,5 +89,29 @@
 		</div> 
 	</div>
 </div>
+
+<div class="popup-A sl-shadow" style="position:absolute;display: none;">
+	<div class="title"><h4>新建流程</h4></div>
+		<div class="content">
+			<table width="100%" border="0" class="fix-table2">
+				<tbody>
+					<tr>
+          				<td width="70" class="title-r">流程ID</td>
+          				<td><input id="flowFileId" type="text" id="text_0" name="text_0" class="fix-input" style="width:200px;"></td>
+        			</tr>
+        			<tr>
+          				<td class="title-r">流程名称</td>
+          				<td><input id="flowFileName"  type="text" id="text_1" name="text_0" class="fix-input" style="width:200px;"></td>
+        			</tr>
+			        <tr>
+			         	<td>&nbsp;</td>
+          				<td>
+          					<div class="btn-normal fn-left m-r-30"><a href="#" id="okBtn">确 定</a></div>
+              				<div class="btn-normal"><a href="#" id="closeBtn">取 消</a></div>
+              			</td>
+       				 </tr>
+      			</tbody></table>
+	</div>
+</div>
 </body>
 </html>

@@ -99,6 +99,11 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .fix-table tr.odd { background:#f7f7f7;}
 .fix-table tbody tr:HOVER {cursor:pointer;}
 
+.fix-table2 { margin:0; color:#444;}
+.fix-table2 td { padding:10px 0;}
+.fix-table2 td.title-r { text-align:right; color:#666; padding-right:20px;}
+.fix-table2 .fix-input { padding:4px 5px; background:#f2f2f2; border:none; font-size:12px; line-height:12px; color:#333;}
+
 /* 分页 */
 .page { padding:10px 15px; height:18px; overflow:hidden; text-align:right;}
 .page ul { margin:0; padding:0; height:auto; overflow:hidden; display:inline-block;}
@@ -117,3 +122,11 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .type-box .type a div { font-size:14px; text-align:left; font-family:"微软雅黑";}
 .type-box .type a div:first-letter {font-size:200%;font-weight:bold;float:left;margin:0 5px;}
 .type-box .type a:hover { background:#eee ;}
+
+/* 弹出框 */
+.popup-A { width:380px; height:auto; overflow:hidden; z-index:200; top:300px; right:300px;}
+.popup-A .title { height:30px; background:#aaa; border:1px solid #cfedf7; border-bottom:none;}
+.popup-A .title h4 { color:#fff; font:14px/26px "微软雅黑"; padding-left:10px;}
+.popup-A .content { padding:12px; min-height:220px; height:auto; overflow:hidden; background:#FFF; border:1px solid #cfedf7;}
+
+.m-r-30 { margin-right:30px;}

@@ -38,4 +38,6 @@ xmlns:context="http://www.springframework.org/schema/context"
 		<property name="dbId" value="DB_FIX_BPA_BASE" />
 		<property name="ormDataSource" ref="DB_BPA_BASE_OrmDataSource" />
 	</bean>
+
+
 </beans>

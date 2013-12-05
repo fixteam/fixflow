@@ -127,16 +127,16 @@ ORYX.I18N.jPDLSupport.close = "Close";
 if(!ORYX.I18N.Save) ORYX.I18N.Save = {};
 
 ORYX.I18N.Save.group = "File";
-ORYX.I18N.Save.save = "Save";
+ORYX.I18N.Save.save = "保存";
 ORYX.I18N.Save.saveDesc = "Save";
 ORYX.I18N.Save.saveAs = "Save As...";
 ORYX.I18N.Save.saveAsDesc = "Save As...";
 ORYX.I18N.Save.unsavedData = "There are unsaved data, please save before you leave, otherwise your changes get lost!";
 ORYX.I18N.Save.newProcess = "New Process";
 ORYX.I18N.Save.saveAsTitle = "Save as...";
-ORYX.I18N.Save.saveBtn = "Save";
-ORYX.I18N.Save.close = "Close";
-ORYX.I18N.Save.savedAs = "Saved As";
+ORYX.I18N.Save.saveBtn = "保存";
+ORYX.I18N.Save.close = "关闭";
+ORYX.I18N.Save.savedAs = "另存为";
 ORYX.I18N.Save.saved = "Saved!";
 ORYX.I18N.Save.failed = "Saving failed.";
 ORYX.I18N.Save.noRights = "You have no rights to save changes.";
@@ -231,10 +231,10 @@ ORYX.I18N.PropertyWindow.title = "属性";
 if(!ORYX.I18N.ShapeRepository) ORYX.I18N.ShapeRepository = {};
 ORYX.I18N.ShapeRepository.title = "图形库";
 
-ORYX.I18N.Save.dialogDesciption = "Please enter a name, a description and a comment.";
-ORYX.I18N.Save.dialogLabelTitle = "Title";
-ORYX.I18N.Save.dialogLabelDesc = "Description";
-ORYX.I18N.Save.dialogLabelType = "Type";
+ORYX.I18N.Save.dialogDesciption = "请输入相关保存信息";
+ORYX.I18N.Save.dialogLabelTitle = "标题";
+ORYX.I18N.Save.dialogLabelDesc = "描述";
+ORYX.I18N.Save.dialogLabelType = "类型";
 ORYX.I18N.Save.dialogLabelComment = "Revision comment";
 
 Ext.MessageBox.buttonText.yes = "Yes";

@@ -29,6 +29,40 @@ var zTreeSetting = {
 };
 var tree;
 $(document).ready(function(){
+	$("#okBtn").click(function(){
+		var id = $("#flowFileId").val();
+		var name = $("#flowFileName").val();
+		$.ajax({
+			url: "/bpmcenter/FlowWebManagerServlet",
+			type: "POST",
+			dataType: "text",
+			data: {
+				method: "createBPMNFile",
+				path: getBreadcrumbNameList(breadcrumbList),
+				name: name,
+				id: id+".bpmn"
+			},
+			success: function(data){
+				eval("var d = " + data);
+				if(d.state == "error"){
+					alert("创建失败！");
+				}else{
+					alert("创建成功！");
+					var $newFile = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="'+id+'.bpmn">'+id+'.bpmn</span></div>');
+					$newFile.appendTo($("div.view_plugin"));
+					$("div.popup-A").hide();
+				}
+				$("#flowFileId").val("");
+				$("#flowFileName").val("");
+			}
+		});
+		
+	});
+	
+	$("#closeBtn").click(function(){
+		$("div.popup-A").hide();
+	});
+	
 	$("#upload").change(function(){
 		var fileName = $(this).val();
 		var fName = fileName.substring(fileName.lastIndexOf("\\")+1);
@@ -72,40 +106,7 @@ $(document).ready(function(){
 			switch($(this).attr("btn-type")){
 				case "createFile":
 					currentOperationType = "createFile";
-					$("div.thumb-wrap[dirType=empty]").remove();
-					var guid = FixFlow.Utils.createGuid();
-					var $newFile = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div></div>');
-					$newFile.appendTo($("div.view_plugin"));
-					var $newFileName = $('<span class="editable"><input type="text" class="editName" style="width:90px;" oldValue="未命名"/></span>').appendTo($newFile);
-					var $input = $("input", $newFileName);
-					$input.focus();
-					$input.keydown(function(event){
-						if(event.keyCode == 13){
-							var name = $(this).val();
-							$.ajax({
-								url: "/bpmcenter/FlowWebManagerServlet",
-								type: "POST",
-								dataType: "text",
-								data: {
-									method: "createBPMNFile",
-									path: getBreadcrumbNameList(breadcrumbList),
-									name: "abc",
-									id:name+".bpmn"
-								},
-								success: function(data){
-									/*eval("var d = " + data);
-									if(d.state == "error"){
-										alert("文件夹重名！");
-										$input.focus();
-										$input.select();
-										return;
-									}*/
-									$input.parent("span").replaceWith("<span>"+name+".bpmn</span>");
-									//tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
-								}
-							});
-						};
-					});
+					$("div.popup-A").show();
 					break;
 				case "createFolder":
 					currentOperationType = "create";
@@ -299,6 +300,8 @@ $(document).ready(function(){
 	
 	$(document).click(function(){
 		var newName = "";
+		
+		
 		if($("input.editName").length>0){
 			if($("input.editName").val() == ""){
 				newName = $("input.editName").attr("oldValue");
@@ -326,29 +329,6 @@ $(document).ready(function(){
 						}
 						$("input.editName").parent("span").replaceWith("<span title="+newName+">"+newName+"</span>");
 						tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
-					}
-				});
-			}else if(currentOperationType == "createFile"){
-				$.ajax({
-					url: "/bpmcenter/FlowWebManagerServlet",
-					type: "POST",
-					dataType: "text",
-					data: {
-						method: "createBPMNFile",
-						path: getBreadcrumbNameList(breadcrumbList),
-						name: "abc",
-						id:newName+".bpmn"
-					},
-					success: function(data){
-						/*eval("var d = " + data);
-						if(d.state == "error"){
-							alert("文件夹重名！");
-							$input.focus();
-							$input.select();
-							return;
-						}*/
-						$input.parent("span").replaceWith("<span>"+name+".bpmn</span>");
-						//tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
 					}
 				});
 			}else if(currentOperationType == "rename"){
@@ -489,4 +469,8 @@ function resetToolbarState(){
 
 function checkIsResolvent(){
 	return (breadcrumbList[1] && breadcrumbList[1].name == "resolvent");
+}
+
+function createFlowFile(){
+	
 }
