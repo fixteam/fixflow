@@ -90,7 +90,24 @@
 		select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,NODE_ID,NODE_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME 
 		from (select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,NODE_ID,NODE_NAME,sum(ALL_COUNT) as ALL_COUNT,sum(DONE_COUNT) as DONE_COUNT,sum (SUM_TIME) as SUM_TIME 
 				from (select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,NODE_ID,NODE_NAME,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT, sum(WORK_TIME) as SUM_TIME 
-						from fixbpa_flow_taskinstance
+						from 
+						<choose>  
+					        <when test="dateStart != null || dateEnd != null">  
+					            (select t2.*
+									  from FIXBPA_FLOW_PROCESSINSTANCE t1, fixbpa_flow_taskinstance t2
+									 where t1.PROCESSINSTANCE_ID = t2.PROCESSINSTANCE_ID
+						    		<if test="dateStart != null">  
+						        		and t1.START_TIME >= #{dateStart}
+						    		</if>
+						    		<if test="dateEnd != null">  
+					        			<![CDATA[and t1.START_TIME <= #{dateEnd}]]>
+					    			</if>
+									 ) mt
+					        </when>  
+					        <otherwise>  
+					            fixbpa_flow_taskinstance
+					        </otherwise>  
+					    </choose>  
 						where 1=1 
 						<if test="procKey != null">  
 			        		and PROCESSDEFINITION_KEY = #{procKey} 
@@ -123,7 +140,24 @@
 		select * from 
 			(select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,USER_NAME,NODE_ID,NODE_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME from
 				(select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,USER_NAME,NODE_ID,NODE_NAME,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT, sum(WORK_TIME) as SUM_TIME 
-				from fixbpa_flow_taskinstance
+				from 
+				<choose>  
+			        <when test="dateStart != null || dateEnd != null">  
+			            (select t2.*
+							  from FIXBPA_FLOW_PROCESSINSTANCE t1, fixbpa_flow_taskinstance t2
+							 where t1.PROCESSINSTANCE_ID = t2.PROCESSINSTANCE_ID
+				    		<if test="dateStart != null">  
+				        		and t1.START_TIME >= #{dateStart}
+				    		</if>
+				    		<if test="dateEnd != null">  
+			        			<![CDATA[and t1.START_TIME <= #{dateEnd}]]>
+			    			</if>
+							 ) mt
+			        </when>  
+			        <otherwise>  
+			            fixbpa_flow_taskinstance
+			        </otherwise>  
+			    </choose>  
 				where 1=1
 				<if test="procKey != null">  
 			    	and PROCESSDEFINITION_KEY = #{procKey}
