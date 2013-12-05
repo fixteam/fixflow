@@ -211,7 +211,24 @@
 		select count(1) from 
 			(select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,USER_NAME,NODE_ID,NODE_NAME,DONE_COUNT,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME from 
 				(select PROCESSDEFINITION_KEY<if test="procID != null">,PROCESSDEFINITION_ID</if>,USER_NAME,NODE_ID,NODE_NAME,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT, sum(WORK_TIME) as SUM_TIME 
-				from fixbpa_flow_taskinstance 
+				from 
+				<choose>  
+			        <when test="dateStart != null || dateEnd != null">  
+			            (select t2.*
+							  from FIXBPA_FLOW_PROCESSINSTANCE t1, fixbpa_flow_taskinstance t2
+							 where t1.PROCESSINSTANCE_ID = t2.PROCESSINSTANCE_ID
+				    		<if test="dateStart != null">  
+				        		and t1.START_TIME >= #{dateStart}
+				    		</if>
+				    		<if test="dateEnd != null">  
+			        			<![CDATA[and t1.START_TIME <= #{dateEnd}]]>
+			    			</if>
+							 ) mt
+			        </when>  
+			        <otherwise>  
+			            fixbpa_flow_taskinstance
+			        </otherwise>  
+			    </choose>  
 				where 1=1
 				<if test="procKey != null">  
 			    	and PROCESSDEFINITION_KEY = #{procKey} 
@@ -256,7 +273,25 @@
     <select id="top10NodeDetail" resultType="java.util.Map" parameterType="java.util.Map">
     	SELECT * FROM (SELECT PROCESSDEFINITION_KEY,USER_NAME,NODE_ID,NODE_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) AS UNDONE_COUNT,CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME FROM 
         (SELECT PROCESSDEFINITION_KEY,USER_NAME,NODE_ID,NODE_NAME,COUNT(1) AS ALL_COUNT,COUNT(END_TIME) AS DONE_COUNT, SUM(WORK_TIME) AS SUM_TIME 
-        FROM FIXBPA_FLOW_TASKINSTANCE WHERE 1=1
+        FROM 
+			<choose>  
+		        <when test="dateStart != null || dateEnd != null">  
+		            (select t2.*
+						  from FIXBPA_FLOW_PROCESSINSTANCE t1, fixbpa_flow_taskinstance t2
+						 where t1.PROCESSINSTANCE_ID = t2.PROCESSINSTANCE_ID
+			    		<if test="dateStart != null">  
+			        		and t1.START_TIME >= #{dateStart}
+			    		</if>
+			    		<if test="dateEnd != null">  
+		        			<![CDATA[and t1.START_TIME <= #{dateEnd}]]>
+		    			</if>
+						 ) mt
+		        </when>  
+		        <otherwise>  
+		            fixbpa_flow_taskinstance
+		        </otherwise>  
+		    </choose>  
+        WHERE 1=1
 		<if test="procID != null">
 			and PROCESSDEFINITION_ID = #{procID}
 		</if>	
@@ -271,7 +306,25 @@
     </select>
     <select id="getFixFlowNodeDetailAvgTime" resultType="java.util.Map" parameterType="java.util.Map">
     	SELECT  CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME,'平均处理时间' AS AVG_TIME_NAME FROM (SELECT PROCESSDEFINITION_KEY,COUNT(1) AS ALL_COUNT,COUNT(END_TIME) AS DONE_COUNT, SUM(WORK_TIME) AS SUM_TIME 
-        FROM FIXBPA_FLOW_TASKINSTANCE WHERE 1=1
+        FROM 
+			<choose>  
+		        <when test="dateStart != null || dateEnd != null">  
+		            (select t2.*
+						  from FIXBPA_FLOW_PROCESSINSTANCE t1, fixbpa_flow_taskinstance t2
+						 where t1.PROCESSINSTANCE_ID = t2.PROCESSINSTANCE_ID
+			    		<if test="dateStart != null">  
+			        		and t1.START_TIME >= #{dateStart}
+			    		</if>
+			    		<if test="dateEnd != null">  
+		        			<![CDATA[and t1.START_TIME <= #{dateEnd}]]>
+		    			</if>
+						 ) mt
+		        </when>  
+		        <otherwise>  
+		            fixbpa_flow_taskinstance
+		        </otherwise>  
+		    </choose>  
+        WHERE 1=1
         <if test="procID != null">
 			and PROCESSDEFINITION_ID = #{procID}
 		</if>	
@@ -285,7 +338,25 @@
     </select>
     <select id="getFixFlowNodeDetailAvgDoneCount" resultType="java.util.Map" parameterType="java.util.Map">
     	SELECT SUM(DONE_COUNT)/COUNT(USER_NAME) AS AVG_DONE_COUNT, '平均完成次数' AS AVG_DONE_COUNT_NAME FROM (SELECT USER_NAME ,COUNT(END_TIME) DONE_COUNT
-            FROM FIXBPA_FLOW_TASKINSTANCE WHERE 1=1 
+            FROM 
+			<choose>  
+		        <when test="dateStart != null || dateEnd != null">  
+		            (select t2.*
+						  from FIXBPA_FLOW_PROCESSINSTANCE t1, fixbpa_flow_taskinstance t2
+						 where t1.PROCESSINSTANCE_ID = t2.PROCESSINSTANCE_ID
+			    		<if test="dateStart != null">  
+			        		and t1.START_TIME >= #{dateStart}
+			    		</if>
+			    		<if test="dateEnd != null">  
+		        			<![CDATA[and t1.START_TIME <= #{dateEnd}]]>
+		    			</if>
+						 ) mt
+		        </when>  
+		        <otherwise>  
+		            fixbpa_flow_taskinstance
+		        </otherwise>  
+		    </choose>  
+            WHERE 1=1 
         <if test="procID != null">
 			and PROCESSDEFINITION_ID = #{procID}
 		</if>	
