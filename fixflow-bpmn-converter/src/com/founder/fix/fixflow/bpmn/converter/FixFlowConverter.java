@@ -1,7 +1,14 @@
 package com.founder.fix.fixflow.bpmn.converter;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
@@ -10,6 +17,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.Definitions;
 import org.eclipse.bpmn2.DocumentRoot;
+import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.di.BpmnDiPackage;
 import org.eclipse.bpmn2.util.Bpmn2Resource;
 import org.eclipse.bpmn2.util.Bpmn2ResourceFactoryImpl;
@@ -32,6 +40,12 @@ public class FixFlowConverter {
 		
 	}
 	
+	/**
+	 * 将bpmn模型转换成jsonNode
+	 * @param processKey
+	 * @param input
+	 * @return
+	 */
 	public ObjectNode convertBpmn2Json(String processKey,InputStream input){
 		Definitions model = getDefinitions(processKey,input);
 		BpmnJsonConverter converter = new BpmnJsonConverter();
@@ -51,18 +65,87 @@ public class FixFlowConverter {
 		}
 	}
 	
+	/**
+	 * 创建新的bpmn文件
+	 * @param uri
+	 * @param processId
+	 * @param processName
+	 */
+	public void createBPMNFile(String path,String processId,String processName){
+		File newFile = new File(path);
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("org/activiti/editor/language/default_process.bpmn");
+		FileOutputStream outputStream = null;
+		BufferedOutputStream buffOS = null;
+		InputStream inputStreamNewFile = null;
+		try{
+			newFile.createNewFile();
+			outputStream = new FileOutputStream(newFile);
+			BufferedInputStream buffInput = new BufferedInputStream(inputStream);
+			buffOS = new BufferedOutputStream(outputStream);
+			int word = 0;
+			while ((word = buffInput.read()) != -1){
+				buffOS.write(word);
+			}
+			buffOS.flush();
+			inputStreamNewFile = new FileInputStream(newFile);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			try {
+				if(outputStream !=null)
+					outputStream.close();
+				if(buffOS != null)
+					buffOS.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		URI uri = URI.createFileURI(path);
+		Definitions definitions = getDefinitions("process_1",inputStreamNewFile);
+		Process process =  (Process)definitions.getRootElements().get(0);
+		process.setName(processName);
+		save(definitions, uri);
+	}
+	
+	/**
+	 * 将jsonNode转换并保存成bpmn文件
+	 * @param modelNode
+	 * @param uri
+	 */
 	public void save(JsonNode modelNode,URI uri){
 		Definitions defintion = new BpmnJsonConverter().convertToBpmnModel(modelNode);
+		save(defintion,uri);
+	}
+	
+	/**
+	 * 将definitions保存成bpmn文件
+	 * @param definitions
+	 * @param uri
+	 */
+	public void save(Definitions definitions,URI uri){
 		ResourceSet resourceSet = getResourceSet();
 		Bpmn2Resource resource = (Bpmn2Resource) resourceSet.getResource(uri, true);
 		DocumentRoot documentRoot = (DocumentRoot) resource.getContents().get(0);
-		documentRoot.setDefinitions(defintion);
+		documentRoot.setDefinitions(definitions);
 		try {
 			resource.save(null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 获取一个空的definitions
+	 * @return
+	 */
+	public Definitions getNoneDefinitions(){
+		Definitions definitions = null;
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("org/activiti/editor/language/node_template.bpmn");
+		definitions = getDefinitions("node-tempplate",inputStream);
+		return definitions;
+	}
+	
 	
 	/**
 	 * 根据流程key和bpmn文件流获取definitions
