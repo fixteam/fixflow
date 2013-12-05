@@ -67,6 +67,7 @@ import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskSubjectBehavior;
 import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -204,7 +205,11 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     
     //fixflow扩展流程属性
     propertiesNode.put(PROPERTY_PROCESS_CATEGORY, mainProcess.getCategory());
-    propertiesNode.put(PROPERTY_PROCESS_SUBJECT, mainProcess.getTaskSubject().getExpressionValue());
+    TaskSubjectBehavior taskSubject =  mainProcess.getTaskSubject();
+    if(taskSubject!= null){
+    	propertiesNode.put(PROPERTY_PROCESS_SUBJECT, mainProcess.getTaskSubject().getExpressionValue());
+    }
+   
     FormUri formObj = mainProcess.getFormUriObj();
     if(formObj != null){
     	 propertiesNode.put(PROPERTY_PROCESS_DEFAULT_FORMURI,formObj.getExpression().getValue());
@@ -524,6 +529,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
         try {
           converter.newInstance().convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap,sourceAndTargetMap,model);
         } catch (Exception e) {
+        	e.printStackTrace();
           LOGGER.error("Error converting {}", BpmnJsonConverterUtil.getStencilId(shapeNode), e);
         }
       }

@@ -8,7 +8,7 @@
         <li><a href="#" onclick="updateMyself();">${sessionScope.LOGIN_USER_NAME}</a></li>
         <li><a href="LoginServlet?doLogOut=true">${applicationScope.appInfo["common.logOut"]}</a></li>
         <li><a href="FlowManager?action=processDefinitionList" target='_blank'>管控中心</a></li>
-        <li><a href="FixFlowBPACenter?action=getBPA">分析中心</a></li>
+        <li><a href="FixFlowBPACenter?action=getBPA" target='_blank'>分析中心</a></li>
         <li><a href="#" id="red" name="theme_color" style="background-color: #dc562e;display: block;width:10px;height:10px;margin-top:5px;border:1px solid #404040"></a></li>
         <li><a href="#" id="blue" name="theme_color" style="background-color: #10a7d9;display: block;width:10px;height:10px;margin-top:4px;border:1px solid #404040"></a></li>
         </ul>
