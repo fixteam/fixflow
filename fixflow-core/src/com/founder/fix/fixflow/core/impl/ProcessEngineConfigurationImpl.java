@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 
 
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -77,6 +78,7 @@ import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMapping;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMappingConfig;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigFactory;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigPackage;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
 import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
@@ -190,6 +192,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	protected SqlMappingConfig sqlMappingConfig;
 	
+	protected DataVariableConfig dataVariableConfig;
+	
+	
+
 	protected List<SqlMapping> sqlMappings;
 	
 	protected Map<String, Map<String, Sql>> sqlMap=new HashMap<String, Map<String, Sql>>();
@@ -210,7 +216,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected void init() {
 		initEmfFile();
 		initSqlMappingFile();
-
+		initDataVariableConfig();
 		initCommandContextFactory();
 		initCommandExecutors();
 		initConnectionManagementConfig();
@@ -248,6 +254,51 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 
 	
+
+	private void initDataVariableConfig() {
+		// TODO Auto-generated method stub
+		ResourceSet resourceSet = new ResourceSetImpl();
+
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
+
+		
+
+		InputStream inputStream = null;
+		String classPath="com/founder/fix/fixflow/expand/config/datavariableconfig.xml";
+		inputStream = ReflectUtil.getResourceAsStream("datavariableconfig.xml");
+		if(inputStream!=null){
+			classPath="datavariableconfig.xml";
+		}
+		
+		
+		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
+		Resource resource = null;
+		try {
+			if (!filePath.startsWith("jar")) {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
+				resource = resourceSet.createResource(URI.createFileURI(filePath));
+			} else {
+				resource = resourceSet.createResource(URI.createURI(filePath));
+			}
+
+		} catch (UnsupportedEncodingException e2) {
+			e2.printStackTrace();
+			throw new FixFlowException("流程配置文件加载失败！", e2);
+		}
+
+		// register package in local resource registry
+		resourceSet.getPackageRegistry().put(SqlmappingconfigPackage.eINSTANCE.getNsURI(), SqlmappingconfigPackage.eINSTANCE);
+		// load resource
+		try {
+			resource.load(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("流程配置文件加载失败", e);
+		}
+
+		dataVariableConfig= (DataVariableConfig) resource.getContents().get(0);
+	}
 
 	private void initSqlMappingFile() {
 
@@ -1255,7 +1306,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	}
 	
-	
+	public DataVariableConfig getDataVariableConfig() {
+		return dataVariableConfig;
+	}
 	
 	public DataBaseTable getDataBaseTableConfig(DataBaseTableEnum dataBaseTableEnum) {
 		
