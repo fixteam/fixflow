@@ -261,7 +261,7 @@ public class LaneImpl extends BaseElementImpl implements Lane {
     		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) this.eResource().getContents().get(0).eContents().get(0);
         	String processId=definitionsBehavior.getProcessId();
         	
-        	String nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, id);
+        	String nameTemp=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, id);
         	if(nameTemp==null){
         		return name;
         	}
