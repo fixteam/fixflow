@@ -11,5 +11,33 @@ xmlns:context="http://www.springframework.org/schema/context"
 					http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
 
+	<bean id="paginationInterceptor" class="com.founder.fix.bpa.db.impl.ibatis.PaginationInterceptor"/>
+	
+    <bean id="DB_BPA_BASE_SessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="fix_biz_base_dataSource" />
+        <property name="mapperLocations" value="classpath*:mybatis/*Mapper.xml" />
+		<property name="plugins">
+	        <array>
+	            <ref bean="paginationInterceptor"/>
+	        </array>
+    	</property>
+    </bean>
+	<bean id="DB_BPA_BASE_SqlSession"     class="org.mybatis.spring.SqlSessionTemplate">  
+          <constructor-arg index="0" ref="DB_BPA_BASE_SessionFactory" />  
+    </bean> 	
+					
+	<bean id="DB_BPA_BASE_OrmDataSource" scope="prototype" class="com.founder.fix.bpa.db.impl.MybatisDataSourceImpl"> 
+		<property name="sqlSession" ref="DB_BPA_BASE_SqlSession" />
+	</bean>
 
+	<bean id="DB_BPA_BASE" scope="prototype" class="com.founder.fix.bpa.db.impl.FixFlowDataSourceImpl"> 
+		<property name="dbId" value="DB_FIX_BIZ_BASE" />
+		<property name="ormDataSource" ref="DB_BPA_BASE_OrmDataSource" />
+	</bean>
+	
+	<bean id="DB_BPA_BASE2" scope="prototype" class="com.founder.fix.bpa.db.impl.FixFlowDataSourceImpl"> 
+		<property name="dbId" value="DB_FIX_BPA_BASE" />
+		<property name="ormDataSource" ref="DB_BPA_BASE_OrmDataSource" />
+	</bean>
+	
 </beans>
