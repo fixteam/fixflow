@@ -10,27 +10,27 @@
 			"title": "流程号",
 			"value": "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : "常规"
 		},{
 			"id": "callableelementversion",
 			"type": "String",
 			"title": "版本",
 			"value": "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : "常规"
 		},{
 			"id" : "isasync",
 			"title" : "异步",
 			"type" : "Choice",
 			"value" : "",
-			"popular" : true,
+			"popular" : "常规",
 			"items" : [ {
 				"id" : "c1",
-				"title" : "是",
+				"title" : "true",
 				"value" : "true"
 			}, {
 				"id" : "c2",
-				"title" : "否",
+				"title" : "false",
 				"value" : "false"
 			}]
 		},{
@@ -39,7 +39,7 @@
 			"title": "关联值",
 			"value": "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : "常规"
 		}]
 	},{
 		"name": "fixscripttaskbase",
@@ -49,7 +49,7 @@
 			"title": "脚本",
 			"value": "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : "常规"
 		}]
 	},{
 		"name": "fixflowcommonbase",
@@ -59,14 +59,14 @@
 			"title" : "编号",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true
+			"popular" : "常规"
 		},{ 
 			"id" : "name",
 			"type" : "String", 
 			"title" : "名称",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
-			"popular" : true,
+			"popular" : "常规",
 			"refToView" : "text_name"
 		},{
 			"id" : "documentation",
@@ -74,7 +74,7 @@
 			"title" : "描述",
 			"value" : "",
 			"description" : "Listener expression definition.",
-			"popular" : true
+			"popular" : "常规"
 		}]
 	},{
 		"name": "flowbase",
@@ -84,28 +84,28 @@
 	      "title" : "主题",
 	      "value" : "",
 	      "description" : "Unique identifier of the element.",
-	      "popular" : true
+	      "popular" : "流程信息"
     	},{
 	      "id" : "process_default_formuri",
 	      "type" : "String",
-	      "title" : "默认列表",
+	      "title" : "默认表单",
 	      "value" : "",
 	      "description" : "Unique identifier of the element.",
-	      "popular" : true
+	      "popular" : "流程信息"
     	},{
 	      "id" : "process_category",
 	      "type" : "String",
 	      "title" : "分类",
 	      "value" : "",
 	      "description" : "Unique identifier of the element.",
-	      "popular" : true
+	      "popular" : "流程信息"
     	},{
     	  "id" : "process_datavariable",
 	      "type" : "Complex",
 	      "title" : "数据变量",
 	      "value" : "",
 	      "description" : "Unique identifier of the element.",
-	      "popular" : true,
+	      "popular" : "数据变量",
 	      "complexItems" : [ {
 	        "id" : "id",
 	        "name" : "名称",
@@ -123,12 +123,12 @@
 	        "optional" : false,
 	        "items" : [ {
 	          "id" : "c1",
-	          "title" : "是",
+	          "title" : "true",
 	          "value" : "true",
 	          "refToView" : ""
 	        }, {
 	          "id" : "c2",
-	          "title" : "否",
+	          "title" : "false",
 	          "value" : "false",
 	          "refToView" : ""
 	        }]
@@ -141,12 +141,12 @@
 	        "optional" : false,
 	        "items" : [ {
 	          "id" : "c1",
-	          "title" : "是",
+	          "title" : "true",
 	          "value" : "true",
 	          "refToView" : ""
 	        }, {
 	          "id" : "c2",
-	          "title" : "否",
+	          "title" : "false",
 	          "value" : "false",
 	          "refToView" : ""
 	        }]
@@ -159,19 +159,19 @@
 	        "optional" : false,
 	        "items" : [ {
 	          "id" : "c1",
-	          "title" : "是",
+	          "title" : "true",
 	          "value" : "true",
 	          "refToView" : ""
 	        }, {
 	          "id" : "c2",
-	          "title" : "否",
+	          "title" : "false",
 	          "value" : "false",
 	          "refToView" : ""
 	        }]
 	      },{
 	        "id" : "expression",
 	        "name" : "默认值",
-	        "type" : "String",
+	        "type" : "Text",
 	        "description" : "Listener expression definition.",
 	        "value" : "",
 	        "width" : 100,
@@ -187,7 +187,7 @@
       "title" : "进出类型",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "常规",
       "items" : [ {
 				"id" : "1",
 				"title" : "合并",
@@ -206,21 +206,21 @@
       "title" : "操作表单",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "常规"
     },{
       "id" : "formuriview",
       "type" : "Text",
       "title" : "浏览表单",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "常规"
     },{
       "id" : "taskpriority",
       "type" : "Choice",
       "title" : "优先级",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "常规",
       "items" : [{
 				"id" : "1",
 				"title" : "1",
@@ -239,22 +239,26 @@
       "title" : "动态主题",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "任务信息"
     },{
       "id" : "tasktype",
       "type" : "Choice",
       "title" : "任务类型",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "任务信息",
       "items" : [{
 				"id" : "1",
-				"title" : "任务类型1",
-				"value" : "1"
+				"title" : "FIXFLOWTASK",
+				"value" : "FIXFLOWTASK"
 			}, {
 				"id" : "2",
-				"title" : "任务类型2",
-				"value" : "2"
+				"title" : "FIXNOTICETASK",
+				"value" : "FIXNOTICETASK"
+			}, {
+				"id" : "3",
+				"title" : "FIXREMIND",
+				"value" : "FIXREMIND"
 			}]
     }]
   },{
@@ -265,7 +269,7 @@
       "title" : "处理命令",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "处理命令",
       "complexItems" : [ {
         "id" : "id",
         "name" : "编号",
@@ -314,12 +318,12 @@
         "optional" : false,
         "items" : [ {
           "id" : "c1",
-          "title" : "是",
+          "title" : "true",
           "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
-          "title" : "否",
+          "title" : "false",
           "value" : "false",
           "refToView" : ""
         }]
@@ -332,12 +336,12 @@
         "optional" : false,
         "items" : [ {
           "id" : "c1",
-          "title" : "是",
+          "title" : "true",
           "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
-          "title" : "否",
+          "title" : "false",
           "value" : "false",
           "refToView" : ""
         }]
@@ -350,12 +354,12 @@
         "optional" : false,
         "items" : [ {
           "id" : "c1",
-          "title" : "是",
+          "title" : "true",
           "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
-          "title" : "否",
+          "title" : "false",
           "value" : "false",
           "refToView" : ""
         }]
@@ -385,15 +389,35 @@
       "title" : "分配策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "任务分配",
       "items" : [ {
 	    "id" : "1",
-	    "title" : "1",
-	    "value" : "1"
+	    "title" : "共享（默认策略）",
+	    "value" : "共享（默认策略）"
 	  }, {
 	    "id" : "2",
-	    "title" : "2",
-	    "value" : "2"
+	    "title" : "独占（默认策略）",
+	    "value" : "独占（默认策略）"
+	  }, {
+	    "id" : "3",
+	    "title" : "独占（资源中任务最少者）",
+	    "value" : "独占（资源中任务最少者）"
+	  }, {
+	    "id" : "4",
+	    "title" : "独占（在资源中随机分配任务）",
+	    "value" : "独占（在资源中随机分配任务）"
+	  }, {
+	    "id" : "5",
+	    "title" : "共享（在只有一人时采用独占策略）",
+	    "value" : "共享（在只有一人时采用独占策略）"
+	  }, {
+	    "id" : "6",
+	    "title" : "虚拟运行策略",
+	    "value" : "虚拟运行策略"
+	  }, {
+	    "id" : "7",
+	    "title" : "动态（根据策略表达式动态分配策略）",
+	    "value" : "动态（根据策略表达式动态分配策略）"
 	  }]
     }, {
       "id" : "assignexpression",
@@ -401,14 +425,14 @@
       "title" : "分配表达式",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "任务分配"
     },{
       "id" : "potentialowner",
       "type" : "Complex",
-      "title" : "完成人表达式",
+      "title" : "处理人",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "任务分配",
       "complexItems" : [ {
         "id" : "name",
         "name" : "名称",
@@ -428,11 +452,22 @@
       },{
         "id" : "resourcetype",
         "name" : "资源类型",
-        "type" : "String",
+        "type" : "Choice",
         "description" : "Listener expression definition.",
         "value" : "",
-        "width" : 100,
-        "optional" : true
+         "width" : 100,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "true",
+          "value" : "true",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "false",
+          "value" : "false",
+          "refToView" : ""
+        }]
       },{
         "id" : "iscontainssub",
         "name" : "包含子集",
@@ -442,12 +477,12 @@
         "optional" : false,
         "items" : [ {
           "id" : "c1",
-          "title" : "是",
+          "title" : "true",
           "value" : "true",
           "refToView" : ""
         }, {
           "id" : "c2",
-          "title" : "否",
+          "title" : "false",
           "value" : "false",
           "refToView" : ""
         }]
@@ -461,14 +496,14 @@
       "title" : "启用跳过策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "跳过策略",
       "items" : [ {
 	    "id" : "1",
-	    "title" : "是",
+	    "title" : "true",
 	    "value" : "true"
 	  }, {
 	    "id" : "2",
-	    "title" : "否",
+	    "title" : "false",
 	    "value" : "false"
 	  }]
     },{
@@ -477,14 +512,14 @@
       "title" : "生成跳过策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "跳过策略",
       "items" : [ {
 	    "id" : "1",
-	    "title" : "是",
+	    "title" : "true",
 	    "value" : "true"
 	  }, {
 	    "id" : "2",
-	    "title" : "否",
+	    "title" : "false",
 	    "value" : "false"
 	  }]
     },{
@@ -493,21 +528,21 @@
       "title" : "跳过策略",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "跳过策略"
     },{
       "id" : "skipassignee",
       "type" : "Text",
       "title" : "处理者",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "跳过策略"
     },{
       "id" : "skipcomment",
       "type" : "Text",
       "title" : "跳过意见",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "跳过策略"
     }]
   },{
   	"name": "multiinstancebase",
@@ -517,14 +552,14 @@
       "title" : "启动多实例",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "高级属性",
       "items" : [ {
 	    "id" : "1",
-	    "title" : "是",
+	    "title" : "true",
 	    "value" : "true"
 	  }, {
 	    "id" : "2",
-	    "title" : "否",
+	    "title" : "false",
 	    "value" : "false"
 	  }]
   	},{
@@ -533,14 +568,14 @@
       "title" : "串行多实例",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true,
+      "popular" : "高级属性",
       "items" : [ {
 	    "id" : "1",
-	    "title" : "是",
+	    "title" : "true",
 	    "value" : "true"
 	  }, {
 	    "id" : "2",
-	    "title" : "否",
+	    "title" : "false",
 	    "value" : "false"
 	  }]
   	},{
@@ -549,35 +584,35 @@
       "title" : "输入数据集",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "高级属性"
     },{
       "id" : "loopdataoutputcollection",
       "type" : "Text",
       "title" : "输出数据集",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "高级属性"
     },{
       "id" : "inputdataitem",
       "type" : "Text",
       "title" : "输入项",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "高级属性"
     },{
       "id" : "outputdataitem",
       "type" : "Text",
       "title" : "输出项",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "高级属性"
     },{
       "id" : "multiinstance_condition",
       "type" : "Text",
       "title" : "完成表达式",
       "value" : "",
       "description" : "Unique identifier of the element.",
-      "popular" : true
+      "popular" : "高级属性"
     }]
   },{
     "name" : "elementbase",
@@ -1239,14 +1274,35 @@
       "title" : "条件",
       "value" : "",
       "description" : "The condition of the sequence flow",
-      "popular" : true
+      "popular" : "常规"
     }, {
+      "id" : "orderid",
+      "type" : "Choice",
+      "title" : "排序",
+      "value" : "0",
+      "description" : "orderid",
+      "popular" : "常规",
+      "items" : [ {
+        "id" : "0",
+        "title" : "0",
+        "value" : "0"
+      }, {
+        "id" : "1",
+        "title" : "1",
+        "value" : "1"
+      }, {
+        "id" : "2",
+        "title" : "2",
+        "value" : "2"
+      }]
+    } , {
       "id" : "defaultflow",
       "type" : "Choice",
       "title" : "Default flow",
       "value" : "None",
       "description" : "Define the sequence flow as default",
       "popular" : true,
+			"visible" : false,
       "items" : [ {
         "id" : "none",
         "title" : "Standard",
@@ -1265,6 +1321,7 @@
       "type" : "Choice",
       "title" : "Conditional flow",
       "value" : "None",
+			"visible" : false,
       "description" : "Define the sequence flow with a condition",
       "popular" : true,
       "items" : [ {
@@ -1534,8 +1591,9 @@
       "type" : "Choice",
       "title" : "Loop type",
       "value" : "None",
+			"visible" : false,
       "description" : "Repeated activity execution (parallel or sequential) can be displayed through different loop types",
-      "popular" : false,
+      "popular" : "更多属性",
       "items" : [ {
         "id" : "c1",
         "title" : "None",
@@ -1572,8 +1630,9 @@
       "type" : "Boolean",
       "title" : "Is for compensation",
       "value" : "false",
+			"visible" : false,
       "description" : "A flag that identifies whether this activity is intended for the purposes of compensation.",
-      "popular" : false,
+      "popular" : "更多属性",
       "refToView" : "compensation"
     } ]
   } ],
@@ -1621,7 +1680,7 @@
     "view" : "activity/scripttask.svg",
     "icon" : "activity/list/type.script.png",
     "groups" : [ "活动" ],
-    "propertyPackages" : [ "fixflowcommonbase", "fixscripttaskbase", "multiinstancebase", "skipstrategybase" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixscripttaskbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",

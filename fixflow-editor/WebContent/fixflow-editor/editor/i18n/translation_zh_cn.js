@@ -128,19 +128,19 @@ if(!ORYX.I18N.Save) ORYX.I18N.Save = {};
 
 ORYX.I18N.Save.group = "File";
 ORYX.I18N.Save.save = "保存";
-ORYX.I18N.Save.saveDesc = "Save";
-ORYX.I18N.Save.saveAs = "Save As...";
-ORYX.I18N.Save.saveAsDesc = "Save As...";
+ORYX.I18N.Save.saveDesc = "保存";
+ORYX.I18N.Save.saveAs = "另存为";
+ORYX.I18N.Save.saveAsDesc = "另存为";
 ORYX.I18N.Save.unsavedData = "There are unsaved data, please save before you leave, otherwise your changes get lost!";
 ORYX.I18N.Save.newProcess = "New Process";
-ORYX.I18N.Save.saveAsTitle = "Save as...";
+ORYX.I18N.Save.saveAsTitle = "另存为";
 ORYX.I18N.Save.saveBtn = "保存";
 ORYX.I18N.Save.close = "关闭";
 ORYX.I18N.Save.savedAs = "另存为";
-ORYX.I18N.Save.saved = "Saved!";
-ORYX.I18N.Save.failed = "Saving failed.";
+ORYX.I18N.Save.saved = "已保存!";
+ORYX.I18N.Save.failed = "保存失败";
 ORYX.I18N.Save.noRights = "You have no rights to save changes.";
-ORYX.I18N.Save.saving = "Saving";
+ORYX.I18N.Save.saving = "保存中……";
 ORYX.I18N.Save.saveAsHint = "The process diagram is stored under:";
 
 if(!ORYX.I18N.File) ORYX.I18N.File = {};
@@ -167,7 +167,7 @@ ORYX.I18N.Grouping.ungroupDesc = "Deletes the group of all selected Shapes";
 
 if(!ORYX.I18N.Loading) ORYX.I18N.Loading = {};
 
-ORYX.I18N.Loading.waiting ="Please wait...";
+ORYX.I18N.Loading.waiting ="加载中...";
 
 if(!ORYX.I18N.PropertyWindow) ORYX.I18N.PropertyWindow = {};
 
@@ -178,9 +178,9 @@ ORYX.I18N.PropertyWindow.clickIcon = "Click Icon";
 ORYX.I18N.PropertyWindow.add = "添加";
 ORYX.I18N.PropertyWindow.rem = "删除";
 ORYX.I18N.PropertyWindow.complex = "编辑";
-ORYX.I18N.PropertyWindow.text = "Editor for a Text Type";
-ORYX.I18N.PropertyWindow.ok = "Ok";
-ORYX.I18N.PropertyWindow.cancel = "Cancel";
+ORYX.I18N.PropertyWindow.text = "编辑";
+ORYX.I18N.PropertyWindow.ok = "确定";
+ORYX.I18N.PropertyWindow.cancel = "取消";
 ORYX.I18N.PropertyWindow.dateFormat = "m/d/y";
 
 if(!ORYX.I18N.ShapeMenuPlugin) ORYX.I18N.ShapeMenuPlugin = {};

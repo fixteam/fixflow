@@ -20901,18 +20901,29 @@ ORYX.Plugins.PropertyWindow = {
 			]),
 			sortInfo: {field: 'popular', direction: "ASC"},
 			sortData : function(f, direction){
-		        direction = direction || 'ASC';
-		        var st = this.fields.get(f).sortType;
-		        var fn = function(r1, r2){
-		            var v1 = st(r1.data[f]), v2 = st(r2.data[f]);
+				direction = direction || 'ASC';
+				var st = this.fields.get(f).sortType;
+				var fn = function(r1, r2){
+					var v1 = st(r1.data[f]), v2 = st(r2.data[f]);
 					var p1 = r1.data['popular'], p2  = r2.data['popular'];
-		            return p1 && !p2 ? -1 : (!p1 && p2 ? 1 : (v1 > v2 ? 1 : (v1 < v2 ? -1 : 0)));
-		        };
-		        this.data.sort(direction, fn);
-		        if(this.snapshot && this.snapshot != this.data){
-		            this.snapshot.sort(direction, fn);
+					var sort = {
+						"常规":0,
+						"高级属性":1,
+						"任务信息":2,
+						"跳过策略":3,
+						"处理命令":4,
+						"任务分配":5,
+						"流程信息":6,
+						"数据变量":7,
+						"连接器":8
+					};
+					return sort[p1]-sort[p2];//p1 && !p2 ? -1 : (!p1 && p2 ? 1 : (v1 > v2 ? 1 : (v1 < v2 ? -1 : 0)));
+				};
+				this.data.sort(direction, fn);
+				if(this.snapshot && this.snapshot != this.data){
+					this.snapshot.sort(direction, fn);
 				}
-		    },
+			},
 			groupField: 'popular'
         });
 		this.dataSource.load();
@@ -20927,7 +20938,7 @@ ORYX.Plugins.PropertyWindow = {
 			enableHdMenu: false,
 			view: new Ext.grid.GroupingView({
 				forceFit: true,
-				groupTextTpl: '{[values.rs.first().data.popular ? ORYX.I18N.PropertyWindow.oftenUsed : ORYX.I18N.PropertyWindow.moreProps]}'
+				groupTextTpl: '{[values.rs.first().data.popular]}'
 			}),
 			
 			// the data store
@@ -21518,7 +21529,7 @@ ORYX.Plugins.PropertyWindow = {
 				if(pair.visible()) {
 					// Popular Properties are those which are set to be popular
 					if (pair.popular()) {
-						pair.setPopular();
+						//pair.setPopular();
 					} 
 					
 					if(pair.popular()) {
@@ -21779,6 +21790,10 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 				editor = new Ext.form.Checkbox( { width : width } );
 			} else if (type == ORYX.CONFIG.TYPE_COMPLEX) {
 				continue;
+			} else if(type == ORYX.CONFIG.TYPE_TEXT){
+				var cf = new Ext.form.ComplexTextField();
+				cf.on('dialogClosed', this.dialogClosed, {scope:this, row:0, col:1,field:cf});							
+				editor = new Ext.Editor(cf);
 			}
 					
 			cols.push({

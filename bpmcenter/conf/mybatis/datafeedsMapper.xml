@@ -387,6 +387,8 @@
 	      where INSTANCE_STATUS = 'TERMINATION'
 	      group by PROCESSDEFINITION_KEY) b
 	      on a.PROCESSDEFINITION_KEY=b.PROCESSDEFINITION_KEY) 
+     <if test="orderColum=='AVG_TIME'"><![CDATA[where DONE_COUNT<>0]]></if>
+     
      ORDER BY ${orderColum} ${orderType}
     </select>
     
