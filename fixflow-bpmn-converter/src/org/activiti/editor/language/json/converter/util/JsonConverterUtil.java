@@ -1,11 +1,15 @@
 package org.activiti.editor.language.json.converter.util;
 
+import groovyjarjarasm.asm.tree.IntInsnNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.activiti.editor.constants.EditorJsonConstants;
 import org.activiti.editor.constants.StencilConstants;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 
 public class JsonConverterUtil implements EditorJsonConstants, StencilConstants {
   
@@ -47,6 +51,24 @@ public class JsonConverterUtil implements EditorJsonConstants, StencilConstants 
       propertyNode = propertiesNode.get(name);
     }
     return propertyNode;
+  }
+  
+  /**
+   * 查找ObjectNode下propertyName属性为name的json节点
+   * @param name
+   * @param propertyName
+   * @param objectNode
+   * @return
+   */
+  public static JsonNode getChildElementByProperty(String name,String propertyName,ArrayNode objectNode){
+	  JsonNode jsonNode = null;
+	  for( int i = 0; i< objectNode.size();i++){
+		  JsonNode childNode = objectNode.get(i);
+		  if(childNode.get(propertyName)!=null && name.equals(childNode.get(propertyName).asText())){
+			  return childNode;
+		  }
+	  }
+	  return jsonNode;
   }
 
 }
