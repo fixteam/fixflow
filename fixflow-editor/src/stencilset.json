@@ -171,7 +171,7 @@
 	      },{
 	        "id" : "expression",
 	        "name" : "默认值",
-	        "type" : "Text",
+	        "type" : "String",
 	        "description" : "Listener expression definition.",
 	        "value" : "",
 	        "width" : 100,

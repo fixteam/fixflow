@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.editor.language.json.converter.BpmnJsonConverterUtil;
 import org.activiti.editor.language.json.converter.util.JsonConverterUtil;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
@@ -23,6 +24,11 @@ import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicy;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.variableconfig.DataTypeDef;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
+import com.founder.fix.bpmn2extensions.variableconfig.DataVariableDataType;
 import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
@@ -54,6 +60,7 @@ public class StencilsetServlet extends HttpServlet {
             initTaskCommandType(rootNode);
             initAssigneeType(rootNode);
             initGroupInfo(rootNode);
+            initDataVaribaleType(rootNode);
             out.print(rootNode);
         }catch(Exception ex){
         	ex.printStackTrace();
@@ -142,5 +149,43 @@ public class StencilsetServlet extends HttpServlet {
             arrayNode.add(objectNode);
         }
         ((ObjectNode)resourceType).put("items", arrayNode);
+	}
+	
+	private void initDataVaribaleType(JsonNode rootNode){
+		DataVariableConfig dataVariableConfig = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDataVariableConfig();
+		
+		ArrayNode baseNodeArray = (ArrayNode)rootNode.get("propertyPackages");
+        JsonNode flowBase = JsonConverterUtil.getChildElementByProperty("flowbase", "name", baseNodeArray);
+        flowBase = flowBase.get("properties");
+        JsonNode dataVariableNode = JsonConverterUtil.getChildElementByProperty("process_datavariable", "id", (ArrayNode)flowBase);
+        JsonNode complexItemsNode = dataVariableNode.get("complexItems");
+        
+        //加载数据类型
+        JsonNode dataTypeNode = JsonConverterUtil.getChildElementByProperty("datatype", "id",(ArrayNode)complexItemsNode);
+        DataVariableDataType dataVariableDataType = dataVariableConfig.getDataVariableDataType();
+		List<DataTypeDef> dataTypeDefs = dataVariableDataType.getDataTypeDef();
+		ArrayNode dataTypeArrayNode = objectMapper.createArrayNode();
+		for(DataTypeDef dataTypeDef :dataTypeDefs){
+			ObjectNode objectNode = objectMapper.createObjectNode();
+        	objectNode.put("id",dataTypeDef.getId());
+        	objectNode.put("title", dataTypeDef.getName());
+        	objectNode.put("value", dataTypeDef.getId());
+        	dataTypeArrayNode.add(objectNode);
+		}
+		((ObjectNode)dataTypeNode).put("items", dataTypeArrayNode);
+        
+		//加载业务类型
+        JsonNode bizTypeNode = JsonConverterUtil.getChildElementByProperty("biztype", "id", (ArrayNode)complexItemsNode);
+        DataVariableBizTypeConfig dataVariableBizTypeConfig = dataVariableConfig.getDataVariableBizTypeConfig();
+        List<DataVariableBizType> bizTypes = dataVariableBizTypeConfig.getDataVariableBizType();
+        ArrayNode bizTypeArrayNode = objectMapper.createArrayNode();
+        for(DataVariableBizType dataVariableBizType : bizTypes){
+        	ObjectNode objectNode = objectMapper.createObjectNode();
+        	objectNode.put("id",dataVariableBizType.getTypeId());
+        	objectNode.put("title", dataVariableBizType.getTypeName());
+        	objectNode.put("value", dataVariableBizType.getTypeId());
+        	bizTypeArrayNode.add(objectNode);
+        }
+        ((ObjectNode)bizTypeNode).put("items", bizTypeArrayNode);
 	}
 }
