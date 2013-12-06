@@ -301,7 +301,10 @@
 		<if test="nodeID != null">
 			and NODE_ID = #{nodeID}
 		</if>
-        GROUP BY USER_NAME,PROCESSDEFINITION_KEY,NODE_ID,NODE_NAME) TB ) TB2 
+        GROUP BY USER_NAME,PROCESSDEFINITION_KEY,NODE_ID,NODE_NAME) TB ) TB2 WHERE 1=1 AND USER_NAME IS NOT NULL
+        <if test="orderColum == 'AVG_TIME'">
+        	AND AVG_TIME >= 0
+        </if>
         ORDER BY ${orderColum} ${orderType}
     </select>
     <select id="getFixFlowNodeDetailAvgTime" resultType="java.util.Map" parameterType="java.util.Map">
