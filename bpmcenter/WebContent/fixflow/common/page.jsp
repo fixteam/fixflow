@@ -58,20 +58,20 @@
 		sb.append(pagination.createPageInfo());
 		sb.append("<li class='show'>&emsp;每页显示 ");
 		sb.append("<a ");
-		if(pagination.getPageSize()==10){
+		if(pagination.getPageSize()==15){
 			sb.append(" class='select' ");
 		}
-		sb.append("href='#' onclick='toSize(10)'>10</a> ");
-		sb.append("<a ");
-		if(pagination.getPageSize()==20){
-			sb.append(" class='select' ");
-		}
-		sb.append("href='#' onclick='toSize(20)'>20</a> ");
+		sb.append("href='#' onclick='toSize(15)'>15</a> ");
 		sb.append("<a ");
 		if(pagination.getPageSize()==30){
 			sb.append(" class='select' ");
 		}
 		sb.append("href='#' onclick='toSize(30)'>30</a> ");
+		sb.append("<a ");
+		if(pagination.getPageSize()==50){
+			sb.append(" class='select' ");
+		}
+		sb.append("href='#' onclick='toSize(50)'>50</a> ");
 		sb.append(" 条</li>");
 		sb.append("</ul></div>");
 		out.print(sb.toString());

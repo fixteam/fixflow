@@ -80,7 +80,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			String pageI = StringUtil.getString(params.get("pageIndex"));
 			String rowI = StringUtil.getString(params.get("pageSize"));
 			int pageIndex=1;
-			int rowNum   =10;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}

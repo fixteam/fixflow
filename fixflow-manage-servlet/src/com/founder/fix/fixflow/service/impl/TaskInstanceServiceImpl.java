@@ -106,7 +106,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =10;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
