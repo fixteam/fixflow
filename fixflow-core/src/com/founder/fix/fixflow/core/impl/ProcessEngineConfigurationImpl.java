@@ -37,6 +37,7 @@ import javax.jms.JMSException;
 
 
 
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -79,6 +80,7 @@ import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMappingConfig;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigFactory;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigPackage;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
+import com.founder.fix.bpmn2extensions.variableconfig.VariableconfigPackage;
 import com.founder.fix.fixflow.core.ConnectionManagement;
 import com.founder.fix.fixflow.core.FormService;
 import com.founder.fix.fixflow.core.HistoryService;
@@ -287,7 +289,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 
 		// register package in local resource registry
-		resourceSet.getPackageRegistry().put(SqlmappingconfigPackage.eINSTANCE.getNsURI(), SqlmappingconfigPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(VariableconfigPackage.eINSTANCE.getNsURI(), VariableconfigPackage.eINSTANCE);
 		// load resource
 		try {
 			resource.load(null);
