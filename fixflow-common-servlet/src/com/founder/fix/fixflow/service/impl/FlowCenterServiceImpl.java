@@ -152,7 +152,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =10;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -314,7 +314,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			int pageIndex=1;
-			int rowNum   =10;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -454,7 +454,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =20;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
