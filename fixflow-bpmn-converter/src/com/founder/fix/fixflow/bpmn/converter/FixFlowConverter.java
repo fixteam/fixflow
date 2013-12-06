@@ -104,6 +104,7 @@ public class FixFlowConverter {
 		URI uri = URI.createFileURI(path);
 		Definitions definitions = getDefinitions("process_1",inputStreamNewFile);
 		Process process =  (Process)definitions.getRootElements().get(0);
+		process.setId(processId);
 		process.setName(processName);
 		save(definitions, uri);
 	}

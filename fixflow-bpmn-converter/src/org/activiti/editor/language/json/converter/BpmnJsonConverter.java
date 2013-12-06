@@ -196,7 +196,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       
     ObjectNode propertiesNode = objectMapper.createObjectNode();
     if (StringUtils.isNotEmpty(mainProcess.getId())) {
-      propertiesNode.put(PROPERTY_PROCESS_ID, mainProcess.getId());
+      propertiesNode.put(PROPERTY_OVERRIDE_ID, mainProcess.getId());
     }
     if (StringUtils.isNotEmpty(mainProcess.getName())) {
       propertiesNode.put(PROPERTY_NAME, mainProcess.getName());
@@ -436,8 +436,11 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     	        	String dataType = variableNode.get(PROPERTY_DATAVARIABLE_TYPE).asText();
     	        	String bizType = variableNode.get(PROPERTY_DATAVARIABLE_BIZTYPE).asText();
     	        	boolean isPersistence = StringUtil.getBoolean(variableNode.get(PROPERTY_DATAVARIABLE_IS_PERSISTENCE));
-    	        	String expression = variableNode.get(PROPERTY_DATAVARIABLE_DEFAULT_VALUE).asText();
-    	        	
+    	        	String expression = "";
+    	        	JsonNode tmpNode = variableNode.get(PROPERTY_DATAVARIABLE_DEFAULT_VALUE);
+    	        	if(tmpNode != null){
+    	        		expression = tmpNode.asText();
+    	        	}
     	        	DataVariable dataVariableObj = FixFlowFactory.eINSTANCE.createDataVariable();
     	        	dataVariableObj.setBizType(bizType);
     	        	dataVariableObj.setId(id);

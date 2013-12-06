@@ -430,7 +430,7 @@
       "id" : "potentialowner",
       "type" : "Complex",
       "title" : "处理人",
-      "value" : "{'totalCount':1,'items':[{'resourcetype':'user','iscontainssub':'false','resourceassignmentexpression':'fixflow_allusers','name':'所有人'}]}",
+      "value" : "{'totalCount':1,'items':[{'resourcetype':'user','iscontainssub':'false','resourceassignmentexpression':'\"fixflow_allusers\"','name':'所有人'}]}",
       "description" : "Unique identifier of the element.",
       "popular" : "任务分配",
       "complexItems" : [ {
