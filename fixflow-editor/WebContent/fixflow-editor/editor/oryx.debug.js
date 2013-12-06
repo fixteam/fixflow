@@ -21790,6 +21790,10 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 				editor = new Ext.form.Checkbox( { width : width } );
 			} else if (type == ORYX.CONFIG.TYPE_COMPLEX) {
 				continue;
+			} else if(type == ORYX.CONFIG.TYPE_TEXT){
+				var cf = new Ext.form.ComplexTextField();
+				cf.on('dialogClosed', this.dialogClosed, {scope:this, row:0, col:1,field:cf});							
+				editor = new Ext.Editor(cf);
 			}
 					
 			cols.push({

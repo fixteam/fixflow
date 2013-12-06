@@ -171,7 +171,7 @@
 	      },{
 	        "id" : "expression",
 	        "name" : "默认值",
-	        "type" : "String",
+	        "type" : "Text",
 	        "description" : "Listener expression definition.",
 	        "value" : "",
 	        "width" : 100,
@@ -429,7 +429,7 @@
     },{
       "id" : "potentialowner",
       "type" : "Complex",
-      "title" : "完成人表达式",
+      "title" : "处理人",
       "value" : "",
       "description" : "Unique identifier of the element.",
       "popular" : "任务分配",
@@ -452,11 +452,22 @@
       },{
         "id" : "resourcetype",
         "name" : "资源类型",
-        "type" : "String",
+        "type" : "Choice",
         "description" : "Listener expression definition.",
         "value" : "",
-        "width" : 100,
-        "optional" : true
+         "width" : 100,
+        "optional" : false,
+        "items" : [ {
+          "id" : "c1",
+          "title" : "true",
+          "value" : "true",
+          "refToView" : ""
+        }, {
+          "id" : "c2",
+          "title" : "false",
+          "value" : "false",
+          "refToView" : ""
+        }]
       },{
         "id" : "iscontainssub",
         "name" : "包含子集",
