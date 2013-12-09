@@ -408,5 +408,13 @@
           group by PROCESSDEFINITION_KEY) 
     </select>
     
+	<select id="flowInstances" resultType="java.util.Map">
+		select PROCESSINSTANCE_ID,PROCESS_NAME,START_TIME,WORK_TIME from FIXBPA_FLOW_PROCESSINSTANCE 
+	</select>
+	
+	<select id="flowInstances_page" resultType="java.lang.Integer">
+		select count(1) from FIXBPA_FLOW_PROCESSINSTANCE 
+	</select>
+    
 </mapper> 
 
