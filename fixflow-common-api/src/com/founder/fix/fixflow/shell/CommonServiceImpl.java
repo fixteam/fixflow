@@ -66,9 +66,12 @@ public abstract class CommonServiceImpl {
 	protected void closeProcessEngine(){
 		if(processEngine!=null){
 			boolean closeConnection = true;
-			if(connection!=null)
+			if(connection!=null){
 				closeConnection = false;
+			}
 			FixFlowShellProxy.closeProcessEngine(processEngine,closeConnection);
+			processEngine = null;
+			connection = null;
 		}
 	}
 	
