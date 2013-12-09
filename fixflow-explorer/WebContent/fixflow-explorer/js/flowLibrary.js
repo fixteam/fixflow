@@ -32,6 +32,10 @@ $(document).ready(function(){
 	$("#okBtn").click(function(){
 		var id = $("#flowFileId").val();
 		var name = $("#flowFileName").val();
+		if(id=="" || name==""){
+			alert("请输入名称和编号");
+			return;
+		}
 		$.ajax({
 			url: "/bpmcenter/FlowWebManagerServlet",
 			type: "POST",
@@ -51,6 +55,7 @@ $(document).ready(function(){
 					var $newFile = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="'+id+'.bpmn">'+id+'.bpmn</span></div>');
 					$newFile.appendTo($("div.view_plugin"));
 					$("div.popup-A").hide();
+					$(".bg").hide();
 				}
 				$("#flowFileId").val("");
 				$("#flowFileName").val("");
@@ -61,6 +66,7 @@ $(document).ready(function(){
 	
 	$("#closeBtn").click(function(){
 		$("div.popup-A").hide();
+		$(".bg").hide();
 	});
 	
 	$("#upload").change(function(){
@@ -100,16 +106,18 @@ $(document).ready(function(){
 		
 		$(this).click(function(event){
 			if($(this).hasClass("btn-disable")){
-				return;
+				return false;
 			}
 			var $selectTarget = $("div.thumb-wrap[select=true]");
 			switch($(this).attr("btn-type")){
 				case "createFile":
 					currentOperationType = "createFile";
 					$("div.popup-A").show();
+					$(".bg").show();
 					break;
 				case "createFolder":
 					currentOperationType = "create";
+					$("div[btn-type]").removeClass("btn-normal").addClass("btn-disable");
 					$("div.thumb-wrap[dirType=empty]").remove();
 					var guid = FixFlow.Utils.createGuid();
 					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+guid+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
@@ -140,6 +148,7 @@ $(document).ready(function(){
 									}
 									$input.parent("span").replaceWith("<span>"+name+"</span>");
 									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
+									resetToolbarState();
 								}
 							});
 						};
@@ -147,6 +156,7 @@ $(document).ready(function(){
 					break;
 					
 				case "rename":
+					$("div[btn-type]").removeClass("btn-normal").addClass("btn-disable");
 					currentOperationType = "rename";
 					var $selectThumbWrap = $("div.thumb-wrap[select=true]");
 					var $span = $("span", $selectThumbWrap);
@@ -170,7 +180,15 @@ $(document).ready(function(){
 									newFileName: name
 								},
 								success: function(data){
+									eval("var d = " + data);
+									if(d.state == "error"){
+										alert("重命名文件夹失败！");
+										$input.focus();
+										$input.select();
+										return;
+									}
 									$editInput.parent("span").replaceWith("<span>"+name+"</span>");
+									$("div[btn-type]").addClass("btn-normal").removeClass("btn-disable");
 									$.ajax({
 										url: "/bpmcenter/FileAndDirectoryServlet",
 										type: "POST",
@@ -298,7 +316,7 @@ $(document).ready(function(){
 		})
 	});
 	
-	$(document).click(function(){
+	/*$(document).click(function(){
 		var newName = "";
 		
 		
@@ -363,7 +381,7 @@ $(document).ready(function(){
 				});
 			}
 		}
-	});
+	});*/
 	
 });
 
@@ -469,8 +487,4 @@ function resetToolbarState(){
 
 function checkIsResolvent(){
 	return (breadcrumbList[1] && breadcrumbList[1].name == "resolvent");
-}
-
-function createFlowFile(){
-	
 }

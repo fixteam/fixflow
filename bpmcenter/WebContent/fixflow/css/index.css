@@ -130,3 +130,6 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .popup-A .content { padding:12px; min-height:220px; height:auto; overflow:hidden; background:#FFF; border:1px solid #cfedf7;}
 
 .m-r-30 { margin-right:30px;}
+
+/* 遮罩层 */
+.bg {display: none; width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; background-color: gray; opacity:0.5; z-index:100;}
