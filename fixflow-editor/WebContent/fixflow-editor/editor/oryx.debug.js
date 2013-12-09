@@ -21201,10 +21201,12 @@ ORYX.Plugins.PropertyWindow = {
 				if(key == "oryx-overrideid" && firstShape.properties[key]==""){
 					var guid = Fix.Util.createGuid();
 					this.shapeSelection.commonPropertiesValues[key] = guid;
+					firstShape.properties[key] = guid;
 				}else if(key == "oryx-name" && firstShape.properties[key]==""){
 					var id = property._stencil._jsonStencil.id;
 					id = id.substring(id.indexOf("#")+1);
 					this.shapeSelection.commonPropertiesValues[key] = id;
+					firstShape.properties[key] = id;
 				}else{
 					this.shapeSelection.commonPropertiesValues[key] = firstShape.properties[key];
 				}
