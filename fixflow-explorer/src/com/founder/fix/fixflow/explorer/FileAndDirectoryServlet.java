@@ -58,16 +58,16 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		FileAndDirectoryUtils.renameFile(buildPath()+File.separator+request("oldFileName"),buildPath()+File.separator+request("newFileName"),getBasePath());
     			success("重命名成功!","string");
     	} catch (Exception e) {
-    		error("重命名失败!");
+    		error(e.getMessage());
     	}
     }
     
     public void moveFileOrDirectory(){
     	try {
     		FileAndDirectoryUtils.moveFileAndDirectory(getMoveResource()[0], getMoveResource()[1], getBasePath(),request("fileName"));
-    		success("重命名成功!","string");
+    		success("删除成功!","string");
     	} catch (Exception e) {
-    		error("重命名失败!");
+    		error("删除失败!");
     	}
     }
     

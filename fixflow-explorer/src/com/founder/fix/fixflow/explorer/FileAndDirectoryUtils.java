@@ -126,6 +126,9 @@ public class FileAndDirectoryUtils {
     public static boolean renameFile(String resFilePath, String newFilePath,String basePath) throws Exception{
         File resFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+resFilePath);  
         File newFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+newFilePath);  
+		if(newFile.exists()){
+			throw new Exception("当前文件或文件夹已存在!");
+		}
         return resFile.renameTo(newFile);  
     }  
     
