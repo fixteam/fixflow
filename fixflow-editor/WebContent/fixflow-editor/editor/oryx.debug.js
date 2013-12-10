@@ -21785,7 +21785,8 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 			var editor;
 			
 			if (type == ORYX.CONFIG.TYPE_STRING) {
-				editor = new Ext.form.TextField({ allowBlank : this.items[i].optional(), width : width});
+				editor = new Ext.form.TextField({ allowBlank : this.items[i].optional(), width : width, keyName:id});
+				//editor = new Ext.form.TextArea({alignment: "tl-tl", allowBlank: false,  msgTarget:'title', width:300, height:200});
 			} else if (type == ORYX.CONFIG.TYPE_CHOICE) {				
 				var items = this.items[i].items();
 				var select = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", parent, ['select', {style:'display:none'}]);
@@ -21801,9 +21802,27 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 			} else if (type == ORYX.CONFIG.TYPE_COMPLEX) {
 				continue;
 			} else if(type == ORYX.CONFIG.TYPE_TEXT){
-				var cf = new Ext.form.ComplexTextField();
-				cf.on('dialogClosed', this.dialogClosed, {scope:this, row:0, col:1,field:cf});							
-				editor = new Ext.Editor(cf);
+				editor = new Ext.form.TextField({ allowBlank : this.items[i].optional(), width : width, keyName:id});
+				editor.on('focus', function(that, event, opts){
+					var key = that.initialConfig.keyName;
+					var startValue = that.startValue;
+					Ext.MessageBox.show({
+						title: '输入完成人表达式',
+						value: startValue,
+						width: 500,
+						buttons: Ext.MessageBox.OKCANCEL,
+						multiline: 500,
+						fn: function(btn, text){
+							if(btn == 'ok'){
+								Fix.MixOryx.beforeEditEl.editor.boundEl.dom.innerHTML = '<div class="x-grid3-cell-inner x-grid3-col-resourceassignmentexpression" unselectable="on" id="ext-gen483">'+text+'</div>';
+								var row = Fix.MixOryx.beforeEditRow;
+								var col = Fix.MixOryx.beforeEditCol;
+								var ds = Fix.MixOryx.ds;
+								ds.data.items[row].data[key] = text;
+							}
+						}
+					});
+				});
 			}
 					
 			cols.push({
@@ -21841,7 +21860,9 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 		
 		var col = option.column;
 		var row = option.row;
-		
+		Fix.MixOryx.beforeEditEl = this.grid.getColumnModel().config[col];
+		Fix.MixOryx.beforeEditRow = row;
+		Fix.MixOryx.beforeEditCol = col;
 		var editId = this.grid.getColumnModel().config[col].id;
 		// check if there is an item in the row, that disables this cell
 		for (var i = 0; i < this.items.length; i++) {
@@ -21896,7 +21917,7 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 				var width 	= this.items[i].width();
 				var type 	= this.items[i].type();	
 					
-				if (type == ORYX.CONFIG.TYPE_CHOICE || type == ORYX.CONFIG.TYPE_COMPLEX) {
+				if (type == ORYX.CONFIG.TYPE_CHOICE || type == ORYX.CONFIG.TYPE_COMPLEX || type == ORYX.CONFIG.TYPE_TEXT) {
 					type = ORYX.CONFIG.TYPE_STRING;
 				}
 						
@@ -21924,6 +21945,7 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
 		        	}, recordType)
 	        });
 			ds.load();
+			Fix.MixOryx.ds = ds;
 					
 				
 			var cm = this.buildColumnModel();
@@ -22702,9 +22724,9 @@ Ext.form.ComplexTextField = Ext.extend(Ext.form.TriggerField,  {
 					dialog.destroy();
 				}.bind(this)				
 			},
-			buttons		: [{
-                text: ORYX.I18N.PropertyWindow.ok,
-                handler: function(){	 
+			buttons: [{
+				text: ORYX.I18N.PropertyWindow.ok,
+				handler: function(){	 
 					// store dialog input
 					var value = grid.getValue();
 					this.setValue(value);
@@ -22713,14 +22735,14 @@ Ext.form.ComplexTextField = Ext.extend(Ext.form.TriggerField,  {
 					this.dataSource.commitChanges()
 
 					dialog.hide()
-                }.bind(this)
-            }, {
-                text: ORYX.I18N.PropertyWindow.cancel,
-                handler: function(){
+         }.bind(this)
+      }, {
+				text: ORYX.I18N.PropertyWindow.cancel,
+				handler: function(){
 					this.setValue(this.value);
-                	dialog.hide()
-                }.bind(this)
-            }]
+					dialog.hide()
+				}.bind(this)
+      }]
 		});		
 				
 		dialog.show();		

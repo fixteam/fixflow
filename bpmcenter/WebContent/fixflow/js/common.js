@@ -106,7 +106,10 @@ Fix = {
 			window.open(url,wn);
 		}
 		
-	}	
+	},
+	MixOryx: {
+		
+	}
 };
 
 /*
