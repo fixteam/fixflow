@@ -444,7 +444,7 @@
       },{
         "id" : "resourceassignmentexpression",
         "name" : "完成人表达式",
-        "type" : "String",
+        "type" : "Text",
         "description" : "Listener expression definition.",
         "value" : "",
         "width" : 100,
