@@ -338,12 +338,10 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     } else if (parentElement instanceof SubProcess) {
       ((SubProcess) parentElement).getFlowElements().add(flowElement);
     } else if (parentElement instanceof Lane) {
-    	
-    	 /* 这里注释掉内容以后需要恢复过来
-      Lane lane = (Lane) parentElement;
-      lane.getFlowReferences().add(flowElement.getId());
-      lane.getParentProcess().addFlowElement(flowElement);
-      */
+    	Process process = (Process)this.model.getRootElements().get(0);
+    	Lane lane = (Lane) parentElement;
+    	process.getFlowElements().add(flowElement);
+    	lane.getFlowNodeRefs().add((FlowNode)flowElement);
     }
   }
   
