@@ -168,6 +168,11 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     DI_GATEWAY.add(STENCIL_GATEWAY_PARALLEL);
   }
 
+  /**
+   * 将模型转换成json数据
+   * @param model
+   * @return
+   */
   public ObjectNode convertToJson(Definitions model) {
     ObjectNode modelNode = objectMapper.createObjectNode();
     modelNode.put("bounds", BpmnJsonConverterUtil.createBoundsNode(1485, 1050, 0, 0));
@@ -187,14 +192,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     ProcessDefinitionBehavior mainProcess = null;
     mainProcess=(ProcessDefinitionBehavior)BpmnModelUtil.getProcess(model);
     EMFExtensionUtil.getDataVariables(mainProcess);
-    
-    /*
-    if (BpmnModelUtil.getProcessList(model).getPools().size() > 0) {
-      mainProcess = model.getProcess(model.getPools().get(0).getId());
-    } else {
-      mainProcess = model.getMainProcess();
-    }*/
-      
+
     ObjectNode propertiesNode = objectMapper.createObjectNode();
     if (StringUtils.isNotEmpty(mainProcess.getId())) {
       propertiesNode.put(PROPERTY_OVERRIDE_ID, mainProcess.getId());
@@ -202,7 +200,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     if (StringUtils.isNotEmpty(mainProcess.getName())) {
       propertiesNode.put(PROPERTY_NAME, mainProcess.getName());
     }
-    
     
     //fixflow扩展流程属性
     propertiesNode.put(PROPERTY_PROCESS_CATEGORY, mainProcess.getCategory());
@@ -237,12 +234,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
         propertiesNode.put(PROPERTY_PROCESS_DATAVARIABLE, datavariableNode);
     }
     
-    
-    /*
-    if (mainProcess.isExecutable() == false) {
-      propertiesNode.put(PROPERTY_PROCESS_EXECUTABLE, PROPERTY_VALUE_NO);
-    }*/
-    
     propertiesNode.put(PROPERTY_PROCESS_NAMESPACE, model.getTargetNamespace());
     
     if (StringUtils.isNotEmpty(BpmnModelUtil.getDocumentation(mainProcess))) {
@@ -250,25 +241,31 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
     modelNode.put(EDITOR_SHAPE_PROPERTIES, propertiesNode);
     
-    
     /*****lane的处理******/
     List<Lane> lanes=new ArrayList<Lane>();
     List<FlowElement> laneFlowElements = new ArrayList<FlowElement>();
-    //ArrayNode laneShapesArrayNode = objectMapper.createArrayNode();
     fillAllLanes(lanes, mainProcess);
     if(lanes.size() >0){
       for (Lane lane : lanes) {
     	  addLaneElements(lane,mainProcess,laneFlowElements,model,shapesArrayNode,0.0,0.0);
       }
     }
-   
-     processFlowElements(BpmnModelUtil.getProcess(model).getFlowElements(), model, shapesArrayNode, 0.0, 0.0,laneFlowElements);
-    
-    
+    //处理不包含在lane中的元素
+    processFlowElements(BpmnModelUtil.getProcess(model).getFlowElements(), model, shapesArrayNode, 0.0, 0.0,laneFlowElements);
     modelNode.put(EDITOR_CHILD_SHAPES, shapesArrayNode);
     return modelNode;
   }
   
+  /**
+   * 处理lane中的子元素
+   * @param lane
+   * @param mainProcess
+   * @param laneFlowElements
+   * @param model
+   * @param shapesArrayNode
+   * @param x
+   * @param y
+   */
   public void addLaneElements(Lane lane,Process mainProcess,List<FlowElement> laneFlowElements,Definitions model,ArrayNode shapesArrayNode,double x,double y){
 	  Bounds laneGraphicInfo =BpmnModelUtil.getBpmnShape(model, lane.getId()).getBounds();
       ObjectNode laneNode = BpmnJsonConverterUtil.createChildShape(lane.getId(), STENCIL_LANE, 
@@ -278,8 +275,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       lanePropertiesNode.put("parentpool", "");
       lanePropertiesNode.put("parentlane", "");
       lanePropertiesNode.put("showcaption", "true");
-      lanePropertiesNode.put("bgcolor", "");
+      lanePropertiesNode.put("bgcolor", "#FFFFCC");
       lanePropertiesNode.put("bordercolor", "#000000");
+      lanePropertiesNode.put(PROPERTY_OVERRIDE_ID, lane.getId());
+      lanePropertiesNode.put(PROPERTY_NAME, lane.getName());
       
       laneNode.put(EDITOR_SHAPE_PROPERTIES, lanePropertiesNode);
       ArrayNode dockArrayNode = objectMapper.createArrayNode();
@@ -303,7 +302,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
           }
         }
       }
-      
       if(lane.getChildLaneSet() != null){
     	  for(Lane tmpLane :lane.getChildLaneSet().getLanes()){
     		  addLaneElements(tmpLane,mainProcess,laneFlowElements,model,elementShapesArrayNode,laneGraphicInfo.getX(),laneGraphicInfo.getY());
@@ -311,48 +309,54 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       }
   }
   
+  /**
+   * 解析流程元素城json
+   * flowElements 需要解析的元素
+   * subProcessX 相对坐标
+   * subProcessY 相对坐标
+   * laneFlowElements lane中已经解析的元素，此处不再解析
+   */
   public void processFlowElements(Collection<FlowElement> flowElements, Definitions model, ArrayNode shapesArrayNode, 
       double subProcessX, double subProcessY,List<FlowElement> laneFlowElements) {
-    
-    for (FlowElement flowElement : flowElements) {
-    	if(laneFlowElements !=null && laneFlowElements.contains(flowElement)){
-    		continue;
-    	}
-    	Class<? extends BaseBpmnJsonConverter> converter = convertersToJsonMap.get(flowElement.getClass());
-    	if (converter != null) {
-    		try {
-    			converter.newInstance().convertToJson(flowElement, this, model, shapesArrayNode, 
-    					subProcessX, subProcessY);
-    		} catch (Exception e) {
-    			LOGGER.error("Error converting {}", flowElement, e);
-    			e.printStackTrace();
-    		}
-    	}
-    }
+	    for (FlowElement flowElement : flowElements) {
+	    	if(laneFlowElements !=null && laneFlowElements.contains(flowElement)){
+	    		continue;
+	    	}
+	    	Class<? extends BaseBpmnJsonConverter> converter = convertersToJsonMap.get(flowElement.getClass());
+	    	if (converter != null) {
+	    		try {
+	    			converter.newInstance().convertToJson(flowElement, this, model, shapesArrayNode, 
+	    					subProcessX, subProcessY);
+	    		} catch (Exception e) {
+	    			LOGGER.error("Error converting {}", flowElement, e);
+	    			e.printStackTrace();
+	    		}
+	    	}
+	    }
   }
   
+  /**
+   * 加载process层级下的lane元素，不加载嵌套的lane
+   * @param lanes
+   * @param baseElement
+   */
   private void fillAllLanes(List<Lane> lanes,BaseElement baseElement){
 	  if(baseElement instanceof Process){
 		  Process process = (Process)baseElement;
 		  for(LaneSet laneSet :process.getLaneSets()){
 			  for(Lane lane : laneSet.getLanes()){
-//				  fillAllLanes(lanes,lane);
 				  lanes.add(lane);
 			  }
 		  }
 	  }
-//	  if(baseElement instanceof Lane){
-//		  Lane lane = (Lane) baseElement;
-//		  lanes.add(lane);
-//		  LaneSet laneSet = lane.getChildLaneSet();
-//		  if(laneSet != null){
-//			  for(Lane tmpLane : laneSet.getLanes()){
-//				  fillAllLanes(lanes,tmpLane);
-//			  } 
-//		  }
-//	  }
+
   }
   
+  /**
+   * 将json数据转换为definitions
+   * @param modelNode
+   * @return
+   */
   public Definitions convertToBpmnModel(JsonNode modelNode) {
 	  //加载一个空的definitions
 	  
@@ -368,24 +372,9 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	  readShapeDI(modelNode, 0, 0, shapeMap, sourceRefMap, bpmnModel);
 	  filterAllEdges(modelNode, edgeMap, sourceAndTargetMap, shapeMap, sourceRefMap);
 	  ArrayNode shapesArrayNode = (ArrayNode) modelNode.get(EDITOR_CHILD_SHAPES);
+	  //做pool的时候用
 	  boolean nonEmptyPoolFound = false;
-	  // first create the pool structure
 
-//	  for (JsonNode shapeNode : shapesArrayNode) {
-//		  String stencilId = BpmnJsonConverterUtil.getStencilId(shapeNode);
-//		  if (STENCIL_LANE.equals(stencilId)) {
-//			  Lane lane = Bpmn2Factory.eINSTANCE.createLane();// Lane();
-//			  if(process.getLaneSets().size() >0){
-//				  process.getLaneSets().get(0).getLanes().add(lane);
-//			  }else{
-//				  LaneSet laneSet = Bpmn2Factory.eINSTANCE.createLaneSet();
-//				  laneSet.getLanes().add(lane);
-//				  process.getLaneSets().add(laneSet);
-//			  }
-//			  processJsonElements(shapeNode.get(EDITOR_CHILD_SHAPES), modelNode, lane, shapeMap,sourceAndTargetMap,bpmnModel);
-//		  }
-//	  }
-	  
 	  if (nonEmptyPoolFound == false) {
 	      JsonNode processIdNode = JsonConverterUtil.getProperty(PROPERTY_PROCESS_ID, modelNode);
 	      if(processIdNode != null && StringUtils.isNotEmpty(processIdNode.asText())) {
@@ -468,9 +457,13 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	  
 	  Map<String, SequenceFlow> flowSourceMap = new HashMap<String, SequenceFlow>();
 	  Map<String, SequenceFlow> flowTargetMap = new HashMap<String, SequenceFlow>();
+	  //初始化线条的source map和target map,后面为flowNode加载来源和target
 	  addAllSequenceFlows(process.getFlowElements(), flowSourceMap, flowTargetMap);
+	  //flowElement的incoming和outgoing处理
 	  postProcessElements(process, process.getFlowElements(), flowSourceMap, flowTargetMap);
+	  //给根plane set 关联元素
 	  bpmnPlane.setBpmnElement(BpmnModelUtil.getBaseElement(bpmnModel, process.getId()));
+	  //给shape元素 set 关联元素
 	  for(DiagramElement diagram :  bpmnModel.getDiagrams().get(0).getPlane().getPlaneElement()){
 		  if(diagram instanceof BPMNShape){
 			  BPMNShape bpmnShape = (BPMNShape)diagram;
@@ -480,62 +473,73 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 			  bpmnShape.setBpmnElement(bpmnElement);
 		  }
 	  }
+	  //生成线条元素
 	  readEdgeDI(edgeMap, sourceAndTargetMap, bpmnModel);
 	  return bpmnModel;
   }
   
+  /**
+   * 由json生成flowElement元素，包括lane
+   */
   public void processJsonElements(JsonNode shapesArrayNode, JsonNode modelNode, 
       BaseElement parentElement, Map<String, JsonNode> shapeMap,Map<String, List<JsonNode>> sourceAndTargetMap,Definitions model) {
-    
-    for (JsonNode shapeNode : shapesArrayNode) {
-    	String stencilId = BpmnJsonConverterUtil.getStencilId(shapeNode);
-    	if(STENCIL_LANE.equals(stencilId)){
-    		Lane lane = Bpmn2Factory.eINSTANCE.createLane();
-    		String override = BpmnJsonConverterUtil.getElementId(shapeNode);
-    		lane.setId(override);
-    		lane.setName("aaaa");
-    		if(parentElement instanceof Lane){
-    			Lane parentLane = ((Lane)parentElement);
-    			if(parentLane.getChildLaneSet() == null){
-    				LaneSet laneSet = Bpmn2Factory.eINSTANCE.createLaneSet();
-  			  		laneSet.getLanes().add(lane);
-  			  		parentLane.setChildLaneSet(laneSet);
-    			}else{
-    				parentLane.getChildLaneSet().getLanes().add(lane);
-    			}
-    		}else if(parentElement instanceof Process){
-    			Process process = (Process)parentElement;
-    			if(process.getLaneSets().size() >0){
-    				process.getLaneSets().get(0).getLanes().add(lane);
-  			  	}else{
-  			  		LaneSet laneSet = Bpmn2Factory.eINSTANCE.createLaneSet();
-  			  		laneSet.getLanes().add(lane);
-  			  		process.getLaneSets().add(laneSet);
-  			  	}
-    		}
-			processJsonElements(shapeNode.get(EDITOR_CHILD_SHAPES), modelNode, lane, shapeMap,sourceAndTargetMap,model);
-			continue;
-    	}
+	    for (JsonNode shapeNode : shapesArrayNode) {
+	    	String stencilId = BpmnJsonConverterUtil.getStencilId(shapeNode);
+	    	//先处理lane,lane中会包含child元素
+	    	if(STENCIL_LANE.equals(stencilId)){
+	    		Lane lane = Bpmn2Factory.eINSTANCE.createLane();
+	    		String override = BpmnJsonConverterUtil.getElementId(shapeNode);
+	    		String laneNameString = JsonConverterUtil.getPropertyValueAsString(PROPERTY_NAME, shapeNode);
+	    		lane.setId(override);
+	    		lane.setName(laneNameString);
+	    		if(parentElement instanceof Lane){
+	    			Lane parentLane = ((Lane)parentElement);
+	    			if(parentLane.getChildLaneSet() == null){
+	    				LaneSet laneSet = Bpmn2Factory.eINSTANCE.createLaneSet();
+	  			  		laneSet.getLanes().add(lane);
+	  			  		parentLane.setChildLaneSet(laneSet);
+	    			}else{
+	    				parentLane.getChildLaneSet().getLanes().add(lane);
+	    			}
+	    		}else if(parentElement instanceof Process){
+	    			Process process = (Process)parentElement;
+	    			if(process.getLaneSets().size() >0){
+	    				process.getLaneSets().get(0).getLanes().add(lane);
+	  			  	}else{
+	  			  		LaneSet laneSet = Bpmn2Factory.eINSTANCE.createLaneSet();
+	  			  		laneSet.getLanes().add(lane);
+	  			  		process.getLaneSets().add(laneSet);
+	  			  	}
+	    		}
+				processJsonElements(shapeNode.get(EDITOR_CHILD_SHAPES), modelNode, lane, shapeMap,sourceAndTargetMap,model);
+				continue;
+	    	}
     	
-      Class<? extends BaseBpmnJsonConverter> converter = convertersToBpmnMap.get(stencilId);
-      if (converter != null) {
-        try {
-          converter.newInstance().convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap,sourceAndTargetMap,model);
-        } catch (Exception e) {
-        	e.printStackTrace();
-          LOGGER.error("Error converting {}", BpmnJsonConverterUtil.getStencilId(shapeNode), e);
-        }
-      }
-    }
+	    	//处理非lane元素
+	    	Class<? extends BaseBpmnJsonConverter> converter = convertersToBpmnMap.get(stencilId);
+	    	if (converter != null) {
+	    		try {
+	    			converter.newInstance().convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap,sourceAndTargetMap,model);
+	    		} catch (Exception e) {
+	    			e.printStackTrace();
+	    			LOGGER.error("Error converting {}", BpmnJsonConverterUtil.getStencilId(shapeNode), e);
+	    		}
+	    	}
+	    }
     
-    //fixflow线条处理
-    if (parentElement instanceof Process) {
-        ProcessDefinitionBehavior process = (ProcessDefinitionBehavior) parentElement;
-        addSourceAndTarget(process.getFlowElements(),sourceAndTargetMap,model);
-    }
+	    //fixflow线条处理  给线条增加source 和target元素
+	    if (parentElement instanceof Process) {
+	        ProcessDefinitionBehavior process = (ProcessDefinitionBehavior) parentElement;
+	        addSourceAndTarget(process.getFlowElements(),sourceAndTargetMap,model);
+	    }
   }
   
-  //给线条增加source和target元素
+  /**
+   * 给线条增加source和target元素
+   * @param flowElements
+   * @param sourceAndTargetMap
+   * @param model
+   */
   private void addSourceAndTarget(Collection<FlowElement> flowElements,Map<String, List<JsonNode>> sourceAndTargetMap,Definitions model){
 	  for(FlowElement flowElement:flowElements){
       	if(flowElement instanceof SequenceFlowBehavior){
@@ -554,17 +558,12 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       }
   }
   
-  private void fillSubShapes(Map<String, SubProcess> subShapesMap, SubProcess subProcess) {
-    for (FlowElement flowElement : subProcess.getFlowElements()) {
-      if (flowElement instanceof SubProcess) {
-        SubProcess childSubProcess = (SubProcess) flowElement;
-        fillSubShapes(subShapesMap, childSubProcess);
-      } else {
-        subShapesMap.put(flowElement.getId(), subProcess);
-      }
-    }
-  }
-  
+  /**
+   * 初始化flowSourceMap和flowTargetMap
+   * @param flowElementList
+   * @param flowSourceMap
+   * @param flowTargetMap
+   */
   private void addAllSequenceFlows(Collection<FlowElement> flowElementList,
       Map<String, SequenceFlow> flowSourceMap, Map<String, SequenceFlow> flowTargetMap) {
     
@@ -580,6 +579,13 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
   }
   
+  /**
+   * 给flowNode加载incoming和outGoing
+   * @param process
+   * @param flowElementList
+   * @param flowSourceMap
+   * @param flowTargetMap
+   */
   private void postProcessElements(Process process, Collection<FlowElement> flowElementList,
       Map<String, SequenceFlow> flowSourceMap, Map<String, SequenceFlow> flowTargetMap) {
     
@@ -611,6 +617,12 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
   }
    
+  /**
+   * 边界事件处理
+   * @param attachedToRefId
+   * @param flowElementList
+   * @return
+   */
   private Activity retrieveAttachedRefObject(String attachedToRefId, Collection<FlowElement> flowElementList) {
     for (FlowElement flowElement : flowElementList) {
       if (attachedToRefId.equals(flowElement.getId())) {
@@ -626,6 +638,15 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     return null;
   }
   
+  /**
+   * 处理图形元素
+   * @param objectNode
+   * @param parentX
+   * @param parentY
+   * @param shapeMap
+   * @param sourceRefMap
+   * @param bpmnModel
+   */
   private void readShapeDI(JsonNode objectNode, double parentX, double parentY, 
       Map<String, JsonNode> shapeMap, Map<String, JsonNode> sourceRefMap, Definitions bpmnModel) {
     
@@ -642,8 +663,15 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	    	bpmnShape.setId(BpmnJsonConverterUtil.getFormatShapeId(elementId));
           JsonNode boundsNode = jsonChildNode.get(EDITOR_BOUNDS);
           ObjectNode upperLeftNode = (ObjectNode) boundsNode.get(EDITOR_BOUNDS_UPPER_LEFT);
-          graphicInfo.setX((float)(upperLeftNode.get(EDITOR_BOUNDS_X).asDouble() + parentX));
-          graphicInfo.setY((float)(upperLeftNode.get(EDITOR_BOUNDS_Y).asDouble() + parentY));
+          double upLeftX = upperLeftNode.get(EDITOR_BOUNDS_X).asDouble();
+          double upLeftY = upperLeftNode.get(EDITOR_BOUNDS_Y).asDouble();
+          //坐标修正
+          if(DI_CIRCLES.contains(stencilId)){
+        	  upLeftX -= 3;
+        	  upLeftY -= 3;
+          }
+          graphicInfo.setX((float)(upLeftX + parentX ));
+          graphicInfo.setY((float)(upLeftY + parentY ));
           
           ObjectNode lowerRightNode = (ObjectNode) boundsNode.get(EDITOR_BOUNDS_LOWER_RIGHT);
           graphicInfo.setWidth((float)(lowerRightNode.get(EDITOR_BOUNDS_X).asDouble() - graphicInfo.getX() + parentX));
@@ -672,6 +700,14 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
   }
   
+  /**
+   * 遍历线条元素，初始化sourceAndTargetMap
+   * @param objectNode
+   * @param edgeMap
+   * @param sourceAndTargetMap
+   * @param shapeMap
+   * @param sourceRefMap
+   */
   private void filterAllEdges(JsonNode objectNode, 
       Map<String, JsonNode> edgeMap, Map<String, List<JsonNode>> sourceAndTargetMap,
       Map<String, JsonNode> shapeMap, Map<String, JsonNode> sourceRefMap) {
@@ -699,6 +735,12 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
   }
   
+  /**
+   * 处理edge元素
+   * @param edgeMap
+   * @param sourceAndTargetMap
+   * @param bpmnModel
+   */
   private void readEdgeDI(Map<String, JsonNode> edgeMap, Map<String, List<JsonNode>> sourceAndTargetMap, Definitions bpmnModel) {
     for (String edgeId : edgeMap.keySet()) {
       
@@ -725,14 +767,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       Bounds sourceInfo = BpmnModelUtil.getBpmnShape(bpmnModel, BpmnJsonConverterUtil.getElementId(sourceRefNode)).getBounds();
       Bounds targetInfo = BpmnModelUtil.getBpmnShape(bpmnModel, BpmnJsonConverterUtil.getElementId(targetRefNode)).getBounds();
       
-      /*JsonNode sourceRefBoundsNode = sourceRefNode.get(EDITOR_BOUNDS);
-      BoundsLocation sourceRefUpperLeftLocation = getLocation(EDITOR_BOUNDS_UPPER_LEFT, sourceRefBoundsNode);
-      BoundsLocation sourceRefLowerRightLocation = getLocation(EDITOR_BOUNDS_LOWER_RIGHT, sourceRefBoundsNode);
-      
-      JsonNode targetRefBoundsNode = targetRefNode.get(EDITOR_BOUNDS);
-      BoundsLocation targetRefUpperLeftLocation = getLocation(EDITOR_BOUNDS_UPPER_LEFT, targetRefBoundsNode);
-      BoundsLocation targetRefLowerRightLocation = getLocation(EDITOR_BOUNDS_LOWER_RIGHT, targetRefBoundsNode);*/
-      
       double sourceRefLineX = sourceInfo.getX() + sourceDockersX;
       double sourceRefLineY = sourceInfo.getY() + sourceDockersY;
       
@@ -750,8 +784,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       
       String sourceRefStencilId = BpmnJsonConverterUtil.getStencilId(sourceRefNode);
       String targetRefStencilId = BpmnJsonConverterUtil.getStencilId(targetRefNode);
-      
-      
       
       List<Point> graphicInfoList = new ArrayList<Point>();
       
