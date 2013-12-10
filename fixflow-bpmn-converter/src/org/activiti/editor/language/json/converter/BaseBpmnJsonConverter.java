@@ -122,26 +122,21 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
 
   public void convertToJson(FlowElement flowElement, ActivityProcessor processor, Definitions model,
       ArrayNode shapesArrayNode, double subProcessX, double subProcessY) {
-    
     this.model = model;
     this.processor = processor;
     this.subProcessX = subProcessX;
     this.subProcessY = subProcessY;
     this.shapesArrayNode = shapesArrayNode;
-   // GraphicInfo graphicInfo = model.getGraphicInfo(flowElement.getId());
-    
     BPMNShape bpmnShape=BpmnModelUtil.getBpmnShape(model, flowElement.getId());
     Bounds bounds=bpmnShape.getBounds();
     String stencilId = null;
     stencilId = getStencilId(flowElement);
-    
     double upleftX = bounds.getX() - subProcessX;
     double upleftY = bounds.getY() - subProcessY;
-    
-    //坐标修正，对圆形和网关进行坐标修正
+    //坐标修正
     if(DI_CIRCLES.contains(stencilId) || DI_GATEWAY.contains(stencilId)){
-    	upleftX += 3;
-    	upleftY += 3;
+    	upleftX += REVERSION_X;
+    	upleftY += REVERSION_Y;
     }
     flowElementNode = BpmnJsonConverterUtil.createChildShape(flowElement.getId(), stencilId, 
     		bounds.getX() - subProcessX + bounds.getWidth(), 

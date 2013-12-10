@@ -667,8 +667,8 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
           double upLeftY = upperLeftNode.get(EDITOR_BOUNDS_Y).asDouble();
           //坐标修正
           if(DI_CIRCLES.contains(stencilId)){
-        	  upLeftX -= 3;
-        	  upLeftY -= 3;
+        	  upLeftX -= REVERSION_X;
+        	  upLeftY -= REVERSION_Y;
           }
           graphicInfo.setX((float)(upLeftX + parentX ));
           graphicInfo.setY((float)(upLeftY + parentY ));
