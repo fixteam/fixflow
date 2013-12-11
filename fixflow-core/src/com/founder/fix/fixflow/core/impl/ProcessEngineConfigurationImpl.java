@@ -38,6 +38,8 @@ import javax.jms.JMSException;
 
 
 
+
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -68,6 +70,8 @@ import com.founder.fix.bpmn2extensions.coreconfig.PigeonholeConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.Priority;
 import com.founder.fix.bpmn2extensions.coreconfig.PriorityConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.QuartzConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.ResourcePath;
+import com.founder.fix.bpmn2extensions.coreconfig.ResourcePathConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
@@ -220,6 +224,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initSqlMappingFile();
 		initDataVariableConfig();
 		initCommandContextFactory();
+		initResourcePathConfig();
 		initCommandExecutors();
 		initConnectionManagementConfig();
 		initServices();
@@ -255,6 +260,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 
+	protected ResourcePathConfig resourcePathConfig;
+
+	
+
+	private void initResourcePathConfig() {
+		// TODO Auto-generated method stub
+		this.resourcePathConfig=getFixFlowConfig().getResourcePathConfig();
+	}
+	
 	
 
 	private void initDataVariableConfig() {
@@ -1319,6 +1333,20 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		for (DataBaseTable dataBaseTable : dataBaseTables) {
 			if(dataBaseTable.getTableId().toLowerCase().equals(dataBaseTableEnum.toString().toLowerCase())){
 				return dataBaseTable;
+			}
+		}
+		return null;
+	}
+	
+	public ResourcePathConfig getResourcePathConfig() {
+		return resourcePathConfig;
+	}
+	public ResourcePath getResourcePath(String resourceId){
+
+		List<ResourcePath> resourcePaths=this.resourcePathConfig.getResourcePath();
+		for (ResourcePath resourcePath : resourcePaths) {
+			if(resourcePath.getId().equals(resourceId)){
+				return resourcePath;
 			}
 		}
 		return null;
