@@ -399,11 +399,17 @@
 
     
      <select id="top10Flow" resultType="java.util.Map" parameterType="java.util.Map">
-    select a.PROCESSDEFINITION_KEY,PROCESS_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME,TERMINATION_COUNT  
+    select a.PROCESSDEFINITION_KEY,d.PROCESS_NAME,ALL_COUNT,
+	case when DONE_COUNT is null then
+	          0
+	         else
+	          DONE_COUNT
+	       end as DONE_COUNT
+,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME,TERMINATION_COUNT  
     from      
-	      ((select PROCESSDEFINITION_KEY,PROCESS_NAME,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
+	      ((select PROCESSDEFINITION_KEY,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
 	        from FIXBPA_FLOW_PROCESSINSTANCE 
-	        group by PROCESSDEFINITION_KEY,PROCESS_NAME) a 
+	        group by PROCESSDEFINITION_KEY) a 
 	  
 	      left join
 	      
@@ -411,7 +417,21 @@
 	      from FIXBPA_FLOW_PROCESSINSTANCE 
 	      where INSTANCE_STATUS = 'TERMINATION'
 	      group by PROCESSDEFINITION_KEY) b
-	      on a.PROCESSDEFINITION_KEY=b.PROCESSDEFINITION_KEY) 
+	      on a.PROCESSDEFINITION_KEY=b.PROCESSDEFINITION_KEY
+	      left join
+	      
+	      (select PROCESSDEFINITION_KEY,count(1) AS DONE_COUNT
+	      from FIXBPA_FLOW_PROCESSINSTANCE 
+	      where INSTANCE_STATUS = 'COMPLETE'
+	      group by PROCESSDEFINITION_KEY) c
+	      on a.PROCESSDEFINITION_KEY=c.PROCESSDEFINITION_KEY
+	      
+	     left join (select t1.PROCESS_KEY as PROCESSDEFINITION_KEY,t1.PROCESS_NAME
+	               from FIXBPA_FLOW_PROCESSDEFINITION t1 inner join (
+	                    select max(VERSION) as VERSION,PROCESS_KEY from FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY
+	               ) t2 on  t1.PROCESS_KEY=t2.PROCESS_KEY and t1.version=t2.version) d
+	    	on a.PROCESSDEFINITION_KEY = d.PROCESSDEFINITION_KEY
+	      ) 
      <if test="orderColum=='AVG_TIME'"><![CDATA[where DONE_COUNT<>0]]></if>
      
      ORDER BY ${orderColum} ${orderType}
@@ -434,11 +454,54 @@
     </select>
     
 	<select id="flowInstances" resultType="java.util.Map">
-		select PROCESSINSTANCE_ID,PROCESS_NAME,START_TIME,WORK_TIME from FIXBPA_FLOW_PROCESSINSTANCE 
+		select PROCESSINSTANCE_ID,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME 
+		from FIXBPA_FLOW_PROCESSINSTANCE
+		where 1=1
+		<if test="procID != null">
+			and PROCESSINSTANCE_ID like '%${procID}%' 
+	  	</if> 
+	  	<if test="procName != null">
+			and PROCESS_NAME like '%${procName}%' 
+	  	</if> 
+	  	<if test="subject != null">
+			and SUBJECT like '%${subject}%' 
+	  	</if> 
+	  	<if test="dateStart != null">  
+    		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+			
 	</select>
 	
 	<select id="flowInstances_page" resultType="java.lang.Integer">
 		select count(1) from FIXBPA_FLOW_PROCESSINSTANCE 
+		where 1=1
+		<if test="procID != null">
+			and PROCESSINSTANCE_ID like '%${procID}%' 
+	  	</if> 
+	  	<if test="procName != null">
+			and PROCESS_NAME like '%${procName}%' 
+	  	</if> 
+	  	<if test="subject != null">
+			and SUBJECT like '%${subject}%' 
+	  	</if>
+	  	<if test="dateStart != null">  
+    		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if> 
+	</select>
+	
+	<select id="flowInstances_nodeList" resultType="java.util.Map" parameterType="java.util.Map">      	
+		select  NODE_ID,NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME 
+		from FIXBPA_FLOW_TASKINSTANCE
+		<if test="procID != null">
+			where PROCESSINSTANCE_ID = #{procID} 
+	  	</if> 
+	  	order by  CREATE_TIME
 	</select>
 	<select id="allVersionFlowInfo" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT A.PROCESSDEFINITION_ID,A.PROCESSDEFINITION_KEY,PROCESS_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) AS UNDONE_COUNT,CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME,TERMINATION_COUNT  
