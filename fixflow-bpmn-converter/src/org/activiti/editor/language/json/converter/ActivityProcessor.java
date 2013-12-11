@@ -28,7 +28,7 @@ import org.eclipse.bpmn2.FlowElement;
 public interface ActivityProcessor {
 
   public void processFlowElements(Collection<FlowElement> flowElements, Definitions model, ArrayNode shapesArrayNode, 
-      double subProcessX, double subProcessY);
+      double subProcessX, double subProcessY,List<FlowElement> laneFlowElements);
   
   public void processJsonElements(JsonNode shapesArrayNode, JsonNode modelNode, BaseElement parentElement, Map<String, JsonNode> shapeMapMap,Map<String, List<JsonNode>> sourceAndTargetMap,Definitions model);
 }

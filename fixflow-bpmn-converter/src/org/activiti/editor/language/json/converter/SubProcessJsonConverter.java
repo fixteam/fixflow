@@ -58,7 +58,7 @@ public class SubProcessJsonConverter extends BaseBpmnJsonConverter {
    
     Bounds graphicInfo =  BpmnModelUtil.getBpmnShape(model, flowElement.getId()).getBounds();
     processor.processFlowElements(subProcess.getFlowElements(), model, subProcessShapesArrayNode, 
-    		graphicInfo.getX(), graphicInfo.getY());
+    		graphicInfo.getX(), graphicInfo.getY(),null);
     flowElementNode.put("childShapes", subProcessShapesArrayNode);
   }
   
