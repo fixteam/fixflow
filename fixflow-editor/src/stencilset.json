@@ -52,14 +52,14 @@
 	        "name" : "原数据",
 	        "type" : "String",
 	        "value" : "",
-	        "width" : 100,
+	        "width" : 200,
 	        "optional" : true
 	      },{
 	        "id" : "subprocessid",
 	        "name" : "子流程数据",
 	        "type" : "String",
 	        "value" : "",
-	        "width" : 85,
+	        "width" : 185,
 	        "optional" : false
 	      }]
     	},{
@@ -74,14 +74,14 @@
 	        "name" : "子流程数据",
 	        "type" : "String",
 	        "value" : "",
-	        "width" : 85,
+	        "width" : 200,
 	        "optional" : false
 	      },{
 	        "id" : "datasourceid",
 	        "name" : "原数据",
 	        "type" : "String",
 	        "value" : "",
-	        "width" : 100,
+	        "width" : 185,
 	        "optional" : true
 	      }]
     	}]
