@@ -133,3 +133,13 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 /* 遮罩层 */
 .bg {display: none; width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; background-color: gray; opacity:0.5; z-index:100;}
+
+/* TOP10 */
+.td-top10 {padding: 6px; width: 50%}
+.top10 { width:100%; height:auto; overflow:hidden;border:1px solid #cfedf7;background:#FFF; }
+.top10 #listAvgTimeDesc,#listAvgTimeAsc,#listDoneCountDesc,#listDoneCountAsc {height: 320px}
+
+.top10 .title { height:30px; background:#aaa; border:1px solid #cfedf7; border-bottom:none;}
+.top10 .title { color:#fff; font:14px/26px "微软雅黑"; text-align:center;}
+.top10 .title a { color:#fff; font:14px/26px "微软雅黑"; text-decoration:none;cursor: pointer;}
+.top10 .content { padding:6px; min-height:240px; height:auto; overflow:hidden; background:#FFF;}
