@@ -8,13 +8,13 @@
       <fixflow:taskSubject id="TaskSubject_1">
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;开发修改bug专用-杨&quot;">&quot;开发修改bug专用-杨&quot;</fixflow:expression>
       </fixflow:taskSubject>
-      <fixflow:DataVariable id="变量1" dataType="java.lang.String" isPersistence="true" bizType="customVariable">
-        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="&quot;值1&quot;">&quot;值1&quot;</fixflow:expression>
-        <fixflow:documentation xsi:type="fixflow:Documentation" id="Documentation_1"></fixflow:documentation>
+      <fixflow:DataVariable id="变量2" dataType="java.lang.String" bizType="customVariable">
+        <fixflow:expression xsi:type="fixflow:Expression" name="&quot;aa&quot;">&quot;aa&quot;</fixflow:expression>
+        <fixflow:documentation xsi:type="fixflow:Documentation"></fixflow:documentation>
       </fixflow:DataVariable>
-      <fixflow:DataVariable id="变量2" dataType="java.util.List&lt;String>" bizType="customVariable">
-        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_4" name="newjava.util.ArrayList();">new java.util.ArrayList();</fixflow:expression>
-        <fixflow:documentation xsi:type="fixflow:Documentation" id="Documentation_2"></fixflow:documentation>
+      <fixflow:DataVariable id="变量1" dataType="java.lang.String" isPersistence="true" bizType="customVariable">
+        <fixflow:expression xsi:type="fixflow:Expression" name="&quot;值1&quot;">&quot;值1&quot;</fixflow:expression>
+        <fixflow:documentation xsi:type="fixflow:Documentation"></fixflow:documentation>
       </fixflow:DataVariable>
     </bpmn2:extensionElements>
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1"/>
@@ -28,8 +28,8 @@
           <fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&quot;分配表达式&quot;">&quot;分配表达式&quot;</fixflow:expression>
         </fixflow:assignPolicyType>
         <fixflow:taskCommand id="HandleCommand_2" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
-          <fixflow:expression xsi:type="fixflow:Expression" name="&quot;aaaaa&quot;">&quot;aaaaa&quot;</fixflow:expression>
-          <fixflow:parameterExpression xsi:type="fixflow:Expression" name="java.util.HashMapobjectParam=newjava.util.HashMap();&#xD;&#xA;&#xD;&#xA;objectParam.put(&quot;PROCESSINSTANCE_ID&quot;,&quot;999&quot;);&#xD;&#xA;&#xD;&#xA;returnobjectParam;">java.util.HashMap objectParam = new java.util.HashMap();&#xD;
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_6" name="&quot;aaaaa&quot;">&quot;aaaaa&quot;</fixflow:expression>
+          <fixflow:parameterExpression xsi:type="fixflow:Expression" id="Expression_7" name="java.util.HashMapobjectParam=newjava.util.HashMap();&#xD;&#xA;&#xD;&#xA;objectParam.put(&quot;PROCESSINSTANCE_ID&quot;,&quot;999&quot;);&#xD;&#xA;&#xD;&#xA;returnobjectParam;">java.util.HashMap objectParam = new java.util.HashMap();&#xD;
 &#xD;
 objectParam.put(&quot;PROCESSINSTANCE_ID&quot;,&quot;999&quot;);&#xD;
 &#xD;
@@ -59,7 +59,7 @@ return objectParam;</fixflow:parameterExpression>
         </fixflow:taskSubject>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
       <bpmn2:potentialOwner id="PotentialOwner_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
         <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_1">
           <bpmn2:formalExpression id="所有人">&quot;fixflow_allusers&quot;</bpmn2:formalExpression>
@@ -68,35 +68,53 @@ return objectParam;</fixflow:parameterExpression>
       <bpmn2:potentialOwner id="PotentialOwner_2" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="aaa">
         <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_2"/>
       </bpmn2:potentialOwner>
-      <bpmn2:multiInstanceLoopCharacteristics>
+      <bpmn2:multiInstanceLoopCharacteristics id="MultiInstanceLoopCharacteristics_1">
         <bpmn2:extensionElements>
           <fixflow:loopDataInputCollection>
-            <fixflow:expression xsi:type="fixflow:Expression" name="aaa">aaa</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_9" name="aaa">aaa</fixflow:expression>
           </fixflow:loopDataInputCollection>
           <fixflow:loopDataOutputCollection>
-            <fixflow:expression xsi:type="fixflow:Expression" name="dd">dd</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_14" name="dd">dd</fixflow:expression>
           </fixflow:loopDataOutputCollection>
         </bpmn2:extensionElements>
-        <bpmn2:inputDataItem xsi:type="bpmn2:tDataInput">
+        <bpmn2:inputDataItem xsi:type="bpmn2:tDataInput" id="DataInput_1">
           <bpmn2:extensionElements>
-            <fixflow:expression xsi:type="fixflow:Expression" name="凤飞飞">凤飞飞</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_15" name="凤飞飞">凤飞飞</fixflow:expression>
           </bpmn2:extensionElements>
         </bpmn2:inputDataItem>
-        <bpmn2:outputDataItem xsi:type="bpmn2:tDataOutput">
+        <bpmn2:outputDataItem xsi:type="bpmn2:tDataOutput" id="DataOutput_1">
           <bpmn2:extensionElements>
-            <fixflow:expression xsi:type="fixflow:Expression" name="ss">ss</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_16" name="ss">ss</fixflow:expression>
           </bpmn2:extensionElements>
         </bpmn2:outputDataItem>
         <bpmn2:completionCondition xsi:type="bpmn2:tFormalExpression" id="ddddddd">ddddddd</bpmn2:completionCondition>
       </bpmn2:multiInstanceLoopCharacteristics>
     </bpmn2:userTask>
     <bpmn2:endEvent id="EndEvent_1" name="End Event 1">
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_1" fixflow:orderId="3" name="线条名称" sourceRef="StartEvent_1" targetRef="UserTask_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="&quot;线条表达式&quot;">&quot;线条表达式&quot;</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="Exclusive Gateway 1">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
+    <bpmn2:callActivity id="CallActivity_1" fixflow:callableElementId="&quot;zb_zbxm_modify&quot;" fixflow:callableElementName="&quot;zb_zbxm_modify&quot;" fixflow:callableElementVersion="&quot;1&quot;" fixflow:callableElementVersionName="&quot;1&quot;" fixflow:callableElementBizKey="&quot;guid&quot;" fixflow:callableElementBizKeyName="&quot;guid&quot;" name="Call Activity 1">
+      <bpmn2:extensionElements>
+        <fixflow:dataSourceToSubProcessMapping>
+          <fixflow:dataVariableMapping xsi:type="fixflow:DataVariableMapping" dataSourceId="变量1" subProcesId="项目编号"/>
+        </fixflow:dataSourceToSubProcessMapping>
+        <fixflow:subProcessToDataSourceMapping>
+          <fixflow:dataVariableMapping xsi:type="fixflow:DataVariableMapping" dataSourceId="变量1" subProcesId="发起人编号"/>
+        </fixflow:subProcessToDataSourceMapping>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+    </bpmn2:callActivity>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ExclusiveGateway_1" targetRef="CallActivity_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="CallActivity_1" targetRef="EndEvent_1"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default 流程定义">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_testych">
@@ -104,23 +122,40 @@ return objectParam;</fixflow:parameterExpression>
         <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="130.0" y="140.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="108.0" y="143.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
-        <dc:Bounds height="50.0" width="110.0" x="260.0" y="155.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="200.0" y="186.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="490.0" y="130.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="740.0" y="120.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
-        <di:waypoint xsi:type="dc:Point" x="148.0" y="176.0"/>
-        <di:waypoint xsi:type="dc:Point" x="148.0" y="180.0"/>
-        <di:waypoint xsi:type="dc:Point" x="260.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="126.0" y="179.0"/>
+        <di:waypoint xsi:type="dc:Point" x="126.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="200.0" y="211.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_EndEvent_1">
-        <di:waypoint xsi:type="dc:Point" x="370.0" y="180.0"/>
-        <di:waypoint xsi:type="dc:Point" x="508.0" y="180.0"/>
-        <di:waypoint xsi:type="dc:Point" x="508.0" y="166.0"/>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="356.0" y="274.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_ExclusiveGateway_1">
+        <di:waypoint xsi:type="dc:Point" x="310.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="381.0" y="211.0"/>
+        <di:waypoint xsi:type="dc:Point" x="381.0" y="274.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_CallActivity_1" bpmnElement="CallActivity_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="510.0" y="176.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_CallActivity_1">
+        <di:waypoint xsi:type="dc:Point" x="407.0" y="299.0"/>
+        <di:waypoint xsi:type="dc:Point" x="453.0" y="299.0"/>
+        <di:waypoint xsi:type="dc:Point" x="453.0" y="201.0"/>
+        <di:waypoint xsi:type="dc:Point" x="510.0" y="201.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_CallActivity_1" targetElement="BPMNShape_EndEvent_1">
+        <di:waypoint xsi:type="dc:Point" x="620.0" y="201.0"/>
+        <di:waypoint xsi:type="dc:Point" x="758.0" y="201.0"/>
+        <di:waypoint xsi:type="dc:Point" x="758.0" y="156.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
