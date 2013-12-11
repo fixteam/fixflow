@@ -813,18 +813,22 @@ public class DateUtil {
 	 */
 	public static String convertDate(Object date) {
 		String result = null;
-		if (date instanceof TIMESTAMP){
-			try {
-				 TIMESTAMP ts = (TIMESTAMP)date;
-				 Date dateTemp = 	new Date(ts.timestampValue().getTime());
-				 result = dfyyyyMMddHHMMSS.format(dateTemp);
-				   
-			} catch (SQLException e) {
-				e.printStackTrace();
+		if (date!=null) {
+			if (date instanceof TIMESTAMP){
+				try {
+					 TIMESTAMP ts = (TIMESTAMP)date;
+					 Date dateTemp = 	new Date(ts.timestampValue().getTime());
+					 result = dfyyyyMMddHHMMSS.format(dateTemp);
+					   
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-		}
-		else {
-			result = dfyyyyMMddHHMMSS.format(date);
+			else {
+				
+				result = dfyyyyMMddHHMMSS.format((Date)date);
+			}
+			
 		}
 		return result;
 	}
