@@ -237,4 +237,9 @@ public interface StencilConstants {
 	final String PROPERTY_CALLACTIVITY_ELEMENTVERSION = "callableelementversion";
 	final String PROPERTY_CALLACTIVITY_ISASYNC = "isasync";
 	final String PROPERTY_CALLACTIVITY_BIZKEY = "callableelementbizkey";
+	final String PROPERTY_CALLACTIVITY_DATASOURCETOSUBPROCESS = "datasourcetosubprocess";
+	final String PROPERTY_CALLACTIVITY_SUBPROCESSTODATASOURCE = "subprocesstodatasource";
+	final String PROPERTY_CALLACTIVITY_DATASOURCE_ID = "datasourceid";
+	final String PROPERTY_CALLACTIVITY_SUBPROCESS_ID = "subprocessid";
+	final String PROPERTY_CALLACTIVITY_DATA_TYPE = "datatype";
 }

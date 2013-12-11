@@ -7,6 +7,7 @@ var zTreeSetting = {
 	callback: {
 		beforeClick: function(){
 			$("a.curSelectedNode").removeClass("curSelectedNode");
+			currentOperationType = "done";
 		},
 		onClick: function(event, treeId, treeNode){
 			currentTreeNode = treeNode;
@@ -146,12 +147,15 @@ $(document).ready(function(){
 										$input.select();
 										return;
 									}
+									currentOperationType = "done";
 									$input.parent("span").replaceWith("<span>"+name+"</span>");
 									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
 									resetToolbarState();
 								}
 							});
 						};
+					}).click(function(){
+						return false;
 					});
 					break;
 					
@@ -197,6 +201,7 @@ $(document).ready(function(){
 											method: "loadTree"
 										},
 										success: function(data){
+											currentOperationType = "done";
 											var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
 											var node = tree.getNodeByParam("id", treeNodeId);
 											node.name = name;
@@ -206,6 +211,8 @@ $(document).ready(function(){
 								}
 							});
 						};
+					}).click(function(){
+						return false;
 					});
 					break;
 					
@@ -251,7 +258,10 @@ $(document).ready(function(){
 	
 	//Click Event
 	$("div.thumb-wrap[dirType!=empty]").live("click",function(){
-		
+		var b = checkCurrentOperationType();
+		if(!b){
+			return false;
+		}
 		if($("span.editable",$(this)).html() == "resolvent"){
 			return false;
 		}
@@ -311,13 +321,22 @@ $(document).ready(function(){
 	});
 	
 	$("#updateCache").click(function(){
+		var b = checkCurrentOperationType();
+		if(!b){
+			return false;
+		}
 		$.get("FlowManager?action=updateCache",function(msg){
 			alert(msg);
 		})
 	});
 	
-	/*$(document).click(function(){
-		var newName = "";
+	$(document).click(function(){
+		var b = checkCurrentOperationType();
+		if(!b){
+			return false;
+		}
+		
+		/*var newName = "";
 		
 		
 		if($("input.editName").length>0){
@@ -380,8 +399,8 @@ $(document).ready(function(){
 					}
 				});
 			}
-		}
-	});*/
+		}*/
+	});
 	
 });
 
@@ -487,4 +506,12 @@ function resetToolbarState(){
 
 function checkIsResolvent(){
 	return (breadcrumbList[1] && breadcrumbList[1].name == "resolvent");
+}
+
+function checkCurrentOperationType(){
+	if(currentOperationType == "create" || currentOperationType == "createFile" || currentOperationType == "rename"){
+		alert("请完成新建或重命名操作，按回车键确认！");
+		return false;
+	}
+	return true;
 }
