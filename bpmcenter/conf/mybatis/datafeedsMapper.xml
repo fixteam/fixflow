@@ -415,6 +415,38 @@
 	<select id="flowInstances_page" resultType="java.lang.Integer">
 		select count(1) from FIXBPA_FLOW_PROCESSINSTANCE 
 	</select>
+	<select id="allVersionFlowInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT A.PROCESSDEFINITION_ID,A.PROCESSDEFINITION_KEY,PROCESS_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) AS UNDONE_COUNT,CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME,TERMINATION_COUNT  
+    	FROM   
+    	((SELECT VERSION,PROCESSDEFINITION_ID,PROCESSDEFINITION_KEY,PROCESS_NAME,COUNT(1) AS ALL_COUNT,COUNT(END_TIME) AS DONE_COUNT,SUM(WORK_TIME) AS SUM_TIME 
+        FROM FIXBPA_FLOW_PROCESSINSTANCE WHERE 1=1
+		<if test="dateStart != null">  
+	    		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+		
+        GROUP BY PROCESSDEFINITION_ID,PROCESSDEFINITION_KEY,PROCESS_NAME,VERSION) A 
+		LEFT JOIN
+        (SELECT PROCESSDEFINITION_ID,PROCESSDEFINITION_KEY,COUNT(1) AS TERMINATION_COUNT
+        FROM FIXBPA_FLOW_PROCESSINSTANCE 
+        WHERE INSTANCE_STATUS = 'TERMINATION'
+		<if test="dateStart != null">  
+	   		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+
+        GROUP BY PROCESSDEFINITION_ID,PROCESSDEFINITION_KEY) B
+        ON A.PROCESSDEFINITION_ID=B.PROCESSDEFINITION_ID)
+        WHERE 1=1
+        <if test="procKey != null">  
+      		AND A.PROCESSDEFINITION_KEY = #{procKey} 
+  		</if>
+		ORDER BY A.VERSION DESC
+	</select>
     
 </mapper> 
 
