@@ -43,7 +43,7 @@
     <taskCommandDef id="endEvent" name="流程结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="receiveEnd" name="等待结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
   </taskCommandConfig>
-  <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
+  <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE" isDefaultConfig="true">
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="false" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
       <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from au_userinfo t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID"/>
@@ -116,4 +116,13 @@
     <importDataVariable id="FixCSDB" name="FixCS平台数据库变量" expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)"/>
     <importDataVariable id="GeneralDB" name="通用数据库变量" expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);"/>
   </importDataVariableConfig>
+  <resourcePathConfig>
+    <resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-expand" virtualPath="template"/>
+    <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="template/flow-template"/>
+    <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="template/node-template"/>
+    <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" virtualPath="template/system-template" src="template/system-template"/>
+    <resourcePath id="connector-path" name="流程连接器路径" projectName="fixflow-expand" virtualPath="src/com/founder/fix/fixflow/expand/flowconnector"/>
+  	<resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="/Users/kenshin/Desktop/repository"/>
+  	<resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="/Users/kenshin/Desktop/repository"/>	
+  </resourcePathConfig>
 </coreconfig:FixFlowConfig>
