@@ -409,11 +409,67 @@
     </select>
     
 	<select id="flowInstances" resultType="java.util.Map">
-		select PROCESSINSTANCE_ID,PROCESS_NAME,START_TIME,WORK_TIME from FIXBPA_FLOW_PROCESSINSTANCE 
+		select PROCESSINSTANCE_ID,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME 
+		from FIXBPA_FLOW_PROCESSINSTANCE
+		where 1=1
+		<if test="procID != null">
+			and PROCESSINSTANCE_ID like '%${procID}%' 
+	  	</if> 
+	  	<if test="procName != null">
+			and PROCESS_NAME like '%${procName}%' 
+	  	</if> 
+	  	<if test="subject != null">
+			and SUBJECT like '%${subject}%' 
+	  	</if> 
+	  	<if test="dateStart != null">  
+    		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+			
 	</select>
 	
 	<select id="flowInstances_page" resultType="java.lang.Integer">
 		select count(1) from FIXBPA_FLOW_PROCESSINSTANCE 
+		where 1=1
+		<if test="procID != null">
+			and PROCESSINSTANCE_ID like '%${procID}%' 
+	  	</if> 
+	  	<if test="procName != null">
+			and PROCESS_NAME like '%${procName}%' 
+	  	</if> 
+	  	<if test="subject != null">
+			and SUBJECT like '%${subject}%' 
+	  	</if>
+	  	<if test="dateStart != null">  
+    		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if> 
+	</select>
+	
+	<select id="flowInstances_nodeList" resultType="java.util.Map" parameterType="java.util.Map">      
+      select  b.NODE_ID,b.NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME from 
+        (select  NODE_ID,NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME 
+        from FIXBPA_FLOW_TASKINSTANCE
+		<if test="procID != null">
+			where PROCESSINSTANCE_ID = #{procID} 
+	  	</if>  
+      	) a
+		right join
+		(select  NODE_ID,NODE_NAME from FIXBPA_FLOW_NODE 
+		where 1=1
+	      	  
+		<if test="procDefKey != null">
+			and PROCESSDEFINITION_KEY = #{procDefKey}
+	  	</if>
+	  	<if test="procDefID != null">
+			and PROCESSDEFINITION_ID = #{procDefID}
+	     </if>
+	     )b
+	      on a.NODE_ID = b.NODE_ID
 	</select>
     
 </mapper> 
