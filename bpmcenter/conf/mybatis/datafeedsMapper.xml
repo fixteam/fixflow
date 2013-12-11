@@ -475,26 +475,13 @@
 		</if> 
 	</select>
 	
-	<select id="flowInstances_nodeList" resultType="java.util.Map" parameterType="java.util.Map">      
-      select  b.NODE_ID,b.NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME from 
-        (select  NODE_ID,NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME 
-        from FIXBPA_FLOW_TASKINSTANCE
+	<select id="flowInstances_nodeList" resultType="java.util.Map" parameterType="java.util.Map">      	
+		select  NODE_ID,NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME 
+		from FIXBPA_FLOW_TASKINSTANCE
 		<if test="procID != null">
 			where PROCESSINSTANCE_ID = #{procID} 
-	  	</if>  
-      	) a
-		right join
-		(select  NODE_ID,NODE_NAME from FIXBPA_FLOW_NODE 
-		where 1=1
-	      	  
-		<if test="procDefKey != null">
-			and PROCESSDEFINITION_KEY = #{procDefKey}
-	  	</if>
-	  	<if test="procDefID != null">
-			and PROCESSDEFINITION_ID = #{procDefID}
-	     </if>
-	     )b
-	      on a.NODE_ID = b.NODE_ID
+	  	</if> 
+	  	order by  CREATE_TIME
 	</select>
 	<select id="allVersionFlowInfo" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT A.PROCESSDEFINITION_ID,A.PROCESSDEFINITION_KEY,PROCESS_NAME,ALL_COUNT,DONE_COUNT,(ALL_COUNT-DONE_COUNT) AS UNDONE_COUNT,CASE WHEN DONE_COUNT = 0 THEN -1 ELSE (SUM_TIME/DONE_COUNT) END AS AVG_TIME,TERMINATION_COUNT  
