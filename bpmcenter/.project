@@ -79,11 +79,6 @@
 			<type>2</type>
 			<location>GIT_FIXFLOW_HOME/fixflow-explorer/WebContent</location>
 		</link>
-		<link>
-			<name>fixflowresourcewebcontent</name>
-			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-resource/WebContent</location>
-		</link>
 		
 		<link>
 			<name>flowcoresrc</name>
@@ -99,11 +94,6 @@
 			<name>flowmanageservletsrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-manage-servlet/src</locationURI>
-		</link>
-		<link>
-			<name>flowmanagesrc</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_HOME/fixflow-manage-api/src</locationURI>
 		</link>
 		<link>
 			<name>internationalization</name>

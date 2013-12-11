@@ -12,7 +12,6 @@
 	<classpathentry kind="src" path="fixflowdiagram"/>
 	<classpathentry kind="src" path="flowcoresrc"/>
 	<classpathentry kind="src" path="fixflowcoreconf"/>
-	<classpathentry kind="src" path="flowmanagesrc"/>
 	<classpathentry kind="src" path="flowmanageservletsrc"/>
 	<classpathentry kind="src" path="fixfloweditorsrc"/>
 	<classpathentry kind="src" path="fixfloweditorwebcontent"/>
@@ -20,9 +19,6 @@
 	<classpathentry kind="src" path="fixflowbpawebcontent"/>
 	<classpathentry kind="src" path="fixflowexplorersrc"/>
 	<classpathentry kind="src" path="fixflowexplorerwebcontent"/>
-	<classpathentry kind="src" path="fixflowresourcewebcontent"/>
-
-	
 	<classpathentry kind="src" path="bpaanalysissrc"/>
 	<classpathentry kind="src" path="bpaanalysisconf"/>
 	<classpathentry kind="src" path="bpadatafeedssrc"/>
