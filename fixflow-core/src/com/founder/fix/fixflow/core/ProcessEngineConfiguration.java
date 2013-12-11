@@ -21,7 +21,13 @@ import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 
 public abstract class ProcessEngineConfiguration {
 	
-	
+	public static String FIXFLOW_REPOSITORY_ROOT="fixflow-repository-root";
+	public static String FIXFLOW_REPOSITORY_FLOW_TEMPLATE="fixflow-repository-flow-template";
+	public static String FIXFLOW_REPOSITORY_NODE_TEMPLATE="fixflow-repository-node-template";
+	public static String SYSTEM_TEMPLATE="system-template";
+	public static String CONNECTOR_PATH="connector-path";
+	public static String FIXFLOW_EDITOR_PUBLIC_REPOSITORY="fixflow-editor-public-repository";
+	public static String FIXFLOW_EDITOR_PRIVATE_REPOSITORY="fixflow-editor-private-repository";
 	
 
 	protected String processEngineName = ProcessEngineManagement.NAME_DEFAULT;
