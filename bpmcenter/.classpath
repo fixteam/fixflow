@@ -21,7 +21,7 @@
 	<classpathentry kind="src" path="fixflowexplorersrc"/>
 	<classpathentry kind="src" path="fixflowexplorerwebcontent"/>
 	<classpathentry kind="src" path="fixflowresourcewebcontent"/>
-	<classpathentry kind="src" path="fixflowrepositorywebcontent"/>
+
 	
 	<classpathentry kind="src" path="bpaanalysissrc"/>
 	<classpathentry kind="src" path="bpaanalysisconf"/>

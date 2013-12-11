@@ -86,12 +86,6 @@
 		</link>
 		
 		<link>
-			<name>fixflowrepositorywebcontent</name>
-			<type>2</type>
-			<location>GIT_FIXFLOW_HOME/fixflow-repository/WebContent</location>
-		</link>
-		
-		<link>
 			<name>flowcoresrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_HOME/fixflow-core/src</locationURI>

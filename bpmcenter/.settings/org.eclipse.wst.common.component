@@ -17,7 +17,6 @@
         <wb-resource deploy-path="/" source-path="/fixflowbpawebcontent"/>
         <wb-resource deploy-path="/" source-path="/fixflowexplorerwebcontent"/>
         <wb-resource deploy-path="/" source-path="/fixflowresourcewebcontent"/>
-        <wb-resource deploy-path="/" source-path="/fixflowrepositorywebcontent"/>
         <wb-resource deploy-path="/" source-path="/bpadatapusherpage"/>
        <wb-resource deploy-path="/WEB-INF/lib" source-path="/bpadatapusherlib"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapusherlib"/>
@@ -29,7 +28,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorersrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorerwebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowresourcewebcontent"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowrepositorywebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysissrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysisconf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatafeedssrc"/>
