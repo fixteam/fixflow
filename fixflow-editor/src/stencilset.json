@@ -40,7 +40,51 @@
 			"value": "",
 			"description" : "Unique identifier of the element.",
 			"popular" : "常规"
-		}]
+		},{
+    	  "id" : "datasourcetosubprocess",
+	      "type" : "Complex",
+	      "title" : "主流程-子流程",
+	      "value" : "",
+	      "description" : "Unique identifier of the element.",
+	      "popular" : "数据映射",
+	      "complexItems" : [ {
+	        "id" : "datasourceid",
+	        "name" : "原数据",
+	        "type" : "String",
+	        "value" : "",
+	        "width" : 100,
+	        "optional" : true
+	      },{
+	        "id" : "subprocessid",
+	        "name" : "子流程数据",
+	        "type" : "String",
+	        "value" : "",
+	        "width" : 85,
+	        "optional" : false
+	      }]
+    	},{
+    	  "id" : "subprocesstodatasource",
+	      "type" : "Complex",
+	      "title" : "子流程-主流程",
+	      "value" : "",
+	      "description" : "子流程-主流程",
+	      "popular" : "数据映射",
+	      "complexItems" : [ {
+	        "id" : "subprocessid",
+	        "name" : "子流程数据",
+	        "type" : "String",
+	        "value" : "",
+	        "width" : 85,
+	        "optional" : false
+	      },{
+	        "id" : "datasourceid",
+	        "name" : "原数据",
+	        "type" : "String",
+	        "value" : "",
+	        "width" : 100,
+	        "optional" : true
+	      }]
+    	}]
 	},{
 		"name": "fixscripttaskbase",
 		"properties": [{
@@ -1850,7 +1894,7 @@
     "view" : "activity/callactivity.svg",
     "icon" : "activity/task.png",
     "groups" : [ "其他" ],
-    "propertyPackages" : [ "fixflowcommonbase", "fixcallactivitybase", "skipstrategybase", "multiinstancebase" ],
+    "propertyPackages" : [ "fixflowcommonbase", "fixcallactivitybase", "skipstrategybase", "multiinstancebase", "activity", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "all" ]
   }, {
     "type" : "node",
