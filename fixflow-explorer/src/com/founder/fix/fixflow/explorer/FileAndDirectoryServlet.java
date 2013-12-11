@@ -1,5 +1,7 @@
 package com.founder.fix.fixflow.explorer;
 
+import groovy.lang.Buildable;
+
 import java.io.File;
 
 import com.founder.fix.fixflow.service.FlowCenterService;
@@ -28,14 +30,16 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		FileAndDirectoryUtils.clear();
 			success(json);
 		} catch (Exception e) {
+			e.printStackTrace();
 			error("初始化参数出错!");
 		}
     }
-    
-	 
+   
     public void create(){
     	try {
-			FileAndDirectoryUtils.createFileOrDirectory(buildPath()+File.separator+request("newFileName"),getBasePath());
+    		String path = buildPath();
+    		path = path + File.separator + request("newFileName");
+			FileAndDirectoryUtils.createFileOrDirectory(path);
 			success("创建成功!","string");
 		} catch (Exception e) {
 			error(e.getMessage());
@@ -44,7 +48,8 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void readSubFileAndDirectory(){
     	try {
-    		String subJson = FileAndDirectoryUtils.readSubFileAndDirectory(buildPath(),getBasePath());
+    		String path = buildPath();
+    		String subJson = FileAndDirectoryUtils.readSubFileAndDirectory(path);
     		FileAndDirectoryUtils.clear();
     		success(subJson);
     	} catch (Exception e) {
@@ -55,7 +60,10 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void reName(){
     	try {
-    		FileAndDirectoryUtils.renameFile(buildPath()+File.separator+request("oldFileName"),buildPath()+File.separator+request("newFileName"),getBasePath());
+    		String basePath = buildPath();
+    		String oldFilePathString = basePath + File.separator + request("oldFileName");
+    		String newFilePathString = basePath + File.separator + request("newFileName");
+    		FileAndDirectoryUtils.renameFile(oldFilePathString,newFilePathString);
     			success("重命名成功!","string");
     	} catch (Exception e) {
     		error(e.getMessage());
@@ -64,7 +72,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void moveFileOrDirectory(){
     	try {
-    		FileAndDirectoryUtils.moveFileAndDirectory(getMoveResource()[0], getMoveResource()[1], getBasePath(),request("fileName"));
+    		FileAndDirectoryUtils.moveFileAndDirectory(getMoveResource()[0], getMoveResource()[1],request("fileName"));
     		success("删除成功!","string");
     	} catch (Exception e) {
     		error("删除失败!");
@@ -72,19 +80,37 @@ public class FileAndDirectoryServlet extends BaseServlet {
     }
     
     public String buildPath(){
-		String[] node = request("path").split(",");
-		String path = session(FlowCenterService.LOGIN_USER_ID);
-		for (int i = 0; i < node.length; i++) {
-			path += File.separator+node[i];
+    	String loginId = session(FlowCenterService.LOGIN_USER_ID);
+		String path = request("path");	
+		String [] pathArr = path.split(",");
+		String type = pathArr[0];
+		
+		String tmpPathString = "";
+		File file = null;
+		
+		if("private".equals(type)){
+			tmpPathString = FileAndDirectoryUtils.privatePath +file.separator + loginId;
+		}else{
+			tmpPathString = FileAndDirectoryUtils.sharedPath;
 		}
-		return path;
+		
+		for(int i = 1; i<pathArr.length;i++){
+			tmpPathString += File.separator;
+			tmpPathString += pathArr[i];
+		}
+    	return tmpPathString;
     }
     
     public String[] getMoveResource(){
     	String[] resutl = new String[2];
     	String[] node = request("path").split(",");
     	resutl[0] = buildPath()+File.separator+ request("fileName");
-    	resutl[1] =session(FlowCenterService.LOGIN_USER_ID)+File.separator+ node[0]+File.separator+"resolvent";
+    	if("private".equals(node[0])){
+    		resutl[1] = FileAndDirectoryUtils.privatePath + File.separator + session(FlowCenterService.LOGIN_USER_ID) + File.separator + "resolvent";
+    	}else{
+    		resutl[1] = FileAndDirectoryUtils.sharedPath + File.separator+"resolvent";
+    	}
+    	//resutl[1] = session(FlowCenterService.LOGIN_USER_ID)+File.separator+ node[0]+File.separator+"resolvent";
     	return resutl;
     }
 }
