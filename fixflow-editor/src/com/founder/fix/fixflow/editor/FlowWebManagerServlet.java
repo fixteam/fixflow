@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.explorer.BaseServlet;
+import com.founder.fix.fixflow.explorer.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.explorer.FileHandle;
 import com.founder.fix.fixflow.service.FlowCenterService;
 
@@ -37,7 +38,7 @@ public class FlowWebManagerServlet extends BaseServlet {
 	 */
     public void loadBPMWeb(){
     	try {
-            InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
+            InputStream input = new FileInputStream(buildPath() +File.separator+request("fileName")); 
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ajaxResultObj(on);
 //    		 InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
@@ -56,7 +57,7 @@ public class FlowWebManagerServlet extends BaseServlet {
     public void reTryModelInfo(){
     	try {
     		ObjectMapper objectMapper = new ObjectMapper();
-            InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
+            InputStream input = new FileInputStream(buildPath() +File.separator+request("fileName")); 
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ObjectNode rootNode = objectMapper.createObjectNode();
     		rootNode.put("name", "testName");
@@ -163,16 +164,24 @@ public class FlowWebManagerServlet extends BaseServlet {
     
     
     public String buildPath(){
-		String[] node = null;
-		try{
-			node = request("path").split(",");
-		}catch(Exception e){
-			node = requestAttribute("path").split(",");
+    	String loginId = session(FlowCenterService.LOGIN_USER_ID);
+		String path = request("path");	
+		String [] pathArr = path.split(",");
+		String type = pathArr[0];
+		
+		String tmpPathString = "";
+		File file = null;
+		
+		if("private".equals(type)){
+			tmpPathString = FileAndDirectoryUtils.privatePath +file.separator + loginId;
+		}else{
+			tmpPathString = FileAndDirectoryUtils.sharedPath;
 		}
-		String path = session(FlowCenterService.LOGIN_USER_ID);
-		for (int i = 0; i < node.length; i++) {
-			path += File.separator+node[i];
+		
+		for(int i = 1; i<pathArr.length;i++){
+			tmpPathString += File.separator;
+			tmpPathString += pathArr[i];
 		}
-		return path;
+    	return tmpPathString;
     }
 }
