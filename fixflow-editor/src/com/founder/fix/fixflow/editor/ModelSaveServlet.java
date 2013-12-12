@@ -45,7 +45,7 @@ public class ModelSaveServlet extends HttpServlet {
 	
 	 
 	public String getBasePath(HttpServletRequest request){
-		return request.getSession().getServletContext().getRealPath("/")+File.separator+"fixflow-repository"+File.separator;
+		return request.getSession().getServletContext().getRealPath("/")+File.separator+"fixflow-editor"+File.separator;
 	}
 	
 	@Override
@@ -62,12 +62,12 @@ public class ModelSaveServlet extends HttpServlet {
     	JsonNode objectNode = objectMapper.readTree(json_xml);
     	String resFilePath = getBasePath(req)+"temp"+File.separator+"node_template.bpmn";;
     	String newFilePath = getBasePath(req)+buildPath(req,path)+File.separator+fileName;
-    	String staticFilePath = getBasePath(req)+"system-template"+File.separator+"node_template.bpmn";
+    	String staticFilePath = getBasePath(req)+"template"+File.separator+"node_template.bpmn";
     	FileOutputStream outputStream = null;
     	try{
     		//保存思想：因为save方法不一定保存成功，并且保存失败后会导致原有文件丢失，所以做了个临时保存，没问题再复制过去
     		FileUtil.copyFile(staticFilePath, resFilePath);
-    		new FixFlowConverter().save(objectNode,URI.createFileURI(getBasePath(req)+"temp"+File.separator+"node_template.bpmn"));
+    		new FixFlowConverter().save(objectNode,URI.createFileURI(resFilePath));
     	    FileUtil.copyFile(resFilePath, newFilePath);
     	    
     	    //png图片处理
