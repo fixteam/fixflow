@@ -127,7 +127,10 @@ public class FileAndDirectoryUtils {
 				subJson += ",{name:'"+FList[i].getName()+"',type:'dir'}";
 				iterationRead(FList[i],key);
 			}else{
-				subJson += ",{name:'"+FList[i].getName()+"',type:'file'}";
+				//只读取bpmn文件
+				if(FList[i].getName().lastIndexOf(".bpmn") > -1){
+					subJson += ",{name:'"+FList[i].getName()+"',type:'file'}";
+				}
 			}
 		}
  

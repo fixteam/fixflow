@@ -23,6 +23,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.emf.common.util.URI;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
+import com.founder.fix.fixflow.explorer.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.util.FileUtil;
 public class ModelSaveServlet extends HttpServlet {
@@ -34,13 +35,26 @@ public class ModelSaveServlet extends HttpServlet {
 		doGet(req, resp);
 	}
 	
-	  public String buildPath(HttpServletRequest request,String filePath){
-			String[] node = filePath.split(",");
-			String path = request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID).toString();
-			for (int i = 0; i < node.length; i++) {
-				path += File.separator+node[i];
+	  public String buildPath(HttpServletRequest request,String path){
+		  
+		  String loginId = request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID).toString();
+			String [] pathArr = path.split(",");
+			String type = pathArr[0];
+			
+			String tmpPathString = "";
+			File file = null;
+			
+			if("private".equals(type)){
+				tmpPathString = FileAndDirectoryUtils.privatePath +file.separator + loginId;
+			}else{
+				tmpPathString = FileAndDirectoryUtils.sharedPath;
 			}
-			return path;
+			
+			for(int i = 1; i<pathArr.length;i++){
+				tmpPathString += File.separator;
+				tmpPathString += pathArr[i];
+			}
+	    	return tmpPathString;
 	    }
 	
 	 
@@ -61,7 +75,7 @@ public class ModelSaveServlet extends HttpServlet {
 	    ObjectMapper objectMapper = new ObjectMapper();
     	JsonNode objectNode = objectMapper.readTree(json_xml);
     	String resFilePath = getBasePath(req)+"temp"+File.separator+"node_template.bpmn";;
-    	String newFilePath = getBasePath(req)+buildPath(req,path)+File.separator+fileName;
+    	String newFilePath = buildPath(req,path)+File.separator+fileName;
     	String staticFilePath = getBasePath(req)+"template"+File.separator+"node_template.bpmn";
     	FileOutputStream outputStream = null;
     	try{

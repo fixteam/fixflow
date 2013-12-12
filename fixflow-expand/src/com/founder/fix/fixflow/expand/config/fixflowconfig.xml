@@ -122,7 +122,7 @@
     <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="template/node-template/"/>
     <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" virtualPath="template/system-template" src="template/system-template/"/>
     <resourcePath id="connector-path" name="流程连接器路径" projectName="fixflow-expand" virtualPath="src/com/founder/fix/fixflow/expand/flowconnector"/>
-  	<resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="/Users/kenshin/Desktop/repository/"/>
-  	<resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="/Users/kenshin/Desktop/repository/"/>	
+  	<resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
+  	<resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>	
   </resourcePathConfig>
 </coreconfig:FixFlowConfig>

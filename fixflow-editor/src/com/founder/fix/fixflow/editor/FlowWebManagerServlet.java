@@ -83,7 +83,7 @@ public class FlowWebManagerServlet extends BaseServlet {
         		fileName = processId + ".bpmn";
         	}
         	String processName = request("name");
-        	String path = buildPath()+File.separator+ buildPath()+File.separator+fileName;
+        	String path = buildPath()+File.separator+fileName;
         	new FixFlowConverter().createBPMNFile(path, processId, processName);
         	success("创建成功","String");
     	}catch(Exception ex){
