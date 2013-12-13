@@ -24,6 +24,7 @@ import org.eclipse.bpmn2.UserTask;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -76,6 +77,15 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		this.expression=expression;
 		this.taskCommandType=taskCommandType;
 		this.isAdmin=isAdmin;
+		
+		TaskCommandDef taskCommandDef=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+
+		if(taskCommandDef!=null){
+			isVerification=StringUtil.getBoolean(taskCommandDef.getIsEnabled());
+			isSaveData=StringUtil.getBoolean(taskCommandDef.getIsSaveData());
+			isSimulationRun=StringUtil.getBoolean(taskCommandDef.getIsSimulationRun());
+			taskCommandDefType=taskCommandDef.getType();
+		}
 	}
 	
 	public String getExpressionParam() {
@@ -146,9 +156,12 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		Object isSaveDataObject=taskCommand.getIsSaveData();
 		Object isSimulationRunObject=taskCommand.getIsSimulationRun();
 		
+		this.taskCommandType=taskCommand.getCommandType();
 		
-		
-		TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+		//ych修改不从context取引擎
+		//TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+		TaskCommandDef taskCommandDef=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+
 		if(taskCommandDef!=null){
 			isVerification=StringUtil.getBoolean(taskCommandDef.getIsEnabled());
 			isSaveData=StringUtil.getBoolean(taskCommandDef.getIsSaveData());
@@ -171,11 +184,9 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		
 		
 		
-		this.taskCommandType=taskCommand.getCommandType();
 		
-		booleanInternationalization=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-    	
-    	
+		booleanInternationalization=StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+
     	
 
 	}
