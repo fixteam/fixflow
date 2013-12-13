@@ -120,39 +120,20 @@ $(document).ready(function(){
 					currentOperationType = "create";
 					$("div[btn-type]").removeClass("btn-normal").addClass("btn-disable");
 					$("div.thumb-wrap[dirType=empty]").remove();
-					var guid = FixFlow.Utils.createGuid();
-					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+guid+'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" title="End-to-End processes1" class="x-thumb-icon"></div></div>');
+					Operation.createGuid = FixFlow.Utils.createGuid();
+					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+ Operation.createGuid +'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" class="x-thumb-icon"></div><span class="editable"></span></div>');
 					$newFolder.appendTo($("div.view_plugin"));
-					var $newFolderName = $('<span class="editable"><input type="text" class="editName" style="width:90px;" oldValue="未命名"/></span>').appendTo($newFolder);
-					var $input = $("input", $newFolderName);
-					$input.focus();
+					var $input = $('<input type="text" class="editName" style="width:90px;" />');
+					$input.val("新建文件夹").attr("oldValue", "新建文件夹");
+					$("span.editable", $newFolder).append($input);
+					$input.select();
 					$input.keydown(function(event){
 						if(event.keyCode == 13){
-							var name = $(this).val();
-							//breadcrumbList.push(name);
-							$.ajax({
-								url: "/bpmcenter/FileAndDirectoryServlet",
-								type: "POST",
-								dataType: "text",
-								data: {
-									method: "create",
-									path: getBreadcrumbNameList(breadcrumbList),
-									newFileName: name
-								},
-								success: function(data){
-									eval("var d = " + data);
-									if(d.state == "error"){
-										alert("文件夹重名！");
-										$input.focus();
-										$input.select();
-										return;
-									}
-									currentOperationType = "done";
-									$input.parent("span").replaceWith("<span>"+name+"</span>");
-									tree.addNodes(currentTreeNode,{name:name, isParent:true, id:guid});
-									resetToolbarState();
-								}
-							});
+							Operation.create($(this));
+						}else if(event.keyCode == 27){	//ESC
+							currentOperationType = "done";
+							$newFolder.remove();
+							resetToolbarState();
 						};
 					}).click(function(){
 						return false;
@@ -169,50 +150,13 @@ $(document).ready(function(){
 					$editInput.focus();
 					$editInput.click(function(){
 						return false;
-					})
-					$editInput.keydown(function(event){
-						if(event.keyCode == 13){
-							var name = $(this).val();
-							$.ajax({
-								url: "/bpmcenter/FileAndDirectoryServlet",
-								type: "POST",
-								dataType: "text",
-								data: {
-									method: "reName",
-									path: getBreadcrumbNameList(breadcrumbList),
-									oldFileName: $(this).attr("oldValue"),
-									newFileName: name
-								},
-								success: function(data){
-									eval("var d = " + data);
-									if(d.state == "error"){
-										alert("重命名文件夹失败！");
-										$input.focus();
-										$input.select();
-										return;
-									}
-									$editInput.parent("span").replaceWith("<span>"+name+"</span>");
-									$("div[btn-type]").addClass("btn-normal").removeClass("btn-disable");
-									$.ajax({
-										url: "/bpmcenter/FileAndDirectoryServlet",
-										type: "POST",
-										dataType: "text",
-										data: {
-											method: "loadTree"
-										},
-										success: function(data){
-											currentOperationType = "done";
-											var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
-											var node = tree.getNodeByParam("id", treeNodeId);
-											node.name = name;
-											$("#"+node.tId+" >a>span:last").html(name);
-										}
-									});
-								}
-							});
-						};
-					}).click(function(){
-						return false;
+					}).keydown(function(event){
+						if(event.keyCode == 13){	//Enter
+							Operation.rename($(this));
+						}else if(event.keyCode == 27){	//ESC
+							currentOperationType = "done";
+							$editInput.parent("span").replaceWith("<span>"+$(this).attr("oldValue")+"</span>");
+						}
 					});
 					break;
 					
@@ -258,8 +202,7 @@ $(document).ready(function(){
 	
 	//Click Event
 	$("div.thumb-wrap[dirType!=empty]").live("click",function(){
-		var b = checkCurrentOperationType();
-		if(!b){
+		if(Operation.checkCurrentOperationType()){
 			return false;
 		}
 		if($("span.editable",$(this)).html() == "resolvent"){
@@ -321,8 +264,7 @@ $(document).ready(function(){
 	});
 	
 	$("#updateCache").click(function(){
-		var b = checkCurrentOperationType();
-		if(!b){
+		if(Operation.checkCurrentOperationType()){
 			return false;
 		}
 		$.get("FlowManager?action=updateCache",function(msg){
@@ -331,75 +273,11 @@ $(document).ready(function(){
 	});
 	
 	$(document).click(function(){
-		var b = checkCurrentOperationType();
-		if(!b){
-			return false;
+		if(Operation.checkCurrentOperationType()){
+			var that = $("input.editName");
+			Operation[currentOperationType](that);
 		}
 		
-		/*var newName = "";
-		
-		
-		if($("input.editName").length>0){
-			if($("input.editName").val() == ""){
-				newName = $("input.editName").attr("oldValue");
-			}else{
-				newName = $("input.editName").val();
-			}
-			var guid = $("input.editName").attr("id");
-			if(currentOperationType == "create"){
-				$.ajax({
-					url: "/bpmcenter/FileAndDirectoryServlet",
-					type: "POST",
-					dataType: "text",
-					data: {
-						method: "create",
-						path: getBreadcrumbNameList(breadcrumbList),
-						newFileName: newName
-					},
-					success: function(data){
-						eval("var d = " + data);
-						if(d.state == "error"){
-							alert("文件夹重名！");
-							$("input.editName").focus();
-							$("input.editName").select();
-							return;
-						}
-						$("input.editName").parent("span").replaceWith("<span title="+newName+">"+newName+"</span>");
-						tree.addNodes(currentTreeNode,{name:newName, isParent:true, id:guid});
-					}
-				});
-			}else if(currentOperationType == "rename"){
-				var name = $("input.editName").val();
-				$.ajax({
-					url: "/bpmcenter/FileAndDirectoryServlet",
-					type: "POST",
-					dataType: "text",
-					data: {
-						method: "reName",
-						path: getBreadcrumbNameList(breadcrumbList),
-						oldFileName: $("input.editName").attr("oldValue"),
-						newFileName: name
-					},
-					success: function(data){
-						$("input.editName").parent("span").replaceWith("<span title="+name+">"+name+"</span>");
-						$.ajax({
-							url: "/bpmcenter/FileAndDirectoryServlet",
-							type: "POST",
-							dataType: "text",
-							data: {
-								method: "loadTree"
-							},
-							success: function(data){
-								var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
-								var node = tree.getNodeByParam("id", treeNodeId);
-								node.name = name;
-								$("#"+node.tId+" >a>span:last").html(name);
-							}
-						});
-					}
-				});
-			}
-		}*/
 	});
 	
 });
@@ -508,10 +386,78 @@ function checkIsResolvent(){
 	return (breadcrumbList[1] && breadcrumbList[1].name == "resolvent");
 }
 
-function checkCurrentOperationType(){
-	if(currentOperationType == "create" || currentOperationType == "createFile" || currentOperationType == "rename"){
-		alert("请完成新建或重命名操作，按回车键确认！");
+var Operation = {
+	createGuid: "",
+	checkCurrentOperationType: function(){
+		if(currentOperationType == "create" || currentOperationType == "rename"){
+			return true;
+		}
 		return false;
+	},
+	create: function(that){
+		var name = that.val();
+		$.ajax({
+			url: "/bpmcenter/FileAndDirectoryServlet",
+			type: "POST",
+			dataType: "text",
+			data: {
+				method: "create",
+				path: getBreadcrumbNameList(breadcrumbList),
+				newFileName: name
+			},
+			success: function(data){
+				eval("var d = " + data);
+				if(d.state == "error"){
+					alert("文件夹重名！");
+					that.focus();
+					that.select();
+					return;
+				}
+				currentOperationType = "done";
+				that.parent("span").replaceWith("<span>"+name+"</span>");
+				tree.addNodes(currentTreeNode,{name:name, isParent:true, id:Operation.createGuid});
+				resetToolbarState();
+			}
+		});
+	},
+	rename: function(that){
+		var name = that.val();
+		$.ajax({
+			url: "/bpmcenter/FileAndDirectoryServlet",
+			type: "POST",
+			dataType: "text",
+			data: {
+				method: "reName",
+				path: getBreadcrumbNameList(breadcrumbList),
+				oldFileName: that.attr("oldValue"),
+				newFileName: name
+			},
+			success: function(data){
+				eval("var d = " + data);
+				if(d.state == "error"){
+					alert("重命名文件夹失败！");
+					that.focus();
+					that.select();
+					return;
+				}
+				that.parent("span").replaceWith("<span>"+name+"</span>");
+				$("div[btn-type]").addClass("btn-normal").removeClass("btn-disable");
+				$.ajax({
+					url: "/bpmcenter/FileAndDirectoryServlet",
+					type: "POST",
+					dataType: "text",
+					data: {
+						method: "loadTree"
+					},
+					success: function(data){
+						currentOperationType = "done";
+						var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
+						var node = tree.getNodeByParam("id", treeNodeId);
+						node.name = name;
+						$("#"+node.tId+" >a>span:last").html(name);
+					}
+				});
+			}
+		});
 	}
-	return true;
 }
