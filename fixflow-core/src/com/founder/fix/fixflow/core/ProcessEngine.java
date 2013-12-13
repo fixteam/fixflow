@@ -158,7 +158,7 @@ public interface ProcessEngine {
 	FixFlowVersion getVersion();
 	
 	/**
-	 * 清楚流程引擎缓存
+	 * 清除流程引擎缓存
 	 * @param deploymentCache 定义缓存
 	 * @param processDataCache 流程对象缓存
 	 */
