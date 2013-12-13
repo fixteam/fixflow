@@ -405,7 +405,7 @@
 	         else
 	          DONE_COUNT
 	       end as DONE_COUNT
-,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME,TERMINATION_COUNT  
+,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME,CASE WHEN TERMINATION_COUNT IS NULL THEN 0 ELSE TERMINATION_COUNT END AS TERMINATION_COUNT  
     from      
 	      ((select PROCESSDEFINITION_KEY,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
 	        from FIXBPA_FLOW_PROCESSINSTANCE 
@@ -558,5 +558,14 @@
 		ORDER BY A.VERSION DESC
 	</select>
     
+    <select id="getFixFlowAvgTerminationCount" resultType="java.util.Map" parameterType="java.util.Map">
+ 	     
+      select sum(TERMINATION_COUNT)/count(PROCESSDEFINITION_KEY) as AVG_TERMINATION_COUNT, '平均终止次数' AS AVG_TERMINATION_COUNT_NAME from ( select PROCESSDEFINITION_KEY,count(1) AS TERMINATION_COUNT
+      from FIXBPA_FLOW_PROCESSINSTANCE 
+      where INSTANCE_STATUS = 'TERMINATION'
+       
+	
+      group by PROCESSDEFINITION_KEY)
+    </select>
 </mapper> 
 

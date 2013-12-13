@@ -147,5 +147,5 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 
 .top10 .title { height:30px; background:#aaa; border:1px solid #cfedf7; border-bottom:none;}
 .top10 .title { color:#fff; font:14px/26px "微软雅黑"; text-align:center;}
-.top10 .title a { color:#fff; font:14px/26px "微软雅黑"; text-decoration:none;cursor: pointer;}
+.top10 .title a { color:#FF7F00; font:14px/26px "微软雅黑"; text-decoration:none;cursor: pointer;}
 .top10 .content { padding:6px; min-height:240px; height:auto; overflow:hidden; background:#FFF;}
