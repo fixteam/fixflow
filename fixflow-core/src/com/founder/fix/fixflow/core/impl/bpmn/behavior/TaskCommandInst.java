@@ -77,6 +77,15 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		this.expression=expression;
 		this.taskCommandType=taskCommandType;
 		this.isAdmin=isAdmin;
+		
+		TaskCommandDef taskCommandDef=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+
+		if(taskCommandDef!=null){
+			isVerification=StringUtil.getBoolean(taskCommandDef.getIsEnabled());
+			isSaveData=StringUtil.getBoolean(taskCommandDef.getIsSaveData());
+			isSimulationRun=StringUtil.getBoolean(taskCommandDef.getIsSimulationRun());
+			taskCommandDefType=taskCommandDef.getType();
+		}
 	}
 	
 	public String getExpressionParam() {
@@ -147,6 +156,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		Object isSaveDataObject=taskCommand.getIsSaveData();
 		Object isSimulationRunObject=taskCommand.getIsSimulationRun();
 		
+		this.taskCommandType=taskCommand.getCommandType();
 		
 		//ych修改不从context取引擎
 		//TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
@@ -174,12 +184,9 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		
 		
 		
-		this.taskCommandType=taskCommand.getCommandType();
 		
-		//ych修改，不读取国际化配置，暂时修改用于展现web流程图
-		//booleanInternationalization=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-    	
-		booleanInternationalization = false;
+		booleanInternationalization=StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+
     	
 
 	}
