@@ -408,7 +408,16 @@
 ,(ALL_COUNT-DONE_COUNT) as UNDONE_COUNT,case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME,CASE WHEN TERMINATION_COUNT IS NULL THEN 0 ELSE TERMINATION_COUNT END AS TERMINATION_COUNT  
     from      
 	      ((select PROCESSDEFINITION_KEY,count(1) as ALL_COUNT,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
-	        from FIXBPA_FLOW_PROCESSINSTANCE 
+	        from FIXBPA_FLOW_PROCESSINSTANCE where 1=1
+	        <if test="procName != null">  
+		   		and PROCESS_NAME like '%${procName}%' 
+			</if>
+			<if test="dateStart != null">  
+		   		and START_TIME >= #{dateStart}
+			</if>
+			<if test="dateEnd != null">  
+				<![CDATA[and START_TIME <= #{dateEnd}]]>
+			</if>
 	        group by PROCESSDEFINITION_KEY) a 
 	  
 	      left join
@@ -416,6 +425,15 @@
 	      (select PROCESSDEFINITION_KEY,count(1) AS TERMINATION_COUNT
 	      from FIXBPA_FLOW_PROCESSINSTANCE 
 	      where INSTANCE_STATUS = 'TERMINATION'
+	        <if test="procName != null">  
+		   		and PROCESS_NAME like '%${procName}%' 
+			</if>
+			<if test="dateStart != null">  
+		   		and START_TIME >= #{dateStart}
+			</if>
+			<if test="dateEnd != null">  
+				<![CDATA[and START_TIME <= #{dateEnd}]]>
+			</if>	
 	      group by PROCESSDEFINITION_KEY) b
 	      on a.PROCESSDEFINITION_KEY=b.PROCESSDEFINITION_KEY
 	      left join
@@ -423,6 +441,15 @@
 	      (select PROCESSDEFINITION_KEY,count(1) AS DONE_COUNT
 	      from FIXBPA_FLOW_PROCESSINSTANCE 
 	      where INSTANCE_STATUS = 'COMPLETE'
+	        <if test="procName != null">  
+		   		and PROCESS_NAME like '%${procName}%' 
+			</if>
+			<if test="dateStart != null">  
+		   		and START_TIME >= #{dateStart}
+			</if>
+			<if test="dateEnd != null">  
+				<![CDATA[and START_TIME <= #{dateEnd}]]>
+			</if>
 	      group by PROCESSDEFINITION_KEY) c
 	      on a.PROCESSDEFINITION_KEY=c.PROCESSDEFINITION_KEY
 	      
@@ -440,8 +467,17 @@
     <select id="getFixFlowAvgTime" resultType="java.util.Map" parameterType="java.util.Map">
    	 select case when DONE_COUNT = 0 then -1 else (SUM_TIME/DONE_COUNT) end as AVG_TIME, '平均处理时间' AS AVG_TIME_NAME  
      from      
-        (select count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
-          from FIXBPA_FLOW_PROCESSINSTANCE 
+        (select count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME
+          from FIXBPA_FLOW_PROCESSINSTANCE where 1=1
+        <if test="procName != null">  
+	   		and PROCESS_NAME like '%${procName}%' 
+		</if>
+		<if test="dateStart != null">  
+	   		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
           )  
     </select>
     
@@ -449,7 +485,16 @@
  	  select  SUM(DONE_COUNT)/COUNT(PROCESSDEFINITION_KEY) AS AVG_DONE_COUNT, '平均完成次数' AS AVG_DONE_COUNT_NAME
       from
           (select PROCESSDEFINITION_KEY,count(END_TIME) as DONE_COUNT,sum(WORK_TIME) as SUM_TIME 
-          from FIXBPA_FLOW_PROCESSINSTANCE 
+          from FIXBPA_FLOW_PROCESSINSTANCE where 1=1
+                  <if test="procName != null">  
+	   		and PROCESS_NAME like '%${procName}%' 
+		</if>
+		<if test="dateStart != null">  
+	   		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
           group by PROCESSDEFINITION_KEY) 
     </select>
     
