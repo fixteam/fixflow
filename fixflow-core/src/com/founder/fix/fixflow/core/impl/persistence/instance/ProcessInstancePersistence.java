@@ -685,7 +685,7 @@ public class ProcessInstancePersistence {
 	 */
 	public List<String> selectProcessInstanceIdByDefinitionId(String processDefinitionId){
 		List<String> processInstanceIds = new ArrayList<String>();
-		String sql = "select processinstance_id from "+ProcessInstanceObjKey.getTableName(QueryLocation.RUN_HIS)+" p where p.processdefinition_id =?";
+		String sql = "select PROCESSINSTANCE_ID from "+ProcessInstanceObjKey.getTableName(QueryLocation.RUN_HIS)+" p where p.processdefinition_id =?";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(processDefinitionId);
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sql, objectParamWhere);

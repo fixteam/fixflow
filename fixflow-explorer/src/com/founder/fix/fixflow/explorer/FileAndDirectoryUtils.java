@@ -1,6 +1,13 @@
 package com.founder.fix.fixflow.explorer;
 
+import groovyjarjarasm.asm.tree.IntInsnNode;
+
 import java.io.File;
+import java.util.List;
+
+import com.founder.fix.bpmn2extensions.coreconfig.ResourcePath;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 
 /**
  * 文件及文件夹的IO管理类
@@ -9,9 +16,23 @@ import java.io.File;
  */
 public class FileAndDirectoryUtils {
 	
-	private static int key = 0;
+	private static int key = 1;
 	private static String json = "",subJson = "";
-	 
+	public static String privatePath = "";
+	public static String sharedPath = "";
+	
+	static{
+		ProcessEngineConfigurationImpl configuration = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+		List<ResourcePath> list = configuration.getResourcePathConfig().getResourcePath();
+		for(ResourcePath resourcePath : list){
+			if(configuration.FIXFLOW_EDITOR_PRIVATE_REPOSITORY.equals(resourcePath.getId())){
+				privatePath = resourcePath.getPhysicalPath();
+			}
+			if(configuration.FIXFLOW_EDITOR_PUBLIC_REPOSITORY.equals(resourcePath.getId())){
+				sharedPath = resourcePath.getPhysicalPath();
+			}
+		}
+	}
 	/**
 	 * 构建文件及文件夹的层次结构对应的体现数据（json data）
 	 * @param loginUserId
@@ -21,10 +42,16 @@ public class FileAndDirectoryUtils {
 	 */
 	public static String buildLevelJsonDataWithLoginPerson(String loginUserId, String basePath) throws Exception{
 		try{
-			createLeve(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId+File.separator+"private"+File.separator+"resolvent"));
-			createLeve(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId+File.separator+"shared"+File.separator+"resolvent"));
+			createLeve(new File(privatePath+File.separator+loginUserId+File.separator+"resolvent"));
+			createLeve(new File(sharedPath+File.separator+"resolvent"));
 			
-			iterationRead(new File(basePath+File.separator+"fixflow-repository"+File.separator+loginUserId),0);
+			key =1;
+			int privateKey = key++;
+			int sharedKey = key++;
+			json += ",{id:"+privateKey+",pId:0,name:'private',type:'dir',isParent:true}";
+			json += ",{id:'"+sharedKey+"',pId:0,name:'shared',type:'dir',isParent:true}";
+			iterationRead(new File(privatePath+File.separator+loginUserId),privateKey);
+			iterationRead(new File(sharedPath),sharedKey);
 		}catch(Exception e){
 		}
 		
@@ -69,8 +96,9 @@ public class FileAndDirectoryUtils {
 	 *               webcontent目录
 	 * @throws Exception
 	 */
-	public static void createFileOrDirectory(String fileLeveStr, String basePath) throws Exception{
-		File file = new File( basePath+File.separator+"fixflow-repository"+File.separator+fileLeveStr);
+	public static void createFileOrDirectory(String path) throws Exception{
+		
+		File file = new File(path);
 		if(!file.exists()){
 			file.mkdirs();
 		}else{
@@ -86,8 +114,8 @@ public class FileAndDirectoryUtils {
 	 *               webcontent目录
 	 * @throws Exception
 	 */
-	public static String readSubFileAndDirectory(String fileLeveStr, String basePath) throws Exception{
-		File file = new File( basePath+File.separator+"fixflow-repository"+File.separator+fileLeveStr);
+	public static String readSubFileAndDirectory(String path) throws Exception{
+		File file = new File(path);
 		
 		if(!file.exists()){
 			file.mkdirs();
@@ -99,7 +127,10 @@ public class FileAndDirectoryUtils {
 				subJson += ",{name:'"+FList[i].getName()+"',type:'dir'}";
 				iterationRead(FList[i],key);
 			}else{
-				subJson += ",{name:'"+FList[i].getName()+"',type:'file'}";
+				//只读取bpmn文件
+				if(FList[i].getName().lastIndexOf(".bpmn") > -1){
+					subJson += ",{name:'"+FList[i].getName()+"',type:'file'}";
+				}
 			}
 		}
  
@@ -123,9 +154,9 @@ public class FileAndDirectoryUtils {
      *            
      * @return 操作成功标识 
      */  
-    public static boolean renameFile(String resFilePath, String newFilePath,String basePath) throws Exception{
-        File resFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+resFilePath);  
-        File newFile = new File(basePath+File.separator+"fixflow-repository"+File.separator+newFilePath);  
+    public static boolean renameFile(String resFilePath, String newFilePath) throws Exception{
+        File resFile = new File(resFilePath);  
+        File newFile = new File(newFilePath);  
 		if(newFile.exists()){
 			throw new Exception("当前文件或文件夹已存在!");
 		}
@@ -145,9 +176,9 @@ public class FileAndDirectoryUtils {
      *            
      * @return 操作成功标识 
      */  
-    public static boolean moveFileAndDirectory(String resFileOrDirectory, String newFilePOrDirectory,String basePath,String fileName) throws Exception{
-    	  File resf = new File(basePath+File.separator+"fixflow-repository"+File.separator+resFileOrDirectory);
-	      String newf = basePath+File.separator+"fixflow-repository"+File.separator+newFilePOrDirectory;
+    public static boolean moveFileAndDirectory(String resFileOrDirectory, String newFilePOrDirectory,String fileName) throws Exception{
+    	  File resf = new File(resFileOrDirectory);
+	      String newf = newFilePOrDirectory;
 	      File fnewpath = new File(newf);
 	      if(!fnewpath.exists())
 	        fnewpath.mkdirs();
