@@ -43,6 +43,7 @@
     <taskCommandDef id="endEvent" name="流程结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
     <taskCommandDef id="receiveEnd" name="等待结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
   </taskCommandConfig>
+  <!--  
   <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE" isDefaultConfig="true">
     <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="false" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
@@ -50,6 +51,15 @@
     </groupInfo>
     <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
       <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID ,t3.name as name from au_userinfo t1,  FIX_GROUP_RELATION t2, au_roleinfo t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role' and t2.group_id =t3.roleid"/>
+    </groupInfo>
+  </designerOrgConfig>-->
+  <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE">
+    <allUserInfo isEnabled="false" userIdField="EMPLOYEE_CODE" userNameField="EMPLOYEE_NAME" sqlText="select * from hr_employee_info"/>
+    <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="true" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.orgid from au_userinfo t1,  au_orgmember t2 where t1.userid = t2.userid"/>
+    </groupInfo>
+    <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.roleid from au_userinfo t1,  au_rolemember t2 where t1.userid = t2.userid "/>
     </groupInfo>
   </designerOrgConfig>
   <sysMailConfig selected="方正国际邮箱">
@@ -78,7 +88,7 @@
     <expandClass classId="ProcessDefinitionQuery" className="流程定义查询" classInterface="com.founder.fix.fixflow.core.model.ProcessDefinitionQuery" classImpl="com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl" remarks="流程定义查询"/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
-  <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="oracle"/>
+  <quartzConfig isEnable="false" isDefaultConfig="true" dataBaseId="oracle"/>
   <scriptLanguageConfig selected="Groovy">
     <scriptLanguage id="BeanShell" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl"/>
     <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>
