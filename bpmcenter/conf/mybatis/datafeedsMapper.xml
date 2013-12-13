@@ -87,7 +87,7 @@
       
       
 		<if test="orderColumn != null and orderColumn!=''">  
-			order by ${orderColumn} ${orderType}
+			order by ${orderColumn} ${orderType},PROCESSDEFINITION_KEY ${orderType}
   		</if>
     </select>
     
@@ -434,7 +434,7 @@
 	      ) 
      <if test="orderColum=='AVG_TIME'"><![CDATA[where DONE_COUNT<>0]]></if>
      
-     ORDER BY ${orderColum} ${orderType}
+     ORDER BY ${orderColum} ${orderType},PROCESSDEFINITION_KEY ${orderType}
     </select>
     
     <select id="getFixFlowAvgTime" resultType="java.util.Map" parameterType="java.util.Map">
