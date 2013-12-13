@@ -80,7 +80,7 @@
       
       left join (select t1.PROCESS_KEY as PROCESSDEFINITION_KEY,t1.PROCESS_NAME
                from FIXBPA_FLOW_PROCESSDEFINITION t1 inner join (
-                    select max(VERSION) as VERSION,PROCESS_KEY from FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY
+                    select max(VERSION) as VERSION,PROCESS_KEY from FIXBPA_FLOW_PROCESSDEFINITION GROUP BY PROCESS_KEY
                ) t2 on  t1.PROCESS_KEY=t2.PROCESS_KEY and t1.version=t2.version) d
     	on a.PROCESSDEFINITION_KEY = d.PROCESSDEFINITION_KEY
       )
@@ -156,7 +156,7 @@
     
 	<select id="nodeInfo_getProcName" resultType="java.lang.String"
 		parameterType="java.lang.String">
-		select distinct PROCESS_NAME from fixflow_def_processdefinition 
+		select distinct PROCESS_NAME from FIXBPA_FLOW_PROCESSDEFINITION 
 		where PROCESS_KEY= #{procKey} 		
     </select>
  
@@ -428,7 +428,7 @@
 	      
 	     left join (select t1.PROCESS_KEY as PROCESSDEFINITION_KEY,t1.PROCESS_NAME
 	               from FIXBPA_FLOW_PROCESSDEFINITION t1 inner join (
-	                    select max(VERSION) as VERSION,PROCESS_KEY from FIXFLOW_DEF_PROCESSDEFINITION GROUP BY PROCESS_KEY
+	                    select max(VERSION) as VERSION,PROCESS_KEY from FIXBPA_FLOW_PROCESSDEFINITION GROUP BY PROCESS_KEY
 	               ) t2 on  t1.PROCESS_KEY=t2.PROCESS_KEY and t1.version=t2.version) d
 	    	on a.PROCESSDEFINITION_KEY = d.PROCESSDEFINITION_KEY
 	      ) 

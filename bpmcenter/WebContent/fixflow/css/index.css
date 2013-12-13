@@ -97,6 +97,12 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
 .fix-table td.time { text-align:center;}
 .fix-table tr.odd { background:#f7f7f7;}
+.fix-table tr.ver { background:#f0f8fa;cursor: pointer;}
+.fix-table tr.ver td.first { background-color: #fff}
+.fix-table tr.ver td.bleft { border-left: solid red 1px;border-left-style: dashed;}
+.fix-table tr.ver td.bright { border-right: solid red 1px;border-right-style: dashed;}
+.fix-table tr.ver td.btop { border-top: solid red 1px;border-top-style: dashed;}
+.fix-table tr.ver td.bbottom { border-bottom: solid red 1px;border-bottom-style: dashed;}
 .fix-table tbody tr:HOVER {cursor:pointer;}
 
 .fix-table2 { margin:0; color:#444;}

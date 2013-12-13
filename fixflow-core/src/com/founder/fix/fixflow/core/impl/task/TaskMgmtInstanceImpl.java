@@ -28,6 +28,7 @@ import org.eclipse.bpmn2.impl.FlowNodeImpl;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicy;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
 import com.founder.fix.bpmn2extensions.fixflow.AssignPolicyType;
+import com.founder.fix.bpmn2extensions.fixflow.FormUri;
 import com.founder.fix.fixflow.core.action.AssignmentHandler;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -148,12 +149,19 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 				} else {
 
-					String defaultFormUri = token.getProcessInstance().getProcessDefinition().getDefaultFormUri();
-					if (defaultFormUri != null && !defaultFormUri.equals("")) {
-
-						taskInstance.setFormUri(defaultFormUri);
-
-					} else {
+					
+					FormUri formUriObj=token.getProcessInstance().getProcessDefinition().getFormUriObj();
+					
+					String expressionValue=null;
+					if (formUriObj != null && formUriObj.getExpression() != null) {
+						expressionValue = formUriObj.getExpression().getValue();
+					} 
+					
+					Object returnObject = ExpressionMgmt.execute(expressionValue, executionContext);
+					if (returnObject != null) {
+						taskInstance.setFormUri(StringUtil.getString(returnObject));
+					}
+				   else {
 						throw new FixFlowException(userTask.getId() + " 节点没有指定表单,请检查流程配置!");
 					}
 				}
