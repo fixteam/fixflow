@@ -499,11 +499,11 @@
     </select>
     
 	<select id="flowInstances" resultType="java.util.Map">
-		select PROCESSINSTANCE_ID,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME 
+		select PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME 
 		from FIXBPA_FLOW_PROCESSINSTANCE
 		where 1=1
 		<if test="procID != null">
-			and PROCESSINSTANCE_ID like '%${procID}%' 
+			and BIZ_KEY like '%${procID}%' 
 	  	</if> 
 	  	<if test="procName != null">
 			and PROCESS_NAME like '%${procName}%' 
@@ -524,7 +524,7 @@
 		select count(1) from FIXBPA_FLOW_PROCESSINSTANCE 
 		where 1=1
 		<if test="procID != null">
-			and PROCESSINSTANCE_ID like '%${procID}%' 
+			and BIZ_KEY like '%${procID}%' 
 	  	</if> 
 	  	<if test="procName != null">
 			and PROCESS_NAME like '%${procName}%' 
