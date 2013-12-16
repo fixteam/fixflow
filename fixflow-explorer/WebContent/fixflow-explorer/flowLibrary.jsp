@@ -64,6 +64,7 @@
 			
 			<!-- toolbar -->
 			<div class="toolbar" style="padding-right:2px;text-align: right;margin-bottom: 4px;">
+				<div class="btn-normal listBtn" btn-type="delopy" btn-scope=single><a href="#" >发布流程</a></div>
 				<div class="btn-normal listBtn" btn-type="createFile" btn-scope=all><a href="#" >新建流程</a></div>
 		  		<div class="btn-normal listBtn" btn-type="createFolder" btn-scope=all><a href="#" >新建文件夹</a></div>
 		  		<div class="btn-normal listBtn" btn-type="rename" btn-scope=single><a href="#" >重命名</a></div>

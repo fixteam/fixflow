@@ -111,6 +111,36 @@ $(document).ready(function(){
 			}
 			var $selectTarget = $("div.thumb-wrap[select=true]");
 			switch($(this).attr("btn-type")){
+				case "delopy":
+					var $selectThumbWrap = $("div.thumb-wrap[select=true]");
+					var $span = $("span", $selectThumbWrap);
+					var fileName = $span.html();
+					var fileType = fileName.substring(fileName.lastIndexOf(".")+1);
+					if(fileType!="bpmn"){
+						alert("该文件不是流程定义文件");
+						return false;
+					}
+					if(window.confirm('确定发布？')){
+						$.ajax({
+							url: "/bpmcenter/FileAndDirectoryServlet",
+							type: "POST",
+							dataType: "text",
+							data: {
+								method: "delopy",
+								path: getBreadcrumbNameList(breadcrumbList),
+								fileName: fileName,
+							},
+							success: function(data){
+								eval("var d = " + data);
+								if(d.state == "error"){
+									alert("发布失败");
+								}else{
+									alert("发布成功！");
+								}
+							}
+						});
+					}
+					break;
 				case "createFile":
 					currentOperationType = "createFile";
 					$("div.popup-A").show();
