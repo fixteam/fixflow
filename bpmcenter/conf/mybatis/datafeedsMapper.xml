@@ -608,8 +608,15 @@
       select sum(TERMINATION_COUNT)/count(PROCESSDEFINITION_KEY) as AVG_TERMINATION_COUNT, '平均终止次数' AS AVG_TERMINATION_COUNT_NAME from ( select PROCESSDEFINITION_KEY,count(1) AS TERMINATION_COUNT
       from FIXBPA_FLOW_PROCESSINSTANCE 
       where INSTANCE_STATUS = 'TERMINATION'
-       
-	
+        <if test="procName != null">  
+	   		and PROCESS_NAME like '%${procName}%' 
+		</if>
+		<if test="dateStart != null">  
+	   		and START_TIME >= #{dateStart}
+		</if>
+		<if test="dateEnd != null">  
+			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
       group by PROCESSDEFINITION_KEY)
     </select>
 </mapper> 
