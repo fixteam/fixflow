@@ -1884,7 +1884,8 @@ ORYX.CONFIG.MODEL_LIST_URL = 			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/models";
 ORYX.CONFIG.SS_EXTENSIONS_FOLDER =		ORYX.CONFIG.ROOT_PATH + "stencilsets/extensions/";
 ORYX.CONFIG.SS_EXTENSIONS_CONFIG =		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_ssextensions";	
 ORYX.CONFIG.ORYX_NEW_URL =				"/new";	
-ORYX.CONFIG.BPMN_LAYOUTER =				ORYX.CONFIG.ROOT_PATH + "bpmnlayouter";/**
+ORYX.CONFIG.BPMN_LAYOUTER =				ORYX.CONFIG.ROOT_PATH + "bpmnlayouter";
+/**
  * Copyright (c) 2006
  * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
  *
@@ -1915,7 +1916,7 @@ if(!ORYX.CONFIG) ORYX.CONFIG = {};
  */
 ORYX.CONFIG.BACKEND_SWITCH 		= 		true;
 ORYX.CONFIG.PANEL_LEFT_WIDTH 	= 		250;
-ORYX.CONFIG.PANEL_RIGHT_COLLAPSED 	= 	true;
+ORYX.CONFIG.PANEL_RIGHT_COLLAPSED 	= 	false;
 ORYX.CONFIG.PANEL_RIGHT_WIDTH	= 		300;
 ORYX.CONFIG.APPNAME = 					'Activiti BPM suite';
 ORYX.CONFIG.WEB_URL = 					"../";
@@ -10218,6 +10219,35 @@ ORYX.Core.AbstractShape = ORYX.Core.UIObject.extend(
 							} else if(!(name === "bounds"||name === "parent"||name === "target"||name === "dockers"||name === "docker"||name === "outgoing"||name === "incoming")) {
 								this.setHiddenProperty(prefix+"-"+name, value);
 							}
+							
+							var Stencil = this.getStencil();
+							if(prefix+"-"+name == "oryx-multiinstance" && value == "false"){	//设置级联属性
+								Stencil.property("oryx-multiinstance_seq")._jsonProp.visible = false;
+								Stencil.property("oryx-loopdatainputcollection")._jsonProp.visible = false;
+								Stencil.property("oryx-loopdataoutputcollection")._jsonProp.visible = false;
+								Stencil.property("oryx-inputdataitem")._jsonProp.visible = false;
+								Stencil.property("oryx-outputdataitem")._jsonProp.visible = false;
+								Stencil.property("oryx-multiinstance_condition")._jsonProp.visible = false;
+							}else if(prefix+"-"+name == "oryx-multiinstance" && value == "true"){
+								Stencil.property("oryx-multiinstance_seq")._jsonProp.visible = true;
+								Stencil.property("oryx-loopdatainputcollection")._jsonProp.visible = true;
+								Stencil.property("oryx-loopdataoutputcollection")._jsonProp.visible = true;
+								Stencil.property("oryx-inputdataitem")._jsonProp.visible = true;
+								Stencil.property("oryx-outputdataitem")._jsonProp.visible = true;
+								Stencil.property("oryx-multiinstance_condition")._jsonProp.visible = true;
+							}
+							
+							if(prefix+"-"+name == "oryx-skipenable" && value == "false"){	
+								Stencil.property("oryx-iscreateskipprocess")._jsonProp.visible = false;
+								Stencil.property("oryx-skipexpression")._jsonProp.visible = false;
+								Stencil.property("oryx-skipassignee")._jsonProp.visible = false;
+								Stencil.property("oryx-skipcomment")._jsonProp.visible = false;
+							}else if(prefix+"-"+name == "oryx-skipenable" && value == "true"){
+								Stencil.property("oryx-iscreateskipprocess")._jsonProp.visible = true;
+								Stencil.property("oryx-skipexpression")._jsonProp.visible = true;
+								Stencil.property("oryx-skipassignee")._jsonProp.visible = true;
+								Stencil.property("oryx-skipcomment")._jsonProp.visible = true;
+							}
 					
 			}
 		}).bind(this));
@@ -11201,7 +11231,7 @@ var passObj = window.dialogArguments || {};
         ORYX.Editor.createByUrl(modelUrl, {
             id: modelUrl,
 						parameters:{
-							path: passObj.path || "private,test",
+							path: passObj.path || "private",
 							fileName: passObj.fileName || "process_testych.bpmn",
 							method: "loadBPMWeb"
 						}
@@ -20858,6 +20888,8 @@ ORYX.Plugins.PropertyWindow = {
 		this.shapeSelection.shapes = new Array();
 		this.shapeSelection.commonProperties = new Array();
 		this.shapeSelection.commonPropertiesValues = new Hash();
+		this.shapeSelection.skipenable = true;
+		this.shapeSelection.multiinstance = true;
 		
 		this.updaterFlag = false;
 
@@ -21119,6 +21151,33 @@ ORYX.Plugins.PropertyWindow = {
 		this.shapeSelection.shapes.each(function(shape){
 			if(!shape.getStencil().property(key).readonly()) {
 				shape.setProperty(key, value);
+				if(key=="oryx-multiinstance" && value == "false"){	//设置级联属性
+					shape.getStencil().property("oryx-multiinstance_seq")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-loopdatainputcollection")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-loopdataoutputcollection")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-inputdataitem")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-outputdataitem")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-multiinstance_condition")._jsonProp.visible = false;
+				}else if(key=="oryx-multiinstance" && value == "true"){
+					shape.getStencil().property("oryx-multiinstance_seq")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-loopdatainputcollection")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-loopdataoutputcollection")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-inputdataitem")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-outputdataitem")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-multiinstance_condition")._jsonProp.visible = true;
+				}
+				
+				if(key=="oryx-skipenable" && value == "false"){	
+					shape.getStencil().property("oryx-iscreateskipprocess")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-skipexpression")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-skipassignee")._jsonProp.visible = false;
+					shape.getStencil().property("oryx-skipcomment")._jsonProp.visible = false;
+				}else if(key=="oryx-skipenable" && value == "true"){
+					shape.getStencil().property("oryx-iscreateskipprocess")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-skipexpression")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-skipassignee")._jsonProp.visible = true;
+					shape.getStencil().property("oryx-skipcomment")._jsonProp.visible = true;
+				}
 				//shape.update();
 			}
 		}.bind(this));
@@ -21310,11 +21369,31 @@ ORYX.Plugins.PropertyWindow = {
 			this.shapeSelection.commonProperties.each((function(pair, index) {
 
 				var key = pair.prefix() + "-" + pair.id();
-				
 				// Get the property pair
 				var name		= pair.title();
 				var icons		= [];
 				var attribute	= this.shapeSelection.commonPropertiesValues[key];
+				
+				if(key == "oryx-multiinstance"){
+					this.shapeSelection.multiinstance = attribute;
+				}else if(key == "oryx-skipenable"){
+					this.shapeSelection.skipenable = attribute;
+				}
+				
+				if(key == "oryx-loopdatainputcollection" || key == "oryx-loopdataoutputcollection" || key == "oryx-inputdataitem" || key == "oryx-outputdataitem" || key == "oryx-multiinstance_condition" || key == "oryx-multiinstance_seq" ){
+					if(this.shapeSelection.multiinstance == "true"){
+						pair._jsonProp.visible = true;
+					}else{
+						pair._jsonProp.visible = false;
+					}
+				}else if(key == "oryx-iscreateskipprocess" || key == "oryx-skipexpression" || key == "oryx-skipassignee" || key == "oryx-skipcomment"){
+					if(this.shapeSelection.skipenable == "true"){
+						pair._jsonProp.visible = true;
+					}else{
+						pair._jsonProp.visible = false;
+					}
+				}
+				
 				
 				var editorGrid = undefined;
 				var editorRenderer = null;
