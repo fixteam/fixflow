@@ -104,7 +104,8 @@ public class FileAndDirectoryServlet extends BaseServlet {
     }
     
     public void getProcessVersionInfo() throws Exception{
-    	String processKey = request("processKey");
+    	String fileName =  request("fileName");
+    	String processKey = fileName.substring(0, fileName.lastIndexOf("."));
     	List<Map<String, Object>> resultMaps = new ArrayList<Map<String,Object>>();
     	ProcessEngine processEngine = getProcessEngine();
     	if(processEngine != null){
