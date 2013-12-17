@@ -1,22 +1,11 @@
 package com.founder.fix.fixflow.editor;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URLDecoder;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.activiti.editor.language.json.converter.BpmnJsonConverter;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
-import org.eclipse.bpmn2.Definitions;
-import org.eclipse.emf.common.util.URI;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.explorer.BaseServlet;
@@ -92,16 +81,7 @@ public class FlowWebManagerServlet extends BaseServlet {
     	}
     }
     
-    public void save() throws JsonProcessingException, IOException{
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	String body;
-		body = getBody(requestParm);
-		body = URLDecoder.decode(body);
-    	String json_xml = getBodyFromPayload(body,"json_xml");
-    	JsonNode objectNode = objectMapper.readTree(json_xml);
-    	new FixFlowConverter().save(objectNode,URI.createFileURI("d:\\node_template.bpmn"));
-    	
-    }
+   
 	/**
 	 * 任务：将流文件写入到指定的目录下的指定文件
 	 */
@@ -128,40 +108,7 @@ public class FlowWebManagerServlet extends BaseServlet {
 		return null;
 	}
 	
-	public String getBody(HttpServletRequest request) throws IOException {
-
-	    String body = null;
-	    StringBuilder stringBuilder = new StringBuilder();
-	    BufferedReader bufferedReader = null;
-
-	    try {
-	        InputStream inputStream = request.getInputStream();
-	        if (inputStream != null) {
-	            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-	            char[] charBuffer = new char[128];
-	            int bytesRead = -1;
-	            while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-	                stringBuilder.append(charBuffer, 0, bytesRead);
-	            }
-	        } else {
-	            stringBuilder.append("");
-	        }
-	    } catch (IOException ex) {
-	        throw ex;
-	    } finally {
-	        if (bufferedReader != null) {
-	            try {
-	                bufferedReader.close();
-	            } catch (IOException ex) {
-	                throw ex;
-	            }
-	        }
-	    }
-
-	    body = stringBuilder.toString();
-	    return body;
-	}
-    
+	
     
     public String buildPath(){
     	String loginId = session(FlowCenterService.LOGIN_USER_ID);
