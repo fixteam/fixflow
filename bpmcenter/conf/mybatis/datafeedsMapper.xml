@@ -499,7 +499,7 @@
     </select>
     
 	<select id="flowInstances" resultType="java.util.Map">
-		select PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME 
+		select PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME,INSTANCE_STATUS 
 		from FIXBPA_FLOW_PROCESSINSTANCE
 		where 1=1
 		<if test="procID != null">
@@ -517,7 +517,14 @@
 		<if test="dateEnd != null">  
 			<![CDATA[and START_TIME <= #{dateEnd}]]>
 		</if>
-			
+		
+		<if test="instanceStatus != null">  
+			and INSTANCE_STATUS like '%${instanceStatus}%' 
+		</if>
+	    <if test="orderColumn != null and orderColumn!=''">  
+      		order by ${orderColumn} ${orderType}
+      	</if> 
+				
 	</select>
 	
 	<select id="flowInstances_page" resultType="java.lang.Integer">
