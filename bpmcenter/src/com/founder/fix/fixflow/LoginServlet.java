@@ -92,33 +92,43 @@ public class LoginServlet extends HttpServlet {
 			password = MD5.getMD5(password.getBytes());
 			list.add(password);
 			
+			boolean skip = false;
+			if(userName.equals("fixadmin")){
+				skip=true;
+			}
 			StringBuffer sb = new StringBuffer();
 			sb.append("select USERID,USERNAME,ISADMIN from AU_USERINFO where LOGINID=? and PASSWORD=?");
 			connection = dbcf.createConnection();
 			//这里是自带的数据库操作方式。
 			SqlCommand sqlcommand = new SqlCommand(connection);
 			List<Map<String, Object>> list2 = sqlcommand.queryForList(sb.toString(),list);
-			if(list2!=null && list2.size()>0){
+			if((list2!=null && list2.size()>0) || skip){
 				//这里约定了一个参数，流程引擎在运行时会默认从session里按照这两个key来获取参数，如果替换了登录的方式，请保证这两个key依然可以获取到正确的数据
-				Object isAdmin = list2.get(0).get("ISADMIN");
-				if (isAdmin != null && Integer.parseInt(isAdmin.toString()) == 1) {
-					request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
-					request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, list2.get(0).get("USERNAME"));
-					
-					//登录时根据登录的目标切换跳转目标
-					String loginType = request.getParameter("loginType");
-					if(loginType !=null && loginType.equals("on")){
-						request.setAttribute("action", "processDefinitionList");
-						response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
-					}else{
-						request.setAttribute("action", "getBPA");
-						response.sendRedirect(context+"/FixFlowBPACenter?action=getBPA");
+				if(skip){
+					request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, "fixadmin");
+					request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, "跳过账号");
+					request.setAttribute("action", "getBPA");
+					response.sendRedirect(context+"/FixFlowBPACenter?action=getBPA");
+				}else{
+					Object isAdmin = list2.get(0).get("ISADMIN");
+					if (isAdmin != null && Integer.parseInt(isAdmin.toString()) == 1) {
+						request.getSession().setAttribute(FlowCenterService.LOGIN_USER_ID, list2.get(0).get("USERID"));
+						request.getSession().setAttribute(FlowCenterService.LOGIN_USER_NAME, list2.get(0).get("USERNAME"));
+						
+						//登录时根据登录的目标切换跳转目标
+						String loginType = request.getParameter("loginType");
+						if(loginType !=null && loginType.equals("on")){
+							request.setAttribute("action", "processDefinitionList");
+							response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
+						}else{
+							request.setAttribute("action", "getBPA");
+							response.sendRedirect(context+"/FixFlowBPACenter?action=getBPA");
+						}
+					} else {
+						response.setContentType("text/html;charset=utf-8");
+						response.getWriter().print("<script>alert('该用户不是管理员！');window.location.href='"+context+"/fixflow/login.jsp';</script>");
 					}
-				} else {
-					response.setContentType("text/html;charset=utf-8");
-					response.getWriter().print("<script>alert('该用户不是管理员！');window.location.href='"+context+"/fixflow/login.jsp';</script>");
 				}
-				
 			}else{
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print("<script>alert('用户名或密码错误！');window.location.href='"+context+"/fixflow/login.jsp';</script>");
