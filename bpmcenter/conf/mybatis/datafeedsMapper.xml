@@ -499,7 +499,7 @@
     </select>
     
 	<select id="flowInstances" resultType="java.util.Map">
-		select PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME 
+		select PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME,USER_NAME,END_TIME 
 		from FIXBPA_FLOW_PROCESSINSTANCE
 		where 1=1
 		<if test="procID != null">
@@ -516,6 +516,9 @@
 		</if>
 		<if test="dateEnd != null">  
 			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+		<if test="userName != null">
+			and USER_NAME like '%${userName}%'
 		</if>
 			
 	</select>
@@ -541,7 +544,7 @@
 	</select>
 	
 	<select id="flowInstances_nodeList" resultType="java.util.Map" parameterType="java.util.Map">      	
-		select  NODE_ID,NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME 
+		select  NODE_ID,NODE_NAME,TASK_COMMENT,CREATE_TIME,END_TIME,WORK_TIME,USER_NAME,COMMAND_MESSAGE
 		from FIXBPA_FLOW_TASKINSTANCE
 		<if test="procID != null">
 			where PROCESSINSTANCE_ID = #{procID} 
