@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.core.impl.cmd;
 
 import java.util.zip.ZipInputStream;
 
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
@@ -33,7 +34,7 @@ public class DeploymentByZipCmd implements Command<String> {
 	}
 	public String execute(CommandContext commandContext) {
 		if(zipInputStream == null){
-			return null;
+			throw new FixFlowException("Zip文件不能为空");
 		}
 		deploymentBuilder.addZipInputStream(zipInputStream);
 		return deploymentBuilder.deploy().getId();
