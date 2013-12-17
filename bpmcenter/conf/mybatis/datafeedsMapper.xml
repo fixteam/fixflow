@@ -548,6 +548,9 @@
 		</if>
 		<if test="dateEnd != null">  
 			<![CDATA[and START_TIME <= #{dateEnd}]]>
+		</if>
+		<if test="instanceStatus != null">  
+			and INSTANCE_STATUS = #{instanceStatus}
 		</if> 
 	</select>
 	
