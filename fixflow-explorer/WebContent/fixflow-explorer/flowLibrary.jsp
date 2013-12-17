@@ -91,7 +91,7 @@
 	</div>
 </div>
 
-<div class="popup-A sl-shadow" style="position:absolute;display: none;">
+<div id="createFileDialog" class="popup-A sl-shadow" style="position:absolute;display: none;">
 	<div class="title"><h4>新建流程</h4></div>
 		<div class="content">
 			<table width="100%" border="0" class="fix-table2">
@@ -112,6 +112,33 @@
               			</td>
        				 </tr>
       			</tbody></table>
+	</div>
+</div>
+
+<div id="delopyFlowDialog" class="popup-A sl-shadow" style="position:absolute; display: none; width: 880px; right: 80px;">
+	<div class="title"><h4>发布流程</h4></div>
+		<div class="content">
+			<table width="100%" border="0" class="fix-table2">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>名称</th>
+						<th>版本</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+      			</tbody>
+      			<tfoot>
+      				<tr>
+      					<td colspan="4">
+      						<div class="btn-normal fn-left"><a href="#" id="delopyOkBtn">发布</a></div>
+      						<div class="btn-normal fn-left"><a href="#" id="delopyUpdateBtn">更新</a></div>
+              				<div class="btn-normal fn-left"><a href="#" id="delopyCloseBtn">取 消</a></div>
+              			</td>
+      				</tr>
+      			</tfoot>
+      		</table>
 	</div>
 </div>
 <div class="bg"></div>
