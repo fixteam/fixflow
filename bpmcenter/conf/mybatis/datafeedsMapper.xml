@@ -523,7 +523,7 @@
 		</if>
 		
 		<if test="instanceStatus != null">  
-			and INSTANCE_STATUS like '%${instanceStatus}%' 
+			and INSTANCE_STATUS = #{instanceStatus}
 		</if>
 	    <if test="orderColumn != null and orderColumn!=''">  
       		order by ${orderColumn} ${orderType}
