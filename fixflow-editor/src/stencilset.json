@@ -103,6 +103,7 @@
 			"title" : "编号",
 			"value" : "",
 			"description" : "Unique identifier of the element.",
+			"readonly": true,
 			"popular" : "常规"
 		},{ 
 			"id" : "name",
