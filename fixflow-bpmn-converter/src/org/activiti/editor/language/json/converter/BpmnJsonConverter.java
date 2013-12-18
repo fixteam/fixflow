@@ -376,7 +376,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	  boolean nonEmptyPoolFound = false;
 
 	  if (nonEmptyPoolFound == false) {
-	      JsonNode processIdNode = JsonConverterUtil.getProperty(PROPERTY_PROCESS_ID, modelNode);
+	      JsonNode processIdNode = JsonConverterUtil.getProperty(PROPERTY_OVERRIDE_ID, modelNode);
 	      if(processIdNode != null && StringUtils.isNotEmpty(processIdNode.asText())) {
 	    	  process.setId(processIdNode.asText());
 	      }
