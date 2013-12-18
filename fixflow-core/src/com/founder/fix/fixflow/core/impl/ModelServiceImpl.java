@@ -201,6 +201,11 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 		return commandExecutor.execute(new DeploymentByStreamCmd(createDeployment(),fileInputStreamMap));
 	}
 	
+	public String updateDeploymentByStream(Map<String, InputStream> fileInputStreamMap,String deploymentId){
+		
+		return null;
+	}
+	
 	public List<Map<String, String>> getUserSubmitProcess(String userId, int number) {
 
 		return commandExecutor.execute(new GetUserSubmitProcess(userId,number));
