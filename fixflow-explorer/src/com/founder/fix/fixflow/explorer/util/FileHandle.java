@@ -1,4 +1,4 @@
-package com.founder.fix.fixflow.explorer;
+package com.founder.fix.fixflow.explorer.util;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
@@ -23,7 +22,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.emf.common.util.URI;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
-import com.founder.fix.fixflow.explorer.FileAndDirectoryUtils;
+import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.util.FileUtil;
 public class ModelSaveServlet extends HttpServlet {
@@ -37,7 +36,7 @@ public class ModelSaveServlet extends HttpServlet {
 	
 	  public String buildPath(HttpServletRequest request,String path){
 		  
-		  String loginId = request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID).toString();
+		  	String loginId = request.getSession().getAttribute(FlowCenterService.LOGIN_USER_ID).toString();
 			String [] pathArr = path.split(",");
 			String type = pathArr[0];
 			

@@ -1,32 +1,15 @@
 package com.founder.fix.fixflow.explorer;
 
-import groovy.lang.Buildable;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
-
-import com.founder.fix.bpmn2extensions.coreconfig.DataBase;
-import com.founder.fix.fixflow.core.ModelService;
-import com.founder.fix.fixflow.core.ProcessEngine;
-import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.impl.ExternalContent;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
+import com.founder.fix.fixflow.explorer.impl.FlowExplorerServiceImpl;
+import com.founder.fix.fixflow.explorer.service.FlowExplorerService;
+import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.service.FlowCenterService;
-import com.ibm.db2.jcc.a.e;
  
 /**
  * 文件目录管理类
@@ -57,6 +40,9 @@ public class FileAndDirectoryServlet extends BaseServlet {
 		}
     }
    
+    /**
+     * 新建文件夹
+     */
     public void create(){
     	try {
     		String path = buildPath();
@@ -74,83 +60,42 @@ public class FileAndDirectoryServlet extends BaseServlet {
     public void delopy(){
     	String fileName = request("fileName");
     	String deploymentId = request("deploymentId");
+    	String userId = session(FlowCenterService.LOGIN_USER_ID);
     	if(fileName != null){
     		InputStream input = null;
     		InputStream pngInputStream = null;
-    		ProcessEngine processEngine =null;
     		try{
-	    		processEngine = getProcessEngine();
-	    		if(processEngine != null){
-    				
-					String pngFileName = fileName.substring(0,fileName.lastIndexOf("."))+".png";
-	        		input = new FileInputStream(buildPath() +File.separator+fileName); 
-	        		pngInputStream = new FileInputStream(buildPath() +File.separator+pngFileName); 
-	        		Map<String,InputStream> fileInputSteamMap = new HashMap<String, InputStream>();
-	        		fileInputSteamMap.put(fileName, input);
-	        		fileInputSteamMap.put(pngFileName, pngInputStream);
-	        		ModelService modelService = processEngine.getModelService();
-	        		if(deploymentId != null  && !"".equals(deploymentId)){
-	        			modelService.updateDeploymentByStream(fileInputSteamMap, deploymentId);
-	        			success("更新成功！", "string");
-	        		}else{
-	        			modelService.deploymentByStream(fileInputSteamMap);
-		        		success("发布成功", "string");
-	        		}
-		    		
-	    		}
+				String pngFileName = fileName.substring(0,fileName.lastIndexOf("."))+".png";
+        		input = new FileInputStream(buildPath() +File.separator+fileName); 
+        		pngInputStream = new FileInputStream(buildPath() +File.separator+pngFileName); 
+        		Map<String,InputStream> fileInputSteamMap = new HashMap<String, InputStream>();
+        		fileInputSteamMap.put(fileName, input);
+        		fileInputSteamMap.put(pngFileName, pngInputStream);
+        		FlowExplorerService flowExplorerService = new FlowExplorerServiceImpl();
+        		flowExplorerService.deploy(fileInputSteamMap, deploymentId, userId);
+        		success("发布成功", "string");
 			}catch(Exception ex){
 				ex.printStackTrace();
 				error("发布失败 :"+ex.getMessage());
-			}finally{
-				if(processEngine != null){
-					processEngine.contextClose(true, true);
-				}
 			}
     	}
-    	//error("发布失败，请确认fileName路径正确");
     }
     
+    /**
+     * 获取流程版本信息
+     * @throws Exception
+     */
     public void getProcessVersionInfo() throws Exception{
+    	String userId = session(FlowCenterService.LOGIN_USER_ID);
     	String fileName =  request("fileName");
-    	String processKey = fileName.substring(0, fileName.lastIndexOf("."));
-    	List<Map<String, Object>> resultMaps = new ArrayList<Map<String,Object>>();
-    	ProcessEngine processEngine = getProcessEngine();
-    	if(processEngine != null){
-    		ModelService modelService = processEngine.getModelService();
-    		ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
-    		processDefinitionQuery.processDefinitionKey(processKey);
-    		List<ProcessDefinitionBehavior> processDefinitionBehaviors = processDefinitionQuery.list();
-    		for(ProcessDefinitionBehavior processDefinitionBehavior :processDefinitionBehaviors){
-    			resultMaps.add(processDefinitionBehavior.getPersistentState());
-    		}
+    	String result = null;
+    	try{
+    		FlowExplorerService flowExplorerService = new FlowExplorerServiceImpl();
+        	result = flowExplorerService.getProcessVersionInfo(fileName, userId);
+        	success(result);
+    	}catch(Exception ex){
+    		error("创建失败" + ex.getMessage());
     	}
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	String aaString = objectMapper.writeValueAsString(resultMaps);
-    	System.out.println(aaString);
-    	success(aaString);
-    }
-    
-    
-    private ProcessEngine getProcessEngine() throws Exception{
-    	Connection connection = null;
-    	ProcessEngine processEngine=ProcessEngineManagement.getDefaultProcessEngine();
-    	
-		//获取流程当前配置的数据库信息
-		DataBase dataBase=processEngine.getProcessEngineConfiguration().getSelectedDatabase();
-		String driver = dataBase.getDriverClassName();
-		String url = dataBase.getUrl();
-		String user = dataBase.getUsername();
-		String password = dataBase.getPassword();
-		//创建Connection
-		Class.forName(driver);
-		connection = DriverManager.getConnection(url, user, password);
-		connection.setAutoCommit(false);
-		ExternalContent externalContent =new ExternalContent();
-		externalContent.setAuthenticatedUserId(session(FlowCenterService.LOGIN_USER_ID));
-		externalContent.setConnection(connection);
-		processEngine.setExternalContent(externalContent);
-    	
-    	return processEngine;
     }
     
     public void readSubFileAndDirectory(){
@@ -163,7 +108,6 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		error("下属文件及文件夹读取失败!");
     	}
     }
-    
     
     public void reName(){
     	try {
@@ -217,7 +161,6 @@ public class FileAndDirectoryServlet extends BaseServlet {
     	}else{
     		resutl[1] = FileAndDirectoryUtils.sharedPath + File.separator+"resolvent";
     	}
-    	//resutl[1] = session(FlowCenterService.LOGIN_USER_ID)+File.separator+ node[0]+File.separator+"resolvent";
     	return resutl;
     }
 }

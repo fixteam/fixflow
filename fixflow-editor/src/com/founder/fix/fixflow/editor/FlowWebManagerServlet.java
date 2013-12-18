@@ -9,8 +9,8 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.explorer.BaseServlet;
-import com.founder.fix.fixflow.explorer.FileAndDirectoryUtils;
-import com.founder.fix.fixflow.explorer.FileHandle;
+import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
+import com.founder.fix.fixflow.explorer.util.FileHandle;
 import com.founder.fix.fixflow.service.FlowCenterService;
 
 /**
@@ -30,13 +30,6 @@ public class FlowWebManagerServlet extends BaseServlet {
             InputStream input = new FileInputStream(buildPath() +File.separator+request("fileName")); 
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		ajaxResultObj(on);
-//    		 InputStream input = new FileInputStream(new File(getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath() +File.separator+request("fileName"))); 
-//     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
-//     		
-//     		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("org/activiti/editor/language/test.completemodel.json");
-//     		ObjectMapper objectMapper = new ObjectMapper();
-//     		JsonNode jsonNode = objectMapper.readTree(inputStream);
-//     		ajaxResultObj((ObjectNode)jsonNode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			error("加载web流程图，返回json格式对象出错!");
