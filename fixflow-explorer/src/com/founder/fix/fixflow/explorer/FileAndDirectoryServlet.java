@@ -73,6 +73,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
      */
     public void delopy(){
     	String fileName = request("fileName");
+    	String deploymentId = request("deploymentId");
     	if(fileName != null){
     		InputStream input = null;
     		InputStream pngInputStream = null;
@@ -88,8 +89,14 @@ public class FileAndDirectoryServlet extends BaseServlet {
 	        		fileInputSteamMap.put(fileName, input);
 	        		fileInputSteamMap.put(pngFileName, pngInputStream);
 	        		ModelService modelService = processEngine.getModelService();
-		    		modelService.deploymentByStream(fileInputSteamMap);
-	        		success("发布成功", "string");
+	        		if(deploymentId != null  && !"".equals(deploymentId)){
+	        			modelService.updateDeploymentByStream(fileInputSteamMap, deploymentId);
+	        			success("更新成功！", "string");
+	        		}else{
+	        			modelService.deploymentByStream(fileInputSteamMap);
+		        		success("发布成功", "string");
+	        		}
+		    		
 	    		}
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -100,7 +107,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
 				}
 			}
     	}
-    	error("发布失败，请确认fileName路径正确");
+    	//error("发布失败，请确认fileName路径正确");
     }
     
     public void getProcessVersionInfo() throws Exception{

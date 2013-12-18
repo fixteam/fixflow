@@ -199,6 +199,7 @@ $(document).ready(function(){
 						},
 						success: function(data){
 							eval("var d = " + data);
+							$("#delopyFlowDialog table").data("fileName", fileName);
 							$.each(d.result, function(index, obj){
 								var $tbody = $("#delopyFlowDialog table tbody");
 								var $tr = $("<tr><td>"+ obj.processDefinitionKey +"</td><td>"+ obj.processDefinitionName +"</td><td>"+ obj.version  +"</td></tr>");
@@ -206,7 +207,7 @@ $(document).ready(function(){
 									$("tr", $tbody).removeClass("select");
 									$(this).addClass("select");
 								});
-								$("#delopyFlowDialog table").data("fileName", fileName);
+								
 								$tr.data("deploymentId", obj.deploymentId);
 								$tbody.append($tr);
 							});
