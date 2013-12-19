@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmappingconfig:RulesConfig id="variable" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
+
+
+	<!-- 变量表 -->
+	<dataBaseTable tableId="fixflow_run_variable" tableName="变量表" tableValue="FIXFLOW_RUN_VARIABLE" mappingType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity">
+		<columnMapping column="PROCESSINSTANCE_ID" name="流程实例编号" property="processInstanceId" simpleKey="processInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="VARIABLE_KEY" name="变量key" property="variableKey" simpleKey="variableKey" jdbcType="VARCHAR" />
+		<columnMapping column="VARIABLE_VALUE" name="变量值" property="variableValue" simpleKey="variableValue" jdbcType="VARCHAR" />
+		<columnMapping column="VARIABLE_CLASSNAME" name="变量类全名" property="variableClassName" simpleKey="variableClassName" jdbcType="VARCHAR" />
+		<columnMapping column="TASKINSTANCE_ID" name="任务编号" property="taskInstanceId" simpleKey="taskInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="TOKEN_ID" name="令牌号" property="tokenId" simpleKey="tokenId" jdbcType="VARCHAR" />
+		<columnMapping column="NODE_ID" name="节点编号" property="nodeId" simpleKey="nodeId" jdbcType="VARCHAR" />
+		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+		<columnMapping column="VARIABLE_TYPE" name="变量业务类型" property="variableType" simpleKey="variableType" jdbcType="VARCHAR" />
+		<columnMapping column="BIZ_DATA" name="业务查询数据" property="bizData" simpleKey="bizData" jdbcType="VARCHAR" />
+	</dataBaseTable>
+
+	<insert id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</insert>
+
+	<delete id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+
+	</delete>
+	<update id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</update>
+
+	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+
+	</sql>
+	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</businessRules>
+
+</sqlmappingconfig:RulesConfig>

@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.impl;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -35,13 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 
-
-
-
-
-
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -72,17 +67,21 @@ import com.founder.fix.bpmn2extensions.coreconfig.PriorityConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.QuartzConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ResourcePath;
 import com.founder.fix.bpmn2extensions.coreconfig.ResourcePathConfig;
+import com.founder.fix.bpmn2extensions.coreconfig.RulesResource;
+import com.founder.fix.bpmn2extensions.coreconfig.RulesResourceConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.ScriptLanguageConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.BusinessRules;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.ColumnMapping;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTableConfig;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.Sql;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMapping;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlMappingConfig;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Delete;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Insert;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Select;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigFactory;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigPackage;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Update;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.VariableconfigPackage;
 import com.founder.fix.fixflow.core.ConnectionManagement;
@@ -150,8 +149,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	public AbstractAuthentication authenticationInstance;
 
-	
-
 	protected DataBase selectedDatabase;
 	protected SysMailConfig sysMailConfig;
 	protected EventSubscriptionConfig eventSubscriptionConfig;
@@ -163,10 +160,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected FixFlowResources fixFlowResources;
 
 	protected PigeonholeConfig pigeonholeConfig;
-	
-	protected DataBaseTableConfig dataBaseTableConfig;
-
-	
 
 	protected ExpandCmdConfig expandCmdConfig;
 
@@ -195,16 +188,14 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected ConnectionManagementInstanceConfig connectionManagementInstanceConfigDefault;
 
 	protected List<ConnectionManagementInstanceConfig> connectionManagementInstanceConfigs;
-	
-	protected SqlMappingConfig sqlMappingConfig;
-	
-	protected DataVariableConfig dataVariableConfig;
-	
-	
 
-	protected List<SqlMapping> sqlMappings;
-	
-	protected Map<String, Map<String, Sql>> sqlMap=new HashMap<String, Map<String, Sql>>();
+	protected DataVariableConfig dataVariableConfig;
+
+	protected Map<String, DataBaseTable> dataBaseTables = new HashMap<String, DataBaseTable>();
+
+	protected Map<String, ColumnMapping> columnMappingMap = new HashMap<String, ColumnMapping>();
+
+	protected Map<String, Rule> ruleMap = new HashMap<String, Rule>();
 
 	
 
@@ -221,7 +212,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	protected void init() {
 		initEmfFile();
-		initSqlMappingFile();
+		initRulesConfig();
+		// initSqlMappingFile();
 		initDataVariableConfig();
 		initCommandContextFactory();
 		initResourcePathConfig();
@@ -229,7 +221,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initConnectionManagementConfig();
 		initServices();
 		initConnection();
-		initDataBaseTable();
+		// initDataBaseTable();
 		initCache();
 		initDeployers();
 		initGroupDefinitions();
@@ -255,21 +247,146 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initPriorityConfig();
 		initAssignPolicyConfig();
 		initThreadPool();
-	
 
 	}
 
+	private void initRulesConfig() {
+		// TODO Auto-generated method stub
+
+		// this.rulesConfigs=new ArrayList<RulesConfig>();
+		ruleMap.clear();
+
+		RulesResourceConfig rulesResourceConfig = getFixFlowConfig().getRulesResourceConfig();
+		List<RulesResource> rulesResources = rulesResourceConfig.getRulesResource();
+
+		for (RulesResource rulesResource : rulesResources) {
+
+			String classPath = rulesResource.getSrc();
+
+			String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
+			Document document = null;
+			try {
+
+				if (!filePath.startsWith("jar")) {
+					filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
+
+					InputStream in = new FileInputStream(filePath);
+					document = XmlUtil.read(in);
+				} else {
+					InputStream in = new FileInputStream(filePath);
+					document = XmlUtil.read(in);
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new FixFlowException("读取fixflow配置出错", e);
+			}
+
+			for (Object ele : document.getRootElement().elements("dataBaseTable")) {
+				Element element = (Element) ele;
+
+				DataBaseTable dataBaseTable = SqlmappingconfigFactory.eINSTANCE.createDataBaseTable();
+				dataBaseTable.setTableId(element.attributeValue("tableId"));
+				dataBaseTable.setTableName(element.attributeValue("tableName"));
+				dataBaseTable.setTableValue(element.attributeValue("tableValue"));
+				dataBaseTable.setMappingType(element.attributeValue("mappingType"));
+
+				for (Object eleNew : element.elements("columnMapping")) {
+					Element columnMappingElement = (Element) eleNew;
+					ColumnMapping columnMapping = SqlmappingconfigFactory.eINSTANCE.createColumnMapping();
+					columnMapping.setColumn(columnMappingElement.attributeValue("column"));
+					columnMapping.setName(columnMappingElement.attributeValue("name"));
+					columnMapping.setJdbcType(columnMappingElement.attributeValue("jdbcType"));
+					columnMapping.setProperty(columnMappingElement.attributeValue("property"));
+					columnMapping.setSimpleKey(columnMappingElement.attributeValue("property"));
+
+					dataBaseTable.getColumnMapping().add(columnMapping);
+					columnMappingMap.put(dataBaseTable.getTableId()+"_"+columnMapping.getColumn(), columnMapping);
+				}
+
+				dataBaseTables.put(dataBaseTable.getTableId(), dataBaseTable);
+
+			}
+
+			for (Object ele : document.getRootElement().elements("insert")) {
+				Element element = (Element) ele;
+
+				Insert insertObj = SqlmappingconfigFactory.eINSTANCE.createInsert();
+				insertObj.setId(element.attributeValue("id"));
+				insertObj.setParameterType(element.attributeValue("parameterType"));
+				insertObj.setRemark(element.attributeValue("remark"));
+				insertObj.setSqlValue(element.getText());
+
+				ruleMap.put(insertObj.getId(), insertObj);
+
+			}
+
+			for (Object ele : document.getRootElement().elements("delete")) {
+				Element element = (Element) ele;
+
+				Delete deleteObj = SqlmappingconfigFactory.eINSTANCE.createDelete();
+				deleteObj.setId(element.attributeValue("id"));
+				deleteObj.setParameterType(element.attributeValue("parameterType"));
+				deleteObj.setRemark(element.attributeValue("remark"));
+				deleteObj.setSqlValue(element.getText());
+
+				ruleMap.put(deleteObj.getId(), deleteObj);
+
+			}
+
+			for (Object ele : document.getRootElement().elements("update")) {
+				Element element = (Element) ele;
+
+				Update updateObj = SqlmappingconfigFactory.eINSTANCE.createUpdate();
+				updateObj.setId(element.attributeValue("id"));
+				updateObj.setParameterType(element.attributeValue("parameterType"));
+				updateObj.setRemark(element.attributeValue("remark"));
+				updateObj.setSqlValue(element.getText());
+
+				ruleMap.put(updateObj.getId(), updateObj);
+
+			}
+
+			for (Object ele : document.getRootElement().elements("select")) {
+				Element element = (Element) ele;
+
+				Select selectObj = SqlmappingconfigFactory.eINSTANCE.createSelect();
+				selectObj.setId(element.attributeValue("id"));
+				selectObj.setParameterType(element.attributeValue("parameterType"));
+				selectObj.setRemark(element.attributeValue("remark"));
+				selectObj.setSqlValue(element.getText());
+				selectObj.setResultMap(element.attributeValue("resultMap"));
+
+				ruleMap.put(selectObj.getId(), selectObj);
+
+			}
+
+			for (Object ele : document.getRootElement().elements("businessRules")) {
+				Element element = (Element) ele;
+
+				BusinessRules businessRules = SqlmappingconfigFactory.eINSTANCE.createBusinessRules();
+				businessRules.setId(element.attributeValue("id"));
+				businessRules.setParameterType(element.attributeValue("parameterType"));
+				businessRules.setRemark(element.attributeValue("remark"));
+				businessRules.setSqlValue(element.getText());
+				businessRules.setResultType(element.attributeValue("resultType"));
+				ruleMap.put(businessRules.getId(), businessRules);
+
+			}
+
+			// rulesConfigs.add(rulesConfig);
+
+		}
+
+	}
 
 	protected ResourcePathConfig resourcePathConfig;
 
-	
-
 	private void initResourcePathConfig() {
 		// TODO Auto-generated method stub
-		this.resourcePathConfig=getFixFlowConfig().getResourcePathConfig();
+		this.resourcePathConfig = getFixFlowConfig().getResourcePathConfig();
 	}
-	
-	
 
 	private void initDataVariableConfig() {
 		// TODO Auto-generated method stub
@@ -277,16 +394,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
 
-		
-
 		InputStream inputStream = null;
-		String classPath="com/founder/fix/fixflow/expand/config/datavariableconfig.xml";
+		String classPath = "com/founder/fix/fixflow/expand/config/datavariableconfig.xml";
 		inputStream = ReflectUtil.getResourceAsStream("datavariableconfig.xml");
-		if(inputStream!=null){
-			classPath="datavariableconfig.xml";
+		if (inputStream != null) {
+			classPath = "datavariableconfig.xml";
 		}
-		
-		
+
 		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
 		try {
@@ -313,98 +427,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			throw new FixFlowException("流程配置文件加载失败", e);
 		}
 
-		dataVariableConfig= (DataVariableConfig) resource.getContents().get(0);
-	}
-
-	private void initSqlMappingFile() {
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
-
-		
-
-		InputStream inputStream = null;
-		String classPath="com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml";
-		inputStream = ReflectUtil.getResourceAsStream("sqlmappingconfig.xml");
-		if(inputStream!=null){
-			classPath="sqlmappingconfig.xml";
-		}
-		
-		
-		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
-		Resource resource = null;
-		try {
-			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
-				resource = resourceSet.createResource(URI.createFileURI(filePath));
-			} else {
-				resource = resourceSet.createResource(URI.createURI(filePath));
-			}
-
-		} catch (UnsupportedEncodingException e2) {
-			e2.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败！", e2);
-		}
-
-		// register package in local resource registry
-		resourceSet.getPackageRegistry().put(SqlmappingconfigPackage.eINSTANCE.getNsURI(), SqlmappingconfigPackage.eINSTANCE);
-		// load resource
-		try {
-			resource.load(null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败", e);
-		}
-
-		sqlMappingConfig= (SqlMappingConfig) resource.getContents().get(0);
-
-	}
-
-	
-	
-	private void initDataBaseTable() {
-		
-		this.sqlMappingConfig.eResource();
-		
-		
-		this.sqlMappings=this.sqlMappingConfig.getSqlMapping();
-		this.dataBaseTableConfig=this.sqlMappingConfig.getDataBaseTableConfig();
-		
-		
-		
-		Document document = null;
-		try {
-			document = XmlUtil.read(ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/expand/config/sqlmappingconfig.xml"));
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new FixFlowException("读取fixflow配置出错", e);
-		}
-		sqlMap.clear();
-		for (Object ele : document.getRootElement().elements("sqlMapping")) {
-			Element sqlMapping = (Element) ele;
-			Map<String, Sql> sqlMapNew=new HashMap<String, Sql>();
-			for (Object eleNew : sqlMapping.elements("sql")) {
-				Element sqlE = (Element) eleNew;
-				Sql sql=SqlmappingconfigFactory.eINSTANCE.createSql();
-				sql.setId(sqlE.attributeValue("id"));
-				sql.setSqlValue(sqlE.getText());
-				sqlMapNew.put(sql.getId(),sql );
-			}
-			sqlMap.put(sqlMapping.attributeValue("id"), sqlMapNew);
-			
-		}
-		
-		/*
-		for (SqlMapping sqlMapping : this.sqlMappings) {
-			for (Sql sql : sqlMapping.getSql()) {
-				sqlMap.put(sql.getId(), sql);
-			}
-		}*/
-		
-		
+		dataVariableConfig = (DataVariableConfig) resource.getContents().get(0);
 	}
 
 	private void initImportDataVariableConfig() {
@@ -423,15 +446,16 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		for (ConnectionManagementInstanceConfig connectionManagementInstanceConfigTemp : connectionManagementInstanceConfigs) {
 			if (connectionManagementInstanceConfigTemp.getId().equals(selectId)) {
 				this.connectionManagementInstanceConfigDefault = connectionManagementInstanceConfigTemp;
-				connectionManagementDefault = (ConnectionManagement) ReflectUtil.instantiate(this.connectionManagementInstanceConfigDefault.getClassImpl());
+				connectionManagementDefault = (ConnectionManagement) ReflectUtil.instantiate(this.connectionManagementInstanceConfigDefault
+						.getClassImpl());
 				if (this.connectionManagementDefault == null) {
 					throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
 				}
 				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementDefault);
 
 			} else {
-				ConnectionManagement connectionManagementOther = (ConnectionManagement) ReflectUtil.instantiate(connectionManagementInstanceConfigTemp
-						.getClassImpl());
+				ConnectionManagement connectionManagementOther = (ConnectionManagement) ReflectUtil
+						.instantiate(connectionManagementInstanceConfigTemp.getClassImpl());
 				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementOther);
 			}
 		}
@@ -443,17 +467,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		ResourceSet resourceSet = new ResourceSetImpl();
 
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
-		
-		
-		
-		InputStream inputStream = null;
-		String classPath="com/founder/fix/fixflow/expand/config/fixflowconfig.xml";
-		inputStream = ReflectUtil.getResourceAsStream("fixflowconfig.xml");
-		if(inputStream!=null){
-			classPath="fixflowconfig.xml";
-		}
 
-		
+		InputStream inputStream = null;
+		String classPath = "com/founder/fix/fixflow/expand/config/fixflowconfig.xml";
+		inputStream = ReflectUtil.getResourceAsStream("fixflowconfig.xml");
+		if (inputStream != null) {
+			classPath = "fixflowconfig.xml";
+		}
 
 		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
@@ -702,16 +722,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		 * SchedulerFactory schedulerFactory =
 		 * QuartzUtil.createSchedulerFactory(); Scheduler scheduler = null;
 		 */
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		this.quartzConfig = fixFlowConfig.getQuartzConfig();
 
@@ -794,49 +804,44 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		props.put("org.quartz.dataSource.fixDS.user", username);
 		props.put("org.quartz.dataSource.fixDS.password", password);
 		props.put("org.quartz.dataSource.fixDS.maxConnections", "5");
-		
-		
-		
-		Properties prop= new Properties();
+
+		Properties prop = new Properties();
 		InputStream inputStream = null;
-		
-		
+
 		try {
 			inputStream = ReflectUtil.getResourceAsStream("quartz.properties");
-			if(inputStream!=null){
+			if (inputStream != null) {
 				prop.load(inputStream);
 				inputStream.close();
-				Set<Object> objects=prop.keySet();
+				Set<Object> objects = prop.keySet();
 				for (Object object : objects) {
 					props.put(StringUtil.getString(object), prop.getProperty(StringUtil.getString(object)));
 				}
-				
+
 			}
-			
+
 		} catch (IOException e) {
 			System.out.println("Scr根目录未找到quartz.properties文件");
 		}
-		
-		if(inputStream==null){
+
+		if (inputStream == null) {
 			try {
 				inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/expand/config/quartz.properties");
-				if(inputStream!=null){
+				if (inputStream != null) {
 					prop.load(inputStream);
 					inputStream.close();
-					Set<Object> objects=prop.keySet();
+					Set<Object> objects = prop.keySet();
 					for (Object object : objects) {
 						props.put(StringUtil.getString(object), prop.getProperty(StringUtil.getString(object)));
 					}
-					
+
 				}
 			} catch (IOException e) {
 				System.out.println("com/founder/fix/fixflow/expand/config/根目录未找到quartz.properties文件");
 			}
 		}
-		
 
 		props.putAll(prop);
-		
 
 		schedulerFactory = null;
 		schedulerFactory = QuartzUtil.createSchedulerFactory(props);
@@ -1098,7 +1103,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		this.identityService = identityService;
 		return this;
 	}
-	
+
 	public ManagementService getManagementService() {
 		return managementService;
 	}
@@ -1111,8 +1116,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public TaskService getTaskService() {
 		return taskService;
 	}
-	
-	
 
 	public List<GroupDefinition> getGroupDefinitions() {
 		return groupDefinitions;
@@ -1289,67 +1292,70 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public AbstractAuthentication getAuthenticationInstance() {
 		return authenticationInstance;
 	}
-	
-	public DataBaseTableConfig getDataBaseTableConfig() {
-	
-		return dataBaseTableConfig;
-	}
-	
-	public List<SqlMapping> getSqlMappings() {
-		return sqlMappings;
-	}
-	
-	public SqlMapping getSqlMapping(String sqlMappingId) {
-		
-		for (SqlMapping sqlMapping : this.sqlMappings) {
-			if(sqlMapping.getId().equals(sqlMappingId)){
-				return sqlMapping;
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * 获取sql配置
-	 * @param sqlMappingId 分类编号
-	 * @param sqlId sql编号
-	 * @return
-	 */
-	public Sql getSql(String sqlMappingId,String sqlId) {
-		
-		return sqlMap.get(sqlMappingId).get(sqlId);
 
-	}
-	
 	public DataVariableConfig getDataVariableConfig() {
 		return dataVariableConfig;
 	}
-	
+
 	public DataBaseTable getDataBaseTableConfig(DataBaseTableEnum dataBaseTableEnum) {
-		
-		List<DataBaseTable> dataBaseTables=dataBaseTableConfig.getDataBaseTable();
-		
-		for (DataBaseTable dataBaseTable : dataBaseTables) {
-			if(dataBaseTable.getTableId().toLowerCase().equals(dataBaseTableEnum.toString().toLowerCase())){
-				return dataBaseTable;
-			}
-		}
-		return null;
+
+		return this.dataBaseTables.get(dataBaseTableEnum.toString().toLowerCase());
+
 	}
-	
+
 	public ResourcePathConfig getResourcePathConfig() {
 		return resourcePathConfig;
 	}
-	public ResourcePath getResourcePath(String resourceId){
 
-		List<ResourcePath> resourcePaths=this.resourcePathConfig.getResourcePath();
+	public ResourcePath getResourcePath(String resourceId) {
+
+		List<ResourcePath> resourcePaths = this.resourcePathConfig.getResourcePath();
 		for (ResourcePath resourcePath : resourcePaths) {
-			if(resourcePath.getId().equals(resourceId)){
+			if (resourcePath.getId().equals(resourceId)) {
 				return resourcePath;
 			}
 		}
 		return null;
 	}
+
+	public DataBaseTable getBaseTable(String tableId) {
+
+		return this.dataBaseTables.get(tableId);
+
+	}
+
+	public Rule getRule(String ruleId) {
+
+		return this.ruleMap.get(ruleId);
+
+	}
+	
+	public Map<String, Rule> getRuleMap() {
+		return ruleMap;
+	}
+	public Map<String, DataBaseTable> getDataBaseTables() {
+		return dataBaseTables;
+	}
+	
+	public ColumnMapping getColumn(String tableId,String columnId) {
+		
+		
+		return columnMappingMap.get(tableId+"_"+columnId);
+		
+	}
+	
+	public Map<String,ColumnMapping> getColumnMap(String tableId) {
+		Map<String, ColumnMapping> columnMappingMapObj=new HashMap<String, ColumnMapping>();
+		DataBaseTable dataBaseTable=dataBaseTables.get(tableId);
+		if(dataBaseTable!=null){
+			for (ColumnMapping columnMapping : dataBaseTable.getColumnMapping()) {
+				columnMappingMapObj.put(columnMapping.getColumn(), columnMapping);
+			}
+		}
+		
+		return columnMappingMapObj;
+		
+	}
+	
 
 }

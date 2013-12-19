@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmappingconfig:RulesConfig id="taskIdentityLink" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
+
+
+	<!-- 任务表 -->
+	<dataBaseTable tableId="fixflow_run_taskidentitylink" tableName="任务候选人表" tableValue="FIXFLOW_RUN_TASKIDENTITYLINK" mappingType="com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity">
+		<columnMapping column="ID" name="编号" property="id" simpleKey="id" jdbcType="VARCHAR" />
+		<columnMapping column="TYPE" name="分配类型" property="type" simpleKey="type" jdbcType="VARCHAR" />
+		<columnMapping column="USER_ID" name="用户编号" property="userId" simpleKey="userId" jdbcType="VARCHAR" />
+		<columnMapping column="GROUP_ID" name="组编号" property="groupId" simpleKey="groupId" jdbcType="VARCHAR" />
+		<columnMapping column="GROUP_TYPE" name="组类型" property="groupType" simpleKey="groupType" jdbcType="VARCHAR" />
+		<columnMapping column="TASKINSTANCE_ID" name="任务实例编号" property="taskId" simpleKey="taskInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="INCLUDE_EXCLUSION" name="包含排除" property="includeExclusion" simpleKey="includeExclusion" jdbcType="VARCHAR" />
+		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+	</dataBaseTable>
+
+	<insert id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</insert>
+
+	<delete id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+
+	</delete>
+	<update id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</update>
+
+	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+
+	</sql>
+	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</businessRules>
+
+</sqlmappingconfig:RulesConfig>

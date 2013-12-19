@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmappingconfig:RulesConfig id="processInstance" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
+
+
+	<!-- 运行实例表 -->
+	<dataBaseTable tableId="fixflow_run_processinstance" tableName="流程实例表" tableValue="FIXFLOW_RUN_PROCESSINSTANCE" mappingType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity">
+		<columnMapping column="PROCESSINSTANCE_ID" name="编号" property="id" simpleKey="processInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="PROCESSDEFINITION_ID" name="流程定义唯一编号" property="processDefinitionId" simpleKey="processDefinitionId" jdbcType="VARCHAR" />
+		<columnMapping column="SUBJECT" name="流程实例主题" property="subject" simpleKey="subject" jdbcType="VARCHAR" />
+		<columnMapping column="START_TIME" name="启动时间" property="startTime" simpleKey="startTime" jdbcType="VARCHAR" />
+		<columnMapping column="END_TIME" name="结束时间" property="endTime" simpleKey="endTime" jdbcType="VARCHAR" />
+		<columnMapping column="DEFINITION_ID" name="业务定义编号" property="definitionId" simpleKey="definitionId" jdbcType="VARCHAR" />
+		<columnMapping column="ROOTTOKEN_ID" name="根令牌编号" property="rootTokenId" simpleKey="rootTokenId" jdbcType="VARCHAR" />
+		<columnMapping column="BIZ_KEY" name="业务关联键值" property="bizKey" simpleKey="bizKey" jdbcType="VARCHAR" />
+		<columnMapping column="INITIATOR" name="提交人" property="initiator" simpleKey="initiator" jdbcType="VARCHAR" />
+		<columnMapping column="ISSUSPENDED" name="是否暂停" property="isSuspended" simpleKey="isSuspended" jdbcType="VARCHAR" />
+		<columnMapping column="PROCESSDEFINITION_KEY" name="流程定义编号" property="processDefinitionKey" simpleKey="processDefinitionKey" jdbcType="VARCHAR" />
+		<columnMapping column="PARENT_INSTANCE_ID" name="父流程实例编号" property="parentProcessInstanceId" simpleKey="parentProcessInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="PARENT_INSTANCE_TOKEN_ID" name="父流程实例令牌编号" property="parentProcessInstanceTokenId" simpleKey="parentProcessInstanceTokenId" jdbcType="VARCHAR" />
+		<columnMapping column="UPDATE_TIME" name="更新时间" property="updateTime" simpleKey="updateTime" jdbcType="VARCHAR" />
+		<columnMapping column="START_AUTHOR" name="启动人" property="startAuthor" simpleKey="startAuthor" jdbcType="VARCHAR" />
+		<columnMapping column="PROCESSLOCATION" name="流程位置" property="processLocation" simpleKey="processLocation" jdbcType="VARCHAR" />
+		<columnMapping column="ISPIGEONHOLE" name="实例编号" property="id" simpleKey="processInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="INSTANCE_STATUS" name="实例状态" property="instanceStatus" simpleKey="instanceStatus" jdbcType="VARCHAR" />
+		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+	</dataBaseTable>
+
+	<insert id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</insert>
+	
+	<delete id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	
+	</delete>
+	<update id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</update>
+	
+	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+
+	</sql>
+	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</businessRules>
+
+</sqlmappingconfig:RulesConfig>

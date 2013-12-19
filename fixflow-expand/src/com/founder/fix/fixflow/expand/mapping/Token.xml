@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmappingconfig:RulesConfig id="token" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
+
+
+	<!-- 任务表 -->
+	<dataBaseTable tableId="fixflow_run_token" tableName="令牌表" tableValue="FIXFLOW_RUN_TOKEN" mappingType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity">
+		<columnMapping column="TOKEN_ID" name="归档时间" property="id" simpleKey="tokenId" jdbcType="VARCHAR" />
+		<columnMapping column="START_TIME" name="启动时间" property="startTime" simpleKey="startTime" jdbcType="VARCHAR" />
+		<columnMapping column="END_TIME" name="结束时间" property="endTime" simpleKey="endTime" jdbcType="VARCHAR" />
+		<columnMapping column="NODEENTER_TIME" name="令牌进入节点的时间" property="nodeEnterTime" simpleKey="nodeEnterTime" jdbcType="VARCHAR" />
+		<columnMapping column="ISABLETOREACTIVATEPARENT" name="在创建分支令牌为true,当子令牌到达join是会被设为false." property="isAbleToReactivateParent" simpleKey="isAbleToReactivateParent" jdbcType="VARCHAR" />
+		<columnMapping column="ISSUSPENDED" name="是否停止" property="isSuspended" simpleKey="isSuspended" jdbcType="VARCHAR" />
+		<columnMapping column="TOKEN_LOCK" name="令牌是否被锁定" property="isLocked" simpleKey="isLocked" jdbcType="VARCHAR" />
+		<columnMapping column="NODE_ID" name="节点编号" property="nodeId" simpleKey="nodeId" jdbcType="VARCHAR" />
+		<columnMapping column="PROCESSINSTANCE_ID" name="流程实例编号" property="processInstanceId" simpleKey="processInstanceId" jdbcType="VARCHAR" />
+		<columnMapping column="PARENT_ID" name="父令牌编号" property="parentTokenId" simpleKey="parentTokenId" jdbcType="VARCHAR" />
+		<columnMapping column="ISSUBPROCESSROOTTOKEN" name="是否是子流程根令牌" property="isSubProcessRootToken" simpleKey="isSubProcessRootToken" jdbcType="VARCHAR" />
+		<columnMapping column="FREETOKEN" name="是否为自由令牌" property="freeToken" simpleKey="freeToken" jdbcType="VARCHAR" />
+		<columnMapping column="PARENT_FREETOKEN_ID" name="父自由令牌编号" property="parentFreeTokenId" simpleKey="parentFreeTokenId" jdbcType="VARCHAR" />
+		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+	</dataBaseTable>
+
+	<insert id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</insert>
+
+	<delete id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+
+	</delete>
+	<update id="编号" parameterType="入参类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</update>
+
+	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+
+	</sql>
+	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
+	<![CDATA[ 
+	
+	]]>
+	</businessRules>
+
+</sqlmappingconfig:RulesConfig>

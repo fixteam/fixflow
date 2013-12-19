@@ -18,6 +18,7 @@
 package com.founder.fix.fixflow.core.impl.persistence;
 
 import com.founder.fix.fixflow.core.impl.db.DbSqlSession;
+import com.founder.fix.fixflow.core.impl.db.MappingSqlSession;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 
@@ -37,6 +38,11 @@ public abstract class AbstractManager {
 	protected DbSqlSession getDbSqlSession() {
 
 		return commandContext.getDbSqlSession();
+	}
+	
+	protected MappingSqlSession getMappingSqlSession() {
+
+		return commandContext.getMappingSqlSession();
 	}
 
 	protected CommandContext commandContext;
