@@ -108,7 +108,7 @@
 			         	<td>&nbsp;</td>
           				<td>
           					<div class="btn-normal fn-left m-r-30"><a href="#" id="okBtn">确 定</a></div>
-              				<div class="btn-normal"><a href="#" id="closeBtn">取 消</a></div>
+              				<div class="btn-normal fn-left"><a href="#" id="closeBtn">取 消</a></div>
               			</td>
        				 </tr>
       			</tbody></table>
@@ -118,7 +118,7 @@
 <div id="delopyFlowDialog" class="popup-A sl-shadow" style="position:absolute; display: none; width: 880px; right: 80px;">
 	<div class="title"><h4>发布流程</h4></div>
 		<div class="content">
-			<table width="100%" border="0" class="fix-table2">
+			<table width="100%" border="0" class="popup-tb">
 				<thead>
 					<tr>
 						<th>编号</th>
@@ -132,9 +132,9 @@
       			<tfoot>
       				<tr>
       					<td colspan="4">
-      						<div class="btn-normal fn-left"><a href="#" id="delopyOkBtn">发布</a></div>
-      						<div class="btn-normal fn-left"><a href="#" id="delopyUpdateBtn">更新</a></div>
-              				<div class="btn-normal fn-left"><a href="#" id="delopyCloseBtn">取 消</a></div>
+      						<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyOkBtn">发布</a></div>
+      						<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyUpdateBtn">更新</a></div>
+              				<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyCloseBtn">取 消</a></div>
               			</td>
       				</tr>
       			</tfoot>
