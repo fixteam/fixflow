@@ -25,7 +25,6 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
-import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
@@ -79,7 +78,6 @@ public class PersistentSession {
 			return;
 		}
 		
-		Context.getAbstractScriptLanguageMgmt().setVariable(variableName, variableObj);
 		
 	}
 
