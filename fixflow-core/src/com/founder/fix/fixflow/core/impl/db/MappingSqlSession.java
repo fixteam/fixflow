@@ -36,14 +36,14 @@ public class MappingSqlSession {
 	protected PersistentSession persistentSession;
 	AbstractScriptLanguageMgmt scriptLanguageMgmt;
 	ProcessEngineConfigurationImpl processEngineConfiguration;
-
+	SqlCommand sqlCommand;
 	public MappingSqlSession(Connection connection, CacheObject cacheObject) {
 		this.cacheObject = cacheObject;
 		this.connection = connection;
 		scriptLanguageMgmt = Context.getAbstractScriptLanguageMgmt();
 		processEngineConfiguration = Context.getProcessEngineConfiguration();
 		scriptLanguageMgmt.setVariable("SysRulesConfig", processEngineConfiguration);
-
+		sqlCommand=new SqlCommand(connection);
 	}
 
 	// insert
@@ -52,6 +52,7 @@ public class MappingSqlSession {
 	public void insert(String statement, PersistentObject persistentObject) {
 
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
+		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		scriptLanguageMgmt.execute(rule.getSqlValue());
 	}
@@ -61,6 +62,7 @@ public class MappingSqlSession {
 
 	public void update(String statement, PersistentObject persistentObject) {
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
+		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		scriptLanguageMgmt.execute(rule.getSqlValue());
 	}
@@ -71,12 +73,14 @@ public class MappingSqlSession {
 	public void delete(String statement, Object parameter) {
 
 		scriptLanguageMgmt.setVariable("parameter", parameter);
+		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		scriptLanguageMgmt.execute(rule.getSqlValue());
 	}
 
 	public void delete(String statement, PersistentObject persistentObject) {
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
+		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		scriptLanguageMgmt.execute(rule.getSqlValue());
 	}
@@ -114,6 +118,7 @@ public class MappingSqlSession {
 
 		
 		scriptLanguageMgmt.setVariable("parameter", parameter);
+		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		List returnObjList=(List)scriptLanguageMgmt.execute(rule.getSqlValue());
 		
@@ -124,6 +129,7 @@ public class MappingSqlSession {
 	public Object selectOne(String statement, Object parameter) {
 		
 		scriptLanguageMgmt.setVariable("parameter", parameter);
+		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		Object returnObj=scriptLanguageMgmt.execute(rule.getSqlValue());
 		
