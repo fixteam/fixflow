@@ -1,10 +1,16 @@
 package com.founder.fix.fixflow.explorer;
 
-import groovy.lang.Buildable;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.founder.fix.fixflow.explorer.impl.FlowExplorerServiceImpl;
+import com.founder.fix.fixflow.explorer.service.FlowExplorerService;
+import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.service.FlowCenterService;
+import com.founder.fix.fixflow.util.FileUtil;
  
 /**
  * 文件目录管理类
@@ -35,6 +41,9 @@ public class FileAndDirectoryServlet extends BaseServlet {
 		}
     }
    
+    /**
+     * 新建文件夹
+     */
     public void create(){
     	try {
     		String path = buildPath();
@@ -44,6 +53,50 @@ public class FileAndDirectoryServlet extends BaseServlet {
 		} catch (Exception e) {
 			error(e.getMessage());
 		}
+    }
+    
+    /**
+     * 发布流程定义
+     */
+    public void delopy(){
+    	String fileName = request("fileName");
+    	String deploymentId = request("deploymentId");
+    	String userId = session(FlowCenterService.LOGIN_USER_ID);
+    	if(fileName != null){
+    		InputStream input = null;
+    		InputStream pngInputStream = null;
+    		try{
+				String pngFileName = fileName.substring(0,fileName.lastIndexOf("."))+".png";
+        		input = new FileInputStream(buildPath() +File.separator+fileName); 
+        		pngInputStream = new FileInputStream(buildPath() +File.separator+pngFileName); 
+        		Map<String,InputStream> fileInputSteamMap = new HashMap<String, InputStream>();
+        		fileInputSteamMap.put(fileName, input);
+        		fileInputSteamMap.put(pngFileName, pngInputStream);
+        		FlowExplorerService flowExplorerService = new FlowExplorerServiceImpl();
+        		flowExplorerService.deploy(fileInputSteamMap, deploymentId, userId);
+        		success("发布成功", "string");
+			}catch(Exception ex){
+				ex.printStackTrace();
+				error("发布失败 :"+ex.getMessage());
+			}
+    	}
+    }
+    
+    /**
+     * 获取流程版本信息
+     * @throws Exception
+     */
+    public void getProcessVersionInfo() throws Exception{
+    	String userId = session(FlowCenterService.LOGIN_USER_ID);
+    	String fileName =  request("fileName");
+    	String result = null;
+    	try{
+    		FlowExplorerService flowExplorerService = new FlowExplorerServiceImpl();
+        	result = flowExplorerService.getProcessVersionInfo(fileName, userId);
+        	success(result);
+    	}catch(Exception ex){
+    		error("创建失败" + ex.getMessage());
+    	}
     }
     
     public void readSubFileAndDirectory(){
@@ -57,14 +110,13 @@ public class FileAndDirectoryServlet extends BaseServlet {
     	}
     }
     
-    
     public void reName(){
     	try {
     		String basePath = buildPath();
     		String oldFilePathString = basePath + File.separator + request("oldFileName");
     		String newFilePathString = basePath + File.separator + request("newFileName");
     		FileAndDirectoryUtils.renameFile(oldFilePathString,newFilePathString);
-    			success("重命名成功!","string");
+    		success("重命名成功!","string");
     	} catch (Exception e) {
     		error(e.getMessage());
     	}
@@ -72,7 +124,15 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void moveFileOrDirectory(){
     	try {
-    		FileAndDirectoryUtils.moveFileAndDirectory(getMoveResource()[0], getMoveResource()[1],request("fileName"));
+    		
+    		String []resourceArr = getMoveResource();
+    		String bpmnFile = resourceArr[0];
+    		String pngFile = bpmnFile.substring(0, bpmnFile.lastIndexOf(".")) + ".png";
+    		String bpmnFileName = request("fileName");
+    		String pngFileName = bpmnFileName.substring(0, bpmnFileName.lastIndexOf(".")) + ".png";
+    		String newPath = resourceArr[1];
+    		FileAndDirectoryUtils.moveFileAndDirectory(bpmnFile, newPath,bpmnFileName);
+    		FileAndDirectoryUtils.moveFileAndDirectory(pngFile, newPath,pngFileName);
     		success("删除成功!","string");
     	} catch (Exception e) {
     		error("删除失败!");
@@ -110,7 +170,6 @@ public class FileAndDirectoryServlet extends BaseServlet {
     	}else{
     		resutl[1] = FileAndDirectoryUtils.sharedPath + File.separator+"resolvent";
     	}
-    	//resutl[1] = session(FlowCenterService.LOGIN_USER_ID)+File.separator+ node[0]+File.separator+"resolvent";
     	return resutl;
     }
 }

@@ -17,27 +17,29 @@
  */
 package com.founder.fix.fixflow.core.impl.cmd;
 
-import java.util.zip.ZipInputStream;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
-import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.model.DeploymentBuilder;
 
-public class DeploymentByZipCmd implements Command<String> {
+public class DeploymentByStreamCmd implements Command<String> {
 
-	protected ZipInputStream zipInputStream;
-	protected DeploymentBuilder deploymentBuilder;
-	public DeploymentByZipCmd(DeploymentBuilder deploymentBuilder,ZipInputStream zipInputStream){
-		this.zipInputStream = zipInputStream;
+	protected Map<String,InputStream> inputStreamMap = null; 
+	protected DeploymentBuilder deploymentBuilder = null;
+	public DeploymentByStreamCmd(DeploymentBuilder deploymentBuilder,Map<String,InputStream> inputStreamMap) {
 		this.deploymentBuilder = deploymentBuilder;
+		this.inputStreamMap = inputStreamMap;
 	}
 	public String execute(CommandContext commandContext) {
-		if(zipInputStream == null){
-			throw new FixFlowException("Zip文件不能为空");
+		if(inputStreamMap != null){
+			for(String key : inputStreamMap.keySet()){
+				InputStream tmpInputStream = inputStreamMap.get(key);
+				deploymentBuilder.addInputStream(key, tmpInputStream);
+			}
 		}
-		deploymentBuilder.addZipInputStream(zipInputStream);
 		return deploymentBuilder.deploy().getId();
 	}
-
 }

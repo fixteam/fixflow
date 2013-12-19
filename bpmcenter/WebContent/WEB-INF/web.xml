@@ -57,17 +57,6 @@
   </servlet-mapping>
    <!-- fixflow-editor Servlet开始 -->
    
-   <servlet>
-    <description></description>
-    <display-name>ModelConverter</display-name>
-    <servlet-name>ModelConverter</servlet-name>
-    <servlet-class>com.founder.fix.fixflow.editor.ModelConverter</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ModelConverter</servlet-name>
-    <url-pattern>/ModelConverter</url-pattern>
-  </servlet-mapping>
   
    <servlet>
     <description></description>
@@ -92,19 +81,7 @@
     <servlet-name>StencilsetServlet</servlet-name>
     <url-pattern>/StencilsetServlet</url-pattern>
   </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>TestServlet</display-name>
-    <servlet-name>TestServlet</servlet-name>
-    <servlet-class>com.founder.fix.fixflow.editor.TestServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>TestServlet</servlet-name>
-    <url-pattern>/TestServlet</url-pattern>
-  </servlet-mapping>
-  
+
   <servlet>
     <description></description>
     <display-name>ModelSaveServlet</display-name>

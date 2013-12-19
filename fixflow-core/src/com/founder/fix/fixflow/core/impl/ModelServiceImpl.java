@@ -26,6 +26,7 @@ import com.founder.fix.fixflow.core.ModelService;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteDeploymentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeployCmd;
+import com.founder.fix.fixflow.core.impl.cmd.DeploymentByStreamCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeploymentByZipCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDefaultFromUriCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetDeploymentEntityCmd;
@@ -195,7 +196,16 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 		}
 		return updateDeploymentByZip(new ZipInputStream(inputStream),deploymentId);
 	}
-
+	
+	public String deploymentByStream(Map<String, InputStream> fileInputStreamMap) {
+		return commandExecutor.execute(new DeploymentByStreamCmd(createDeployment(),fileInputStreamMap));
+	}
+	
+	public String updateDeploymentByStream(Map<String, InputStream> fileInputStreamMap,String deploymentId){
+		
+		return null;
+	}
+	
 	public List<Map<String, String>> getUserSubmitProcess(String userId, int number) {
 
 		return commandExecutor.execute(new GetUserSubmitProcess(userId,number));

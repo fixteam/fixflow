@@ -1,6 +1,4 @@
-package com.founder.fix.fixflow.explorer;
-
-import groovyjarjarasm.asm.tree.IntInsnNode;
+package com.founder.fix.fixflow.explorer.util;
 
 import java.io.File;
 import java.util.List;
@@ -8,6 +6,7 @@ import java.util.List;
 import com.founder.fix.bpmn2extensions.coreconfig.ResourcePath;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
+import com.founder.fix.fixflow.util.FileUtil;
 
 /**
  * 文件及文件夹的IO管理类
@@ -160,7 +159,9 @@ public class FileAndDirectoryUtils {
 		if(newFile.exists()){
 			throw new Exception("当前文件或文件夹已存在!");
 		}
-        return resFile.renameTo(newFile);  
+		FileUtil.copyFile(resFilePath, newFilePath);
+		resFile.deleteOnExit();
+		return true;
     }  
     
     /** 
@@ -182,29 +183,11 @@ public class FileAndDirectoryUtils {
 	      File fnewpath = new File(newf);
 	      if(!fnewpath.exists())
 	        fnewpath.mkdirs();
-	      File fnew = new File(newf+File.separator+fileName);
-	      return  resf.renameTo(fnew);
+	      if(resf.exists()){
+	    	  FileUtil.copyFile(resFileOrDirectory, newf+File.separator+fileName);
+		      resf.delete();
+	      }
+	      return true;
     }  
-  
-	
-	public static void main(String[] args) {
-		try {
-			 /** File fold = new File("/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/fixflow-repository/private/1/dep1");//某路径下的文件
-		      String strNewPath = "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/fixflow-repository/private";//新路径
-		      File fnewpath = new File(strNewPath);
-		      if(!fnewpath.exists())
-		        fnewpath.mkdirs();
-		      File fnew = new File(strNewPath+File.separator+"dep1");
-		      fold.renameTo(fnew);*/
-			
-			
-			
-			//renameFile("private/1/2222", "private/1/xuhaiyang", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter");
-			
-			System.out.println(buildLevelJsonDataWithLoginPerson("1", "/Users/admin/Documents/java/founder/apache-tomcat-6.0.18/wtpwebapps/bpmcenter/"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 }

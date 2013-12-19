@@ -30,6 +30,7 @@ var zTreeSetting = {
 };
 var tree;
 $(document).ready(function(){
+	/************新建流程对话框**************/
 	$("#okBtn").click(function(){
 		var id = $("#flowFileId").val();
 		var name = $("#flowFileName").val();
@@ -55,7 +56,7 @@ $(document).ready(function(){
 					alert("创建成功！");
 					var $newFile = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="'+id+'.bpmn">'+id+'.bpmn</span></div>');
 					$newFile.appendTo($("div.view_plugin"));
-					$("div.popup-A").hide();
+					$("#createFileDialog").hide();
 					$(".bg").hide();
 				}
 				$("#flowFileId").val("");
@@ -66,9 +67,76 @@ $(document).ready(function(){
 	});
 	
 	$("#closeBtn").click(function(){
-		$("div.popup-A").hide();
+		$("#createFileDialog").hide();
 		$(".bg").hide();
 	});
+	/***********************************/
+	
+	/************发布流程对话框**************/
+	$("#delopyUpdateBtn").click(function(){
+		if($("tr.select").length<1){
+			alert("请选择一行记录");
+			return;
+		}
+		var fileName = $("#delopyFlowDialog table").data("fileName");
+		var deploymentId = $("tr.select").data("deploymentId") || "";
+		if(window.confirm('确定发布？')){
+			$.ajax({
+				url: "/bpmcenter/FileAndDirectoryServlet",
+				type: "POST",
+				dataType: "text",
+				data: {
+					method: "delopy",
+					path: getBreadcrumbNameList(breadcrumbList),
+					fileName: fileName,
+					deploymentId: deploymentId
+				},
+				success: function(data){
+					eval("var d = " + data);
+					if(d.state == "error"){
+						alert("更新失败");
+					}else{
+						alert("更新成功！");
+						$("#delopyFlowDialog").hide();
+						$(".bg").hide();
+					}
+				}
+			});
+		}
+	});
+	
+	$("#delopyOkBtn").click(function(){
+		var fileName = $("#delopyFlowDialog table").data("fileName");
+		if(window.confirm('确定发布？')){
+			$.ajax({
+				url: "/bpmcenter/FileAndDirectoryServlet",
+				type: "POST",
+				dataType: "text",
+				data: {
+					method: "delopy",
+					path: getBreadcrumbNameList(breadcrumbList),
+					fileName: fileName,
+					deploymentId: ""
+				},
+				success: function(data){
+					eval("var d = " + data);
+					if(d.state == "error"){
+						alert("发布失败");
+					}else{
+						alert("发布成功！");
+						$("#delopyFlowDialog").hide();
+						$(".bg").hide();
+					}
+				}
+			});
+		}
+	});
+	
+	$("#delopyCloseBtn").click(function(){
+		$("#delopyFlowDialog").hide();
+		$(".bg").hide();
+	});
+	/***********************************/
 	
 	$("#upload").change(function(){
 		var fileName = $(this).val();
@@ -111,9 +179,46 @@ $(document).ready(function(){
 			}
 			var $selectTarget = $("div.thumb-wrap[select=true]");
 			switch($(this).attr("btn-type")){
+				case "delopy":
+					var $selectThumbWrap = $("div.thumb-wrap[select=true]");
+					var $span = $("span", $selectThumbWrap);
+					var fileName = $span.html();
+					var fileType = fileName.substring(fileName.lastIndexOf(".")+1);
+					if(fileType!="bpmn"){
+						alert("该文件不是流程定义文件");
+						return false;
+					}
+					$("#delopyFlowDialog table tbody").empty();
+					$.ajax({
+						url: "/bpmcenter/FileAndDirectoryServlet",
+						type: "POST",
+						dataType: "text",
+						data: {
+							method: "getProcessVersionInfo",
+							fileName: fileName
+						},
+						success: function(data){
+							eval("var d = " + data);
+							$("#delopyFlowDialog table").data("fileName", fileName);
+							$.each(d.result, function(index, obj){
+								var $tbody = $("#delopyFlowDialog table tbody");
+								var $tr = $("<tr><td>"+ obj.processDefinitionKey +"</td><td>"+ obj.processDefinitionName +"</td><td>"+ obj.version  +"</td></tr>");
+								$tr.click(function(){
+									$("tr", $tbody).removeClass("select");
+									$(this).addClass("select");
+								});
+								
+								$tr.data("deploymentId", obj.deploymentId);
+								$tbody.append($tr);
+							});
+							$("#delopyFlowDialog").show();
+							$(".bg").show();
+						}
+					});
+					break;
 				case "createFile":
 					currentOperationType = "createFile";
-					$("div.popup-A").show();
+					$("#createFileDialog").show();
 					$(".bg").show();
 					break;
 				case "createFolder":

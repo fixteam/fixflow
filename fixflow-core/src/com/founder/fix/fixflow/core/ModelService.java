@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
@@ -228,6 +230,21 @@ public interface ModelService extends ProcessService{
 	String deploymentByZip(ZipInputStream zipInputStream);
 	
 	/**
+	 * 通过流发布流程定义，必须要bpmn流和png的流，其他inputStream会发布到FIXFLOW_DEF_BYTEARRAY表中 
+	 * @param inputStreamMap key:filename value inputsteam
+	 * @return
+	 */
+	String deploymentByStream(Map<String, InputStream> inputStreamMap);
+	
+	/**
+	 * 通过通过流更新流程定义，必须要bpmn流和png的流，其他inputStream会发布到FIXFLOW_DEF_BYTEARRAY表中 
+	 * @param fileInputStreamMap inputStreamMap key:filename value inputsteam
+	 * @param deploymentId 发布号
+	 * @return
+	 */
+	public String updateDeploymentByStream(Map<String, InputStream> fileInputStreamMap,String deploymentId);
+	
+	/**
 	 * 通过zip文件发布流程
 	 * @param path zip文件路径
 	 * @param deploymentId 发布号
@@ -249,6 +266,8 @@ public interface ModelService extends ProcessService{
 	 * @return 发布号
 	 */
 	DeploymentEntity getDeploymentEntity(String deploymentId);
+	
+	
 	
 }
   
