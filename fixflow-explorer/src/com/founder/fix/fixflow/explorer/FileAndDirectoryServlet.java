@@ -10,6 +10,7 @@ import com.founder.fix.fixflow.explorer.impl.FlowExplorerServiceImpl;
 import com.founder.fix.fixflow.explorer.service.FlowExplorerService;
 import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.service.FlowCenterService;
+import com.founder.fix.fixflow.util.FileUtil;
  
 /**
  * 文件目录管理类
@@ -115,7 +116,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		String oldFilePathString = basePath + File.separator + request("oldFileName");
     		String newFilePathString = basePath + File.separator + request("newFileName");
     		FileAndDirectoryUtils.renameFile(oldFilePathString,newFilePathString);
-    			success("重命名成功!","string");
+    		success("重命名成功!","string");
     	} catch (Exception e) {
     		error(e.getMessage());
     	}
@@ -123,7 +124,15 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void moveFileOrDirectory(){
     	try {
-    		FileAndDirectoryUtils.moveFileAndDirectory(getMoveResource()[0], getMoveResource()[1],request("fileName"));
+    		
+    		String []resourceArr = getMoveResource();
+    		String bpmnFile = resourceArr[0];
+    		String pngFile = bpmnFile.substring(0, bpmnFile.lastIndexOf(".")) + ".png";
+    		String bpmnFileName = request("fileName");
+    		String pngFileName = bpmnFileName.substring(0, bpmnFileName.lastIndexOf(".")) + ".png";
+    		String newPath = resourceArr[1];
+    		FileAndDirectoryUtils.moveFileAndDirectory(bpmnFile, newPath,bpmnFileName);
+    		FileAndDirectoryUtils.moveFileAndDirectory(pngFile, newPath,pngFileName);
     		success("删除成功!","string");
     	} catch (Exception e) {
     		error("删除失败!");
