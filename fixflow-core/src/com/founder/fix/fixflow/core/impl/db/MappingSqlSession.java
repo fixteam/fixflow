@@ -44,13 +44,14 @@ public class MappingSqlSession {
 	AbstractScriptLanguageMgmt scriptLanguageMgmt;
 	ProcessEngineConfigurationImpl processEngineConfiguration;
 	SqlCommand sqlCommand;
+
 	public MappingSqlSession(Connection connection, CacheObject cacheObject) {
 		this.cacheObject = cacheObject;
 		this.connection = connection;
 		scriptLanguageMgmt = Context.getAbstractScriptLanguageMgmt();
 		processEngineConfiguration = Context.getProcessEngineConfiguration();
 		scriptLanguageMgmt.setVariable("sysRulesConfig", processEngineConfiguration);
-		sqlCommand=new SqlCommand(connection);
+		sqlCommand = new SqlCommand(connection);
 	}
 
 	// insert
@@ -114,69 +115,85 @@ public class MappingSqlSession {
 		}
 	}
 
-
 	@SuppressWarnings("rawtypes")
 	public List selectList(String statement, Object parameter, int firstResult, int maxResults) {
 		return selectList(statement, new ListQueryParameterObject(parameter, firstResult, maxResults));
 	}
 
-	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List selectList(String statement, ListQueryParameterObject parameter) {
 
-		
-		
-		
-		
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		List returnObjList=(List)scriptLanguageMgmt.execute(rule.getSqlValue());
-		if(rule instanceof Select){
-			Select select=(Select)rule;
-			String resultMap=select.getResultMap();
-			if(StringUtil.isNotEmpty(resultMap)){
-				DataBaseTable dataBaseTable=processEngineConfiguration.getDataBaseTable(resultMap);
-				
-				if(dataBaseTable==null){
-					throw new FixFlowDbException("resultMap "+resultMap+" 未找到!");
+		List returnObjList = (List) scriptLanguageMgmt.execute(rule.getSqlValue());
+		if (rule instanceof Select) {
+			Select select = (Select) rule;
+			String resultMap = select.getResultMap();
+			if (StringUtil.isNotEmpty(resultMap)) {
+				DataBaseTable dataBaseTable = processEngineConfiguration.getDataBaseTable(resultMap);
+
+				if (dataBaseTable == null) {
+					throw new FixFlowDbException("resultMap " + resultMap + " 未找到!");
 				}
-				
-				String mappingType=dataBaseTable.getMappingType();
-				if(StringUtil.isNotEmpty(mappingType)){
-					List<Object> returnList=new ArrayList<Object>();
-					
+
+				String mappingType = dataBaseTable.getMappingType();
+				if (StringUtil.isNotEmpty(mappingType)) {
+					List<Object> returnList = new ArrayList<Object>();
+
 					for (Object object : returnObjList) {
-						AbstractPersistentObject persistentObject =(AbstractPersistentObject)ReflectUtil.instantiate(mappingType);
-						persistentObject.persistentInit(dataBaseTable,(Map)object);
+						AbstractPersistentObject persistentObject = (AbstractPersistentObject) ReflectUtil.instantiate(mappingType);
+						persistentObject.persistentInit(dataBaseTable, (Map) object);
 						returnList.add(persistentObject);
 					}
 					return returnList;
-					
-				}else{
-					throw new FixFlowDbException("resultMap: "+resultMap+"中的 mappingType为空!");
+
+				} else {
+					throw new FixFlowDbException("resultMap: " + resultMap + "中的 mappingType为空!");
 				}
-				
-				
-				
+
 			}
-			
+
 		}
-		
-		
-		
+
 		return returnObjList;
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object selectOne(String statement, Object parameter) {
-		
+
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		Object returnObj=scriptLanguageMgmt.execute(rule.getSqlValue());
-		
-		return returnObj;
+		Object returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
+		if (rule instanceof Select) {
+			Select select = (Select) rule;
+			String resultMap = select.getResultMap();
+			if (StringUtil.isNotEmpty(resultMap)) {
+				DataBaseTable dataBaseTable = processEngineConfiguration.getDataBaseTable(resultMap);
+
+				if (dataBaseTable == null) {
+					throw new FixFlowDbException("resultMap " + resultMap + " 未找到!");
+				}
+
+				String mappingType = dataBaseTable.getMappingType();
+				if (StringUtil.isNotEmpty(mappingType)) {
+
+					AbstractPersistentObject persistentObject = (AbstractPersistentObject) ReflectUtil.instantiate(mappingType);
+					persistentObject.persistentInit(dataBaseTable, (Map) returnObjList);
+
+					return persistentObject;
+
+				} else {
+					throw new FixFlowDbException("resultMap: " + resultMap + "中的 mappingType为空!");
+				}
+
+			}
+
+		}
+
+		return returnObjList;
 	}
 
 	public <T extends PersistentObject> T selectById(Class<T> entityClass, String id) {
