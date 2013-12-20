@@ -1318,7 +1318,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return null;
 	}
 
-	public DataBaseTable getBaseTable(String tableId) {
+	public DataBaseTable getDataBaseTable(String tableId) {
 
 		return this.dataBaseTables.get(tableId);
 
@@ -1333,6 +1333,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public Map<String, Rule> getRuleMap() {
 		return ruleMap;
 	}
+	
+	
+	
 	public Map<String, DataBaseTable> getDataBaseTables() {
 		return dataBaseTables;
 	}

@@ -18,13 +18,20 @@
 package com.founder.fix.fixflow.core.impl.db;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Select;
+import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
+import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 
 public class MappingSqlSession {
@@ -113,14 +120,50 @@ public class MappingSqlSession {
 		return selectList(statement, new ListQueryParameterObject(parameter, firstResult, maxResults));
 	}
 
-	@SuppressWarnings("rawtypes")
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List selectList(String statement, ListQueryParameterObject parameter) {
 
+		
+		
+		
 		
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		List returnObjList=(List)scriptLanguageMgmt.execute(rule.getSqlValue());
+		if(rule instanceof Select){
+			Select select=(Select)rule;
+			String resultMap=select.getResultMap();
+			if(StringUtil.isNotEmpty(resultMap)){
+				DataBaseTable dataBaseTable=processEngineConfiguration.getDataBaseTable(resultMap);
+				
+				if(dataBaseTable==null){
+					throw new FixFlowDbException("resultMap "+resultMap+" 未找到!");
+				}
+				
+				String mappingType=dataBaseTable.getMappingType();
+				if(StringUtil.isNotEmpty(mappingType)){
+					List<Object> returnList=new ArrayList<Object>();
+					
+					for (Object object : returnObjList) {
+						AbstractPersistentObject persistentObject =(AbstractPersistentObject)ReflectUtil.instantiate(mappingType);
+						persistentObject.persistentInit(dataBaseTable,(Map)object);
+						returnList.add(persistentObject);
+					}
+					return returnList;
+					
+				}else{
+					throw new FixFlowDbException("resultMap: "+resultMap+"中的 mappingType为空!");
+				}
+				
+				
+				
+			}
+			
+		}
+		
+		
 		
 		return returnObjList;
 

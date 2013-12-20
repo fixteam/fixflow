@@ -19,6 +19,8 @@ package com.founder.fix.fixflow.core.impl.db;
 
 import java.util.Map;
 
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
+
 
 public abstract class AbstractPersistentObject implements PersistentObject {
 
@@ -38,6 +40,14 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 	 * @return
 	 */
 	public abstract void persistentInit(Map<String, Object> entityMap);
+	
+	
+	/**
+	 * 从数据库初始化对象
+	 * @param entityMap 字段Map
+	 * @return
+	 */
+	public abstract void persistentInit(DataBaseTable dataBaseTable,Map<String, Object> entityMap);
 	
 	/**
 	 * 获取能持久化到数据的Map

@@ -39,10 +39,5 @@ public interface PersistentObject extends Serializable{
 	 */
 	Map<String, Object> getPersistentState();
 	
-	/**
-	 * 获取对象数据Map
-	 * @return
-	 */
-	Map<String, Object> getPersistentDbMap();
 	
 }
