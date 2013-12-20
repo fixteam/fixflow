@@ -4,47 +4,55 @@
 
 	<!-- 任务表 -->
 	<dataBaseTable tableId="fixflow_run_taskinstance" tableName="任务表" tableValue="FIXFLOW_RUN_TASKINSTANCE" mappingType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity">
-		<columnMapping column="TASKINSTANCE_ID" name="任务实例编号" property="id" simpleKey="taskInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSINSTANCE_ID" name="流程实例编号" property="processInstanceId" simpleKey="processInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSDEFINITION_ID" name="流程定义唯一编号" property="processDefinitionId" simpleKey="processDefinitionId" jdbcType="VARCHAR" />
-		<columnMapping column="VERSION" name="任务版本号" property="version" simpleKey="version" jdbcType="VARCHAR" />
-		<columnMapping column="TOKEN_ID" name="任务令牌号" property="tokenId" simpleKey="tokenId" jdbcType="VARCHAR" />
-		<columnMapping column="NODE_ID" name="节点编号" property="nodeId" simpleKey="nodeId" jdbcType="VARCHAR" />
-		<columnMapping column="PARENTTASK_ID" name="归档时间" property="parentTaskInstanceId" simpleKey="parentTaskInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="ASSIGNEE" name="任务处理人" property="assignee" simpleKey="assignee" jdbcType="VARCHAR" />
-		<columnMapping column="CLAIM_TIME" name="领取时间" property="claimTime" simpleKey="claimTime" jdbcType="VARCHAR" />
-		<columnMapping column="NAME" name="任务名称" property="name" simpleKey="name" jdbcType="VARCHAR" />
-		<columnMapping column="CREATE_TIME" name="创建时间" property="createTime" simpleKey="createTime" jdbcType="VARCHAR" />
-		<columnMapping column="START_TIME" name="开始时间" property="startTime" simpleKey="startTime" jdbcType="VARCHAR" />
-		<columnMapping column="ISBLOCKING" name="是否阻塞" property="isBlocking" simpleKey="isBlocking" jdbcType="VARCHAR" />
-		<columnMapping column="END_TIME" name="结束时间" property="endTime" simpleKey="endTime" jdbcType="VARCHAR" />
-		<columnMapping column="DUEDATE" name="处理期限" property="dueDate" simpleKey="dueDate" jdbcType="VARCHAR" />
-		<columnMapping column="PRIORITY" name="优先级别" property="priority" simpleKey="priority" jdbcType="VARCHAR" />
-		<columnMapping column="CATEGORY" name="用户分类" property="category" simpleKey="category" jdbcType="VARCHAR" />
-		<columnMapping column="OWNER" name="任务所有者" property="owner" simpleKey="owner" jdbcType="VARCHAR" />
-		<columnMapping column="DELEGATIONSTATESTRING" name="任务代理状态" property="delegationState" simpleKey="delegationState" jdbcType="VARCHAR" />
-		<columnMapping column="BIZKEY" name="业务关联键值" property="bizKey" simpleKey="bizKey" jdbcType="VARCHAR" />
-		<columnMapping column="COMMAND_TYPE" name="处理命令类型" property="commandType" simpleKey="commandType" jdbcType="VARCHAR" />
-		<columnMapping column="COMMAND_MESSAGE" name="处理命令内容" property="commandMessage" simpleKey="commandMessage" jdbcType="VARCHAR" />
-		<columnMapping column="TASK_COMMENT" name="处理意见" property="taskComment" simpleKey="taskComment" jdbcType="VARCHAR" />
-		<columnMapping column="NODE_NAME" name="节点名称" property="nodeName" simpleKey="nodeName" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSDEFINITION_KEY" name="流程定义编号" property="processDefinitionKey" simpleKey="processDefinitionKey" jdbcType="VARCHAR" />
-		<columnMapping column="FORMURI" name="操作表单" property="formUri" simpleKey="formUri" jdbcType="VARCHAR" />
-		<columnMapping column="TASKGROUP" name="会签任务组编号" property="taskGroup" simpleKey="taskGroup" jdbcType="VARCHAR" />
-		<columnMapping column="TASKTYPE" name="任务类型" property="taskInstanceType" simpleKey="taskInstanceType" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSDEFINITION_NAME" name="流程定义名称" property="processDefinitionName" simpleKey="processDefinitionName" jdbcType="VARCHAR" />
-		<columnMapping column="ISCANCELLED" name="是否取消" property="isCancelled" simpleKey="isCancelled" jdbcType="VARCHAR" />
-		<columnMapping column="ISSUSPENDED" name="是否暂停" property="isSuspended" simpleKey="isSuspended" jdbcType="VARCHAR" />
-		<columnMapping column="ISOPEN" name="是否打开" property="isOpen" simpleKey="isOpen" jdbcType="VARCHAR" />
-		<columnMapping column="ISDRAFT" name="是否草稿" property="isDraft" simpleKey="isDraft" jdbcType="VARCHAR" />
-		<columnMapping column="EXPECTED_EXECUTIONTIME" name="预计执行时间" property="expectedExecutionTime" simpleKey="expectedExecutionTime" jdbcType="VARCHAR" />
-		<columnMapping column="AGENT" name="任务代理处理者" property="agent" simpleKey="agent" jdbcType="VARCHAR" />
-		<columnMapping column="ADMIN" name="管理员处理" property="admin" simpleKey="admin" jdbcType="VARCHAR" />
-		<columnMapping column="FORMURIVIEW" name="浏览表单" property="formUriView" simpleKey="formUriView" jdbcType="VARCHAR" />
-		<columnMapping column="CALLACTIVITY_INSTANCE_ID" name="调用子流程时生成的子流程实例号，用于子流程结束的时候关闭这个任务" property="callActivityInstanceId" simpleKey="callActivityInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="COMMAND_ID" name="处理命令编号" property="commandId" simpleKey="commandId" jdbcType="VARCHAR" />
-		<columnMapping column="PENDINGTASKID" name="转办任务编号" property="pendingTaskId" simpleKey="pendingTaskId" jdbcType="VARCHAR" />
-		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+		<columnMapping property="id" column="TASKINSTANCE_ID" name="任务实例编号"  simpleKey="taskInstanceId" jdbcType="VARCHAR" />
+		<columnMapping property="name" column="NAME" name="任务名称" simpleKey="name" jdbcType="VARCHAR" />
+		<columnMapping property="description" column="DESCRIPTION" name="任务主题"  simpleKey="description" jdbcType="VARCHAR" />
+		
+		<columnMapping property="processInstanceId" column="PROCESSINSTANCE_ID" name="流程实例编号"  simpleKey="processInstanceId" jdbcType="VARCHAR" />
+		<columnMapping property="processDefinitionId" column="PROCESSDEFINITION_ID" name="流程定义唯一编号"  simpleKey="processDefinitionId" jdbcType="VARCHAR" />
+		<columnMapping property="processDefinitionKey" column="PROCESSDEFINITION_KEY" name="流程定义编号"  simpleKey="processDefinitionKey" jdbcType="VARCHAR" />
+		<columnMapping property="processDefinitionName" column="PROCESSDEFINITION_NAME" name="流程定义名称"  simpleKey="processDefinitionName" jdbcType="VARCHAR" />
+		
+		<columnMapping property="version" column="VERSION" name="任务版本号"  simpleKey="version" jdbcType="VARCHAR" />
+		<columnMapping property="tokenId" column="TOKEN_ID" name="任务令牌号"  simpleKey="tokenId" jdbcType="VARCHAR" />
+		<columnMapping property="nodeId" column="NODE_ID" name="节点编号"  simpleKey="nodeId" jdbcType="VARCHAR" />
+		<columnMapping property="nodeName" column="NODE_NAME" name="节点名称"  simpleKey="nodeName" jdbcType="VARCHAR" />
+		
+		<columnMapping property="parentTaskInstanceId" column="PARENTTASK_ID" name="归档时间"  simpleKey="parentTaskInstanceId" jdbcType="VARCHAR" />
+		<columnMapping property="assignee" column="ASSIGNEE" name="任务处理人"  simpleKey="assignee" jdbcType="VARCHAR" />
+		<columnMapping property="claimTime" column="CLAIM_TIME" name="领取时间" simpleKey="claimTime" jdbcType="VARCHAR" />
+		
+		<columnMapping property="createTime" column="CREATE_TIME" name="创建时间"  simpleKey="createTime" jdbcType="VARCHAR" />
+		<columnMapping property="startTime" column="START_TIME" name="开始时间"  simpleKey="startTime" jdbcType="VARCHAR" />
+		<columnMapping property="endTime" column="END_TIME" name="结束时间"  simpleKey="endTime" jdbcType="VARCHAR" />
+		<columnMapping property="dueDate" column="DUEDATE" name="处理期限"  simpleKey="dueDate" jdbcType="VARCHAR" />
+		
+		<columnMapping property="isBlocking" column="ISBLOCKING" name="是否阻塞"  simpleKey="isBlocking" jdbcType="VARCHAR" />
+		<columnMapping property="priority" column="PRIORITY" name="优先级别"  simpleKey="priority" jdbcType="VARCHAR" />
+		<columnMapping property="category" column="CATEGORY" name="用户分类"  simpleKey="category" jdbcType="VARCHAR" />
+		<columnMapping property="owner" column="OWNER" name="任务所有者"  simpleKey="owner" jdbcType="VARCHAR" />
+		<columnMapping property="delegationState" column="DELEGATIONSTATESTRING" name="任务代理状态"  simpleKey="delegationState" jdbcType="VARCHAR" />
+		<columnMapping property="bizKey" column="BIZKEY" name="业务关联键值" simpleKey="bizKey" jdbcType="VARCHAR" />
+		<columnMapping property="taskComment" column="TASK_COMMENT" name="处理意见"  simpleKey="taskComment" jdbcType="VARCHAR" />
+		<columnMapping property="formUri" column="FORMURI" name="操作表单"  simpleKey="formUri" jdbcType="VARCHAR" />
+		<columnMapping property="formUriView" column="FORMURIVIEW" name="浏览表单" simpleKey="formUriView" jdbcType="VARCHAR" />
+		
+		<columnMapping property="taskGroup" column="TASKGROUP" name="会签任务组编号"  simpleKey="taskGroup" jdbcType="VARCHAR" />
+		<columnMapping property="taskInstanceType" column="TASKTYPE" name="任务类型"  simpleKey="taskInstanceType" jdbcType="VARCHAR" />
+		<columnMapping property="isCancelled" column="ISCANCELLED" name="是否取消"  simpleKey="isCancelled" jdbcType="VARCHAR" />
+		<columnMapping property="isSuspended" column="ISSUSPENDED" name="是否暂停"  simpleKey="isSuspended" jdbcType="VARCHAR" />
+		<columnMapping property="isOpen" column="ISOPEN" name="是否打开"  simpleKey="isOpen" jdbcType="VARCHAR" />
+		<columnMapping property="isDraft" column="ISDRAFT" name="是否草稿"  simpleKey="isDraft" jdbcType="VARCHAR" />
+		<columnMapping property="expectedExecutionTime" column="EXPECTED_EXECUTIONTIME" name="预计执行时间"  simpleKey="expectedExecutionTime" jdbcType="VARCHAR" />
+		<columnMapping property="agent" column="AGENT" name="任务代理处理者"  simpleKey="agent" jdbcType="VARCHAR" />
+		<columnMapping property="admin" column="ADMIN" name="管理员处理"  simpleKey="admin" jdbcType="VARCHAR" />
+		<columnMapping property="callActivityInstanceId" column="CALLACTIVITY_INSTANCE_ID" name="调用子流程时生成的子流程实例号，用于子流程结束的时候关闭这个任务"  simpleKey="callActivityInstanceId" jdbcType="VARCHAR" />
+		<columnMapping property="pendingTaskId" column="PENDINGTASKID" name="转办任务编号" simpleKey="pendingTaskId" jdbcType="VARCHAR" />
+		<columnMapping property="archiveTime" column="ARCHIVE_TIME" name="归档时间" simpleKey="archiveTime" jdbcType="VARCHAR" />
+		<columnMapping property="commandId" column="COMMAND_ID" name="处理命令编号" simpleKey="commandId" jdbcType="VARCHAR" />
+		<columnMapping property="commandType" column="COMMAND_TYPE" name="处理命令类型"  simpleKey="commandType" jdbcType="VARCHAR" />
+		<columnMapping property="commandMessage" column="COMMAND_MESSAGE" name="处理命令内容"  simpleKey="commandMessage" jdbcType="VARCHAR" />
+		
 	</dataBaseTable>
 
 	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
