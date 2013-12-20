@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.UserTask;
 import org.quartz.JobKey;
@@ -54,35 +53,43 @@ import com.founder.fix.fixflow.core.task.IdentityLinkType;
 import com.founder.fix.fixflow.core.task.IncludeExclusion;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskQuery;
-
 import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
-public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable ,Cloneable{
+public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable, Cloneable {
 
-	
-	
-	
+	private static final long serialVersionUID = 2262140765605817383L;
 
-
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1620201951314802718L;
+	// 需要持久化的字段 //////////////////////////////////////////////////////////
 
 	protected String id;
-
-	protected String owner;
-
-	protected String assignee;
 
 	protected String name;
 
 	protected String description;
 
-	protected int priority = TaskInstance.PRIORITY_NORMAL;
+	protected String processInstanceId;
+
+	protected String processDefinitionId;
+
+	protected String processDefinitionKey;
+
+	protected String processDefinitionName;
+
+	protected int version;
+
+	protected String tokenId;
+
+	protected String nodeId;
+
+	protected String nodeName;
+
+	protected String parentTaskInstanceId;
+
+	protected String assignee;
+
+	protected Date claimTime;
 
 	protected Date createTime;
 
@@ -92,41 +99,322 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	protected Date dueDate;
 
-	protected Date claimTime;
+	protected boolean isBlocking = false;
+
+	protected int priority = TaskInstance.PRIORITY_NORMAL;
+
+	protected String category;
+
+	protected String owner;
+
+	protected DelegationState delegationState;
+
+	protected String bizKey;
+
+	protected String taskComment;
 
 	protected String formUri;
-	
+
 	protected String formUriView;
 
-	
+	protected String taskGroup;
 
-	protected boolean isBlocking = false;
+	protected TaskInstanceType taskInstanceType = TaskInstanceType.FIXFLOWTASK;
+
+	protected boolean isCancelled = false;
 
 	protected boolean isSuspended = false;
 
 	protected boolean isOpen = true;
 
-	protected boolean isCancelled = false;
+	protected boolean isDraft = false;
+
+	protected int expectedExecutionTime = 0;
+
+	protected String agent;
+
+	protected String admin;
+
+	protected String callActivityInstanceId;
+
+	protected String pendingTaskId;
+
+	protected Date archiveTime;
+
+	protected String commandId;
+
+	protected String commandType;
+
+	protected String commandMessage;
+
+	// get set //////////////////////////////////////////////////////////
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getProcessInstanceId() {
+		return this.processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+	public String getProcessDefinitionId() {
+		return this.processDefinitionId;
+	}
+
+	public void setProcessDefinitionId(String processDefinitionId) {
+		this.processDefinitionId = processDefinitionId;
+	}
+
+	public void setProcessDefinitionKey(String processDefinitionKey) {
+		this.processDefinitionKey = processDefinitionKey;
+	}
+
+	public String getProcessDefinitionKey() {
+		return this.processDefinitionKey;
+	}
+
+	public String getProcessDefinitionName() {
+		return processDefinitionName;
+	}
+
+	public void setProcessDefinitionName(String processDefinitionName) {
+		this.processDefinitionName = processDefinitionName;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public String getTokenId() {
+		return this.tokenId;
+	}
+
+	public void setTokenId(String tokenId) {
+		this.tokenId = tokenId;
+	}
+
+	public String getNodeId() {
+		return this.nodeId;
+	}
+
+	public void setNodeId(String nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public String getNodeName() {
+		return nodeName;
+	}
+
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
+	}
+
+	public String getParentTaskInstanceId() {
+		return this.parentTaskInstanceId;
+	}
+
+	public void setParentTaskInstanceId(String parentTaskInstanceId) {
+		this.parentTaskInstanceId = parentTaskInstanceId;
+	}
+
+	public String getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(String assignee) {
+		this.assignee = assignee;
+	}
+
+	public Date getClaimTime() {
+		return this.claimTime;
+	}
+
+	public void setClaimTime(Date claimTime) {
+		this.claimTime = claimTime;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	// 有问题的
+	public boolean isBlocking() {
+		return isBlocking;
+	}
+
+	public void setBlocking(boolean isBlocking) {
+		this.isBlocking = isBlocking;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	// 有问题的
+	public DelegationState getDelegationState() {
+		return delegationState;
+	}
+
+	public void setDelegationState(DelegationState delegationState) {
+		this.delegationState = delegationState;
+	}
+
+	public String getBizKey() {
+		return this.bizKey;
+	}
+
+	public void setBizKey(String bizKey) {
+		this.bizKey = bizKey;
+	}
+
+	public String getTaskComment() {
+		return taskComment;
+	}
+
+	public void setTaskComment(String taskComment) {
+		this.taskComment = taskComment;
+	}
+
+	public void setFormUri(String formUri) {
+		this.formUri = formUri;
+	}
+
+	public String getFormUri() {
+		return this.formUri;
+	}
+
+	public String getFormUriView() {
+		return formUriView;
+	}
+
+	public void setFormUriView(String formUriView) {
+		this.formUriView = formUriView;
+	}
+
+	public String getTaskGroup() {
+		return taskGroup;
+	}
+
+	public void setTaskGroup(String taskGroup) {
+		this.taskGroup = taskGroup;
+	}
+
+	public TaskInstanceType getTaskInstanceType() {
+		return taskInstanceType;
+	}
+
+	public void setTaskInstanceType(TaskInstanceType taskInstanceType) {
+		this.taskInstanceType = taskInstanceType;
+	}
+
+	// 有问题的
+	public void setCancelled(boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+
+	public boolean isCancelled() {
+		return isCancelled;
+	}
+
+	// 有问题的
+	public void setSuspended(boolean isSuspended) {
+		this.isSuspended = isSuspended;
+	}
+
+	public boolean isSuspended() {
+		return isSuspended;
+	}
+
+	// 有问题的
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	public boolean isOpen() {
+		return isOpen;
+	}
+
+	// 对象化元素 //////////////////////////////////////////////////////////
 
 	protected TokenEntity token;
 
-	protected String tokenId;
-
-	protected String bizKey;
-
 	protected UserTask node;
-
-	protected String nodeId;
-
-	protected String nodeName;
-
-	protected DelegationState delegationState;
-
-	protected String processDefinitionId;
-
-	protected String processDefinitionKey;
-
-	protected String processInstanceId;
 
 	protected TaskDefinition taskDefinition;
 
@@ -134,69 +422,19 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	protected TaskInstance parentTaskInstance;
 
-	protected String parentTaskInstanceId;
-
 	protected TaskMgmtInstance taskMgmtInstance;
 
-	protected String processDefinitionName;
-	
-	protected boolean isDraft=false;
-	
-	protected int expectedExecutionTime=0;
-	
-	protected String admin;
-	
-	protected String callActivityInstanceId;
-
-	protected String pendingTaskId;
-
-	protected String commandType;
-	
-	protected String commandId;
-	
-	/**
-	 * 归档时间
-	 */
-	protected Date archiveTime;
-	
-	/**
-	 * 代理处理者
-	 */
-	protected String agent;
-	
-	
-	/**
-	 * 用户分类
-	 */
-	protected String category;
-
-	
-
-	
-
 	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
-	
+
 	/**
 	 * 持久化扩展字段
 	 */
 	protected Map<String, Object> persistenceExtensionFields = new HashMap<String, Object>();
-	
-	public void setPersistenceExtensionField(String fieldName,Object value){
+
+	public void setPersistenceExtensionField(String fieldName, Object value) {
 		extensionFields.put(fieldName, value);
 		persistenceExtensionFields.put(fieldName, value);
 	}
-	
-
-
-	/**
-	 * 默认为fixflow任务
-	 */
-	protected TaskInstanceType taskInstanceType = TaskInstanceType.FIXFLOWTASK;
-
-	/**
-	 * 会签任务组编号
-	 */
-	protected String taskGroup;
 
 	/**
 	 * 创建任务
@@ -220,48 +458,8 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return task;
 	}
 
-	public String getAssignee() {
-		return assignee;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
 	public TaskInstance getParentTaskInstance() {
 		return parentTaskInstance;
-	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public Date getStartTime() {
-		return startTime;
 	}
 
 	public TaskDefinition getTaskDefinition() {
@@ -272,24 +470,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return token;
 	}
 
-	public void setAssignee(String assignee) {
-		this.assignee = assignee;
-		// addIdentityLink(assignee, null, null,IncludeExclusion.INCLUDE,
-		// IdentityLinkType.assignee);
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	public String getCallActivityInstanceId() {
 		return callActivityInstanceId;
 	}
@@ -298,29 +478,10 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.callActivityInstanceId = callActivityInstanceId;
 	}
 
-	public void setOwner(String owner) {
-		this.owner = owner;
-		// addIdentityLink(owner, null, null,
-		// IncludeExclusion.INCLUDE,IdentityLinkType.owner);
-	}
-
 	public void setParentTaskInstance(TaskInstance parentTaskInstance) {
 		this.parentTaskInstanceId = parentTaskInstance.getId();
 		this.parentTaskInstance = parentTaskInstance;
 
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
-
-	}
-	
-	public String getFormUriView() {
-		return formUriView;
-	}
-
-	public void setFormUriView(String formUriView) {
-		this.formUriView = formUriView;
 	}
 
 	public void addCandidateGroup(GroupTo groupTo, IncludeExclusion includeExclusion) {
@@ -331,14 +492,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		addIdentityLink(userId, null, null, includeExclusion, IdentityLinkType.candidate);
 	}
 
-	public DelegationState getDelegationState() {
-		return delegationState;
-	}
-
-	public void setDelegationState(DelegationState delegationState) {
-		this.delegationState = delegationState;
-	}
-
 	public void setTaskMgmtInstance(TaskMgmtInstance taskMgmtInstance) {
 		this.taskMgmtInstance = taskMgmtInstance;
 	}
@@ -346,7 +499,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setTaskDefinition(TaskDefinition taskDefinition) {
 		this.taskDefinition = taskDefinition;
 	}
-	
+
 	public Date getArchiveTime() {
 		return archiveTime;
 	}
@@ -400,27 +553,26 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		 * task.fireEvent(Event.EVENTTYPE_TASK_START, executionContext); }
 		 */
 	}
-	
-	public void end(TaskCommandInst taskCommandInst,String taskComment) {
-		
 
-		//设置任务上点击的处理命令
+	public void end(TaskCommandInst taskCommandInst, String taskComment) {
+
+		// 设置任务上点击的处理命令
 		this.setCommandId(taskCommandInst.getId());
-		//设置任务上点击的处理命令类型
+		// 设置任务上点击的处理命令类型
 		this.setCommandType(taskCommandInst.getTaskCommandType());
-		//设置任务上点击的处理命令文本
+		// 设置任务上点击的处理命令文本
 		this.setCommandMessage(taskCommandInst.getName());
-		//处理意见
+		// 处理意见
 		this.setTaskComment(taskComment);
-		
-		//调用任务的完成方法
+
+		// 调用任务的完成方法
 		end();
 	}
 
 	public void end() {
-		
-		//设置是否为草稿
-		this.isDraft=false;
+
+		// 设置是否为草稿
+		this.isDraft = false;
 
 		// this.operationCommand = operationCommand;
 		if (this.endTime != null) {
@@ -478,86 +630,69 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		 */
 
 	}
-	
-	
-	public void toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,FlowNode flowNode,String rollBackAssignee) {
-		
-		
-		//分支退回处理
-		
-		
-		if(token.getParent()==null){
-			//主令牌非分支的处理
-			
-			customEnd(taskCommandInst,taskComment);
+
+	public void toFlowNodeEnd(TaskCommandInst taskCommandInst, String taskComment, FlowNode flowNode, String rollBackAssignee) {
+
+		// 分支退回处理
+
+		if (token.getParent() == null) {
+			// 主令牌非分支的处理
+
+			customEnd(taskCommandInst, taskComment);
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
 			executionContext.setToFlowNode(flowNode);
 			executionContext.setRollBackAssignee(rollBackAssignee);
 			token.signal(executionContext);
-			
-		}
-		else{
-			//非主令牌分支令牌的处理
-			CommandExecutor commandExecutor=Context.getProcessEngineConfiguration().getCommandExecutor();
-			TaskQuery taskQuery=new TaskQueryImpl(commandExecutor);
-			Long taskNum=taskQuery.tokenId(token.getId()).nodeId(flowNode.getId()).count();
-			if(taskNum!=0){
-				//分支令牌经过这个节点则允许正常退回
-				customEnd(taskCommandInst,taskComment);
+
+		} else {
+			// 非主令牌分支令牌的处理
+			CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutor();
+			TaskQuery taskQuery = new TaskQueryImpl(commandExecutor);
+			Long taskNum = taskQuery.tokenId(token.getId()).nodeId(flowNode.getId()).count();
+			if (taskNum != 0) {
+				// 分支令牌经过这个节点则允许正常退回
+				customEnd(taskCommandInst, taskComment);
 				ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
 				executionContext.setToFlowNode(flowNode);
 				executionContext.setRollBackAssignee(rollBackAssignee);
 				token.signal(executionContext);
-			}else{
-				
-				
-				
-				//分支令牌经过这个节点则允许正常退回
-				customEnd(taskCommandInst,taskComment);
-				
-				
-				boolean isFind=toFlowNodeEnd(taskCommandInst ,taskComment, flowNode, rollBackAssignee,token.getParent(),taskQuery);
-				if(!isFind){
+			} else {
+
+				// 分支令牌经过这个节点则允许正常退回
+				customEnd(taskCommandInst, taskComment);
+
+				boolean isFind = toFlowNodeEnd(taskCommandInst, taskComment, flowNode, rollBackAssignee, token.getParent(), taskQuery);
+				if (!isFind) {
 					throw new FixFlowException("该节点从未到达过不能退回");
 				}
 			}
-			
-			
-			
-			
-			
+
 		}
-		
-		
-		
-		
-		
-		
-		
+
 	}
-	
-	private boolean toFlowNodeEnd(TaskCommandInst taskCommandInst,String taskComment,FlowNode flowNode,String rollBackAssignee,TokenEntity tokenObj,TaskQuery taskQuery){
-		Long taskNum=taskQuery.tokenId(tokenObj.getId()).nodeId(flowNode.getId()).count();
-		if(taskNum!=0){
-			
+
+	private boolean toFlowNodeEnd(TaskCommandInst taskCommandInst, String taskComment, FlowNode flowNode, String rollBackAssignee,
+			TokenEntity tokenObj, TaskQuery taskQuery) {
+		Long taskNum = taskQuery.tokenId(tokenObj.getId()).nodeId(flowNode.getId()).count();
+		if (taskNum != 0) {
+
 			tokenObj.terminationChildToken();
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenObj);
 			executionContext.setToFlowNode(flowNode);
 			executionContext.setRollBackAssignee(rollBackAssignee);
 			tokenObj.signal(executionContext);
 			return true;
-		}else{
-			if(tokenObj.getParent()!=null){
-				return toFlowNodeEnd( taskCommandInst, taskComment, flowNode, rollBackAssignee, tokenObj.getParent(), taskQuery);
-				
-			}else{
+		} else {
+			if (tokenObj.getParent() != null) {
+				return toFlowNodeEnd(taskCommandInst, taskComment, flowNode, rollBackAssignee, tokenObj.getParent(), taskQuery);
+
+			} else {
 				return false;
 			}
-			
-		}
-		
-	}
 
+		}
+
+	}
 
 	public String getAgent() {
 		return agent;
@@ -566,121 +701,109 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setAgent(String agent) {
 		this.agent = agent;
 	}
-	
-	//public void customEnd(String taskCommandType,String taskCommandName,FlowNode flowNode ) {
-		
-		
-		
-	//}
-	
+
+	// public void customEnd(String taskCommandType,String
+	// taskCommandName,FlowNode flowNode ) {
+
+	// }
 
 	/**
 	 * 这个结束并不会去推动令牌向下。例如用在退回的时候。
 	 */
-	public void customEnd(TaskCommandInst taskCommandInst,String taskComment) {
-		
+	public void customEnd(TaskCommandInst taskCommandInst, String taskComment) {
+
 		// this.operationCommand = operationCommand;
 		if (this.endTime != null) {
-			//throw new FixFlowException("任务已经结束,不能再进行处理.");
+			// throw new FixFlowException("任务已经结束,不能再进行处理.");
 		}
 		if (this.isSuspended) {
 			throw new FixFlowException("任务已经暂停不能再处理");
 		}
 
 		this.endTime = new Date();
-		
-		this.isDraft=false;
+
+		this.isDraft = false;
 
 		this.isOpen = false;
-		
-		this.taskComment=taskComment;
-		
-		
-		
-		
-		if(taskCommandInst!=null&&taskCommandInst.getTaskCommandType()!=null&&!taskCommandInst.getTaskCommandType().equals("")){
-			String taskCommandType=taskCommandInst.getTaskCommandType();
-			String taskCommandName=taskCommandInst.getName();
-			//设置流程自动结束信息 autoEnd
+
+		this.taskComment = taskComment;
+
+		if (taskCommandInst != null && taskCommandInst.getTaskCommandType() != null && !taskCommandInst.getTaskCommandType().equals("")) {
+			String taskCommandType = taskCommandInst.getTaskCommandType();
+			String taskCommandName = taskCommandInst.getName();
+			// 设置流程自动结束信息 autoEnd
 			this.setCommandId(taskCommandInst.getId());
 			this.setCommandType(taskCommandType);
-			if(taskCommandName==null){
-				TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
-				if(taskCommandDef!=null){
+			if (taskCommandName == null) {
+				TaskCommandDef taskCommandDef = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(taskCommandType);
+				if (taskCommandDef != null) {
 					this.setCommandMessage(taskCommandDef.getName());
 				}
-			}
-			else{
+			} else {
 				this.setCommandMessage(taskCommandName);
-				
+
 			}
-			
-		}
-		else{
-			
+
+		} else {
+
 			this.setCommandId(TaskCommandType.AUTOEND);
 			this.setCommandType(TaskCommandType.AUTOEND);
-			TaskCommandDef taskCommandDef=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.AUTOEND);
-			if(taskCommandDef!=null){
+			TaskCommandDef taskCommandDef = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(TaskCommandType.AUTOEND);
+			if (taskCommandDef != null) {
 				this.setCommandMessage(taskCommandDef.getName());
 			}
 		}
-		
-
-		
-		
-		
-		
 
 	}
-	
-	
-	public TokenEntity removeTimeOutTask(){
-		
-		if(this.node.getBoundaryEventRefs().size()>0){
-			//List<BoundaryEvent> boundaryEvents = this.getBoundaryEventRefs();
-			TokenEntity tokenEntity=this.getToken();
-			String parentTokenId=tokenEntity.getParent().getId();
-			try {
-				Scheduler scheduler=Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
-				//Set<JobKey> jobKeys=scheduler.getJobKeys(GroupMatcher.jobGroupContains("Out"));
-				Map<String, TokenEntity> tokenBrothers=tokenEntity.getParent().getChildren();
 
-				int colseTokenBrothersNum=0;
-				
+	public TokenEntity removeTimeOutTask() {
+
+		if (this.node.getBoundaryEventRefs().size() > 0) {
+			// List<BoundaryEvent> boundaryEvents = this.getBoundaryEventRefs();
+			TokenEntity tokenEntity = this.getToken();
+			String parentTokenId = tokenEntity.getParent().getId();
+			try {
+				Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
+				// Set<JobKey>
+				// jobKeys=scheduler.getJobKeys(GroupMatcher.jobGroupContains("Out"));
+				Map<String, TokenEntity> tokenBrothers = tokenEntity.getParent().getChildren();
+
+				int colseTokenBrothersNum = 0;
+
 				for (String tokenBrotherKey : tokenBrothers.keySet()) {
-					
-					
-					if(!tokenBrotherKey.equals(tokenEntity.getId())){
-						
-						//for (BoundaryEvent boundaryEvent : this.node.getBoundaryEventRefs()) {
-							//if(tokenBrothers.get(tokenBrotherKey).getFlowNode().getId().equals(boundaryEvent.getId())){
-								//JobDetail JobDetail=scheduler.getJobDetail(JobKey.jobKey(tokenBrothers.get(tokenBrotherKey).getId(),"FixTimeOutTask_"+parentTokenId));
-								scheduler.deleteJob(JobKey.jobKey(tokenBrothers.get(tokenBrotherKey).getId(),"FixTimeOutTask_"+parentTokenId));
-								tokenBrothers.get(tokenBrotherKey).end();
-								colseTokenBrothersNum=colseTokenBrothersNum+1;
-								break;
-							//}
-						//}
+
+					if (!tokenBrotherKey.equals(tokenEntity.getId())) {
+
+						// for (BoundaryEvent boundaryEvent :
+						// this.node.getBoundaryEventRefs()) {
+						// if(tokenBrothers.get(tokenBrotherKey).getFlowNode().getId().equals(boundaryEvent.getId())){
+						// JobDetail
+						// JobDetail=scheduler.getJobDetail(JobKey.jobKey(tokenBrothers.get(tokenBrotherKey).getId(),"FixTimeOutTask_"+parentTokenId));
+						scheduler.deleteJob(JobKey.jobKey(tokenBrothers.get(tokenBrotherKey).getId(), "FixTimeOutTask_" + parentTokenId));
+						tokenBrothers.get(tokenBrotherKey).end();
+						colseTokenBrothersNum = colseTokenBrothersNum + 1;
+						break;
+						// }
+						// }
 					}
 				}
 
-				if (colseTokenBrothersNum==(tokenBrothers.keySet().size()-1)) {
+				if (colseTokenBrothersNum == (tokenBrothers.keySet().size() - 1)) {
 					tokenEntity.getParent().terminationChildToken();
-					//ExecutionContext executionContextParent=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity.getParent());
-					
-					
-					//super.leave(executionContextParent, sequenceFlow);
+					// ExecutionContext
+					// executionContextParent=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity.getParent());
+
+					// super.leave(executionContextParent, sequenceFlow);
 					return tokenEntity.getParent();
 				}
 
 			} catch (SchedulerException e) {
 				e.printStackTrace();
-				throw new FixFlowException("流程在离开节点 "+this.getId()+" 的时候发生错误! 错误信息: "+e.toString(), e);
+				throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);
 			}
-			
+
 		}
-		
+
 		return null;
 	}
 
@@ -694,7 +817,8 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	}
 
-	public IdentityLinkEntity addIdentityLink(String userId, String groupId, String groupType, IncludeExclusion includeExclusion, IdentityLinkType type) {
+	public IdentityLinkEntity addIdentityLink(String userId, String groupId, String groupType, IncludeExclusion includeExclusion,
+			IdentityLinkType type) {
 		IdentityLinkEntity identityLink = new IdentityLinkEntity(GuidUtil.CreateGuid());
 
 		identityLink.setTaskInstance(this);
@@ -738,28 +862,8 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return (endTime != null);
 	}
 
-	public boolean isBlocking() {
-		return isBlocking;
-	}
-
 	public void cancel() {
 		isCancelled = true;
-	}
-
-	public boolean isCancelled() {
-		return isCancelled;
-	}
-
-	public boolean isOpen() {
-		return isOpen;
-	}
-
-	public boolean isSuspended() {
-		return isSuspended;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public void setAssigneeId(String assigneeId) {
@@ -770,67 +874,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.owner = ownerId;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public void setBlocking(boolean isBlocking) {
-		this.isBlocking = isBlocking;
-	}
-
-	public String getProcessInstanceId() {
-
-		return this.processInstanceId;
-	}
-
-	public String getTokenId() {
-		return this.tokenId;
-	}
-
-	public String getProcessDefinitionId() {
-		return this.processDefinitionId;
-	}
-
-	public String getParentTaskInstanceId() {
-		return this.parentTaskInstanceId;
-	}
-
-	public void setProcessDefinitionId(String processDefinitionId) {
-		this.processDefinitionId = processDefinitionId;
-	}
-
-	public void setProcessInstanceId(String processInstanceId) {
-		this.processInstanceId = processInstanceId;
-	}
-
-	public void setTokenId(String tokenId) {
-		this.tokenId = tokenId;
-	}
-
-	public void setParentTaskInstanceId(String parentTaskInstanceId) {
-		this.parentTaskInstanceId = parentTaskInstanceId;
-	}
-
-	public String getNodeId() {
-		// TODO Auto-generated method stub
-		return this.nodeId;
-	}
-
-	public void setNodeId(String nodeId) {
-		this.nodeId = nodeId;
-	}
-
-
-	
-
 	public String getCommandType() {
 		return commandType;
 	}
@@ -839,46 +882,40 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.commandType = commandType;
 	}
 
-	protected String commandMessage;
-
 	public String getCommandMessage() {
-		
-		
-		
-		if(this.getCommandType()==null){
-			
-			return commandMessage;
-			
-		}
-		Boolean booleanTemp=StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-    	
-    	
-    	if(booleanTemp){
-        	String processId=this.getProcessDefinitionId();
-        	String cType=Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
-        	String nameTemp=null;
-        	if(cType.equals("system")){
-        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(FixFlowResources.TaskComandResource, "System_"+commandId);
-            	
-        	}
-        	else{
-        		nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId+"_"+commandId);
-            	
-        	}
 
-        	if(nameTemp==null){
-        		return commandMessage;
-        	}
-        	return nameTemp;
-        	
-    	}
-    	else{
-    		return commandMessage;
-    	}
-		
+		if (this.getCommandType() == null) {
+
+			return commandMessage;
+
+		}
+		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+
+		if (booleanTemp) {
+			String processId = this.getProcessDefinitionId();
+			String cType = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
+			String nameTemp = null;
+			if (cType.equals("system")) {
+				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources()
+						.getResourceName(FixFlowResources.TaskComandResource, "System_" + commandId);
+
+			} else {
+				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId + "_" + commandId);
+
+			}
+
+			if (nameTemp == null) {
+				return commandMessage;
+			}
+			return nameTemp;
+
+		} else {
+			return commandMessage;
+		}
+
 	}
-	
-	public String  getDefaultCommandMessage(){
+
+	public String getDefaultCommandMessage() {
 		return commandMessage;
 	}
 
@@ -886,38 +923,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.commandMessage = commandMessage;
 	}
 
-	protected String taskComment;
-
-	public String getTaskComment() {
-		return taskComment;
-	}
-
-	public void setTaskComment(String taskComment) {
-		this.taskComment = taskComment;
-	}
-
-	public String getBizKey() {
-		return this.bizKey;
-	}
-
-	public void setBizKey(String bizKey) {
-		this.bizKey = bizKey;
-	}
-	
 	public String getAdmin() {
 		return admin;
 	}
 
 	public void setAdmin(String admin) {
 		this.admin = admin;
-	}
-
-	public String getNodeName() {
-		return nodeName;
-	}
-
-	public void setNodeName(String nodeName) {
-		this.nodeName = nodeName;
 	}
 
 	// 持久化的时候用的方法
@@ -954,14 +965,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.endTime = endTime;
 	}
 
-	public Date getClaimTime() {
-		return this.claimTime;
-	}
-
-	public void setClaimTime(Date claimTime) {
-		this.claimTime = claimTime;
-	}
-
 	public void setClaimTimeWithoutCascade(Date claimTime) {
 		this.claimTime = claimTime;
 	}
@@ -981,19 +984,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setProcessDefinitionKeyWithoutCascade(String processDefinitionKey) {
 		this.processDefinitionKey = processDefinitionKey;
 	}
-	
-	public void setProcessDefinitionKey(String processDefinitionKey) {
-		this.processDefinitionKey = processDefinitionKey;
-	}
 
 	public void setProcessDefinitionIdWithoutCascade(String processDefinitionId) {
 		this.processDefinitionId = processDefinitionId;
 	}
 
-	public String getProcessDefinitionKey() {
-		return this.processDefinitionKey;
-	}
-	
 	public String getCommandId() {
 		return commandId;
 	}
@@ -1001,22 +996,21 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setCommandId(String commandId) {
 		this.commandId = commandId;
 	}
-	
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<IdentityLink> getIdentityLinkQueryToListNoCache() {
 
 		if (this.taskIdentityLinks.size() == 0) {
 
-				List valueObjectTemp = (List) Context.getCommandContext().getIdentityLinkManager().findIdentityLinksByTaskId(this.id);
-				if (valueObjectTemp.size() > 0) {
-					
-					this.taskIdentityLinks = (List<IdentityLinkEntity>) valueObjectTemp;
-					return (List) this.taskIdentityLinks;
-				} else {
-					return (List) this.taskIdentityLinks;
-				}
-			
+			List valueObjectTemp = (List) Context.getCommandContext().getIdentityLinkManager().findIdentityLinksByTaskId(this.id);
+			if (valueObjectTemp.size() > 0) {
+
+				this.taskIdentityLinks = (List<IdentityLinkEntity>) valueObjectTemp;
+				return (List) this.taskIdentityLinks;
+			} else {
+				return (List) this.taskIdentityLinks;
+			}
+
 		} else {
 			return (List) this.taskIdentityLinks;
 		}
@@ -1058,44 +1052,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return Context.getCommandContext().getProcessDefinitionManager().findLatestProcessDefinitionById(this.processDefinitionId);
 	}
 
-	public void setFormUri(String formUri) {
-		// TODO Auto-generated method stub
-		this.formUri = formUri;
-	}
-
-	public String getFormUri() {
-		// TODO Auto-generated method stub
-		return this.formUri;
-	}
-
-	public String getTaskGroup() {
-		return taskGroup;
-	}
-
-	public void setTaskGroup(String taskGroup) {
-		this.taskGroup = taskGroup;
-	}
-
-	public void setCancelled(boolean isCancelled) {
-		this.isCancelled = isCancelled;
-	}
-
-	public TaskInstanceType getTaskInstanceType() {
-		return taskInstanceType;
-	}
-
-	public void setTaskInstanceType(TaskInstanceType taskInstanceType) {
-		this.taskInstanceType = taskInstanceType;
-	}
-
-	public String getProcessDefinitionName() {
-		return processDefinitionName;
-	}
-
-	public void setProcessDefinitionName(String processDefinitionName) {
-		this.processDefinitionName = processDefinitionName;
-	}
-
 	public Object getExtensionField(String fieldName) {
 		return extensionFields.get(fieldName);
 	}
@@ -1112,7 +1068,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.extensionFields.put(fieldName, fieldValue);
 	}
 
-	
 	public boolean isDraft() {
 		return isDraft;
 	}
@@ -1120,15 +1075,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setDraft(boolean isDraft) {
 		this.isDraft = isDraft;
 	}
-	
-	public String getCategory() {
-		return category;
-	}
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	
 	public int getExpectedExecutionTime() {
 		return expectedExecutionTime;
 	}
@@ -1136,7 +1083,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setExpectedExecutionTime(int expectedExecutionTime) {
 		this.expectedExecutionTime = expectedExecutionTime;
 	}
-	
+
 	public String getPendingTaskId() {
 		return pendingTaskId;
 	}
@@ -1145,8 +1092,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.pendingTaskId = pendingTaskId;
 	}
 
-	
-	
 	/**
 	 * 从数据库读取任务
 	 */
@@ -1156,7 +1101,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	}
 
-
 	public void persistentInit(Map<String, Object> entityMap) {
 		for (String dataKey : entityMap.keySet()) {
 
@@ -1164,7 +1108,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setId(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.Agent().DataBaseKey())) {
 				this.setAgent(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
@@ -1219,7 +1163,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 				if (entityMap.get(dataKey) != null) {
 					this.setDelegationState(DelegationState.valueOf(entityMap.get(dataKey).toString()));
-					
+
 				}
 				continue;
 			}
@@ -1256,13 +1200,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setBizKey(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
-			
 
 			if (dataKey.equals(TaskInstanceObjKey.CommandId().DataBaseKey())) {
 				this.setCommandId(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
-
 
 			if (dataKey.equals(TaskInstanceObjKey.CommandType().DataBaseKey())) {
 				this.setCommandType(StringUtil.getString(entityMap.get(dataKey)));
@@ -1302,25 +1244,25 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setProcessDefinitionName(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.IsDraft().DataBaseKey())) {
 				this.setDraft(StringUtil.getBoolean(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.IsOpen().DataBaseKey())) {
-				this.isOpen=StringUtil.getBoolean(entityMap.get(dataKey));
+				this.isOpen = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 			if (dataKey.equals(TaskInstanceObjKey.IsSuspended().DataBaseKey())) {
-				this.isSuspended=StringUtil.getBoolean(entityMap.get(dataKey));
+				this.isSuspended = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
 			if (dataKey.equals(TaskInstanceObjKey.IsCancelled().DataBaseKey())) {
-				this.isCancelled=StringUtil.getBoolean(entityMap.get(dataKey));
+				this.isCancelled = StringUtil.getBoolean(entityMap.get(dataKey));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.Category().DataBaseKey())) {
 				this.setCategory(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
@@ -1330,17 +1272,17 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setExpectedExecutionTime(StringUtil.getInt(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.Admin().DataBaseKey())) {
 				this.setAdmin(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey())) {
 				this.setCallActivityInstanceId(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			if (dataKey.equals(TaskInstanceObjKey.PendingTaskId().DataBaseKey())) {
 				this.setPendingTaskId(StringUtil.getString(entityMap.get(dataKey)));
 				continue;
@@ -1349,7 +1291,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 				this.setArchiveTime(StringUtil.getDate(entityMap.get(dataKey)));
 				continue;
 			}
-			
+
 			this.addExtensionField(dataKey, entityMap.get(dataKey));
 		}
 	}
@@ -1396,7 +1338,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		objectParam.put(TaskInstanceObjKey.CommandType().DataBaseKey(), this.getCommandType());
 
 		objectParam.put(TaskInstanceObjKey.CommandId().DataBaseKey(), this.getCommandId());
-		
+
 		objectParam.put(TaskInstanceObjKey.CommandMessage().DataBaseKey(), this.getCommandMessage());
 
 		objectParam.put(TaskInstanceObjKey.TaskComment().DataBaseKey(), this.getTaskComment());
@@ -1406,7 +1348,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		objectParam.put(TaskInstanceObjKey.DelegationState().DataBaseKey(), StringUtil.getString(this.getDelegationState()));
 
 		objectParam.put(TaskInstanceObjKey.FormUri().DataBaseKey(), this.getFormUri());
-		
+
 		objectParam.put(TaskInstanceObjKey.FormUriView().DataBaseKey(), this.getFormUriView());
 
 		objectParam.put(TaskInstanceObjKey.TaskGroup().DataBaseKey(), this.getTaskGroup());
@@ -1415,38 +1357,34 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 		objectParam.put(TaskInstanceObjKey.ProcessDefinitionName().DataBaseKey(), this.getProcessDefinitionName());
 
-		
 		objectParam.put(TaskInstanceObjKey.IsSuspended().DataBaseKey(), String.valueOf(this.isSuspended()));
 		objectParam.put(TaskInstanceObjKey.IsOpen().DataBaseKey(), String.valueOf(this.isOpen()));
-		
+
 		objectParam.put(TaskInstanceObjKey.IsDraft().DataBaseKey(), String.valueOf(this.isDraft()));
-		
+
 		objectParam.put(TaskInstanceObjKey.IsCancelled().DataBaseKey(), String.valueOf(this.isCancelled()));
-		
+
 		objectParam.put(TaskInstanceObjKey.Category().DataBaseKey(), String.valueOf(this.category));
-		
+
 		objectParam.put(TaskInstanceObjKey.ExpectedExecutionTime().DataBaseKey(), String.valueOf(this.expectedExecutionTime));
 		objectParam.put(TaskInstanceObjKey.Agent().DataBaseKey(), this.agent);
 		objectParam.put(TaskInstanceObjKey.Admin().DataBaseKey(), this.admin);
-		
-		
+
 		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
 		objectParam.put(TaskInstanceObjKey.PendingTaskId().DataBaseKey(), this.pendingTaskId);
 		objectParam.put(TaskInstanceObjKey.ArchiveTime().DataBaseKey(), this.archiveTime);
-		
+
 		for (String key : persistenceExtensionFields.keySet()) {
-			objectParam.put(key, persistenceExtensionFields.get(key));	
+			objectParam.put(key, persistenceExtensionFields.get(key));
 		}
-		
+
 		return objectParam;
 	}
 
-
-	
 	public Map<String, Object> getPersistentState() {
 
 		Map<String, Object> persistentState = new HashMap<String, Object>();
-		
+
 		persistentState.put(TaskInstanceObjKey.TaskInstanceId().FullKey(), this.id);
 		persistentState.put(TaskInstanceObjKey.Name().FullKey(), this.name);
 		persistentState.put(TaskInstanceObjKey.Description().FullKey(), this.description);
@@ -1489,20 +1427,19 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
 		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
 		persistentState.put(TaskInstanceObjKey.ArchiveTime().FullKey(), this.pendingTaskId);
-		
+
 		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));	
+			persistentState.put(key, extensionFields.get(key));
 		}
-		
+
 		return persistentState;
 	}
 
-	public TaskInstanceEntity clone(){
+	public TaskInstanceEntity clone() {
 
-		
-		TaskInstanceEntity taskInstanceEntityNew=new TaskInstanceEntity();
+		TaskInstanceEntity taskInstanceEntityNew = new TaskInstanceEntity();
 		taskInstanceEntityNew.persistentInit(getPersistentDbMap());
-		
+
 		return taskInstanceEntityNew;
 	}
 
