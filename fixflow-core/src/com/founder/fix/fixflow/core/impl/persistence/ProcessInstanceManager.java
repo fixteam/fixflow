@@ -200,7 +200,7 @@ public class ProcessInstanceManager extends AbstractManager {
 	}
 	
 	/**
-	 * 保存任务实例
+	 * 保存流程中需要保存的任务实例
 	 * @param processInstanceEntity
 	 */
 	public void saveTaskInstance(ProcessInstanceEntity processInstanceEntity){

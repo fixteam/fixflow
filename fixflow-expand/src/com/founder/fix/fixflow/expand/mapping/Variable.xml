@@ -16,27 +16,28 @@
 		<columnMapping column="BIZ_DATA" name="业务查询数据" property="bizData" simpleKey="bizData" jdbcType="VARCHAR" />
 	</dataBaseTable>
 
-	<insert id="编号" parameterType="入参类型" remark="备注">
-	<![CDATA[ 
-	
-	]]>
+	<insert id="insertVariable" parameterType="入参类型" remark="插入变量">
+		<![CDATA[ 
+			sqlCommand.insert("FIXFLOW_RUN_VARIABLE",parameter.getPersistentDbMap());
+		]]>
 	</insert>
 
 	<delete id="编号" parameterType="入参类型" remark="备注">
-	<![CDATA[ 
-	
-	]]>
+		<![CDATA[ 
+		
+		]]>
 
 	</delete>
-	<update id="编号" parameterType="入参类型" remark="备注">
-	<![CDATA[ 
-	
-	]]>
+	<update id="updateVariable" parameterType="入参类型" remark="备注">
+		<![CDATA[ 
+			objectParamWhere = { parameter.getId() };
+			sqlCommand.update("FIXFLOW_RUN_VARIABLE",  parameter.getPersistentDbMap(), " TOKEN_ID=?",objectParamWhere);
+		]]>
 	</update>
 
-	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+	<select id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
 
-	</sql>
+	</select>
 	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
 	<![CDATA[ 
 	

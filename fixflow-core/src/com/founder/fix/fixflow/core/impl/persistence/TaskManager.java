@@ -35,12 +35,23 @@ import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
  */
 public class TaskManager extends AbstractManager {
 
+	/**
+	 * 根据任务编号查询任务实例
+	 * @param id
+	 * @return
+	 */
 	public TaskInstanceEntity findTaskById(String id) {
+		/*5.1修改
 		if (id == null) {
 			throw new FixFlowException("任务编号不能为空!");
 		}
 
 		return (TaskInstanceEntity) getDbSqlSession().selectOne("selectTaskInstance", id);
+		*/
+		if (id == null) {
+			throw new FixFlowException("任务编号不能为空!");
+		}
+		return (TaskInstanceEntity)getMappingSqlSession().selectOne("selectTaskByTaskId", id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -90,9 +101,20 @@ public class TaskManager extends AbstractManager {
 
 	public void saveTaskInstanceEntity(TaskInstanceEntity taskInstance) {
 		// 先清空掉缓存再存储
+		/* 5.1修改
 		CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
 		cacheHandler.putCacheData("IdentityLink_" + taskInstance.getId(), null);
 		getDbSqlSession().save("saveTaskInstance", taskInstance);
+		*/
+		
+		CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
+		cacheHandler.putCacheData("IdentityLink_" + taskInstance.getId(), null);
+		TaskInstanceEntity taskInstanceEntity = findTaskById(taskInstance.getId());
+		if(taskInstanceEntity == null){
+			insertTaskInstance(taskInstanceEntity);
+		}else{
+			updateTaskInstance(taskInstanceEntity);
+		}
 	}
 
 	public void deleteTaskInstanceByTaskInstanceId(String taskInstanceId, boolean cascade) {
@@ -116,5 +138,24 @@ public class TaskManager extends AbstractManager {
 		}
 
 	}
-
+	
+	
+	/**新增方法****/
+	
+	/**
+	 * 插入新的任务实例
+	 * @param taskInstanceEntity
+	 */
+	public void insertTaskInstance(TaskInstanceEntity taskInstanceEntity){
+		getMappingSqlSession().insert("insertTaskInstance", taskInstanceEntity);
+	}
+	
+	/**
+	 * 更新任务实例
+	 * @param taskInstanceEntity
+	 */
+	public void updateTaskInstance(TaskInstanceEntity taskInstanceEntity){
+		getMappingSqlSession().update("updateTaskInstance", taskInstanceEntity);
+	}
+	
 }

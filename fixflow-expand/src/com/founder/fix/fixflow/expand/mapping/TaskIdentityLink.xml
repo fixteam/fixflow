@@ -14,30 +14,32 @@
 		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
 	</dataBaseTable>
 
-	<insert id="编号" parameterType="入参类型" remark="备注">
-	<![CDATA[ 
-	
-	
-		objectParam =taskInstanceEntity.getPersistentDbMap();
-		return objectParam;
-	]]>
+	<insert id="insertIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLink" remark="插入候选人">
+		<![CDATA[ 
+			sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK",parameter.getPersistentDbMap());
+		]]>
 	</insert>
 
-	<delete id="编号" parameterType="入参类型" remark="备注">
-	<![CDATA[ 
-	
-	]]>
-
+	<delete id="deleteIdentityLinkByProcessInstanceId" parameterType="java.lang.String" remark="删除流程实例对应的所有候选人">
+		<![CDATA[ 
+			
+		]]>
 	</delete>
-	<update id="编号" parameterType="入参类型" remark="备注">
-	<![CDATA[ 
 	
-	]]>
+	<update id="updateIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLink" remark="更新任务候选人">
+		<![CDATA[ 
+			objectParamWhere = { parameter.getId() };
+			sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK",  parameter.getPersistentDbMap(), " ID=?",objectParamWhere);
+		]]>
 	</update>
 
-	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
-
-	</sql>
+	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="fixflow_run_taskidentitylink" remark="查询单个任务候选人">
+		<![CDATA[
+			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE ID = ? ";
+			objectParamWhere = { parameter };
+			sqlCommand.queryForList(sqlText, objectParamWhere);
+		]]>
+	</select>
 	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
 	<![CDATA[ 
 	

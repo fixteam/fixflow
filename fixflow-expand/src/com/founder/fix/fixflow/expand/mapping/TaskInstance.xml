@@ -49,39 +49,31 @@
 
 	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
 	<![CDATA[ 
-		sqlCommand.insert(sysRulesConfig.getBaseTable("fixflow_run_taskinstance"), parameter.getPersistentDbMap());
-	]]>
-	</insert>
-	
-	
-	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
-	<![CDATA[ 
-		sqlCommand.insert(sysRulesConfig.getBaseTable("fixflow_run_taskinstance"), parameter.getPersistentDbMap());
-	]]>
-	</insert>
-	
-	
-	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
-	<![CDATA[ 
-
+		sqlCommand.insert("FIXFLOW_RUN_TASKINSTANCE" , parameter.getPersistentDbMap());
 	]]>
 	</insert>
 
 	<delete id="编号" parameterType="入参类型" remark="备注">
 	<![CDATA[ 
-	
+		
 	]]>
 
 	</delete>
-	<update id="编号" parameterType="入参类型" remark="备注">
+	<update id="updateTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="备注">
 	<![CDATA[ 
-	
+		objectParamWhere = { parameter.getId() };
+		sqlCommand.update("FIXFLOW_RUN_TASKINSTANCE",  parameter.getPersistentDbMap(), " ID=?",objectParamWhere);
 	]]>
 	</update>
 
-	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
-
-	</sql>
+	<select id="selectTaskByTaskId" parameterType="java.lang.String" resultMap="fixflow_run_taskinstance" remark="根据任务编号查询任务实例 ">
+		<![CDATA[ 
+			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ID = ? ";
+			objectParamWhere = { parameter };
+			sqlCommand.queryForValue(sqlText, objectParamWhere);
+		]]>
+	</select>
+	
 	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
 	<![CDATA[ 
 	

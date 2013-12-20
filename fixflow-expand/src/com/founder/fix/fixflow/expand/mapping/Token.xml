@@ -20,9 +20,9 @@
 		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
 	</dataBaseTable>
 
-	<insert id="编号" parameterType="入参类型" remark="备注">
+	<insert id="insertToken" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="插入新令牌">
 	<![CDATA[ 
-	
+		sqlCommand.insert("FIXFLOW_RUN_TOKEN",parameter.getPersistentDbMap());
 	]]>
 	</insert>
 
@@ -32,15 +32,16 @@
 	]]>
 
 	</delete>
-	<update id="编号" parameterType="入参类型" remark="备注">
+	<update id="updateToken" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="更新令牌">
 	<![CDATA[ 
-	
+		objectParamWhere = { parameter.getId() };
+		sqlCommand.update("FIXFLOW_RUN_TOKEN",  parameter.getPersistentDbMap(), " TOKEN_ID=?",objectParamWhere);
 	]]>
 	</update>
 
-	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+	<select id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
 
-	</sql>
+	</select>
 	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
 	<![CDATA[ 
 	

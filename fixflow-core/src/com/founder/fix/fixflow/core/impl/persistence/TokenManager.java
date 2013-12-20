@@ -17,11 +17,13 @@
  */
 package com.founder.fix.fixflow.core.impl.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
+import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 
 public class TokenManager extends AbstractManager {
 	
@@ -40,6 +42,55 @@ public class TokenManager extends AbstractManager {
 		String query = "selectTokenByQueryCriteria";
 		return getDbSqlSession().selectList(query, tokenQuery, page);
 
+	}
+	
+	
+	
+	/**新增方法*/
+	
+	/**
+	 * 递归保存令牌实例
+	 * @param tokenEntity
+	 */
+	public void saveToken(TokenEntity tokenEntity){
+		TokenEntity tmpTokenEntity = selectTokenByTokenId(tokenEntity.getId());
+		if(tmpTokenEntity == null){
+			insertToken(tokenEntity);
+		}else{
+			updateToken(tokenEntity);
+		}
+		if (tokenEntity.getChildren() != null) {
+			for (String tokenKey : tokenEntity.getChildren().keySet()) {
+				TokenEntity tokenChildren = tokenEntity.getChildren().get(tokenKey);
+				saveToken(tokenChildren);
+			}
+		}
+	}
+	
+	/**
+	 * 插入令牌实例
+	 * @param tokenEntity
+	 */
+	public void insertToken(TokenEntity tokenEntity){
+		
+	}
+	
+	/**
+	 * 更新令牌实例
+	 * @param tokenEntity
+	 */
+	public void updateToken(TokenEntity tokenEntity){
+		
+	}
+	
+	/**
+	 * 根据ID获取令牌实例
+	 * @param tokenId
+	 * @return
+	 */
+	public TokenEntity selectTokenByTokenId(String tokenId){
+		
+		return null;
 	}
 
 }
