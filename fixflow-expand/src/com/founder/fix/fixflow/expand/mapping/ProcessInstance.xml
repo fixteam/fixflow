@@ -27,6 +27,8 @@
 
 	<insert id="编号" parameterType="入参类型" remark="备注">
 	<![CDATA[ 
+	
+	
 
 	
 	]]>
