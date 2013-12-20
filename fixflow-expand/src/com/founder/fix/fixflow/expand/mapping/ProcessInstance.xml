@@ -27,6 +27,7 @@
 
 	<insert id="编号" parameterType="入参类型" remark="备注">
 	<![CDATA[ 
+
 	
 	]]>
 	</insert>
@@ -43,9 +44,11 @@
 	]]>
 	</update>
 	
-	<sql id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
+	<select id="编号" parameterType="入参类型" resultMap="返回映射" remark="备注">
 
-	</sql>
+	</select>
+	
+	
 	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
 	<![CDATA[ 
 	

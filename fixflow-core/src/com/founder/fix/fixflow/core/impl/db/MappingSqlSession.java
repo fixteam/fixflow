@@ -42,7 +42,7 @@ public class MappingSqlSession {
 		this.connection = connection;
 		scriptLanguageMgmt = Context.getAbstractScriptLanguageMgmt();
 		processEngineConfiguration = Context.getProcessEngineConfiguration();
-		scriptLanguageMgmt.setVariable("SysRulesConfig", processEngineConfiguration);
+		scriptLanguageMgmt.setVariable("sysRulesConfig", processEngineConfiguration);
 		sqlCommand=new SqlCommand(connection);
 	}
 

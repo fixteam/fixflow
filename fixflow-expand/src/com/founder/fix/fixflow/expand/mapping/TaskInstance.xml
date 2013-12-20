@@ -47,9 +47,23 @@
 		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
 	</dataBaseTable>
 
-	<insert id="编号" parameterType="入参类型" remark="备注">
+	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
 	<![CDATA[ 
+		sqlCommand.insert(sysRulesConfig.getBaseTable("fixflow_run_taskinstance"), parameter.getPersistentDbMap());
+	]]>
+	</insert>
 	
+	
+	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
+	<![CDATA[ 
+		sqlCommand.insert(sysRulesConfig.getBaseTable("fixflow_run_taskinstance"), parameter.getPersistentDbMap());
+	]]>
+	</insert>
+	
+	
+	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
+	<![CDATA[ 
+
 	]]>
 	</insert>
 
