@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.impl.persistence;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +25,17 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
+import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
+import com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
+import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.objkey.TokenObjKey;
 
 public class ProcessInstanceManager extends AbstractManager {
 
@@ -117,12 +125,8 @@ public class ProcessInstanceManager extends AbstractManager {
 	}
 
 	public void saveProcessInstance(ProcessInstanceEntity processInstance) throws Exception {
-		
 		String processLocation="";
-		
 		List<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
-		
-		
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 			if(!taskInstanceEntity.hasEnded()){
 				if(processLocation.equals("")){
@@ -137,16 +141,105 @@ public class ProcessInstanceManager extends AbstractManager {
 		processInstance.setUpdateTime(new Date());
 		processInstance.setProcessLocation(processLocation);
 		
-		
+		/* 5.1版本修改
 		getDbSqlSession().save("saveProcessInstance", processInstance);
+		*/
+		
+		
+		//保存流程实例和令牌
+		int count = selectProcessInstanceCountById(processInstance.getId());
+		if(count == 0){
+			insertProcessInstance(processInstance);
+			commandContext.getTokenManager().insertToken(processInstance.getRootToken());
+		}else{
+			updateProcessInstance(processInstance);
+			commandContext.getTokenManager().updateToken(processInstance.getRootToken());
+		}
+		//保存FreeToken
+		saveFreeToken(processInstance);
+		// 存储任务实例
+		saveTaskInstance(processInstance);
+		// 存储流程环境变量
+		saveVariableInstance(processInstance);
 		
 	}
 	
 	public void UpdateProcessInstanceBusinessKey(ProcessInstanceEntity processInstance) throws Exception {
-
+		/** 5.1版本修改
 		getDbSqlSession().save("saveProcessInstance", processInstance);
-
+		*/
+		updateProcessInstance(processInstance);
 	}
+	
+	/**新增**/
+	
+	/**
+	 * 新增流程实例
+	 * @param processInstanceEntity
+	 */
+	public void insertProcessInstance(ProcessInstanceEntity processInstanceEntity){
+		getMappingSqlSession().insert("insertProcessInstance", processInstanceEntity);
+	}
+	
+	/**
+	 * 更新流程实例
+	 * @param processInstanceEntity
+	 */
+	public void updateProcessInstance(ProcessInstanceEntity processInstanceEntity){
+		getMappingSqlSession().update("updateProcessInstance", processInstanceEntity);
+	}
+	
+	/**
+	 * 查询指定ID是否存在数据库
+	 * @param processInstanceId
+	 * @return
+	 */
+	public int selectProcessInstanceCountById(String processInstanceId){
+		
+		return 0;
+	}
+	
+	/**
+	 * 保存任务实例
+	 * @param processInstanceEntity
+	 */
+	public void saveTaskInstance(ProcessInstanceEntity processInstanceEntity){
+		if (processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys() != null) {
+			for (TaskInstanceEntity taskInstance : processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys()) {
+				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
+				for (IdentityLinkEntity identityLink : taskInstance.getTaskIdentityLinkEntitys()) {
+					commandContext.getIdentityLinkManager().saveIdentityLink(identityLink);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 保存FreeToken
+	 * @param processInstanceEntity
+	 */
+	public void saveFreeToken(ProcessInstanceEntity processInstanceEntity){
+		for (TokenEntity token : processInstanceEntity.getTokenList()) {
+			if(token.isFreeToken()){
+				commandContext.getTokenManager().saveToken(token);
+			}
+		}
+	}
+	
+	/**
+	 * 持久化流程变量
+	 * @param processInstanceEntity
+	 */
+	public void saveVariableInstance(ProcessInstanceEntity processInstanceEntity){
+		for (DataVariableEntity dataVariableEntity : processInstanceEntity.getDataVariableMgmtInstance().getDataVariableEntities()) {
+			if (dataVariableEntity.isPersistence()) {
+				commandContext.getVariableManager().saveVariable(dataVariableEntity);
+			}
+		}
+	}
+	
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime,String processKey,Page page) {
