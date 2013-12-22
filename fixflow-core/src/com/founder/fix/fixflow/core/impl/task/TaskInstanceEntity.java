@@ -46,6 +46,7 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 import com.founder.fix.fixflow.core.task.Assignable;
 import com.founder.fix.fixflow.core.task.DelegationState;
 import com.founder.fix.fixflow.core.task.IdentityLink;
@@ -60,6 +61,10 @@ import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable, Cloneable {
 
 	private static final long serialVersionUID = 2262140765605817383L;
+	
+	public static final String GET_TASKINSTANCE_PERSISTENT_STATE="getTaskInstancePersistentState";
+	
+	public static final String GET_TASKINSTANCE_PERSISTENT_DBMAP="getTaskInstancePersistentDbMap";
 
 	// 需要持久化的字段 //////////////////////////////////////////////////////////
 
@@ -301,22 +306,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.owner = owner;
 	}
 
-	// 有问题的
-	public boolean isBlocking() {
-		return isBlocking;
-	}
-
-	public void setBlockingString(String isBlocking) {
-		if (StringUtil.isNotEmpty(isBlocking)) {
-			this.isBlocking = StringUtil.getBoolean(isBlocking);
-		}
-
-	}
-
-	public void setBlocking(boolean isBlocking) {
-		this.isBlocking = isBlocking;
-	}
-
 	public int getPriority() {
 		return priority;
 	}
@@ -402,6 +391,22 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		}
 	}
 
+	// 有问题的
+	public boolean isBlocking() {
+		return isBlocking;
+	}
+
+	public void setBlockingString(String isBlocking) {
+		if (StringUtil.isNotEmpty(isBlocking)) {
+			this.isBlocking = StringUtil.getBoolean(isBlocking);
+		}
+
+	}
+
+	public void setBlocking(boolean isBlocking) {
+		this.isBlocking = isBlocking;
+	}
+
 	public boolean isCancelled() {
 		return isCancelled;
 	}
@@ -456,7 +461,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	public void setDraft(boolean isDraft) {
 		this.isDraft = isDraft;
 	}
-	
+
 	public void setDraftString(String isDraft) {
 		if (StringUtil.isNotEmpty(isDraft)) {
 			this.isDraft = StringUtil.getBoolean(isDraft);
@@ -589,6 +594,10 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	 * 持久化扩展字段
 	 */
 	protected Map<String, Object> persistenceExtensionFields = new HashMap<String, Object>();
+
+	public Map<String, Object> getPersistenceExtensionFields() {
+		return persistenceExtensionFields;
+	}
 
 	public void setPersistenceExtensionField(String fieldName, Object value) {
 		extensionFields.put(fieldName, value);
@@ -1342,142 +1351,29 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> getPersistentDbMap() {
 		Map<String, Object> objectParam = new HashMap<String, Object>();
 
-		objectParam.put(TaskInstanceObjKey.TaskInstanceId().DataBaseKey(), this.getId());
+		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
+		
+		objectParam=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(GET_TASKINSTANCE_PERSISTENT_DBMAP, this);
 
-		objectParam.put(TaskInstanceObjKey.ProcessInstanceId().DataBaseKey(), this.getProcessInstanceId());
-
-		objectParam.put(TaskInstanceObjKey.ProcessDefinitionId().DataBaseKey(), this.getProcessDefinitionId());
-
-		objectParam.put(TaskInstanceObjKey.ProcessDefinitionKey().DataBaseKey(), this.getProcessDefinitionKey());
-
-		objectParam.put(TaskInstanceObjKey.TokenId().DataBaseKey(), this.getTokenId());
-
-		objectParam.put(TaskInstanceObjKey.NodeId().DataBaseKey(), this.getNodeId());
-
-		objectParam.put(TaskInstanceObjKey.Description().DataBaseKey(), this.getDescription());
-
-		objectParam.put(TaskInstanceObjKey.ParentTaskInstanceId().DataBaseKey(), this.getParentTaskInstanceId());
-
-		objectParam.put(TaskInstanceObjKey.Assignee().DataBaseKey(), this.getAssignee());
-
-		objectParam.put(TaskInstanceObjKey.Name().DataBaseKey(), this.getName());
-
-		objectParam.put(TaskInstanceObjKey.CreateTime().DataBaseKey(), this.getCreateTime());
-
-		objectParam.put(TaskInstanceObjKey.StartTime().DataBaseKey(), this.getStartTime());
-
-		objectParam.put(TaskInstanceObjKey.EndTime().DataBaseKey(), this.getEndTime());
-
-		objectParam.put(TaskInstanceObjKey.DueDate().DataBaseKey(), this.getDueDate());
-
-		objectParam.put(TaskInstanceObjKey.ClaimTime().DataBaseKey(), this.getClaimTime());
-
-		objectParam.put(TaskInstanceObjKey.Priority().DataBaseKey(), String.valueOf(this.getPriority()));
-
-		objectParam.put(TaskInstanceObjKey.Owner().DataBaseKey(), this.getOwner());
-
-		objectParam.put(TaskInstanceObjKey.BizKey().DataBaseKey(), this.getBizKey());
-
-		objectParam.put(TaskInstanceObjKey.CommandType().DataBaseKey(), this.getCommandType());
-
-		objectParam.put(TaskInstanceObjKey.CommandId().DataBaseKey(), this.getCommandId());
-
-		objectParam.put(TaskInstanceObjKey.CommandMessage().DataBaseKey(), this.getCommandMessage());
-
-		objectParam.put(TaskInstanceObjKey.TaskComment().DataBaseKey(), this.getTaskComment());
-
-		objectParam.put(TaskInstanceObjKey.NodeName().DataBaseKey(), this.getNodeName());
-
-		objectParam.put(TaskInstanceObjKey.DelegationState().DataBaseKey(), StringUtil.getString(this.getDelegationState()));
-
-		objectParam.put(TaskInstanceObjKey.FormUri().DataBaseKey(), this.getFormUri());
-
-		objectParam.put(TaskInstanceObjKey.FormUriView().DataBaseKey(), this.getFormUriView());
-
-		objectParam.put(TaskInstanceObjKey.TaskGroup().DataBaseKey(), this.getTaskGroup());
-
-		objectParam.put(TaskInstanceObjKey.TaskInstanceType().DataBaseKey(), this.getTaskInstanceType().toString());
-
-		objectParam.put(TaskInstanceObjKey.ProcessDefinitionName().DataBaseKey(), this.getProcessDefinitionName());
-
-		objectParam.put(TaskInstanceObjKey.IsSuspended().DataBaseKey(), String.valueOf(this.isSuspended()));
-		objectParam.put(TaskInstanceObjKey.IsOpen().DataBaseKey(), String.valueOf(this.isOpen()));
-
-		objectParam.put(TaskInstanceObjKey.IsDraft().DataBaseKey(), String.valueOf(this.isDraft()));
-
-		objectParam.put(TaskInstanceObjKey.IsCancelled().DataBaseKey(), String.valueOf(this.isCancelled()));
-
-		objectParam.put(TaskInstanceObjKey.Category().DataBaseKey(), String.valueOf(this.category));
-
-		objectParam.put(TaskInstanceObjKey.ExpectedExecutionTime().DataBaseKey(), String.valueOf(this.expectedExecutionTime));
-		objectParam.put(TaskInstanceObjKey.Agent().DataBaseKey(), this.agent);
-		objectParam.put(TaskInstanceObjKey.Admin().DataBaseKey(), this.admin);
-
-		objectParam.put(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey(), this.callActivityInstanceId);
-		objectParam.put(TaskInstanceObjKey.PendingTaskId().DataBaseKey(), this.pendingTaskId);
-		objectParam.put(TaskInstanceObjKey.ArchiveTime().DataBaseKey(), this.archiveTime);
-
-		for (String key : persistenceExtensionFields.keySet()) {
-			objectParam.put(key, persistenceExtensionFields.get(key));
-		}
 
 		return objectParam;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> getPersistentState() {
 
-		Map<String, Object> persistentState = new HashMap<String, Object>();
+		
+		Map<String, Object> persistentState =null;
+		
+		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
+		
+		persistentState=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(GET_TASKINSTANCE_PERSISTENT_STATE, this);
 
-		persistentState.put(TaskInstanceObjKey.TaskInstanceId().FullKey(), this.id);
-		persistentState.put(TaskInstanceObjKey.Name().FullKey(), this.name);
-		persistentState.put(TaskInstanceObjKey.Description().FullKey(), this.description);
-		persistentState.put(TaskInstanceObjKey.Priority().FullKey(), this.priority);
-		persistentState.put(TaskInstanceObjKey.Owner().FullKey(), this.owner);
-		persistentState.put(TaskInstanceObjKey.Assignee().FullKey(), this.assignee);
-		persistentState.put(TaskInstanceObjKey.NodeId().FullKey(), this.nodeId);
-		persistentState.put(TaskInstanceObjKey.NodeName().FullKey(), this.nodeName);
-		persistentState.put(TaskInstanceObjKey.ProcessInstanceId().FullKey(), this.processInstanceId);
-		persistentState.put(TaskInstanceObjKey.DelegationState().FullKey(), this.delegationState);
-		persistentState.put(TaskInstanceObjKey.TokenId().FullKey(), this.tokenId);
-		persistentState.put(TaskInstanceObjKey.CreateTime().FullKey(), this.createTime);
-		persistentState.put(TaskInstanceObjKey.StartTime().FullKey(), this.startTime);
-		persistentState.put(TaskInstanceObjKey.EndTime().FullKey(), this.endTime);
-		persistentState.put(TaskInstanceObjKey.ClaimTime().FullKey(), this.claimTime);
-		persistentState.put(TaskInstanceObjKey.ProcessDefinitionId().FullKey(), this.processDefinitionId);
-		persistentState.put(TaskInstanceObjKey.ProcessDefinitionKey().FullKey(), this.processDefinitionKey);
-		persistentState.put(TaskInstanceObjKey.DueDate().FullKey(), this.dueDate);
-		persistentState.put(TaskInstanceObjKey.ParentTaskInstanceId().FullKey(), this.parentTaskInstanceId);
-		persistentState.put(TaskInstanceObjKey.IsBlocking().FullKey(), this.isBlocking);
-		persistentState.put(TaskInstanceObjKey.IsOpen().FullKey(), this.isOpen);
-		persistentState.put(TaskInstanceObjKey.IsCancelled().FullKey(), this.isCancelled);
-		persistentState.put(TaskInstanceObjKey.IsSuspended().FullKey(), this.isSuspended);
-		persistentState.put(TaskInstanceObjKey.HasEnded().FullKey(), this.endTime != null);
-		persistentState.put(TaskInstanceObjKey.BizKey().FullKey(), this.bizKey);
-		persistentState.put(TaskInstanceObjKey.CommandId().FullKey(), this.commandId);
-		persistentState.put(TaskInstanceObjKey.CommandType().FullKey(), this.commandType);
-		persistentState.put(TaskInstanceObjKey.CommandMessage().FullKey(), this.commandMessage);
-		persistentState.put(TaskInstanceObjKey.TaskComment().FullKey(), this.taskComment);
-		persistentState.put(TaskInstanceObjKey.FormUri().FullKey(), this.formUri);
-		persistentState.put(TaskInstanceObjKey.FormUri().FullKey(), this.formUriView);
-		persistentState.put(TaskInstanceObjKey.TaskGroup().FullKey(), this.taskGroup);
-		persistentState.put(TaskInstanceObjKey.TaskInstanceType().FullKey(), this.taskInstanceType.toString());
-		persistentState.put(TaskInstanceObjKey.ProcessDefinitionName().FullKey(), this.getProcessDefinitionName());
-		persistentState.put(TaskInstanceObjKey.IsDraft().FullKey(), this.isDraft);
-		persistentState.put(TaskInstanceObjKey.Category().FullKey(), this.category);
-		persistentState.put(TaskInstanceObjKey.ExpectedExecutionTime().FullKey(), this.expectedExecutionTime);
-		persistentState.put(TaskInstanceObjKey.Agent().FullKey(), this.agent);
-		persistentState.put(TaskInstanceObjKey.Admin().FullKey(), this.admin);
-		persistentState.put(TaskInstanceObjKey.CallActivityInstanceId().FullKey(), this.callActivityInstanceId);
-		persistentState.put(TaskInstanceObjKey.PendingTaskId().FullKey(), this.pendingTaskId);
-		persistentState.put(TaskInstanceObjKey.ArchiveTime().FullKey(), this.pendingTaskId);
-
-		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));
-		}
-
+		
 		return persistentState;
 	}
 

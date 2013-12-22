@@ -15,14 +15,14 @@
 		<column column="TOKEN_ID" name="任务令牌号" jdbcType="VARCHAR" />
 		<column column="NODE_ID" name="节点编号" jdbcType="VARCHAR" />
 		<column column="NODE_NAME" name="节点名称" jdbcType="VARCHAR" />
-		<column column="PARENTTASK_ID" name="归档时间" jdbcType="VARCHAR" />
+		<column column="PARENTTASK_ID" name="父任务" jdbcType="VARCHAR" />
 		<column column="ASSIGNEE" name="任务处理人" jdbcType="VARCHAR" />
 		<column column="CLAIM_TIME" name="领取时间" jdbcType="TIMESTAMP" />
 		<column column="CREATE_TIME" name="创建时间" jdbcType="TIMESTAMP" />
 		<column column="START_TIME" name="开始时间" jdbcType="TIMESTAMP" />
 		<column column="END_TIME" name="结束时间" jdbcType="TIMESTAMP" />
 		<column column="DUEDATE" name="处理期限" jdbcType="TIMESTAMP" />
-		<column column="ISBLOCKING" name="是否阻塞" jdbcType="VARCHAR" />
+		
 		<column column="PRIORITY" name="优先级别" jdbcType="INTEGER" />
 		<column column="CATEGORY" name="用户分类" jdbcType="VARCHAR" />
 		<column column="OWNER" name="任务所有者" jdbcType="VARCHAR" />
@@ -33,6 +33,7 @@
 		<column column="FORMURIVIEW" name="浏览表单" jdbcType="VARCHAR" />
 		<column column="TASKGROUP" name="会签任务组编号" jdbcType="VARCHAR" />
 		<column column="TASKTYPE" name="任务类型" jdbcType="VARCHAR" />
+		<column column="ISBLOCKING" name="是否阻塞" jdbcType="VARCHAR" />
 		<column column="ISCANCELLED" name="是否取消" jdbcType="VARCHAR" />
 		<column column="ISSUSPENDED" name="是否暂停" jdbcType="VARCHAR" />
 		<column column="ISOPEN" name="是否打开" jdbcType="VARCHAR" />
@@ -68,7 +69,7 @@
 		<result property="startTime" column="START_TIME" name="开始时间" jdbcType="TIMESTAMP" />
 		<result property="endTime" column="END_TIME" name="结束时间" jdbcType="TIMESTAMP" />
 		<result property="dueDate" column="DUEDATE" name="处理期限" jdbcType="TIMESTAMP" />
-		<result property="blockingString" column="ISBLOCKING" name="是否阻塞" jdbcType="VARCHAR" />
+		
 		<result property="priority" column="PRIORITY" name="优先级别" jdbcType="INTEGER" />
 		<result property="category" column="CATEGORY" name="用户分类" jdbcType="VARCHAR" />
 		<result property="owner" column="OWNER" name="任务所有者" jdbcType="VARCHAR" />
@@ -79,6 +80,7 @@
 		<result property="formUriView" column="FORMURIVIEW" name="浏览表单" jdbcType="VARCHAR" />
 		<result property="taskGroup" column="TASKGROUP" name="会签任务组编号" jdbcType="VARCHAR" />
 		<result property="taskInstanceTypeString" column="TASKTYPE" name="任务类型" jdbcType="VARCHAR" />
+		<result property="blockingString" column="ISBLOCKING" name="是否阻塞" jdbcType="VARCHAR" />
 		<result property="cancelledString" column="ISCANCELLED" name="是否取消" jdbcType="VARCHAR" />
 		<result property="suspendedString" column="ISSUSPENDED" name="是否暂停" jdbcType="VARCHAR" />
 		<result property="openString" column="ISOPEN" name="是否打开" jdbcType="VARCHAR" />
@@ -122,9 +124,117 @@
 		]]>
 	</select>
 
-	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
+	<businessRules id="getTaskInstancePersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
 	
+		objectParam = new HashMap<String, Object>();
+		objectParam.put("TASKINSTANCE_ID", parameter.getId());		
+		objectParam.put("NAME", parameter.getName());		
+		objectParam.put("DESCRIPTION", parameter.getDescription());
+		objectParam.put("PROCESSINSTANCE_ID", parameter.getProcessInstanceId());
+		objectParam.put("PROCESSDEFINITION_ID", parameter.getProcessDefinitionId());
+		objectParam.put("PROCESSDEFINITION_KEY", parameter.getProcessDefinitionKey());	
+		objectParam.put("PROCESSDEFINITION_NAME", parameter.getProcessDefinitionName());		
+		objectParam.put("VERSION", parameter.getVersion());
+		objectParam.put("TOKEN_ID", parameter.getTokenId());
+		objectParam.put("NODE_ID", parameter.getNodeId());
+		objectParam.put("NODE_NAME", parameter.getNodeName());		
+		objectParam.put("PARENTTASK_ID", parameter.getParentTaskInstanceId());		
+		objectParam.put("ASSIGNEE", parameter.getAssignee());
+		objectParam.put("CLAIM_TIME", parameter.getClaimTime());	
+		objectParam.put("CREATE_TIME", parameter.getCreateTime());
+		objectParam.put("START_TIME", parameter.getStartTime());		
+		objectParam.put("END_TIME", parameter.getEndTime());		
+		objectParam.put("DUEDATE", parameter.getDueDate());		
+		objectParam.put("PRIORITY", String.valueOf(parameter.getPriority()));		
+		objectParam.put("CATEGORY", String.valueOf(parameter.category));		
+		objectParam.put("OWNER", parameter.getOwner());		
+		objectParam.put("DELEGATIONSTATESTRING", StringUtil.getString(parameter.getDelegationState()));		
+		objectParam.put("BIZKEY", parameter.getBizKey());	
+		objectParam.put("TASK_COMMENT", parameter.getTaskComment());	
+		objectParam.put("FORMURI", parameter.getFormUri());
+		objectParam.put("FORMURIVIEW", parameter.getFormUriView());		
+		objectParam.put("TASKGROUP", parameter.getTaskGroup());		
+		objectParam.put("TASKTYPE", StringUtil.getString(parameter.getTaskInstanceType()));	
+		objectParam.put("ISBLOCKING", String.valueOf(parameter.isBlocking());
+		objectParam.put("ISCANCELLED", String.valueOf(parameter.isCancelled()));		
+		objectParam.put("ISSUSPENDED", String.valueOf(parameter.isSuspended()));		
+		objectParam.put("ISOPEN", String.valueOf(parameter.isOpen()));
+		objectParam.put("ISDRAFT", String.valueOf(parameter.isDraft()));
+		objectParam.put("EXPECTED_EXECUTIONTIME", String.valueOf(parameter.expectedExecutionTime));
+		objectParam.put("AGENT", parameter.agent);		
+		objectParam.put("ADMIN", parameter.admin);		
+		objectParam.put("CALLACTIVITY_INSTANCE_ID", parameter.callActivityInstanceId);		
+		objectParam.put("PENDINGTASKID", parameter.pendingTaskId);		
+		objectParam.put("ARCHIVE_TIME", parameter.archiveTime);		
+		objectParam.put("COMMAND_ID", parameter.getCommandId());
+		objectParam.put("COMMAND_TYPE", parameter.getCommandType());		
+		objectParam.put("COMMAND_MESSAGE", parameter.getCommandMessage());
+		
+		persistenceExtensionFields=parameter.getPersistenceExtensionFields();		
+		for (String key : persistenceExtensionFields.keySet()) {
+			objectParam.put(key, persistenceExtensionFields.get(key));
+		}
+		return objectParam;
+		
+	]]>
+	</businessRules>
+	
+	
+	<businessRules id="getTaskInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递">
+	<![CDATA[ 
+	
+		persistentState = new HashMap<String, Object>();
+		persistentState.put("taskInstanceId", parameter.getId());		
+		persistentState.put("name", parameter.getName());		
+		persistentState.put("description", parameter.getDescription());
+		persistentState.put("processInstanceId", parameter.getProcessInstanceId());
+		persistentState.put("processDefinitionId", parameter.getProcessDefinitionId());
+		persistentState.put("processDefinitionKey", parameter.getProcessDefinitionKey());		
+		persistentState.put("processDefinitionName", parameter.getProcessDefinitionName());	
+		persistentState.put("version", parameter.getVersion());
+		persistentState.put("tokenId", parameter.getTokenId());
+		persistentState.put("nodeId", parameter.getNodeId());
+		persistentState.put("nodeName", parameter.getNodeName());		
+		persistentState.put("parentTaskInstanceId", parameter.getParentTaskInstanceId());		
+		persistentState.put("assignee", parameter.getAssignee());
+		persistentState.put("claimTime", parameter.getClaimTime());		
+		persistentState.put("createTime", parameter.getCreateTime());
+		persistentState.put("startTime", parameter.getStartTime());		
+		persistentState.put("endTime", parameter.getEndTime());		
+		persistentState.put("dueDate", parameter.getDueDate());		
+		persistentState.put("priority", String.valueOf(parameter.getPriority()));		
+		persistentState.put("category", String.valueOf(parameter.category));		
+		persistentState.put("owner", parameter.getOwner());		
+		persistentState.put("delegationState", StringUtil.getString(parameter.getDelegationState()));		
+		persistentState.put("bizKey", parameter.getBizKey());		
+		persistentState.put("taskComment", parameter.getTaskComment());		
+		persistentState.put("formUri", parameter.getFormUri());
+		persistentState.put("formUriView", parameter.getFormUriView());		
+		persistentState.put("taskGroup", parameter.getTaskGroup());		
+		persistentState.put("taskInstanceType", StringUtil.getString(parameter.getTaskInstanceType()));		
+		persistentState.put("isBlocking", String.valueOf(parameter.isBlocking());
+		persistentState.put("isCancelled", String.valueOf(parameter.isCancelled()));		
+		persistentState.put("isSuspended", String.valueOf(parameter.isSuspended()));		
+		persistentState.put("isOpen", String.valueOf(parameter.isOpen()));
+		persistentState.put("isDraft", String.valueOf(parameter.isDraft()));
+		persistentState.put("expectedExecutionTime", String.valueOf(parameter.expectedExecutionTime));
+		persistentState.put("agent", parameter.agent);		
+		persistentState.put("admin", parameter.admin);		
+		persistentState.put("callActivityInstanceId", parameter.callActivityInstanceId);		
+		persistentState.put("pendingTaskId", parameter.pendingTaskId);		
+		persistentState.put("archiveTime", parameter.archiveTime);		
+		persistentState.put("commandId", parameter.getCommandId());
+		persistentState.put("commandType", parameter.getCommandType());		
+		persistentState.put("commandMessage", parameter.getCommandMessage());
+		
+		extensionFields=parameter.getExtensionFields();	
+			
+		for (String key : extensionFields.keySet()) {
+			persistentState.put(key, extensionFields.get(key));
+		}
+		return persistentState;
+		
 	]]>
 	</businessRules>
 
