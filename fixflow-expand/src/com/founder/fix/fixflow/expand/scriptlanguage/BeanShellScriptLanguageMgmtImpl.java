@@ -181,14 +181,15 @@ public class BeanShellScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt 
 	}
 
 	@Override
-	public Object executeBusinessRules(String ruleId, Object parameter) {
+	public <T> T executeBusinessRules(String ruleId, Object parameter,T classReturn) {
 		// TODO Auto-generated method stub
 		
-		return executeBusinessRules(ruleId,parameter,null);
+		return executeBusinessRules(ruleId,parameter,classReturn,null);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
+	public <T> T executeBusinessRules(String ruleId, Object parameter,T classReturn, Map<String, Object> configMap) {
 		
 		
 		try {
@@ -204,7 +205,7 @@ public class BeanShellScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt 
 				
 			}
 			Rule rule = processEngineConfiguration.getRule(ruleId);
-			Object returnObj =  interpreter.eval(rule.getSqlValue());
+			T returnObj =  (T)interpreter.eval(rule.getSqlValue());
 			return returnObj;
 		} catch (EvalError e) {
 			// TODO Auto-generated catch block
@@ -212,6 +213,16 @@ public class BeanShellScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt 
 			throw new FixFlowException("表达式计算错误! 错误信息: " + e.getErrorText(), e);
 		}
 		
+	}
+	
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter) {
+		return executeBusinessRules(ruleId,parameter,Object.class);
+	}
+
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
+		return executeBusinessRules(ruleId,parameter,Object.class,configMap);
 	}
 
 }

@@ -139,13 +139,14 @@ public class GroovyScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt {
 	}
 
 	@Override
-	public Object executeBusinessRules(String ruleId, Object parameter) {
+	public <T> T executeBusinessRules(String ruleId, Object parameter,T classReturn) {
 
-		return executeBusinessRules(ruleId,parameter,null);
+		return executeBusinessRules(ruleId,parameter,classReturn,null);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
+	public <T> T executeBusinessRules(String ruleId, Object parameter,T classReturn, Map<String, Object> configMap) {
 		
 		ProcessEngineConfigurationImpl processEngineConfiguration=Context.getProcessEngineConfiguration();
 		groovyShell.setVariable("sysRulesConfig", Context.getProcessEngineConfiguration());
@@ -159,8 +160,18 @@ public class GroovyScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt {
 			
 		}
 		Rule rule = processEngineConfiguration.getRule(ruleId);
-		Object returnObj =  groovyShell.evaluate(rule.getSqlValue());
+		T returnObj =  (T)groovyShell.evaluate(rule.getSqlValue());
 		return returnObj;
+	}
+
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter) {
+		return executeBusinessRules(ruleId,parameter,Object.class);
+	}
+
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
+		return executeBusinessRules(ruleId,parameter,Object.class,configMap);
 	}
 
 }
