@@ -20,10 +20,14 @@ package com.founder.fix.fixflow.expand.scriptlanguage;
 import groovy.lang.GroovyShell;
 
 import java.util.List;
+import java.util.Map;
 
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
@@ -132,6 +136,31 @@ public class GroovyScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt {
 	@Override
 	public Object execute(String scriptText) {
 		 return groovyShell.evaluate(scriptText);
+	}
+
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter) {
+
+		return executeBusinessRules(ruleId,parameter,null);
+	}
+
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
+		
+		ProcessEngineConfigurationImpl processEngineConfiguration=Context.getProcessEngineConfiguration();
+		groovyShell.setVariable("sysRulesConfig", Context.getProcessEngineConfiguration());
+		groovyShell.setVariable("parameter", parameter);
+		groovyShell.setVariable("sqlCommand", new SqlCommand(Context.getDbConnection()));
+		if(configMap!=null){
+			
+			for (String mapKey : configMap.keySet()) {
+				groovyShell.setVariable(mapKey, configMap.get(mapKey));
+			}
+			
+		}
+		Rule rule = processEngineConfiguration.getRule(ruleId);
+		Object returnObj =  groovyShell.evaluate(rule.getSqlValue());
+		return returnObj;
 	}
 
 }

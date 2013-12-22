@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.core.scriptlanguage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +49,23 @@ public abstract class AbstractScriptLanguageMgmt {
 	 * @return
 	 */
 	public abstract Object execute(String scriptText, ProcessDefinitionBehavior processDefinition);
+	
+	/**
+	 * 执行业务规则表达式
+	 * @param ruleId 规则编号
+	 * @param parameter 主参数
+	 * @return
+	 */
+	public abstract Object executeBusinessRules(String ruleId,Object parameter);
+	
+	/**
+	 * 执行业务规则表达式
+	 * @param ruleId 规则编号
+	 * @param parameter 主参数
+	 * @param configMap 辅助参数
+	 * @return
+	 */
+	public abstract Object executeBusinessRules(String ruleId,Object parameter,Map<String, Object> configMap);
 	
 	/**
 	 * 向表达式环境中放入变量
