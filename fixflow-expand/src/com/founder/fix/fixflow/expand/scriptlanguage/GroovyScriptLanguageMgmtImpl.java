@@ -166,12 +166,25 @@ public class GroovyScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt {
 
 	@Override
 	public Object executeBusinessRules(String ruleId, Object parameter) {
-		return executeBusinessRules(ruleId,parameter,Object.class);
+		return executeBusinessRules(ruleId,parameter);
 	}
 
 	@Override
 	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
-		return executeBusinessRules(ruleId,parameter,Object.class,configMap);
+		ProcessEngineConfigurationImpl processEngineConfiguration=Context.getProcessEngineConfiguration();
+		groovyShell.setVariable("sysRulesConfig", Context.getProcessEngineConfiguration());
+		groovyShell.setVariable("parameter", parameter);
+		groovyShell.setVariable("sqlCommand", new SqlCommand(Context.getDbConnection()));
+		if(configMap!=null){
+			
+			for (String mapKey : configMap.keySet()) {
+				groovyShell.setVariable(mapKey, configMap.get(mapKey));
+			}
+			
+		}
+		Rule rule = processEngineConfiguration.getRule(ruleId);
+		Object returnObj =  groovyShell.evaluate(rule.getSqlValue());
+		return returnObj;
 	}
 
 }

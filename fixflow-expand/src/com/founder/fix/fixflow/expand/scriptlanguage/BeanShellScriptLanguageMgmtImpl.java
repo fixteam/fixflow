@@ -217,12 +217,31 @@ public class BeanShellScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt 
 	
 	@Override
 	public Object executeBusinessRules(String ruleId, Object parameter) {
-		return executeBusinessRules(ruleId,parameter,Object.class);
+		return executeBusinessRules(ruleId,parameter);
 	}
 
 	@Override
 	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
-		return executeBusinessRules(ruleId,parameter,Object.class,configMap);
+		try {
+			ProcessEngineConfigurationImpl processEngineConfiguration=Context.getProcessEngineConfiguration();
+			interpreter.set("sysRulesConfig", Context.getProcessEngineConfiguration());
+			interpreter.set("parameter", parameter);
+			interpreter.set("sqlCommand", new SqlCommand(Context.getDbConnection()));
+			if(configMap!=null){
+				
+				for (String mapKey : configMap.keySet()) {
+					interpreter.set(mapKey, configMap.get(mapKey));
+				}
+				
+			}
+			Rule rule = processEngineConfiguration.getRule(ruleId);
+			Object returnObj =  (Object)interpreter.eval(rule.getSqlValue());
+			return returnObj;
+		} catch (EvalError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("表达式计算错误! 错误信息: " + e.getErrorText(), e);
+		}
 	}
 
 }
