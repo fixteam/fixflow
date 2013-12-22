@@ -18,14 +18,13 @@
 package com.founder.fix.fixflow.core.impl.db;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.ColumnMapping;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
-import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Result;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
+
 
 public abstract class AbstractPersistentObject implements PersistentObject {
 
@@ -51,9 +50,9 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public void persistentInit(DataBaseTable dataBaseTable, Map<String, Object> entityMap) {
+	public void persistentInit(ResultMap resultMap, Map<String, Object> entityMap) {
 
-		String className = dataBaseTable.getMappingType();
+		String className = resultMap.getType();
 
 		
 		try {
@@ -63,13 +62,13 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
 			// 获得类的所有属性
 			
-			List<ColumnMapping> columnMappings=dataBaseTable.getColumnMapping();
+			List<Result> results=resultMap.getResult();
 			
 		
 
-			for (ColumnMapping columnMapping : columnMappings) {
+			for (Result result : results) {
 
-				PropertyDescriptor pd = new PropertyDescriptor(columnMapping.getProperty(), clazz);
+				PropertyDescriptor pd = new PropertyDescriptor(result.getProperty(), clazz);
 
 				// 获得写方法
 
@@ -77,7 +76,7 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
 				// 获得读方法
 
-				Method rM = pd.getReadMethod();
+				//Method rM = pd.getReadMethod();
 
 				// 获得方法的参数，因为是标准的set方法，所以只取第一个参数
 
@@ -92,7 +91,7 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 					if (classes[0].equals(String.class)) {
 
 						// 调用set方法，传参
-						Object dataObj=entityMap.get(columnMapping.getColumn());
+						Object dataObj=entityMap.get(result.getColumn());
 						wM.invoke(obj, dataObj);
 
 						// 调用get方法，获得返回值

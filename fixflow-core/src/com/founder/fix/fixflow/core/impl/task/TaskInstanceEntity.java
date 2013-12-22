@@ -306,6 +306,13 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return isBlocking;
 	}
 
+	public void setBlockingString(String isBlocking) {
+		if (StringUtil.isNotEmpty(isBlocking)) {
+			this.isBlocking = StringUtil.getBoolean(isBlocking);
+		}
+
+	}
+
 	public void setBlocking(boolean isBlocking) {
 		this.isBlocking = isBlocking;
 	}
@@ -333,6 +340,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	public void setDelegationState(DelegationState delegationState) {
 		this.delegationState = delegationState;
+	}
+
+	public void setDelegationStateString(String delegationState) {
+		if (StringUtil.isNotEmpty(delegationState)) {
+			this.delegationState = DelegationState.valueOf(delegationState);
+		}
 	}
 
 	public String getBizKey() {
@@ -383,9 +396,10 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.taskInstanceType = taskInstanceType;
 	}
 
-	// 有问题的
-	public void setCancelled(boolean isCancelled) {
-		this.isCancelled = isCancelled;
+	public void setTaskInstanceTypeString(String taskInstanceType) {
+		if (StringUtil.isNotEmpty(taskInstanceType)) {
+			this.taskInstanceType = TaskInstanceType.valueOf(taskInstanceType);
+		}
 	}
 
 	public boolean isCancelled() {
@@ -393,8 +407,15 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	}
 
 	// 有问题的
-	public void setSuspended(boolean isSuspended) {
-		this.isSuspended = isSuspended;
+	public void setCancelled(boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+
+	// 有问题的
+	public void setCancelledString(String isCancelled) {
+		if (StringUtil.isNotEmpty(isCancelled)) {
+			this.isCancelled = StringUtil.getBoolean(isCancelled);
+		}
 	}
 
 	public boolean isSuspended() {
@@ -402,12 +423,150 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 	}
 
 	// 有问题的
-	public void setOpen(boolean isOpen) {
-		this.isOpen = isOpen;
+	public void setSuspended(boolean isSuspended) {
+		this.isSuspended = isSuspended;
+	}
+
+	public void setSuspendedString(String isSuspended) {
+		if (StringUtil.isNotEmpty(isSuspended)) {
+			this.isSuspended = StringUtil.getBoolean(isSuspended);
+		}
 	}
 
 	public boolean isOpen() {
 		return isOpen;
+	}
+
+	// 有问题的
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	// 有问题的
+	public void setOpenString(String isOpen) {
+		if (StringUtil.isNotEmpty(isOpen)) {
+			this.isOpen = StringUtil.getBoolean(isOpen);
+		}
+	}
+
+	public boolean isDraft() {
+		return isDraft;
+	}
+
+	public void setDraft(boolean isDraft) {
+		this.isDraft = isDraft;
+	}
+	
+	public void setDraftString(String isDraft) {
+		if (StringUtil.isNotEmpty(isDraft)) {
+			this.isDraft = StringUtil.getBoolean(isDraft);
+		}
+	}
+
+	public int getExpectedExecutionTime() {
+		return expectedExecutionTime;
+	}
+
+	public void setExpectedExecutionTime(int expectedExecutionTime) {
+		this.expectedExecutionTime = expectedExecutionTime;
+	}
+
+	public String getAgent() {
+		return agent;
+	}
+
+	public void setAgent(String agent) {
+		this.agent = agent;
+	}
+
+	public String getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
+
+	public String getCallActivityInstanceId() {
+		return callActivityInstanceId;
+	}
+
+	public void setCallActivityInstanceId(String callActivityInstanceId) {
+		this.callActivityInstanceId = callActivityInstanceId;
+	}
+
+	public String getPendingTaskId() {
+		return pendingTaskId;
+	}
+
+	public void setPendingTaskId(String pendingTaskId) {
+		this.pendingTaskId = pendingTaskId;
+	}
+
+	public Date getArchiveTime() {
+		return archiveTime;
+	}
+
+	public void setArchiveTime(Date archiveTime) {
+		this.archiveTime = archiveTime;
+	}
+
+	public String getCommandId() {
+		return commandId;
+	}
+
+	public void setCommandId(String commandId) {
+		this.commandId = commandId;
+	}
+
+	public String getCommandType() {
+		return commandType;
+	}
+
+	public void setCommandType(String commandType) {
+		this.commandType = commandType;
+	}
+
+	// 有问题的
+	public String getCommandMessage() {
+
+		if (this.getCommandType() == null) {
+
+			return commandMessage;
+
+		}
+		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+
+		if (booleanTemp) {
+			String processId = this.getProcessDefinitionId();
+			String cType = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
+			String nameTemp = null;
+			if (cType.equals("system")) {
+				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources()
+						.getResourceName(FixFlowResources.TaskComandResource, "System_" + commandId);
+
+			} else {
+				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId + "_" + commandId);
+
+			}
+
+			if (nameTemp == null) {
+				return commandMessage;
+			}
+			return nameTemp;
+
+		} else {
+			return commandMessage;
+		}
+
+	}
+
+	public String getDefaultCommandMessage() {
+		return commandMessage;
+	}
+
+	public void setCommandMessage(String commandMessage) {
+		this.commandMessage = commandMessage;
 	}
 
 	// 对象化元素 //////////////////////////////////////////////////////////
@@ -470,14 +629,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return token;
 	}
 
-	public String getCallActivityInstanceId() {
-		return callActivityInstanceId;
-	}
-
-	public void setCallActivityInstanceId(String callActivityInstanceId) {
-		this.callActivityInstanceId = callActivityInstanceId;
-	}
-
 	public void setParentTaskInstance(TaskInstance parentTaskInstance) {
 		this.parentTaskInstanceId = parentTaskInstance.getId();
 		this.parentTaskInstance = parentTaskInstance;
@@ -498,14 +649,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	public void setTaskDefinition(TaskDefinition taskDefinition) {
 		this.taskDefinition = taskDefinition;
-	}
-
-	public Date getArchiveTime() {
-		return archiveTime;
-	}
-
-	public void setArchiveTime(Date archiveTime) {
-		this.archiveTime = archiveTime;
 	}
 
 	public void setToken(TokenEntity token) {
@@ -694,14 +837,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	}
 
-	public String getAgent() {
-		return agent;
-	}
-
-	public void setAgent(String agent) {
-		this.agent = agent;
-	}
-
 	// public void customEnd(String taskCommandType,String
 	// taskCommandName,FlowNode flowNode ) {
 
@@ -874,63 +1009,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		this.owner = ownerId;
 	}
 
-	public String getCommandType() {
-		return commandType;
-	}
-
-	public void setCommandType(String commandType) {
-		this.commandType = commandType;
-	}
-
-	public String getCommandMessage() {
-
-		if (this.getCommandType() == null) {
-
-			return commandMessage;
-
-		}
-		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-
-		if (booleanTemp) {
-			String processId = this.getProcessDefinitionId();
-			String cType = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
-			String nameTemp = null;
-			if (cType.equals("system")) {
-				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources()
-						.getResourceName(FixFlowResources.TaskComandResource, "System_" + commandId);
-
-			} else {
-				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId + "_" + commandId);
-
-			}
-
-			if (nameTemp == null) {
-				return commandMessage;
-			}
-			return nameTemp;
-
-		} else {
-			return commandMessage;
-		}
-
-	}
-
-	public String getDefaultCommandMessage() {
-		return commandMessage;
-	}
-
-	public void setCommandMessage(String commandMessage) {
-		this.commandMessage = commandMessage;
-	}
-
-	public String getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(String admin) {
-		this.admin = admin;
-	}
-
 	// 持久化的时候用的方法
 
 	public void setAssigneeWithoutCascade(String assignee) {
@@ -987,14 +1065,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	public void setProcessDefinitionIdWithoutCascade(String processDefinitionId) {
 		this.processDefinitionId = processDefinitionId;
-	}
-
-	public String getCommandId() {
-		return commandId;
-	}
-
-	public void setCommandId(String commandId) {
-		this.commandId = commandId;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -1066,30 +1136,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	public void addExtensionField(String fieldName, Object fieldValue) {
 		this.extensionFields.put(fieldName, fieldValue);
-	}
-
-	public boolean isDraft() {
-		return isDraft;
-	}
-
-	public void setDraft(boolean isDraft) {
-		this.isDraft = isDraft;
-	}
-
-	public int getExpectedExecutionTime() {
-		return expectedExecutionTime;
-	}
-
-	public void setExpectedExecutionTime(int expectedExecutionTime) {
-		this.expectedExecutionTime = expectedExecutionTime;
-	}
-
-	public String getPendingTaskId() {
-		return pendingTaskId;
-	}
-
-	public void setPendingTaskId(String pendingTaskId) {
-		this.pendingTaskId = pendingTaskId;
 	}
 
 	/**

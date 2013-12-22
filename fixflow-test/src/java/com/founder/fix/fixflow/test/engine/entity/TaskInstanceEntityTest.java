@@ -6,8 +6,9 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.ColumnMapping;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Result;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
 
 public class TaskInstanceEntityTest extends AbstractFixFlowTestCase{
@@ -15,30 +16,32 @@ public class TaskInstanceEntityTest extends AbstractFixFlowTestCase{
 	@SuppressWarnings("rawtypes")
 	public void testTaskInstanceEntityMapping() throws Exception {
 		
-		DataBaseTable dataBaseTable=processEngineConfiguration.getDataBaseTable("fixflow_run_taskinstance");
+		ResultMap resultMap=processEngineConfiguration.getResultMap("taskResultMap");
 		
 		
 		
 		
-		Class clazz = Class.forName(dataBaseTable.getMappingType());
+		Class clazz = Class.forName(resultMap.getType());
 
 		Object obj = clazz.newInstance();
 		
-		List<ColumnMapping> columnMappings=dataBaseTable.getColumnMapping();
+		List<Result> results=resultMap.getResult();
 		
 		
 
-		for (ColumnMapping columnMapping : columnMappings) {
+		for (Result columnMapping : results) {
 
 			PropertyDescriptor pd = new PropertyDescriptor(columnMapping.getProperty(), clazz);
 
 			// 获得写方法
 
 			Method wM = pd.getWriteMethod();
+			
+			wM.invoke(obj,"");
 
 			// 获得读方法
 
-			Method rM = pd.getReadMethod();
+			//Method rM = pd.getReadMethod();
 		}
 
 

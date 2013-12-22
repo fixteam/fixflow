@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Select;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
@@ -129,21 +129,21 @@ public class MappingSqlSession {
 		List returnObjList = (List) scriptLanguageMgmt.execute(rule.getSqlValue());
 		if (rule instanceof Select) {
 			Select select = (Select) rule;
-			String resultMap = select.getResultMap();
-			if (StringUtil.isNotEmpty(resultMap)) {
-				DataBaseTable dataBaseTable = processEngineConfiguration.getDataBaseTable(resultMap);
+			String resultMapSelect = select.getResultMap();
+			if (StringUtil.isNotEmpty(resultMapSelect)) {
+				ResultMap resultMap = processEngineConfiguration.getResultMap(resultMapSelect);
 
-				if (dataBaseTable == null) {
-					throw new FixFlowDbException("resultMap " + resultMap + " 未找到!");
+				if (resultMap == null) {
+					throw new FixFlowDbException("resultMap " + resultMapSelect + " 未找到!");
 				}
 
-				String mappingType = dataBaseTable.getMappingType();
+				String mappingType = resultMap.getType();
 				if (StringUtil.isNotEmpty(mappingType)) {
 					List<Object> returnList = new ArrayList<Object>();
 
 					for (Object object : returnObjList) {
 						AbstractPersistentObject persistentObject = (AbstractPersistentObject) ReflectUtil.instantiate(mappingType);
-						persistentObject.persistentInit(dataBaseTable, (Map) object);
+						persistentObject.persistentInit(resultMap, (Map) object);
 						returnList.add(persistentObject);
 					}
 					return returnList;
@@ -169,19 +169,19 @@ public class MappingSqlSession {
 		Object returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
 		if (rule instanceof Select) {
 			Select select = (Select) rule;
-			String resultMap = select.getResultMap();
-			if (StringUtil.isNotEmpty(resultMap)) {
-				DataBaseTable dataBaseTable = processEngineConfiguration.getDataBaseTable(resultMap);
+			String resultMapSelect = select.getResultMap();
+			if (StringUtil.isNotEmpty(resultMapSelect)) {
+				ResultMap resultMap = processEngineConfiguration.getResultMap(resultMapSelect);
 
-				if (dataBaseTable == null) {
+				if (resultMap == null) {
 					throw new FixFlowDbException("resultMap " + resultMap + " 未找到!");
 				}
 
-				String mappingType = dataBaseTable.getMappingType();
+				String mappingType = resultMap.getType();
 				if (StringUtil.isNotEmpty(mappingType)) {
 
 					AbstractPersistentObject persistentObject = (AbstractPersistentObject) ReflectUtil.instantiate(mappingType);
-					persistentObject.persistentInit(dataBaseTable, (Map) returnObjList);
+					persistentObject.persistentInit(resultMap, (Map) returnObjList);
 
 					return persistentObject;
 

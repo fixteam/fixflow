@@ -74,10 +74,12 @@ import com.founder.fix.bpmn2extensions.coreconfig.SysMailConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.BusinessRules;
-import com.founder.fix.bpmn2extensions.sqlmappingconfig.ColumnMapping;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Column;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.DataBaseTable;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Delete;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Insert;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Result;
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Select;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.SqlmappingconfigFactory;
@@ -192,8 +194,12 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected DataVariableConfig dataVariableConfig;
 
 	protected Map<String, DataBaseTable> dataBaseTables = new HashMap<String, DataBaseTable>();
+	
+	protected Map<String, ResultMap> resultMaps = new HashMap<String, ResultMap>();
+	
 
-	protected Map<String, ColumnMapping> columnMappingMap = new HashMap<String, ColumnMapping>();
+	
+	protected Map<String, Column> columnMap = new HashMap<String, Column>();
 
 	protected Map<String, Rule> ruleMap = new HashMap<String, Rule>();
 
@@ -290,22 +296,48 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				dataBaseTable.setTableId(element.attributeValue("tableId"));
 				dataBaseTable.setTableName(element.attributeValue("tableName"));
 				dataBaseTable.setTableValue(element.attributeValue("tableValue"));
-				dataBaseTable.setMappingType(element.attributeValue("mappingType"));
+				//dataBaseTable.setMappingType(element.attributeValue("mappingType"));
 
-				for (Object eleNew : element.elements("columnMapping")) {
-					Element columnMappingElement = (Element) eleNew;
-					ColumnMapping columnMapping = SqlmappingconfigFactory.eINSTANCE.createColumnMapping();
-					columnMapping.setColumn(columnMappingElement.attributeValue("column"));
-					columnMapping.setName(columnMappingElement.attributeValue("name"));
-					columnMapping.setJdbcType(columnMappingElement.attributeValue("jdbcType"));
-					columnMapping.setProperty(columnMappingElement.attributeValue("property"));
-					columnMapping.setSimpleKey(columnMappingElement.attributeValue("property"));
+				for (Object eleNew : element.elements("column")) {
+					Element columnElement = (Element) eleNew;
+					Column column = SqlmappingconfigFactory.eINSTANCE.createColumn();
+					column.setColumn(columnElement.attributeValue("column"));
+					column.setName(columnElement.attributeValue("name"));
+					column.setJdbcType(columnElement.attributeValue("jdbcType"));
+					//column.setProperty(columnElement.attributeValue("property"));
+					//column.setSimpleKey(columnElement.attributeValue("property"));
 
-					dataBaseTable.getColumnMapping().add(columnMapping);
-					columnMappingMap.put(dataBaseTable.getTableId()+"_"+columnMapping.getColumn(), columnMapping);
+					dataBaseTable.getColumn().add(column);
+					columnMap.put(dataBaseTable.getTableId()+"_"+column.getColumn(), column);
 				}
 
 				dataBaseTables.put(dataBaseTable.getTableId(), dataBaseTable);
+
+			}
+			
+
+			for (Object ele : document.getRootElement().elements("resultMap")) {
+				Element element = (Element) ele;
+
+				ResultMap resultMap = SqlmappingconfigFactory.eINSTANCE.createResultMap();
+				resultMap.setId(element.attributeValue("id"));
+				resultMap.setName(element.attributeValue("name"));
+				resultMap.setType(element.attributeValue("type"));
+				
+				for (Object eleNew : element.elements("result")) {
+					Element resultMappingElement = (Element) eleNew;
+					Result result = SqlmappingconfigFactory.eINSTANCE.createResult();
+					result.setColumn(resultMappingElement.attributeValue("column"));
+					result.setName(resultMappingElement.attributeValue("name"));
+					result.setJdbcType(resultMappingElement.attributeValue("jdbcType"));
+					result.setProperty(resultMappingElement.attributeValue("property"));
+					//result.setSimpleKey(columnMappingElement.attributeValue("property"));
+
+					resultMap.getResult().add(result);
+					//columnMappingMap.put(dataBaseTable.getTableId()+"_"+columnMapping.getColumn(), columnMapping);
+				}
+
+				resultMaps.put(resultMap.getId(), resultMap);
 
 			}
 
@@ -1340,25 +1372,32 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return dataBaseTables;
 	}
 	
-	public ColumnMapping getColumn(String tableId,String columnId) {
+	public Column getColumn(String tableId,String columnId) {
 		
 		
-		return columnMappingMap.get(tableId+"_"+columnId);
+		return columnMap.get(tableId+"_"+columnId);
 		
 	}
 	
-	public Map<String,ColumnMapping> getColumnMap(String tableId) {
-		Map<String, ColumnMapping> columnMappingMapObj=new HashMap<String, ColumnMapping>();
+	public Map<String,Column> getColumnMap(String tableId) {
+		Map<String, Column> columnMapObj=new HashMap<String, Column>();
 		DataBaseTable dataBaseTable=dataBaseTables.get(tableId);
 		if(dataBaseTable!=null){
-			for (ColumnMapping columnMapping : dataBaseTable.getColumnMapping()) {
-				columnMappingMapObj.put(columnMapping.getColumn(), columnMapping);
+			for (Column column : dataBaseTable.getColumn()) {
+				columnMapObj.put(column.getColumn(), column);
 			}
 		}
 		
-		return columnMappingMapObj;
+		return columnMapObj;
 		
 	}
+	public Map<String, ResultMap> getResultMaps() {
+		return resultMaps;
+	}
 	
+	public ResultMap getResultMap(String id) {
+		return resultMaps.get(id);
+	}
+
 
 }

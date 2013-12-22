@@ -83,9 +83,9 @@ public class StringUtil {
     	return Boolean.parseBoolean(booleanStringTemp);
     }
 
-	public static boolean isNotEmpty(String orgId) {
+	public static boolean isNotEmpty(String str) {
 		
-		if(orgId==null||orgId.equals("")){
+		if(str==null||str.equals("")){
 			return false;
 		}
 		else{
