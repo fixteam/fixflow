@@ -549,6 +549,9 @@
 		<if test="dateEnd != null">  
 			<![CDATA[and START_TIME <= #{dateEnd}]]>
 		</if>
+		<if test="userName != null">
+			and USER_NAME like '%${userName}%'
+		</if>
 		<if test="instanceStatus != null">  
 			and INSTANCE_STATUS = #{instanceStatus}
 		</if> 
