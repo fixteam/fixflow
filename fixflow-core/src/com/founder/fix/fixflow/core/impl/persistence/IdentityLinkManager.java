@@ -69,21 +69,13 @@ public class IdentityLinkManager extends AbstractManager {
 		
 		IdentityLink tmpIdentityLink = selectIdentifyLinkById(identityLink.getId());
 		if(tmpIdentityLink == null){
-			insertIdentifyLink(identityLink);
+			insert("insertIdentityLink", identityLink);
 		}else{
-			updateIdentifyLink(identityLink);
+			update("updateIdentityLink", identityLink);
 		}
 	}
 	
 	/****新增方法*****/
-	
-	public void insertIdentifyLink(IdentityLink identityLink){
-		getMappingSqlSession().insert("insertIdentityLink", identityLink);
-	}
-	
-	public void updateIdentifyLink(IdentityLink identityLink){
-		getMappingSqlSession().update("updateIdentityLink", identityLink);
-	}
 	
 	public IdentityLink selectIdentifyLinkById(String id){
 		return (IdentityLink)getMappingSqlSession().selectOne("selectIdentityLinkById", id);

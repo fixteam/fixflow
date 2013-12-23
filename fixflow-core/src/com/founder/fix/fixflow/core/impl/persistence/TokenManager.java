@@ -48,6 +48,19 @@ public class TokenManager extends AbstractManager {
 	
 	/**新增方法*/
 	
+	
+	/**
+	 * 非递归保存令牌
+	 * @param tokenEntity
+	 */
+	public void saveRootToken(TokenEntity tokenEntity){
+		TokenEntity tmpTokenEntity = selectTokenByTokenId(tokenEntity.getId());
+		if(tmpTokenEntity == null){
+			insert("insertToken", tokenEntity);
+		}else{
+			update("updateToken", tokenEntity);
+		}
+	}
 	/**
 	 * 递归保存令牌实例
 	 * @param tokenEntity
@@ -55,9 +68,9 @@ public class TokenManager extends AbstractManager {
 	public void saveToken(TokenEntity tokenEntity){
 		TokenEntity tmpTokenEntity = selectTokenByTokenId(tokenEntity.getId());
 		if(tmpTokenEntity == null){
-			insertToken(tokenEntity);
+			insert("insertToken", tokenEntity);
 		}else{
-			updateToken(tokenEntity);
+			update("updateToken", tokenEntity);
 		}
 		if (tokenEntity.getChildren() != null) {
 			for (String tokenKey : tokenEntity.getChildren().keySet()) {
@@ -65,22 +78,6 @@ public class TokenManager extends AbstractManager {
 				saveToken(tokenChildren);
 			}
 		}
-	}
-	
-	/**
-	 * 插入令牌实例
-	 * @param tokenEntity
-	 */
-	public void insertToken(TokenEntity tokenEntity){
-		
-	}
-	
-	/**
-	 * 更新令牌实例
-	 * @param tokenEntity
-	 */
-	public void updateToken(TokenEntity tokenEntity){
-		
 	}
 	
 	/**

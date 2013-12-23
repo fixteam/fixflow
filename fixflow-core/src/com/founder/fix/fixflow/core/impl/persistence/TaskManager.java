@@ -111,51 +111,23 @@ public class TaskManager extends AbstractManager {
 		cacheHandler.putCacheData("IdentityLink_" + taskInstance.getId(), null);
 		TaskInstanceEntity taskInstanceEntity = findTaskById(taskInstance.getId());
 		if(taskInstanceEntity == null){
-			insertTaskInstance(taskInstanceEntity);
+			insert("insertTaskInstance",taskInstance);
 		}else{
-			updateTaskInstance(taskInstanceEntity);
+			update("updateTaskInstance",taskInstance);
 		}
 	}
 
 	public void deleteTaskInstanceByTaskInstanceId(String taskInstanceId, boolean cascade) {
-
 		if (cascade) {
-
 			getCommandContext().getIdentityLinkManager().deleteIdentityLinksByTaskId(taskInstanceId);
-			
-			
 			QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
 			queryVariablesCommand.setTaskInstanceId(taskInstanceId);
-			
-
-
 			getCommandContext().getVariableManager().deleteVariable(queryVariablesCommand);
 			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
-			
-
 		} else {
 			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
 		}
-
 	}
-	
 	
 	/**新增方法****/
-	
-	/**
-	 * 插入新的任务实例
-	 * @param taskInstanceEntity
-	 */
-	public void insertTaskInstance(TaskInstanceEntity taskInstanceEntity){
-		getMappingSqlSession().insert("insertTaskInstance", taskInstanceEntity);
-	}
-	
-	/**
-	 * 更新任务实例
-	 * @param taskInstanceEntity
-	 */
-	public void updateTaskInstance(TaskInstanceEntity taskInstanceEntity){
-		getMappingSqlSession().update("updateTaskInstance", taskInstanceEntity);
-	}
-	
 }

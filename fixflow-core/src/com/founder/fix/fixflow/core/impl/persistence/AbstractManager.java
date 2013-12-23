@@ -34,6 +34,10 @@ public abstract class AbstractManager {
 	public void delete(String deleteStatement, PersistentObject persistentObject) {
 		getDbSqlSession().delete(deleteStatement, persistentObject.getId());
 	}
+	
+	public void update(String updateStatement, PersistentObject persistentObject){
+		getDbSqlSession().update(updateStatement, persistentObject);
+	}
 
 	protected DbSqlSession getDbSqlSession() {
 

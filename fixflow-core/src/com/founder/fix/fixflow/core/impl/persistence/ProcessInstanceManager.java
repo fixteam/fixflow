@@ -150,11 +150,11 @@ public class ProcessInstanceManager extends AbstractManager {
 		int count = selectProcessInstanceCountById(processInstance.getId());
 		if(count == 0){
 			insertProcessInstance(processInstance);
-			commandContext.getTokenManager().insertToken(processInstance.getRootToken());
 		}else{
 			updateProcessInstance(processInstance);
-			commandContext.getTokenManager().updateToken(processInstance.getRootToken());
 		}
+		//保存根令牌
+		commandContext.getTokenManager().saveRootToken(processInstance.getRootToken());
 		//保存FreeToken
 		saveFreeToken(processInstance);
 		// 存储任务实例
