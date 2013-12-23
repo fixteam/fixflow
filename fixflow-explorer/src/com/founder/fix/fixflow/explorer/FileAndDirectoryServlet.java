@@ -124,17 +124,20 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public void moveFileOrDirectory(){
     	try {
-    		
     		String []resourceArr = getMoveResource();
     		String bpmnFile = resourceArr[0];
-    		String pngFile = bpmnFile.substring(0, bpmnFile.lastIndexOf(".")) + ".png";
     		String bpmnFileName = request("fileName");
-    		String pngFileName = bpmnFileName.substring(0, bpmnFileName.lastIndexOf(".")) + ".png";
     		String newPath = resourceArr[1];
+    		//如果删除File,则删除同名PNG
+    		if(bpmnFile.lastIndexOf(".") > -1){
+    			String pngFile = bpmnFile.substring(0, bpmnFile.lastIndexOf(".")) + ".png";
+    			String pngFileName = bpmnFileName.substring(0, bpmnFileName.lastIndexOf(".")) + ".png";
+    			FileAndDirectoryUtils.moveFileAndDirectory(pngFile, newPath,pngFileName);
+    		}
     		FileAndDirectoryUtils.moveFileAndDirectory(bpmnFile, newPath,bpmnFileName);
-    		FileAndDirectoryUtils.moveFileAndDirectory(pngFile, newPath,pngFileName);
     		success("删除成功!","string");
     	} catch (Exception e) {
+    		e.printStackTrace();
     		error("删除失败!");
     	}
     }

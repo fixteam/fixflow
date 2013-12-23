@@ -208,10 +208,10 @@ public class FileUtil
 	}
 	
 	/**
-	 * 路径拷贝
+	 * 路径拷贝     
 	 * @param from
 	 * @param target
-	 * @param ingores
+	 * @param ingores 忽略的文件或文件夹   by ych
 	 * @throws IOException
 	 */
 	public static void copyFolder(String from ,String target,List<String> ingores) throws IOException{
@@ -219,7 +219,7 @@ public class FileUtil
 		if (file.isFile()) {
 			copyFile(from,target);
 		}else{
-			if(ingores!=null && !ingores.contains(file.getName())){
+			if(ingores == null || !ingores.contains(file.getName())){
 				if (!file.exists()) { 
 					file.mkdir(); 
 				} 

@@ -261,6 +261,7 @@ $(document).ready(function(){
 						}else if(event.keyCode == 27){	//ESC
 							currentOperationType = "done";
 							$editInput.parent("span").replaceWith("<span>"+$(this).attr("oldValue")+"</span>");
+							resetToolbarState();
 						}
 					});
 					break;
@@ -280,6 +281,11 @@ $(document).ready(function(){
 								fileName: fileName,
 							},
 							success: function(data){
+								eval("var d = " + data);
+								if(d.state == "error"){
+									alert("删除失败！");
+									return;
+								}
 								var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
 								var node = tree.getNodeByParam("id", treeNodeId);
 								tree.removeNode(node);
@@ -478,13 +484,21 @@ function getBreadcrumbNameList(bcList){
 }
 
 function resetToolbarState(){
+	var select = false;
+	if($(".thumb-wrap[select=true]").length > 0){
+		select = true;
+	}
 	$("div.toolbar > div.listBtn").each(function(){
-		if($(this).attr("btn-scope") == "single"){
-			$(this).removeClass("btn-normal").addClass("btn-disable");
+		if(!select){
+			if($(this).attr("btn-scope") == "single"){
+				$(this).removeClass("btn-normal").addClass("btn-disable");
+			}else{
+				$(this).addClass("btn-normal").removeClass("btn-disable");
+			}
 		}else{
 			$(this).addClass("btn-normal").removeClass("btn-disable");
 		}
-	})
+	});
 }
 
 function checkIsResolvent(){

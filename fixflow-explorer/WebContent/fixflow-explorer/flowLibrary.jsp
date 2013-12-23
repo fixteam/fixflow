@@ -93,52 +93,51 @@
 
 <div id="createFileDialog" class="popup-A sl-shadow" style="position:absolute;display: none;">
 	<div class="title"><h4>新建流程</h4></div>
-		<div class="content">
-			<table width="100%" border="0" class="fix-table2">
-				<tbody>
-					<tr>
-          				<td width="70" class="title-r">流程ID</td>
-          				<td><input id="flowFileId" type="text" id="text_0" name="text_0" class="fix-input" style="width:200px;"></td>
-        			</tr>
-        			<tr>
-          				<td class="title-r">流程名称</td>
-          				<td><input id="flowFileName"  type="text" id="text_1" name="text_0" class="fix-input" style="width:200px;"></td>
-        			</tr>
-			        <tr>
-			         	<td>&nbsp;</td>
-          				<td>
-          					<div class="btn-normal fn-left m-r-30"><a href="#" id="okBtn">确 定</a></div>
-              				<div class="btn-normal fn-left"><a href="#" id="closeBtn">取 消</a></div>
-              			</td>
-       				 </tr>
-      			</tbody></table>
+	<div class="content">
+		<table width="100%" border="0" class="fix-table2">
+			<tbody>
+				<tr>
+    				<td width="70" class="title-r">流程ID</td>
+     				<td><input id="flowFileId" type="text" id="text_0" name="text_0" class="fix-input" style="width:200px;"></td>
+       			</tr>
+       			<tr>
+         			<td class="title-r">流程名称</td>
+         			<td><input id="flowFileName"  type="text" id="text_1" name="text_0" class="fix-input" style="width:200px;"></td>
+       			</tr>
+		        <tr>
+		         	<td>&nbsp;</td>
+         			<td>
+         				<div class="btn-normal fn-left m-r-30"><a href="#" id="okBtn">确 定</a></div>
+             			<div class="btn-normal fn-left"><a href="#" id="closeBtn">取 消</a></div>
+             		</td>
+      			 </tr>
+     		</tbody>
+     	</table>
 	</div>
 </div>
 
 <div id="delopyFlowDialog" class="popup-A sl-shadow" style="position:absolute; display: none; width: 880px; right: 80px;">
 	<div class="title"><h4>发布流程</h4></div>
-		<div class="content">
-			<table width="100%" border="0" class="popup-tb">
-				<thead>
-					<tr>
-						<th>编号</th>
-						<th>名称</th>
-						<th>版本</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-      			</tbody>
-      			<tfoot>
-      				<tr>
-      					<td colspan="4">
-      						<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyOkBtn">发布</a></div>
-      						<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyUpdateBtn">更新</a></div>
-              				<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyCloseBtn">取 消</a></div>
-              			</td>
-      				</tr>
-      			</tfoot>
-      		</table>
+	<div class="content">
+		<table width="100%" border="0" class="popup-tb">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>名称</th>
+					<th>版本</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+     		<tfoot>
+     			<tr>
+     				<td colspan="4">
+     					<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyOkBtn">发布</a></div>
+     					<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyUpdateBtn">更新</a></div>
+             			<div class="btn-normal fn-left" style="float:none;"><a href="#" id="delopyCloseBtn">取 消</a></div>
+             		</td>
+     			</tr>
+     		</tfoot>
+     	</table>
 	</div>
 </div>
 <div class="bg"></div>
