@@ -17,13 +17,13 @@
  */
 package com.founder.fix.fixflow.core.impl.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
-import com.founder.fix.fixflow.core.objkey.TokenObjKey;
+import com.founder.fix.fixflow.core.runtime.Token;
 
 public class TokenManager extends AbstractManager {
 	
@@ -53,28 +53,29 @@ public class TokenManager extends AbstractManager {
 	 * 非递归保存令牌
 	 * @param tokenEntity
 	 */
-	public void saveRootToken(TokenEntity tokenEntity){
-		TokenEntity tmpTokenEntity = selectTokenByTokenId(tokenEntity.getId());
+	public void saveToken(Token token){
+		TokenEntity tmpTokenEntity = findTokenById(token.getId());
 		if(tmpTokenEntity == null){
-			insert("insertToken", tokenEntity);
+			insert("insertToken", token);
 		}else{
-			update("updateToken", tokenEntity);
+			update("updateToken", token);
 		}
 	}
 	/**
 	 * 递归保存令牌实例
 	 * @param tokenEntity
 	 */
-	public void saveToken(TokenEntity tokenEntity){
-		TokenEntity tmpTokenEntity = selectTokenByTokenId(tokenEntity.getId());
+	public void saveTokenAndChildren(Token token){
+		
+		TokenEntity tmpTokenEntity = findTokenById(token.getId());
 		if(tmpTokenEntity == null){
-			insert("insertToken", tokenEntity);
+			insert("insertToken", token);
 		}else{
-			update("updateToken", tokenEntity);
+			update("updateToken", token);
 		}
-		if (tokenEntity.getChildren() != null) {
-			for (String tokenKey : tokenEntity.getChildren().keySet()) {
-				TokenEntity tokenChildren = tokenEntity.getChildren().get(tokenKey);
+		if (token.getChildren() != null) {
+			for (String tokenKey : token.getChildren().keySet()) {
+				TokenEntity tokenChildren = token.getChildren().get(tokenKey);
 				saveToken(tokenChildren);
 			}
 		}
@@ -85,9 +86,12 @@ public class TokenManager extends AbstractManager {
 	 * @param tokenId
 	 * @return
 	 */
-	public TokenEntity selectTokenByTokenId(String tokenId){
+	public TokenEntity findTokenById(String id){
 		
-		return null;
+		if (id == null) {
+			throw new FixFlowException("令牌编号不能为空!");
+		}
+		return (TokenEntity)getMappingSqlSession().selectOne("findTokenById", id);
 	}
 
 }

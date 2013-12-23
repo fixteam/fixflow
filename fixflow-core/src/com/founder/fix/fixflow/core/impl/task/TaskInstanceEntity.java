@@ -29,10 +29,12 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
@@ -58,16 +60,14 @@ import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEntity> implements TaskInstance, Assignable, Cloneable {
 
 	private static final long serialVersionUID = 2262140765605817383L;
-	
-	// 静态字段  //////////////////////////////////////////////////////////////
-	
-	public static final String RULE_GET_TASKINSTANCE_PERSISTENT_STATE="getTaskInstancePersistentState";
-	
-	public static final String RULE_GET_TASKINSTANCE_PERSISTENT_DBMAP="getTaskInstancePersistentDbMap";
-	
-	public static final String RULE_TASK_INSTANCE_CLONE="taskInstanceClone";
-	
-	
+
+	// 静态字段 //////////////////////////////////////////////////////////////
+
+	public static final String RULE_GET_TASKINSTANCE_PERSISTENT_STATE = "getTaskInstancePersistentState";
+
+	public static final String RULE_GET_TASKINSTANCE_PERSISTENT_DBMAP = "getTaskInstancePersistentDbMap";
+
+	public static final String RULE_TASK_INSTANCE_CLONE = "taskInstanceClone";
 
 	// 需要持久化的字段 //////////////////////////////////////////////////////////
 
@@ -535,7 +535,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		this.commandType = commandType;
 	}
 
-	// 有问题的
 	public String getCommandMessage() {
 
 		if (this.getCommandType() == null) {
@@ -543,18 +542,21 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 			return commandMessage;
 
 		}
-		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+
+		// 国际化处理
+		ProcessEngineConfigurationImpl processEngineConfiguration = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+		Boolean booleanTemp = StringUtil.getBoolean(processEngineConfiguration.getInternationalizationConfig().getIsEnable());
 
 		if (booleanTemp) {
 			String processId = this.getProcessDefinitionId();
-			String cType = Context.getProcessEngineConfiguration().getTaskCommandDefMap().get(this.getCommandType()).getType();
+			String cType = processEngineConfiguration.getTaskCommandDefMap().get(this.getCommandType()).getType();
 			String nameTemp = null;
 			if (cType.equals("system")) {
-				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources()
-						.getResourceName(FixFlowResources.TaskComandResource, "System_" + commandId);
+				nameTemp = processEngineConfiguration.getFixFlowResources().getResourceName(FixFlowResources.TaskComandResource,
+						"System_" + commandId);
 
 			} else {
-				nameTemp = Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, this.nodeId + "_" + commandId);
+				nameTemp = processEngineConfiguration.getFixFlowResources().getResourceName(processId, this.nodeId + "_" + commandId);
 
 			}
 
@@ -591,12 +593,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 	protected TaskMgmtInstance taskMgmtInstance;
 
-	
-
 	/**
 	 * 创建任务
 	 */
 	public TaskInstanceEntity() {
+
 	}
 
 	/**
@@ -671,7 +672,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		}
 		createTime = new Date();
 
-		// if this task instance is associated with a task...
 		if ((taskDefinition != null) && (executionContext != null)) {
 			//
 			executionContext.setTaskInstance(this);
@@ -686,13 +686,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		}
 
 		startTime = new Date();
-		/*
-		 * if ((task != null) && (token != null)) { ExecutionContext
-		 * executionContext = new ExecutionContext(token);
-		 * executionContext.setTask(task);
-		 * executionContext.setTaskInstance(this);
-		 * task.fireEvent(Event.EVENTTYPE_TASK_START, executionContext); }
-		 */
+
 	}
 
 	public void end(TaskCommandInst taskCommandInst, String taskComment) {
@@ -736,39 +730,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 			// task.fireEvent(Event.EVENTTYPE_TASK_END, executionContext);
 		}
 
-		// log this assignment
+		//
 		if (token != null) {
 			// token.addLog(new TaskEndLog(this));
 		}
 
 		token.signal();
-
-		// 用于并行、串行会签的处理.
-
-		/*
-		 * if (token.getFlowNode() instanceof UserTask && ((UserTask)
-		 * this).getLoopCharacteristics() != null) {
-		 * 
-		 * UserTask userTask = (UserTask) token.getFlowNode();
-		 * LoopCharacteristics loopCharacteristics =
-		 * userTask.getLoopCharacteristics();
-		 * 
-		 * if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics)
-		 * { Set<TaskInstance>
-		 * taskInstances=token.getProcessInstance().getTaskMgmtInstance
-		 * ().getTaskInstances(token);
-		 * 
-		 * // 并行多实例处理 }else { // 串行处理 }
-		 * 
-		 * }
-		 * 
-		 * 
-		 * 
-		 * for (TaskInstance taskInstance :taskInstances) {
-		 * if(taskInstance.getNodeId().equals(this.getNodeId())){
-		 * 
-		 * } }
-		 */
 
 	}
 
@@ -835,11 +802,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 	}
 
-	// public void customEnd(String taskCommandType,String
-	// taskCommandName,FlowNode flowNode ) {
-
-	// }
-
 	/**
 	 * 这个结束并不会去推动令牌向下。例如用在退回的时候。
 	 */
@@ -892,13 +854,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	public TokenEntity removeTimeOutTask() {
 
 		if (this.node.getBoundaryEventRefs().size() > 0) {
-			// List<BoundaryEvent> boundaryEvents = this.getBoundaryEventRefs();
+
 			TokenEntity tokenEntity = this.getToken();
 			String parentTokenId = tokenEntity.getParent().getId();
 			try {
 				Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
-				// Set<JobKey>
-				// jobKeys=scheduler.getJobKeys(GroupMatcher.jobGroupContains("Out"));
+
 				Map<String, TokenEntity> tokenBrothers = tokenEntity.getParent().getChildren();
 
 				int colseTokenBrothersNum = 0;
@@ -907,26 +868,16 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 					if (!tokenBrotherKey.equals(tokenEntity.getId())) {
 
-						// for (BoundaryEvent boundaryEvent :
-						// this.node.getBoundaryEventRefs()) {
-						// if(tokenBrothers.get(tokenBrotherKey).getFlowNode().getId().equals(boundaryEvent.getId())){
-						// JobDetail
-						// JobDetail=scheduler.getJobDetail(JobKey.jobKey(tokenBrothers.get(tokenBrotherKey).getId(),"FixTimeOutTask_"+parentTokenId));
 						scheduler.deleteJob(JobKey.jobKey(tokenBrothers.get(tokenBrotherKey).getId(), "FixTimeOutTask_" + parentTokenId));
 						tokenBrothers.get(tokenBrotherKey).end();
 						colseTokenBrothersNum = colseTokenBrothersNum + 1;
 						break;
-						// }
-						// }
+
 					}
 				}
 
 				if (colseTokenBrothersNum == (tokenBrothers.keySet().size() - 1)) {
 					tokenEntity.getParent().terminationChildToken();
-					// ExecutionContext
-					// executionContextParent=ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(tokenEntity.getParent());
-
-					// super.leave(executionContextParent, sequenceFlow);
 					return tokenEntity.getParent();
 				}
 
@@ -999,72 +950,6 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		isCancelled = true;
 	}
 
-	public void setAssigneeId(String assigneeId) {
-		this.assignee = assigneeId;
-	}
-
-	public void setOwnerId(String ownerId) {
-		this.owner = ownerId;
-	}
-
-	// 持久化的时候用的方法
-
-	public void setAssigneeWithoutCascade(String assignee) {
-		this.assignee = assignee;
-	}
-
-	public void setOwnerWithoutCascade(String owner) {
-		this.owner = owner;
-	}
-
-	public void setDueDateWithoutCascade(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public void setPriorityWithoutCascade(int priority) {
-		this.priority = priority;
-	}
-
-	public void setParentTaskIdWithoutCascade(String parentTaskInstanceId) {
-		this.parentTaskInstanceId = parentTaskInstanceId;
-	}
-
-	public void setNameWithoutCascade(String taskName) {
-		this.name = taskName;
-	}
-
-	public void setDescriptionWithoutCascade(String description) {
-		this.description = description;
-	}
-
-	public void setEndTimeWithoutCascade(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public void setClaimTimeWithoutCascade(Date claimTime) {
-		this.claimTime = claimTime;
-	}
-
-	public void setIdWithoutCascade(String id) {
-		this.id = id;
-	}
-
-	public void setCreateTimeWithoutCascade(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public void setStartTimeWithoutCascade(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public void setProcessDefinitionKeyWithoutCascade(String processDefinitionKey) {
-		this.processDefinitionKey = processDefinitionKey;
-	}
-
-	public void setProcessDefinitionIdWithoutCascade(String processDefinitionId) {
-		this.processDefinitionId = processDefinitionId;
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<IdentityLink> getIdentityLinkQueryToListNoCache() {
 
@@ -1134,8 +1019,5 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	public String getPersistentStateRuleId() {
 		return RULE_GET_TASKINSTANCE_PERSISTENT_STATE;
 	}
-
-	
-
 
 }

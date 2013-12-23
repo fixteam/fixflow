@@ -41,13 +41,6 @@ public class TaskManager extends AbstractManager {
 	 * @return
 	 */
 	public TaskInstanceEntity findTaskById(String id) {
-		/*5.1修改
-		if (id == null) {
-			throw new FixFlowException("任务编号不能为空!");
-		}
-
-		return (TaskInstanceEntity) getDbSqlSession().selectOne("selectTaskInstance", id);
-		*/
 		if (id == null) {
 			throw new FixFlowException("任务编号不能为空!");
 		}

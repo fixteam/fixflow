@@ -167,6 +167,9 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
 		Object returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
+		if(returnObjList==null){
+			return  null;
+		}
 		if (rule instanceof Select) {
 			Select select = (Select) rule;
 			String resultMapSelect = select.getResultMap();
@@ -181,7 +184,25 @@ public class MappingSqlSession {
 				if (StringUtil.isNotEmpty(mappingType)) {
 
 					AbstractPersistentObject persistentObject = (AbstractPersistentObject) ReflectUtil.instantiate(mappingType);
-					persistentObject.persistentInit(resultMap, (Map) returnObjList);
+					
+					if(returnObjList instanceof List){
+						List listObj=(List)returnObjList;
+						if(listObj.size()==1&&listObj.get(0)instanceof Map){
+							
+							persistentObject.persistentInit(resultMap, (Map) returnObjList);
+							return persistentObject;
+						}
+						
+						
+					}else{
+						if(returnObjList instanceof Map){
+							persistentObject.persistentInit(resultMap, (Map) returnObjList);
+							return persistentObject;
+						}
+					}
+					
+					
+					
 
 					return persistentObject;
 
@@ -196,18 +217,5 @@ public class MappingSqlSession {
 		return returnObjList;
 	}
 
-	public <T extends PersistentObject> T selectById(Class<T> entityClass, String id) {
-		/*
-		 * T persistentObject = cacheGet(entityClass, id); if
-		 * (persistentObject!=null) { return persistentObject; } String
-		 * selectStatement =
-		 * dbSqlSessionFactory.getSelectStatement(entityClass); selectStatement
-		 * = dbSqlSessionFactory.mapStatement(selectStatement); persistentObject
-		 * = (T) sqlSession.selectOne(selectStatement, id); if
-		 * (persistentObject==null) { return null; } cachePut(persistentObject,
-		 * true); return persistentObject;
-		 */
-		return null;
-	}
 
 }

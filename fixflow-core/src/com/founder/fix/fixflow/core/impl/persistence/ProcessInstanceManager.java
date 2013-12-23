@@ -17,7 +17,6 @@
  */
 package com.founder.fix.fixflow.core.impl.persistence;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,16 +25,13 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
-import com.founder.fix.fixflow.core.impl.persistence.instance.IdentityLinkPersistence;
-import com.founder.fix.fixflow.core.impl.persistence.instance.TaskInstancePersistence;
-import com.founder.fix.fixflow.core.impl.persistence.instance.VariablePersistence;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.objkey.TokenObjKey;
+import com.founder.fix.fixflow.core.runtime.Token;
 
 public class ProcessInstanceManager extends AbstractManager {
 
@@ -126,6 +122,9 @@ public class ProcessInstanceManager extends AbstractManager {
 
 	public void saveProcessInstance(ProcessInstanceEntity processInstance) throws Exception {
 		String processLocation="";
+		
+		
+		
 		List<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 			if(!taskInstanceEntity.hasEnded()){
@@ -140,27 +139,35 @@ public class ProcessInstanceManager extends AbstractManager {
 		//添加更新时间的操作
 		processInstance.setUpdateTime(new Date());
 		processInstance.setProcessLocation(processLocation);
-		
-		/* 5.1版本修改
-		getDbSqlSession().save("saveProcessInstance", processInstance);
-		*/
-		
+
+		//List<TaskInstanceEntity> taskInstances =processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
 		
 		//保存流程实例和令牌
 		int count = selectProcessInstanceCountById(processInstance.getId());
 		if(count == 0){
 			insertProcessInstance(processInstance);
+
 		}else{
 			updateProcessInstance(processInstance);
+			
 		}
-		//保存根令牌
-		commandContext.getTokenManager().saveRootToken(processInstance.getRootToken());
-		//保存FreeToken
-		saveFreeToken(processInstance);
-		// 存储任务实例
-		saveTaskInstance(processInstance);
+		
+		for (Token token : processInstance.getTokenList()) {
+			commandContext.getTokenManager().saveToken(token);
+		}
+		
+		for (TaskInstanceEntity taskInstance : taskInstanceEntities) {
+			commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
+		}
+
+		
+		
 		// 存储流程环境变量
-		saveVariableInstance(processInstance);
+		for (DataVariableEntity dataVariableEntity : processInstance.getDataVariableMgmtInstance().getDataVariableEntities()) {
+			if (dataVariableEntity.isPersistence()) {
+				commandContext.getVariableManager().saveVariable(dataVariableEntity);
+			}
+		}
 		
 	}
 	
@@ -199,44 +206,9 @@ public class ProcessInstanceManager extends AbstractManager {
 		return 0;
 	}
 	
-	/**
-	 * 保存流程中需要保存的任务实例
-	 * @param processInstanceEntity
-	 */
-	public void saveTaskInstance(ProcessInstanceEntity processInstanceEntity){
-		if (processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys() != null) {
-			for (TaskInstanceEntity taskInstance : processInstanceEntity.getTaskMgmtInstance().getTaskInstanceEntitys()) {
-				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
-				for (IdentityLinkEntity identityLink : taskInstance.getTaskIdentityLinkEntitys()) {
-					commandContext.getIdentityLinkManager().saveIdentityLink(identityLink);
-				}
-			}
-		}
-	}
+
 	
-	/**
-	 * 保存FreeToken
-	 * @param processInstanceEntity
-	 */
-	public void saveFreeToken(ProcessInstanceEntity processInstanceEntity){
-		for (TokenEntity token : processInstanceEntity.getTokenList()) {
-			if(token.isFreeToken()){
-				commandContext.getTokenManager().saveToken(token);
-			}
-		}
-	}
-	
-	/**
-	 * 持久化流程变量
-	 * @param processInstanceEntity
-	 */
-	public void saveVariableInstance(ProcessInstanceEntity processInstanceEntity){
-		for (DataVariableEntity dataVariableEntity : processInstanceEntity.getDataVariableMgmtInstance().getDataVariableEntities()) {
-			if (dataVariableEntity.isPersistence()) {
-				commandContext.getVariableManager().saveVariable(dataVariableEntity);
-			}
-		}
-	}
+
 	
 	
 	

@@ -116,11 +116,11 @@
 	]]>
 	</update>
 
-	<select id="selectTaskByTaskId" parameterType="java.lang.String" resultMap="fixflow_run_taskinstance" remark="根据任务编号查询任务实例 ">
+	<select id="selectTaskByTaskId" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据任务编号查询任务实例 ">
 		<![CDATA[ 
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ID = ? ";
 			objectParamWhere = { parameter };
-			sqlCommand.queryForValue(sqlText, objectParamWhere);
+			sqlCommand.queryForList(sqlText, objectParamWhere);
 		]]>
 	</select>
 
