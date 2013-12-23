@@ -155,12 +155,18 @@ public class FileAndDirectoryUtils {
      */  
     public static boolean renameFile(String resFilePath, String newFilePath) throws Exception{
         File resFile = new File(resFilePath);  
+        if(!resFile.exists()){
+			return true;
+		}
         File newFile = new File(newFilePath);  
 		if(newFile.exists()){
 			throw new Exception("当前文件或文件夹已存在!");
 		}
-		FileUtil.copyFile(resFilePath, newFilePath);
-		resFile.deleteOnExit();
+		if(!newFile.isFile() &&!newFile.exists()){
+			newFile.mkdir();
+		}
+		FileUtil.copyFolder(resFilePath, newFilePath,null);
+		FileUtil.deleteFile(resFilePath);
 		return true;
     }  
     
@@ -179,13 +185,16 @@ public class FileAndDirectoryUtils {
      */  
     public static boolean moveFileAndDirectory(String resFileOrDirectory, String newFilePOrDirectory,String fileName) throws Exception{
     	  File resf = new File(resFileOrDirectory);
+    	  if(!resf.exists()){
+    		  return true;
+    	  }
 	      String newf = newFilePOrDirectory;
-	      File fnewpath = new File(newf);
-	      if(!fnewpath.exists())
-	        fnewpath.mkdirs();
+	      File fnewpath = new File(newf+File.separator+fileName);
+	      if(!resf.isFile() && !fnewpath.exists())
+	        fnewpath.mkdir();
 	      if(resf.exists()){
-	    	  FileUtil.copyFile(resFileOrDirectory, newf+File.separator+fileName);
-		      resf.delete();
+	    	  FileUtil.copyFolder(resFileOrDirectory, newf+File.separator+fileName,null);
+		      FileUtil.deleteFile(resFileOrDirectory);
 	      }
 	      return true;
     }  
