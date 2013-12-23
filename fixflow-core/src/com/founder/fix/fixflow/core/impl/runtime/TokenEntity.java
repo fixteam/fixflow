@@ -26,8 +26,6 @@ import org.eclipse.bpmn2.FlowNode;
 import org.eclipse.bpmn2.LoopCharacteristics;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 
-import bsh.This;
-
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;

@@ -67,7 +67,7 @@
 		objectParamWhere = { parameter };
 		sqlCommand.queryForList(sqlText, objectParamWhere);
 	</select>
-	<businessRules id="getTokenPersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
+	<businessRules id="getTokenPersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
 	
 		persistentState = new HashMap<String, Object>();

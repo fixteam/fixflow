@@ -33,7 +33,11 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 public class IdentityLinkEntity extends AbstractPersistentObject implements IdentityLink {
 
 	private static final long serialVersionUID = 1L;
+	public static final String RULE_GET_IDENTITYLINK_PERSISTENT_STATE = "getIdentityLinkPersistentState";
+	public static final String RULE_GET_IDENTITYLINK_PERSISTENT_DBMAP = "getIdentityLinkPersistentDbMap";
+	public static final String RULE_GET_IDENTITYLINK_CLONE = "identityLinkClone";
 
+	//持久化字段
 	protected String id;
 
 	protected IdentityLinkType type;
@@ -44,7 +48,37 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 
 	protected String groupType;
 	
+	protected String taskId;
+	
+	protected IncludeExclusion includeExclusion;
+	
 	protected Date archiveTime;
+	
+	
+	//get和set方法
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setType(IdentityLinkType type) {
+		this.type = type;
+	}
+
+	public IdentityLinkType getType() {
+		return this.type;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
 
 	public String getGroupId() {
 		return groupId;
@@ -53,13 +87,35 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-
+	
 	public String getGroupType() {
 		return groupType;
 	}
 
 	public void setGroupType(String groupType) {
 		this.groupType = groupType;
+	}
+	
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+	
+	public IncludeExclusion getIncludeExclusion() {
+		return includeExclusion;
+	}
+
+	public void setIncludeExclusion(IncludeExclusion includeExclusion) {
+		this.includeExclusion = includeExclusion;
+	}
+	
+	public void setIncludeExclusionString(String includeExclusion) {
+		if(StringUtil.isNotEmpty(includeExclusion)){
+			this.includeExclusion = IncludeExclusion.valueOf(includeExclusion);
+		}
 	}
 	
 	public Date getArchiveTime() {
@@ -70,12 +126,20 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 		this.archiveTime = archiveTime;
 	}
 
-	protected IncludeExclusion includeExclusion;
-
-	protected String taskId;
-
+	//定义对象
 	protected TaskInstance taskInstance;
 
+	//对象set和get方法
+	public TaskInstance getTaskInstance() {
+		return taskInstance;
+	}
+
+	public void setTaskInstance(TaskInstance taskInstance) {
+		this.taskInstance = taskInstance;
+		this.taskId = taskInstance.getId();
+	}
+	
+	//构造函数
 	public IdentityLinkEntity() {
 
 	}
@@ -88,105 +152,16 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 		return userId != null;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public TaskInstance getTaskInstance() {
-		return taskInstance;
-	}
-
-	public void setTaskInstance(TaskInstance taskInstance) {
-		this.taskInstance = taskInstance;
-		this.taskId = taskInstance.getId();
-	}
-
-	public void setType(IdentityLinkType type) {
-		this.type = type;
-	}
-
-	public IdentityLinkType getType() {
-		// TODO Auto-generated method stub
-		return this.type;
-	}
-
-	public void setUserId(String userId) {
-
-		this.userId = userId;
-
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public String getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
-	}
-
 	public GroupTo getGroup() {
-
 		return new GroupTo(groupId, groupType);
 	}
 
 	public void setGroup(GroupTo group) {
-
 		this.groupId = group.getGroupId();
 		this.groupType = group.getGroupType();
 	}
-
-	public IncludeExclusion getIncludeExclusion() {
-		return includeExclusion;
-	}
-
-	public void setIncludeExclusion(IncludeExclusion includeExclusion) {
-		this.includeExclusion = includeExclusion;
-	}
-
-	// 持久化使用
-
-	public void setGroupIdWithoutCascade(String groupId) {
-		this.groupId = groupId;
-
-	}
-
-	public void setGroupTypeWithoutCascade(String groupType) {
-		this.groupType = groupType;
-	}
-
-	public void setIdWithoutCascade(String id) {
-		this.id = id;
-	}
-
-	public void setIncludeExclusionWithoutCascade(IncludeExclusion includeExclusion) {
-		this.includeExclusion = includeExclusion;
-
-	}
-
-	public void setGroupWithoutCascade(GroupTo group) {
-		this.groupId = group.getGroupId();
-		this.groupType = group.getGroupType();
-	}
-
-	public void setTypeWithoutCascade(IdentityLinkType identityLinkType) {
-		this.type = identityLinkType;
-	}
-
-	public void setUserIdWithoutCascade(String userId) {
-		this.userId = userId;
-	}
-
-	public void setTaskIdWithoutCascade(String taskId) {
-		this.taskId = taskId;
-	}
+	
+	
 
 	public Map<String, Object> getPersistentState() {
 
@@ -212,77 +187,53 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 		return objectParam;
 
 	}
-
-	public IdentityLinkEntity(Map<String, Object> entityMap){
-		persistentInit(entityMap);
+	
+	@Override
+	public String getCloneRuleId() {
+		return RULE_GET_IDENTITYLINK_CLONE;
 	}
-	public void persistentInit(Map<String, Object> entityMap) {
-		for (String dataKey : entityMap.keySet()) {
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.Id().DataBaseKey())) {
-				this.id = StringUtil.getString(entityMap.get(dataKey));
-				continue;
-			}
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.Type().DataBaseKey())) {
-				this.type = IdentityLinkType.valueOf(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.UserId().DataBaseKey())) {
-				this.userId = StringUtil.getString(entityMap.get(dataKey));
-				continue;
-			}
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.GroupId().DataBaseKey())) {
-				this.groupId = StringUtil.getString(entityMap.get(dataKey));
-				continue;
-			}
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.GroupType().DataBaseKey())) {
-				this.groupType = StringUtil.getString(entityMap.get(dataKey));
-				continue;
-			}
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.IncludeExclusion().DataBaseKey())) {
-				this.includeExclusion = IncludeExclusion.valueOf(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskIdentityLinkObjKey.TaskInstanceId().DataBaseKey())) {
-				this.taskId = StringUtil.getString(entityMap.get(dataKey));
-				continue;
-			}
-			
-			if (dataKey.equals(TaskIdentityLinkObjKey.ArchiveTime().DataBaseKey())) {
-				this.archiveTime = StringUtil.getDate(entityMap.get(dataKey));
-				continue;
-			}
-
-		}
+	
+	@Override
+	public String getPersistentDbMapRuleId() {
+		return RULE_GET_IDENTITYLINK_PERSISTENT_DBMAP;
+	}
+	
+	@Override
+	public String getPersistentStateRuleId() {
+		return RULE_GET_IDENTITYLINK_PERSISTENT_STATE;
+	}
+	
+	//过时方法
+	public void setGroupIdWithoutCascade(String groupId) {
+		this.groupId = groupId;
 	}
 
-	public Map<String, Object> getPersistentDbMap() {
-		// 构建查询参数
-				Map<String, Object> objectParam = new HashMap<String, Object>();
+	public void setGroupTypeWithoutCascade(String groupType) {
+		this.groupType = groupType;
+	}
 
-				// 身份链接编号 String
-				objectParam.put(TaskIdentityLinkObjKey.Id().DataBaseKey(), this.getId());
-				// 身份链接类型 String
-				objectParam.put(TaskIdentityLinkObjKey.Type().DataBaseKey(), this.getType().toString());
-				// 用户编号 String
-				objectParam.put(TaskIdentityLinkObjKey.UserId().DataBaseKey(), this.getUserId());
-				// 组编号 String
-				objectParam.put(TaskIdentityLinkObjKey.GroupId().DataBaseKey(), this.getGroupId());
-				// 组类型 String
-				objectParam.put(TaskIdentityLinkObjKey.GroupType().DataBaseKey(), this.getGroupType());
+	public void setIdWithoutCascade(String id) {
+		this.id = id;
+	}
 
-				// 包含排除 String
-				objectParam.put(TaskIdentityLinkObjKey.IncludeExclusion().DataBaseKey(), this.getIncludeExclusion().toString());
-				// 任务实例编号 String
-				objectParam.put(TaskIdentityLinkObjKey.TaskInstanceId().DataBaseKey(), this.getTaskId());
-				// 任务实例归档时间
-				objectParam.put(TaskIdentityLinkObjKey.ArchiveTime().DataBaseKey(), this.getArchiveTime());
-				return objectParam;
+	public void setIncludeExclusionWithoutCascade(IncludeExclusion includeExclusion) {
+		this.includeExclusion = includeExclusion;
+	}
+
+	public void setGroupWithoutCascade(GroupTo group) {
+		this.groupId = group.getGroupId();
+		this.groupType = group.getGroupType();
+	}
+
+	public void setTypeWithoutCascade(IdentityLinkType identityLinkType) {
+		this.type = identityLinkType;
+	}
+
+	public void setUserIdWithoutCascade(String userId) {
+		this.userId = userId;
+	}
+
+	public void setTaskIdWithoutCascade(String taskId) {
+		this.taskId = taskId;
 	}
 }

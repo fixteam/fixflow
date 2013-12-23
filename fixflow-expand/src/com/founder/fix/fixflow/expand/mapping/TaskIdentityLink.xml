@@ -3,18 +3,31 @@
 
 
 	<!-- 任务表 -->
-	<dataBaseTable tableId="fixflow_run_taskidentitylink" tableName="任务候选人表" tableValue="FIXFLOW_RUN_TASKIDENTITYLINK" mappingType="com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity">
-		<columnMapping column="ID" name="编号" property="id" simpleKey="id" jdbcType="VARCHAR" />
-		<columnMapping column="TYPE" name="分配类型" property="type" simpleKey="type" jdbcType="VARCHAR" />
-		<columnMapping column="USER_ID" name="用户编号" property="userId" simpleKey="userId" jdbcType="VARCHAR" />
-		<columnMapping column="GROUP_ID" name="组编号" property="groupId" simpleKey="groupId" jdbcType="VARCHAR" />
-		<columnMapping column="GROUP_TYPE" name="组类型" property="groupType" simpleKey="groupType" jdbcType="VARCHAR" />
-		<columnMapping column="TASKINSTANCE_ID" name="任务实例编号" property="taskId" simpleKey="taskInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="INCLUDE_EXCLUSION" name="包含排除" property="includeExclusion" simpleKey="includeExclusion" jdbcType="VARCHAR" />
-		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+	<dataBaseTable tableId="fixflow_run_taskidentitylink" tableName="任务候选人表" tableValue="FIXFLOW_RUN_TASKIDENTITYLINK">
+		<column column="ID" name="编号" jdbcType="VARCHAR" />
+		<column column="TYPE" name="分配类型" jdbcType="VARCHAR" />
+		<column column="USER_ID" name="用户编号" jdbcType="VARCHAR" />
+		<column column="GROUP_ID" name="组编号" jdbcType="VARCHAR" />
+		<column column="GROUP_TYPE" name="组类型" jdbcType="VARCHAR" />
+		<column column="TASKINSTANCE_ID" name="任务实例编号" jdbcType="VARCHAR" />
+		<column column="INCLUDE_EXCLUSION" name="包含排除" jdbcType="VARCHAR" />
+		<column column="ARCHIVE_TIME" name="归档时间" jdbcType="TIMESTAMP" />
 	</dataBaseTable>
+	
+	<!-- 任务表 -->
+	<resultMap id="identityLinkResultMap" name="任务表" type="com.founder.fix.fixflow.core.impl.runtime.TokenEntity">
+		<result property="id" column="ID" name="编号" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE" name="分配类型" jdbcType="VARCHAR" />
+		<result property="userId" column="USER_ID" name="用户编号" jdbcType="VARCHAR" />
+		<result property="groupId" column="GROUP_ID" name="组编号" jdbcType="VARCHAR" />
+		<result property="groupType" column="GROUP_TYPE" name="组类型" jdbcType="VARCHAR" />
+		<result property="taskId" column="TASKINSTANCE_ID" name="任务实例编号" jdbcType="VARCHAR" />
+		<result property="includeExclusionString" column="INCLUDE_EXCLUSION" name="包含排除" jdbcType="VARCHAR" />
+		<result property="archive" column="ARCHIVE_TIME" name="归档时间" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
 
-	<insert id="insertIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLink" remark="插入候选人">
+	<insert id="insertIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="插入候选人">
 		<![CDATA[ 
 			sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK",parameter.getPersistentDbMap());
 		]]>
@@ -26,23 +39,66 @@
 		]]>
 	</delete>
 	
-	<update id="updateIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLink" remark="更新任务候选人">
+	<update id="updateIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="更新任务候选人">
 		<![CDATA[ 
 			objectParamWhere = { parameter.getId() };
 			sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK",  parameter.getPersistentDbMap(), " ID=?",objectParamWhere);
 		]]>
 	</update>
 
-	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="fixflow_run_taskidentitylink" remark="查询单个任务候选人">
+	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE ID = ? ";
 			objectParamWhere = { parameter };
 			sqlCommand.queryForList(sqlText, objectParamWhere);
 		]]>
 	</select>
-	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
-	<![CDATA[ 
 	
+	
+	<businessRules id="getIdentityLinkPersistentDbMap" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
+	<![CDATA[ 
+		objectParam = new HashMap<String, Object>();
+		objectParam.put("ID", this.getId());
+		objectParam.put("TYPE", this.getType().toString());
+		objectParam.put("USER_ID", this.getUserId());
+		objectParam.put("GROUP_ID", this.getGroupId());
+		objectParam.put("GROUP_TYPE", this.getGroupType());
+		objectParam.put("INCLUDE_EXCLUSION", this.getIncludeExclusion().toString());
+		objectParam.put("TASKINSTANCE_ID", this.getTaskId());
+		objectParam.put("ARCHIVE_TIME", this.getArchiveTime());
+		extensionFields=parameter.getExtensionFields();	
+		for (String key : extensionFields.keySet()) {
+			persistentState.put(key, extensionFields.get(key));
+		}
+		return persistentState;
+	]]>
+	</businessRules>
+	
+	
+	<businessRules id="getIdentityLinkPersistentState" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
+	<![CDATA[ 
+		objectParam = new HashMap<String, Object>();
+		objectParam.put("id", this.getId());
+		objectParam.put("type", this.getType().toString());
+		objectParam.put("userId", this.getUserId());
+		objectParam.put("groupId", this.getGroupId());
+		objectParam.put("groupType", this.getGroupType());
+		objectParam.put("includeExclusion", this.getIncludeExclusion().toString());
+		objectParam.put("taskId", this.getTaskId());
+		objectParam.put("archiveTime", this.getArchiveTime());
+		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
+		for (String key : persistenceExtensionFields.keySet()) {
+			objectParam.put(key, persistenceExtensionFields.get(key));	
+		}
+		return objectParam;
+	]]>
+	</businessRules>
+	
+	<businessRules id="identityLinkClone" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="令牌实例拷贝">
+	<![CDATA[ 
+		identityLinkEntity = new IdentityLinkEntity();
+		identityLinkEntity.persistentInit(sysRulesConfig.getResultMap("tokenResultMap"),parameter.getPersistentDbMap());
+		return identityLinkEntity;
 	]]>
 	</businessRules>
 
