@@ -19,29 +19,132 @@ package com.founder.fix.fixflow.core.impl.db;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Result;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
+import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 
 
-public abstract class AbstractPersistentObject implements PersistentObject {
+public abstract class AbstractPersistentObject <T> implements PersistentObject {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1542067996535178080L;
 
+	
+	private ResultMap resultMap;
+
+
 	/**
-	 * 从数据库初始化对象
-	 * 
-	 * @param entityMap
-	 *            字段Map
+	 * 获取当前对象所使用的数据映射规则
 	 * @return
 	 */
-	public abstract void persistentInit(Map<String, Object> entityMap);
+	public ResultMap getResultMap() {
+		return resultMap;
+	}
+	
 
+	//用户自定义字段用来存储数据库表中的新增字段
+	
+	/**
+	 * 用户自定义字段
+	 */
+	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
+	
+	/**
+	 * 获取用户自定义字段值
+	 * @param fieldName 字段名称
+	 * @return
+	 */
+	public Object getExtensionField(String fieldName) {
+		return extensionFields.get(fieldName);
+	}
+
+	/**
+	 * 获取用户自定义字段Map
+	 * @return
+	 */
+	public Map<String, Object> getExtensionFields() {
+		return extensionFields;
+	}
+
+	/**
+	 * 设置用户自定义字段
+	 * @param extensionFields
+	 */
+	protected void setExtensionFields(Map<String, Object> extensionFields) {
+		this.extensionFields = extensionFields;
+	}
+
+	/**
+	 * 添加一个用户自定义字段
+	 * @param fieldName 字段名称
+	 * @param fieldValue 字段值
+	 */
+	protected void addExtensionField(String fieldName, Object fieldValue) {
+		this.extensionFields.put(fieldName, fieldValue);
+	}
+	
+	
+
+	/**
+	 * 持久化扩展字段
+	 */
+	protected Map<String, Object> persistenceExtensionFields = new HashMap<String, Object>();
+
+	/**
+	 * 获取持久化Map
+	 * @return
+	 */
+	protected Map<String, Object> getPersistenceExtensionFields() {
+		return persistenceExtensionFields;
+	}
+
+	/**
+	 * 设置一个持久化Map,这个值将会被持久到表中
+	 * @param fieldName 字段名称
+	 * @param value 字段值
+	 */
+	public void setPersistenceExtensionField(String fieldName, Object value) {
+		extensionFields.put(fieldName, value);
+		persistenceExtensionFields.put(fieldName, value);
+	}
+	
+	//    抽象方法 ////////////////////////
+	
+	/**
+	 * 获取拷贝所使用的业务规则编号
+	 * @return
+	 */
+	public abstract String getCloneRuleId();
+	
+	/**
+	 * 获取能持久化到数据的Map的业务规则编号
+	 * @return
+	 */
+	public abstract String getPersistentDbMapRuleId();
+	
+	/**
+	 * 获取对象Map化业务规则编号
+	 * @return
+	 */
+	public abstract String getPersistentStateRuleId();
+	
+	
+
+	
+	
+
+	
+	
+	// 公用方法
+	
+	
 	/**
 	 * 从数据库初始化对象
 	 * 
@@ -54,7 +157,7 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
 		String className = resultMap.getType();
 
-		
+		this.resultMap=resultMap;
 		try {
 			Class clazz = Class.forName(className);
 
@@ -68,12 +171,20 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
 			for (Result result : results) {
 
+				Object dataObj=entityMap.get(result.getColumn());
+				if(dataObj==null){
+					continue;
+				}
+				
 				PropertyDescriptor pd = new PropertyDescriptor(result.getProperty(), clazz);
 
 				// 获得写方法
 
 				Method wM = pd.getWriteMethod();
-
+				
+				if(wM==null){
+					continue;
+				}
 				// 获得读方法
 
 				//Method rM = pd.getReadMethod();
@@ -90,30 +201,21 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
 					if (classes[0].equals(String.class)) {
 
-						// 调用set方法，传参
-						Object dataObj=entityMap.get(result.getColumn());
 						wM.invoke(obj, dataObj);
-
-						// 调用get方法，获得返回值
-
-						//String str = (String) rM.invoke(obj);
-
-						//System.out.println("Name is : " + str);
 
 					}
 
-					//if (classes[0].equals(int.class)) {
-
-						//wM.invoke(obj, 2);
-
-						//Integer num = (Integer) rM.invoke(obj);
-
-						//System.out.println("Age is : " + num);
-
-					//}
 
 				}
+				entityMap.remove(result.getColumn());
 			}
+			
+			
+			for (String mapKey : entityMap.keySet()) {
+				addExtensionField(mapKey, entityMap.get(mapKey));
+			}
+			
+
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -122,11 +224,53 @@ public abstract class AbstractPersistentObject implements PersistentObject {
 
 	}
 
+
+	
+	@SuppressWarnings("unchecked")
+	/**
+	 * 拷贝对象
+	 */
+	public  T  clone(){
+		
+		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
+		
+		T tObject=(T)scriptLanguageMgmt.executeBusinessRules(getCloneRuleId(), this);
+	
+		return tObject;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
 	/**
 	 * 获取能持久化到数据的Map
 	 * 
 	 * @return 对应到数据库字段的Map
 	 */
-	public abstract Map<String, Object> getPersistentDbMap();
+	public Map<String, Object> getPersistentDbMap() {
+		Map<String, Object> objectParam = new HashMap<String, Object>();
+
+		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
+		
+		objectParam=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(getPersistentDbMapRuleId(), this);
+
+
+		return objectParam;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getPersistentState() {
+
+		
+		Map<String, Object> persistentState =null;
+		
+		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
+		
+		persistentState=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(getPersistentStateRuleId(), this);
+
+		
+		return persistentState;
+	}
+	
+	
 
 }

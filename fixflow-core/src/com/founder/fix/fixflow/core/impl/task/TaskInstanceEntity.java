@@ -19,7 +19,6 @@ package com.founder.fix.fixflow.core.impl.task;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +43,7 @@ import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
-import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
-import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 import com.founder.fix.fixflow.core.task.Assignable;
 import com.founder.fix.fixflow.core.task.DelegationState;
 import com.founder.fix.fixflow.core.task.IdentityLink;
@@ -58,13 +55,19 @@ import com.founder.fix.fixflow.core.task.TaskDefinition;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
-public class TaskInstanceEntity extends AbstractPersistentObject implements TaskInstance, Assignable, Cloneable {
+public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEntity> implements TaskInstance, Assignable, Cloneable {
 
 	private static final long serialVersionUID = 2262140765605817383L;
 	
-	public static final String GET_TASKINSTANCE_PERSISTENT_STATE="getTaskInstancePersistentState";
+	// 静态字段  //////////////////////////////////////////////////////////////
 	
-	public static final String GET_TASKINSTANCE_PERSISTENT_DBMAP="getTaskInstancePersistentDbMap";
+	public static final String RULE_GET_TASKINSTANCE_PERSISTENT_STATE="getTaskInstancePersistentState";
+	
+	public static final String RULE_GET_TASKINSTANCE_PERSISTENT_DBMAP="getTaskInstancePersistentDbMap";
+	
+	public static final String RULE_TASK_INSTANCE_CLONE="taskInstanceClone";
+	
+	
 
 	// 需要持久化的字段 //////////////////////////////////////////////////////////
 
@@ -588,21 +591,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 
 	protected TaskMgmtInstance taskMgmtInstance;
 
-	protected Map<String, Object> extensionFields = new HashMap<String, Object>();
-
-	/**
-	 * 持久化扩展字段
-	 */
-	protected Map<String, Object> persistenceExtensionFields = new HashMap<String, Object>();
-
-	public Map<String, Object> getPersistenceExtensionFields() {
-		return persistenceExtensionFields;
-	}
-
-	public void setPersistenceExtensionField(String fieldName, Object value) {
-		extensionFields.put(fieldName, value);
-		persistenceExtensionFields.put(fieldName, value);
-	}
+	
 
 	/**
 	 * 创建任务
@@ -1131,258 +1120,22 @@ public class TaskInstanceEntity extends AbstractPersistentObject implements Task
 		return Context.getCommandContext().getProcessDefinitionManager().findLatestProcessDefinitionById(this.processDefinitionId);
 	}
 
-	public Object getExtensionField(String fieldName) {
-		return extensionFields.get(fieldName);
+	@Override
+	public String getCloneRuleId() {
+		return RULE_TASK_INSTANCE_CLONE;
 	}
 
-	public Map<String, Object> getExtensionFields() {
-		return extensionFields;
+	@Override
+	public String getPersistentDbMapRuleId() {
+		return RULE_GET_TASKINSTANCE_PERSISTENT_DBMAP;
 	}
 
-	public void setExtensionFields(Map<String, Object> extensionFields) {
-		this.extensionFields = extensionFields;
+	@Override
+	public String getPersistentStateRuleId() {
+		return RULE_GET_TASKINSTANCE_PERSISTENT_STATE;
 	}
 
-	public void addExtensionField(String fieldName, Object fieldValue) {
-		this.extensionFields.put(fieldName, fieldValue);
-	}
+	
 
-	/**
-	 * 从数据库读取任务
-	 */
-	public TaskInstanceEntity(Map<String, Object> entityMap) {
-
-		persistentInit(entityMap);
-
-	}
-
-	public void persistentInit(Map<String, Object> entityMap) {
-		for (String dataKey : entityMap.keySet()) {
-
-			if (dataKey.equals(TaskInstanceObjKey.TaskInstanceId().DataBaseKey())) {
-				this.setId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Agent().DataBaseKey())) {
-				this.setAgent(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Name().DataBaseKey())) {
-				this.setNameWithoutCascade(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Description().DataBaseKey())) {
-				this.setDescriptionWithoutCascade(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Priority().DataBaseKey())) {
-				this.setPriorityWithoutCascade(StringUtil.getInt(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Owner().DataBaseKey())) {
-				this.setOwnerWithoutCascade(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Assignee().DataBaseKey())) {
-				this.setAssigneeWithoutCascade(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.NodeId().DataBaseKey())) {
-				this.setNodeId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.ProcessInstanceId().DataBaseKey())) {
-				this.setProcessInstanceId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.ProcessDefinitionId().DataBaseKey())) {
-				this.setProcessDefinitionIdWithoutCascade(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.ProcessDefinitionKey().DataBaseKey())) {
-				this.setProcessDefinitionKeyWithoutCascade(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.DelegationState().DataBaseKey())) {
-
-				if (entityMap.get(dataKey) != null) {
-					this.setDelegationState(DelegationState.valueOf(entityMap.get(dataKey).toString()));
-
-				}
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.TokenId().DataBaseKey())) {
-				this.setTokenId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.CreateTime().DataBaseKey())) {
-				this.setCreateTime(StringUtil.getDate(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.StartTime().DataBaseKey())) {
-				this.setStartTime(StringUtil.getDate(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.EndTime().DataBaseKey())) {
-				this.setEndTime(StringUtil.getDate(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.DueDate().DataBaseKey())) {
-				this.setDueDateWithoutCascade(StringUtil.getDate(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.ClaimTime().DataBaseKey())) {
-				this.setClaimTime(StringUtil.getDate(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.BizKey().DataBaseKey())) {
-				this.setBizKey(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.CommandId().DataBaseKey())) {
-				this.setCommandId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.CommandType().DataBaseKey())) {
-				this.setCommandType(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.CommandMessage().DataBaseKey())) {
-				this.setCommandMessage(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.TaskComment().DataBaseKey())) {
-				this.setTaskComment(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.NodeName().DataBaseKey())) {
-				this.setNodeName(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.FormUri().DataBaseKey())) {
-				this.setFormUri(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.FormUriView().DataBaseKey())) {
-				this.setFormUriView(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.TaskGroup().DataBaseKey())) {
-				this.setTaskGroup(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.TaskInstanceType().DataBaseKey())) {
-				this.setTaskInstanceType(TaskInstanceType.valueOf(StringUtil.getString(entityMap.get(dataKey))));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.ProcessDefinitionName().DataBaseKey())) {
-				this.setProcessDefinitionName(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.IsDraft().DataBaseKey())) {
-				this.setDraft(StringUtil.getBoolean(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.IsOpen().DataBaseKey())) {
-				this.isOpen = StringUtil.getBoolean(entityMap.get(dataKey));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.IsSuspended().DataBaseKey())) {
-				this.isSuspended = StringUtil.getBoolean(entityMap.get(dataKey));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.IsCancelled().DataBaseKey())) {
-				this.isCancelled = StringUtil.getBoolean(entityMap.get(dataKey));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Category().DataBaseKey())) {
-				this.setCategory(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.ExpectedExecutionTime().DataBaseKey())) {
-				this.setExpectedExecutionTime(StringUtil.getInt(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.Admin().DataBaseKey())) {
-				this.setAdmin(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.CallActivityInstanceId().DataBaseKey())) {
-				this.setCallActivityInstanceId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-
-			if (dataKey.equals(TaskInstanceObjKey.PendingTaskId().DataBaseKey())) {
-				this.setPendingTaskId(StringUtil.getString(entityMap.get(dataKey)));
-				continue;
-			}
-			if (dataKey.equals(TaskInstanceObjKey.ArchiveTime().DataBaseKey())) {
-				this.setArchiveTime(StringUtil.getDate(entityMap.get(dataKey)));
-				continue;
-			}
-
-			this.addExtensionField(dataKey, entityMap.get(dataKey));
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> getPersistentDbMap() {
-		Map<String, Object> objectParam = new HashMap<String, Object>();
-
-		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
-		
-		objectParam=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(GET_TASKINSTANCE_PERSISTENT_DBMAP, this);
-
-
-		return objectParam;
-	}
-
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> getPersistentState() {
-
-		
-		Map<String, Object> persistentState =null;
-		
-		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
-		
-		persistentState=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(GET_TASKINSTANCE_PERSISTENT_STATE, this);
-
-		
-		return persistentState;
-	}
-
-	public TaskInstanceEntity clone() {
-
-		TaskInstanceEntity taskInstanceEntityNew = new TaskInstanceEntity();
-		taskInstanceEntityNew.persistentInit(getPersistentDbMap());
-
-		return taskInstanceEntityNew;
-	}
 
 }

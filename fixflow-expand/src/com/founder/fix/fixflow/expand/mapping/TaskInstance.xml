@@ -237,5 +237,16 @@
 		
 	]]>
 	</businessRules>
+	
+	<businessRules id="taskInstanceClone" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="任务实例拷贝">
+	<![CDATA[ 
+	
+		taskInstanceEntityNew = new TaskInstanceEntity();
+		taskInstanceEntityNew.persistentInit(sysRulesConfig.getResultMap("taskResultMap"),parameter.getPersistentDbMap());
+		return taskInstanceEntityNew;
+		
+	]]>
+	</businessRules>
+	
 
 </sqlmappingconfig:RulesConfig>
