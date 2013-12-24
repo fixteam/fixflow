@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.core.impl.db;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,8 @@ import java.util.Map;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Result;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.util.JavaBeanUtil;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 
 
@@ -161,7 +164,7 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 		try {
 			Class clazz = Class.forName(className);
 
-			Object obj = clazz.newInstance();
+			//Object obj = clazz.newInstance();
 
 			// 获得类的所有属性
 			
@@ -176,11 +179,12 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 					continue;
 				}
 				
-				PropertyDescriptor pd = new PropertyDescriptor(result.getProperty(), clazz);
+//				PropertyDescriptor pd = new PropertyDescriptor(result.getProperty(), clazz);
 
 				// 获得写方法
 
-				Method wM = pd.getWriteMethod();
+//				Method wM = pd.getWriteMethod();
+				Method wM = JavaBeanUtil.getSetStringMethod(clazz, result.getProperty(), result.getJdbcType());
 				
 				if(wM==null){
 					continue;
@@ -200,9 +204,12 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 					// 判断参数类型
 
 					if (classes[0].equals(String.class)) {
-
-						wM.invoke(obj, dataObj);
-
+						wM.invoke(this, dataObj);
+					}else if(classes[0].equals(Date.class)){
+						dataObj = StringUtil.getDate(dataObj);
+						wM.invoke(this, dataObj);
+					}else if(classes[0].equals(int.class)){
+						wM.invoke(this, dataObj);
 					}
 
 

@@ -2,6 +2,7 @@ package com.founder.fix.fixflow.core.impl.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 public class JavaBeanUtil {
 	/** 
@@ -77,6 +78,44 @@ public class JavaBeanUtil {
 	        Method method = getGetMethod(o.getClass(), fieldName);  
 	        try {  
 	            return method.invoke(o, new Object[0]);  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        return null;  
+	    } 
+
+	    public static Class <?> convertSqlType(String sqlType){
+	    	if(sqlType == null){
+	    		return String.class;
+	    	}
+	    	if("VARCHAR".equals(sqlType)){
+	    		return String.class;
+	    	}else if("TIMESTAMP".equals(sqlType)){
+	    		return Date.class;
+	    	}else if("INTEGER".equals(sqlType)){
+	    		return int.class;
+	    	}
+	    	return String.class;
+	    }
+	    
+	    /** 
+	     * java反射bean的set方法 
+	     *  
+	     * @param objectClass 
+	     * @param fieldName 
+	     * @return 
+	     */  
+	    @SuppressWarnings({ "unchecked", "rawtypes" })  
+	    public static Method getSetStringMethod(Class objectClass, String fieldName,String sqlType) {  
+	        try {  
+	            Class[] parameterTypes = new Class[1];  
+	            parameterTypes[0] = convertSqlType(sqlType);  
+	            StringBuffer sb = new StringBuffer();  
+	            sb.append("set");  
+	            sb.append(fieldName.substring(0, 1).toUpperCase());  
+	            sb.append(fieldName.substring(1));  
+	            Method method = objectClass.getMethod(sb.toString(), parameterTypes);  
+	            return method;  
 	        } catch (Exception e) {  
 	            e.printStackTrace();  
 	        }  
