@@ -585,9 +585,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 	protected UserTask node;
 
+	
+
 	protected TaskDefinition taskDefinition;
 
-	protected List<IdentityLinkEntity> taskIdentityLinks = new ArrayList<IdentityLinkEntity>();
+	protected List<IdentityLinkEntity> taskIdentityLinks;
 
 	protected TaskInstance parentTaskInstance;
 
@@ -617,6 +619,16 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	}
 
 	public TaskInstance getParentTaskInstance() {
+		
+		if(this.parentTaskInstance==null){
+			
+			if(StringUtil.isNotEmpty(this.parentTaskInstanceId)){
+				this.parentTaskInstance=Context.getCommandContext().getTaskManager().findTaskById(this.parentTaskInstanceId);
+				return this.parentTaskInstance;
+			}
+			
+		}
+		
 		return parentTaskInstance;
 	}
 
@@ -629,8 +641,12 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	}
 
 	public void setParentTaskInstance(TaskInstance parentTaskInstance) {
-		this.parentTaskInstanceId = parentTaskInstance.getId();
 		this.parentTaskInstance = parentTaskInstance;
+		if(parentTaskInstance!=null){
+			this.parentTaskInstanceId = parentTaskInstance.getId();
+		}
+		
+		
 
 	}
 
@@ -722,20 +738,20 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		this.isOpen = false;
 
 		// fire the task instance end event
-		if ((taskDefinition != null) && (token != null)) {
+		if ((taskDefinition != null) && (getToken() != null)) {
 
-			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(getToken());
 			executionContext.setTaskDefinition(taskDefinition);
 			executionContext.setTaskInstance(this);
 			// task.fireEvent(Event.EVENTTYPE_TASK_END, executionContext);
 		}
 
 		//
-		if (token != null) {
+		if (getToken() != null) {
 			// token.addLog(new TaskEndLog(this));
 		}
 
-		token.signal();
+		getToken().signal();
 
 	}
 
@@ -743,33 +759,33 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 		// 分支退回处理
 
-		if (token.getParent() == null) {
+		if (getToken().getParent() == null) {
 			// 主令牌非分支的处理
 
 			customEnd(taskCommandInst, taskComment);
-			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(getToken());
 			executionContext.setToFlowNode(flowNode);
 			executionContext.setRollBackAssignee(rollBackAssignee);
-			token.signal(executionContext);
+			getToken().signal(executionContext);
 
 		} else {
 			// 非主令牌分支令牌的处理
 			CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutor();
 			TaskQuery taskQuery = new TaskQueryImpl(commandExecutor);
-			Long taskNum = taskQuery.tokenId(token.getId()).nodeId(flowNode.getId()).count();
+			Long taskNum = taskQuery.tokenId(getToken().getId()).nodeId(flowNode.getId()).count();
 			if (taskNum != 0) {
 				// 分支令牌经过这个节点则允许正常退回
 				customEnd(taskCommandInst, taskComment);
-				ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(token);
+				ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(getToken());
 				executionContext.setToFlowNode(flowNode);
 				executionContext.setRollBackAssignee(rollBackAssignee);
-				token.signal(executionContext);
+				getToken().signal(executionContext);
 			} else {
 
 				// 分支令牌经过这个节点则允许正常退回
 				customEnd(taskCommandInst, taskComment);
 
-				boolean isFind = toFlowNodeEnd(taskCommandInst, taskComment, flowNode, rollBackAssignee, token.getParent(), taskQuery);
+				boolean isFind = toFlowNodeEnd(taskCommandInst, taskComment, flowNode, rollBackAssignee, getToken().getParent(), taskQuery);
 				if (!isFind) {
 					throw new FixFlowException("该节点从未到达过不能退回");
 				}
@@ -850,10 +866,23 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		}
 
 	}
+	
+	
+	public UserTask getNode() {
+		
+		if(this.node==null){
+			if(StringUtil.isNotEmpty(this.nodeId)){
+				this.node=(UserTask)getProcessDefinition().getDefinitions().getElement(this.nodeId);
+				return this.node;
+			}
+		}
+		
+		return node;
+	}
 
 	public TokenEntity removeTimeOutTask() {
 
-		if (this.node.getBoundaryEventRefs().size() > 0) {
+		if (getNode().getBoundaryEventRefs().size() > 0) {
 
 			TokenEntity tokenEntity = this.getToken();
 			String parentTokenId = tokenEntity.getParent().getId();
@@ -911,7 +940,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		identityLink.setGroupType(groupType);
 		identityLink.setType(type);
 		identityLink.setIncludeExclusion(includeExclusion);
-		this.taskIdentityLinks.add(identityLink);
+		getTaskIdentityLinkEntitys().add(identityLink);
 		return identityLink;
 	}
 
@@ -931,15 +960,15 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		isOpen = true;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<IdentityLink> getTaskIdentityLinks() {
 
-		return (List) taskIdentityLinks;
+		return getIdentityLinkQueryToListNoCache();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<IdentityLinkEntity> getTaskIdentityLinkEntitys() {
 
-		return taskIdentityLinks;
+		return (List)getIdentityLinkQueryToListNoCache();
 	}
 
 	public boolean hasEnded() {
@@ -953,7 +982,9 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<IdentityLink> getIdentityLinkQueryToListNoCache() {
 
-		if (this.taskIdentityLinks.size() == 0) {
+		if (this.taskIdentityLinks==null) {
+			
+			this.taskIdentityLinks= new ArrayList<IdentityLinkEntity>();
 
 			List valueObjectTemp = (List) Context.getCommandContext().getIdentityLinkManager().findIdentityLinksByTaskId(this.id);
 			if (valueObjectTemp.size() > 0) {

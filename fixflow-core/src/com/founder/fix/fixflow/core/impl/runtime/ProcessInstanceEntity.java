@@ -526,8 +526,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 
-			processDefinition.getTaskSubject().getExpressionValue();
-			String processInstanceSubjectExpression = processDefinition.getTaskSubject().getExpressionValue();
+			getProcessDefinition().getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression = getProcessDefinition().getTaskSubject().getExpressionValue();
 
 			try {
 				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression, executionContext);
@@ -536,14 +536,14 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 					this.setSubject(StringUtil.getString(result));
 
 				} else {
-					this.setSubject(processDefinition.getName());
+					this.setSubject(getProcessDefinition().getName());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				this.setSubject(processDefinition.getName());
+				this.setSubject(getProcessDefinition().getName());
 			}
 
-			processDefinition.getStartElement().enter(executionContext);
+			getProcessDefinition().getStartElement().enter(executionContext);
 		} else {
 			throw new FixFlowException("流程实例已经启动!");
 		}
@@ -557,8 +557,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 
-			processDefinition.getTaskSubject().getExpressionValue();
-			String processInstanceSubjectExpression = processDefinition.getTaskSubject().getExpressionValue();
+			getProcessDefinition().getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression = getProcessDefinition().getTaskSubject().getExpressionValue();
 
 			try {
 				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression, executionContext);
@@ -567,11 +567,11 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 					this.setSubject(StringUtil.getString(result));
 
 				} else {
-					this.setSubject(processDefinition.getName());
+					this.setSubject(getProcessDefinition().getName());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				this.setSubject(processDefinition.getName());
+				this.setSubject(getProcessDefinition().getName());
 			}
 
 			// 触发流程启动事件
@@ -590,8 +590,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 			this.startTime = new Date();
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
-			processDefinition.getTaskSubject().getExpressionValue();
-			String processInstanceSubjectExpression = processDefinition.getTaskSubject().getExpressionValue();
+			getProcessDefinition().getTaskSubject().getExpressionValue();
+			String processInstanceSubjectExpression = getProcessDefinition().getTaskSubject().getExpressionValue();
 
 			try {
 				Object result = ExpressionMgmt.execute(processInstanceSubjectExpression, executionContext);
@@ -600,18 +600,18 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 					this.setSubject(StringUtil.getString(result));
 
 				} else {
-					this.setSubject(processDefinition.getName());
+					this.setSubject(getProcessDefinition().getName());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				this.setSubject(processDefinition.getName());
+				this.setSubject(getProcessDefinition().getName());
 			}
 
 			// 触发流程启动事件
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
 			// executionContext);
 			// 将令牌设置到开始节点
-			processDefinition.getNoneStartEvent().enter(executionContext);
+			getProcessDefinition().getNoneStartEvent().enter(executionContext);
 		} else {
 			throw new FixFlowException("流程实例已经启动!");
 		}
@@ -626,8 +626,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 
 			String processInstanceSubjectExpression = "";
-			if (processDefinition.getTaskSubject() != null) {
-				processInstanceSubjectExpression = processDefinition.getTaskSubject().getExpressionValue();
+			if (getProcessDefinition().getTaskSubject() != null) {
+				processInstanceSubjectExpression = getProcessDefinition().getTaskSubject().getExpressionValue();
 			}
 
 			try {
@@ -637,18 +637,18 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 					this.setSubject(StringUtil.getString(result));
 
 				} else {
-					this.setSubject(processDefinition.getName());
+					this.setSubject(getProcessDefinition().getName());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				this.setSubject(processDefinition.getName());
+				this.setSubject(getProcessDefinition().getName());
 			}
 
 			// 触发流程启动事件
 			// fixflowDefinition.fireEvent(Event.EVENTTYPE_PROCESS_START,
 			// executionContext);
 			// 将令牌设置到开始节点
-			processDefinition.getTimeStartEvent(nodeId).enter(executionContext);
+			getProcessDefinition().getTimeStartEvent(nodeId).enter(executionContext);
 		} else {
 			throw new FixFlowException("流程实例已经启动!");
 		}
@@ -659,23 +659,23 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 		if (hasEnded()) {
 			throw new FixFlowException("根令牌已经结束!");
 		}
-		rootToken.signal();
+		getRootToken().signal();
 	}
 
 	public void addTokenList(TokenEntity token) {
-		if (tokenList == null) {
+		if (getTokenList() == null) {
 			tokenList = new ArrayList<TokenEntity>();
 		}
-		tokenList.add(token);
+		getTokenList().add(token);
 
 	}
 
 	public void end() {
-		rootToken.end();
+		getRootToken().end();
 		if (endTime == null) {
 			// 设置流程结束时间
 			endTime = new Date();
-			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(rootToken);
+			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(getRootToken());
 			// 插入流程结束任务
 			if (this.getProcessDefinition().getStartElement() != null && this.getProcessDefinition().getStartElement() instanceof StartEvent) {
 				// 插入流程结束记录
@@ -761,7 +761,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	 * 终止流程实例
 	 */
 	public void termination() {
-		rootToken.end(false);
+		getRootToken().end(false);
 		if (endTime == null) {
 			// 设置流程结束时间
 			endTime = new Date();
@@ -829,7 +829,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 		}
 		// 结束创建的那条子流程状态记录。
 		callActivityBehavior.endSubTask(this.getId());
-		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.rootToken);
+		ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(this.getRootToken());
 		Map<String, Object> dataVarMap = new HashMap<String, Object>();
 		SubProcessToDataSourceMapping subProcessToDataSourceMapping = callActivityBehavior.getSubProcessToDataSourceMapping();
 		if (subProcessToDataSourceMapping != null) {
@@ -844,7 +844,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 
 	public Map<String, Object> getDataVariable() {
 		QueryVariablesCommand queryVariablesCommand = new QueryVariablesCommand();
-		queryVariablesCommand.setProcessInstanceId(this.id);
+		queryVariablesCommand.setProcessInstanceId(this.getId());
 		return Context.getCommandContext().getVariableManager().queryVariable(queryVariablesCommand);
 	}
 
@@ -872,13 +872,13 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	public void resume() {
 		isSuspended = false;
 		this.instanceType = ProcessInstanceType.RUNNING;
-		rootToken.resume();
+		getRootToken().resume();
 	}
 
 	public void suspend() {
 		isSuspended = true;
 		this.instanceType = ProcessInstanceType.SUSPEND;
-		rootToken.suspend();
+		getRootToken().suspend();
 	}
 
 	public int getVersion() {

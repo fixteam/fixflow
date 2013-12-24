@@ -18,19 +18,16 @@
 package com.founder.fix.fixflow.core.impl.task;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
 import com.founder.fix.fixflow.core.task.IncludeExclusion;
 import com.founder.fix.fixflow.core.task.IdentityLink;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
-public class IdentityLinkEntity extends AbstractPersistentObject implements IdentityLink {
+public class IdentityLinkEntity extends AbstractPersistentObject<IdentityLinkEntity> implements IdentityLink {
 
 	private static final long serialVersionUID = 1L;
 	public static final String RULE_GET_IDENTITYLINK_PERSISTENT_STATE = "getIdentityLinkPersistentState";
@@ -161,33 +158,7 @@ public class IdentityLinkEntity extends AbstractPersistentObject implements Iden
 		this.groupType = group.getGroupType();
 	}
 	
-	
 
-	public Map<String, Object> getPersistentState() {
-
-		// 构建查询参数
-		Map<String, Object> objectParam = new HashMap<String, Object>();
-
-		// 身份链接编号 String
-		objectParam.put(TaskIdentityLinkObjKey.Id().FullKey(), this.getId());
-		// 身份链接类型 String
-		objectParam.put(TaskIdentityLinkObjKey.Type().FullKey(), this.getType().toString());
-		// 用户编号 String
-		objectParam.put(TaskIdentityLinkObjKey.UserId().FullKey(), this.getUserId());
-		// 组编号 String
-		objectParam.put(TaskIdentityLinkObjKey.GroupId().FullKey(), this.getGroupId());
-		// 组类型 String
-		objectParam.put(TaskIdentityLinkObjKey.GroupType().FullKey(), this.getGroupType());
-		// 包含排除 String
-		objectParam.put(TaskIdentityLinkObjKey.IncludeExclusion().FullKey(), this.getIncludeExclusion().toString());
-		// 任务实例编号 String
-		objectParam.put(TaskIdentityLinkObjKey.TaskInstanceId().FullKey(), this.getTaskId());
-		// 归档时间
-		objectParam.put(TaskIdentityLinkObjKey.ArchiveTime().FullKey(), this.getArchiveTime());
-		return objectParam;
-
-	}
-	
 	@Override
 	public String getCloneRuleId() {
 		return RULE_GET_IDENTITYLINK_CLONE;
