@@ -68,6 +68,15 @@
 		objectParamWhere.add(parameter);
 		sqlCommand.queryForList(sqlText, objectParamWhere);
 	</select>
+	
+	
+	<select id="findTokensByProcessInstanceId" parameterType="java.lang.String" resultMap="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="查询单个令牌对象">
+		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID = ? AND END_TIME IS NULL ";
+		objectParamWhere = { parameter };
+		sqlCommand.queryForList(sqlText, objectParamWhere);
+	</select>
+	
+	
 	<businessRules id="getTokenPersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
 	

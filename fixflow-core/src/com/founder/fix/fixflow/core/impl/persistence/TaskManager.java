@@ -121,6 +121,11 @@ public class TaskManager extends AbstractManager {
 			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<TaskInstanceEntity> findTaskByProcessInstanceIdNotEnd(String id) {
+		return (List<TaskInstanceEntity>)getDbSqlSession().selectList("findTaskByProcessInstanceIdNotEnd", id);
+	}
 	
 	/**新增方法****/
 }

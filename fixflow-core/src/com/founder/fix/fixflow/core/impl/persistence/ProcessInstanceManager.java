@@ -27,10 +27,7 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
-import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
-import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
-import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.Token;
 
 public class ProcessInstanceManager extends AbstractManager {
@@ -145,10 +142,10 @@ public class ProcessInstanceManager extends AbstractManager {
 		//保存流程实例和令牌
 		int count = selectProcessInstanceCountById(processInstance.getId());
 		if(count == 0){
-			insertProcessInstance(processInstance);
+			insert(processInstance);
 
 		}else{
-			updateProcessInstance(processInstance);
+			update(processInstance);
 			
 		}
 		
@@ -175,16 +172,15 @@ public class ProcessInstanceManager extends AbstractManager {
 		/** 5.1版本修改
 		getDbSqlSession().save("saveProcessInstance", processInstance);
 		*/
-		updateProcessInstance(processInstance);
+		update(processInstance);
 	}
 	
-	/**新增**/
 	
 	/**
 	 * 新增流程实例
 	 * @param processInstanceEntity
 	 */
-	public void insertProcessInstance(ProcessInstanceEntity processInstanceEntity){
+	public void insert(ProcessInstanceEntity processInstanceEntity){
 		getMappingSqlSession().insert("insertProcessInstance", processInstanceEntity);
 	}
 	
@@ -192,7 +188,7 @@ public class ProcessInstanceManager extends AbstractManager {
 	 * 更新流程实例
 	 * @param processInstanceEntity
 	 */
-	public void updateProcessInstance(ProcessInstanceEntity processInstanceEntity){
+	public void update(ProcessInstanceEntity processInstanceEntity){
 		getMappingSqlSession().update("updateProcessInstance", processInstanceEntity);
 	}
 	
@@ -203,73 +199,12 @@ public class ProcessInstanceManager extends AbstractManager {
 	 */
 	public int selectProcessInstanceCountById(String processInstanceId){
 		
+		
+		
 		return 0;
 	}
 	
 
 	
-
-	
-	
-	
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime,String processKey,Page page) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		parameters.put("processKey", processKey);
-		return getDbSqlSession().selectList("selectProcessPerformance", parameters, page);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime,Page page) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface2", parameters, page);
-	}
-	
-	public int getProcessPerformance2(String startTime,String endTime) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return StringUtil.getInt(getDbSqlSession().selectOne("selectProcessPerformanceInterface22", parameters));
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface1", parameters);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String[] processKey,String startTime,String endTime) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("processKey", processKey);
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface4", parameters);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime, String pid) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		parameters.put("pid", pid);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface5", parameters);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformanceTask(String[] pid, String startTime,String endTime) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("pid", pid);
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface3", parameters);
-	}
 
 }

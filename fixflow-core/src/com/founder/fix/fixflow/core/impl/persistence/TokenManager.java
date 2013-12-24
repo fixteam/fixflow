@@ -94,4 +94,20 @@ public class TokenManager extends AbstractManager {
 		return (TokenEntity)getMappingSqlSession().selectOne("findTokenById", id);
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public List<TokenEntity> findTokensByProcessInstanceId(String id) {
+
+		String query = "findTokensByProcessInstanceId";
+		return (List<TokenEntity>)getDbSqlSession().selectList(query, id);
+
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<TokenEntity> findTokenByParentId(String id) {
+		String query = "findTokenByParentId";
+		return (List<TokenEntity>)getDbSqlSession().selectList(query, id);
+	}
+
 }
