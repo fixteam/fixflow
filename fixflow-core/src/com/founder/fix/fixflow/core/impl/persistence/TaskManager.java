@@ -51,7 +51,9 @@ public class TaskManager extends AbstractManager {
 	public List<TaskInstanceEntity> findTasksByQueryCriteria(TaskQueryImpl taskQuery, Page page) {
 
 		String query = "selectTaskByQueryCriteria";
-		return getDbSqlSession().selectList(query, taskQuery, page);
+		
+		return getMappingSqlSession().selectList(query, taskQuery, page);
+		
 
 	}
 	
