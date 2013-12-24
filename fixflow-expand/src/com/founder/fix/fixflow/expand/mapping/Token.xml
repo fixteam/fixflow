@@ -62,9 +62,10 @@
 	]]>
 	</update>
 
-	<select id="findTokenById" parameterType="java.lang.String" resultMap="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="查询单个令牌对象">
+	<select id="findTokenById" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
 		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE TOKEN_ID = ? ";
-		objectParamWhere = { parameter };
+		objectParamWhere = new ArrayList();
+		objectParamWhere.add(parameter);
 		sqlCommand.queryForList(sqlText, objectParamWhere);
 	</select>
 	
@@ -82,11 +83,9 @@
 		persistentState = new HashMap<String, Object>();
 		persistentState.put("TOKEN_ID", parameter.getId());
 		persistentState.put("NAME", parameter.getName());
-		persistentState.put("PROCESSINSTANCE_ID", parameter.getProcessInstance().getId());
-		persistentState.put("NODE_ID", parameter.getFlowNode().getId());
-		if (parameter.getParent() != null) {
-			objectParam.put("PARENT_ID", parameter.getParent().getId());
-		}
+		persistentState.put("PROCESSINSTANCE_ID", parameter.getProcessInstanceId());
+		persistentState.put("NODE_ID", parameter.getNodeId());
+		persistentState.put("PARENT_ID", parameter.getParentTokenId());
 		persistentState.put("PARENT_FREETOKEN_ID", parameter.getParentFreeTokenId());
 		persistentState.put("START_TIME", parameter.getStartTime());
 		persistentState.put("END_TIME", parameter.getEndTime());

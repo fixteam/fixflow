@@ -3,27 +3,48 @@
 
 
 	<!-- 运行实例表 -->
-	<dataBaseTable tableId="fixflow_run_processinstance" tableName="流程实例表" tableValue="FIXFLOW_RUN_PROCESSINSTANCE" mappingType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity">
-		<columnMapping column="PROCESSINSTANCE_ID" name="编号" property="id" simpleKey="processInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSDEFINITION_ID" name="流程定义唯一编号" property="processDefinitionId" simpleKey="processDefinitionId" jdbcType="VARCHAR" />
-		<columnMapping column="SUBJECT" name="流程实例主题" property="subject" simpleKey="subject" jdbcType="VARCHAR" />
-		<columnMapping column="START_TIME" name="启动时间" property="startTime" simpleKey="startTime" jdbcType="VARCHAR" />
-		<columnMapping column="END_TIME" name="结束时间" property="endTime" simpleKey="endTime" jdbcType="VARCHAR" />
-		<columnMapping column="DEFINITION_ID" name="业务定义编号" property="definitionId" simpleKey="definitionId" jdbcType="VARCHAR" />
-		<columnMapping column="ROOTTOKEN_ID" name="根令牌编号" property="rootTokenId" simpleKey="rootTokenId" jdbcType="VARCHAR" />
-		<columnMapping column="BIZ_KEY" name="业务关联键值" property="bizKey" simpleKey="bizKey" jdbcType="VARCHAR" />
-		<columnMapping column="INITIATOR" name="提交人" property="initiator" simpleKey="initiator" jdbcType="VARCHAR" />
-		<columnMapping column="ISSUSPENDED" name="是否暂停" property="isSuspended" simpleKey="isSuspended" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSDEFINITION_KEY" name="流程定义编号" property="processDefinitionKey" simpleKey="processDefinitionKey" jdbcType="VARCHAR" />
-		<columnMapping column="PARENT_INSTANCE_ID" name="父流程实例编号" property="parentProcessInstanceId" simpleKey="parentProcessInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="PARENT_INSTANCE_TOKEN_ID" name="父流程实例令牌编号" property="parentProcessInstanceTokenId" simpleKey="parentProcessInstanceTokenId" jdbcType="VARCHAR" />
-		<columnMapping column="UPDATE_TIME" name="更新时间" property="updateTime" simpleKey="updateTime" jdbcType="VARCHAR" />
-		<columnMapping column="START_AUTHOR" name="启动人" property="startAuthor" simpleKey="startAuthor" jdbcType="VARCHAR" />
-		<columnMapping column="PROCESSLOCATION" name="流程位置" property="processLocation" simpleKey="processLocation" jdbcType="VARCHAR" />
-		<columnMapping column="ISPIGEONHOLE" name="实例编号" property="id" simpleKey="processInstanceId" jdbcType="VARCHAR" />
-		<columnMapping column="INSTANCE_STATUS" name="实例状态" property="instanceStatus" simpleKey="instanceStatus" jdbcType="VARCHAR" />
-		<columnMapping column="ARCHIVE_TIME" name="归档时间" property="archiveTime" simpleKey="archiveTime" jdbcType="VARCHAR" />
+	<dataBaseTable tableId="fixflow_run_processinstance" tableName="流程实例表" tableValue="FIXFLOW_RUN_PROCESSINSTANCE">
+		<column column="PROCESSINSTANCE_ID" name="编号" jdbcType="VARCHAR" />
+		<column column="PROCESSDEFINITION_ID" name="流程定义唯一编号" jdbcType="VARCHAR" />
+		<column column="SUBJECT" name="流程实例主题" jdbcType="VARCHAR" />
+		<column column="START_TIME" name="启动时间" jdbcType="VARCHAR" />
+		<column column="END_TIME" name="结束时间" jdbcType="VARCHAR" />
+		<column column="DEFINITION_ID" name="业务定义编号" jdbcType="VARCHAR" />
+		<column column="ROOTTOKEN_ID" name="根令牌编号" jdbcType="VARCHAR" />
+		<column column="BIZ_KEY" name="业务关联键值" jdbcType="VARCHAR" />
+		<column column="INITIATOR" name="提交人" jdbcType="VARCHAR" />
+		<column column="ISSUSPENDED" name="是否暂停" jdbcType="VARCHAR" />
+		<column column="PROCESSDEFINITION_KEY" name="流程定义编号" jdbcType="VARCHAR" />
+		<column column="PARENT_INSTANCE_ID" name="父流程实例编号"  jdbcType="VARCHAR" />
+		<column column="PARENT_INSTANCE_TOKEN_ID" name="父流程实例令牌编号" jdbcType="VARCHAR" />
+		<column column="UPDATE_TIME" name="更新时间" jdbcType="VARCHAR" />
+		<column column="START_AUTHOR" name="启动人" jdbcType="VARCHAR" />
+		<column column="PROCESSLOCATION" name="流程位置" jdbcType="VARCHAR" />
+		<column column="ISPIGEONHOLE" name="实例编号" jdbcType="VARCHAR" />
+		<column column="INSTANCE_STATUS" name="实例状态" jdbcType="VARCHAR" />
+		<column column="ARCHIVE_TIME" name="归档时间" jdbcType="VARCHAR" />
 	</dataBaseTable>
+	
+	<resultMap id="processInstanceResultMap" name="任务表" type="com.founder.fix.fixflow.core.impl.runtime.TokenEntity">
+		<result property="id" column="PROCESSINSTANCE_ID" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="subject" column="SUBJECT" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="processDefinitionKey" column="PROCESSDEFINITION_KEY" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="processDefinitionId" column="PROCESSDEFINITION_ID" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="definitionId" column="DEFINITION_ID" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="rootTokenId" column="ROOTTOKEN_ID" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="parentProcessInstanceId" column="PARENT_INSTANCE_ID" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="parentProcessInstanceTokenId" column="PARENT_INSTANCE_TOKEN_ID" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="startTime" column="START_TIME" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="endTime" column="END_TIME" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="updateTime" column="UPDATE_TIME" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="archiveTime" column="ARCHIVE_TIME" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="bizKey" column="BIZ_KEY" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="startAuthor" column="START_AUTHOR" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="initiator" column="INITIATOR" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="processLocation" column="PROCESSLOCATION" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="instanceType" column="INSTANCE_STATUS" name="令牌编号" jdbcType="VARCHAR" />
+		<result property="suspended" column="ISSUSPENDED" name="令牌编号" jdbcType="VARCHAR" />
+	</resultMap>	
 
 	<insert id="insertProcessInstance" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" remark="插入新的流程实例">
 	<![CDATA[ 
@@ -51,9 +72,71 @@
 	</select>
 	
 	
-	<businessRules id="编号" parameterType="入参类型" resultType="返回类型" remark="备注">
+	<businessRules id="getProcessPersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
+		objectParam = new HashMap<String, Object>();
+		objectParam.put("PROCESSINSTANCE_ID", parameter.id);
+		objectParam.put("SUBJECT", parameter.getSubject());
+		objectParam.put("PROCESSDEFINITION_KEY", parameter.getProcessDefinitionKey());
+		objectParam.put("PROCESSDEFINITION_ID", parameter.processDefinitionId);
+		objectParam.put("DEFINITION_ID", parameter.getProcessDefinition().getDefinitions().getId());
+		objectParam.put("ROOTTOKEN_ID", parameter.getRootToken().getId());
+		objectParam.put("PARENT_INSTANCE_ID", parameter.getParentProcessInstanceId());
+		objectParam.put("PARENT_INSTANCE_TOKEN_ID", parameter.getParentProcessInstanceTokenId());
+		objectParam.put("BIZ_KEY", parameter.getBizKey());
+		objectParam.put("INITIATOR", parameter.getInitiator());
+		objectParam.put("START_AUTHOR", parameter.getStartAuthor());
+		objectParam.put("START_TIME", parameter.startTime);
+		objectParam.put("END_TIME", parameter.endTime);
+		objectParam.put("UPDATE_TIME", parameter.getUpdateTime());
+		objectParam.put("ARCHIVE_TIME", parameter.getArchiveTime());
+		objectParam.put("ISSUSPENDED", String.valueOf(parameter.isSuspended()));
+		objectParam.put("PROCESSLOCATION", parameter.getProcessLocation());
+		objectParam.put("INSTANCE_STATUS", parameter.getInstanceType().toString());
+		extensionFields=parameter.getExtensionFields();	
+		for (String key : extensionFields.keySet()) {
+			objectParam.put(key, extensionFields.get(key));
+		}
+		return objectParam;
+		
+	]]>
+	</businessRules>
 	
+	
+	<businessRules id="getProcessPersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
+	<![CDATA[ 
+		mapPersistentState = new HashMap<String, Object>();
+		mapPersistentState.put("processInstanceId", this.id);
+		mapPersistentState.put("subject", this.subject);
+		mapPersistentState.put("processDefinitionKey", this.processDefinitionKey);
+		mapPersistentState.put("processDefinitionId", this.processDefinitionId);
+		mapPersistentState.put("rootTokenId", this.rootTokenId);
+		mapPersistentState.put("definitionId", this.definitionId);
+		mapPersistentState.put("parentProcessInstanceId", this.parentProcessInstanceId);
+		mapPersistentState.put("parentProcessInstanceTokenId", this.parentProcessInstanceTokenId);
+		mapPersistentState.put("initiator", this.initiator);
+		mapPersistentState.put("startAuthor", this.startAuthor);
+		mapPersistentState.put("bizKey", this.bizKey);
+		mapPersistentState.put("startTime", this.startTime);
+		mapPersistentState.put("endTime", this.endTime);
+		mapPersistentState.put("updateTime", this.updateTime);
+		mapPersistentState.put("archiveTime", this.archiveTime);
+		mapPersistentState.put("isSuspended", this.isSuspended);
+		mapPersistentState.put("processLocation", this.processLocation);
+		mapPersistentState.put("instanceStatus", this.instanceType);
+		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
+		for (String key : persistenceExtensionFields.keySet()) {
+			mapPersistentState.put(key, persistenceExtensionFields.get(key));	
+		}
+		return mapPersistentState;
+	]]>
+	</businessRules>
+	
+	<businessRules id="ProcessInstanceClone" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" remark="流程实例拷贝">
+	<![CDATA[ 
+		processInstanceEntity = new ProcessInstanceEntity();
+		processInstanceEntity.persistentInit(sysRulesConfig.getResultMap("processInstanceResultMap"),parameter.getPersistentDbMap());
+		return processInstanceEntity;
 	]]>
 	</businessRules>
 
