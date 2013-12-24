@@ -19,9 +19,9 @@ package com.founder.fix.fixflow.core.task;
 
 import java.util.List;
 
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
-import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.Token;
 
 public interface TaskMgmtInstance {
@@ -32,7 +32,7 @@ public interface TaskMgmtInstance {
 	
 	public TaskInstanceEntity createTaskInstanceEntity(TaskDefinition taskDefinition, ExecutionContext executionContext,String taskGroup);
 
-	void setProcessInstance(ProcessInstance processInstance);
+	void setProcessInstance(ProcessInstanceEntity processInstance);
 
 	void performAssignment(TaskDefinition taskDefinition, Assignable assignable, ExecutionContext executionContext);
 

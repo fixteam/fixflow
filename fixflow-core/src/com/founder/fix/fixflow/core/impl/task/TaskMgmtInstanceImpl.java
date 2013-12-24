@@ -38,11 +38,11 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
-import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.Assignable;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
@@ -52,7 +52,10 @@ import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
-	List<TaskInstanceEntity> taskInstances = new ArrayList<TaskInstanceEntity>();
+	
+	protected ProcessInstanceEntity processInstance;
+	
+	List<TaskInstanceEntity> taskInstances;
 
 	public TaskMgmtInstanceImpl() {
 	}
@@ -246,15 +249,16 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	}
 
 	public void addTaskInstanceEntity(TaskInstanceEntity taskInstance) {
-		if (taskInstances == null)
-			taskInstances = new ArrayList<TaskInstanceEntity>();
-		taskInstances.add(taskInstance);
+		if (getTaskInstanceEntitys() == null){
+			this.taskInstances = new ArrayList<TaskInstanceEntity>();
+		}
+			
+		getTaskInstanceEntitys().add(taskInstance);
 		taskInstance.setTaskMgmtInstance(this);
 	}
 
-	public void setProcessInstance(ProcessInstance processInstance) {
-		// TODO Auto-generated method stub
-
+	public void setProcessInstance(ProcessInstanceEntity processInstance) {
+		this.processInstance=processInstance;
 	}
 
 	public void performAssignment(TaskDefinition taskDefinition, Assignable assignable, ExecutionContext executionContext) {
@@ -447,8 +451,8 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		if (token == null) {
 			throw new FixFlowException("暂停任务实例的时候令牌不能为空!");
 		}
-		if (taskInstances != null) {
-			for (TaskInstanceEntity taskInstance : taskInstances) {
+		if (getTaskInstanceEntitys() != null) {
+			for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 				if (token.equals(taskInstance.getToken())) {
 					taskInstance.suspend();
 				}
@@ -463,8 +467,8 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		if (token == null) {
 			throw new FixFlowException("恢复任务实例的时候令牌不能为空!");
 		}
-		if (taskInstances != null) {
-			for (TaskInstanceEntity taskInstance : taskInstances) {
+		if (getTaskInstanceEntitys() != null) {
+			for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 				if (token.equals(taskInstance.getToken())) {
 					taskInstance.resume();
 				}
@@ -474,9 +478,9 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 	public Set<TaskInstanceEntity> getUnfinishedTasks(Token token) {
 		Set<TaskInstanceEntity> unfinishedTasks = new HashSet<TaskInstanceEntity>();
-		if (taskInstances != null) {
+		if (getTaskInstanceEntitys() != null) {
 
-			for (TaskInstanceEntity taskInstance : taskInstances) {
+			for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 
 				if ((!taskInstance.hasEnded()) && (token != null) && (token.getId().equals(taskInstance.getToken().getId()))) {
 					unfinishedTasks.add(taskInstance);
@@ -491,7 +495,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 		List<TaskInstanceEntity> taskInstancesTemp = new ArrayList<TaskInstanceEntity>();
 
-		for (TaskInstanceEntity taskInstance : taskInstances) {
+		for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 			if (taskInstance.getToken().getId().equals(token.getId())) {
 				taskInstancesTemp.add(taskInstance);
 			}
@@ -503,7 +507,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	public TaskInstanceEntity getTaskInstanceEntitys(String taskId) {
 
 		
-		for (TaskInstanceEntity taskInstance : taskInstances) {
+		for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 			if (taskInstance.getId().equals(taskId)) {
 				return taskInstance;
 			}
@@ -513,6 +517,20 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	}
 
 	public List<TaskInstanceEntity> getTaskInstanceEntitys() {
+		
+		if(this.taskInstances==null){
+			this.taskInstances= new ArrayList<TaskInstanceEntity>();
+			
+			if(this.processInstance!=null){
+				
+				this.taskInstances=Context.getCommandContext().getTaskManager().findTaskByProcessInstanceIdNotEnd(this.processInstance.getId());
+				return this.taskInstances;
+			}
+
+			
+		}
+
+		
 		return taskInstances;
 	}
 
