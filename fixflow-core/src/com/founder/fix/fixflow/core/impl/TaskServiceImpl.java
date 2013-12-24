@@ -32,7 +32,6 @@ import com.founder.fix.fixflow.core.impl.cmd.AddCommentCmd;
 import com.founder.fix.fixflow.core.impl.cmd.CompleteGeneralTaskSimulationRunCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteIdentityLinkCmd;
 import com.founder.fix.fixflow.core.impl.cmd.DeleteTaskCmd;
-import com.founder.fix.fixflow.core.impl.cmd.ExpandCommonCmd;
 import com.founder.fix.fixflow.core.impl.cmd.ExpandTaskComplete;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentToUsersAndCountCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetAgentToUsersCmd;
@@ -55,7 +54,6 @@ import com.founder.fix.fixflow.core.impl.cmd.GetTaskStatusByByProcessInstanceIdC
 import com.founder.fix.fixflow.core.impl.cmd.GetTaskUsersByTaskIdCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetUserCommandCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetUserEndTaskNodesInProcessInstanceCmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface3Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.QueryVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveIdentityLinkCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveTaskCmd;
@@ -366,22 +364,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<Map<String, Object>> processPerformance(String[] pid, String startTime, String endTime, String type) {
-		// TODO Auto-generated method stub
-		if(type.equals("person")) {
-			return commandExecutor.execute(new ProcessPerformanceInterface3Cmd(pid, startTime, endTime));
-		}
-		if(type.equals("org")) {
-			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("starttime", startTime);
-			map.put("endtime", endTime);
-			map.put("org", pid);
-			return commandExecutor.execute(new ExpandCommonCmd("PerformanceInterfaceTask", map));
-		}
-		else
-			return null;
-	}
+
 
 	public List<UserTo> getAgentUsers(String userId) {
 

@@ -125,7 +125,7 @@ public class StartEventBehavior extends StartEventImpl {
 		taskInstance.setDraft(isDraft);
 		
 	
-		taskInstance.setAssigneeId(Authentication.getAuthenticatedUserId());
+		taskInstance.setAssignee(Authentication.getAuthenticatedUserId());
 		//taskInstance.setEndTime(newTaskEndTime);
 		taskInstance.setCommandId(TaskCommandType.STARTEVENT);
 		taskInstance.setCommandType(TaskCommandType.STARTEVENT);

@@ -397,7 +397,7 @@ public class UserTaskBehavior extends UserTaskImpl {
 		ProcessDefinitionBehavior processDefinition = token.getProcessInstance().getProcessDefinition();
 		String processDefinitionId = processDefinition.getProcessDefinitionId();
 		newTask.setProcessDefinitionId(processDefinitionId);
-		newTask.setProcessDefinitionKeyWithoutCascade(processDefinition.getProcessDefinitionKey());
+		newTask.setProcessDefinitionKey(processDefinition.getProcessDefinitionKey());
 		newTask.setName(this.getName());
 		newTask.setNodeName(this.getName());
 		newTask.setProcessInstanceId(token.getProcessInstance().getId());

@@ -187,12 +187,12 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 		}
 
 		if (AbstractCommandFilter.isAutoClaim()) {
-			this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+			this.taskInstanceEntityAbstract.setAssignee(Authentication.getAuthenticatedUserId());
 		}
 		if (this.taskInstanceEntityAbstract.getAssignee() == null) {
 
 			if (StringUtil.isNotEmpty(this.admin)) {
-				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(this.admin);
+				this.taskInstanceEntityAbstract.setAssignee(this.admin);
 			} else {
 
 				if(this.taskCommandInstAbstract!=null&&this.taskCommandInstAbstract.getTaskCommandDefType()!=null){
@@ -210,12 +210,12 @@ public abstract class AbstractExpandTaskCmd<P extends AbstractCustomExpandTaskCo
 		if (StringUtil.isNotEmpty(agent)) {
 			this.taskInstanceEntityAbstract.setAgent(Authentication.getAuthenticatedUserId());
 			if (StringUtil.isEmpty(this.taskInstanceEntityAbstract.getAssignee())) {
-				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(this.agent);
+				this.taskInstanceEntityAbstract.setAssignee(this.agent);
 			}
 
 		} else {
 			if (StringUtil.isEmpty(this.taskInstanceEntityAbstract.getAssignee())) {
-				this.taskInstanceEntityAbstract.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				this.taskInstanceEntityAbstract.setAssignee(Authentication.getAuthenticatedUserId());
 			}
 			this.taskInstanceEntityAbstract.setAgent(null);
 		}

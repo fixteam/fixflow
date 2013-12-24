@@ -114,7 +114,7 @@ public class TransferTaskCmd implements Command<Void> {
 
 				TaskCommandInst taskCommand = userTask.getTaskCommandsMap().get(userCommandId);
 
-				taskInstance.setEndTimeWithoutCascade(ClockUtil.getCurrentTime());
+				taskInstance.setEndTime(ClockUtil.getCurrentTime());
 				taskInstance.setCommandId(taskCommand.getId());
 				taskInstance.setCommandType(StringUtil.getString(taskCommand.getTaskCommandType()));
 				taskInstance.setCommandMessage(taskCommand.getName());
@@ -122,10 +122,10 @@ public class TransferTaskCmd implements Command<Void> {
 
 				Context.getCommandContext().getTaskManager().saveTaskInstanceEntity(taskInstance);
 
-				taskInstance.setIdWithoutCascade(GuidUtil.CreateGuid());
-				taskInstance.setAssigneeWithoutCascade(transferUserId);
-				taskInstance.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
-				taskInstance.setEndTimeWithoutCascade(null);
+				taskInstance.setId(GuidUtil.CreateGuid());
+				taskInstance.setAssignee(transferUserId);
+				taskInstance.setCreateTime(ClockUtil.getCurrentTime());
+				taskInstance.setEndTime(null);
 				taskInstance.setCommandType(null);
 				taskInstance.setCommandMessage(null);
 				taskInstance.setTaskComment(null);

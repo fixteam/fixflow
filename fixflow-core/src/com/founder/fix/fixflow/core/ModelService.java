@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
-import org.omg.PortableInterceptor.INACTIVE;
-
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;

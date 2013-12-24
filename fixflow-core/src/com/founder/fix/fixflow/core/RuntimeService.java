@@ -335,62 +335,6 @@ public interface RuntimeService extends ProcessService{
 	 */
 	public boolean insertPigeonholeData();
 	
-	/**
-	 * 流程绩效接口
-	 * @param processKey 流程名
-	 * @param startTime 开始时间
-	 * @param endTime 结束时间
-	 * @param firstPage 第几页
-	 * @param maxSize 每页大小
-	 * @return
-	 */
-	List<Map<String,Object>> processPerformance(String processKey, String startTime, String endTime, int firstPage, int maxSize );
-	
-	/**
-	 * 流程绩效 接口4
-	 * @param processKey 流程名
-	 * @param startTime 开始时间
-	 * @param endTime 结束时间
-	 * @return
-	 */
-	List<Map<String,Object>> processPerformance(String[] processKey, String startTime, String endTime);
-	
-	/**
-	 * 流程绩效接口1
-	 * @param startTime
-	 * @param endTime
-	 * @return
-	 */
-	List<Map<String,Object>> processPerformance(String startTime, String endTime);
-	
-	/**
-	 * 流程绩效接口5
-	 * @param startTime
-	 * @param endTime
-	 * @param pid
-	 * @return
-	 */
-	List<Map<String,Object>> processPerformance(String startTime, String endTime, String pid);
-	
-	/**
-	 * 流程绩效接口2
-	 * @param startTime
-	 * @param endTime
-	 * @param firstPage
-	 * @param maxSize
-	 * @return
-	 */
-	List<Map<String,Object>> processPerformance(String startTime, String endTime, int firstPage, int maxSize);
-	
-	/**
-	 * 流程绩效接口2取总
-	 * @param startTime
-	 * @param endTime
-	 * @param firstPage
-	 * @param maxSize
-	 * @return
-	 */
-	int processPerformance2(String startTime, String endTime);
 	
 	<T> T ExpandCmd(String cmdId,Map<String, Object> parameterMap, T classReturn);
 	

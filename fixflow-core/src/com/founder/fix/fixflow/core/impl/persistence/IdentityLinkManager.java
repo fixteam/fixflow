@@ -18,13 +18,11 @@
 package com.founder.fix.fixflow.core.impl.persistence;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl;
 import com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity;
-import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
 import com.founder.fix.fixflow.core.task.IdentityLink;
 
 public class IdentityLinkManager extends AbstractManager {

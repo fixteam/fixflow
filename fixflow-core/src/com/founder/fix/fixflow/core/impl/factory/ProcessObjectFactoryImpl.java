@@ -99,7 +99,7 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 	}
 
 
-	public TaskMgmtInstance createTaskMgmtInstance(ProcessInstance processInstance) {
+	public TaskMgmtInstance createTaskMgmtInstance() {
 		
 		ExpandClassConfig expandClassConfig = processEngineConfiguration.getExpandClassConfig();
 		List<ExpandClass>  expandClasses=expandClassConfig.getExpandClass();
@@ -381,9 +381,6 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 		ContextInstanceImpl contextInstanceImpl = new ContextInstanceImpl(processInstance);
 		return contextInstanceImpl;
 	}
-	
-	
-
 
 
 
