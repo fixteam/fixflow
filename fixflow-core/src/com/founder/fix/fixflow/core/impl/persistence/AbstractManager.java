@@ -28,15 +28,15 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 public abstract class AbstractManager {
 
 	public void insert(String insertStatement, PersistentObject persistentObject) {
-		getDbSqlSession().insert(insertStatement, persistentObject);
+		getMappingSqlSession().insert(insertStatement, persistentObject);
 	}
 
 	public void delete(String deleteStatement, PersistentObject persistentObject) {
-		getDbSqlSession().delete(deleteStatement, persistentObject.getId());
+		getMappingSqlSession().delete(deleteStatement, persistentObject.getId());
 	}
 	
 	public void update(String updateStatement, PersistentObject persistentObject){
-		getDbSqlSession().update(updateStatement, persistentObject);
+		getMappingSqlSession().update(updateStatement, persistentObject);
 	}
 
 	protected DbSqlSession getDbSqlSession() {

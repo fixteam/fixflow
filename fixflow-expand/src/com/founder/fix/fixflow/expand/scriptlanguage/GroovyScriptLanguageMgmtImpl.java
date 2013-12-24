@@ -166,7 +166,7 @@ public class GroovyScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt {
 
 	@Override
 	public Object executeBusinessRules(String ruleId, Object parameter) {
-		return executeBusinessRules(ruleId,parameter);
+		return executeBusinessRules(ruleId,parameter,null);
 	}
 
 	@Override

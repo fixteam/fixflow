@@ -168,7 +168,12 @@ public class MappingSqlSession {
 		Rule rule = processEngineConfiguration.getRule(statement);
 		Object returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
 		if(returnObjList==null){
-			return  null;
+			return null;
+		}
+		if(returnObjList instanceof List){
+			if(((List)returnObjList).size() == 0){
+				return null;
+			}
 		}
 		if (rule instanceof Select) {
 			Select select = (Select) rule;
@@ -189,7 +194,7 @@ public class MappingSqlSession {
 						List listObj=(List)returnObjList;
 						if(listObj.size()==1&&listObj.get(0)instanceof Map){
 							
-							persistentObject.persistentInit(resultMap, (Map) returnObjList);
+							persistentObject.persistentInit(resultMap, (Map) listObj.get(0));
 							return persistentObject;
 						}
 						
