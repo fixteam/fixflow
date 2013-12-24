@@ -77,17 +77,17 @@ public class PendingTaskCmd extends AbstractExpandTaskCmd<PendingTaskCommand, Vo
 		// 拷贝出一个新的任务
 		TaskInstanceEntity taskInstanceNew = taskInstance.clone();
 		// 设置新任务的GUID
-		taskInstanceNew.setIdWithoutCascade(GuidUtil.CreateGuid());
+		taskInstanceNew.setId(GuidUtil.CreateGuid());
 		// 将新任务的处理者设置为需要转办的人
-		taskInstanceNew.setAssigneeWithoutCascade(pendingUserId);
+		taskInstanceNew.setAssignee(pendingUserId);
 		// 重置任务的创建时间
-		taskInstanceNew.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
+		taskInstanceNew.setCreateTime(ClockUtil.getCurrentTime());
 		// 设置任务的原始拥有者,以便在还回的时候找到原始处理者
 		taskInstanceNew.setOwner(assigneeId);
 		// 将任务设置为还回状态
 		taskInstanceNew.setDelegationState(DelegationState.RESOLVED);
 		// 将新任务的结束时间设置为空
-		taskInstanceNew.setEndTimeWithoutCascade(null);
+		taskInstanceNew.setEndTime(null);
 		// 将新任务的任务命令的编号设置为空
 		taskInstanceNew.setCommandId(null);
 		// 将新任务的任务命令类型设置为空

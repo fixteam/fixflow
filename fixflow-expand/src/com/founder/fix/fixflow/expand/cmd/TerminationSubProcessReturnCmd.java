@@ -123,7 +123,7 @@ public class TerminationSubProcessReturnCmd extends AbstractExpandTaskCmd<Termin
 		// 获取正在操作的任务命令对象实例
 		TaskCommandInst taskCommand = getTaskCommandInst();
 		taskInstanceCallAct.customEnd(taskCommand, this.taskComment);
-		taskInstanceCallAct.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+		taskInstanceCallAct.setAssignee(Authentication.getAuthenticatedUserId());
 		Context.getCommandContext().getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity) taskInstanceCallAct);
 
 		

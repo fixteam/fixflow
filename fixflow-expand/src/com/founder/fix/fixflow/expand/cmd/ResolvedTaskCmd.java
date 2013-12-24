@@ -65,11 +65,11 @@ public class ResolvedTaskCmd extends AbstractExpandTaskCmd<ResolvedTaskCommand, 
 		// 拷贝出一个新的任务
 		TaskInstanceEntity taskInstanceNew = taskInstance.clone();
 
-		taskInstanceNew.setIdWithoutCascade(GuidUtil.CreateGuid());
-		taskInstanceNew.setAssigneeWithoutCascade(owner);
-		taskInstanceNew.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
+		taskInstanceNew.setId(GuidUtil.CreateGuid());
+		taskInstanceNew.setAssignee(owner);
+		taskInstanceNew.setCreateTime(ClockUtil.getCurrentTime());
 
-		taskInstanceNew.setEndTimeWithoutCascade(null);
+		taskInstanceNew.setEndTime(null);
 		taskInstanceNew.setCommandId(null);
 		taskInstanceNew.setCommandType(null);
 		taskInstanceNew.setCommandMessage(null);

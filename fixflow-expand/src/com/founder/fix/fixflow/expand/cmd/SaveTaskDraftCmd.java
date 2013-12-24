@@ -177,9 +177,9 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 				taskInstanceNew.setDraft(true);
 				if(this.agent!=null&&!this.agent.equals("")){
 					taskInstanceNew.setAgent(Authentication.getAuthenticatedUserId());
-					taskInstanceNew.setAssigneeWithoutCascade(this.agent);
+					taskInstanceNew.setAssignee(this.agent);
 				}else{
-					taskInstanceNew.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+					taskInstanceNew.setAssignee(Authentication.getAuthenticatedUserId());
 					taskInstanceNew.setAgent(null);
 				}
 				//taskInstance.setAssignee(Authentication.getAuthenticatedUserId());
@@ -193,9 +193,9 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 					taskInstanceNew.setDraft(true);
 					if(this.agent!=null&&!this.agent.equals("")){
 						taskInstanceNew.setAgent(Authentication.getAuthenticatedUserId());
-						taskInstanceNew.setAssigneeWithoutCascade(this.agent);
+						taskInstanceNew.setAssignee(this.agent);
 					}else{
-						taskInstanceNew.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+						taskInstanceNew.setAssignee(Authentication.getAuthenticatedUserId());
 						taskInstanceNew.setAgent(null);
 					}
 					//taskInstanceCandidate.setAssignee(Authentication.getAuthenticatedUserId());
