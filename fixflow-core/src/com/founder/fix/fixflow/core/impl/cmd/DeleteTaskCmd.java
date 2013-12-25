@@ -57,7 +57,7 @@ public class DeleteTaskCmd implements Command<Void> {
 	}
 
 	protected void deleteTask(String taskId) {
-		Context.getCommandContext().getTaskManager().deleteTaskInstanceByTaskInstanceId(taskId, cascade);
+		Context.getCommandContext().getTaskManager().deleteTaskById(taskId, cascade);
 	}
 
 }
