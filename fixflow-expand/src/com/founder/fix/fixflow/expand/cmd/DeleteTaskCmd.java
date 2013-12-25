@@ -40,7 +40,7 @@ public class DeleteTaskCmd extends AbstractExpandTaskCmd<DeleteTaskCommand, Void
 		
 		
 
-		commandContext.getTaskManager().deleteTaskInstanceByTaskInstanceId(getTaskInstanceEntity().getId(), true);
+		commandContext.getTaskManager().deleteTaskById(getTaskInstanceEntity().getId(), true);
 
 		return null;
 

@@ -12,11 +12,8 @@ import com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
+import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
-import com.founder.fix.fixflow.core.objkey.TaskIdentityLinkObjKey;
-import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
-import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 
@@ -125,10 +122,10 @@ public class TaskQueryScript implements SelectRulesScript {
 	}
 
 	public String selectTaskByQueryCriteriaSql(String selectTaskByQueryCriteriaSql,TaskQueryImpl taskQuery, List<Object> objectParamWhere,SqlCommand sqlCommand) {
-		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " FROM " + TaskInstanceObjKey.getTableName(taskQuery.getQueryLocation())
+		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " FROM " + QueryTableUtil.getTableSelect("fixflow_run_taskinstance", taskQuery.getQueryLocation())
 				+ " T ";
 		if (taskQuery.getCandidateUser() != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " left join " + TaskIdentityLinkObjKey.TaskIdentityLinkTableName()
+			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " left join " + QueryTableUtil.getTableSelect("fixflow_run_taskidentitylink", taskQuery.getQueryLocation())
 					+ " I on I.TASKINSTANCE_ID = T.TASKINSTANCE_ID ";
 		}
 		// initiator
@@ -143,7 +140,7 @@ public class TaskQueryScript implements SelectRulesScript {
 		if (taskQuery.isCandidateNotNull()) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.ASSIGNEE IS NULL and I.TYPE = 'candidate' ";
 		}
-		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "  LEFT JOIN  " + ProcessInstanceObjKey.ProcessInstanceTableName()
+		selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "  LEFT JOIN  " + QueryTableUtil.getTableSelect("fixflow_run_processinstance", taskQuery.getQueryLocation())
 				+ " P on T.PROCESSINSTANCE_ID = P.PROCESSINSTANCE_ID ";
 		// 自定义扩展查询
 		if (taskQuery.getQueryExpandTo() != null && taskQuery.getQueryExpandTo().getLeftJoinSql() != null
@@ -271,11 +268,11 @@ public class TaskQueryScript implements SelectRulesScript {
 				List<Object> dataList = new ArrayList<Object>();
 				dataList.add(taskQuery.getProcessInstanceId());
 				StringBuffer processInstanceIdList = new StringBuffer();
-				List<Map<String, Object>> dataListMaps = sqlCommand.queryForList("SELECT * FROM " + ProcessInstanceObjKey.ProcessInstanceTableName()
+				List<Map<String, Object>> dataListMaps = sqlCommand.queryForList("SELECT * FROM " +QueryTableUtil.getTableSelect("fixflow_run_processinstance", taskQuery.getQueryLocation())
 						+ " WHERE PARENT_INSTANCE_ID=?", dataList);
 				processInstanceIdList.append("'" + taskQuery.getProcessInstanceId() + "'");
 				if (dataListMaps.size() > 0) {
-					getSubProcessId(taskQuery.getProcessInstanceId(), processInstanceIdList,sqlCommand);
+					getSubProcessId(taskQuery.getProcessInstanceId(), processInstanceIdList,sqlCommand,taskQuery);
 				}
 				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID in (" + processInstanceIdList.toString()
 						+ ") ";
@@ -286,7 +283,7 @@ public class TaskQueryScript implements SelectRulesScript {
 		}
 		if (taskQuery.getTaskVariableValue() != null && !taskQuery.getTaskVariableValue().equals("")) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.TASKINSTANCE_ID in ( SELECT TASKINSTANCE_ID FROM "
-					+ VariableObjKey.getTableName(taskQuery.getQueryLocation())
+					+ QueryTableUtil.getTableSelect("fixflow_run_variable", taskQuery.getQueryLocation())
 					+ " WHERE TASKINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
 			if (taskQuery.getTaskVariableKey() != null && !taskQuery.getTaskVariableKey().equals("")) {
 				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + "AND VARIABLE_KEY = ? ";
@@ -303,7 +300,7 @@ public class TaskQueryScript implements SelectRulesScript {
 		}
 		if (taskQuery.getProcessInstanceVariableValue() != null && !taskQuery.getProcessInstanceVariableValue().equals("")) {
 			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " and T.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "
-					+ VariableObjKey.getTableName(taskQuery.getQueryLocation())
+					+ QueryTableUtil.getTableSelect("fixflow_run_variable", taskQuery.getQueryLocation())
 					+ " WHERE PROCESSINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
 			if (taskQuery.getProcessInstanceVariableKey() != null && !taskQuery.getProcessInstanceVariableKey().equals("")) {
 
@@ -365,15 +362,15 @@ public class TaskQueryScript implements SelectRulesScript {
 		return selectTaskByQueryCriteriaSql;
 	}
 	
-	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList,SqlCommand sqlCommand){
+	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList,SqlCommand sqlCommand,TaskQueryImpl taskQuery){
 		//这个地方需要用到递归去寻找所有的子流程
 		List<Object> dataList=new ArrayList<Object>();
 		dataList.add(processInstanceId);
-		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
+		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+QueryTableUtil.getTableSelect("fixflow_run_processinstance", taskQuery.getQueryLocation())+" WHERE PARENT_INSTANCE_ID=?", dataList);
 		if(dataListMaps.size()>0){
 			for (Map<String, Object> map : dataListMaps) {
 				processInstanceIdList.append(",'"+StringUtil.getString(map.get("PROCESSINSTANCE_ID"))+"'");
-				getSubProcessId(StringUtil.getString(map.get("PROCESSINSTANCE_ID")),processInstanceIdList,sqlCommand);
+				getSubProcessId(StringUtil.getString(map.get("PROCESSINSTANCE_ID")),processInstanceIdList,sqlCommand,taskQuery);
 			}
 		}
 	}
