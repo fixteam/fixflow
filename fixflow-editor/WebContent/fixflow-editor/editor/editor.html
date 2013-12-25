@@ -36,7 +36,12 @@ xmlns:atom="http://b3mn.org/2007/atom+xhtml">
 <!-- Fixflow Util -->
 <script type="text/javascript" src="/bpmcenter/fixflow/js/common.js"></script>
 </head>
-<body style="overflow:hidden;">
+<body style="overflow:hidden;" onunload="resetTag();">
 <div id="window-win"></div>
 </body>
+<script>
+function resetTag(){
+	window.opener.openEditorTag = false;
+}
+</script>
 </html>

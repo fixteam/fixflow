@@ -1,33 +1,34 @@
-var breadcrumbList = new Array();
-var currentTreeNode;
-var currentTreeChildrenNodes;
-var currentOperationType;
-var zTreeSetting = {
-	data: { simpleData: { enable: true}},
-	callback: {
-		beforeClick: function(){
-			$("a.curSelectedNode").removeClass("curSelectedNode");
-			currentOperationType = "done";
-		},
-		onClick: function(event, treeId, treeNode){
-			currentTreeNode = treeNode;
-			breadcrumbList = new Array();
-			breadcrumbList.push({name:treeNode.name, treeNodeId:treeNode.id});
-			getBreadcrumb(treeNode, breadcrumbList);
-			breadcrumbList.reverse();
-			createBreadcrumbList(breadcrumbList);
-			readSubFileAndDirectory(breadcrumbList);
-			currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
-				return true;
-			}, false, currentTreeNode);
-			if(checkIsResolvent()){
-				$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
-			}else{
-				resetToolbarState();
+var breadcrumbList = new Array(),
+	currentTreeNode,
+	currentTreeChildrenNodes,
+	currentOperationType,
+	openEditorTag = false;
+	zTreeSetting = {
+		data: { simpleData: { enable: true}},
+		callback: {
+			beforeClick: function(){
+				$("a.curSelectedNode").removeClass("curSelectedNode");
+				currentOperationType = "done";
+			},
+			onClick: function(event, treeId, treeNode){
+				currentTreeNode = treeNode;
+				breadcrumbList = new Array();
+				breadcrumbList.push({name:treeNode.name, treeNodeId:treeNode.id});
+				getBreadcrumb(treeNode, breadcrumbList);
+				breadcrumbList.reverse();
+				createBreadcrumbList(breadcrumbList);
+				readSubFileAndDirectory(breadcrumbList);
+				currentTreeChildrenNodes = tree.getNodesByFilter(function(node){
+					return true;
+				}, false, currentTreeNode);
+				if(checkIsResolvent()){
+					$(".toolbar > div").removeClass("btn-normal").addClass("btn-disable");
+				}else{
+					resetToolbarState();
+				}
 			}
 		}
-	}
-};
+	};
 var tree;
 $(document).ready(function(){
 	/************新建流程对话框**************/
@@ -359,16 +360,21 @@ $(document).ready(function(){
 			}
 			
 		}else if(dirType == "file"){
-			var fileType = name.substring(name.lastIndexOf(".")+1);
-			if(fileType!="bpmn"){
-				alert("该文件不是流程定义文件");
-				return false;
+			if(!openEditorTag){
+				var fileType = name.substring(name.lastIndexOf(".")+1);
+				if(fileType!="bpmn"){
+					alert("该文件不是流程定义文件");
+					return false;
+				}
+				var passObj = {
+					path: getBreadcrumbNameList(breadcrumbList),
+					fileName: name
+				}
+				openEditorTag = true;
+				window.showModalDialog("/bpmcenter/fixflow-editor/editor/editor.html", passObj, "dialogTop=10px;dialogWidth="+(screen.width-80)+";dialogHeight="+(screen.height-150));
+			}else{
+				alert("请关闭已打开的Web流程设计器");
 			}
-			var passObj = {
-				path: getBreadcrumbNameList(breadcrumbList),
-				fileName: name
-			}
-			window.showModalDialog("/bpmcenter/fixflow-editor/editor/editor.html", passObj, "dialogTop=10px;dialogWidth="+(screen.width-80)+";dialogHeight="+(screen.height-150));
 		}else{
 			
 		}
