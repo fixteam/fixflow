@@ -103,9 +103,10 @@
 	]]>
 	</insert>
 
-	<delete id="编号" parameterType="入参类型" remark="备注">
+	<delete id="deleteTaskById" parameterType="String" remark="根据任务编号删除任务">
 	<![CDATA[ 
-		
+		Object[] objectParamWhere = { parameter };
+		sqlCommand.delete(TaskInstanceObjKey.TaskInstanceTableName(), " TASKINSTANCE_ID=?", objectParamWhere);
 	]]>
 
 	</delete>
@@ -124,6 +125,15 @@
 		]]>
 	</select>
 	
+	<select id="findTaskByProcessInstanceIdNotEnd" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据流程实例编号返回所有相关任务">
+		<![CDATA[ 
+			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID = ? ";
+			objectParamWhere = { parameter };
+			sqlCommand.queryForList(sqlText, objectParamWhere);
+		]]>
+	</select>
+	
+	
 	
 	<select id="selectTaskByQueryCriteria" 
 	parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
@@ -137,7 +147,81 @@
 	parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryCountScript"
 	remark="查询任务数量"/>
+	
+	
+	<select id="findAgentUsers" parameterType="String" remark="查询我的代理人">
+		<![CDATA[  
+		
+		sql="SELECT distinct(z.AGENT_ID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join "
+		+"FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1'"+
+		"and  a.AUSER=?) z";
+		objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(userId);
+		listMaps=sqlCommand.queryForList(sql, objectParamWhere);
+		return listMaps;
+		
+		
+		]]>
+	</select>
+	
+	
+	<select id="findAgentToUsers" parameterType="String" remark="查询代理给我的人">
+		<![CDATA[  
+		
+		sql="SELECT distinct(z.USERID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join" +
+				" FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1' " +
+				" and  a.AGENT_ID=?) z";
+		objectParamWhere = new ArrayList<Object>();
+		objectParamWhere.add(userId);
+		listMaps=sqlCommand.queryForList(sql, objectParamWhere);
+		return listMaps;
+		
+		
+		]]>
+	</select>
+	
+	
+	<select id="getTaskStatusByByProcessInstanceIdList" parameterType="Object" remark="根据流程实例编号集合查询状态">
+		<![CDATA[  
+		
+		id = "";
+		for (int i = 0; i < processInstanceIdList.size(); i++) {
+			if (i == 0) {
+				id = "'" + processInstanceIdList.get(i) + "'";
+			} else {
+				id = id + ",'" + processInstanceIdList.get(i) + "'";
+			}
+		}
+		sqlText = "select x.*,y.END_TIME as PROCESSINSTANCE_ENDTIME  from (select a.*,b.ID,b.type,b.user_id"
+				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+TaskInstanceObjKey.TaskInstanceTableName()+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
+				+ ")) a left join "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+ProcessInstanceObjKey.ProcessInstanceTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
+		
+		returnList = sqlCommand.queryForList(sqlText);
+		
+		return returnList;
+		
+		
+		]]>
+	</select>
 
+	<select id="findTasksByTokenIdList" parameterType="List" resultMap="taskResultMap" remark="根据令牌集合查询任务">
+		<![CDATA[ 
+		sqlText = "SELECT * FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
+		for (int i = 0; i < tokenIdList.size(); i++) {
+			if (i == 0) {
+				sqlText = sqlText + "'" + tokenIdList.get(i) + "'";
+			} else {
+				sqlText = sqlText + ",'" + tokenIdList.get(i) + "'";
+			}
+		}
+		sqlText = sqlText + " ) ORDER BY END_TIME DESC";
+		// 构建查询参数
+		dataObj = sqlCommand.queryForList(sqlText);
+		
+		return dataObj;
+	
+		]]>
+	</select>
 	
 	
 	

@@ -27,6 +27,11 @@ import com.founder.fix.fixflow.core.task.IdentityLink;
 
 public class IdentityLinkManager extends AbstractManager {
 
+	
+	public void insert(IdentityLink identityLink) {
+		insert("insertIdentityLink", identityLink);
+	}
+	
 	public void deleteIdentityLink(IdentityLinkEntity identityLink) {
 		//getDbSqlSession().delete("deleteIdentityLink", identityLink.getId());
 		
@@ -78,4 +83,6 @@ public class IdentityLinkManager extends AbstractManager {
 	public IdentityLinkEntity selectIdentifyLinkById(String id){
 		return (IdentityLinkEntity)getMappingSqlSession().selectOne("selectIdentityLinkById", id);
 	}
+
+	
 }

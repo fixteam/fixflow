@@ -28,6 +28,7 @@ import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 import com.founder.fix.fixflow.core.impl.persistence.AbstractManager;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskQueryImpl;
+import com.founder.fix.fixflow.core.task.IdentityLink;
 
 /**
  * 任务数据管理器
@@ -65,78 +66,104 @@ public class TaskManager extends AbstractManager {
 	 * @return
 	 */
 	public long findTaskCountByQueryCriteria(TaskQueryImpl taskQuery) {
-		return (Long) getDbSqlSession().selectOne("selectTaskCountByQueryCriteria", taskQuery);
+		return (Long) getMappingSqlSession().selectOne("selectTaskCountByQueryCriteria", taskQuery);
 	}
 	
 	
 	/**
-	 * 
+	 * 查询我的代理人
 	 * @param userId
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> findAgentUsers(String userId){
 		String query = "findAgentUsers";
-		return getDbSqlSession().selectList(query,userId);
+		return getMappingSqlSession().selectList(query,userId);
 	}
-
 	
+	/**
+	 * 查询代理给我的人
+	 * @param userId
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String,Object>> findAgentToUsers(String userId){
 		String query = "findAgentToUsers";
-		return getDbSqlSession().selectList(query,userId);
+		return getMappingSqlSession().selectList(query,userId);
 	}
-	// getTaskStatusByByProcessInstanceIdList
 
+
+	/**
+	 * 根据流程实例编号集合查询状态
+	 * @param processInstanceIdList
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getTaskStatusByByProcessInstanceIdList(List<String> processInstanceIdList) {
 
 		String query = "getTaskStatusByByProcessInstanceIdList";
-		return getDbSqlSession().selectList(query, processInstanceIdList);
+		return getMappingSqlSession().selectList(query, processInstanceIdList);
 
 	}
-
 	
-
-	public List<TaskInstanceEntity> findTasksByParentTaskId(String parentTaskId) {
-		return null;
-	}
-
+	/**
+	 * 根据令牌集合查询任务
+	 * @param tokenIdList
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskInstanceEntity> findTasksByTokenIdList(List<String> tokenIdList) {
-		return getDbSqlSession().selectList("selectTasksByTokenIdList", tokenIdList);
+		return getMappingSqlSession().selectList("selectTasksByTokenIdList", tokenIdList);
 	}
 
+	/**
+	 * 保存任务
+	 * @param taskInstance
+	 */
 	public void saveTaskInstanceEntity(TaskInstanceEntity taskInstance) {
-		// 先清空掉缓存再存储
-		/* 5.1修改
-		CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
-		cacheHandler.putCacheData("IdentityLink_" + taskInstance.getId(), null);
-		getDbSqlSession().save("saveTaskInstance", taskInstance);
-		*/
+
 		
 		CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
 		cacheHandler.putCacheData("IdentityLink_" + taskInstance.getId(), null);
 		TaskInstanceEntity taskInstanceEntity = findTaskById(taskInstance.getId());
 		if(taskInstanceEntity == null){
 			insert("insertTaskInstance",taskInstance);
+			for (IdentityLink identityLink : taskInstance.getTaskIdentityLinks()) {
+				getCommandContext().getIdentityLinkManager().insert(identityLink);
+			}
+			
+			
 		}else{
 			update("updateTaskInstance",taskInstance);
+			for (IdentityLink identityLink : taskInstance.getTaskIdentityLinks()) {
+				getCommandContext().getIdentityLinkManager().saveIdentityLink(identityLink);
+			}
+			
 		}
 	}
+	
 
-	public void deleteTaskInstanceByTaskInstanceId(String taskInstanceId, boolean cascade) {
+	/**
+	 * 删除任务
+	 * @param taskInstanceId
+	 * @param cascade
+	 */
+	public void deleteTaskById(String taskInstanceId, boolean cascade) {
 		if (cascade) {
 			getCommandContext().getIdentityLinkManager().deleteIdentityLinksByTaskId(taskInstanceId);
 			QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
 			queryVariablesCommand.setTaskInstanceId(taskInstanceId);
 			getCommandContext().getVariableManager().deleteVariable(queryVariablesCommand);
-			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
-		} else {
-			getDbSqlSession().delete("deleteTaskInstanceByTaskInstanceId", taskInstanceId);
+			
 		}
+		getMappingSqlSession().delete("deleteTaskById", taskInstanceId);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskInstanceEntity> findTaskByProcessInstanceIdNotEnd(String id) {
 		return (List<TaskInstanceEntity>)getDbSqlSession().selectList("findTaskByProcessInstanceIdNotEnd", id);
