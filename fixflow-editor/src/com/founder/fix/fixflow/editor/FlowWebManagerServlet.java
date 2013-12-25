@@ -106,7 +106,10 @@ public class FlowWebManagerServlet extends BaseServlet {
     
     public String buildPath(){
     	String loginId = session(FlowCenterService.LOGIN_USER_ID);
-		String path = requestAttribute("path");	
+    	String path = request("path");
+    	if(path == null){
+    		path = requestAttribute("path");	
+    	}
 		String [] pathArr = path.split(",");
 		String type = pathArr[0];
 		
