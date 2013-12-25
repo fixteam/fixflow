@@ -129,7 +129,7 @@ public class TaskManager extends AbstractManager {
 		if(taskInstanceEntity == null){
 			insert("insertTaskInstance",taskInstance);
 			for (IdentityLink identityLink : taskInstance.getTaskIdentityLinks()) {
-				getCommandContext().getIdentityLinkManager().insert(identityLink);
+				getCommandContext().getIdentityLinkManager().saveIdentityLink(identityLink);
 			}
 			
 			

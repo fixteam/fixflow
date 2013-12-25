@@ -3,7 +3,7 @@
 
 
 	<!-- 任务表 -->
-	<dataBaseTable tableId="fixflow_run_token" tableName="令牌表" tableValue="FIXFLOW_RUN_TOKEN">
+	<dataBaseTable tableId="fixflow_run_token" tableName="令牌表" tableValue="FIXFLOW_RUN_TOKEN" archiveTable="FIXFLOW_HIS_TOKEN">
 		<column column="TOKEN_ID" name="令牌编号" jdbcType="VARCHAR" />
 		<column column="NAME" name="令牌名称" jdbcType="VARCHAR" />
 		<column column="START_TIME" name="开始时间" jdbcType="TIMESTAMP" />
@@ -51,15 +51,21 @@
 
 	<delete id="deleteTokenByProcessInstanceId" parameterType="String" remark="备注">
 	<![CDATA[ 
+			import com.founder.fix.fixflow.core.impl.util.StringUtil;
 			Object[] objectParamWhere = new Object[1];
 			objectParamWhere[0]=parameter;
-			sqlCommand.delete(TokenObjKey.TokenTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
+			sqlCommand.delete("FIXFLOW_RUN_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
+			isEnable = StringUtil.getBoolean(sysRulesConfig.getPigeonholeConfig().getIsEnable());
+			if(isEnable){
+				sqlCommand.delete("FIXFLOW_HIS_TOKEN", " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM FIXFLOW_HIS_TASKINSTANCE WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+			}
 	]]>
 
 	</delete>
 	<update id="updateToken" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="更新令牌">
 	<![CDATA[ 
-		objectParamWhere = { parameter.getId() };
+		Object[] objectParamWhere = new Object[1];
+		objectParamWhere[0]=parameter.getId() ;
 		sqlCommand.update("FIXFLOW_RUN_TOKEN",  parameter.getPersistentDbMap(), " TOKEN_ID=?",objectParamWhere);
 	]]>
 	</update>

@@ -3,7 +3,7 @@
 
 
 	<!-- 运行实例表 -->
-	<dataBaseTable tableId="fixflow_run_processinstance" tableName="流程实例表" tableValue="FIXFLOW_RUN_PROCESSINSTANCE">
+	<dataBaseTable tableId="fixflow_run_processinstance" tableName="流程实例表" tableValue="FIXFLOW_RUN_PROCESSINSTANCE" archiveTable="FIXFLOW_HIS_PROCESSINSTANCE">
 		<column column="PROCESSINSTANCE_ID" name="编号" jdbcType="VARCHAR" />
 		<column column="PROCESSDEFINITION_ID" name="流程定义唯一编号" jdbcType="VARCHAR" />
 		<column column="SUBJECT" name="流程实例主题" jdbcType="VARCHAR" />
@@ -64,7 +64,8 @@
 	</delete>
 	<update id="updateProcessInstance" parameterType="入参类型" remark="备注">
 		<![CDATA[ 
-			objectParamWhere = { parameter.getId() };
+			Object[] objectParamWhere = new Object[1];
+			objectParamWhere[0]=parameter.getId() ;
 			sqlCommand.update("FIXFLOW_RUN_PROCESSINSTANCE",  parameter.getPersistentDbMap(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 		]]>
 	</update>

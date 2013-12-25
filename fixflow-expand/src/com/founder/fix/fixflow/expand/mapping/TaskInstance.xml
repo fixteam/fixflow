@@ -3,7 +3,7 @@
 
 
 	<!-- 任务表 -->
-	<dataBaseTable tableId="fixflow_run_taskinstance" tableName="任务表" tableValue="FIXFLOW_RUN_TASKINSTANCE" >
+	<dataBaseTable tableId="fixflow_run_taskinstance" tableName="任务表" tableValue="FIXFLOW_RUN_TASKINSTANCE" archiveTable="FIXFLOW_HIS_TASKINSTANCE">
 		<column column="TASKINSTANCE_ID" name="任务实例编号" jdbcType="VARCHAR" />
 		<column column="NAME" name="任务名称" jdbcType="VARCHAR" />
 		<column column="DESCRIPTION" name="任务主题" jdbcType="VARCHAR" />
@@ -122,7 +122,8 @@
 	
 	<update id="updateTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="备注">
 	<![CDATA[ 
-		objectParamWhere = { parameter.getId() };
+		Object[] objectParamWhere = new Object[1];
+		objectParamWhere[0]=parameter.getId() ;
 		sqlCommand.update("FIXFLOW_RUN_TASKINSTANCE",  parameter.getPersistentDbMap(), " ID=?",objectParamWhere);
 	]]>
 	</update>
