@@ -9,14 +9,14 @@
 			"type": "String",
 			"title": "流程号",
 			"value": "",
-			"description" : "Unique identifier of the element.",
+			"description" : "流程号",
 			"popular" : "常规"
 		},{
 			"id": "callableelementversion",
 			"type": "String",
 			"title": "版本",
 			"value": "",
-			"description" : "Unique identifier of the element.",
+			"description" : "版本",
 			"popular" : "常规"
 		},{
 			"id" : "isasync",
@@ -38,14 +38,14 @@
 			"type": "String",
 			"title": "关联值",
 			"value": "",
-			"description" : "Unique identifier of the element.",
+			"description" : "关联值",
 			"popular" : "常规"
 		},{
     	  "id" : "datasourcetosubprocess",
 	      "type" : "Complex",
 	      "title" : "主流程-子流程",
 	      "value" : "",
-	      "description" : "Unique identifier of the element.",
+	      "description" : "主流程-子流程",
 	      "popular" : "数据映射",
 	      "complexItems" : [ {
 	        "id" : "datasourceid",
@@ -92,7 +92,7 @@
 			"type": "Text",
 			"title": "脚本",
 			"value": "",
-			"description" : "Unique identifier of the element.",
+			"description" : "脚本",
 			"popular" : "常规"
 		}]
 	},{
@@ -102,7 +102,7 @@
 			"type" : "String",
 			"title" : "编号",
 			"value" : "",
-			"description" : "Unique identifier of the element.",
+			"description" : "编号",
 			"readonly": true,
 			"popular" : "常规"
 		},{ 
@@ -110,7 +110,7 @@
 			"type" : "String", 
 			"title" : "名称",
 			"value" : "",
-			"description" : "Unique identifier of the element.",
+			"description" : "名称",
 			"popular" : "常规",
 			"refToView" : "text_name"
 		},{
@@ -118,7 +118,7 @@
 			"type" : "Text",
 			"title" : "描述",
 			"value" : "",
-			"description" : "Listener expression definition.",
+			"description" : "描述",
 			"popular" : "常规"
 		}]
 	},{
@@ -128,34 +128,34 @@
 	      "type" : "String",
 	      "title" : "主题",
 	      "value" : "",
-	      "description" : "Unique identifier of the element.",
+	      "description" : "主题",
 	      "popular" : "流程信息"
     	},{
 	      "id" : "process_default_formuri",
 	      "type" : "String",
 	      "title" : "默认表单",
 	      "value" : "",
-	      "description" : "Unique identifier of the element.",
+	      "description" : "默认表单",
 	      "popular" : "流程信息"
     	},{
 	      "id" : "process_category",
 	      "type" : "String",
 	      "title" : "分类",
 	      "value" : "",
-	      "description" : "Unique identifier of the element.",
+	      "description" : "分类",
 	      "popular" : "流程信息"
     	},{
     	  "id" : "process_datavariable",
 	      "type" : "Complex",
 	      "title" : "数据变量",
 	      "value" : "",
-	      "description" : "Unique identifier of the element.",
+	      "description" : "数据变量",
 	      "popular" : "数据变量",
 	      "complexItems" : [ {
 	        "id" : "id",
 	        "name" : "名称",
 	        "type" : "String",
-	        "description" : "Listener expression definition.",
+	        "description" : "名称",
 	        "value" : "",
 	        "width" : 100,
 	        "optional" : true
@@ -217,7 +217,7 @@
 	        "id" : "expression",
 	        "name" : "默认值",
 	        "type" : "String",
-	        "description" : "Listener expression definition.",
+	        "description" : "默认值",
 	        "value" : "",
 	        "width" : 100,
 	        "optional" : true
@@ -231,7 +231,7 @@
       "type" : "Choice",
       "title" : "进出类型",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "进出类型",
       "popular" : "常规",
       "items" : [ {
 				"id" : "1",
@@ -250,21 +250,21 @@
       "type" : "Text",
       "title" : "操作表单",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "操作表单",
       "popular" : "常规"
     },{
       "id" : "formuriview",
       "type" : "Text",
       "title" : "浏览表单",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "浏览表单",
       "popular" : "常规"
     },{
       "id" : "taskpriority",
       "type" : "Choice",
       "title" : "优先级",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "优先级",
       "popular" : "常规",
       "items" : [{
 				"id" : "1",
@@ -283,14 +283,14 @@
       "type" : "Text",
       "title" : "动态主题",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "动态主题",
       "popular" : "任务信息"
     },{
       "id" : "tasktype",
       "type" : "Choice",
       "title" : "任务类型",
       "value" : "FIXFLOWTASK",
-      "description" : "Unique identifier of the element.",
+      "description" : "任务类型",
       "popular" : "任务信息",
       "items" : [{
 				"id" : "1",
@@ -313,13 +313,13 @@
       "type" : "Complex",
       "title" : "处理命令",
       "value" : "{'totalCount':1,'items':[{'id':'Advance_ProcessStatus','name':'流程状态','commandtype':'processStatus','expression':null,'issavedata':'true','issimulationrun':'false','isverification':'true','parameterexpression':null}]}",
-      "description" : "Unique identifier of the element.",
+      "description" : "处理命令",
       "popular" : "处理命令",
       "complexItems" : [ {
         "id" : "id",
         "name" : "编号",
         "type" : "String",
-        "description" : "Listener expression definition.",
+        "description" : "编号",
         "value" : "",
         "width" : 100,
         "optional" : true
@@ -327,7 +327,7 @@
         "id" : "name",
         "name" : "名称",
         "type" : "String",
-        "description" : "Listener expression definition.",
+        "description" : "名称",
         "value" : "",
         "width" : 100,
         "optional" : true
@@ -412,7 +412,7 @@
         "id" : "expression",
         "name" : "执行表达式",
         "type" : "String",
-        "description" : "Listener class.",
+        "description" : "执行表达式",
         "value" : "",
         "width" : 100,
         "optional" : true
@@ -420,7 +420,7 @@
         "id" : "parameterexpression",
         "name" : "参数表达式",
         "type" : "String",
-        "description" : "Listener expression definition.",
+        "description" : "参数表达式",
         "value" : "",
         "width" : 100,
         "optional" : true
@@ -433,7 +433,7 @@
       "type" : "Choice",
       "title" : "分配策略",
       "value" : "potentialOwner",
-      "description" : "Unique identifier of the element.",
+      "description" : "分配策略",
       "popular" : "任务分配",
       "items" : [ {
 	    "id" : "1",
@@ -469,20 +469,20 @@
       "type" : "Text",
       "title" : "分配表达式",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "分配表达式",
       "popular" : "任务分配"
     },{
       "id" : "potentialowner",
       "type" : "Complex",
       "title" : "处理人",
       "value" : "{'totalCount':1,'items':[{'resourcetype':'user','iscontainssub':'false','resourceassignmentexpression':'\"fixflow_allusers\"','name':'所有人'}]}",
-      "description" : "Unique identifier of the element.",
+      "description" : "处理人",
       "popular" : "任务分配",
       "complexItems" : [ {
         "id" : "name",
         "name" : "名称",
         "type" : "String",
-        "description" : "Listener class.",
+        "description" : "名称",
         "value" : "",
         "width" : 100,
         "optional" : true
@@ -490,7 +490,7 @@
         "id" : "resourceassignmentexpression",
         "name" : "完成人表达式",
         "type" : "Text",
-        "description" : "Listener expression definition.",
+        "description" : "完成人表达式",
         "value" : "",
         "width" : 100,
         "optional" : true
@@ -498,7 +498,7 @@
         "id" : "resourcetype",
         "name" : "资源类型",
         "type" : "Choice",
-        "description" : "Listener expression definition.",
+        "description" : "资源类型",
         "value" : "",
          "width" : 100,
         "optional" : false,
@@ -540,7 +540,7 @@
       "type" : "Choice",
       "title" : "启用跳过策略",
       "value" : "false",
-      "description" : "Unique identifier of the element.",
+      "description" : "启用跳过策略",
       "popular" : "跳过策略",
       "items" : [ {
 	    "id" : "1",
@@ -556,7 +556,7 @@
       "type" : "Choice",
       "title" : "生成跳过策略",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "生成跳过策略",
       "popular" : "跳过策略",
       "items" : [ {
 	    "id" : "1",
@@ -572,21 +572,21 @@
       "type" : "Text",
       "title" : "跳过策略",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "跳过策略",
       "popular" : "跳过策略"
     },{
       "id" : "skipassignee",
       "type" : "Text",
       "title" : "处理者",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "处理者",
       "popular" : "跳过策略"
     },{
       "id" : "skipcomment",
       "type" : "Text",
       "title" : "跳过意见",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "跳过意见",
       "popular" : "跳过策略"
     }]
   },{
@@ -596,7 +596,7 @@
   	  "type" : "Choice",
       "title" : "启动多实例",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "启动多实例",
       "popular" : "高级属性",
       "items" : [ {
 	    "id" : "1",
@@ -612,7 +612,7 @@
   	  "type" : "Choice",
       "title" : "串行多实例",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "串行多实例",
       "popular" : "高级属性",
       "items" : [ {
 	    "id" : "1",
@@ -628,35 +628,35 @@
       "type" : "Text",
       "title" : "输入数据集",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "输入数据集",
       "popular" : "高级属性"
     },{
       "id" : "loopdataoutputcollection",
       "type" : "Text",
       "title" : "输出数据集",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "输出数据集",
       "popular" : "高级属性"
     },{
       "id" : "inputdataitem",
       "type" : "Text",
       "title" : "输入项",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "输入项",
       "popular" : "高级属性"
     },{
       "id" : "outputdataitem",
       "type" : "Text",
       "title" : "输出项",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "输出项",
       "popular" : "高级属性"
     },{
       "id" : "multiinstance_condition",
       "type" : "Text",
       "title" : "完成表达式",
       "value" : "",
-      "description" : "Unique identifier of the element.",
+      "description" : "完成表达式",
       "popular" : "高级属性"
     }]
   },{
@@ -1685,7 +1685,7 @@
     "type" : "edge",
     "id" : "SequenceFlow",
     "title" : "序列流",
-    "description" : "Sequence flow defines the execution order of activities.",
+    "description" : "序列流",
     "view" : "connector/sequenceflow.svg",
     "icon" : "connector/sequenceflow.png",
     "groups" : [ "连接" ],
@@ -1698,7 +1698,7 @@
     "type" : "edge",
     "id" : "Association",
     "title" : "关联线",
-    "description" : "Associates a text annotation with an element.",
+    "description" : "关联线",
     "view" : "connector/association.undirected.svg",
     "icon" : "connector/association.undirected.png",
     "groups" : [ "连接" ],
@@ -1711,7 +1711,7 @@
     "type" : "node",
     "id" : "UserTask",
     "title" : "人工任务",
-    "description" : "A manual task assigned to a specific person",
+    "description" : "人工任务",
     "view" : "activity/usertask.svg",
     "icon" : "activity/list/type.user.png",
     "groups" : [ "活动" ],
@@ -1721,7 +1721,7 @@
     "type" : "node",
     "id" : "ScriptTask",
     "title" : "脚本任务",
-    "description" : "An automatic task with script logic",
+    "description" : "脚本任务",
     "view" : "activity/scripttask.svg",
     "icon" : "activity/list/type.script.png",
     "groups" : [ "活动" ],
@@ -1731,7 +1731,7 @@
     "type" : "node",
     "id" : "ExclusiveGateway",
     "title" : "排他网关",
-    "description" : "A choice gateway",
+    "description" : "排他网关",
     "view" : "gateway/exclusive.databased.svg",
     "icon" : "gateway/exclusive.databased.png",
     "groups" : [ "网关" ],
@@ -1741,7 +1741,7 @@
     "type" : "node",
     "id" : "ParallelGateway",
     "title" : "并行网关",
-    "description" : "A parallel gateway",
+    "description" : "并行网关",
     "view" : "gateway/parallel.svg",
     "icon" : "gateway/parallel.png",
     "groups" : [ "网关" ],
@@ -1751,7 +1751,7 @@
     "type" : "node",
     "id" : "InclusiveGateway",
     "title" : "包容网关",
-    "description" : "An inclusive gateway",
+    "description" : "包容网关",
     "view" : "gateway/inclusive.svg",
     "icon" : "gateway/inclusive.png",
     "groups" : [ "网关" ],
@@ -1761,7 +1761,7 @@
     "type" : "node",
     "id" : "EventGateway",
     "title" : "复杂网关",
-    "description" : "An event gateway",
+    "description" : "复杂网关",
     "view" : "gateway/eventbased.svg",
     "icon" : "gateway/eventbased.png",
     "groups" : [ "网关" ],
@@ -1771,7 +1771,7 @@
     "type" : "node",
     "id" : "StartNoneEvent",
     "title" : "开始事件",
-    "description" : "A start event without a specific trigger",
+    "description" : "开始事件",
     "view" : "startevent/none.svg",
     "icon" : "startevent/none.png",
     "groups" : [ "事件" ],
@@ -1781,7 +1781,7 @@
     "type" : "node",
     "id" : "EndNoneEvent",
     "title" : "结束事件",
-    "description" : "An end event without a specific trigger",
+    "description" : "结束事件",
     "view" : "endevent/none.svg",
     "icon" : "endevent/none.png",
     "groups" : [ "事件" ],
@@ -1792,7 +1792,7 @@
 			"id" :				"Lane",
 			"title" :			"泳道",
 			"groups" :			["其他"],
-			"description" :		"Pools and lanes represent responsibilities for activities in a process. A pool or a lane can be an organization, a role or a system. Lanes subdivide pools or other lanes hierarchically.",
+			"description" :		"泳道",
 			"view" :			"swimlane/lane.svg",
 			"icon" :			"swimlane/lane.png",
 			"propertyPackages": [ "fixflowcommonbase" ],
@@ -1879,7 +1879,7 @@
     "type" : "node",
     "id" : "BPMNDiagram",
     "title" : "BPMN-Diagram",
-    "description" : "A BPMN 2.0 diagram.",
+    "description" : "BPMN 2.0",
     "view" : "diagram.svg",
     "icon" : "diagram.png",
     "groups" : [ "Diagram" ],
@@ -1891,7 +1891,7 @@
     "type" : "node",
     "id" : "CallActivity",
     "title" : "外部子流程",
-    "description" : "A call activity",
+    "description" : "外部子流程",
     "view" : "activity/callactivity.svg",
     "icon" : "activity/task.png",
     "groups" : [ "其他" ],
@@ -1901,7 +1901,7 @@
     "type" : "node",
     "id" : "SubProcess",
     "title" : "内部子流程",
-    "description" : "A sub process scope",
+    "description" : "内部子流程",
     "view" : "activity/subprocess.expanded.svg",
     "icon" : "activity/expanded.subprocess.png",
     "groups" : [ "其他" ],
