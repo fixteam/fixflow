@@ -27,11 +27,11 @@ public class TaskQueryCountScript implements SelectRulesScript {
 		this.sqlCommand = sqlCommand;
 		this.pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 
-		return findTaskCountByQueryCriteria(taskQuery,page,sqlCommand);
+		return findTaskCountByQueryCriteria(taskQuery);
 	}
 	
 	
-	public long findTaskCountByQueryCriteria(TaskQueryImpl taskQuery,Page page,SqlCommand sqlCommand) {
+	public long findTaskCountByQueryCriteria(TaskQueryImpl taskQuery) {
 		String selectTaskByQueryCriteriaSql = "";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		String agentOldAssignee=null;

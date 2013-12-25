@@ -28,21 +28,24 @@ import com.founder.fix.fixflow.core.runtime.Token;
 public class TokenManager extends AbstractManager {
 	
 	
-	
-	
-	public long findTokenCountByQueryCriteria(TokenQueryImpl tokenQuery)
-	{
-		return (Long)getDbSqlSession().selectOne("selectTokenCountByQueryCriteria", tokenQuery);
-	}
-	
-	
 	@SuppressWarnings("unchecked")
 	public List<TokenEntity> findTokenByQueryCriteria(TokenQueryImpl tokenQuery, Page page) {
 
 		String query = "selectTokenByQueryCriteria";
-		return getDbSqlSession().selectList(query, tokenQuery, page);
+		return getMappingSqlSession().selectList(query, tokenQuery, page);
 
 	}
+	
+	
+	
+	
+	public long findTokenCountByQueryCriteria(TokenQueryImpl tokenQuery)
+	{
+		return (Long)getMappingSqlSession().selectOne("selectTokenCountByQueryCriteria", tokenQuery);
+	}
+	
+	
+	
 	
 	
 	
@@ -99,7 +102,15 @@ public class TokenManager extends AbstractManager {
 	public List<TokenEntity> findTokensByProcessInstanceId(String id) {
 
 		String query = "findTokensByProcessInstanceId";
-		return (List<TokenEntity>)getDbSqlSession().selectList(query, id);
+		return (List<TokenEntity>)getMappingSqlSession().selectList(query, id);
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TokenEntity> findTokensByProcessInstanceIdNotEnd(String id) {
+
+		String query = "findTokensByProcessInstanceIdNotEnd";
+		return (List<TokenEntity>)getMappingSqlSession().selectList(query, id);
 
 	}
 

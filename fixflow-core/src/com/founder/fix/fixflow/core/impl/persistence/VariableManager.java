@@ -105,7 +105,9 @@ public class VariableManager extends AbstractManager {
 	}
 	
 	public void deleteVariableByProcessInstanceId(String processInstanceId){
-		
+		QueryVariablesCommand queryVariablesCommand=new QueryVariablesCommand();
+		queryVariablesCommand.setProcessInstanceId(processInstanceId);
+		deleteVariable(queryVariablesCommand);
 	}
 
 }

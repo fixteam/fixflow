@@ -17,7 +17,6 @@
  */
 package com.founder.fix.fixflow.core.impl.db;
 
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
