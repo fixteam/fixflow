@@ -384,6 +384,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 			for (AssignPolicy assignPolicyObj : assignPolicyConfig.getAssignPolicy()) {
 				if (assignPolicyObj.getId().equals(typeId)) {
 					assignPolicy = assignPolicyObj;
+					break;
 				}
 			}
 			if (assignPolicy.getClassImpl() == null || assignPolicy.getClassImpl().equals("")) {
@@ -524,6 +525,13 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 			if(this.processInstance!=null){
 				
 				this.taskInstances=Context.getCommandContext().getTaskManager().findTaskByProcessInstanceIdNotEnd(this.processInstance.getId());
+				if(this.taskInstances!=null){
+					for (TaskInstanceEntity taskInstanceEntity : this.taskInstances) {
+						taskInstanceEntity.setTaskMgmtInstance(this);
+						taskInstanceEntity.setToken(this.processInstance.getTokenMap().get(taskInstanceEntity.getTokenId()));
+					}
+				}
+				
 				return this.taskInstances;
 			}
 

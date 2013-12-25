@@ -124,7 +124,7 @@
 	<![CDATA[ 
 		Object[] objectParamWhere = new Object[1];
 		objectParamWhere[0]=parameter.getId() ;
-		sqlCommand.update("FIXFLOW_RUN_TASKINSTANCE",  parameter.getPersistentDbMap(), " ID=?",objectParamWhere);
+		sqlCommand.update("FIXFLOW_RUN_TASKINSTANCE",  parameter.getPersistentDbMap(), " TASKINSTANCE_ID=?",objectParamWhere);
 	]]>
 	</update>
 
@@ -141,7 +141,7 @@
 		<![CDATA[ 
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID = ? ";
 			objectParamWhere = new ArrayList();
-			objectParamWhere.add(parameter);
+			objectParamWhere.add(parameter.getParameter());
 			sqlCommand.queryForList(sqlText, objectParamWhere);
 		]]>
 	</select>
@@ -169,7 +169,7 @@
 		+"FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1'"+
 		"and  a.AUSER=?) z";
 		objectParamWhere = new ArrayList<Object>();
-		objectParamWhere.add(userId);
+		objectParamWhere.add(parameter.getParameter());
 		listMaps=sqlCommand.queryForList(sql, objectParamWhere);
 		return listMaps;
 		
@@ -185,7 +185,7 @@
 				" FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1' " +
 				" and  a.AGENT_ID=?) z";
 		objectParamWhere = new ArrayList<Object>();
-		objectParamWhere.add(userId);
+		objectParamWhere.add(parameter.getParameter());
 		listMaps=sqlCommand.queryForList(sql, objectParamWhere);
 		return listMaps;
 		
@@ -196,18 +196,18 @@
 	
 	<select id="getTaskStatusByByProcessInstanceIdList" parameterType="Object" remark="根据流程实例编号集合查询状态">
 		<![CDATA[  
-		
+		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 		id = "";
-		for (int i = 0; i < processInstanceIdList.size(); i++) {
+		for (int i = 0; i < parameter.getParameter().size(); i++) {
 			if (i == 0) {
-				id = "'" + processInstanceIdList.get(i) + "'";
+				id = "'" + parameter.getParameter().get(i) + "'";
 			} else {
-				id = id + ",'" + processInstanceIdList.get(i) + "'";
+				id = id + ",'" + parameter.getParameter().get(i) + "'";
 			}
 		}
 		sqlText = "select x.*,y.END_TIME as PROCESSINSTANCE_ENDTIME  from (select a.*,b.ID,b.type,b.user_id"
-				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+TaskInstanceObjKey.TaskInstanceTableName()+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
-				+ ")) a left join "+TaskIdentityLinkObjKey.TaskIdentityLinkTableName()+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+ProcessInstanceObjKey.ProcessInstanceTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
+				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+QueryTableUtil.getTableSelect("fixflow_run_taskinstance", taskQuery.getQueryLocation())+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
+				+ ")) a left join "+QueryTableUtil.getTableSelect("fixflow_run_taskidentitylink", taskQuery.getQueryLocation())+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+ProcessInstanceObjKey.ProcessInstanceTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
 		
 		returnList = sqlCommand.queryForList(sqlText);
 		
@@ -219,12 +219,15 @@
 
 	<select id="findTasksByTokenIdList" parameterType="List" resultMap="taskResultMap" remark="根据令牌集合查询任务">
 		<![CDATA[ 
-		sqlText = "SELECT * FROM "+TaskInstanceObjKey.TaskInstanceTableName()+" WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
-		for (int i = 0; i < tokenIdList.size(); i++) {
+		
+		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
+		
+		sqlText = "SELECT * FROM "+QueryTableUtil.getTableSelect("fixflow_run_taskinstance", taskQuery.getQueryLocation())+" WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
+		for (int i = 0; i < parameter.getParameter().size(); i++) {
 			if (i == 0) {
-				sqlText = sqlText + "'" + tokenIdList.get(i) + "'";
+				sqlText = sqlText + "'" + parameter.getParameter().get(i) + "'";
 			} else {
-				sqlText = sqlText + ",'" + tokenIdList.get(i) + "'";
+				sqlText = sqlText + ",'" + parameter.getParameter().get(i) + "'";
 			}
 		}
 		sqlText = sqlText + " ) ORDER BY END_TIME DESC";

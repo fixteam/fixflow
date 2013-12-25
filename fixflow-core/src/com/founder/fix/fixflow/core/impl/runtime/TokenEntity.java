@@ -373,7 +373,16 @@ public class TokenEntity extends AbstractPersistentObject<TokenEntity> implement
 			if (StringUtil.isNotEmpty(this.processInstanceId)) {
 
 				this.processInstance = Context.getCommandContext().getProcessInstanceManager().findProcessInstanceById(this.processInstanceId);
-				return this.processInstance;
+				
+				if(this.processInstance!=null){
+					
+					if(StringUtil.isNotEmpty(this.parentTokenId)&&!this.freeToken){
+						this.processInstance.setRootToken(this);
+					}					
+					return this.processInstance;
+				}
+				
+				
 			}
 			return null;
 
@@ -486,11 +495,17 @@ public class TokenEntity extends AbstractPersistentObject<TokenEntity> implement
 			this.children= new HashMap<String, TokenEntity>();
 			
 			List<TokenEntity> tokenEntities=Context.getCommandContext().getTokenManager().findTokenByParentId(this.getId());
-			for (TokenEntity tokenEntity : tokenEntities) {
-				this.children.put(tokenEntity.getId(),tokenEntity);
-				
+			if(tokenEntities!=null){
+				for (TokenEntity tokenEntity : tokenEntities) {
+					
+					tokenEntity.setProcessInstance(getProcessInstance());
+					
+					this.children.put(tokenEntity.getId(),tokenEntity);
+					
+				}
+				return this.children;
 			}
-			return this.children;
+			
 		}
 		return children;
 	}

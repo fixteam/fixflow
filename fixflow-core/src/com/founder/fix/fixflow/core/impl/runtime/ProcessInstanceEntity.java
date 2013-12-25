@@ -308,7 +308,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	// /////////////////////////////////////////////////////
 	public ProcessInstanceEntity(ProcessDefinitionBehavior processDefinition, String businessKey) {
 		this();
-		
+		// 设置流程实例的编号,通过静态方法获得Guid
+		this.id = GuidUtil.CreateGuid();
 		if (processDefinition == null) {
 			throw new FixFlowException("你不能通过一个空的流程定义对象来创建流程实例");
 		}
@@ -324,8 +325,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 		this.processDefinitionId = processDefinition.getProcessDefinitionId();
 		this.processDefinitionKey = processDefinition.getProcessDefinitionKey();
 		this.definitionId = processDefinition.getDefinitions().getId();
-		// 设置流程实例的编号,通过静态方法获得Guid
-		this.id = GuidUtil.CreateGuid();
+		
 
 		
 		
@@ -370,6 +370,7 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	// 根令牌
 	protected TokenEntity rootToken;
 
+	
 	// 父流程实例令牌
 	protected TokenEntity parentProcessInstanceToken;
 
@@ -460,8 +461,14 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 		if (this.rootToken == null) {
 			if (StringUtil.isNotEmpty(this.rootTokenId)) {
 				TokenEntity rootTokenEntityObj = Context.getCommandContext().getTokenManager().findTokenById(this.rootTokenId);
-				this.rootToken = rootTokenEntityObj;
-				return this.rootToken;
+				
+				if(rootTokenEntityObj!=null){
+					rootTokenEntityObj.setProcessInstance(this);
+					this.rootToken = rootTokenEntityObj;
+					return this.rootToken;
+				}
+				
+				
 			}
 			return null;
 		}
@@ -500,8 +507,17 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 		if (this.tokenList == null) {
 
 			List<TokenEntity> tokenEntities = Context.getCommandContext().getTokenManager().findTokensByProcessInstanceIdNotEnd(this.id);
-			this.tokenList = tokenEntities;
-			return tokenEntities;
+			
+			if(tokenEntities!=null){
+				for (TokenEntity tokenEntity : tokenEntities) {
+					tokenEntity.setProcessInstance(this);
+					
+				}
+				this.tokenList = tokenEntities;
+				return tokenEntities;
+			}
+			
+			
 		}
 
 		return tokenList;
@@ -956,6 +972,15 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	public void setRootTokenIdWithoutCascade(String rootTokenId) {
 		this.rootTokenId = rootTokenId;
 	}
+	
+	public void setRootToken(TokenEntity rootToken) {
+		if(rootToken!=null){
+			this.rootTokenId=rootToken.getId();
+		}
+		
+		this.rootToken = rootToken;
+	}
+
 
 	@Override
 	public String getCloneRuleId() {

@@ -37,6 +37,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.TaskCommandInst;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandExecutor;
@@ -633,11 +634,26 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	}
 
 	public TaskDefinition getTaskDefinition() {
+		if(this.taskDefinition==null){
+				UserTaskBehavior userTaskBehavior=(UserTaskBehavior)getToken().getFlowNode();
+				this.taskDefinition=userTaskBehavior.getTaskDefinition();
+		}
+		
+
 		return taskDefinition;
 	}
 
 	public TokenEntity getToken() {
-		return token;
+		if(this.token==null){
+			if(StringUtil.isNotEmpty(this.tokenId)){
+				this.token=Context.getCommandContext().getTokenManager().findTokenById(this.tokenId);
+				return this.token;
+			}
+		}
+		
+		
+		
+		return this.token;
 	}
 
 	public void setParentTaskInstance(TaskInstance parentTaskInstance) {
@@ -688,10 +704,10 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		}
 		createTime = new Date();
 
-		if ((taskDefinition != null) && (executionContext != null)) {
+		if ((getTaskDefinition() != null) && (executionContext != null)) {
 			//
 			executionContext.setTaskInstance(this);
-			executionContext.setTaskDefinition(taskDefinition);
+			executionContext.setTaskDefinition(getTaskDefinition());
 			// task.fireEvent(Event.EVENTTYPE_TASK_CREATE, executionContext);
 		}
 	}
@@ -738,7 +754,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 		this.isOpen = false;
 
 		// fire the task instance end event
-		if ((taskDefinition != null) && (getToken() != null)) {
+		if ((getTaskDefinition() != null) && (getToken() != null)) {
 
 			ExecutionContext executionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(getToken());
 			executionContext.setTaskDefinition(taskDefinition);
@@ -926,7 +942,7 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 		TaskMgmtInstance taskMgmtInstance = executionContext.getTaskMgmtInstance();
 
-		taskMgmtInstance.performAssignment(taskDefinition, this, executionContext);
+		taskMgmtInstance.performAssignment(getTaskDefinition(), this, executionContext);
 
 	}
 

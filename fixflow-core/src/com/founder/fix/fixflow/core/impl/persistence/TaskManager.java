@@ -166,7 +166,7 @@ public class TaskManager extends AbstractManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskInstanceEntity> findTaskByProcessInstanceIdNotEnd(String id) {
-		return (List<TaskInstanceEntity>)getDbSqlSession().selectList("findTaskByProcessInstanceIdNotEnd", id);
+		return (List<TaskInstanceEntity>)getMappingSqlSession().selectList("findTaskByProcessInstanceIdNotEnd", id);
 	}
 	
 	/**新增方法****/
