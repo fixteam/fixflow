@@ -64,6 +64,10 @@ public class IdentityLinkEntity extends AbstractPersistentObject<IdentityLinkEnt
 	public void setType(IdentityLinkType type) {
 		this.type = type;
 	}
+	
+	public void setTypeString(String type) {
+		this.type = IdentityLinkType.valueOf(type);
+	}
 
 	public IdentityLinkType getType() {
 		return this.type;

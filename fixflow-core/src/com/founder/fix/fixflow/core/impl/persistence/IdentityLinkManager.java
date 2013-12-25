@@ -75,7 +75,7 @@ public class IdentityLinkManager extends AbstractManager {
 	
 	/****新增方法*****/
 	
-	public IdentityLink selectIdentifyLinkById(String id){
-		return (IdentityLink)getMappingSqlSession().selectOne("selectIdentityLinkById", id);
+	public IdentityLinkEntity selectIdentifyLinkById(String id){
+		return (IdentityLinkEntity)getMappingSqlSession().selectOne("selectIdentityLinkById", id);
 	}
 }

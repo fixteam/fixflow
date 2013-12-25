@@ -15,9 +15,9 @@
 	</dataBaseTable>
 	
 	<!-- 任务表 -->
-	<resultMap id="identityLinkResultMap" name="任务表" type="com.founder.fix.fixflow.core.impl.runtime.TokenEntity">
+	<resultMap id="identityLinkResultMap" name="任务表" type="com.founder.fix.fixflow.core.impl.task.IdentityLinkEntity">
 		<result property="id" column="ID" name="编号" jdbcType="VARCHAR" />
-		<result property="type" column="TYPE" name="分配类型" jdbcType="VARCHAR" />
+		<result property="typeString" column="TYPE" name="分配类型" jdbcType="VARCHAR" />
 		<result property="userId" column="USER_ID" name="用户编号" jdbcType="VARCHAR" />
 		<result property="groupId" column="GROUP_ID" name="组编号" jdbcType="VARCHAR" />
 		<result property="groupType" column="GROUP_TYPE" name="组类型" jdbcType="VARCHAR" />
@@ -49,7 +49,8 @@
 	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE ID = ? ";
-			objectParamWhere = { parameter };
+			objectParamWhere = new ArrayList();
+			objectParamWhere.add(parameter);
 			sqlCommand.queryForList(sqlText, objectParamWhere);
 		]]>
 	</select>
@@ -58,19 +59,19 @@
 	<businessRules id="getIdentityLinkPersistentDbMap" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
 		objectParam = new HashMap<String, Object>();
-		objectParam.put("ID", this.getId());
-		objectParam.put("TYPE", this.getType().toString());
-		objectParam.put("USER_ID", this.getUserId());
-		objectParam.put("GROUP_ID", this.getGroupId());
-		objectParam.put("GROUP_TYPE", this.getGroupType());
-		objectParam.put("INCLUDE_EXCLUSION", this.getIncludeExclusion().toString());
-		objectParam.put("TASKINSTANCE_ID", this.getTaskId());
-		objectParam.put("ARCHIVE_TIME", this.getArchiveTime());
+		objectParam.put("ID", parameter.getId());
+		objectParam.put("TYPE", parameter.getType().toString());
+		objectParam.put("USER_ID", parameter.getUserId());
+		objectParam.put("GROUP_ID", parameter.getGroupId());
+		objectParam.put("GROUP_TYPE", parameter.getGroupType());
+		objectParam.put("INCLUDE_EXCLUSION", parameter.getIncludeExclusion().toString());
+		objectParam.put("TASKINSTANCE_ID", parameter.getTaskId());
+		objectParam.put("ARCHIVE_TIME", parameter.getArchiveTime());
 		extensionFields=parameter.getExtensionFields();	
 		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));
+			objectParam.put(key, extensionFields.get(key));
 		}
-		return persistentState;
+		return objectParam;
 	]]>
 	</businessRules>
 	
@@ -78,14 +79,14 @@
 	<businessRules id="getIdentityLinkPersistentState" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
 	<![CDATA[ 
 		objectParam = new HashMap<String, Object>();
-		objectParam.put("id", this.getId());
-		objectParam.put("type", this.getType().toString());
-		objectParam.put("userId", this.getUserId());
-		objectParam.put("groupId", this.getGroupId());
-		objectParam.put("groupType", this.getGroupType());
-		objectParam.put("includeExclusion", this.getIncludeExclusion().toString());
-		objectParam.put("taskId", this.getTaskId());
-		objectParam.put("archiveTime", this.getArchiveTime());
+		objectParam.put("id", parameter.getId());
+		objectParam.put("type", parameter.getType().toString());
+		objectParam.put("userId", parameter.getUserId());
+		objectParam.put("groupId", parameter.getGroupId());
+		objectParam.put("groupType", parameter.getGroupType());
+		objectParam.put("includeExclusion", parameter.getIncludeExclusion().toString());
+		objectParam.put("taskId", parameter.getTaskId());
+		objectParam.put("archiveTime", parameter.getArchiveTime());
 		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
 		for (String key : persistenceExtensionFields.keySet()) {
 			objectParam.put(key, persistenceExtensionFields.get(key));	
@@ -97,7 +98,7 @@
 	<businessRules id="identityLinkClone" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="令牌实例拷贝">
 	<![CDATA[ 
 		identityLinkEntity = new IdentityLinkEntity();
-		identityLinkEntity.persistentInit(sysRulesConfig.getResultMap("tokenResultMap"),parameter.getPersistentDbMap());
+		identityLinkEntity.persistentInit(sysRulesConfig.getResultMap("identityLinkResultMap"),parameter.getPersistentDbMap());
 		return identityLinkEntity;
 	]]>
 	</businessRules>
