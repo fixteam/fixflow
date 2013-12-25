@@ -358,6 +358,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
+						insertObj.setClassPath(classPathString);
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
@@ -381,6 +382,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
+						deleteObj.setClassPath(classPathString);
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
@@ -403,6 +405,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
+						updateObj.setClassPath(classPathString);
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
@@ -426,6 +429,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
+						selectObj.setClassPath(classPathString);
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
@@ -449,6 +453,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
+						businessRules.setClassPath(classPathString);
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}

@@ -62,7 +62,18 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 
 	// Field　字段
 	// //////////////////////////////////////////////////////
+	
+	
+	
+	
 
+	public static final String RULE_GET_PROCESS_INSTANCE_PERSISTENT_STATE = "getProcessInstancePersistentState";
+
+	public static final String RULE_GET_PROCESS_INSTANCE_PERSISTENT_DBMAP = "getProcessInstancePersistentDbMap";
+
+	public static final String RULE_PROCESS_INSTANCE_CLONE = "processInstanceClone";
+	
+	
 	/**
 	 * 
 	 */
@@ -245,6 +256,14 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	public void setInstanceType(ProcessInstanceType instanceType) {
 		this.instanceType = instanceType;
 	}
+	
+	public void setInstanceTypeString(String instanceType) {
+		
+		if(StringUtil.isNotEmpty(instanceType)){
+			this.instanceType = ProcessInstanceType.valueOf(instanceType);
+		}
+		
+	}
 
 	public String getProcessLocation() {
 		return processLocation;
@@ -256,6 +275,14 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 
 	public void setSuspended(boolean isSuspended) {
 		this.isSuspended = isSuspended;
+	}
+	
+	public void setSuspendedString(String isSuspended) {
+		if(StringUtil.isNotEmpty(isSuspended)){
+			this.isSuspended=StringUtil.getBoolean(isSuspended);
+		}
+		
+		
 	}
 
 	public boolean getSuspended() {
@@ -933,18 +960,18 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	@Override
 	public String getCloneRuleId() {
 		// TODO Auto-generated method stub
-		return null;
+		return RULE_PROCESS_INSTANCE_CLONE;
 	}
 
 	@Override
 	public String getPersistentDbMapRuleId() {
 		// TODO Auto-generated method stub
-		return null;
+		return RULE_GET_PROCESS_INSTANCE_PERSISTENT_DBMAP;
 	}
 
 	@Override
 	public String getPersistentStateRuleId() {
 		// TODO Auto-generated method stub
-		return null;
+		return RULE_GET_PROCESS_INSTANCE_PERSISTENT_STATE;
 	}
 }

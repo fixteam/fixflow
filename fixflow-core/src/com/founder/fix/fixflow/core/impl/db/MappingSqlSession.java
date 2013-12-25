@@ -208,6 +208,11 @@ public class MappingSqlSession {
 				throw new FixFlowException("Class : "+classPath+"未找到!");
 			}
 		}else{
+			
+			if(StringUtil.isEmpty(rule.getSqlValue())){
+				throw new FixFlowException("rule : "+rule.getId()+" 值不能为空!");
+			}
+			
 			returnObjList = (List) scriptLanguageMgmt.execute(rule.getSqlValue());
 		}
 		
