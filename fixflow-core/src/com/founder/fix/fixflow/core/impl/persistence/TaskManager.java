@@ -47,18 +47,33 @@ public class TaskManager extends AbstractManager {
 		return (TaskInstanceEntity)getMappingSqlSession().selectOne("selectTaskByTaskId", id);
 	}
 
+	/**
+	 * 查询任务
+	 * @param taskQuery
+	 * @param page
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskInstanceEntity> findTasksByQueryCriteria(TaskQueryImpl taskQuery, Page page) {
-
 		String query = "selectTaskByQueryCriteria";
-		
 		return getMappingSqlSession().selectList(query, taskQuery, page);
-		
-
+	}
+	
+	/**
+	 * 查询任务数量
+	 * @param taskQuery
+	 * @return
+	 */
+	public long findTaskCountByQueryCriteria(TaskQueryImpl taskQuery) {
+		return (Long) getDbSqlSession().selectOne("selectTaskCountByQueryCriteria", taskQuery);
 	}
 	
 	
-	//GetAgentUsersCmd
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> findAgentUsers(String userId){
 		String query = "findAgentUsers";
@@ -81,9 +96,7 @@ public class TaskManager extends AbstractManager {
 
 	}
 
-	public long findTaskCountByQueryCriteria(TaskQueryImpl taskQuery) {
-		return (Long) getDbSqlSession().selectOne("selectTaskCountByQueryCriteria", taskQuery);
-	}
+	
 
 	public List<TaskInstanceEntity> findTasksByParentTaskId(String parentTaskId) {
 		return null;

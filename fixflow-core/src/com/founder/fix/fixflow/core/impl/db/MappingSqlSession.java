@@ -26,6 +26,7 @@ import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Select;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
@@ -33,6 +34,10 @@ import com.founder.fix.fixflow.core.impl.cache.CacheObject;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
+import com.founder.fix.fixflow.core.scriptlanguage.DeleteRulesScript;
+import com.founder.fix.fixflow.core.scriptlanguage.InsertRulesScript;
+import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
+import com.founder.fix.fixflow.core.scriptlanguage.UpdateRulesScript;
 
 public class MappingSqlSession {
 
@@ -62,7 +67,22 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		scriptLanguageMgmt.execute(rule.getSqlValue());
+		String classPath=rule.getClassPath();
+		if(StringUtil.isNotEmpty(classPath)){
+			Class<?> classObj=processEngineConfiguration.getRuleClass(rule.getId());
+			if(classObj!=null){
+				try {
+					InsertRulesScript insertRulesScript=(InsertRulesScript)classObj.newInstance();
+					insertRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
+				} catch (Exception e) {
+					throw new FixFlowException("Class : "+classPath+"未找到!");
+				} 
+			}else{
+				throw new FixFlowException("Class : "+classPath+"未找到!");
+			}
+		}else{
+			scriptLanguageMgmt.execute(rule.getSqlValue());
+		}
 	}
 
 	// update
@@ -72,7 +92,22 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		scriptLanguageMgmt.execute(rule.getSqlValue());
+		String classPath=rule.getClassPath();
+		if(StringUtil.isNotEmpty(classPath)){
+			Class<?> classObj=processEngineConfiguration.getRuleClass(rule.getId());
+			if(classObj!=null){
+				try {
+					UpdateRulesScript updateRulesScript=(UpdateRulesScript)classObj.newInstance();
+					updateRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
+				} catch (Exception e) {
+					throw new FixFlowException("Class : "+classPath+"未找到!");
+				} 
+			}else{
+				throw new FixFlowException("Class : "+classPath+"未找到!");
+			}
+		}else{
+			scriptLanguageMgmt.execute(rule.getSqlValue());
+		}
 	}
 
 	// delete
@@ -83,14 +118,49 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		scriptLanguageMgmt.execute(rule.getSqlValue());
+		String classPath=rule.getClassPath();
+		if(StringUtil.isNotEmpty(classPath)){
+			Class<?> classObj=processEngineConfiguration.getRuleClass(rule.getId());
+			if(classObj!=null){
+				try {
+					DeleteRulesScript deleteRulesScript=(DeleteRulesScript)classObj.newInstance();
+					deleteRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+				} catch (Exception e) {
+					throw new FixFlowException("Class : "+classPath+"未找到!");
+				} 
+			}else{
+				throw new FixFlowException("Class : "+classPath+"未找到!");
+			}
+		}else{
+			scriptLanguageMgmt.execute(rule.getSqlValue());
+		}
 	}
 
 	public void delete(String statement, PersistentObject persistentObject) {
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		scriptLanguageMgmt.execute(rule.getSqlValue());
+		
+		
+	
+		String classPath=rule.getClassPath();
+		if(StringUtil.isNotEmpty(classPath)){
+			Class<?> classObj=processEngineConfiguration.getRuleClass(rule.getId());
+			if(classObj!=null){
+				try {
+					DeleteRulesScript deleteRulesScript=(DeleteRulesScript)classObj.newInstance();
+					deleteRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
+				} catch (Exception e) {
+					throw new FixFlowException("Class : "+classPath+"未找到!");
+				} 
+			}else{
+				throw new FixFlowException("Class : "+classPath+"未找到!");
+			}
+		}else{
+			scriptLanguageMgmt.execute(rule.getSqlValue());
+		}
+		
+		//scriptLanguageMgmt.execute(rule.getSqlValue());
 	}
 
 	// select
@@ -98,27 +168,22 @@ public class MappingSqlSession {
 
 	@SuppressWarnings({ "rawtypes" })
 	public List selectList(String statement) {
-		return selectList(statement, null, 0, Integer.MAX_VALUE);
+		return selectList(statement, null,null);
 	}
 
 	@SuppressWarnings("rawtypes")
 	public List selectList(String statement, Object parameter) {
-		return selectList(statement, parameter, 0, Integer.MAX_VALUE);
+		return selectList(statement, parameter, null);
 	}
 
 	@SuppressWarnings("rawtypes")
 	public List selectList(String statement, Object parameter, Page page) {
-		if (page != null) {
-			return selectList(statement, parameter, page.getFirstResult(), page.getMaxResults());
-		} else {
-			return selectList(statement, parameter, 0, Integer.MAX_VALUE);
-		}
+
+		
+		return selectList(statement, new ListQueryParameterObject(parameter,page));
+
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List selectList(String statement, Object parameter, int firstResult, int maxResults) {
-		return selectList(statement, new ListQueryParameterObject(parameter, firstResult, maxResults));
-	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List selectList(String statement, ListQueryParameterObject parameter) {
@@ -126,7 +191,28 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		List returnObjList = (List) scriptLanguageMgmt.execute(rule.getSqlValue());
+		
+		List returnObjList=null;
+		
+		String classPath=rule.getClassPath();
+		if(StringUtil.isNotEmpty(classPath)){
+			Class<?> classObj=processEngineConfiguration.getRuleClass(rule.getId());
+			if(classObj!=null){
+				try {
+					SelectRulesScript selectRulesScript=(SelectRulesScript)classObj.newInstance();
+					returnObjList=(List)selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+				} catch (Exception e) {
+					throw new FixFlowException("Class : "+classPath+"未找到!");
+				} 
+			}else{
+				throw new FixFlowException("Class : "+classPath+"未找到!");
+			}
+		}else{
+			returnObjList = (List) scriptLanguageMgmt.execute(rule.getSqlValue());
+		}
+		
+		
+		
 		if (rule instanceof Select) {
 			Select select = (Select) rule;
 			String resultMapSelect = select.getResultMap();
@@ -166,7 +252,28 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
-		Object returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
+		
+		
+		Object returnObjList=null;
+		
+		String classPath=rule.getClassPath();
+		if(StringUtil.isNotEmpty(classPath)){
+			Class<?> classObj=processEngineConfiguration.getRuleClass(rule.getId());
+			if(classObj!=null){
+				try {
+					SelectRulesScript selectRulesScript=(SelectRulesScript)classObj.newInstance();
+					returnObjList=(Object)selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+				} catch (Exception e) {
+					throw new FixFlowException("Class : "+classPath+"未找到!");
+				} 
+			}else{
+				throw new FixFlowException("Class : "+classPath+"未找到!");
+			}
+		}else{
+			returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
+		}
+		
+		
 		if(returnObjList==null){
 			return null;
 		}

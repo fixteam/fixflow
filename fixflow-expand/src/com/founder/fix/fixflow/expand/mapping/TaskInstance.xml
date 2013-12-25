@@ -125,18 +125,19 @@
 	</select>
 	
 	
-	<select id="selectTaskByQueryCriteria" parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" resultMap="taskResultMap" remark="查询任务信息">
-		<![CDATA[ 
-		
-			taskQuery=parameter.getParameter();
-			
-		
-			
-			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ID = ? ";
-			objectParamWhere = { parameter };
-			sqlCommand.queryForList(sqlText, objectParamWhere);
-		]]>
-	</select>
+	<select id="selectTaskByQueryCriteria" 
+	parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
+	resultMap="taskResultMap" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryScript"
+	remark="查询任务信息"/>
+	
+	
+	
+	<select id="selectTaskCountByQueryCriteria" 
+	parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryCountScript"
+	remark="查询任务数量"/>
+
 	
 	
 	

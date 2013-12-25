@@ -202,8 +202,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected Map<String, Column> columnMap = new HashMap<String, Column>();
 
 	protected Map<String, Rule> ruleMap = new HashMap<String, Rule>();
+	
+	protected Map<String, Class<?>> ruleClassMap=new HashMap<String, Class<?>>();
 
 	
+
 
 	/**
 	 * 线程池
@@ -349,7 +352,17 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				insertObj.setParameterType(element.attributeValue("parameterType"));
 				insertObj.setRemark(element.attributeValue("remark"));
 				insertObj.setSqlValue(element.getText());
+				
+				String classPathString=element.attributeValue("classPath");
 
+				if(StringUtil.isNotEmpty(classPathString)){
+					Class<?> classObj=ReflectUtil.loadClass(classPathString);
+					if(classObj!=null){
+						ruleClassMap.put(element.attributeValue("id"), classObj);
+					}
+				}
+
+			
 				ruleMap.put(insertObj.getId(), insertObj);
 
 			}
@@ -362,6 +375,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				deleteObj.setParameterType(element.attributeValue("parameterType"));
 				deleteObj.setRemark(element.attributeValue("remark"));
 				deleteObj.setSqlValue(element.getText());
+				
+				String classPathString=element.attributeValue("classPath");
+
+				if(StringUtil.isNotEmpty(classPathString)){
+					Class<?> classObj=ReflectUtil.loadClass(classPathString);
+					if(classObj!=null){
+						ruleClassMap.put(element.attributeValue("id"), classObj);
+					}
+				}
 
 				ruleMap.put(deleteObj.getId(), deleteObj);
 
@@ -375,6 +397,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				updateObj.setParameterType(element.attributeValue("parameterType"));
 				updateObj.setRemark(element.attributeValue("remark"));
 				updateObj.setSqlValue(element.getText());
+				
+				String classPathString=element.attributeValue("classPath");
+
+				if(StringUtil.isNotEmpty(classPathString)){
+					Class<?> classObj=ReflectUtil.loadClass(classPathString);
+					if(classObj!=null){
+						ruleClassMap.put(element.attributeValue("id"), classObj);
+					}
+				}
 
 				ruleMap.put(updateObj.getId(), updateObj);
 
@@ -389,6 +420,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				selectObj.setRemark(element.attributeValue("remark"));
 				selectObj.setSqlValue(element.getText());
 				selectObj.setResultMap(element.attributeValue("resultMap"));
+				
+				String classPathString=element.attributeValue("classPath");
+
+				if(StringUtil.isNotEmpty(classPathString)){
+					Class<?> classObj=ReflectUtil.loadClass(classPathString);
+					if(classObj!=null){
+						ruleClassMap.put(element.attributeValue("id"), classObj);
+					}
+				}
 
 				ruleMap.put(selectObj.getId(), selectObj);
 
@@ -403,11 +443,20 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				businessRules.setRemark(element.attributeValue("remark"));
 				businessRules.setSqlValue(element.getText());
 				businessRules.setResultType(element.attributeValue("resultType"));
+				
+				String classPathString=element.attributeValue("classPath");
+
+				if(StringUtil.isNotEmpty(classPathString)){
+					Class<?> classObj=ReflectUtil.loadClass(classPathString);
+					if(classObj!=null){
+						ruleClassMap.put(element.attributeValue("id"), classObj);
+					}
+				}
+				
 				ruleMap.put(businessRules.getId(), businessRules);
 
 			}
 
-			// rulesConfigs.add(rulesConfig);
 
 		}
 
@@ -1398,6 +1447,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public ResultMap getResultMap(String id) {
 		return resultMaps.get(id);
 	}
+	
+	public Map<String, Class<?>> getRuleClassMap() {
+		return ruleClassMap;
+	}
+	
+	public Class<?> getRuleClass(String id) {
+		return ruleClassMap.get(id);
+	}
+
 
 
 }
