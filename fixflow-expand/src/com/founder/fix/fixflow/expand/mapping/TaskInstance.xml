@@ -119,8 +119,9 @@
 
 	<select id="selectTaskByTaskId" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据任务编号查询任务实例 ">
 		<![CDATA[ 
-			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ID = ? ";
-			objectParamWhere = { parameter };
+			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE TASKINSTANCE_ID = ? ";
+			objectParamWhere = new ArrayList();
+			objectParamWhere.add(parameter);
 			sqlCommand.queryForList(sqlText, objectParamWhere);
 		]]>
 	</select>
@@ -128,7 +129,8 @@
 	<select id="findTaskByProcessInstanceIdNotEnd" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据流程实例编号返回所有相关任务">
 		<![CDATA[ 
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID = ? ";
-			objectParamWhere = { parameter };
+			objectParamWhere = new ArrayList();
+			objectParamWhere.add(parameter);
 			sqlCommand.queryForList(sqlText, objectParamWhere);
 		]]>
 	</select>
@@ -251,14 +253,14 @@
 		objectParam.put("PRIORITY", String.valueOf(parameter.getPriority()));		
 		objectParam.put("CATEGORY", String.valueOf(parameter.category));		
 		objectParam.put("OWNER", parameter.getOwner());		
-		objectParam.put("DELEGATIONSTATESTRING", StringUtil.getString(parameter.getDelegationState()));		
+		objectParam.put("DELEGATIONSTATESTRING", parameter.getDelegationState().toString());		
 		objectParam.put("BIZKEY", parameter.getBizKey());	
 		objectParam.put("TASK_COMMENT", parameter.getTaskComment());	
 		objectParam.put("FORMURI", parameter.getFormUri());
 		objectParam.put("FORMURIVIEW", parameter.getFormUriView());		
 		objectParam.put("TASKGROUP", parameter.getTaskGroup());		
-		objectParam.put("TASKTYPE", StringUtil.getString(parameter.getTaskInstanceType()));	
-		objectParam.put("ISBLOCKING", String.valueOf(parameter.isBlocking());
+		objectParam.put("TASKTYPE", parameter.getTaskInstanceType().toString());	
+		objectParam.put("ISBLOCKING", String.valueOf(parameter.isBlocking()));
 		objectParam.put("ISCANCELLED", String.valueOf(parameter.isCancelled()));		
 		objectParam.put("ISSUSPENDED", String.valueOf(parameter.isSuspended()));		
 		objectParam.put("ISOPEN", String.valueOf(parameter.isOpen()));
