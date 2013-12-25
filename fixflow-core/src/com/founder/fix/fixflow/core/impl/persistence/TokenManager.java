@@ -111,7 +111,7 @@ public class TokenManager extends AbstractManager {
 	}
 	
 	public void deleteTokenByProcessInstanceId(String processInstanceId){
-		
+		delete("deleteTokenByProcessInstanceId", processInstanceId);
 	}
 
 }

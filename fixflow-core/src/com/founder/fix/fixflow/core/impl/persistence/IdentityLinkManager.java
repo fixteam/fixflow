@@ -85,7 +85,7 @@ public class IdentityLinkManager extends AbstractManager {
 	}
 	
 	public void deleteIdentityLinkByProcessInstanceId(String processInstanceId){
-		
+		delete("deleteIdentityLinkByProcessInstanceId", processInstanceId);
 	}
 
 	
