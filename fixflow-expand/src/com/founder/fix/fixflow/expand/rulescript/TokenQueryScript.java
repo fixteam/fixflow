@@ -11,7 +11,7 @@ import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl;
-import com.founder.fix.fixflow.core.objkey.TokenObjKey;
+import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
 
 public class TokenQueryScript implements SelectRulesScript {
@@ -85,7 +85,7 @@ public class TokenQueryScript implements SelectRulesScript {
 	 * @return
 	 */
 	public String selectTokenByQueryCriteriaSql(String sqlString,TokenQueryImpl tokenQuery, Page page,List<Object> objectParamWhere){
-		sqlString = sqlString+" FROM "+TokenObjKey.getTableName(tokenQuery.getQueryLocation())+" tokentable ";
+		sqlString = sqlString+" FROM "+QueryTableUtil.getTableSelect("fixflow_run_token", tokenQuery.getQueryLocation())+" tokentable ";
 		sqlString = sqlString + " WHERE 1=1";
 		if (tokenQuery.getTokenId() != null) {
 			sqlString = sqlString + " and TOKEN_ID=? ";

@@ -11,10 +11,8 @@ import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
+import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
-import com.founder.fix.fixflow.core.objkey.TaskInstanceObjKey;
-import com.founder.fix.fixflow.core.objkey.VariableObjKey;
 import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
 
 public class ProcessInstanceQueryScript implements SelectRulesScript {
@@ -96,6 +94,8 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 		}
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
 		
+		
+		
 		return dataObj;
 		
 	}
@@ -110,7 +110,11 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 	 * @return
 	 */
 	public String selectProcessInstanceByQueryCriteriaSql(String sqlString, ProcessInstanceQueryImpl processInstanceQuery,List<Object> objectParamWhere,SqlCommand sqlCommand) {
-		sqlString = sqlString + " FROM "+ProcessInstanceObjKey.getTableName(processInstanceQuery.getQueryLocation())+" E ";
+		
+		
+		
+		
+		sqlString = sqlString + " FROM "+QueryTableUtil.getTableSelect("fixflow_run_processinstance", processInstanceQuery.getQueryLocation())+" E ";
 		//自定义扩展查询
 		if(processInstanceQuery.getQueryExpandTo()!=null&&processInstanceQuery.getQueryExpandTo().getLeftJoinSql()!=null&&!processInstanceQuery.getQueryExpandTo().getLeftJoinSql().equals("")){
 			sqlString=sqlString+processInstanceQuery.getQueryExpandTo().getLeftJoinSql();
@@ -166,10 +170,10 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 				List<Object> dataList=new ArrayList<Object>();
 				dataList.add(processInstanceQuery.getProcessInstanceId());
 				StringBuffer  processInstanceIdList=new StringBuffer();
-				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
+				List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+QueryTableUtil.getTableSelect("fixflow_run_processinstance", processInstanceQuery.getQueryLocation())+" WHERE PARENT_INSTANCE_ID=?", dataList);
 				processInstanceIdList.append("'"+processInstanceQuery.getProcessInstanceId()+"'");
 				if(dataListMaps.size()>0){
-					getSubProcessId(processInstanceQuery.getProcessInstanceId(),processInstanceIdList,sqlCommand);
+					getSubProcessId(processInstanceQuery.getProcessInstanceId(),processInstanceIdList,sqlCommand,processInstanceQuery);
 				}
 				sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ("+processInstanceIdList.toString()+") ";
 			}
@@ -258,11 +262,11 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 			objectParamWhere.add(processInstanceQuery.getArchiveTimeBefore());
 		}
 		if(processInstanceQuery.getTaskParticipants() !=null ){
-			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+TaskInstanceObjKey.getTableName(processInstanceQuery.getQueryLocation())+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
+			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in (SELECT distinct(F.PROCESSINSTANCE_ID) FROM "+QueryTableUtil.getTableSelect("fixflow_run_taskinstance", processInstanceQuery.getQueryLocation())+" F WHERE F.ASSIGNEE=? and F.END_TIME is not null) ";
 			objectParamWhere.add(processInstanceQuery.getTaskParticipants());
 		}
 		if(processInstanceQuery.getProcessInstanceVariableValue()!=null&&!processInstanceQuery.getProcessInstanceVariableValue().equals("")){
-			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.getTableName(processInstanceQuery.getQueryLocation())+
+			sqlString = sqlString + " and E.PROCESSINSTANCE_ID in ( SELECT PROCESSINSTANCE_ID FROM "+QueryTableUtil.getTableSelect("fixflow_run_variable", processInstanceQuery.getQueryLocation())+
 					" WHERE PROCESSINSTANCE_ID IS NOT NULL AND VARIABLE_TYPE='queryBizVariable' ";
 			if(processInstanceQuery.getProcessInstanceVariableKey()!=null&&!processInstanceQuery.getProcessInstanceVariableKey().equals("")){
 				sqlString = sqlString +"AND VARIABLE_KEY = ? ";
@@ -287,15 +291,15 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 	 * @param processInstanceId 主流程id
 	 * @param processInstanceIdList 构造好的子流程流程号字符串，通过引用返回
 	 */
-	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList,SqlCommand sqlCommand){
+	private void getSubProcessId(String processInstanceId,StringBuffer processInstanceIdList,SqlCommand sqlCommand, ProcessInstanceQueryImpl processInstanceQuery){
 		//这个地方需要用到递归去寻找所有的子流程
 		List<Object> dataList=new ArrayList<Object>();
 		dataList.add(processInstanceId);
-		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PARENT_INSTANCE_ID=?", dataList);
+		List<Map<String, Object>> dataListMaps=sqlCommand.queryForList("SELECT * FROM "+QueryTableUtil.getTableSelect("fixflow_run_processinstance", processInstanceQuery.getQueryLocation())+" WHERE PARENT_INSTANCE_ID=?", dataList);
 		if(dataListMaps.size()>0){
 			for (Map<String, Object> map : dataListMaps) {
 				processInstanceIdList.append(",'"+StringUtil.getString(map.get("PROCESSINSTANCE_ID"))+"'");
-				getSubProcessId(StringUtil.getString(map.get("PROCESSINSTANCE_ID")),processInstanceIdList,sqlCommand);
+				getSubProcessId(StringUtil.getString(map.get("PROCESSINSTANCE_ID")),processInstanceIdList,sqlCommand,processInstanceQuery);
 			}
 		}
 	}
