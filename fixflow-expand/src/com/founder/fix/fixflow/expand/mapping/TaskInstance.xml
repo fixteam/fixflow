@@ -230,7 +230,7 @@
 
 	<businessRules id="getTaskInstancePersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
-	
+		import com.founder.fix.fixflow.core.impl.util.StringUtil;
 		objectParam = new HashMap<String, Object>();
 		objectParam.put("TASKINSTANCE_ID", parameter.getId());		
 		objectParam.put("NAME", parameter.getName());		
@@ -253,7 +253,7 @@
 		objectParam.put("PRIORITY", String.valueOf(parameter.getPriority()));		
 		objectParam.put("CATEGORY", String.valueOf(parameter.category));		
 		objectParam.put("OWNER", parameter.getOwner());		
-		objectParam.put("DELEGATIONSTATESTRING", parameter.getDelegationState().toString());		
+		objectParam.put("DELEGATIONSTATESTRING", StringUtil.getString(parameter.getDelegationState()));		
 		objectParam.put("BIZKEY", parameter.getBizKey());	
 		objectParam.put("TASK_COMMENT", parameter.getTaskComment());	
 		objectParam.put("FORMURI", parameter.getFormUri());

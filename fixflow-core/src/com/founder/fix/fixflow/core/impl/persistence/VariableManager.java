@@ -103,5 +103,9 @@ public class VariableManager extends AbstractManager {
 	public void deleteVariable(QueryVariablesCommand queryVariablesCommand){
 		getDbSqlSession().delete("deleteVariable", queryVariablesCommand);
 	}
+	
+	public void deleteVariableByProcessInstanceId(String processInstanceId){
+		
+	}
 
 }

@@ -43,7 +43,7 @@ public class IdentityLinkManager extends AbstractManager {
 
 	@SuppressWarnings("unchecked")
 	public List<IdentityLinkEntity> findIdentityLinksByTaskId(String taskId) {
-		return getDbSqlSession().selectList("selectIdentityLinksByTask", taskId);
+		return getMappingSqlSession().selectList("selectIdentityLinksByTask", taskId);
 	}
 
 
@@ -82,6 +82,10 @@ public class IdentityLinkManager extends AbstractManager {
 	
 	public IdentityLinkEntity selectIdentifyLinkById(String id){
 		return (IdentityLinkEntity)getMappingSqlSession().selectOne("selectIdentityLinkById", id);
+	}
+	
+	public void deleteIdentityLinkByProcessInstanceId(String processInstanceId){
+		
 	}
 
 	

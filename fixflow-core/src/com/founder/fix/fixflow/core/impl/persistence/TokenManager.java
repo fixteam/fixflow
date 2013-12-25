@@ -109,5 +109,9 @@ public class TokenManager extends AbstractManager {
 		String query = "findTokenByParentId";
 		return (List<TokenEntity>)getDbSqlSession().selectList(query, id);
 	}
+	
+	public void deleteTokenByProcessInstanceId(String processInstanceId){
+		
+	}
 
 }

@@ -209,7 +209,7 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 						dataObj = StringUtil.getDate(dataObj);
 						wM.invoke(this, dataObj);
 					}else if(classes[0].equals(int.class)){
-						wM.invoke(this, dataObj);
+						wM.invoke(this, StringUtil.getInt(dataObj));
 					}
 
 
