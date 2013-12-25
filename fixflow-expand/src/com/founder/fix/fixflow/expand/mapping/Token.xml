@@ -49,9 +49,11 @@
 	]]>
 	</insert>
 
-	<delete id="编号" parameterType="入参类型" remark="备注">
+	<delete id="deleteTokenByProcessInstanceId" parameterType="String" remark="备注">
 	<![CDATA[ 
-	
+			Object[] objectParamWhere = new Object[1];
+			objectParamWhere[0]=parameter;
+			sqlCommand.delete(TokenObjKey.TokenTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 	]]>
 
 	</delete>
@@ -70,11 +72,50 @@
 	</select>
 	
 	
-	<select id="findTokensByProcessInstanceId" parameterType="java.lang.String" resultMap="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="查询单个令牌对象">
+	<select id="findTokensByProcessInstanceId" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
+		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID = ? ";
+		objectParamWhere = { parameter };
+		sqlCommand.queryForList(sqlText, objectParamWhere);
+	</select>
+	
+		
+	<select id="findTokensByProcessInstanceIdNotEnd" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
 		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID = ? AND END_TIME IS NULL ";
 		objectParamWhere = { parameter };
 		sqlCommand.queryForList(sqlText, objectParamWhere);
 	</select>
+	
+	
+	<select id="selectTokenByQueryCriteria" 
+	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
+	resultMap="tokenResultMap" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryScript"
+	remark="查询令牌信息"/>
+	
+	
+	
+	<select id="selectTokenCountByQueryCriteria" 
+	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryCountScript"
+	remark="查询令牌数量"/>
+	
+	
+	<select id="findTokenByParentId" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
+		<![CDATA[ 
+		
+		sqlText = "SELECT * FROM "+TokenObjKey.TokenTableName()+" WHERE PARENT_ID=? AND END_TIME IS NULL";
+		objectParamWhere = { parameter };
+		sqlCommand.queryForList(sqlText, objectParamWhere);
+	
+	
+	
+		]]>
+	</select>
+	
+	
+	
+	
+	
 	
 	
 	<businessRules id="getTokenPersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
