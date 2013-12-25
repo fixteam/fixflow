@@ -105,11 +105,21 @@
 
 	<delete id="deleteTaskById" parameterType="String" remark="根据任务编号删除任务">
 	<![CDATA[ 
-		Object[] objectParamWhere = { parameter };
-		sqlCommand.delete(TaskInstanceObjKey.TaskInstanceTableName(), " TASKINSTANCE_ID=?", objectParamWhere);
+		Object [] objectParamWhere = new Object[1];
+		objectParamWhere[0] = parameter;
+		sqlCommand.delete("FIXFLOW_RUN_TASKINSTANCE", " TASKINSTANCE_ID=?", objectParamWhere);
 	]]>
 
 	</delete>
+	
+	<delete id="deleteTaskByProcessInstanceId" parameterType="String" remark="根据任务编号删除任务">
+	<![CDATA[ 
+		Object [] objectParamWhere = new Object[1];
+		objectParamWhere[0] = parameter;
+		sqlCommand.delete("FIXFLOW_RUN_TASKINSTANCE", " PROCESSINSTANCE_ID = ?", objectParamWhere);
+	]]>
+	</delete>
+	
 	<update id="updateTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="备注">
 	<![CDATA[ 
 		objectParamWhere = { parameter.getId() };
@@ -138,7 +148,7 @@
 	
 	
 	<select id="selectTaskByQueryCriteria" 
-	parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
+	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	resultMap="taskResultMap" 
 	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryScript"
 	remark="查询任务信息"/>
@@ -146,7 +156,7 @@
 	
 	
 	<select id="selectTaskCountByQueryCriteria" 
-	parameterType="jcom.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
+	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryCountScript"
 	remark="查询任务数量"/>
 	

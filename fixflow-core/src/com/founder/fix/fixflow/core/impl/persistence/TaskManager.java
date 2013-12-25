@@ -172,6 +172,6 @@ public class TaskManager extends AbstractManager {
 	/**新增方法****/
 	
 	public void deleteTaskByProcessInstanceId(String processInstanceId){
-		
+		delete("deleteTaskByProcessInstanceId", processInstanceId);
 	}
 }

@@ -32,7 +32,11 @@ public abstract class AbstractManager {
 	}
 
 	public void delete(String deleteStatement, PersistentObject persistentObject) {
-		getMappingSqlSession().delete(deleteStatement, persistentObject.getId());
+		delete(deleteStatement, persistentObject.getId());
+	}
+	
+	public void delete(String deleteStatement, String parameter) {
+		getMappingSqlSession().delete(deleteStatement, parameter);
 	}
 	
 	public void update(String updateStatement, PersistentObject persistentObject){
