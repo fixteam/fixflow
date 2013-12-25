@@ -155,6 +155,9 @@ public class FileAndDirectoryUtils {
      */  
     public static boolean renameFile(String resFilePath, String newFilePath) throws Exception{
         File resFile = new File(resFilePath);  
+        if(resFilePath.equals(newFilePath)){
+        	return true;
+        }
         if(!resFile.exists()){
 			return true;
 		}

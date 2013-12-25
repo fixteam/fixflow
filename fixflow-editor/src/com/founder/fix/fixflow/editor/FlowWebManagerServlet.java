@@ -80,9 +80,10 @@ public class FlowWebManagerServlet extends BaseServlet {
 	 */
     public void writeFile2Address(){
     	try {
-    		String msg =  FileHandle.updload(requestParm, responseParm, getBasePath()+File.separator+"fixflow-repository"+File.separator+ buildPath(), requestAttribute("fileName"));
+    		String msg =  FileHandle.updload(requestParm, responseParm, buildPath(), requestAttribute("fileName"));
     		success(msg, "string");
     	} catch (Exception e) {
+    		e.printStackTrace();
 			error("文件写入到指定的目录下出错!");
 		}
     }
@@ -105,7 +106,7 @@ public class FlowWebManagerServlet extends BaseServlet {
     
     public String buildPath(){
     	String loginId = session(FlowCenterService.LOGIN_USER_ID);
-		String path = request("path");	
+		String path = requestAttribute("path");	
 		String [] pathArr = path.split(",");
 		String type = pathArr[0];
 		
