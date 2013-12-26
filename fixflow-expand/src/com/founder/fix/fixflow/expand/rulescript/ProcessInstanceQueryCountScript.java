@@ -7,7 +7,6 @@ import com.founder.fix.fixflow.core.db.pagination.Pagination;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
-import com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
 import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
@@ -21,9 +20,8 @@ public class ProcessInstanceQueryCountScript implements SelectRulesScript {
 	
 	public Object execute(Object parameter, SqlCommand sqlCommand, ProcessEngineConfigurationImpl processEngineConfiguration) {
 
-		ListQueryParameterObject listQueryParameterObject = (ListQueryParameterObject) parameter;
-		this.processInstanceQueryImpl = (ProcessInstanceQueryImpl) listQueryParameterObject.getParameter();
-		this.page = listQueryParameterObject.getPage();
+
+		this.processInstanceQueryImpl = (ProcessInstanceQueryImpl) parameter;
 		this.sqlCommand = sqlCommand;
 		this.pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 

@@ -287,7 +287,8 @@ public class MappingSqlSession {
 					SelectRulesScript selectRulesScript=(SelectRulesScript)classObj.newInstance();
 					returnObjList=(Object)selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException("Class : "+classPath+"未找到!");
+					e.printStackTrace();
+					throw new FixFlowException("执行Rule异常: "+e.getMessage(),e);
 				} 
 			}else{
 				throw new FixFlowException("Class : "+classPath+"未找到!");
