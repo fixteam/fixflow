@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.cache.CacheHandler;
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
@@ -79,19 +81,19 @@ public class ProcessInstanceManager extends AbstractManager {
 	public ProcessInstanceEntity findProcessInstanceById(String processInstanceId) {
 		
 		
-		//CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
-		//Object cacheObj=cacheHandler.getCacheData("ProcessInstance_" + processInstanceId);
+		CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
+		Object cacheObj=cacheHandler.getCacheData("ProcessInstance_" + processInstanceId);
 		
-		//if(cacheObj==null){
+		if(cacheObj==null){
 			
-		//	ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
-			//cacheHandler.putCacheData("ProcessInstance_" + processInstanceId, processInstanceEntity);
+			ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
+			cacheHandler.putCacheData("ProcessInstance_" + processInstanceId, processInstanceEntity);
 			return (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
 			
 			
-		//}else{
-		//	return (ProcessInstanceEntity)cacheObj;
-		//}
+		}else{
+			return (ProcessInstanceEntity)cacheObj;
+		}
 	
 
 		
