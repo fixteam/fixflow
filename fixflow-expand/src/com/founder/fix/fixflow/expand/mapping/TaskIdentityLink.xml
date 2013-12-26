@@ -79,25 +79,12 @@
 	</select>
 	
 	
-	<businessRules id="getIdentityLinkPersistentDbMap" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
-	<![CDATA[
-		import com.founder.fix.fixflow.core.impl.util.StringUtil; 
-		objectParam = new HashMap<String, Object>();
-		objectParam.put("ID", parameter.getId());
-		objectParam.put("TYPE", StringUtil.getString(parameter.getType()));
-		objectParam.put("USER_ID", parameter.getUserId());
-		objectParam.put("GROUP_ID", parameter.getGroupId());
-		objectParam.put("GROUP_TYPE", parameter.getGroupType());
-		objectParam.put("INCLUDE_EXCLUSION", StringUtil.getString(parameter.getIncludeExclusion()));
-		objectParam.put("TASKINSTANCE_ID", parameter.getTaskId());
-		objectParam.put("ARCHIVE_TIME", parameter.getArchiveTime());
-		extensionFields=parameter.getExtensionFields();	
-		for (String key : extensionFields.keySet()) {
-			objectParam.put(key, extensionFields.get(key));
-		}
-		return objectParam;
-	]]>
-	</businessRules>
+	<businessRules id="getIdentityLinkPersistentDbMap" 
+	parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" 
+	resultType="java.util.Map" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.IdentityLinkPersistentDbMap"
+	remark="返回IdentityLink对象需要保存到数据的字段Map"/>
+
 	
 	
 	<businessRules id="getIdentityLinkPersistentState" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">

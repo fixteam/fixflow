@@ -34,6 +34,7 @@ import com.founder.fix.fixflow.core.impl.cache.CacheObject;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
+import com.founder.fix.fixflow.core.scriptlanguage.BusinessRulesScript;
 import com.founder.fix.fixflow.core.scriptlanguage.DeleteRulesScript;
 import com.founder.fix.fixflow.core.scriptlanguage.InsertRulesScript;
 import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
@@ -355,9 +356,21 @@ public class MappingSqlSession {
 		if (StringUtil.isNotEmpty(classPath)) {
 			Class<?> classObj = processEngineConfiguration.getRuleClass(rule.getId());
 			if (classObj != null) {
+				
+				
+				
 				try {
-					SelectRulesScript selectRulesScript = (SelectRulesScript) classObj.newInstance();
-					returnObjList = (Object) selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+
+					Object classObjInstance=classObj.newInstance();
+					
+					if(classObjInstance instanceof SelectRulesScript){
+						SelectRulesScript selectRulesScript = (SelectRulesScript) classObjInstance;
+						returnObjList = (Object) selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+					}
+					if(classObjInstance instanceof BusinessRulesScript){
+						BusinessRulesScript businessRulesScript = (BusinessRulesScript) classObjInstance;
+						returnObjList = (Object) businessRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new FixFlowException("执行Rule异常: " + e.getMessage(), e);

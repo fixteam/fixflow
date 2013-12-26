@@ -43,7 +43,7 @@ public class DataVariableEntity extends AbstractPersistentObject<DataVariableEnt
 	
 	
 	
-	public static String QUERY_DATA_KEY="queryBizVariable";
+	public final static String QUERY_DATA_KEY="queryBizVariable";
 
 	
 	/**

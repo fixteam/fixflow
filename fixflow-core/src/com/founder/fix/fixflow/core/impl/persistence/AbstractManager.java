@@ -17,6 +17,8 @@
  */
 package com.founder.fix.fixflow.core.impl.persistence;
 
+import java.util.Map;
+
 import com.founder.fix.fixflow.core.impl.db.DbSqlSession;
 import com.founder.fix.fixflow.core.impl.db.MappingSqlSession;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
@@ -41,6 +43,12 @@ public abstract class AbstractManager {
 	
 	public void update(String updateStatement, PersistentObject persistentObject){
 		getMappingSqlSession().update(updateStatement, persistentObject);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getPersistentDbMap(String statement, PersistentObject persistentObject){
+
+		return (Map<String, Object>)getMappingSqlSession().selectOne(statement, persistentObject);
 	}
 
 	protected DbSqlSession getDbSqlSession() {

@@ -270,61 +270,11 @@
 	
 	
 
-	<businessRules id="getTaskInstancePersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
-	<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.util.StringUtil;
-		objectParam = new HashMap<String, Object>();
-		objectParam.put("TASKINSTANCE_ID", parameter.getId());		
-		objectParam.put("NAME", parameter.getName());		
-		objectParam.put("DESCRIPTION", parameter.getDescription());
-		objectParam.put("PROCESSINSTANCE_ID", parameter.getProcessInstanceId());
-		objectParam.put("PROCESSDEFINITION_ID", parameter.getProcessDefinitionId());
-		objectParam.put("PROCESSDEFINITION_KEY", parameter.getProcessDefinitionKey());	
-		objectParam.put("PROCESSDEFINITION_NAME", parameter.getProcessDefinitionName());		
-		objectParam.put("VERSION", parameter.getVersion());
-		objectParam.put("TOKEN_ID", parameter.getTokenId());
-		objectParam.put("NODE_ID", parameter.getNodeId());
-		objectParam.put("NODE_NAME", parameter.getNodeName());		
-		objectParam.put("PARENTTASK_ID", parameter.getParentTaskInstanceId());		
-		objectParam.put("ASSIGNEE", parameter.getAssignee());
-		objectParam.put("CLAIM_TIME", parameter.getClaimTime());	
-		objectParam.put("CREATE_TIME", parameter.getCreateTime());
-		objectParam.put("START_TIME", parameter.getStartTime());		
-		objectParam.put("END_TIME", parameter.getEndTime());		
-		objectParam.put("DUEDATE", parameter.getDueDate());		
-		objectParam.put("PRIORITY", String.valueOf(parameter.getPriority()));		
-		objectParam.put("CATEGORY", String.valueOf(parameter.category));		
-		objectParam.put("OWNER", parameter.getOwner());		
-		objectParam.put("DELEGATIONSTATESTRING", StringUtil.getString(parameter.getDelegationState()));		
-		objectParam.put("BIZKEY", parameter.getBizKey());	
-		objectParam.put("TASK_COMMENT", parameter.getTaskComment());	
-		objectParam.put("FORMURI", parameter.getFormUri());
-		objectParam.put("FORMURIVIEW", parameter.getFormUriView());		
-		objectParam.put("TASKGROUP", parameter.getTaskGroup());		
-		objectParam.put("TASKTYPE", parameter.getTaskInstanceType().toString());	
-		objectParam.put("ISBLOCKING", String.valueOf(parameter.isBlocking()));
-		objectParam.put("ISCANCELLED", String.valueOf(parameter.isCancelled()));		
-		objectParam.put("ISSUSPENDED", String.valueOf(parameter.isSuspended()));		
-		objectParam.put("ISOPEN", String.valueOf(parameter.isOpen()));
-		objectParam.put("ISDRAFT", String.valueOf(parameter.isDraft()));
-		objectParam.put("EXPECTED_EXECUTIONTIME", String.valueOf(parameter.expectedExecutionTime));
-		objectParam.put("AGENT", parameter.agent);		
-		objectParam.put("ADMIN", parameter.admin);		
-		objectParam.put("CALLACTIVITY_INSTANCE_ID", parameter.callActivityInstanceId);		
-		objectParam.put("PENDINGTASKID", parameter.pendingTaskId);		
-		objectParam.put("ARCHIVE_TIME", parameter.archiveTime);		
-		objectParam.put("COMMAND_ID", parameter.getCommandId());
-		objectParam.put("COMMAND_TYPE", parameter.getCommandType());		
-		objectParam.put("COMMAND_MESSAGE", parameter.getCommandMessage());
-		
-		persistenceExtensionFields=parameter.getPersistenceExtensionFields();		
-		for (String key : persistenceExtensionFields.keySet()) {
-			objectParam.put(key, persistenceExtensionFields.get(key));
-		}
-		return objectParam;
-		
-	]]>
-	</businessRules>
+	<businessRules id="getTaskInstancePersistentDbMap" 
+	parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.TaskInstancePersistentDbMap"
+	resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map"/>
+
 	
 	
 	<businessRules id="getTaskInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递">

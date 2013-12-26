@@ -167,8 +167,7 @@
 	remark="查询流程实例对象"/>
 
 	<select id="selectProcessInstanceCountByQueryCriteria" 
-	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject"  
-	resultMap="processInstanceResultMap" 
+	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	classPath="com.founder.fix.fixflow.expand.rulescript.ProcessInstanceQueryCountScript"
 	remark="查询流程实例对象数量"/>
 	
@@ -194,35 +193,13 @@
 	
 	
 	
-	<businessRules id="getProcessInstancePersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
-	<![CDATA[ 
-		objectParam = new HashMap<String, Object>();
-		objectParam.put("PROCESSINSTANCE_ID", parameter.id);
-		objectParam.put("SUBJECT", parameter.getSubject());
-		objectParam.put("PROCESSDEFINITION_KEY", parameter.getProcessDefinitionKey());
-		objectParam.put("PROCESSDEFINITION_ID", parameter.processDefinitionId);
-		//objectParam.put("DEFINITION_ID", parameter.getProcessDefinition().getDefinitions().getId());
-		objectParam.put("ROOTTOKEN_ID", parameter.getRootTokenId());
-		objectParam.put("PARENT_INSTANCE_ID", parameter.getParentProcessInstanceId());
-		objectParam.put("PARENT_INSTANCE_TOKEN_ID", parameter.getParentProcessInstanceTokenId());
-		objectParam.put("BIZ_KEY", parameter.getBizKey());
-		objectParam.put("INITIATOR", parameter.getInitiator());
-		objectParam.put("START_AUTHOR", parameter.getStartAuthor());
-		objectParam.put("START_TIME", parameter.startTime);
-		objectParam.put("END_TIME", parameter.endTime);
-		objectParam.put("UPDATE_TIME", parameter.getUpdateTime());
-		objectParam.put("ARCHIVE_TIME", parameter.getArchiveTime());
-		objectParam.put("ISSUSPENDED", String.valueOf(parameter.isSuspended()));
-		objectParam.put("PROCESSLOCATION", parameter.getProcessLocation());
-		objectParam.put("INSTANCE_STATUS", parameter.getInstanceType().toString());
-		extensionFields=parameter.getExtensionFields();	
-		for (String key : extensionFields.keySet()) {
-			objectParam.put(key, extensionFields.get(key));
-		}
-		return objectParam;
-		
-	]]>
-	</businessRules>
+	<businessRules id="getProcessInstancePersistentDbMap" 
+	parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" 
+	resultType="java.util.Map" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.ProcessInstancePersistentDbMap"
+	remark="返回Task对象需要保存到数据的字段Map"/>
+
+
 	
 	
 	<businessRules id="getProcessInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">

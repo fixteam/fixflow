@@ -136,33 +136,12 @@
 	
 	
 	
-	<businessRules id="getTokenPersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
-	<![CDATA[ 
+	<businessRules id="getTokenPersistentDbMap" 
+	parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" 
+	resultType="java.util.Map" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.TokenPersistentDbMap"
+	remark="返回Token对象需要保存到数据的字段Map"/>
 	
-		persistentState = new HashMap<String, Object>();
-		persistentState.put("TOKEN_ID", parameter.getId());
-		persistentState.put("NAME", parameter.getName());
-		persistentState.put("PROCESSINSTANCE_ID", parameter.getProcessInstanceId());
-		persistentState.put("NODE_ID", parameter.getNodeId());
-		persistentState.put("PARENT_ID", parameter.getParentTokenId());
-		persistentState.put("PARENT_FREETOKEN_ID", parameter.getParentFreeTokenId());
-		persistentState.put("START_TIME", parameter.getStartTime());
-		persistentState.put("END_TIME", parameter.getEndTime());
-		persistentState.put("NODEENTER_TIME", parameter.getNodeEnterTime());
-		persistentState.put("ARCHIVE_TIME", parameter.getArchiveTime());
-		persistentState.put("TOKEN_LOCK", String.valueOf(parameter.getlock()));
-		persistentState.put("ISSUSPENDED", String.valueOf(parameter.isSuspended()));
-		persistentState.put("ISSUBPROCESSROOTTOKEN", String.valueOf(parameter.isSubProcessRootToken()));
-		persistentState.put("ISABLETOREACTIVATEPARENT", String.valueOf(parameter.isAbleToReactivateParent()));
-		persistentState.put("FREETOKEN", String.valueOf(parameter.isFreeToken()));
-		extensionFields=parameter.getExtensionFields();	
-		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));
-		}
-		return persistentState;
-		
-	]]>
-	</businessRules>
 	
 	
 	<businessRules id="getTokenPersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">

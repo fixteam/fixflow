@@ -114,7 +114,7 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 	 * 获取持久化Map
 	 * @return
 	 */
-	protected Map<String, Object> getPersistenceExtensionFields() {
+	public Map<String, Object> getPersistenceExtensionFields() {
 		return persistenceExtensionFields;
 	}
 
@@ -259,7 +259,6 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	/**
 	 * 获取能持久化到数据的Map
 	 * 
@@ -268,10 +267,8 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 	public Map<String, Object> getPersistentDbMap() {
 		Map<String, Object> objectParam = new HashMap<String, Object>();
 
-		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
-		
-		objectParam=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(getPersistentDbMapRuleId(), this);
-
+	
+		objectParam=(Map<String, Object>)Context.getCommandContext().getTaskManager().getPersistentDbMap(getPersistentDbMapRuleId(), this);
 
 		return objectParam;
 	}

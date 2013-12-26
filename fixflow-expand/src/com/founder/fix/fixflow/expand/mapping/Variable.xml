@@ -262,46 +262,13 @@
 
 
 
-	<businessRules id="getVariablePersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
-	<![CDATA[ 
+	<businessRules id="getVariablePersistentDbMap" 
+	parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" 
+	resultType="java.util.Map" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.VariablePersistentDbMap"
+	remark="返回Task对象需要保存到数据的字段Map"/>
 	
-		import com.founder.fix.fixflow.core.impl.util.StringUtil;
-		
-		variableValue=parameter.getExpressionValue();
-		variableValueDb = parameter.ObjectToBytes();
-		
-		variableType = parameter.getVariableType();
-		
-		variableClassName = null;
-		if (variableValue != null) {
-			variableClassName = variableValue.getClass().getCanonicalName();
-		}
-	
-		objectParam = new HashMap<String, Object>();
-		objectParam.put("PROCESSINSTANCE_ID", parameter.getProcessInstanceId());		
-		objectParam.put("VARIABLE_KEY", parameter.getVariableKey());		
-		objectParam.put("VARIABLE_VALUE", variableValueDb);
-		objectParam.put("VARIABLE_CLASSNAME", variableClassName);
-		objectParam.put("TASKINSTANCE_ID", parameter.getTaskInstanceId());
-		objectParam.put("TOKEN_ID", parameter.getTokenId());	
-		objectParam.put("NODE_ID", parameter.getNodeId());		
-		objectParam.put("BIZ_DATA", parameter.getBizData());
-		objectParam.put("ARCHIVE_TIME", parameter.getArchiveTime());
-		objectParam.put("VARIABLE_TYPE", variableType);
-	
-		if (variableType != null && variableType.equals(parameter.QUERY_DATA_KEY)) {
-			objectParam.put("BIZ_DATA", StringUtil.getString(variableValue));
-		}
-		
-		
-		persistenceExtensionFields=parameter.getPersistenceExtensionFields();		
-		for (String key : persistenceExtensionFields.keySet()) {
-			objectParam.put(key, persistenceExtensionFields.get(key));
-		}
-		return objectParam;
-		
-	]]>
-	</businessRules>
+
 
 
 	<businessRules id="getVariablePersistentState" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递">
