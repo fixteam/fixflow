@@ -861,7 +861,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 		}
 		taskInstance.setEndTime(ClockUtil.getCurrentTime());
 		// taskInstance.setCallActivityInstanceId(subProcessInstanceId);
-		Context.getCommandContext().getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity) taskInstance);
+		executionContext.getProcessInstance().getTaskMgmtInstance().addTaskInstanceEntity(taskInstance);
+		//Context.getCommandContext().getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity) taskInstance);
 	}
 
 	private void startParentProcessInstance(TokenEntity parentToken, CallActivityBehavior callActivityBehavior) {

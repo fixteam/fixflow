@@ -139,7 +139,7 @@
 	
 	<select id="findTaskByProcessInstanceIdNotEnd" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据流程实例编号返回所有相关任务">
 		<![CDATA[ 
-			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID = ? ";
+			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID = ? AND END_TIME IS NULL";
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(parameter.getParameter());
 			sqlCommand.queryForList(sqlText, objectParamWhere);
