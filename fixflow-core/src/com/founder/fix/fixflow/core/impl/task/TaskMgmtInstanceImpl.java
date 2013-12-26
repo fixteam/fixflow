@@ -523,21 +523,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		
 		if(this.taskInstances==null){
 			this.taskInstances= new ArrayList<TaskInstanceEntity>();
-			
-			if(this.processInstance!=null){
-				
-				this.taskInstances=Context.getCommandContext().getTaskManager().findTaskByProcessInstanceIdNotEnd(this.processInstance.getId());
-				if(this.taskInstances!=null){
-					for (TaskInstanceEntity taskInstanceEntity : this.taskInstances) {
-						taskInstanceEntity.setTaskMgmtInstance(this);
-						taskInstanceEntity.setToken(this.processInstance.getTokenMap().get(taskInstanceEntity.getTokenId()));
-					}
-				}
-				
-				return this.taskInstances;
-			}
 
-			
 		}
 
 		

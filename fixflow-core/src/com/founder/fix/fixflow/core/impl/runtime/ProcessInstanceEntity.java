@@ -505,19 +505,8 @@ public class ProcessInstanceEntity extends AbstractPersistentObject<ProcessInsta
 	public List<TokenEntity> getTokenList() {
 
 		if (this.tokenList == null) {
+			this.tokenList=new ArrayList<TokenEntity>();
 
-			List<TokenEntity> tokenEntities = Context.getCommandContext().getTokenManager().findTokensByProcessInstanceIdNotEnd(this.id);
-			
-			if(tokenEntities!=null){
-				for (TokenEntity tokenEntity : tokenEntities) {
-					tokenEntity.setProcessInstance(this);
-					
-				}
-				this.tokenList = tokenEntities;
-				return tokenEntities;
-			}
-			
-			
 		}
 
 		return tokenList;

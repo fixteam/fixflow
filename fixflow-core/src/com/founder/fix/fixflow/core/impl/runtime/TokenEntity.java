@@ -165,6 +165,7 @@ public class TokenEntity extends AbstractPersistentObject<TokenEntity> implement
 
 	// //get和set方法
 
+	
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -494,17 +495,6 @@ public class TokenEntity extends AbstractPersistentObject<TokenEntity> implement
 		if(this.children==null){
 			this.children= new HashMap<String, TokenEntity>();
 			
-			List<TokenEntity> tokenEntities=Context.getCommandContext().getTokenManager().findTokenByParentId(this.getId());
-			if(tokenEntities!=null){
-				for (TokenEntity tokenEntity : tokenEntities) {
-					
-					tokenEntity.setProcessInstance(getProcessInstance());
-					
-					this.children.put(tokenEntity.getId(),tokenEntity);
-					
-				}
-				return this.children;
-			}
 			
 		}
 		return children;
@@ -893,4 +883,9 @@ public class TokenEntity extends AbstractPersistentObject<TokenEntity> implement
 	public void setFreeChildren(Map<String, TokenEntity> freeChildren) {
 		this.freeChildren = freeChildren;
 	}
+	
+	public void setChildren(Map<String, TokenEntity> children) {
+		this.children = children;
+	}
+
 }

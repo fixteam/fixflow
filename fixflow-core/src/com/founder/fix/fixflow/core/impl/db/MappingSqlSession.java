@@ -86,6 +86,8 @@ public class MappingSqlSession {
 			sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK", abstractPersistentObject.getPersistentDbMap());
 			return;
 		}
+		
+		abstractPersistentObject.setAdd(false);
 
 		Object parameterOld = scriptLanguageMgmt.getVariable("parameter");
 
@@ -121,7 +123,7 @@ public class MappingSqlSession {
 		Object[] objectParamWhere = new Object[1];
 		objectParamWhere[0]=persistentObject.getId() ;
 		
-	
+		abstractPersistentObject.setAdd(false);
 
 		if (statement.equals("updateProcessInstance")) {
 			
