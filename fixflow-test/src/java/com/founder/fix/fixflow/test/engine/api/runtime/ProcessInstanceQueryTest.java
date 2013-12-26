@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
-import com.founder.fix.fixflow.core.objkey.VariableObjKey;
+import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceType;
@@ -487,7 +488,7 @@ public class ProcessInstanceQueryTest extends AbstractFixFlowTestCase {
 		//常见扩展查询的参数列表
 		List<Object> whereSqlObj = new ArrayList<Object>();
 		//添加扩展wheresql语句    (本例子扩展方法查询正在运行的流程实例)
-		queryExpandTo.setWhereSql("PROCESSINSTANCE_ID  IN (SELECT PROCESSINSTANCE_ID FROM "+VariableObjKey.VariableTableName()+" WHERE VARIABLE_KEY = ? AND BIZ_DATA = ?)");
+		queryExpandTo.setWhereSql("PROCESSINSTANCE_ID  IN (SELECT PROCESSINSTANCE_ID FROM "+QueryTableUtil.getDefaultTableName("fixflow_run_variable")+" WHERE VARIABLE_KEY = ? AND BIZ_DATA = ?)");
 		//增加扩展wheresql的参数
 		whereSqlObj.add("queryVariable");
 		whereSqlObj.add("查询变量1");
