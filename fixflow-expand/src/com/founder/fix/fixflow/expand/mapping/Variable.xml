@@ -283,7 +283,7 @@
 		objectParam.put("NODE_ID", parameter.getNodeId());		
 		objectParam.put("BIZ_DATA", parameter.getBizData());
 		objectParam.put("ARCHIVE_TIME", parameter.getArchiveTime());
-		
+		objectParam.put("VARIABLE_TYPE", variableType);
 	
 		if (variableType != null && variableType.equals(parameter.QUERY_DATA_KEY)) {
 			objectParam.put("BIZ_DATA", StringUtil.getString(variableValue));

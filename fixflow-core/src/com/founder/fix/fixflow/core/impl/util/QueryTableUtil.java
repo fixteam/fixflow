@@ -65,5 +65,19 @@ public class QueryTableUtil {
 		}
 		return tableName;
 	}
+	
+	/**
+	 * 获取默认run表名
+	 * @param tableId
+	 * @return
+	 */
+	public static String getDefaultTableName(String tableId){
+		ProcessEngineConfigurationImpl processEngineConfigurationImpl = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+		DataBaseTable dataBaseTable = processEngineConfigurationImpl.getDataBaseTable(tableId);
+		if(dataBaseTable == null){
+			throw new FixFlowException("未找到id为"+tableId+"的table配置");
+		}
+		return dataBaseTable.getTableValue();
+	}
 
 }
