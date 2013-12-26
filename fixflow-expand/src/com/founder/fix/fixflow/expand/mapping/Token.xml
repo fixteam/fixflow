@@ -98,14 +98,14 @@
 	<select id="selectTokenByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	resultMap="tokenResultMap" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.TokenQueryScript"
 	remark="查询令牌信息"/>
 	
 	
 	
 	<select id="selectTokenCountByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryCountScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.TokenQueryCountScript"
 	remark="查询令牌数量"/>
 	
 	

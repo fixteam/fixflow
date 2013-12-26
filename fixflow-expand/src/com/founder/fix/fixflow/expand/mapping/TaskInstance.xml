@@ -222,7 +222,7 @@
 		
 		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 		
-		sqlText = "SELECT * FROM "+QueryTableUtil.getTableSelect("fixflow_run_taskinstance", taskQuery.getQueryLocation())+" WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
+		sqlText = "SELECT *  FROM FIXFLOW_RUN_TASKINSTANCE  WHERE END_TIME is not null and TASKTYPE='FIXFLOWTASK' and TOKEN_ID IN ( ";
 		for (int i = 0; i < parameter.getParameter().size(); i++) {
 			if (i == 0) {
 				sqlText = sqlText + "'" + parameter.getParameter().get(i) + "'";
@@ -358,6 +358,8 @@
 	
 	<businessRules id="taskInstanceClone" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="任务实例拷贝">
 	<![CDATA[ 
+		import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
+	
 	
 		taskInstanceEntityNew = new TaskInstanceEntity();
 		taskInstanceEntityNew.persistentInit(sysRulesConfig.getResultMap("taskResultMap"),parameter.getPersistentDbMap());

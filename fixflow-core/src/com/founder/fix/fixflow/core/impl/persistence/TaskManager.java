@@ -113,7 +113,7 @@ public class TaskManager extends AbstractManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskInstanceEntity> findTasksByTokenIdList(List<String> tokenIdList) {
-		return getMappingSqlSession().selectList("selectTasksByTokenIdList", tokenIdList);
+		return getMappingSqlSession().selectList("findTasksByTokenIdList", tokenIdList);
 	}
 
 	/**

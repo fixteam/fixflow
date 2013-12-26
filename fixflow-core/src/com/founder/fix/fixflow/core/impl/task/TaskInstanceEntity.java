@@ -1020,8 +1020,8 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<IdentityLink> getIdentityLinkQueryToList() {
 
-		if (this.taskIdentityLinks.size() == 0) {
-
+		if (this.taskIdentityLinks==null||this.taskIdentityLinks.size() == 0) {
+			this.taskIdentityLinks=new ArrayList<IdentityLinkEntity>();
 			CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
 
 			Object valueObject = cacheHandler.getCacheData("IdentityLink_" + this.id);
