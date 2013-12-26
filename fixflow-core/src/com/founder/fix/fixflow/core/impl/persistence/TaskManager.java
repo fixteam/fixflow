@@ -116,6 +116,21 @@ public class TaskManager extends AbstractManager {
 		return getMappingSqlSession().selectList("findTasksByTokenIdList", tokenIdList);
 	}
 
+	
+	public void insert(TaskInstanceEntity taskInstance){
+		insert("insertTaskInstance",taskInstance);
+		for (IdentityLink identityLink : taskInstance.getTaskIdentityLinksNoDB()) {
+			getCommandContext().getIdentityLinkManager().saveIdentityLink(identityLink);
+		}
+	}
+	
+	public void update(TaskInstanceEntity taskInstance){
+		update("updateTaskInstance",taskInstance);
+		for (IdentityLink identityLink : taskInstance.getTaskIdentityLinksNoDB()) {
+			getCommandContext().getIdentityLinkManager().saveIdentityLink(identityLink);
+		}
+	}
+	
 	/**
 	 * 保存任务
 	 * @param taskInstance
@@ -125,20 +140,14 @@ public class TaskManager extends AbstractManager {
 		
 		CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
 		cacheHandler.putCacheData("IdentityLink_" + taskInstance.getId(), null);
-		TaskInstanceEntity taskInstanceEntity = findTaskById(taskInstance.getId());
-		if(taskInstanceEntity == null){
-			insert("insertTaskInstance",taskInstance);
-			for (IdentityLink identityLink : taskInstance.getTaskIdentityLinks()) {
-				getCommandContext().getIdentityLinkManager().saveIdentityLink(identityLink);
-			}
+		//TaskInstanceEntity taskInstanceEntity = findTaskById(taskInstance.getId());
+		if(taskInstance.isAdd()){
 			
+			insert(taskInstance);
 			
 		}else{
-			update("updateTaskInstance",taskInstance);
-			for (IdentityLink identityLink : taskInstance.getTaskIdentityLinks()) {
-				getCommandContext().getIdentityLinkManager().saveIdentityLink(identityLink);
-			}
 			
+			update(taskInstance);
 		}
 	}
 	

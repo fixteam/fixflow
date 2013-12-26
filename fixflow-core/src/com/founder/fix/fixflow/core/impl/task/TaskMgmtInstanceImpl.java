@@ -57,6 +57,8 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	
 	List<TaskInstanceEntity> taskInstances;
 
+	
+
 	public TaskMgmtInstanceImpl() {
 	}
 
@@ -540,6 +542,14 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 		
 		return taskInstances;
+	}
+	
+	public List<TaskInstanceEntity> getTaskInstancesNoDB() {
+		
+		if(this.taskInstances==null){
+			this.taskInstances=new ArrayList<TaskInstanceEntity>();
+		}
+		return this.taskInstances;
 	}
 
 }

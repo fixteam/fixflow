@@ -51,14 +51,21 @@ public class TokenManager extends AbstractManager {
 	
 	/**新增方法*/
 	
+	public void insert(Token token){
+		insert("insertToken", token);
+	}
 	
+	public void update(Token token){
+		insert("updateToken", token);
+	}
 	/**
 	 * 非递归保存令牌
 	 * @param tokenEntity
 	 */
 	public void saveToken(Token token){
-		TokenEntity tmpTokenEntity = findTokenById(token.getId());
-		if(tmpTokenEntity == null){
+		//TokenEntity tmpTokenEntity = findTokenById(token.getId());
+		
+		if(((TokenEntity)token).isAdd()){
 			insert("insertToken", token);
 		}else{
 			update("updateToken", token);

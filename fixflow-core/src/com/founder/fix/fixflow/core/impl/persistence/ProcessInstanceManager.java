@@ -77,8 +77,24 @@ public class ProcessInstanceManager extends AbstractManager {
 	 * @return
 	 */
 	public ProcessInstanceEntity findProcessInstanceById(String processInstanceId) {
+		
+		
+		//CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
+		//Object cacheObj=cacheHandler.getCacheData("ProcessInstance_" + processInstanceId);
+		
+		//if(cacheObj==null){
+			
+		//	ProcessInstanceEntity processInstanceEntity=(ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
+			//cacheHandler.putCacheData("ProcessInstance_" + processInstanceId, processInstanceEntity);
+			return (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
+			
+			
+		//}else{
+		//	return (ProcessInstanceEntity)cacheObj;
+		//}
+	
 
-		return (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
+		
 
 	}
 	
@@ -158,7 +174,10 @@ public class ProcessInstanceManager extends AbstractManager {
 		
 		
 		
-		List<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
+		List<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstancesNoDB();
+		
+		
+		
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
 			if(!taskInstanceEntity.hasEnded()){
 				if(processLocation.equals("")){
@@ -176,22 +195,31 @@ public class ProcessInstanceManager extends AbstractManager {
 		//List<TaskInstanceEntity> taskInstances =processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
 		
 		//保存流程实例和令牌
-		int count = selectProcessInstanceCountById(processInstance.getId());
-		if(count == 0){
+
+		if(processInstance.isAdd()){
 			insert(processInstance);
+			
+			for (Token token : processInstance.getTokenList()) {
+				commandContext.getTokenManager().insert(token);
+			}
+			
+			for (TaskInstanceEntity taskInstance : taskInstanceEntities) {
+				commandContext.getTaskManager().insert(taskInstance);
+			}
 
 		}else{
 			update(processInstance);
 			
+			for (Token token : processInstance.getTokenList()) {
+				commandContext.getTokenManager().saveToken(token);
+			}
+			
+			for (TaskInstanceEntity taskInstance : taskInstanceEntities) {
+				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
+			}
 		}
 		
-		for (Token token : processInstance.getTokenList()) {
-			commandContext.getTokenManager().saveToken(token);
-		}
 		
-		for (TaskInstanceEntity taskInstance : taskInstanceEntities) {
-			commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
-		}
 
 		
 		

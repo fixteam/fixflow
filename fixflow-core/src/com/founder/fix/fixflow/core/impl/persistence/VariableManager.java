@@ -52,9 +52,9 @@ public class VariableManager extends AbstractManager {
 		queryVariablesCommand.setProcessInstanceId(processInstanceId);
 		
 		// 执行查询流程是Sql语句,判断流程实例是否存在于数据库中.
-		List<DataVariableEntity> dataVariableEntities=selectVariableByQuery(queryVariablesCommand);
+		//List<DataVariableEntity> dataVariableEntities=selectVariableByQuery(queryVariablesCommand);
 		
-		if(dataVariableEntities==null||dataVariableEntities.size()==0){
+		if(dataVariableEntity.isAdd()){
 			// 数据库不存在这个变量,则执行创建新变量的方法.
 			insert("insertVariable",dataVariableEntity);
 		}else{

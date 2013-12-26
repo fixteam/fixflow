@@ -51,4 +51,6 @@ public interface TaskMgmtInstance {
 	TaskInstanceEntity getTaskInstanceEntitys(String taskId);
 	
 	List<TaskInstanceEntity> getTaskInstanceEntitys();
+	
+	List<TaskInstanceEntity> getTaskInstancesNoDB();
 }

@@ -130,19 +130,30 @@
 
 	<select id="selectTaskByTaskId" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据任务编号查询任务实例 ">
 		<![CDATA[ 
+		
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+
+			sqlQuery=new SqlQuery();
+			
+		
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE TASKINSTANCE_ID = ? ";
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(parameter);
-			sqlCommand.queryForList(sqlText, objectParamWhere);
+			sqlQuery.queryList(sqlText, objectParamWhere);
 		]]>
 	</select>
 	
 	<select id="findTaskByProcessInstanceIdNotEnd" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据流程实例编号返回所有相关任务">
 		<![CDATA[ 
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+
+
+			sqlQuery=new SqlQuery();
+			
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID = ? AND END_TIME IS NULL";
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(parameter.getParameter());
-			sqlCommand.queryForList(sqlText, objectParamWhere);
+			sqlQuery.queryList(sqlText, objectParamWhere);
 		]]>
 	</select>
 	
@@ -165,13 +176,19 @@
 	<select id="findAgentUsers" parameterType="String" remark="查询我的代理人">
 		<![CDATA[  
 		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+
+
+		sqlQuery=new SqlQuery();
+		
+		
 		sql="SELECT distinct(z.AGENT_ID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join "
 		+"FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1'"+
 		"and  a.AUSER=?) z";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.getParameter());
-		listMaps=sqlCommand.queryForList(sql, objectParamWhere);
-		return listMaps;
+		sqlQuery.queryList(sql, objectParamWhere);
+		
 		
 		
 		]]>
@@ -180,14 +197,17 @@
 	
 	<select id="findAgentToUsers" parameterType="String" remark="查询代理给我的人">
 		<![CDATA[  
-		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+
+		sqlQuery=new SqlQuery();
+			
 		sql="SELECT distinct(z.USERID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join" +
 				" FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1' " +
 				" and  a.AGENT_ID=?) z";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.getParameter());
-		listMaps=sqlCommand.queryForList(sql, objectParamWhere);
-		return listMaps;
+		sqlQuery.queryList(sql, objectParamWhere);
+
 		
 		
 		]]>
@@ -197,6 +217,11 @@
 	<select id="getTaskStatusByByProcessInstanceIdList" parameterType="Object" remark="根据流程实例编号集合查询状态">
 		<![CDATA[  
 		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
+		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+
+		sqlQuery=new SqlQuery();
+		
 		id = "";
 		for (int i = 0; i < parameter.getParameter().size(); i++) {
 			if (i == 0) {
@@ -209,9 +234,9 @@
 				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+QueryTableUtil.getTableSelect("fixflow_run_taskinstance", taskQuery.getQueryLocation())+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
 				+ ")) a left join "+QueryTableUtil.getTableSelect("fixflow_run_taskidentitylink", taskQuery.getQueryLocation())+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+ProcessInstanceObjKey.ProcessInstanceTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
 		
-		returnList = sqlCommand.queryForList(sqlText);
+		sqlQuery.queryList(sqlText);
 		
-		return returnList;
+		
 		
 		
 		]]>
@@ -219,6 +244,10 @@
 
 	<select id="findTasksByTokenIdList" parameterType="List" resultMap="taskResultMap" remark="根据令牌集合查询任务">
 		<![CDATA[ 
+		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+
+		sqlQuery=new SqlQuery();
 		
 		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 		
@@ -232,9 +261,8 @@
 		}
 		sqlText = sqlText + " ) ORDER BY END_TIME DESC";
 		// 构建查询参数
-		dataObj = sqlCommand.queryForList(sqlText);
-		
-		return dataObj;
+		sqlQuery.queryList(sqlText);
+
 	
 		]]>
 	</select>

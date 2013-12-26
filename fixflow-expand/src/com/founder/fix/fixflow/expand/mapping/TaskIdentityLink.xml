@@ -56,20 +56,25 @@
 
 	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+			SqlQuery sqlQuery=new SqlQuery();
+		
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE ID = ? ";
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(parameter);
-			sqlCommand.queryForList(sqlText, objectParamWhere);
+			sqlQuery.queryList(sqlText, objectParamWhere);
 		]]>
 	</select>
 	
 	<select id="selectIdentityLinksByTask" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+			SqlQuery sqlQuery=new SqlQuery();
 			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE TASKINSTANCE_ID = ? ";
 			taskId = parameter.getParameter();
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(taskId);
-			sqlCommand.queryForList(sqlText, objectParamWhere);
+			sqlQuery.queryList(sqlText, objectParamWhere);
 		]]>
 	</select>
 	

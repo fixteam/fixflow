@@ -980,6 +980,15 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 
 		return getIdentityLinkQueryToListNoCache();
 	}
+	
+	public List<IdentityLinkEntity> getTaskIdentityLinksNoDB() {
+
+		if(this.taskIdentityLinks==null){
+			this.taskIdentityLinks=new ArrayList<IdentityLinkEntity>();
+		}
+		return this.taskIdentityLinks;
+	
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<IdentityLinkEntity> getTaskIdentityLinkEntitys() {

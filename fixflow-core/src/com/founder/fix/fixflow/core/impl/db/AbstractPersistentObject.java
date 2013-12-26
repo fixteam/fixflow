@@ -40,7 +40,18 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 
 	
 	private ResultMap resultMap;
+	
+	
+	private boolean isAdd=true;
 
+
+	public boolean isAdd() {
+		return isAdd;
+	}
+
+	public void setAdd(boolean isAdd) {
+		this.isAdd = isAdd;
+	}
 
 	/**
 	 * 获取当前对象所使用的数据映射规则

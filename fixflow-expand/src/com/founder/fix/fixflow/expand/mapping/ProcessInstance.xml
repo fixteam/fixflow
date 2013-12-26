@@ -30,7 +30,6 @@
 		<result property="subject" column="SUBJECT" name="令牌编号" jdbcType="VARCHAR" />
 		<result property="processDefinitionKey" column="PROCESSDEFINITION_KEY" name="令牌编号" jdbcType="VARCHAR" />
 		<result property="processDefinitionId" column="PROCESSDEFINITION_ID" name="令牌编号" jdbcType="VARCHAR" />
-		<result property="definitionId" column="DEFINITION_ID" name="令牌编号" jdbcType="VARCHAR" />
 		<result property="rootTokenId" column="ROOTTOKEN_ID" name="令牌编号" jdbcType="VARCHAR" />
 		<result property="parentProcessInstanceId" column="PARENT_INSTANCE_ID" name="令牌编号" jdbcType="VARCHAR" />
 		<result property="parentProcessInstanceTokenId" column="PARENT_INSTANCE_TOKEN_ID" name="令牌编号" jdbcType="VARCHAR" />
@@ -73,25 +72,32 @@
 	
 	<select id="selectProcessInstanceCountById" parameterType="java.lang.String" remark="查询流程实例是否存在">
 		<![CDATA[ 
+		
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+			SqlQuery sqlQuery=new SqlQuery();
+			
 			sqlText = "SELECT count(*) FROM FIXFLOW_RUN_PROCESSINSTANCE  WHERE PROCESSINSTANCE_ID=?";
 			List<Object> objectParamWhere = new ArrayList<Object>();
 			objectParamWhere.add(parameter);
 			
-			Object returnObj = sqlCommand.queryForValue(sqlText, objectParamWhere);
-			return Integer.parseInt(returnObj.toString());
+			sqlQuery.queryForValue(sqlText, objectParamWhere);
+
 		]]>
 	</select>
 	
 	<select id="findProcessInstanceById" parameterType="java.lang.String" resultMap="processInstanceResultMap" remark="根据流程实例编号查询流程对象">
 		<![CDATA[ 
 		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		SqlQuery sqlQuery=new SqlQuery();
+		
 		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PROCESSINSTANCE_ID=?";
 		// 构建查询参数
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter);
 
-		dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
-		return dataObj;
+		sqlQuery.queryList(sqlText, objectParamWhere);
+
 		
 		]]>
 	</select>
@@ -99,17 +105,16 @@
 	
 	<select id="findSubProcessInstanceById" parameterType="java.lang.String" resultMap="processInstanceResultMap" remark="根据流程实例编号查询子流程对象">
 		<![CDATA[ 
-		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		SqlQuery sqlQuery=new SqlQuery();
 		
 		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID =? AND END_TIME IS NULL";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.getParameter());
 
-		dataList=sqlCommand.queryForList(sqlText,objectParamWhere);
+		sqlQuery.queryList(sqlText,objectParamWhere);
 		
-		
-		
-		return dataList;
+
 		
 		]]>
 	</select>
@@ -117,6 +122,8 @@
 	
 	<select id="findSubProcessInstanceByIdAndToken" parameterType="Map" resultMap="processInstanceResultMap" remark="根据流程实例编号和令牌号查询子流程对象">
 		<![CDATA[ 
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		SqlQuery sqlQuery=new SqlQuery();
 		
 		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID  = ? AND END_TIME IS NULL AND PARENT_INSTANCE_TOKEN_ID =?";
 		
@@ -124,9 +131,8 @@
 		objectParamWhere.add(parameter.get("processInstanceId"));
 		objectParamWhere.add(parameter.get("tokenId"));
 
-		dataList=sqlCommand.queryForList(sqlText,objectParamWhere);
+		sqlQuery.queryList(sqlText,objectParamWhere);
 
-		return dataList;
 		]]>
 	</select>
 	
@@ -136,6 +142,10 @@
 	
 	<select id="selectProcessInstanceIdsByProcessDefinitionId" parameterType="java.lang.String"  remark="备注">
 		<![CDATA[ 
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		SqlQuery sqlQuery=new SqlQuery();
+		
+		
 		processInstanceIds = new ArrayList<String>();
 		String sql = "select PROCESSINSTANCE_ID from "+ProcessInstanceObjKey.getTableName(QueryLocation.RUN_HIS)+" p where p.processdefinition_id =?";
 		objectParamWhere = new ArrayList<Object>();
@@ -166,13 +176,17 @@
 	
 		<![CDATA[ 
 		
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		SqlQuery sqlQuery=new SqlQuery();
+		
+		
 		sqlString = " SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PROCESSDEFINITION_KEY=?  AND BIZ_KEY=? ";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.get("processDefinitionKey"));
 		objectParamWhere.add(parameter.get("businessKey"));
 
-		dataObj = sqlCommand.queryForList(sqlText, objectParamWhere);
-		return dataObj;
+		sqlQuery.queryList(sqlText, objectParamWhere);
+
 		
 		]]>
 	
@@ -187,8 +201,8 @@
 		objectParam.put("SUBJECT", parameter.getSubject());
 		objectParam.put("PROCESSDEFINITION_KEY", parameter.getProcessDefinitionKey());
 		objectParam.put("PROCESSDEFINITION_ID", parameter.processDefinitionId);
-		objectParam.put("DEFINITION_ID", parameter.getProcessDefinition().getDefinitions().getId());
-		objectParam.put("ROOTTOKEN_ID", parameter.getRootToken().getId());
+		//objectParam.put("DEFINITION_ID", parameter.getProcessDefinition().getDefinitions().getId());
+		objectParam.put("ROOTTOKEN_ID", parameter.getRootTokenId());
 		objectParam.put("PARENT_INSTANCE_ID", parameter.getParentProcessInstanceId());
 		objectParam.put("PARENT_INSTANCE_TOKEN_ID", parameter.getParentProcessInstanceTokenId());
 		objectParam.put("BIZ_KEY", parameter.getBizKey());

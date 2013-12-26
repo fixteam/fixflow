@@ -70,8 +70,8 @@ public class IdentityLinkManager extends AbstractManager {
 		getDbSqlSession().save(saveStatement, identityLink);
 		*/
 		
-		IdentityLink tmpIdentityLink = selectIdentifyLinkById(identityLink.getId());
-		if(tmpIdentityLink == null){
+		//IdentityLink tmpIdentityLink = selectIdentifyLinkById(identityLink.getId());
+		if(((IdentityLinkEntity)identityLink).isAdd()){
 			insert("insertIdentityLink", identityLink);
 		}else{
 			update("updateIdentityLink", identityLink);
