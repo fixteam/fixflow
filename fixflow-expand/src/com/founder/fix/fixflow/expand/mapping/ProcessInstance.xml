@@ -103,7 +103,7 @@
 		
 		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID =? AND END_TIME IS NULL";
 		objectParamWhere = new ArrayList<Object>();
-		objectParamWhere.add(parameter);
+		objectParamWhere.add(parameter.getParameter());
 
 		dataList=sqlCommand.queryForList(sqlText,objectParamWhere);
 		

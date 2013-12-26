@@ -21,7 +21,7 @@
 	<resultMap id="variableResultMap" name="任务表" type="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity">
 		<result property="processInstanceId" column="PROCESSINSTANCE_ID" name="流程实例编号" jdbcType="VARCHAR" />
 		<result property="variableKey" column="VARIABLE_KEY" name="变量key" jdbcType="VARCHAR" />
-		<result property="variableValue" column="VARIABLE_VALUE" name="变量值" jdbcType="VARCHAR" />
+		<result property="variableValue" column="VARIABLE_VALUE" name="变量值" jdbcType="VARBINARY" />
 		<result property="variableClassName" column="VARIABLE_CLASSNAME" name="变量类全名" jdbcType="VARCHAR" />
 		<result property="taskInstanceId" column="TASKINSTANCE_ID" name="任务编号" jdbcType="VARCHAR" />
 		<result property="tokenId" column="TOKEN_ID" name="令牌号" jdbcType="VARCHAR" />
@@ -166,7 +166,7 @@
 		}
 
 		// 执行更新语句
-		sqlCommand.update("FIXFLOW_RUN_VARIABLE", parameter.getPersistentDbMap(), updateWhereSql, objectParamObj);
+		sqlCommand.update("FIXFLOW_RUN_VARIABLE", parameter.getPersistentDbMap(), sqlWhereQueryString, objectParamObj);
 
 		]]>
 	</update>
@@ -174,7 +174,8 @@
 	<select id="selectVariableByQuery" parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" resultMap="variableResultMap" remark="查询编号">
 		
 		<![CDATA[ 
-
+		import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
+		
 		queryVariablesCommand=(QueryVariablesCommand)parameter.getParameter();
 
 		variableNames = queryVariablesCommand.getVariableNames();
@@ -260,7 +261,12 @@
 	<businessRules id="getVariablePersistentDbMap" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map">
 	<![CDATA[ 
 	
-		byte[] variableValueDb = parameter.ObjectToBytes(parameter.getVariableValue());
+		import com.founder.fix.fixflow.core.impl.util.StringUtil;
+		
+		variableValue=parameter.getExpressionValue();
+		variableValueDb = parameter.ObjectToBytes();
+		
+		variableType = parameter.getVariableType();
 		
 		variableClassName = null;
 		if (variableValue != null) {
@@ -280,7 +286,7 @@
 		
 	
 		if (variableType != null && variableType.equals(parameter.QUERY_DATA_KEY)) {
-			objectParam.put(VariableObjKey.BizData().DataBaseKey(), StringUtil.getString(variableValue));
+			objectParam.put("BIZ_DATA", StringUtil.getString(variableValue));
 		}
 		
 		

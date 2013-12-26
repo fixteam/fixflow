@@ -19,9 +19,12 @@
 package com.founder.fix.fixflow.core.impl.datavariable;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -340,6 +343,30 @@ public class DataVariableEntity extends AbstractPersistentObject<DataVariableEnt
 		} else {
 
 			return null;
+		}
+	}
+	
+	
+	public static byte[] ObjectToBytes(Object obj) {
+
+		ObjectOutput out = null;
+		try {
+			ByteArrayOutputStream byteout = new ByteArrayOutputStream();
+			out = new ObjectOutputStream(byteout);
+			out.writeObject(obj);
+			byte[] buf = byteout.toByteArray();
+
+			return buf;
+		} catch (IOException e) {
+			return null;
+		} finally {
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+
+				}
+			}
 		}
 	}
 

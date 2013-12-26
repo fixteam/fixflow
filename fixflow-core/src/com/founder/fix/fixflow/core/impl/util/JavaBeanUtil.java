@@ -94,6 +94,8 @@ public class JavaBeanUtil {
 	    		return Date.class;
 	    	}else if("INTEGER".equals(sqlType)){
 	    		return int.class;
+	    	}else if("VARBINARY".equals(sqlType)){
+	    		return byte[].class;
 	    	}
 	    	return String.class;
 	    }

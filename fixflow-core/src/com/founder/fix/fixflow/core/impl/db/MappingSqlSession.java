@@ -63,6 +63,10 @@ public class MappingSqlSession {
 	// ///////////////////////////////////////////////////////////////////
 
 	public void insert(String statement, PersistentObject persistentObject) {
+		
+
+		Object parameterOld=scriptLanguageMgmt.getVariable("parameter");
+		
 
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
@@ -83,12 +87,17 @@ public class MappingSqlSession {
 		}else{
 			scriptLanguageMgmt.execute(rule.getSqlValue());
 		}
+		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 	}
 
 	// update
 	// ///////////////////////////////////////////////////////////////////
 
 	public void update(String statement, PersistentObject persistentObject) {
+		
+		Object parameterOld=scriptLanguageMgmt.getVariable("parameter");
+		
+		
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
@@ -108,13 +117,17 @@ public class MappingSqlSession {
 		}else{
 			scriptLanguageMgmt.execute(rule.getSqlValue());
 		}
+		scriptLanguageMgmt.setVariable("parameter", parameterOld);
+		
 	}
+	
+	
 
 	// delete
 	// ///////////////////////////////////////////////////////////////////
 
 	public void delete(String statement, Object parameter) {
-
+		Object parameterOld=scriptLanguageMgmt.getVariable("parameter");
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
@@ -134,9 +147,11 @@ public class MappingSqlSession {
 		}else{
 			scriptLanguageMgmt.execute(rule.getSqlValue());
 		}
+		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 	}
 
 	public void delete(String statement, PersistentObject persistentObject) {
+		Object parameterOld=scriptLanguageMgmt.getVariable("parameter");
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
@@ -159,7 +174,7 @@ public class MappingSqlSession {
 		}else{
 			scriptLanguageMgmt.execute(rule.getSqlValue());
 		}
-		
+		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 		//scriptLanguageMgmt.execute(rule.getSqlValue());
 	}
 
@@ -187,7 +202,7 @@ public class MappingSqlSession {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List selectList(String statement, ListQueryParameterObject parameter) {
-
+		Object parameterOld=scriptLanguageMgmt.getVariable("parameter");
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
@@ -201,6 +216,8 @@ public class MappingSqlSession {
 				try {
 					SelectRulesScript selectRulesScript=(SelectRulesScript)classObj.newInstance();
 					returnObjList=(List)selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+					
+					
 				} catch (Exception e) {
 					throw new FixFlowException("Class : "+classPath+"未找到!");
 				} 
@@ -237,6 +254,7 @@ public class MappingSqlSession {
 						persistentObject.persistentInit(resultMap, (Map) object);
 						returnList.add(persistentObject);
 					}
+					scriptLanguageMgmt.setVariable("parameter", parameterOld);
 					return returnList;
 
 				} else {
@@ -246,14 +264,14 @@ public class MappingSqlSession {
 			}
 
 		}
-
+		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 		return returnObjList;
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object selectOne(String statement, Object parameter) {
-
+		Object parameterOld=scriptLanguageMgmt.getVariable("parameter");
 		scriptLanguageMgmt.setVariable("parameter", parameter);
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
 		Rule rule = processEngineConfiguration.getRule(statement);
@@ -280,6 +298,7 @@ public class MappingSqlSession {
 		
 		
 		if(returnObjList==null){
+			scriptLanguageMgmt.setVariable("parameter", parameterOld);
 			return null;
 		}
 		if(returnObjList instanceof List){
@@ -307,6 +326,7 @@ public class MappingSqlSession {
 						if(listObj.size()==1&&listObj.get(0)instanceof Map){
 							
 							persistentObject.persistentInit(resultMap, (Map) listObj.get(0));
+							scriptLanguageMgmt.setVariable("parameter", parameterOld);
 							return persistentObject;
 						}
 						
@@ -314,13 +334,14 @@ public class MappingSqlSession {
 					}else{
 						if(returnObjList instanceof Map){
 							persistentObject.persistentInit(resultMap, (Map) returnObjList);
+							scriptLanguageMgmt.setVariable("parameter", parameterOld);
 							return persistentObject;
 						}
 					}
 					
 					
 					
-
+					scriptLanguageMgmt.setVariable("parameter", parameterOld);
 					return persistentObject;
 
 				} else {
@@ -330,7 +351,7 @@ public class MappingSqlSession {
 			}
 
 		}
-
+		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 		return returnObjList;
 	}
 

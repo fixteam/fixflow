@@ -98,7 +98,8 @@ public class ProcessInstanceManager extends AbstractManager {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<ProcessInstanceEntity> findSubProcessInstanceById(String processInstanceId) {
 
-		return (List) getMappingSqlSession().selectOne("findSubProcessInstanceById", processInstanceId);
+		
+		return (List) getMappingSqlSession().selectList("findSubProcessInstanceById", processInstanceId);
 
 	}
 	

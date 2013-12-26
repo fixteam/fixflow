@@ -34,6 +34,7 @@ public class ListQueryParameterObject {
 
 	public ListQueryParameterObject(Object parameter, Page page) {
 		this.parameter = parameter;
+		this.page=page;
 	}
 
 

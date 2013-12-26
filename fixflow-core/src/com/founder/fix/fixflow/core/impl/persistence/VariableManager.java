@@ -67,11 +67,11 @@ public class VariableManager extends AbstractManager {
 	}
 	
 	public void insert(PersistentObject persistentObject) {
-		getDbSqlSession().insert("insertVariable", persistentObject);
+		getMappingSqlSession().insert("insertVariable", persistentObject);
 	}
 	
 	public void update(PersistentObject persistentObject){
-		getDbSqlSession().update("updateVariable", persistentObject);
+		getMappingSqlSession().update("updateVariable", persistentObject);
 	}
 	
 	
@@ -85,7 +85,7 @@ public class VariableManager extends AbstractManager {
 		
 		
 		
-		return (List<DataVariableEntity>)getDbSqlSession().selectList("selectVariableByQuery", queryVariablesCommand,page);
+		return (List<DataVariableEntity>)getMappingSqlSession().selectList("selectVariableByQuery", queryVariablesCommand,page);
 	}
 	
 	
@@ -101,7 +101,7 @@ public class VariableManager extends AbstractManager {
 	}
 	
 	public void deleteVariable(QueryVariablesCommand queryVariablesCommand){
-		getDbSqlSession().delete("deleteVariable", queryVariablesCommand);
+		getMappingSqlSession().delete("deleteVariable", queryVariablesCommand);
 	}
 	
 	public void deleteVariableByProcessInstanceId(String processInstanceId){

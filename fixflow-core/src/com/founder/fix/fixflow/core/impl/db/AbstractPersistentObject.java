@@ -209,6 +209,8 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 						wM.invoke(this, dataObj);
 					}else if(classes[0].equals(int.class)){
 						wM.invoke(this, StringUtil.getInt(dataObj));
+					}else if(classes[0].equals(byte[].class)){
+						wM.invoke(this,(byte[]) dataObj);
 					}
 
 
