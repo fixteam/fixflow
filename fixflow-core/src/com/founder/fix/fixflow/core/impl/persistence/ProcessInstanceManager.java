@@ -24,8 +24,6 @@ import java.util.Map;
 
 import org.eclipse.bpmn2.UserTask;
 
-import com.founder.fix.fixflow.core.cache.CacheHandler;
-import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
@@ -178,10 +176,20 @@ public class ProcessInstanceManager extends AbstractManager {
 	 *            主流程实例编号
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	public List<ProcessInstanceEntity> findSubProcessInstanceById(String processInstanceId) {
-
-		return (List) getMappingSqlSession().selectList("findSubProcessInstanceById", processInstanceId);
+		
+		List<ProcessInstanceEntity> processInstanceEntities=(List<ProcessInstanceEntity>) getMappingSqlSession().selectList("findSubProcessInstanceById", processInstanceId);
+		for (ProcessInstanceEntity processInstanceEntity : processInstanceEntities) {
+			initProcessInstance(processInstanceEntity);
+		}
+//		String processDefinitionId=StringUtil.getString(map.get(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey()));
+//		ProcessDefinitionBehavior processDefinitionBehavior=persistence.selectProcessDefinitionById(processDefinitionId);
+//		ProcessInstanceEntity processInstanceEntity=getProcessInstance(processInstanceId, processDefinitionBehavior);
+//		processInstanceEntities.add(processInstanceEntity);
+		
+		
+		return processInstanceEntities;
 
 	}
 
@@ -192,12 +200,19 @@ public class ProcessInstanceManager extends AbstractManager {
 	 * @param tokenId
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked"})
 	public List<ProcessInstanceEntity> findSubProcessInstanceByIdAndToken(String processInstanceId, String tokenId) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("processInstanceId", processInstanceId);
 		parameters.put("tokenId", tokenId);
-		return (List) getMappingSqlSession().selectOne("findSubProcessInstanceByIdAndToken", parameters);
+		List<ProcessInstanceEntity> processInstanceEntities=(List<ProcessInstanceEntity>) getMappingSqlSession().selectOne("findSubProcessInstanceByIdAndToken", parameters);
+		
+		
+		for (ProcessInstanceEntity processInstanceEntity : processInstanceEntities) {
+			initProcessInstance(processInstanceEntity);
+		}
+		
+		return processInstanceEntities;
 
 	}
 
