@@ -212,6 +212,8 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     if(formObj != null){
     	 propertiesNode.put(PROPERTY_PROCESS_DEFAULT_FORMURI,formObj.getExpression().getValue());
     }
+    boolean isVerify = mainProcess.isVerification();
+    propertiesNode.put(PROPERTY_PROCESS_IS_VERIFY,isVerify);
     //由于获取流程模型的时候没有loadvariable,所以此处先用emf原始加载的方式加载数据变量，后期可能需要改掉
     List<DataVariable> dataVariables = EMFExtensionUtil.getDataVariables(mainProcess);
     if(dataVariables != null){
@@ -400,7 +402,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	      
 	      //流程分类
 	      JsonNode processCategory = JsonConverterUtil.getProperty(PROPERTY_PROCESS_CATEGORY, modelNode);
-	      if(processCategory != null && StringUtil.isNotEmpty(processCategory.asText())){
+	      if(processCategory != null &&!"null".equals(processCategory) && StringUtil.isNotEmpty(processCategory.asText())){
 	    	  BpmnModelUtil.addExtensionAttribute(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY, processCategory.asText());
 	      }
 	      
@@ -445,11 +447,14 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	    	        }
 	    	  }
 	      }
+	      boolean isVerify = JsonConverterUtil.getProperty(PROPERTY_PROCESS_IS_VERIFY, modelNode).asBoolean();
+	      BpmnModelUtil.addExtensionAttribute(process, FixFlowPackage.Literals.DOCUMENT_ROOT__VERIFICATION, isVerify);
 	      
 	      JsonNode processTargetNamespace = JsonConverterUtil.getProperty(PROPERTY_PROCESS_NAMESPACE, modelNode);
 	      if(processTargetNamespace != null && StringUtils.isNotEmpty(processTargetNamespace.asText())) {
 	    	  bpmnModel.setTargetNamespace(processTargetNamespace.asText());
 	      }
+	     
 	      processJsonElements(shapesArrayNode, modelNode, process, shapeMap,sourceAndTargetMap,bpmnModel);
 	  }
     

@@ -77,7 +77,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
         		success("发布成功", "string");
 			}catch(Exception ex){
 				ex.printStackTrace();
-				error("发布失败 :"+ex.getMessage());
+				error(ex.getMessage());
 			}
     	}
     }

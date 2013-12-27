@@ -225,6 +225,7 @@ public interface StencilConstants {
 	final String PROPERTY_PROCESS_DEFAULT_FORMURI = "process_default_formuri";
 	final String PROPERTY_PROCESS_CATEGORY ="process_category";
 	final String PROPERTY_PROCESS_DATAVARIABLE = "process_datavariable";
+	final String PROPERTY_PROCESS_IS_VERIFY = "process_verify";
 	
 	final String PROPERTY_DATAVARIABLE_ID = "id";
 	final String PROPERTY_DATAVARIABLE_TYPE = "datatype";
