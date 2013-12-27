@@ -81,7 +81,7 @@ $(document).ready(function(){
 		}
 		var fileName = $("#delopyFlowDialog table").data("fileName");
 		var deploymentId = $("tr.select").data("deploymentId") || "";
-		if(window.confirm('确定发布？')){
+		if(window.confirm('确定更新？')){
 			$.ajax({
 				url: "/bpmcenter/FileAndDirectoryServlet",
 				type: "POST",
@@ -95,7 +95,7 @@ $(document).ready(function(){
 				success: function(data){
 					eval("var d = " + data);
 					if(d.state == "error"){
-						alert("更新失败");
+						alert(d.result);
 					}else{
 						alert("更新成功！");
 						$("#delopyFlowDialog").hide();
@@ -122,7 +122,7 @@ $(document).ready(function(){
 				success: function(data){
 					eval("var d = " + data);
 					if(d.state == "error"){
-						alert("发布失败");
+						alert(d.result);
 					}else{
 						alert("发布成功！");
 						$("#delopyFlowDialog").hide();

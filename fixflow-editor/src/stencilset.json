@@ -145,6 +145,22 @@
 	      "description" : "分类",
 	      "popular" : "流程信息"
     	},{
+  	  "id":  "process_verify",
+  	  "type" : "Choice",
+      "title" : "发布校验",
+      "value" : "true",
+      "description" : "发布校验",
+      "popular" : "流程信息",
+      "items" : [ {
+	    "id" : "1",
+	    "title" : "true",
+	    "value" : "true"
+	  }, {
+	    "id" : "2",
+	    "title" : "false",
+	    "value" : "false"
+	  }]
+  	},{
     	  "id" : "process_datavariable",
 	      "type" : "Complex",
 	      "title" : "数据变量",
