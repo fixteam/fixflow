@@ -1,9 +1,25 @@
+/**
+ *  Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author ych
+ * @author kenshin
+ */
 package com.founder.fix.fixflow.editor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -12,9 +28,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.editor.language.json.converter.BpmnJsonConverterUtil;
-import org.activiti.editor.language.json.converter.util.JsonConverterUtil;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
@@ -29,11 +42,10 @@ import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizType;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableBizTypeConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableConfig;
 import com.founder.fix.bpmn2extensions.variableconfig.DataVariableDataType;
-import com.founder.fix.fixflow.core.ProcessEngineConfiguration;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.editor.language.json.converter.util.JsonConverterUtil;
 
 public class StencilsetServlet extends HttpServlet {
 
