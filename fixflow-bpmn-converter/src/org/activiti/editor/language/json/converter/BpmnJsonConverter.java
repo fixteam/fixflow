@@ -202,7 +202,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
     
     //fixflow扩展流程属性
-    propertiesNode.put(PROPERTY_PROCESS_CATEGORY, mainProcess.getCategory());
+    String category = mainProcess.getCategory();
+	if(category != null){
+		propertiesNode.put(PROPERTY_PROCESS_CATEGORY, mainProcess.getCategory());
+	}
     TaskSubjectBehavior taskSubject =  mainProcess.getTaskSubject();
     if(taskSubject!= null){
     	propertiesNode.put(PROPERTY_PROCESS_SUBJECT, mainProcess.getTaskSubject().getExpressionValue());
@@ -402,7 +405,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	      
 	      //流程分类
 	      JsonNode processCategory = JsonConverterUtil.getProperty(PROPERTY_PROCESS_CATEGORY, modelNode);
-	      if(processCategory != null &&!"null".equals(processCategory) && StringUtil.isNotEmpty(processCategory.asText())){
+	      if(processCategory != null &&!"null".equals(processCategory.asText()) && StringUtil.isNotEmpty(processCategory.asText())){
 	    	  BpmnModelUtil.addExtensionAttribute(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CATEGORY, processCategory.asText());
 	      }
 	      
@@ -447,7 +450,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	    	        }
 	    	  }
 	      }
-	      boolean isVerify = JsonConverterUtil.getProperty(PROPERTY_PROCESS_IS_VERIFY, modelNode).asBoolean();
+	      String isVerify = JsonConverterUtil.getProperty(PROPERTY_PROCESS_IS_VERIFY, modelNode).asText();
 	      BpmnModelUtil.addExtensionAttribute(process, FixFlowPackage.Literals.DOCUMENT_ROOT__VERIFICATION, isVerify);
 	      
 	      JsonNode processTargetNamespace = JsonConverterUtil.getProperty(PROPERTY_PROCESS_NAMESPACE, modelNode);

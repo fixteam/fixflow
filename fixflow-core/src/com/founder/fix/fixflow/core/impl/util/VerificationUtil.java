@@ -65,7 +65,7 @@ public class VerificationUtil {
 				getSubProcessElement((SubProcess) flowElement, yzForm,sb);
 			}
 		}
-		if (sb.length() > 0 && !sb.toString().equals("\n子流程验证信息：\n")) {
+		if (sb.length() > 0 && !sb.toString().equals("子流程验证信息：")) {
 			return sb.toString();
 		}
 		return "";
@@ -98,10 +98,10 @@ public class VerificationUtil {
 			return;
 		} else {
 			if (!formUriYZ) {
-				sb.append("流程定义上默认表单不能为空." + "\n");
+				sb.append("流程定义上默认表单不能为空;" + "");
 			}
 			if (!taskSubjectYZ) {
-				sb.append("流程定义上必默认任务主题不能为空." + "\n");
+				sb.append("流程定义上必默认任务主题不能为空;" + "");
 			}
 		}
 		return;
@@ -130,7 +130,7 @@ public class VerificationUtil {
 	 */
 	public static BaseElement getSubProcessElement(SubProcess subProcess, boolean yzForm,StringBuffer sb) {
 		String oldinfo = sb.toString();
-		sb.append("\n子流程 " + subProcess.getId() + " 验证信息：\n");
+		sb.append("子流程 " + subProcess.getId() + " 验证信息：");
 		String tiinfo = sb.toString();
 		verificationProc(subProcess.getFlowElements(),sb);
 		if (yzForm) {
@@ -168,18 +168,18 @@ public class VerificationUtil {
 		for (FlowElement flowElement : flowElements) {
 			if (flowElement instanceof StartEvent) {
 				if (((StartEvent) flowElement).getOutgoing().size() == 0) {
-					sb.append("开始节点后面必须含有连接线." + "\n");
+					sb.append("开始节点后面必须含有连接线;" + "");
 					return;
 				}
 				if (((StartEvent) flowElement).getOutgoing().size() > 1) {
-					sb.append("开始节点后面请保证只含有一个人工任务节点用做提交." + "\n");
+					sb.append("开始节点后面请保证只含有一个人工任务节点用做提交;" + "");
 					return;
 				}
 				return;
 
 			}
 		}
-		sb.append("必须含有一个开始节点." + "\n");
+		sb.append("必须含有一个开始节点;" + "");
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class VerificationUtil {
 			}
 		}
 
-		sb.append("提交节点至少含有一个(高级-提交)处理命令" + "\n");
+		sb.append("提交节点至少含有一个(高级-提交)处理命令;" + "");
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class VerificationUtil {
 			if (flowElement instanceof UserTask) {
 				UserTask userTask = (UserTask) flowElement;
 				if (userTask.getResources().size() < 1) {
-					sb.append(userTask.getId() + "节点没有设置任务分配" + "\n");
+					sb.append(userTask.getId() + "节点没有设置任务分配;" + "");
 				}
 				LoopCharacteristics loopCharacteristics = userTask.getLoopCharacteristics();
 
@@ -256,7 +256,7 @@ public class VerificationUtil {
 							if (entry.getValue() instanceof TaskCommand) {
 								TaskCommand taskCommand = (TaskCommand) entry.getValue();
 								if (taskCommand.getCommandType().equals("rollBack")) {
-									sb.append(((UserTask) flowElement).getId() + " 含有多实例的节点不能做退回处理" + "\n");
+									sb.append(((UserTask) flowElement).getId() + " 含有多实例的节点不能做退回处理;" + "");
 								}
 
 							}
@@ -285,7 +285,7 @@ public class VerificationUtil {
 					}
 				}
 				if (humanPerformers.size() > 1) {
-					sb.append("分配任务中独占类型有且只能存在一个");
+					sb.append("分配任务中独占类型有且只能存在一个;");
 				}
 				humanPerformers.clear();
 			}
@@ -308,7 +308,7 @@ public class VerificationUtil {
 		if (endEvents.size() > 0) {
 
 		} else {
-			sb.append("流程没有设置结束节点" + "\n");
+			sb.append("流程没有设置结束节点;" + "");
 		}
 	}
 
@@ -323,7 +323,7 @@ public class VerificationUtil {
 				Task task = (Task) flowElement;
 				for (SequenceFlow sequenceFlow : task.getOutgoing()) {
 					if (sequenceFlow.getTargetRef() instanceof StartEvent) {
-						sb.append("连接线不允许指向开始节点");
+						sb.append("连接线不允许指向开始节点;");
 					}
 				}
 			}
@@ -340,7 +340,7 @@ public class VerificationUtil {
 			if (flowElement instanceof EndEvent) {
 				EndEvent endEvent = (EndEvent) flowElement;
 				if (endEvent.getIncoming().size() < 1) {
-					sb.append("没有连接线指向结束节点\n");
+					sb.append("没有连接线指向结束节点;");
 				}
 			}
 		}
@@ -368,7 +368,7 @@ public class VerificationUtil {
 
 				}
 			}
-			sb.append(userTask.getId() + "节点没有设置表单" + "\n");
+			sb.append(userTask.getId() + "节点没有设置表单;" + "");
 		}
 	}
 
@@ -393,7 +393,7 @@ public class VerificationUtil {
 				}
 			}
 
-			sb.append(((UserTask) flowElement).getId() + "节点没有设置处理命令" + "\n");
+			sb.append(((UserTask) flowElement).getId() + "节点没有设置处理命令;" + "");
 		}
 	}
 

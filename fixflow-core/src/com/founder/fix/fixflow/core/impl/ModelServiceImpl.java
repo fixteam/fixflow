@@ -202,8 +202,7 @@ public class ModelServiceImpl extends ServiceImpl implements ModelService {
 	}
 	
 	public String updateDeploymentByStream(Map<String, InputStream> fileInputStreamMap,String deploymentId){
-		
-		return null;
+		return commandExecutor.execute(new DeploymentByStreamCmd(createDeployment().updateDeploymentId(deploymentId),fileInputStreamMap));
 	}
 	
 	public List<Map<String, String>> getUserSubmitProcess(String userId, int number) {
