@@ -299,6 +299,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				dataBaseTable.setTableId(element.attributeValue("tableId"));
 				dataBaseTable.setTableName(element.attributeValue("tableName"));
 				dataBaseTable.setTableValue(element.attributeValue("tableValue"));
+				dataBaseTable.setArchiveTable(element.attributeValue("archiveTable"));
 				//dataBaseTable.setMappingType(element.attributeValue("mappingType"));
 
 				for (Object eleNew : element.elements("column")) {

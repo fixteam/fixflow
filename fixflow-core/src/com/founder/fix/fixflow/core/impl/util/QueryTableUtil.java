@@ -79,5 +79,66 @@ public class QueryTableUtil {
 		}
 		return dataBaseTable.getTableValue();
 	}
+	
+	/**
+	 * 获取默认run表名
+	 * @param tableId
+	 * @return
+	 */
+	public static String getArchiveTableName(String tableId){
+		ProcessEngineConfigurationImpl processEngineConfigurationImpl = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+		DataBaseTable dataBaseTable = processEngineConfigurationImpl.getDataBaseTable(tableId);
+		if(dataBaseTable == null){
+			throw new FixFlowException("未找到id为"+tableId+"的table配置");
+		}
+		return dataBaseTable.getArchiveTable();
+	}
+	
+	
+	/**
+	 * 获取配置的列信息，有序，且逗号分开，用户select或insert的字段字符串
+	 * @param tableId
+	 * @return
+	 */
+	public static String getColumnString(String tableId){
+		ProcessEngineConfigurationImpl processEngineConfigurationImpl = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+		DataBaseTable dataBaseTable = processEngineConfigurationImpl.getDataBaseTable(tableId);
+		if(dataBaseTable == null){
+			throw new FixFlowException("未找到id为"+tableId+"的table配置");
+		}
+		return getColumnString(dataBaseTable);
+	}
+	
+	/**
+	 * 获取配置的列信息，有序，且逗号分开，用户select或insert的字段字符串
+	 * @param dataBaseTable
+	 * @return
+	 */
+	public static String getColumnString(DataBaseTable dataBaseTable){
+		StringBuilder sbColumn = new StringBuilder();
+		for(Column column :dataBaseTable.getColumn()){
+			sbColumn.append(column.getColumn());
+			sbColumn.append(",");
+		}
+		String columnString = sbColumn.toString().substring(0,sbColumn.toString().length()-1);
+		return columnString;
+	}
+	
+	public static String getColumnStringWithOutArchiveTime(String tableId){
+		ProcessEngineConfigurationImpl processEngineConfigurationImpl = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration();
+		DataBaseTable dataBaseTable = processEngineConfigurationImpl.getDataBaseTable(tableId);
+		if(dataBaseTable == null){
+			throw new FixFlowException("未找到id为"+tableId+"的table配置");
+		}
+		StringBuilder sbColumn = new StringBuilder();
+		for(Column column :dataBaseTable.getColumn()){
+			if(!column.getColumn().equals("ARCHIVE_TIME")){
+				sbColumn.append(column.getColumn());
+				sbColumn.append(",");
+			}
+		}
+		String columnString = sbColumn.toString().substring(0,sbColumn.toString().length()-1);
+		return columnString;
+	}
 
 }
