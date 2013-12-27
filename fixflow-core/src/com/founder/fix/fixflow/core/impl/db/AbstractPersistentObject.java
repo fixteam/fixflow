@@ -214,7 +214,7 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 					// 判断参数类型
 
 					if (classes[0].equals(String.class)) {
-						wM.invoke(this, dataObj);
+						wM.invoke(this, StringUtil.getString(dataObj));
 					}else if(classes[0].equals(Date.class)){
 						dataObj = StringUtil.getDate(dataObj);
 						wM.invoke(this, dataObj);

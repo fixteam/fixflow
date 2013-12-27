@@ -43,16 +43,16 @@
 		if (parameter == null) {
 			return;
 		}
-		List<String> variableNames = parameter.getVariableNames();
+		variableNames = parameter.getVariableNames();
 
-		String sqlWhereQueryString = "";
+		sqlWhereQueryString = "";
 		// 构建查询参数
-		List<Object> objectParamWhere = new ArrayList<Object>();
+		objectParamWhere = new ArrayList<Object>();
 
-		String processInstanceId = parameter.getProcessInstanceId();
-		String tokenId = parameter.getTokenId();
-		String taskInstanceId = parameter.getTaskInstanceId();
-		String nodeId = parameter.getNodeId();
+		processInstanceId = parameter.getProcessInstanceId();
+		tokenId = parameter.getTokenId();
+		taskInstanceId = parameter.getTaskInstanceId();
+		nodeId = parameter.getNodeId();
 
 		if (processInstanceId == null) {
 			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID IS NULL AND ";
@@ -110,7 +110,7 @@
 		for (int i = 0; i < objectParamWhere.size(); i++) {
 			objectParamObj[i] = objectParamWhere.get(i);
 		}
-		sqlCommand.delete(VariableObjKey.VariableTableName(), sqlWhereQueryString, objectParamObj);
+		sqlCommand.delete("FIXFLOW_RUN_VARIABLE", sqlWhereQueryString, objectParamObj);
 		
 		]]>
 

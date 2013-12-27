@@ -15,6 +15,7 @@ import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.task.DelegationState;
+import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.test.AbstractFixFlowTestCase;
 
 public class TaskInstanceEntityTest extends AbstractFixFlowTestCase {
@@ -72,7 +73,7 @@ public class TaskInstanceEntityTest extends AbstractFixFlowTestCase {
 			dataMap.put("FORMURI", "表单");
 			dataMap.put("FORMURIVIEW", "浏览编号");
 			dataMap.put("TASKGROUP", "会签任务组");
-			dataMap.put("TASKTYPE", "任务类型");
+			dataMap.put("TASKTYPE", TaskInstanceType.FIXFLOWTASK);
 			dataMap.put("ISBLOCKING", String.valueOf(false));
 			dataMap.put("ISCANCELLED", String.valueOf(false));
 			dataMap.put("ISSUSPENDED", String.valueOf(false));

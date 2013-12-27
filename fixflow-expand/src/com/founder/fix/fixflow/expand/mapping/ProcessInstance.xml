@@ -54,10 +54,14 @@
 	
 	<delete id="deleteProcessInstanceByProcessInstanceId" parameterType="String" remark="删除流程实例">
 	<![CDATA[ 
-	
-		Object[] objectParamWhere = { parameter };
-		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
-		sqlCommand.delete(ProcessInstanceObjKey.ProcessInstanceHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
+		import com.founder.fix.fixflow.core.impl.util.StringUtil;
+		Object[] objectParamWhere = new Object[1];
+		objectParamWhere[0]=parameter;
+		sqlCommand.delete("FIXFLOW_RUN_PROCESSINSTANCE", " PROCESSINSTANCE_ID=?",objectParamWhere);
+		isEnable = StringUtil.getBoolean(sysRulesConfig.getPigeonholeConfig().getIsEnable());
+		if(isEnable){
+			sqlCommand.delete("FIXFLOW_HIS_TOKEN", " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM FIXFLOW_HIS_TASKINSTANCE WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+		}
 	
 	]]>
 	
@@ -142,16 +146,17 @@
 	
 	<select id="selectProcessInstanceIdsByProcessDefinitionId" parameterType="java.lang.String"  remark="备注">
 		<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 		SqlQuery sqlQuery=new SqlQuery();
 		
 		
 		processInstanceIds = new ArrayList<String>();
-		String sql = "select PROCESSINSTANCE_ID from "+ProcessInstanceObjKey.getTableName(QueryLocation.RUN_HIS)+" p where p.processdefinition_id =?";
+		String sql = "select PROCESSINSTANCE_ID from "+QueryTableUtil.getDefaultTableName("fixflow_run_processinstance")+" p where p.processdefinition_id =?";
 		objectParamWhere = new ArrayList<Object>();
-		objectParamWhere.add(parameter);
+		objectParamWhere.add(parameter.getParameter());
 		dataObj = sqlCommand.queryForList(sql, objectParamWhere);
-		for(tmp :dataObj){
+		for(Map tmp :dataObj){
 			processInstanceIds.add(StringUtil.getString(tmp.get("PROCESSINSTANCE_ID")));
 		}
 		return processInstanceIds;
