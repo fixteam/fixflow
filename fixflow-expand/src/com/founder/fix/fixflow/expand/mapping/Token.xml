@@ -57,7 +57,7 @@
 			sqlCommand.delete("FIXFLOW_RUN_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
 			isEnable = StringUtil.getBoolean(sysRulesConfig.getPigeonholeConfig().getIsEnable());
 			if(isEnable){
-				sqlCommand.delete("FIXFLOW_HIS_TOKEN", " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM FIXFLOW_HIS_TASKINSTANCE WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+				sqlCommand.delete("FIXFLOW_HIS_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
 			}
 	]]>
 

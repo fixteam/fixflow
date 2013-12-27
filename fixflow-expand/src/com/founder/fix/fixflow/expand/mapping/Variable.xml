@@ -3,7 +3,7 @@
 
 
 
-	<dataBaseTable tableId="fixflow_run_variable" tableName="变量表" tableValue="FIXFLOW_RUN_VARIABLE">
+	<dataBaseTable tableId="fixflow_run_variable" tableName="变量表" tableValue="FIXFLOW_RUN_VARIABLE" archiveTable = "FIXFLOW_HIS_VARIABLE">
 		<column column="PROCESSINSTANCE_ID" name="流程实例编号" jdbcType="VARCHAR" />
 		<column column="VARIABLE_KEY" name="变量key" jdbcType="VARCHAR" />
 		<column column="VARIABLE_VALUE" name="变量值" jdbcType="VARCHAR" />
