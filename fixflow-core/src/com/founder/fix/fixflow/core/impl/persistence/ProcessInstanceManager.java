@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.eclipse.bpmn2.UserTask;
 
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
@@ -93,6 +94,9 @@ public class ProcessInstanceManager extends AbstractManager {
 
 			ProcessInstanceEntity processInstanceEntity = (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById",
 					processInstanceId);
+			if(processInstanceEntity==null){
+				throw new FixFlowException("查询的流程实例: "+processInstanceId +" 不存在");
+			}
 			initProcessInstance(processInstanceEntity);
 			return processInstanceEntity;
 		//	cacheHandler.putCacheData("ProcessInstance_" + processInstanceId, processInstanceEntity);

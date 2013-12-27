@@ -19,7 +19,6 @@ package com.founder.fix.fixflow.core.impl.runtime;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpmn2.Activity;
