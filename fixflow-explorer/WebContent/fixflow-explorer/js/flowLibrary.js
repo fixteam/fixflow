@@ -39,6 +39,13 @@ $(document).ready(function(){
 			alert("请输入名称和编号");
 			return;
 		}
+		var reg = /[^x00-xff]/ ;
+		var b = reg.test(id);
+		if(b){
+			alert("流程ID不能有中文");
+			return;
+		}
+		
 		$.ajax({
 			url: "/bpmcenter/FlowWebManagerServlet",
 			type: "POST",
@@ -229,12 +236,18 @@ $(document).ready(function(){
 					Operation.createGuid = FixFlow.Utils.createGuid();
 					var $newFolder = $('<div class="thumb-wrap" dirType="dir" treeNodeId="'+ Operation.createGuid +'"><div class="thumb"><img src="/bpmcenter/fixflow-explorer/images/nuvola/64x64/filesystems/folder_grey.png" class="x-thumb-icon"></div><span class="editable"></span></div>');
 					$newFolder.appendTo($("div.view_plugin"));
-					var $input = $('<input type="text" class="editName" style="width:90px;" />');
+					var $input = $('<input type="text" class="editName" style="width:90px;"  />');
 					$input.val("新建文件夹").attr("oldValue", "新建文件夹");
 					$("span.editable", $newFolder).append($input);
 					$input.select();
 					$input.keydown(function(event){
 						if(event.keyCode == 13){
+							var reg = /[^x00-xff]/ ;
+							var b = reg.test($(this).val());
+							if(b){
+								alert("文件名不能有中文");
+								return;
+							}
 							Operation.create($(this));
 						}else if(event.keyCode == 27){	//ESC
 							currentOperationType = "done";
@@ -258,6 +271,12 @@ $(document).ready(function(){
 						return false;
 					}).keydown(function(event){
 						if(event.keyCode == 13){	//Enter
+							var reg = /[^x00-xff]/ ;
+							var b = reg.test($(this).val());
+							if(b){
+								alert("文件名不能有中文");
+								return;
+							}
 							Operation.rename($(this));
 						}else if(event.keyCode == 27){	//ESC
 							currentOperationType = "done";
@@ -392,6 +411,12 @@ $(document).ready(function(){
 	$(document).click(function(){
 		if(Operation.checkCurrentOperationType()){
 			var that = $("input.editName");
+			var reg = /[^x00-xff]/ ;
+			var b = reg.test(that.val());
+			if((currentOperationType=="create" || currentOperationType=="rename") && b){
+				alert("文件名不能有中文");
+				return;
+			}
 			Operation[currentOperationType](that);
 		}
 		

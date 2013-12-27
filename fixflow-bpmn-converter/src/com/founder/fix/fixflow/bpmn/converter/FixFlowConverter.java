@@ -90,7 +90,7 @@ public class FixFlowConverter {
 	 */
 	public void createBPMNFile(String path,String processId,String processName){
 		File newFile = new File(path);
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("org/activiti/editor/language/default_process.bpmn");
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("com/founder/fix/fixflow/editor/language/default_process.bpmn");
 		FileOutputStream outputStream = null;
 		BufferedOutputStream buffOS = null;
 		InputStream inputStreamNewFile = null;
