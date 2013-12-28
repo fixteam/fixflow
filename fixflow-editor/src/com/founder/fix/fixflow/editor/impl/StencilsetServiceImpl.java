@@ -1,30 +1,10 @@
-/**
- *  Copyright 1996-2013 Founder International Co.,Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- * @author ych
- * @author kenshin
- */
-package com.founder.fix.fixflow.editor;
+package com.founder.fix.fixflow.editor.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,26 +26,17 @@ import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.identity.GroupDefinition;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.editor.language.json.converter.util.JsonConverterUtil;
+import com.founder.fix.fixflow.editor.service.StencilsetService;
 
-public class StencilsetServlet extends HttpServlet {
+public class StencilsetServiceImpl implements StencilsetService {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(req, resp);
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public void getStencilsetJson(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 		InputStream stencilsetStream = this.getClass().getClassLoader().getResourceAsStream("stencilset.json");
-		StringBuffer document = new StringBuffer();
-		resp.setContentType("application/x-json");
-		resp.setCharacterEncoding("utf-8");
-		PrintWriter out = resp.getWriter();
+		response.setContentType("application/x-json");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
         try 
         {
             JsonNode rootNode = objectMapper.readTree(stencilsetStream);
@@ -80,7 +51,7 @@ public class StencilsetServlet extends HttpServlet {
         	out.flush();
         	out.close();
         }
-       
+
 	}
 	
 	/**
@@ -200,4 +171,5 @@ public class StencilsetServlet extends HttpServlet {
         }
         ((ObjectNode)bizTypeNode).put("items", bizTypeArrayNode);
 	}
+
 }

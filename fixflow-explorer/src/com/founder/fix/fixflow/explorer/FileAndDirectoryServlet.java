@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.explorer.impl.FlowExplorerServiceImpl;
 import com.founder.fix.fixflow.explorer.service.FlowExplorerService;
 import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
@@ -57,6 +58,29 @@ public class FileAndDirectoryServlet extends BaseServlet {
 			error("初始化参数出错!");
 		}
     }
+    
+    /**
+     * 新建BPMN文件
+     */
+    public void createBPMNFile(){
+        try{
+                String processId = request("id");
+            String fileName = "";
+            if(processId.endsWith(".bpmn")){
+                    fileName = processId;
+                    processId = processId.substring(0, processId.indexOf("."));
+            }else{
+                    fileName = processId + ".bpmn";
+            }
+            String processName = request("name");
+            String path = buildPath()+File.separator+fileName;
+            new FixFlowConverter().createBPMNFile(path, processId, processName);
+            success("创建成功","String");
+        }catch(Exception ex){
+                ex.printStackTrace();
+                error("创建文件失败");
+        }
+}
    
     /**
      * 新建文件夹

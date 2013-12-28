@@ -1876,7 +1876,7 @@ ORYX.CONFIG.SERVER_MODEL_HANDLER =		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/model";
 ORYX.CONFIG.STENCILSET_HANDLER = 		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_stencilset?embedsvg=true&url=true&namespace=";    
 ORYX.CONFIG.STENCIL_SETS_URL = 			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_stencilset";
 
-ORYX.CONFIG.PLUGINS_CONFIG =			"../../PluginServlet";
+ORYX.CONFIG.PLUGINS_CONFIG =			"../../FlowEditor?action=getPlugin";
 ORYX.CONFIG.SYNTAXCHECKER_URL =			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/syntaxchecker";
 ORYX.CONFIG.DEPLOY_URL = 				ORYX.CONFIG.SERVER_HANDLER_ROOT + "/model/deploy";
 ORYX.CONFIG.MODEL_LIST_URL = 			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/models";
@@ -2370,6 +2370,7 @@ ORYX = Object.extend(ORYX, {
 		new Ajax.Request(source, {
 			asynchronous: false,
 			method: 'get',
+			action: 'getPlugin',
 			onSuccess: function(result) {
 
 				/*
@@ -8472,7 +8473,7 @@ ORYX.Core.StencilSet.StencilSet = Clazz.extend({
 		if(ORYX.CONFIG.BACKEND_SWITCH) {
 			this._baseUrl = "../editor/stencilsets/bpmn2.0/";
 			this._source = "../stencilsets/bpmn2.0/bpmn2.0.json";
-			new Ajax.Request("../../StencilsetServlet", {
+			new Ajax.Request("../../FlowEditor?action=getStencilset", {
 	            asynchronous: false,
 	            method: 'get',
 	            onSuccess: this._init.bind(this),
@@ -11225,7 +11226,7 @@ function init() {
 			modelUrl = modelUrl.replace("/self","/json");
 		} else {
 			var modelId = window.location.search.substring(4);
-			modelUrl = "../../FlowWebManagerServlet";
+			modelUrl = "../../FlowEditor";
 		}
 var passObj = window.dialogArguments || {};
         ORYX.Editor.createByUrl(modelUrl, {
@@ -11233,7 +11234,7 @@ var passObj = window.dialogArguments || {};
 						parameters:{
 							path: passObj.path || "private",
 							fileName: passObj.fileName || "process_testych.bpmn",
-							method: "loadBPMWeb"
+							action: "loadBPMNWeb"
 						}
         });
     }
@@ -24940,13 +24941,13 @@ ORYX.Plugins.Save = Clazz.extend({
 		
 		var modelMeta = this.facade.getModelMetaData();
 		var passObj = window.dialogArguments || {};
-		new Ajax.Request("../../FlowWebManagerServlet", {
+		new Ajax.Request("../../FlowEditor", {
             method: 'get',
             asynchronous: true,
 						parameters:{
 							path: passObj.path || "private,test",
 							fileName: passObj.fileName || "process_testych.bpmn",
-							method: "reTryModelInfo"
+							action: "reTryModelInfo"
 						},
 			requestHeaders: {
 				"Accept":"application/json"
@@ -25004,7 +25005,7 @@ ORYX.Plugins.Save = Clazz.extend({
 		
 		var saveUri;
 		if(forceNew == false) {
-			saveUri = "../../ModelSaveServlet";
+			saveUri = "../../FlowEditor?action=modelSave";
 		} else {
 			saveUri = "../service/model/new";
 		}

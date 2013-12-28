@@ -47,7 +47,7 @@ $(document).ready(function(){
 		}
 		
 		$.ajax({
-			url: "/bpmcenter/FlowWebManagerServlet",
+			url: "/bpmcenter/FileAndDirectoryServlet",
 			type: "POST",
 			dataType: "text",
 			data: {

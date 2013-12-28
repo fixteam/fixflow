@@ -60,39 +60,16 @@
   
    <servlet>
     <description></description>
-    <display-name>PluginServlet</display-name>
-    <servlet-name>PluginServlet</servlet-name>
-    <servlet-class>com.founder.fix.fixflow.editor.PluginServlet</servlet-class>
+    <display-name>FlowEditor</display-name>
+    <servlet-name>FlowEditor</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.editor.FlowEditorServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>PluginServlet</servlet-name>
-    <url-pattern>/PluginServlet</url-pattern>
+    <servlet-name>FlowEditor</servlet-name>
+    <url-pattern>/FlowEditor</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <description></description>
-    <display-name>StencilsetServlet</display-name>
-    <servlet-name>StencilsetServlet</servlet-name>
-    <servlet-class>com.founder.fix.fixflow.editor.StencilsetServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>StencilsetServlet</servlet-name>
-    <url-pattern>/StencilsetServlet</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <description></description>
-    <display-name>ModelSaveServlet</display-name>
-    <servlet-name>ModelSaveServlet</servlet-name>
-    <servlet-class>com.founder.fix.fixflow.editor.ModelSaveServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ModelSaveServlet</servlet-name>
-    <url-pattern>/ModelSaveServlet</url-pattern>
-  </servlet-mapping>
   
   <!-- fixflow-editor Servlet结束 -->
  
