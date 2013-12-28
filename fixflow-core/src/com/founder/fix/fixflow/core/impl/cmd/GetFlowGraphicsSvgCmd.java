@@ -107,8 +107,6 @@ import com.founder.fix.fixflow.core.impl.flowgraphics.svg.to.SvgTaskTo.TaskType;
 import com.founder.fix.fixflow.core.impl.flowgraphics.svg.to.SvgTerminateEndEventTo;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
-import com.founder.fix.fixflow.core.impl.persistence.ProcessDefinitionManager;
-
 public class GetFlowGraphicsSvgCmd implements Command<String> {
 
 	/**

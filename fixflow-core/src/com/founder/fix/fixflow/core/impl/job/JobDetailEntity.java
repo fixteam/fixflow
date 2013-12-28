@@ -30,7 +30,7 @@ import com.founder.fix.fixflow.core.objkey.JobDetailObjKey;
  * @author kenshin
  * 
  */
-public class JobDetailEntity extends AbstractPersistentObject {
+public class JobDetailEntity extends AbstractPersistentObject<JobDetailEntity> {
 
 	/**
 	 * 
@@ -102,7 +102,6 @@ public class JobDetailEntity extends AbstractPersistentObject {
 		return objectParam;
 	}
 
-	@Override
 	public void persistentInit(Map<String, Object> entityMap) {
 		for (String dataKey : entityMap.keySet()) {
 
@@ -143,6 +142,24 @@ public class JobDetailEntity extends AbstractPersistentObject {
 		objectParam.put(JobDetailObjKey.BizObj().DataBaseKey(), this.getBizObj());
 	
 		return objectParam;
+	}
+
+	@Override
+	public String getCloneRuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPersistentDbMapRuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPersistentStateRuleId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

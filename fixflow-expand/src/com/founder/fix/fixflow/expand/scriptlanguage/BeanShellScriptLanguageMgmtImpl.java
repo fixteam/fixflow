@@ -18,14 +18,18 @@
 package com.founder.fix.fixflow.expand.scriptlanguage;
 
 import java.util.List;
+import java.util.Map;
 
 import bsh.EvalError;
 import bsh.Interpreter;
 
+import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
+import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DataVariableBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
@@ -171,10 +175,73 @@ public class BeanShellScriptLanguageMgmtImpl extends AbstractScriptLanguageMgmt 
 		} catch (EvalError e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			throw new FixFlowException("表达式计算错误! 错误信息: " + e.getErrorText(), e);
 		}
-		return null;
+
 	}
 
+	@Override
+	public <T> T executeBusinessRules(String ruleId, Object parameter,T classReturn) {
+		// TODO Auto-generated method stub
+		
+		return executeBusinessRules(ruleId,parameter,classReturn,null);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T executeBusinessRules(String ruleId, Object parameter,T classReturn, Map<String, Object> configMap) {
+		
+		
+		try {
+			ProcessEngineConfigurationImpl processEngineConfiguration=Context.getProcessEngineConfiguration();
+			interpreter.set("sysRulesConfig", Context.getProcessEngineConfiguration());
+			interpreter.set("parameter", parameter);
+			interpreter.set("sqlCommand", new SqlCommand(Context.getDbConnection()));
+			if(configMap!=null){
+				
+				for (String mapKey : configMap.keySet()) {
+					interpreter.set(mapKey, configMap.get(mapKey));
+				}
+				
+			}
+			Rule rule = processEngineConfiguration.getRule(ruleId);
+			T returnObj =  (T)interpreter.eval(rule.getSqlValue());
+			return returnObj;
+		} catch (EvalError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("表达式计算错误! 错误信息: " + e.getErrorText(), e);
+		}
+		
+	}
 	
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter) {
+		return executeBusinessRules(ruleId,parameter);
+	}
+
+	@Override
+	public Object executeBusinessRules(String ruleId, Object parameter, Map<String, Object> configMap) {
+		try {
+			ProcessEngineConfigurationImpl processEngineConfiguration=Context.getProcessEngineConfiguration();
+			interpreter.set("sysRulesConfig", Context.getProcessEngineConfiguration());
+			interpreter.set("parameter", parameter);
+			interpreter.set("sqlCommand", new SqlCommand(Context.getDbConnection()));
+			if(configMap!=null){
+				
+				for (String mapKey : configMap.keySet()) {
+					interpreter.set(mapKey, configMap.get(mapKey));
+				}
+				
+			}
+			Rule rule = processEngineConfiguration.getRule(ruleId);
+			Object returnObj =  (Object)interpreter.eval(rule.getSqlValue());
+			return returnObj;
+		} catch (EvalError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FixFlowException("表达式计算错误! 错误信息: " + e.getErrorText(), e);
+		}
+	}
 
 }

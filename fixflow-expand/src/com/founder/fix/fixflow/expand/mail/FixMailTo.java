@@ -22,11 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
-public class FixMailTo extends AbstractPersistentObject {
+public class FixMailTo extends AbstractPersistentObject<FixMailTo> {
 
 	/**
 	 * 
@@ -157,7 +158,6 @@ public class FixMailTo extends AbstractPersistentObject {
 	}
 
 
-	@Override
 	public void persistentInit(Map<String, Object> entityMap) {
 		for (String dataKey : entityMap.keySet()) {
 
@@ -273,6 +273,27 @@ public class FixMailTo extends AbstractPersistentObject {
 		objectParam.put("FAILURE_REASON",this.getFailureReason());
 	
 		return objectParam;
+	}
+
+
+	@Override
+	public String getCloneRuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getPersistentDbMapRuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getPersistentStateRuleId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

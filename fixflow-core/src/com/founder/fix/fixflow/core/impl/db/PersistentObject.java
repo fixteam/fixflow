@@ -39,4 +39,5 @@ public interface PersistentObject extends Serializable{
 	 */
 	Map<String, Object> getPersistentState();
 	
+	
 }

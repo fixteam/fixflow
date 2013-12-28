@@ -381,9 +381,6 @@ public class ProcessObjectFactoryImpl implements ProcessObjectFactory {
 		ContextInstanceImpl contextInstanceImpl = new ContextInstanceImpl(processInstance);
 		return contextInstanceImpl;
 	}
-	
-	
-
 
 
 

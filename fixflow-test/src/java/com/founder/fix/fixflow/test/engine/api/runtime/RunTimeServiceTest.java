@@ -18,7 +18,6 @@
 package com.founder.fix.fixflow.test.engine.api.runtime;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -89,6 +88,7 @@ public class RunTimeServiceTest extends AbstractFixFlowTestCase {
 	/**
 	 * 测试获取流程实例
 	 */
+	@SuppressWarnings("unused")
 	@Deployment(resources = { "com/founder/fix/fixflow/test/engine/api/runtime/StartProcessInstanceTest.bpmn" })
 	public void testGetProcessInstance(){
 		try{

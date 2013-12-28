@@ -23,6 +23,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
 import com.founder.fix.fixflow.core.impl.db.DbSqlSession;
+import com.founder.fix.fixflow.core.impl.db.MappingSqlSession;
 import com.founder.fix.fixflow.core.impl.persistence.CommentManager;
 import com.founder.fix.fixflow.core.impl.persistence.DeploymentManager;
 import com.founder.fix.fixflow.core.impl.persistence.EventSubscriptionManager;
@@ -144,6 +145,12 @@ public class CommandContext {
 	public DbSqlSession getDbSqlSession() {
 		return new DbSqlSession(Context.getDbConnection(), Context.getCacheObject());
 	}
+	
+	public MappingSqlSession getMappingSqlSession() {
+		return new MappingSqlSession(Context.getDbConnection(), Context.getCacheObject());
+	}
+	
+	
 
 	public CacheObject getCacheObject() {
 		return Context.getCacheObject();

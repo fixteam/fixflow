@@ -400,7 +400,6 @@ public interface TaskService extends ProcessService {
 	 */
 	void deleteIdentityLink(Collection<String> linkIds);
 
-	List<Map<String, Object>> processPerformance(String[] pid, String startTime, String endTime, String type);
 
 	/**
 	 * 获取将任务代理给当前用户的人员列表

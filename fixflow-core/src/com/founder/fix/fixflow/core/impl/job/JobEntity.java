@@ -23,6 +23,7 @@ import java.util.Map;
 
 
 
+
 import com.founder.fix.fixflow.core.exception.FixFlowBizException;
 import com.founder.fix.fixflow.core.exception.FixFlowClassLoadingException;
 import com.founder.fix.fixflow.core.impl.db.AbstractPersistentObject;
@@ -37,7 +38,7 @@ import com.founder.fix.fixflow.core.objkey.JobObjKey;
  * @author kenshin 
  *
  */
-public class JobEntity extends AbstractPersistentObject implements Job{
+public class JobEntity extends AbstractPersistentObject<JobEntity> implements Job{
 
 
 	/**
@@ -227,7 +228,6 @@ public class JobEntity extends AbstractPersistentObject implements Job{
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public void persistentInit(Map<String, Object> entityMap) {
 	
 		for (String dataKey : entityMap.keySet()) {
@@ -319,6 +319,24 @@ public class JobEntity extends AbstractPersistentObject implements Job{
 		objectParam.put(JobObjKey.JobClassName().DataBaseKey(), this.jobClassName.getName());
 
 		return objectParam;
+	}
+
+	@Override
+	public String getCloneRuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPersistentDbMapRuleId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPersistentStateRuleId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

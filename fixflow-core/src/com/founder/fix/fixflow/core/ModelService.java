@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
-import org.omg.PortableInterceptor.INACTIVE;
-
 
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
@@ -128,7 +126,6 @@ public interface ModelService extends ProcessService{
 	 */
 	List<Map<String, Object>> selectProcessDefinitionGroupKey();
 	
-	@Deprecated
 	/**
 	 * 获取流程图图片地址
 	 * @param processDefinitionId 流程唯一编号

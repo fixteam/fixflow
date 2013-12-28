@@ -27,25 +27,31 @@ import com.founder.fix.fixflow.core.task.IdentityLink;
 
 public class IdentityLinkManager extends AbstractManager {
 
+	
+	public void insert(IdentityLink identityLink) {
+		insert("insertIdentityLink", identityLink);
+	}
+	
 	public void deleteIdentityLink(IdentityLinkEntity identityLink) {
-		getDbSqlSession().delete("deleteIdentityLink", identityLink.getId());
+		//getDbSqlSession().delete("deleteIdentityLink", identityLink.getId());
+		
 	}
 	
 	public void deleteIdentityLinkById(String id) {
-		getDbSqlSession().delete("deleteIdentityLink", id);
+		//getDbSqlSession().delete("deleteIdentityLink", id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<IdentityLinkEntity> findIdentityLinksByTaskId(String taskId) {
-		return getDbSqlSession().selectList("selectIdentityLinksByTask", taskId);
+		return getMappingSqlSession().selectList("selectIdentityLinksByTask", taskId);
 	}
 
 
 	public void deleteIdentityLinksByTaskId(String taskId) {
-		List<IdentityLinkEntity> identityLinks = findIdentityLinksByTaskId(taskId);
-		for (IdentityLinkEntity identityLink : identityLinks) {
-			deleteIdentityLink(identityLink);
-		}
+//		List<IdentityLinkEntity> identityLinks = findIdentityLinksByTaskId(taskId);
+//		for (IdentityLinkEntity identityLink : identityLinks) {
+//			deleteIdentityLink(identityLink);
+//		}
 	}
 
 	public long findIdentityLinkCountByQueryCriteria(IdentityLinkQueryImpl identityLinkQueryImpl) {
@@ -58,9 +64,29 @@ public class IdentityLinkManager extends AbstractManager {
 		return getDbSqlSession().selectList(query, identityLinkQueryImpl, page);
 	}
 
-	
 	public void saveIdentityLink(IdentityLink identityLink) {
+		/* 5.1版本修改
 		String saveStatement = "saveIdentityLink";
 		getDbSqlSession().save(saveStatement, identityLink);
+		*/
+		
+		//IdentityLink tmpIdentityLink = selectIdentifyLinkById(identityLink.getId());
+		if(((IdentityLinkEntity)identityLink).isAdd()){
+			insert("insertIdentityLink", identityLink);
+		}else{
+			update("updateIdentityLink", identityLink);
+		}
 	}
+	
+	/****新增方法*****/
+	
+	public IdentityLinkEntity selectIdentifyLinkById(String id){
+		return (IdentityLinkEntity)getMappingSqlSession().selectOne("selectIdentityLinkById", id);
+	}
+	
+	public void deleteIdentityLinkByProcessInstanceId(String processInstanceId){
+		delete("deleteIdentityLinkByProcessInstanceId", processInstanceId);
+	}
+
+	
 }

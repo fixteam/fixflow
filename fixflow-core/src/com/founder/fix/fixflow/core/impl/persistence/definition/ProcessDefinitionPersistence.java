@@ -64,9 +64,9 @@ import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.event.BaseElementEventImpl;
 import com.founder.fix.fixflow.core.impl.persistence.deployer.DeploymentCache;
 import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
+import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.objkey.ProcessInstanceObjKey;
 
 public class ProcessDefinitionPersistence {
 
@@ -520,7 +520,7 @@ public class ProcessDefinitionPersistence {
 
 	public List<Map<String, Object>> findUserSubmitProcess(String userId, int number) {
 		String sqlTextString = "select processdefinition_key from (" + "select p.processdefinition_key, max(p.start_time) start_time, p.initiator"
-				+ " from "+ProcessInstanceObjKey.ProcessInstanceTableName()+" p" + " group by p.processdefinition_key, p.initiator" + " having p.initiator = ? "
+				+ " from "+ QueryTableUtil.getDefaultTableName("fixflow_run_processinstance") +" p" + " group by p.processdefinition_key, p.initiator" + " having p.initiator = ? "
 				+ ")t order by start_time desc";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(userId);

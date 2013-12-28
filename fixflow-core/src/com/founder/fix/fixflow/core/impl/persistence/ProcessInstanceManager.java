@@ -22,189 +22,326 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.bpmn2.UserTask;
+
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceQueryImpl;
+import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.runtime.Token;
 
 public class ProcessInstanceManager extends AbstractManager {
 
+	/**
+	 * 根据流程定义唯一编号删除流程实例
+	 * 
+	 * @param processDefinitionId
+	 *            流程唯一编号
+	 * @param deleteReason
+	 *            无用参数
+	 * @param cascade
+	 *            是否级联删除
+	 */
 	@SuppressWarnings("unchecked")
 	public void deleteProcessInstancesByProcessDefinition(String processDefinitionId, String deleteReason, boolean cascade) {
-		List<String> processInstanceIds = getDbSqlSession().selectList("selectProcessInstanceIdsByProcessDefinitionId", processDefinitionId);
-		for(String processInstanceId :processInstanceIds){
-			deleteProcessInstance(processInstanceId,cascade);
+		List<String> processInstanceIds = getMappingSqlSession().selectList("selectProcessInstanceIdsByProcessDefinitionId", processDefinitionId);
+		for (String processInstanceId : processInstanceIds) {
+			deleteProcessInstance(processInstanceId, cascade);
 		}
 	}
 
-	public void deleteProcessInstance(String processInstanceId,  boolean cascade) {
-		
-		if(cascade){
-			getDbSqlSession().delete("deleteProcessInstanceByProcessInstanceId", processInstanceId);
-			
-			getDbSqlSession().delete("deleteIdentityLinkByProcessInstanceId", processInstanceId);
-			getDbSqlSession().delete("deleteTaskInstanceByProcessInstanceId", processInstanceId);
-			getDbSqlSession().delete("deleteVariableByProcessInstanceId", processInstanceId);
-			getDbSqlSession().delete("deleteTokenByProcessInstanceId", processInstanceId);
-			
-			
+	/**
+	 * 删除流程实例
+	 * 
+	 * @param processInstanceId
+	 *            流程实例编号
+	 * @param cascade
+	 *            是否级联
+	 */
+	public void deleteProcessInstance(String processInstanceId, boolean cascade) {
+
+		getMappingSqlSession().delete("deleteProcessInstanceByProcessInstanceId", processInstanceId);
+
+		if (cascade) {
+
+			getCommandContext().getIdentityLinkManager().deleteIdentityLinkByProcessInstanceId(processInstanceId);
+			getCommandContext().getTaskManager().deleteTaskByProcessInstanceId(processInstanceId);
+			getCommandContext().getVariableManager().deleteVariableByProcessInstanceId(processInstanceId);
+			getCommandContext().getTokenManager().deleteTokenByProcessInstanceId(processInstanceId);
+
 		}
-		else{
-			getDbSqlSession().delete("deleteProcessInstanceByProcessInstanceId", processInstanceId);
-		}
-		
 
 	}
 
-
-	public ProcessInstanceEntity findSubProcessInstanceBySuperExecutionId(String superExecutionId) {
-
-		return null;
-	}
-	
+	/**
+	 * 获取流程实例
+	 * 
+	 * @param processInstanceId
+	 *            流程实例编号
+	 * @return
+	 */
 	public ProcessInstanceEntity findProcessInstanceById(String processInstanceId) {
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("processInstanceId", processInstanceId);
-		parameters.put("processDefinition", null);
-		return (ProcessInstanceEntity) getDbSqlSession().selectOne("selectProcessInstance", parameters);
+		//CacheHandler cacheHandler = Context.getProcessEngineConfiguration().getCacheHandler();
+		//Object cacheObj = cacheHandler.getCacheData("ProcessInstance_" + processInstanceId);
+
+		//if (cacheObj == null) {
+
+			ProcessInstanceEntity processInstanceEntity = (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById",
+					processInstanceId);
+			if(processInstanceEntity==null){
+				throw new FixFlowException("查询的流程实例: "+processInstanceId +" 不存在");
+			}
+			initProcessInstance(processInstanceEntity);
+			return processInstanceEntity;
+		//	cacheHandler.putCacheData("ProcessInstance_" + processInstanceId, processInstanceEntity);
+		//	return (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceById", processInstanceId);
+
+		//} else {
+		//	return (ProcessInstanceEntity) cacheObj;
+		//}
 
 	}
+
+	private void initProcessInstance(ProcessInstanceEntity processInstanceEntity) {
+
+		String processDefinitionId = processInstanceEntity.getProcessDefinitionId();
+
+		ProcessDefinitionManager processDefinitionManager = getCommandContext().getProcessDefinitionManager();
+
+		ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
+
+		processInstanceEntity.setProcessDefinition(processDefinition);
+
+		readToken(processInstanceEntity);
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<ProcessInstanceEntity> findSubProcessInstanceById(String processInstanceId) {
-
-		return (List) getDbSqlSession().selectOne("findSubProcessInstanceById", processInstanceId);
 
 	}
+
+	void readToken(ProcessInstanceEntity processInstanceEntity) {
+		
+		String rocessInstanceId=processInstanceEntity.getId();
+		
+		List<TokenEntity> tokenEntities=getCommandContext().getTokenManager().findTokensByProcessInstanceId(rocessInstanceId);
+		
+		
+		for (TokenEntity tokenEntity : tokenEntities) {
+			tokenEntity.setProcessInstance(processInstanceEntity);
+			processInstanceEntity.addTokenList(tokenEntity);
+			if(StringUtil.isEmpty(tokenEntity.getParentTokenId())&&!tokenEntity.isFreeToken()){
+				processInstanceEntity.setRootToken(tokenEntity);
+			}
+		}
+		
+		for (TokenEntity tokenEntity : tokenEntities) {
+			if(StringUtil.isNotEmpty(tokenEntity.getParentTokenId())){
+				TokenEntity tokenEntityParent=processInstanceEntity.getTokenMap().get(tokenEntity.getParentTokenId());
+				tokenEntity.setParent(tokenEntityParent);
+				tokenEntityParent.addChild(tokenEntity);
+			}
+		}
+		
+		List<TaskInstanceEntity> taskInstanceEntities=getCommandContext().getTaskManager().findTaskByProcessInstanceIdNotEnd(rocessInstanceId);
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<ProcessInstanceEntity> findSubProcessInstanceByIdAndToken(String processInstanceId,String tokenId) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("processInstanceId", processInstanceId);
-		parameters.put("tokenId", tokenId);
-		return (List) getDbSqlSession().selectOne("findSubProcessInstanceByIdAndToken",parameters);
+		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
+			
+			TokenEntity tokenEntity =processInstanceEntity.getTokenMap().get(taskInstanceEntity.getTokenId());
+			if(tokenEntity.getFlowNode() instanceof UserTask){
+				processInstanceEntity.getTaskMgmtInstance().addTaskInstanceEntity(taskInstanceEntity);
+				
+				taskInstanceEntity.setToken(tokenEntity);
+			}
+
+			
+		}
+		
 
 	}
+
+	
+
+
 
 	public ProcessInstanceEntity findProcessInstanceById(String processInstanceId, ProcessDefinitionBehavior processDefinition) {
 
+		return findProcessInstanceById(processInstanceId);
+
+	}
+
+	/**
+	 * 查询子流程
+	 * 
+	 * @param processInstanceId
+	 *            主流程实例编号
+	 * @return
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public List<ProcessInstanceEntity> findSubProcessInstanceById(String processInstanceId) {
+		
+		List<ProcessInstanceEntity> processInstanceEntities=(List<ProcessInstanceEntity>) getMappingSqlSession().selectList("findSubProcessInstanceById", processInstanceId);
+		for (ProcessInstanceEntity processInstanceEntity : processInstanceEntities) {
+			initProcessInstance(processInstanceEntity);
+		}
+//		String processDefinitionId=StringUtil.getString(map.get(ProcessInstanceObjKey.ProcessDefinitionId().DataBaseKey()));
+//		ProcessDefinitionBehavior processDefinitionBehavior=persistence.selectProcessDefinitionById(processDefinitionId);
+//		ProcessInstanceEntity processInstanceEntity=getProcessInstance(processInstanceId, processDefinitionBehavior);
+//		processInstanceEntities.add(processInstanceEntity);
+		
+		
+		return processInstanceEntities;
+
+	}
+
+	/**
+	 * 根据流程实例号和令牌号 查询子流程实例
+	 * 
+	 * @param processInstanceId
+	 * @param tokenId
+	 * @return
+	 */
+	@SuppressWarnings({ "unchecked"})
+	public List<ProcessInstanceEntity> findSubProcessInstanceByIdAndToken(String processInstanceId, String tokenId) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("processInstanceId", processInstanceId);
-		parameters.put("processDefinition", processDefinition);
-		return (ProcessInstanceEntity) getDbSqlSession().selectOne("selectProcessInstance", parameters);
+		parameters.put("tokenId", tokenId);
+		List<ProcessInstanceEntity> processInstanceEntities=(List<ProcessInstanceEntity>) getMappingSqlSession().selectOne("findSubProcessInstanceByIdAndToken", parameters);
+		
+		
+		for (ProcessInstanceEntity processInstanceEntity : processInstanceEntities) {
+			initProcessInstance(processInstanceEntity);
+		}
+		
+		return processInstanceEntities;
 
 	}
 
-	public long findProcessInstanceCountByQueryCriteria(Object executionQuery) {
-
-		return (Long) getDbSqlSession().selectOne("selectProcessInstanceCountByQueryCriteria", executionQuery);
-
-	}
-
+	/**
+	 * 查询流程实例对象
+	 * 
+	 * @param processInstanceQueryImpl
+	 * @param page
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ProcessInstanceEntity> findProcessInstanceByQueryCriteria(ProcessInstanceQueryImpl processInstanceQueryImpl, Page page) {
-		return getDbSqlSession().selectList("selectProcessInstanceByQueryCriteria", processInstanceQueryImpl, page);
+		return getMappingSqlSession().selectList("selectProcessInstanceByQueryCriteria", processInstanceQueryImpl, page);
 	}
-	
-	public ProcessInstanceEntity findProcessInstanceByDefKeyAndBusinessKey(String processDefinitionKey,String businessKey) {
+
+	/**
+	 * 查询流程实例数量
+	 * 
+	 * @param executionQuery
+	 * @return
+	 */
+	public long findProcessInstanceCountByQueryCriteria(Object executionQuery) {
+
+		return (Long) getMappingSqlSession().selectOne("selectProcessInstanceCountByQueryCriteria", executionQuery);
+
+	}
+
+	public ProcessInstanceEntity findProcessInstanceByDefKeyAndBusinessKey(String processDefinitionKey, String businessKey) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("processDefinitionKey", processDefinitionKey);
 		parameters.put("businessKey", businessKey);
-		return (ProcessInstanceEntity)getDbSqlSession().selectOne("selectProcessInstanceByDefKeyAndBusinessKey",parameters );
+		return (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceByDefKeyAndBusinessKey", parameters);
 	}
 
 	public void saveProcessInstance(ProcessInstanceEntity processInstance) throws Exception {
-		
-		String processLocation="";
-		
-		List<TaskInstanceEntity> taskInstanceEntities=processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
-		
-		
+		String processLocation = "";
+
+		List<TaskInstanceEntity> taskInstanceEntities = processInstance.getTaskMgmtInstance().getTaskInstancesNoDB();
+
 		for (TaskInstanceEntity taskInstanceEntity : taskInstanceEntities) {
-			if(!taskInstanceEntity.hasEnded()){
-				if(processLocation.equals("")){
-					processLocation=processLocation+taskInstanceEntity.getNodeId();
-				}
-				else{
-					processLocation=processLocation+","+taskInstanceEntity.getNodeId();
+			if (!taskInstanceEntity.hasEnded()) {
+				if (processLocation.equals("")) {
+					processLocation = processLocation + taskInstanceEntity.getNodeId();
+				} else {
+					processLocation = processLocation + "," + taskInstanceEntity.getNodeId();
 				}
 			}
 		}
-		//添加更新时间的操作
+		// 添加更新时间的操作
 		processInstance.setUpdateTime(new Date());
 		processInstance.setProcessLocation(processLocation);
-		
-		
-		getDbSqlSession().save("saveProcessInstance", processInstance);
-		
+
+		// List<TaskInstanceEntity> taskInstances
+		// =processInstance.getTaskMgmtInstance().getTaskInstanceEntitys();
+
+		// 保存流程实例和令牌
+
+		if (processInstance.isAdd()) {
+			insert(processInstance);
+
+			for (Token token : processInstance.getTokenList()) {
+				commandContext.getTokenManager().insert(token);
+			}
+
+			for (TaskInstanceEntity taskInstance : taskInstanceEntities) {
+				commandContext.getTaskManager().insert(taskInstance);
+			}
+
+		} else {
+			update(processInstance);
+
+			for (Token token : processInstance.getTokenList()) {
+				commandContext.getTokenManager().saveToken(token);
+			}
+
+			for (TaskInstanceEntity taskInstance : taskInstanceEntities) {
+				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
+			}
+		}
+
+		// 存储流程环境变量
+		for (DataVariableEntity dataVariableEntity : processInstance.getDataVariableMgmtInstance().getDataVariableEntities()) {
+			if (dataVariableEntity.isPersistence()) {
+				commandContext.getVariableManager().saveVariable(dataVariableEntity);
+			}
+		}
+
 	}
-	
+
 	public void UpdateProcessInstanceBusinessKey(ProcessInstanceEntity processInstance) throws Exception {
+		/**
+		 * 5.1版本修改 getDbSqlSession().save("saveProcessInstance",
+		 * processInstance);
+		 */
+		update(processInstance);
+	}
 
-		getDbSqlSession().save("saveProcessInstance", processInstance);
+	/**
+	 * 新增流程实例
+	 * 
+	 * @param processInstanceEntity
+	 */
+	public void insert(ProcessInstanceEntity processInstanceEntity) {
+		getMappingSqlSession().insert("insertProcessInstance", processInstanceEntity);
+	}
 
+	/**
+	 * 更新流程实例
+	 * 
+	 * @param processInstanceEntity
+	 */
+	public void update(ProcessInstanceEntity processInstanceEntity) {
+		getMappingSqlSession().update("updateProcessInstance", processInstanceEntity);
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime,String processKey,Page page) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		parameters.put("processKey", processKey);
-		return getDbSqlSession().selectList("selectProcessPerformance", parameters, page);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime,Page page) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface2", parameters, page);
-	}
-	
-	public int getProcessPerformance2(String startTime,String endTime) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return StringUtil.getInt(getDbSqlSession().selectOne("selectProcessPerformanceInterface22", parameters));
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime) {
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface1", parameters);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String[] processKey,String startTime,String endTime) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("processKey", processKey);
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface4", parameters);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformance(String startTime,String endTime, String pid) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		parameters.put("pid", pid);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface5", parameters);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getProcessPerformanceTask(String[] pid, String startTime,String endTime) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("pid", pid);
-		parameters.put("startTime", startTime);
-		parameters.put("endTime", endTime);
-		return getDbSqlSession().selectList("selectProcessPerformanceInterface3", parameters);
+
+	/**
+	 * 查询指定ID是否存在数据库
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
+	public int selectProcessInstanceCountById(String processInstanceId) {
+
+		return StringUtil.getInt(getMappingSqlSession().selectOne("selectProcessInstanceCountById", processInstanceId));
+
 	}
 
 }
