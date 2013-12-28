@@ -80,6 +80,48 @@ public class TableUtil {
 		return getDefaultTableName(RUN_VARIABLE_TABLE_ID);
 	}
 	
+	//   历史表 //////////////////////
+	
+	/**
+	 * 获取流程实例历史表名
+	 * @return
+	 */
+	public static String getProcessInstanceHisTableName(){
+		return getArchiveTableName(RUN_PROCESSINSTANCE_TABLE_ID);
+	}
+	
+	/**
+	 * 获取令牌历史表名
+	 * @return
+	 */
+	public static String getTokenHisTableName(){
+		return getArchiveTableName(RUN_TOKEN_TABLE_ID);
+	}
+	
+	/**
+	 * 获取任务实例历史表名
+	 * @return
+	 */
+	public static String getTaskInstanceHisTableName(){
+		return getArchiveTableName(RUN_TASKINSTANCE_TABLE_ID);
+	}
+	
+	/**
+	 * 获取任务候选人历史表名
+	 * @return
+	 */
+	public static String getTaskTdentityLinkHisTableName(){
+		return getArchiveTableName(RUN_TASKIDENTITYLINK_TABLE_ID);
+	}
+	
+	/**
+	 * 获取变量历史表名
+	 * @return
+	 */
+	public static String getVariableHisTableName(){
+		return getArchiveTableName(RUN_VARIABLE_TABLE_ID);
+	}
+	
 	
 	/**
 	 * 获取查询查询表名，run his run_his

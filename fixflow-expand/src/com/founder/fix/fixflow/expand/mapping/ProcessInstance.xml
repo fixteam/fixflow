@@ -57,12 +57,14 @@
 	<delete id="deleteProcessInstanceByProcessInstanceId" parameterType="String" remark="删除流程实例">
 	<![CDATA[ 
 		import com.founder.fix.fixflow.core.impl.util.StringUtil;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		
 		Object[] objectParamWhere = new Object[1];
 		objectParamWhere[0]=parameter;
-		sqlCommand.delete("FIXFLOW_RUN_PROCESSINSTANCE", " PROCESSINSTANCE_ID=?",objectParamWhere);
+		sqlCommand.delete(TableUtil.getProcessInstanceRunTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 		isEnable = StringUtil.getBoolean(sysRulesConfig.getPigeonholeConfig().getIsEnable());
 		if(isEnable){
-			sqlCommand.delete("FIXFLOW_HIS_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
+			sqlCommand.delete(TableUtil.getProcessInstanceHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 		}
 	
 	]]>
@@ -77,10 +79,12 @@
 	<select id="selectProcessInstanceCountById" parameterType="java.lang.String" remark="查询流程实例是否存在">
 		<![CDATA[ 
 		
-			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+			import com.founder.fix.fixflow.expand.database.TableUtil;
+			
 			SqlQuery sqlQuery=new SqlQuery();
 			
-			sqlText = "SELECT count(*) FROM FIXFLOW_RUN_PROCESSINSTANCE  WHERE PROCESSINSTANCE_ID=?";
+			sqlText = "SELECT count(*) FROM "+TableUtil.getProcessInstanceRunTableName()+"  WHERE PROCESSINSTANCE_ID=?";
 			List<Object> objectParamWhere = new ArrayList<Object>();
 			objectParamWhere.add(parameter);
 			
@@ -92,10 +96,12 @@
 	<select id="findProcessInstanceById" parameterType="java.lang.String" resultMap="processInstanceResultMap" remark="根据流程实例编号查询流程对象">
 		<![CDATA[ 
 		
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		
 		SqlQuery sqlQuery=new SqlQuery();
 		
-		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PROCESSINSTANCE_ID=?";
+		sqlText = "SELECT * FROM "+TableUtil.getProcessInstanceRunTableName()+" WHERE PROCESSINSTANCE_ID=?";
 		// 构建查询参数
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter);
@@ -109,10 +115,12 @@
 	
 	<select id="findSubProcessInstanceById" parameterType="java.lang.String" resultMap="processInstanceResultMap" remark="根据流程实例编号查询子流程对象">
 		<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		
 		SqlQuery sqlQuery=new SqlQuery();
 		
-		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID =? AND END_TIME IS NULL";
+		sqlText = "SELECT * FROM "+TableUtil.getProcessInstanceRunTableName()+" WHERE PARENT_INSTANCE_ID =? AND END_TIME IS NULL";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.getParameter());
 
@@ -126,10 +134,11 @@
 	
 	<select id="findSubProcessInstanceByIdAndToken" parameterType="Map" resultMap="processInstanceResultMap" remark="根据流程实例编号和令牌号查询子流程对象">
 		<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
 		SqlQuery sqlQuery=new SqlQuery();
 		
-		sqlText = "SELECT * FROM FIXFLOW_RUN_PROCESSINSTANCE WHERE PARENT_INSTANCE_ID  = ? AND END_TIME IS NULL AND PARENT_INSTANCE_TOKEN_ID =?";
+		sqlText = "SELECT * FROM "+TableUtil.getProcessInstanceRunTableName()+" WHERE PARENT_INSTANCE_ID  = ? AND END_TIME IS NULL AND PARENT_INSTANCE_TOKEN_ID =?";
 		
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.get("processInstanceId"));
@@ -147,12 +156,12 @@
 	<select id="selectProcessInstanceIdsByProcessDefinitionId" parameterType="java.lang.String"  remark="备注">
 		<![CDATA[ 
 		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
-		import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
 		SqlQuery sqlQuery=new SqlQuery();
 		
 		
 		processInstanceIds = new ArrayList<String>();
-		String sql = "select PROCESSINSTANCE_ID from "+QueryTableUtil.getDefaultTableName("fixflow_run_processinstance")+" p where p.processdefinition_id =?";
+		String sql = "select PROCESSINSTANCE_ID from "+TableUtil.getProcessInstanceRunTableName()+" p where p.processdefinition_id =?";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.getParameter());
 		dataObj = sqlCommand.queryForList(sql, objectParamWhere);
@@ -180,11 +189,12 @@
 	
 		<![CDATA[ 
 		
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
 		SqlQuery sqlQuery=new SqlQuery();
 		
 		
-		sqlString = " SELECT * FROM "+ProcessInstanceObjKey.ProcessInstanceTableName()+" WHERE PROCESSDEFINITION_KEY=?  AND BIZ_KEY=? ";
+		sqlString = " SELECT * FROM "+TableUtil.getProcessInstanceRunTableName()+" WHERE PROCESSDEFINITION_KEY=?  AND BIZ_KEY=? ";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.get("processDefinitionKey"));
 		objectParamWhere.add(parameter.get("businessKey"));
@@ -238,6 +248,7 @@
 	
 	<businessRules id="processInstanceClone" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" remark="流程实例拷贝">
 	<![CDATA[ 
+		import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 		processInstanceEntity = new ProcessInstanceEntity();
 		processInstanceEntity.persistentInit(sysRulesConfig.getResultMap("processInstanceResultMap"),parameter.getPersistentDbMap());
 		return processInstanceEntity;

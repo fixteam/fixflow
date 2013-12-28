@@ -36,12 +36,15 @@
 	<delete id="deleteIdentityLinkByProcessInstanceId" parameterType="java.lang.String" remark="删除流程实例对应的所有候选人">
 		<![CDATA[ 
 			import com.founder.fix.fixflow.core.impl.util.StringUtil;
+			import com.founder.fix.fixflow.expand.database.TableUtil;
+			
+			
 			Object[] objectParamWhere = new Object[1];
 			objectParamWhere[0]=parameter;
-			sqlCommand.delete("FIXFLOW_RUN_TASKIDENTITYLINK", " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM FIXFLOW_RUN_TASKINSTANCE WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+			sqlCommand.delete(TableUtil.getTaskTdentityLinkRunTableName(), " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM "+TableUtil.getTaskInstanceRunTableName()+" WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
 			isEnable = StringUtil.getBoolean(sysRulesConfig.getPigeonholeConfig().getIsEnable());
 			if(isEnable){
-				sqlCommand.delete("FIXFLOW_HIS_TASKIDENTITYLINK", " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM FIXFLOW_HIS_TASKINSTANCE WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
+				sqlCommand.delete(TableUtil.getTaskTdentityLinkHisTableName(), " TASKINSTANCE_ID IN (SELECT TASKINSTANCE_ID FROM "+TableUtil.getTaskInstanceHisTableName()+" WHERE PROCESSINSTANCE_ID=?)",objectParamWhere);
 			}
 		]]>
 	</delete>
@@ -54,10 +57,12 @@
 
 	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
-			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+			import com.founder.fix.fixflow.expand.database.TableUtil;
+			
 			SqlQuery sqlQuery=new SqlQuery();
 		
-			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE ID = ? ";
+			sqlText = "SELECT * FROM "+TableUtil.getTaskTdentityLinkRunTableName()+" WHERE ID = ? ";
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(parameter);
 			sqlQuery.queryList(sqlText, objectParamWhere);
@@ -66,9 +71,11 @@
 	
 	<select id="selectIdentityLinksByTask" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
-			import com.founder.fix.fixflow.core.impl.db.SqlQuery
+			import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+			import com.founder.fix.fixflow.expand.database.TableUtil;
+			
 			SqlQuery sqlQuery=new SqlQuery();
-			sqlText = "SELECT * FROM FIXFLOW_RUN_TASKIDENTITYLINK WHERE TASKINSTANCE_ID = ? ";
+			sqlText = "SELECT * FROM "+TableUtil.getTaskTdentityLinkRunTableName()+" WHERE TASKINSTANCE_ID = ? ";
 			taskId = parameter.getParameter();
 			objectParamWhere = new ArrayList();
 			objectParamWhere.add(taskId);
@@ -106,6 +113,8 @@
 	
 	<businessRules id="identityLinkClone" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="令牌实例拷贝">
 	<![CDATA[ 
+	
+		import com.founder.fix.fixflow.core.task.IdentityLinkEntity;
 		identityLinkEntity = new IdentityLinkEntity();
 		identityLinkEntity.persistentInit(sysRulesConfig.getResultMap("identityLinkResultMap"),parameter.getPersistentDbMap());
 		return identityLinkEntity;

@@ -52,12 +52,14 @@
 	<delete id="deleteTokenByProcessInstanceId" parameterType="String" remark="备注">
 	<![CDATA[ 
 			import com.founder.fix.fixflow.core.impl.util.StringUtil;
+			import com.founder.fix.fixflow.expand.database.TableUtil;
+			
 			Object[] objectParamWhere = new Object[1];
 			objectParamWhere[0]=parameter;
-			sqlCommand.delete("FIXFLOW_RUN_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
+			sqlCommand.delete(TableUtil.getTokenRunTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 			isEnable = StringUtil.getBoolean(sysRulesConfig.getPigeonholeConfig().getIsEnable());
 			if(isEnable){
-				sqlCommand.delete("FIXFLOW_HIS_TOKEN", " PROCESSINSTANCE_ID=?",objectParamWhere);
+				sqlCommand.delete(TableUtil.getTokenHisTableName(), " PROCESSINSTANCE_ID=?",objectParamWhere);
 			}
 	]]>
 
@@ -69,11 +71,11 @@
 	remark="更新令牌"/>
 
 	<select id="findTokenById" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
-	
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
 		SqlQuery sqlQuery=new SqlQuery();
 	
-		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE TOKEN_ID = ? ";
+		sqlText = "SELECT * FROM "+TableUtil.getTokenRunTableName()+" WHERE TOKEN_ID = ? ";
 		objectParamWhere = new ArrayList();
 		objectParamWhere.add(parameter);
 		sqlQuery.queryList(sqlText, objectParamWhere);
@@ -81,9 +83,10 @@
 	
 	
 	<select id="findTokensByProcessInstanceId" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
 		SqlQuery sqlQuery=new SqlQuery();
-		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID = ? ";
+		sqlText = "SELECT * FROM "+TableUtil.getTokenRunTableName()+" WHERE PROCESSINSTANCE_ID = ? ";
 		objectParamWhere = new ArrayList();
 		objectParamWhere.add(parameter.getParameter());
 		sqlQuery.queryList(sqlText, objectParamWhere);
@@ -91,9 +94,10 @@
 	
 		
 	<select id="findTokensByProcessInstanceIdNotEnd" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
 		SqlQuery sqlQuery=new SqlQuery();
-		sqlText = "SELECT * FROM FIXFLOW_RUN_TOKEN WHERE PROCESSINSTANCE_ID = ? AND END_TIME IS NULL ";
+		sqlText = "SELECT * FROM "+TableUtil.getTokenRunTableName()+" WHERE PROCESSINSTANCE_ID = ? AND END_TIME IS NULL ";
 		objectParamWhere = new ArrayList();
 		objectParamWhere.add(parameter.getParameter());
 		sqlQuery.queryList(sqlText, objectParamWhere);
@@ -116,9 +120,10 @@
 	
 	<select id="findTokenByParentId" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
 		<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
+		import com.founder.fix.fixflow.expand.database.TableUtil;
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
 		SqlQuery sqlQuery=new SqlQuery();
-		sqlText = "SELECT * FROM  FIXFLOW_RUN_TOKEN WHERE PARENT_ID=? AND END_TIME IS NULL";
+		sqlText = "SELECT * FROM  "+TableUtil.getTokenRunTableName()+" WHERE PARENT_ID=? AND END_TIME IS NULL";
 		objectParamWhere = new ArrayList();
 		objectParamWhere.add(parameter.getParameter());
 		sqlQuery.queryList(sqlText, objectParamWhere);
@@ -171,6 +176,7 @@
 	
 	<businessRules id="tokenClone" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="令牌实例拷贝">
 	<![CDATA[ 
+		import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 		tokenEntity = new TokenEntity();
 		tokenEntity.persistentInit(sysRulesConfig.getResultMap("tokenResultMap"),parameter.getPersistentDbMap());
 		return tokenEntity;

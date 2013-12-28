@@ -39,7 +39,7 @@
 
 	<delete id="deleteVariable" parameterType="com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand" remark="备注">
 		<![CDATA[ 
-		
+		import com.founder.fix.fixflow.expand.database.TableUtil;
 		if (parameter == null) {
 			return;
 		}
@@ -110,7 +110,7 @@
 		for (int i = 0; i < objectParamWhere.size(); i++) {
 			objectParamObj[i] = objectParamWhere.get(i);
 		}
-		sqlCommand.delete("FIXFLOW_RUN_VARIABLE", sqlWhereQueryString, objectParamObj);
+		sqlCommand.delete(TableUtil.getVariableRunTableName(), sqlWhereQueryString, objectParamObj);
 		
 		]]>
 
@@ -125,8 +125,8 @@
 	<select id="selectVariableByQuery" parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" resultMap="variableResultMap" remark="查询编号">
 		
 		<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.db.SqlQuery
-
+		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
+		import com.founder.fix.fixflow.expand.database.TableUtil;
 		import com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand;
 		
 
@@ -202,7 +202,7 @@
 		}
 
 		// 设置查询字符串
-		sqlText = "SELECT * FROM FIXFLOW_RUN_VARIABLE  WHERE " + sqlWhereQueryString;
+		sqlText = "SELECT * FROM "+TableUtil.getVariableRunTableName()+"  WHERE " + sqlWhereQueryString;
 
 		sqlQuery.queryList(sqlText, objectParamWhere);
 
@@ -250,7 +250,7 @@
 	<businessRules id="variableClone" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity"
 		remark="变量实例拷贝">
 	<![CDATA[ 
-	
+		import com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity;
 		dataVariableEntityNew = new DataVariableEntity();
 		dataVariableEntityNew.persistentInit(sysRulesConfig.getResultMap("variableResultMap"),parameter.getPersistentDbMap());
 		return dataVariableEntityNew;
