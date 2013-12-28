@@ -1,4 +1,4 @@
-package com.founder.fix.fixflow.expand.rulescript;
+package com.founder.fix.fixflow.expand.rulescript.entity;
 
 import java.util.HashMap;
 import java.util.Map;

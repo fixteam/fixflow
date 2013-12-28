@@ -27,11 +27,11 @@
 	</resultMap>
 	
 
-	<insert id="insertIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="插入候选人">
-		<![CDATA[ 
-			sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK",parameter.getPersistentDbMap());
-		]]>
-	</insert>
+	<insert id="insertIdentityLink" 
+	parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.insert.InsertIdentityLink"
+	remark="插入候选人"/>
+
 
 	<delete id="deleteIdentityLinkByProcessInstanceId" parameterType="java.lang.String" remark="删除流程实例对应的所有候选人">
 		<![CDATA[ 
@@ -46,13 +46,11 @@
 		]]>
 	</delete>
 	
-	<update id="updateIdentityLink" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="更新任务候选人">
-		<![CDATA[ 
-			Object[] objectParamWhere = new Object[1];
-			objectParamWhere[0]=parameter.getId() ;
-			sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK",  parameter.getPersistentDbMap(), " ID=?",objectParamWhere);
-		]]>
-	</update>
+	<update id="updateIdentityLink" 
+	parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.update.UpdateIdentityLink"
+	remark="更新任务候选人"/>
+
 
 	<select id="selectIdentityLinkById" parameterType="java.lang.String" resultMap="identityLinkResultMap" remark="查询单个任务候选人">
 		<![CDATA[
@@ -82,7 +80,7 @@
 	<businessRules id="getIdentityLinkPersistentDbMap" 
 	parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" 
 	resultType="java.util.Map" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.IdentityLinkPersistentDbMap"
+	classPath="com.founder.fix.fixflow.expand.rulescript.entity.IdentityLinkPersistentDbMap"
 	remark="返回IdentityLink对象需要保存到数据的字段Map"/>
 
 	

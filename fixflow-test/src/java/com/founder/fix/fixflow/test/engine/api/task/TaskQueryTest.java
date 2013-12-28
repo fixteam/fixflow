@@ -18,16 +18,13 @@
 package com.founder.fix.fixflow.test.engine.api.task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
-import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskInstanceType;
 import com.founder.fix.fixflow.core.task.TaskQuery;

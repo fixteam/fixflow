@@ -126,7 +126,6 @@ public interface ModelService extends ProcessService{
 	 */
 	List<Map<String, Object>> selectProcessDefinitionGroupKey();
 	
-	@Deprecated
 	/**
 	 * 获取流程图图片地址
 	 * @param processDefinitionId 流程唯一编号

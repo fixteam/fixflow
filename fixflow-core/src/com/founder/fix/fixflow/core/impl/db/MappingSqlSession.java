@@ -67,26 +67,7 @@ public class MappingSqlSession {
 		
 		AbstractPersistentObject<?> abstractPersistentObject=(AbstractPersistentObject<?>)persistentObject;
 
-		if (statement.equals("insertProcessInstance")) {
-			sqlCommand.insert("FIXFLOW_RUN_PROCESSINSTANCE", abstractPersistentObject.getPersistentDbMap());
-			return;
-		}
-		if (statement.equals("insertToken")) {
-			sqlCommand.insert("FIXFLOW_RUN_TOKEN", abstractPersistentObject.getPersistentDbMap());
-			return;
-		}
-		if (statement.equals("insertTaskInstance")) {
-			sqlCommand.insert("FIXFLOW_RUN_TASKINSTANCE", abstractPersistentObject.getPersistentDbMap());
-			return;
-		}
-		if (statement.equals("insertVariable")) {
-			sqlCommand.insert("FIXFLOW_RUN_VARIABLE", abstractPersistentObject.getPersistentDbMap());
-			return;
-		}
-		if (statement.equals("insertIdentityLink")) {
-			sqlCommand.insert("FIXFLOW_RUN_TASKIDENTITYLINK", abstractPersistentObject.getPersistentDbMap());
-			return;
-		}
+		
 		
 		abstractPersistentObject.setAdd(false);
 
@@ -121,36 +102,9 @@ public class MappingSqlSession {
 		
 		AbstractPersistentObject<?> abstractPersistentObject=(AbstractPersistentObject<?>)persistentObject;
 		
-		Object[] objectParamWhere = new Object[1];
-		objectParamWhere[0]=persistentObject.getId() ;
+		
 		
 		abstractPersistentObject.setAdd(false);
-
-		if (statement.equals("updateProcessInstance")) {
-			
-			sqlCommand.update("FIXFLOW_RUN_PROCESSINSTANCE",   abstractPersistentObject.getPersistentDbMap(), " PROCESSINSTANCE_ID=?",objectParamWhere);
-
-			return;
-		}
-		if (statement.equals("updateToken")) {
-			
-			sqlCommand.update("FIXFLOW_RUN_TOKEN",   abstractPersistentObject.getPersistentDbMap(), " TOKEN_ID=?",objectParamWhere);
-			return;
-		}
-		if (statement.equals("updateTaskInstance")) {
-			sqlCommand.update("FIXFLOW_RUN_TASKINSTANCE",   abstractPersistentObject.getPersistentDbMap(), " TASKINSTANCE_ID=?",objectParamWhere);
-
-			return;
-		}
-		
-		
-		if (statement.equals("updateIdentityLink")) {
-			
-			sqlCommand.update("FIXFLOW_RUN_TASKIDENTITYLINK",   abstractPersistentObject.getPersistentDbMap(), " ID=?",objectParamWhere);
-
-
-			return;
-		}
 
 		
 		

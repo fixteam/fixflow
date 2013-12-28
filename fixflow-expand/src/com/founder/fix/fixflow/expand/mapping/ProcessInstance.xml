@@ -46,11 +46,13 @@
 		<result property="suspendedString" column="ISSUSPENDED" name="令牌编号" jdbcType="VARCHAR" />
 	</resultMap>	
 
-	<insert id="insertProcessInstance" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" remark="插入新的流程实例">
-	<![CDATA[ 
-		sqlCommand.insert("FIXFLOW_RUN_PROCESSINSTANCE",parameter.getPersistentDbMap());
-	]]>
-	</insert>
+	<insert id="insertProcessInstance" 
+	parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.insert.InsertProcessInstance"
+	remark="插入新的流程实例"/>
+	
+	
+
 	
 	<delete id="deleteProcessInstanceByProcessInstanceId" parameterType="String" remark="删除流程实例">
 	<![CDATA[ 
@@ -66,13 +68,11 @@
 	]]>
 	
 	</delete>
-	<update id="updateProcessInstance" parameterType="入参类型" remark="备注">
-		<![CDATA[ 
-			Object[] objectParamWhere = new Object[1];
-			objectParamWhere[0]=parameter.getId() ;
-			sqlCommand.update("FIXFLOW_RUN_PROCESSINSTANCE",  parameter.getPersistentDbMap(), " PROCESSINSTANCE_ID=?",objectParamWhere);
-		]]>
-	</update>
+	<update id="updateProcessInstance" 
+	parameterType="入参类型" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.update.UpdateProcessInstance"
+	remark="备注"/>
+	
 	
 	<select id="selectProcessInstanceCountById" parameterType="java.lang.String" remark="查询流程实例是否存在">
 		<![CDATA[ 
@@ -168,12 +168,12 @@
 	<select id="selectProcessInstanceByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject"  
 	resultMap="processInstanceResultMap" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.ProcessInstanceQueryScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.select.ProcessInstanceQueryScript"
 	remark="查询流程实例对象"/>
 
 	<select id="selectProcessInstanceCountByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.ProcessInstanceQueryCountScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.select.ProcessInstanceQueryCountScript"
 	remark="查询流程实例对象数量"/>
 	
 	<select id="findProcessInstanceByDefKeyAndBusinessKey" parameterType="Map" resultMap="processInstanceResultMap" remark="根据流程key和业务值查询流程实例">
@@ -201,7 +201,7 @@
 	<businessRules id="getProcessInstancePersistentDbMap" 
 	parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" 
 	resultType="java.util.Map" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.ProcessInstancePersistentDbMap"
+	classPath="com.founder.fix.fixflow.expand.rulescript.entity.ProcessInstancePersistentDbMap"
 	remark="返回Task对象需要保存到数据的字段Map"/>
 
 

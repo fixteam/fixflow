@@ -97,11 +97,11 @@
 
 	</resultMap>
 
-	<insert id="insertTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="插入任务表">
-	<![CDATA[ 
-		sqlCommand.insert("FIXFLOW_RUN_TASKINSTANCE" , parameter.getPersistentDbMap());
-	]]>
-	</insert>
+	<insert id="insertTaskInstance" 
+	parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.insert.InsertTaskInstance"
+	remark="插入任务表"/>
+
 
 	<delete id="deleteTaskById" parameterType="String" remark="根据任务编号删除任务">
 	<![CDATA[ 
@@ -120,13 +120,11 @@
 	]]>
 	</delete>
 	
-	<update id="updateTaskInstance" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="备注">
-	<![CDATA[ 
-		Object[] objectParamWhere = new Object[1];
-		objectParamWhere[0]=parameter.getId() ;
-		sqlCommand.update("FIXFLOW_RUN_TASKINSTANCE",  parameter.getPersistentDbMap(), " TASKINSTANCE_ID=?",objectParamWhere);
-	]]>
-	</update>
+	<update id="updateTaskInstance" 
+	parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity"
+	classPath="com.founder.fix.fixflow.expand.rulescript.update.UpdateTaskInstance"
+	remark="备注"/>
+	
 
 	<select id="selectTaskByTaskId" parameterType="java.lang.String" resultMap="taskResultMap" remark="根据任务编号查询任务实例 ">
 		<![CDATA[ 
@@ -162,14 +160,14 @@
 	<select id="selectTaskByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	resultMap="taskResultMap" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.select.TaskQueryScript"
 	remark="查询任务信息"/>
 	
 	
 	
 	<select id="selectTaskCountByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TaskQueryCountScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.select.TaskQueryCountScript"
 	remark="查询任务数量"/>
 	
 	
@@ -272,7 +270,7 @@
 
 	<businessRules id="getTaskInstancePersistentDbMap" 
 	parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TaskInstancePersistentDbMap"
+	classPath="com.founder.fix.fixflow.expand.rulescript.entity.TaskInstancePersistentDbMap"
 	resultType="java.util.Map" remark="返回Task对象需要保存到数据的字段Map"/>
 
 	

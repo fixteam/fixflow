@@ -43,11 +43,11 @@
 	
 	
 
-	<insert id="insertToken" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="插入新令牌">
-	<![CDATA[ 
-		sqlCommand.insert("FIXFLOW_RUN_TOKEN",parameter.getPersistentDbMap());
-	]]>
-	</insert>
+	<insert id="insertToken" 
+	parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity"
+	classPath="com.founder.fix.fixflow.expand.rulescript.insert.InsertToken"
+	remark="插入新令牌"/>
+
 
 	<delete id="deleteTokenByProcessInstanceId" parameterType="String" remark="备注">
 	<![CDATA[ 
@@ -62,13 +62,11 @@
 	]]>
 
 	</delete>
-	<update id="updateToken" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="更新令牌">
-	<![CDATA[ 
-		Object[] objectParamWhere = new Object[1];
-		objectParamWhere[0]=parameter.getId() ;
-		sqlCommand.update("FIXFLOW_RUN_TOKEN",  parameter.getPersistentDbMap(), " TOKEN_ID=?",objectParamWhere);
-	]]>
-	</update>
+	
+	<update id="updateToken" 
+	parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.update.UpdateToken"
+	remark="更新令牌"/>
 
 	<select id="findTokenById" parameterType="java.lang.String" resultMap="tokenResultMap" remark="查询单个令牌对象">
 	
@@ -105,14 +103,14 @@
 	<select id="selectTokenByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
 	resultMap="tokenResultMap" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TokenQueryScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.select.TokenQueryScript"
 	remark="查询令牌信息"/>
 	
 	
 	
 	<select id="selectTokenCountByQueryCriteria" 
 	parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TokenQueryCountScript"
+	classPath="com.founder.fix.fixflow.expand.rulescript.select.TokenQueryCountScript"
 	remark="查询令牌数量"/>
 	
 	
@@ -139,7 +137,7 @@
 	<businessRules id="getTokenPersistentDbMap" 
 	parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" 
 	resultType="java.util.Map" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.TokenPersistentDbMap"
+	classPath="com.founder.fix.fixflow.expand.rulescript.entity.TokenPersistentDbMap"
 	remark="返回Token对象需要保存到数据的字段Map"/>
 	
 	

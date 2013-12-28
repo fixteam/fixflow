@@ -1,4 +1,4 @@
-package com.founder.fix.fixflow.expand.rulescript;
+package com.founder.fix.fixflow.expand.rulescript.select;
 
 import java.util.ArrayList;
 import java.util.List;

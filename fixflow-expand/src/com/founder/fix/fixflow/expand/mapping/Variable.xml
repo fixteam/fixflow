@@ -31,11 +31,11 @@
 		<result property="archiveTime" column="ARCHIVE_TIME" name="归档时间" jdbcType="TIMESTAMP" />
 	</resultMap>
 
-	<insert id="insertVariable" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" remark="插入变量">
-		<![CDATA[ 
-			sqlCommand.insert("FIXFLOW_RUN_VARIABLE",parameter.getPersistentDbMap());
-		]]>
-	</insert>
+	<insert id="insertVariable" 
+	parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.insert.InsertVariable"
+	remark="插入变量"/>
+
 
 	<delete id="deleteVariable" parameterType="com.founder.fix.fixflow.core.impl.command.QueryVariablesCommand" remark="备注">
 		<![CDATA[ 
@@ -115,61 +115,12 @@
 		]]>
 
 	</delete>
-	<update id="updateVariable" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" remark="备注">
-		<![CDATA[ 
-
-		sqlWhereQueryString = "";
-		// 构建查询参数
-		objectParamWhere = new ArrayList<Object>();
-		variableKey = parameter.getId();
-		processInstanceId = parameter.getProcessInstanceId();
-		tokenId = parameter.getTokenId();
-		taskInstanceId = parameter.getTaskInstanceId();
-		nodeId = parameter.getNodeId();
-		variableType = parameter.getVariableType();
-		
-		if (processInstanceId == null) {
-			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID IS NULL AND ";
-		} else {
-			sqlWhereQueryString = sqlWhereQueryString + " PROCESSINSTANCE_ID=? AND ";
-			objectParamWhere.add(processInstanceId);
-		}
-
-		if (tokenId == null) {
-			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID IS NULL AND ";
-		} else {
-			sqlWhereQueryString = sqlWhereQueryString + " TOKEN_ID=? AND";
-			objectParamWhere.add(tokenId);
-		}
-
-		if (taskInstanceId == null) {
-			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID IS NULL AND ";
-		} else {
-			sqlWhereQueryString = sqlWhereQueryString + " TASKINSTANCE_ID=? AND ";
-			objectParamWhere.add(taskInstanceId);
-		}
-
-		if (nodeId == null) {
-			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID IS NULL ";
-		} else {
-			sqlWhereQueryString = sqlWhereQueryString + " NODE_ID=? ";
-			objectParamWhere.add(nodeId);
-		}
-
-		sqlWhereQueryString = sqlWhereQueryString + " AND VARIABLE_KEY=?";
-		objectParamWhere.add(variableKey);
-
-		// 构建Where查询参数
-		objectParamObj = new Object[objectParamWhere.size()];
-		for (int i = 0; i < objectParamWhere.size(); i++) {
-			objectParamObj[i] = objectParamWhere.get(i);
-		}
-
-		// 执行更新语句
-		sqlCommand.update("FIXFLOW_RUN_VARIABLE", parameter.getPersistentDbMap(), sqlWhereQueryString, objectParamObj);
-
-		]]>
-	</update>
+	
+	
+	<update id="updateVariable" 
+	parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.update.UpdateVariable"
+	remark="备注"/>
 
 	<select id="selectVariableByQuery" parameterType="com.founder.fix.fixflow.core.impl.db.ListQueryParameterObject" resultMap="variableResultMap" remark="查询编号">
 		
@@ -265,7 +216,7 @@
 	<businessRules id="getVariablePersistentDbMap" 
 	parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" 
 	resultType="java.util.Map" 
-	classPath="com.founder.fix.fixflow.expand.rulescript.VariablePersistentDbMap"
+	classPath="com.founder.fix.fixflow.expand.rulescript.entity.VariablePersistentDbMap"
 	remark="返回Task对象需要保存到数据的字段Map"/>
 	
 
