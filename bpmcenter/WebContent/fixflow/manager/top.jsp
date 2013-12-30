@@ -19,7 +19,6 @@
         <ul>
         	<li><a id="tg1" href="#" class="select"><h1>流程库</h1><h4>Liu Cheng Ku</h4></a></li>
        		<li><a id="tg2" href="#"><h1>组织机构</h1><h4>Zu Zhi Ji Gou</h4></a></li>
-      		<li><a id="tg3" href="#"><h1>业务管理</h1><h4>Ye Wu Guan Li</h4></a></li>
        		<li><a id="tg4" href="#"><h1>运维管理</h1><h4>Yun Wei Guan Li</h4></a></li>
         	<li><a id="tg5" href="#"><h1>系统配置</h1><h4>System</h4></a></li>
        </ul>
@@ -31,16 +30,10 @@
         </ul>
         <ul tg="tg2" style="display:none;">
 	        <li><a id="UserGroup" href="FlowManager?action=getUserList">架构定义</a></li>
-	        <li><a href="#">权限定义</a></li>
-        </ul>
-        <ul tg="tg3" style="display:none;">
-	        <li><a href="#">业务规则</a></li>
-	        <li><a href="#">业务监控</a></li>
-	        <li><a href="#">流程分析</a></li>
         </ul>
         <ul tg="tg4" style="display:none;">
 	        <li><a id="processManageList" href="FlowManager?action=processManageList">流程实例管理</a></li>
-	        <li><a href="#">任务干预</a></li>
+	        <li><a id="taskInstanceList" href="FlowManager?action=taskInstanceList">任务干预</a></li>
 	        <li><a id="jobManager" href="FlowManager?action=getJobList">定时任务</a></li>
         </ul>
     </div>
