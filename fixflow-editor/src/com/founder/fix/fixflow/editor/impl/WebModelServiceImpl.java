@@ -1,3 +1,20 @@
+/**
+ *  Copyright 1996-2013 Founder International Co.,Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * @author ych
+ */
 package com.founder.fix.fixflow.editor.impl;
 
 import java.io.BufferedReader;
@@ -29,6 +46,9 @@ import com.founder.fix.fixflow.editor.service.WebModelService;
 import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.util.FileUtil;
 
+/**
+ * 处理流程模型的servlet
+ */
 public class WebModelServiceImpl implements WebModelService {
 
 	private HttpServletRequest request;
@@ -39,6 +59,10 @@ public class WebModelServiceImpl implements WebModelService {
 		this.response.setContentType("application/x-json");
 		this.response.setCharacterEncoding("utf-8");
 	}
+	
+	/**
+	 * 加载模型JSON
+	 */
 	public void loadBPMNJson() throws ServletException, IOException{
 		PrintWriter out = null;
 		try {
@@ -55,6 +79,9 @@ public class WebModelServiceImpl implements WebModelService {
 
 	}
 
+	/**
+	 * 保存模型文件
+	 */
 	@SuppressWarnings("deprecation")
 	public void modelSave() throws ServletException, IOException{
 		String body = getBody(this.request);
@@ -95,6 +122,9 @@ public class WebModelServiceImpl implements WebModelService {
 		}
 	}
 	
+	/**
+	 * 二次请求模型信息
+	 */
 	public void reTryModelInfo() throws ServletException, IOException {
 		PrintWriter out = null;
 		try {
@@ -115,6 +145,10 @@ public class WebModelServiceImpl implements WebModelService {
 		
 	}
 	
+	/**
+	 * 出错处理
+	 * @param message
+	 */
 	public void error(String message){
 		String result = "{\"state\":\"error\",\"result\":\"" + message +"\" }";
 		try {
@@ -125,7 +159,12 @@ public class WebModelServiceImpl implements WebModelService {
         }
 	}
 	
-	 public String buildPath() throws IOException{
+	/**
+	 * 构建路径
+	 * @return
+	 * @throws IOException
+	 */
+	public String buildPath() throws IOException{
     	String loginId = request.getSession().getAttribute("LOGIN_USER_ID").toString();
     	String path = request.getParameter("path");
     	if(path == null){
@@ -155,6 +194,12 @@ public class WebModelServiceImpl implements WebModelService {
     	return tmpPathString;
 	 }
 	 
+	/**
+	 * 从payLoad的方式构建路径 
+	 * @param body
+	 * @return
+	 * @throws IOException
+	 */
 	 public String buildPath(String body) throws IOException{
     	String loginId = request.getSession().getAttribute("LOGIN_USER_ID").toString();
     	String path = request.getParameter("path");
@@ -188,6 +233,12 @@ public class WebModelServiceImpl implements WebModelService {
     	return tmpPathString;
     }
 	 
+	/**
+	 * 从payload中获取参数
+	 * @param content
+	 * @param title
+	 * @return
+	 */
 	public String getParameterFromPayload(String content,String title){
 		String []valueArr = content.split("&");
 		for(String str :valueArr){
@@ -201,6 +252,12 @@ public class WebModelServiceImpl implements WebModelService {
 		return null;
 	}
 		
+	/**
+	 * 获取payload中的body信息
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
 	public String getBody(HttpServletRequest request) throws IOException {
 	    String body = null;
 	    StringBuilder stringBuilder = new StringBuilder();
@@ -232,6 +289,11 @@ public class WebModelServiceImpl implements WebModelService {
 	    return body;
 	}
 	
+	/**
+	 * 获取根路径
+	 * @param request
+	 * @return
+	 */
 	public String getBasePath(HttpServletRequest request){
 		return request.getSession().getServletContext().getRealPath("/")+File.separator+"fixflow-editor"+File.separator;
 	}
