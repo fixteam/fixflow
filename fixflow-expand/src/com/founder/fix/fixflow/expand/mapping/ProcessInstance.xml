@@ -220,24 +220,24 @@
 	<businessRules id="getProcessInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
 	<![CDATA[ 
 		mapPersistentState = new HashMap<String, Object>();
-		mapPersistentState.put("processInstanceId", this.id);
-		mapPersistentState.put("subject", this.subject);
-		mapPersistentState.put("processDefinitionKey", this.processDefinitionKey);
-		mapPersistentState.put("processDefinitionId", this.processDefinitionId);
-		mapPersistentState.put("rootTokenId", this.rootTokenId);
-		mapPersistentState.put("definitionId", this.definitionId);
-		mapPersistentState.put("parentProcessInstanceId", this.parentProcessInstanceId);
-		mapPersistentState.put("parentProcessInstanceTokenId", this.parentProcessInstanceTokenId);
-		mapPersistentState.put("initiator", this.initiator);
-		mapPersistentState.put("startAuthor", this.startAuthor);
-		mapPersistentState.put("bizKey", this.bizKey);
-		mapPersistentState.put("startTime", this.startTime);
-		mapPersistentState.put("endTime", this.endTime);
-		mapPersistentState.put("updateTime", this.updateTime);
-		mapPersistentState.put("archiveTime", this.archiveTime);
-		mapPersistentState.put("isSuspended", this.isSuspended);
-		mapPersistentState.put("processLocation", this.processLocation);
-		mapPersistentState.put("instanceStatus", this.instanceType);
+		mapPersistentState.put("processInstanceId", parameter.id);
+		mapPersistentState.put("subject", parameter.subject);
+		mapPersistentState.put("processDefinitionKey", parameter.processDefinitionKey);
+		mapPersistentState.put("processDefinitionId", parameter.processDefinitionId);
+		mapPersistentState.put("rootTokenId", parameter.rootTokenId);
+		mapPersistentState.put("definitionId", parameter.definitionId);
+		mapPersistentState.put("parentProcessInstanceId", parameter.parentProcessInstanceId);
+		mapPersistentState.put("parentProcessInstanceTokenId", parameter.parentProcessInstanceTokenId);
+		mapPersistentState.put("initiator", parameter.initiator);
+		mapPersistentState.put("startAuthor", parameter.startAuthor);
+		mapPersistentState.put("bizKey", parameter.bizKey);
+		mapPersistentState.put("startTime", parameter.startTime);
+		mapPersistentState.put("endTime", parameter.endTime);
+		mapPersistentState.put("updateTime", parameter.updateTime);
+		mapPersistentState.put("archiveTime", parameter.archiveTime);
+		mapPersistentState.put("isSuspended", parameter.isSuspended);
+		mapPersistentState.put("processLocation", parameter.processLocation);
+		mapPersistentState.put("instanceStatus", parameter.instanceType);
 		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
 		for (String key : persistenceExtensionFields.keySet()) {
 			mapPersistentState.put(key, persistenceExtensionFields.get(key));	

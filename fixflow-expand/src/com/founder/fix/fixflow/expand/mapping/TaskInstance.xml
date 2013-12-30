@@ -184,8 +184,8 @@
 		sqlQuery=new SqlQuery();
 		
 		
-		sql="SELECT distinct(z.AGENT_ID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join "
-		+"FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1'"+
+		sql="SELECT distinct(z.AGENT_ID) EID FROM ( select a.AGENT_ID,b.STATUS,a.AUSER as USERID  from FIXFLOW_AGENT_AGENTDETAILS a left join "+
+		"FIXFLOW_AGENT_AGENTINFO b on a.AGENT_ID=b.AGENT_ID where b.STATUS='1'"+
 		"and  a.AUSER=?) z";
 		objectParamWhere = new ArrayList<Object>();
 		objectParamWhere.add(parameter.getParameter());
@@ -231,9 +231,9 @@
 				id = id + ",'" + parameter.getParameter().get(i) + "'";
 			}
 		}
-		sqlText = "select x.*,y.END_TIME as PROCESSINSTANCE_ENDTIME  from (select a.*,b.ID,b.type,b.user_id"
-				+ ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+TableUtil.getTaskInstanceRunTableName()+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id
-				+ ")) a left join "+TableUtil.getTaskTdentityLinkRunTableName()+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+TableUtil.getProcessInstanceRunTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
+		sqlText = "select x.*,y.END_TIME as PROCESSINSTANCE_ENDTIME  from (select a.*,b.ID,b.type,b.user_id"+
+				 ",b.GROUP_ID,b.group_type,b.include_exclusion from  (select * from "+TableUtil.getTaskInstanceRunTableName()+" where END_TIME is" + " null and PROCESSINSTANCE_ID in (" + id+
+				 ")) a left join "+TableUtil.getTaskTdentityLinkRunTableName()+" b on " + " a.TASKINSTANCE_ID=b.TASKINSTANCE_ID)  x,"+TableUtil.getProcessInstanceRunTableName()+" y where x.PROCESSINSTANCE_ID=" + "y.PROCESSINSTANCE_ID";
 		
 		sqlQuery.queryList(sqlText);
 		
@@ -281,7 +281,8 @@
 	
 	<businessRules id="getTaskInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递">
 	<![CDATA[ 
-	
+		import com.founder.fix.fixflow.core.impl.util.StringUtil;
+		
 		persistentState = new HashMap<String, Object>();
 		persistentState.put("taskInstanceId", parameter.getId());		
 		persistentState.put("name", parameter.getName());		
@@ -311,7 +312,7 @@
 		persistentState.put("formUriView", parameter.getFormUriView());		
 		persistentState.put("taskGroup", parameter.getTaskGroup());		
 		persistentState.put("taskInstanceType", StringUtil.getString(parameter.getTaskInstanceType()));		
-		persistentState.put("isBlocking", String.valueOf(parameter.isBlocking());
+		persistentState.put("isBlocking", String.valueOf(parameter.isBlocking()));
 		persistentState.put("isCancelled", String.valueOf(parameter.isCancelled()));		
 		persistentState.put("isSuspended", String.valueOf(parameter.isSuspended()));		
 		persistentState.put("isOpen", String.valueOf(parameter.isOpen()));
