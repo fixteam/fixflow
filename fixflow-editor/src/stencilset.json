@@ -1725,6 +1725,26 @@
     "roles" : [ "ConnectingObjectsMorph", "all" ]
   },{
     "type" : "node",
+    "id" : "Task",
+    "title" : "通用任务",
+    "description" : "通用任务",
+    "view" : "activity/task.svg",
+    "icon" : "activity/task.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+  },{
+    "type" : "node",
+    "id" : "ManualTask",
+    "title" : "手工任务",
+    "description" : "手工任务",
+    "view" : "activity/manualtask.svg",
+    "icon" : "activity/list/type.manual.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+  },{
+    "type" : "node",
     "id" : "UserTask",
     "title" : "人工任务",
     "description" : "人工任务",
@@ -1742,6 +1762,46 @@
     "icon" : "activity/list/type.script.png",
     "groups" : [ "活动" ],
     "propertyPackages" : [ "fixflowcommonbase", "fixscripttaskbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+  },{
+    "type" : "node",
+    "id" : "BusinessRule",
+    "title" : "规则任务",
+    "description" : "规则任务",
+    "view" : "activity/businessruletask.svg",
+    "icon" : "activity/list/type.business.rule.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+  },{
+    "type" : "node",
+    "id" : "ServiceTask",
+    "title" : "服务任务",
+    "description" : "服务任务",
+    "view" : "activity/servicetask.svg",
+    "icon" : "activity/list/type.service.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+  },{
+    "type" : "node",
+    "id" : "SendTask",
+    "title" : "发送任务",
+    "description" : "发送任务",
+    "view" : "activity/sendtask.svg",
+    "icon" : "activity/list/type.send.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
+    "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
+  },{
+    "type" : "node",
+    "id" : "ReceiveTask",
+    "title" : "接收任务",
+    "description" : "接收任务",
+    "view" : "activity/receivetask.svg",
+    "icon" : "activity/list/type.receive.png",
+    "groups" : [ "活动" ],
+    "propertyPackages" : [ "fixflowcommonbase", "multiinstancebase", "skipstrategybase", "activity", "loopcharacteristics" ],
     "roles" : [ "sequence_start", "Activity", "sequence_end", "ActivitiesMorph", "all" ]
   }, {
     "type" : "node",

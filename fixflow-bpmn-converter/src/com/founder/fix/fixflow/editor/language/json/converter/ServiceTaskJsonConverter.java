@@ -22,13 +22,14 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.editor.language.json.converter.BaseBpmnJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.ServiceTaskJsonConverter;
-import org.apache.commons.lang3.StringUtils;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.ServiceTask;
+import org.eclipse.bpmn2.impl.ServiceTaskImpl;
 
 
 public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
@@ -45,7 +46,7 @@ public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ServiceTask.class, ServiceTaskJsonConverter.class);
+    convertersToJsonMap.put(ServiceTaskImpl.class, ServiceTaskJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -53,36 +54,9 @@ public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
-  	ServiceTask serviceTask = (ServiceTask) flowElement;
-  	
-  	/*if ("mail".equalsIgnoreCase(serviceTask.getType())) {
-  	  
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_TO, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_FROM, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_SUBJECT, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_CC, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_BCC, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_TEXT, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_HTML, serviceTask, propertiesNode);
-  	  setPropertyFieldValue(PROPERTY_MAILTASK_CHARSET, serviceTask, propertiesNode);
-  	  
-  	} else {
-  	
-    	if (ImplementationType.IMPLEMENTATION_TYPE_CLASS.equals(serviceTask.getImplementationType())) {
-    	  propertiesNode.put(PROPERTY_SERVICETASK_CLASS, serviceTask.getImplementation());
-    	} else if (ImplementationType.IMPLEMENTATION_TYPE_EXPRESSION.equals(serviceTask.getImplementationType())) {
-        propertiesNode.put(PROPERTY_SERVICETASK_EXPRESSION, serviceTask.getImplementation());
-      } else if (ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION.equals(serviceTask.getImplementationType())) {
-        propertiesNode.put(PROPERTY_SERVICETASK_DELEGATE_EXPRESSION, serviceTask.getImplementation());
-      }
-    	
-    	if (StringUtils.isNotEmpty(serviceTask.getResultVariableName())) {
-    	  propertiesNode.put(PROPERTY_SERVICETASK_RESULT_VARIABLE, serviceTask.getResultVariableName());
-    	}
-    	
-    	addFieldExtensions(serviceTask.getFieldExtensions(), propertiesNode);
-  	}*/
+	  
   }
+  
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
     ServiceTask task = Bpmn2Factory.eINSTANCE.createServiceTask();// ServiceTask();

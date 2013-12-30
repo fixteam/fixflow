@@ -22,12 +22,14 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.editor.language.json.converter.BaseBpmnJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.BusinessRuleTaskJsonConverter;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.BusinessRuleTask;
 import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.impl.BusinessRuleTaskImpl;
 
 public class BusinessRuleTaskJsonConverter extends BaseBpmnJsonConverter {
 
@@ -43,7 +45,7 @@ public class BusinessRuleTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(BusinessRuleTask.class, BusinessRuleTaskJsonConverter.class);
+    convertersToJsonMap.put(BusinessRuleTaskImpl.class, BusinessRuleTaskJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {
@@ -51,14 +53,7 @@ public class BusinessRuleTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   protected void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement) {
-    BusinessRuleTask ruleTask = (BusinessRuleTask) flowElement;
-  	/*propertiesNode.put(PROPERTY_RULETASK_CLASS, ruleTask.getClassName());
-  	propertiesNode.put(PROPERTY_RULETASK_VARIABLES_INPUT, convertListToCommaSeparatedString(ruleTask.getInputVariables()));
-  	propertiesNode.put(PROPERTY_RULETASK_RESULT, ruleTask.getResultVariableName());
-  	propertiesNode.put(PROPERTY_RULETASK_RULES, convertListToCommaSeparatedString(ruleTask.getRuleNames()));
-  	if (ruleTask.isExclude()) {
-      propertiesNode.put(PROPERTY_RULETASK_EXCLUDE, PROPERTY_VALUE_YES);
-    }*/
+	  
   }
   
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {

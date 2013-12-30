@@ -22,12 +22,14 @@ import java.util.Map;
 
 import com.founder.fix.fixflow.editor.language.json.converter.BaseBpmnJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.ManualTaskJsonConverter;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.ManualTask;
+import org.eclipse.bpmn2.impl.ManualTaskImpl;
 
 public class ManualTaskJsonConverter extends BaseBpmnJsonConverter {
 
@@ -43,7 +45,7 @@ public class ManualTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ManualTask.class, ManualTaskJsonConverter.class);
+    convertersToJsonMap.put(ManualTaskImpl.class, ManualTaskJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {

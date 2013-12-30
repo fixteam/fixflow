@@ -20,8 +20,10 @@ package com.founder.fix.fixflow.editor.language.json.converter;
 
 import java.util.Map;
 
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior;
 import com.founder.fix.fixflow.editor.language.json.converter.BaseBpmnJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.ReceiveTaskJsonConverter;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.BaseElement;
@@ -44,7 +46,7 @@ public class ReceiveTaskJsonConverter extends BaseBpmnJsonConverter {
   }
   
   public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ReceiveTask.class, ReceiveTaskJsonConverter.class);
+    convertersToJsonMap.put(ReceiveTaskBehavior.class, ReceiveTaskJsonConverter.class);
   }
   
   protected String getStencilId(FlowElement flowElement) {

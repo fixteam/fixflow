@@ -45,6 +45,7 @@ public interface StencilConstants {
   final String STENCIL_TASK_SEND = "SendTask";
   final String STENCIL_TASK_SERVICE = "ServiceTask";
   final String STENCIL_TASK_USER = "UserTask";
+  final String STENCIL_TASK = "Task";
   
   final String STENCIL_GATEWAY_EXCLUSIVE = "ExclusiveGateway";
   final String STENCIL_GATEWAY_PARALLEL = "ParallelGateway";
