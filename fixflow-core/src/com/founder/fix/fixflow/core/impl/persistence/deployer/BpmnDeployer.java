@@ -49,7 +49,6 @@ import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.impl.util.VerificationUtil;
-import com.ibm.db2.jcc.sqlj.n;
 
 /**
  * @author kenshins
@@ -132,6 +131,7 @@ public class BpmnDeployer implements Deployer {
 		}
 		//增加模型验证，by ych 2013 12 27
 		if(process.isVerification()){
+			@SuppressWarnings("unused")
 			StringBuffer sb = new StringBuffer();
 			String result = VerificationUtil.verifyAll(process);
 			if(result.length() > 0){
