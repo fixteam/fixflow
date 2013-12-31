@@ -30,17 +30,4 @@ xmlns:context="http://www.springframework.org/schema/context"
 	  </property>
 	</bean>
 	
-	<!-- 数据源配置，该数据源可以是spring连接池也可以是来自服务器连接池 -->
-	<bean id="fix_biz_bpa_dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >        
-	    <property name="driverClassName" value="${idbase2.driverClassName}" />        
-	    <property name="url" value="${idbase2.url}" />        
-	    <property name="username" value="${idbase2.username}" />        
-	    <property name="password" value="${idbase2.password}" />        
-	</bean>
-	<!-- 平台本身的连接配置，DB_FIX_BIZ_BASE是连接名称，改名称与fixflowconfig.xml里的可用连接一一对应-->
-	<bean id="DB_FIX_BPA_BASE" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
-	  <property name="dataSource"> 
-	    <ref bean="fix_biz_bpa_dataSource"/> 
-	  </property>
-	</bean>
 </beans>
