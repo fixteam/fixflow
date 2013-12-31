@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="RunSqlSelectOneObject" name="执行sql语句返回数据集" note="执行sql语句返回数据集" categoryId="072110c3-6064-47ed-a41f-abab02377235" icon="RunSqlSelectOneObject.png">
+  <input id="sqlText" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <output id="outputObj" name="返回结果集" type="java.util.List&lt;java.util.Map&lt;String, Object>>"/>
+  <page id="page1" name="配置数据库语句" note="配置数据库语句">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="查询语句" inputId="sqlText">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="RunSqlSelectOneObject" packageName="com.founder.fix.fixflow.expand.flowconnector.RunSqlSelectOneObject"/>
+</flowconnector:FlowConnectorDefinition>
