@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
 import com.founder.fix.fixflow.explorer.util.FileHandle;
@@ -107,7 +109,10 @@ public class BaseServlet extends HttpServlet {
 	}
 	
 	public  void error(String desc){
-		ResultUtils.getInstance(responseParm).renderJson("{\"state\":\"error\",\"result\":\"" + desc +"\" }");
+		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+		jsonNode.put("state", "error");
+		jsonNode.put("result", desc);
+		ResultUtils.getInstance(responseParm).renderJson(jsonNode);
 	}
  
 	public  void success(String desc,String... flag ){

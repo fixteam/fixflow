@@ -45,7 +45,7 @@ public class FlowExplorerServiceImpl implements FlowExplorerService {
     		ModelService modelService = processEngine.getModelService();
     		ProcessDefinitionQuery processDefinitionQuery = modelService.createProcessDefinitionQuery();
     		processDefinitionQuery.processDefinitionKey(processKey);
-    		processDefinitionQuery.orderByProcessDefinitionVersion();
+    		processDefinitionQuery.orderByProcessDefinitionVersion().desc();
     		List<ProcessDefinitionBehavior> processDefinitionBehaviors = processDefinitionQuery.list();
     		for(ProcessDefinitionBehavior processDefinitionBehavior :processDefinitionBehaviors){
     			resultMaps.add(processDefinitionBehavior.getPersistentState());
