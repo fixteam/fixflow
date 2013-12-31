@@ -86,12 +86,12 @@ public class StencilsetServiceImpl implements StencilsetService {
          List<TaskCommandDef> commandDefs = taskCommandConfig.getTaskCommandDef();
          for(TaskCommandDef taskCommandDef :commandDefs){
          	 ObjectNode typeNode = objectMapper.createObjectNode();
-         	 if(StringUtil.getBoolean(taskCommandDef.getIsEnabled())){
+         	 if(StringUtil.getBoolean(taskCommandDef.getIsEnabled())&& !"system".equals(taskCommandDef.getType())){
          		 typeNode.put("id",taskCommandDef.getId());
-                  typeNode.put("title", taskCommandDef.getName());
-                  typeNode.put("value", taskCommandDef.getId());
-                  typeNode.put("refToView", "");
-                  arrayNode.add(typeNode);
+                 typeNode.put("title", taskCommandDef.getName());
+                 typeNode.put("value", taskCommandDef.getId());
+                 typeNode.put("refToView", "");
+                 arrayNode.add(typeNode);
          	 }
          }
          ((ObjectNode)commandType).put("items", arrayNode);

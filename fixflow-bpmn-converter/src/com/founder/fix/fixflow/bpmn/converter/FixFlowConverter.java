@@ -70,6 +70,18 @@ public class FixFlowConverter {
 		return jsonNode;
 	}
 	
+	/**
+	 * 将bpmn模型转换成jsonNode
+	 * @param processKey
+	 * @param input
+	 * @return
+	 */
+	public ObjectNode convertDefinitions2Json(Definitions definitions){
+		BpmnJsonConverter converter = new BpmnJsonConverter();
+		ObjectNode jsonNode = converter.convertToJson(definitions);
+		return jsonNode;
+	}
+	
 	public void save(Definitions defintion){
 		ResourceSet resourceSet = getResourceSet();
 		Bpmn2Resource resource = (Bpmn2Resource) resourceSet.getResource(URI.createFileURI("d:\\node_template.bpmn"), true);

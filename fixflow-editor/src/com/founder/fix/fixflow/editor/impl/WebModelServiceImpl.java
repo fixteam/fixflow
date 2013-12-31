@@ -38,6 +38,8 @@ import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
+import org.eclipse.bpmn2.Definitions;
+import org.eclipse.bpmn2.Process;
 import org.eclipse.emf.common.util.URI;
 
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
@@ -71,7 +73,7 @@ public class WebModelServiceImpl implements WebModelService {
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		out.print(on);
 		} catch (Exception e) {
-			error("加载web流程图，返回json格式对象出错!");
+			error(e.getMessage());
 		}finally{
         	out.flush();
         	out.close();
@@ -114,7 +116,7 @@ public class WebModelServiceImpl implements WebModelService {
 			outputStream.flush();
 			
     	}catch(Exception e){
-    		e.printStackTrace();
+    		error(e.getMessage());
     	}finally{
 			if(outputStream !=null){
 				outputStream.close();	
@@ -128,14 +130,17 @@ public class WebModelServiceImpl implements WebModelService {
 	public void reTryModelInfo() throws ServletException, IOException {
 		PrintWriter out = null;
 		try {
+			FixFlowConverter fixFlowConverter = new FixFlowConverter();
+			
     		ObjectMapper objectMapper = new ObjectMapper();
             InputStream input = new FileInputStream(buildPath() +File.separator+request.getParameter("fileName")); 
-    		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
+            Definitions definitions = fixFlowConverter.getDefinitions("process_1", input);
+            Process process = (Process)definitions.getRootElements().get(0);
+    		ObjectNode on = fixFlowConverter.convertDefinitions2Json(definitions);
     		ObjectNode rootNode = objectMapper.createObjectNode();
-    		rootNode.put("name", "testName");
-    		rootNode.put("revision", 2);
-    		rootNode.put("description", "测试流程实例");
-    		rootNode.put("modelId", "11212");
+    		rootNode.put("name", process.getName());
+    		rootNode.put("description", process.getName());
+    		rootNode.put("modelId", process.getId());
     		rootNode.put("model", on);
     		out = response.getWriter();
     		out.print(rootNode);
