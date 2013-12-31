@@ -28,7 +28,6 @@ import com.founder.fix.fixflow.explorer.impl.FlowExplorerServiceImpl;
 import com.founder.fix.fixflow.explorer.service.FlowExplorerService;
 import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
 import com.founder.fix.fixflow.service.FlowCenterService;
-import com.founder.fix.fixflow.util.FileUtil;
  
 /**
  * 文件目录管理类
@@ -55,7 +54,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
 			success(json);
 		} catch (Exception e) {
 			e.printStackTrace();
-			error("初始化参数出错!");
+			error("读取文件夹结构失败："+e.getMessage());
 		}
     }
     
@@ -64,7 +63,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
      */
     public void createBPMNFile(){
         try{
-                String processId = request("id");
+            String processId = request("id");
             String fileName = "";
             if(processId.endsWith(".bpmn")){
                     fileName = processId;
@@ -78,7 +77,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
             success("创建成功","String");
         }catch(Exception ex){
                 ex.printStackTrace();
-                error("创建文件失败");
+                error(ex.getMessage());
         }
 }
    
@@ -92,7 +91,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
 			FileAndDirectoryUtils.createFileOrDirectory(path);
 			success("创建成功!","string");
 		} catch (Exception e) {
-			error(e.getMessage());
+			error("创建失败："+e.getMessage());
 		}
     }
     
@@ -117,7 +116,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
         		flowExplorerService.deploy(fileInputSteamMap, deploymentId, userId);
         		success("发布成功", "string");
 			}catch(Exception ex){
-				error(ex.getMessage());
+				error("发布失败：" + ex.getMessage());
 			}
     	}
     }
@@ -146,7 +145,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		FileAndDirectoryUtils.clear();
     		success(subJson);
     	} catch (Exception e) {
-    		error("下属文件及文件夹读取失败!");
+    		error("读取子文件夹失败" + e.getMessage());
     	}
     }
     
@@ -158,7 +157,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		FileAndDirectoryUtils.renameFile(oldFilePathString,newFilePathString);
     		success("重命名成功!","string");
     	} catch (Exception e) {
-    		error(e.getMessage());
+    		error("重命名失败： " + e.getMessage());
     	}
     }
     
@@ -178,7 +177,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
     		success("删除成功!","string");
     	} catch (Exception e) {
     		e.printStackTrace();
-    		error("删除失败!");
+    		error("删除失败 ："+e.getMessage());
     	}
     }
     
@@ -189,10 +188,8 @@ public class FileAndDirectoryServlet extends BaseServlet {
 		String type = pathArr[0];
 		
 		String tmpPathString = "";
-		File file = null;
-		
 		if("private".equals(type)){
-			tmpPathString = FileAndDirectoryUtils.privatePath +file.separator + loginId;
+			tmpPathString = FileAndDirectoryUtils.privatePath +File.separator + loginId;
 		}else{
 			tmpPathString = FileAndDirectoryUtils.sharedPath;
 		}

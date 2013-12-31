@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.dom4j.Document;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.Definitions;
 import org.eclipse.bpmn2.DocumentRoot;
@@ -49,6 +50,7 @@ import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
+import com.founder.fix.fixflow.core.impl.util.XmlUtil;
 import com.founder.fix.fixflow.editor.language.json.converter.BpmnJsonConverter;
 
 public class FixFlowConverter {
@@ -102,7 +104,20 @@ public class FixFlowConverter {
 	 */
 	public void createBPMNFile(String path,String processId,String processName){
 		File newFile = new File(path);
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("com/founder/fix/fixflow/editor/language/default_process.bpmn");
+		InputStream inputStream = null;
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/editor/language/default_process.bpmn").toString();
+		try {
+			if (!filePath.startsWith("jar")) {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/editor/language/default_process.bpmn").getFile(), "utf-8");
+				inputStream = new FileInputStream(filePath);
+			} else {
+				inputStream = new FileInputStream(filePath);
+			}
+		}catch(Exception ex){
+			throw new FixFlowException("读取default_process.bpmn出错："+ex.getMessage());
+		}
+		
+		
 		FileOutputStream outputStream = null;
 		BufferedOutputStream buffOS = null;
 		InputStream inputStreamNewFile = null;
@@ -171,9 +186,21 @@ public class FixFlowConverter {
 	 */
 	public Definitions getNoneDefinitions(){
 		Definitions definitions = null;
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("org/activiti/editor/language/node_template.bpmn");
-		definitions = getDefinitions("node-tempplate",inputStream);
-		return definitions;
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/editor/language/node_template.bpmn").toString();
+		try {
+			InputStream in = null;
+			if (!filePath.startsWith("jar")) {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/editor/language/node_template.bpmn").getFile(), "utf-8");
+				in = new FileInputStream(filePath);
+			} else {
+				in = new FileInputStream(filePath);
+			}
+			definitions = getDefinitions("node-tempplate",in);
+			return definitions;
+		}catch(Exception ex){
+			throw new FixFlowException("读取node_template.bpmnc出错，请检查com/founder/fix/fixflow/editor/language/node_template.bpmn是否存在");
+		}
+		
 	}
 	
 	
