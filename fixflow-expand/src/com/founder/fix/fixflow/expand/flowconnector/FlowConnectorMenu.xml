@@ -5,59 +5,13 @@
     <menuConnector id="FixRunDataBase" name="执行数据库语句" note="通过Engine的connection执行数据库语句，可以保证事务一致"/>
     <menuConnector id="RunSqlSelectOneObject" name="执行sql语句返回数据集" note="执行sql语句返回数据集"/>
     <menuConnector id="TimeoutHandling" name="超时任务处理" note="超时任务处理"/>
+    <menuConnector id="UpdateSql" name="执行数据库更新语句" note="执行数据库更新语句"/>
   </node>
   <node id="8cd83844-8779-4781-bff2-3f0c5b236117" name="Messaging" ico="images.jpg">
-    <menuConnector id="SendMail" name="SendMail" note="根据系统配置的邮箱发送给指定人员邮件"/>
-    <menuConnector id="AutoSendMail" name="自动邮件通知" note="自动发送邮件给当前任务的处理者"/>
+	<menuConnector id="SendMail" name="发送邮件" note="根据引擎的邮件配置发送邮件"/>
   </node>
-  <node id="a1903ab0-8a27-4807-86e7-29c1c2b173ba" name="水利系统" ico="eclipse.png">
-    <menuConnector id="ReciveTask" name="市级任务接收" note="省厅数据下发到市级系统"/>
-    <menuConnector id="SendTask" name="发送任务" note="将下级的数据发送给上级系统"/>
-  </node>
-  <node id="98bccf39-b365-4dfe-88ac-3856eecdbf6c" name="Java" ico="java.png">
-    <menuConnector id="JavaExecutor" name="Java执行器" note="执行一个Java类"/>
-    <menuConnector id="MessageJavaConnector" name="记录全过程的java执行" note="记录全过程的java执行"/>
-  </node>
-  <node id="8d745c52-0306-495c-a3ea-e62697422fe1" name="Script" ico="scripting.png">
-    <menuConnector id="ParameterizedCommand" name="参数化命令" note="使用参数执行命令"/>
-    <menuConnector id="Groovy" name="Groovy脚本" note="执行一个Groovy脚本"/>
-  </node>
-  <node id="06e66880-177b-407a-b921-8c612a92c2a5" name="Social" ico="social.png">
-    <menuConnector id="SendTencentMicroBlog" name="发送腾讯微博" note="发送腾讯微博状态"/>
-    <menuConnector id="UpdateTencentMicroBlog" name="更新腾讯微博" note="更新腾讯微博状态"/>
-    <menuConnector id="SendSinaMicroBlog" name="发送新浪微博" note="发送新浪微博状态"/>
-    <menuConnector id="UpdateSinaMicroBlog" name="更新新浪微博" note="更新新浪微博状态"/>
-  </node>
-  <node id="49b5f811-0cfd-4f03-85f4-0ab8149db390" name="XWiKi" ico="xwiki.png">
-    <menuConnector id="Getmetadata" name="取得元数据" note="从wiki页面中取得元数据"/>
-    <menuConnector id="Addmetadata" name="添加元数据" note="向一个wiki页面中添加元数据"/>
-  </node>
-  <node id="d5eb5872-fa99-4f25-9a3d-b62115624ca8" name="Google" ico="google.png">
-    <menuConnector id="CalendarCreateEvent" name="日历 - 创建事件" note="从指定的谷歌日历中创建一个新的事件"/>
-    <menuConnector id="CalendarCreateEventwithWebcontent" name="日历 - 创建带有Web内容的事件" note="创建一个带有XML页面或者图片的事件"/>
-    <menuConnector id="CalendarDeleteEvents" name="日历 - 删除事件" note="在标题中删除所有包含搜索内容的关键字"/>
-  </node>
-  <node id="ea726fd2-21d6-473c-9745-d3f65cf33def" name="DataBase" ico="Database.png">
-    <menuConnector id="Access" name="Access" note="在Access数据库中执行语句"/>
-    <menuConnector id="Oracle" name="Oracle" note="在Oracle数据库中执行语句"/>
-    <menuConnector id="AS400" name="AS400" note="在AS400数据库中执行语句"/>
-    <menuConnector id="DB2" name="DB2" note="在DB2数据库中执行语句"/>
-    <menuConnector id="MSSQLServer" name="MS SQLServer" note="在Microsoft SQLServer数据库中执行语句"/>
-    <menuConnector id="MySQL" name="MySQL" note="在MySQL数据库中执行语句"/>
-    <menuConnector id="Sybase" name="Sybase" note="在Sybase数据库中执行语句"/>
-  </node>
-  <node id="69df67be-e847-44f9-9760-34802e5aa4c7" name="Sharepoint" ico="sharepoint.jpg">
-    <menuConnector id="Cancelfilecheckout" name="Cancel file checkout" note="取消文件签出"/>
-    <menuConnector id="SharepointCheckin" name="Checkin a file" note="从SharePoint服务器签入指定的文件"/>
-  </node>
-  <node id="5cfa211d-fc91-4d24-ab2b-fc572bf166a4" name="Exchange" ico="exchange.png">
-    <menuConnector id="CreateCalendarItem" name="CreateCalendarItem" note="创建一个新的日历项目"/>
-    <menuConnector id="CreateContact" name="CreateContact" note="创建一个新的联系人"/>
-  </node>
-  <node id="b3077f2f-242d-4482-aa23-c894bb448fdf" name="LDAP" ico="database.png">
-    <menuConnector id="LDAPConnector" name="LDAP" note="LDAP"/>
-  </node>
+
   <node id="44cc7e59-d627-40a2-bcde-6a80268ad2a6" name="WebServices" ico="apache.png">
-    <menuConnector id="SecureWSConnector" name="Secure WS Connector" note="执行一个Web服务"/>
+    <menuConnector id="SecureWSConnector" name="执行一个Web服务" note="执行一个Web服务"/>
   </node>
 </connectormenu:Menu>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="TimeoutHandling" name="超时任务处理" note="超时任务处理" categoryId="072110c3-6064-47ed-a41f-abab02377235" icon="TimeoutHandling.jpg">
-  <inputParameter id="commandId" type="java.lang.String" mandatory="是" defaultValue=""/>
-  <inputParameter id="opinion" type="java.lang.String" controlType="text" defaultValue=""/>
-  <outputs/>
+  <input id="commandId" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <input id="opinion" type="java.lang.String" mandatory="是" defaultValue=""/>
   <page id="page1" name="任务参数" note="超时自动处理任务参数配置">
     <widget xsi:type="flowconnector:Text" id="Widget_0" name="查询语句" inputId="commandId">
       <widgetExpression expressionValue=""/>

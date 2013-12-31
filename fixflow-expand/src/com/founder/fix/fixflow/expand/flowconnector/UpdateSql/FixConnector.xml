@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="UpdateSql" name="执行数据库更新语句" note="执行数据库更新语句" categoryId="072110c3-6064-47ed-a41f-abab02377235" icon="UpdateSql.jpg">
+  <input id="tableName" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <input id="objectParam" type="java.util.HashMap" mandatory="是" defaultValue=""/>
+  <input id="whereSql" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <input id="objectParamWhere" type="java.util.HashMap" mandatory="是" defaultValue=""/>
+  <page id="page1" name="更新参数" note="更新参数">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="表名" inputId="tableName">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_1" name="更改值Map" inputId="objectParam">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_2" name="条件语句" inputId="whereSql">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_3" name="条件参数" inputId="objectParamWhere">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="UpdateSql" packageName="com.founder.fix.fixflow.expand.flowconnector.UpdateSql"/>
+</flowconnector:FlowConnectorDefinition>
