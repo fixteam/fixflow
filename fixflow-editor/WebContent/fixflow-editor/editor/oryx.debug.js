@@ -13138,6 +13138,11 @@ ORYX.Editor.createByUrl = function(modelUrl, config){
       method: 'GET',
 			parameters: config.parameters,
       onSuccess: function(transport) {
+				var responseTextObj = JSON.parse(transport.responseText);
+				if(responseTextObj.state == "error"){
+					alert(responseTextObj.result);
+					window.close();
+				}
         var editorConfig = Ext.decode(transport.responseText);
         editorConfig = Ext.applyIf(editorConfig, config);
         new ORYX.Editor(editorConfig);
@@ -24653,15 +24658,8 @@ ORYX.Plugins.Save = Clazz.extend({
 					// TODO find some nice words here -- copy from above ;)
 					'<form class="oryx_repository_edit_model" action="#" id="edit_model" onsubmit="return false;">',
 									
-						'<fieldset>',
-							'<p class="description">' + ORYX.I18N.Save.dialogDesciption + '</p>',
-							'<input type="hidden" name="namespace" value="{namespace}" />',
-							'<p><label for="edit_model_title">' + ORYX.I18N.Save.dialogLabelTitle + '</label><input type="text" class="text" name="title" value="{title}" id="edit_model_title" onfocus="this.className = \'text activated\'" onblur="this.className = \'text\'"/></p>',
-							'<p><label for="edit_model_summary">' + ORYX.I18N.Save.dialogLabelDesc + '</label><textarea rows="5" name="summary" id="edit_model_summary" onfocus="this.className = \'activated\'" onblur="this.className = \'\'">{summary}</textarea></p>',
-							(modelMeta.versioning) ? '<p><label for="edit_model_comment">' + ORYX.I18N.Save.dialogLabelComment + '</label><textarea rows="5" name="comment" id="edit_model_comment" onfocus="this.className = \'activated\'" onblur="this.className = \'\'">{comment}</textarea></p>' : '',
-							'<p><label for="edit_model_type">' + ORYX.I18N.Save.dialogLabelType + '</label><input type="text" name="type" class="text disabled" value="{type}" disabled="disabled" id="edit_model_type" /></p>',
+						'<div style="text-align:center; padding:20px;">确认保存？</div>',
 							
-						'</fieldset>',
 					
 					'</form>')
 		
@@ -24674,13 +24672,13 @@ ORYX.Plugins.Save = Clazz.extend({
 					text: ORYX.I18N.Save.saving
 		        });*/
 
-				var title 		= form.elements["title"].value.strip();
+				var title 		= ""; //form.elements["title"].value.strip();
 				title 			= title.length == 0 ? defaultData.title : title;
 				
-				var summary 	= form.elements["summary"].value.strip();	
+				var summary 	= ""; //form.elements["summary"].value.strip();	
 				summary 		= summary.length == 0 ? defaultData.summary : summary;
 				
-				var namespace	= form.elements["namespace"].value.strip();
+				var namespace	= ""; //form.elements["namespace"].value.strip();
 				namespace		= namespace.length == 0 ? defaultData.namespace : namespace;
 				
 				modelMeta.name = title;
@@ -24794,6 +24792,10 @@ ORYX.Plugins.Save = Clazz.extend({
 				var success = false;
 				
 				var successFn = function(transport) {
+					var responseTextObj = transport.responseText.evalJSON();
+					if(responseTextObj.state == "error"){
+						alert(responseTextObj.result);
+					}
 					var loc = transport.getResponseHeader.location;
 					if (!this.processURI && loc) {
 						this.processURI = loc;
