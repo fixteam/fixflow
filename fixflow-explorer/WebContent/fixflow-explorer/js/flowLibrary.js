@@ -59,7 +59,7 @@ $(document).ready(function(){
 			success: function(data){
 				eval("var d = " + data);
 				if(d.state == "error"){
-					alert("创建失败！");
+					alert(d.result);
 				}else{
 					alert("创建成功！");
 					var $newFile = $('<div class="thumb-wrap" dirType="file"><div class="thumb model"></div><span class="x-editable" title="'+id+'.bpmn">'+id+'.bpmn</span></div>');
@@ -303,7 +303,7 @@ $(document).ready(function(){
 							success: function(data){
 								eval("var d = " + data);
 								if(d.state == "error"){
-									alert("删除失败！");
+									alert(d.result);
 									return;
 								}
 								var treeNodeId = $("div.thumb-wrap[select=true]").attr("treenodeid");
@@ -558,7 +558,7 @@ var Operation = {
 			success: function(data){
 				eval("var d = " + data);
 				if(d.state == "error"){
-					alert("文件夹重名！");
+					alert(d.result);
 					that.focus();
 					that.select();
 					return;
@@ -585,7 +585,7 @@ var Operation = {
 			success: function(data){
 				eval("var d = " + data);
 				if(d.state == "error"){
-					alert("重命名文件夹失败！");
+					alert(d.result);
 					that.focus();
 					that.select();
 					return;
