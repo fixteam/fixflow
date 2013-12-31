@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="UpdateProcessStatus" name="更新流程状态" note="更新流程状态" categoryId="072110c3-6064-47ed-a41f-abab02377235" icon="UpdateProcessStatus.jpg">
+  <input id="statusValue" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <page id="page1" name="输入参数" note="配置连接器需要的参数">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="状态值" inputId="statusValue">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="UpdateProcessStatus" packageName="com.founder.fix.fixflow.expand.flowconnector.UpdateProcessStatus"/>
+</flowconnector:FlowConnectorDefinition>

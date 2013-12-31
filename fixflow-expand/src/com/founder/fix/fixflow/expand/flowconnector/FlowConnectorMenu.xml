@@ -6,11 +6,13 @@
     <menuConnector id="RunSqlSelectOneObject" name="执行sql语句返回数据集" note="执行sql语句返回数据集"/>
     <menuConnector id="TimeoutHandling" name="超时任务处理" note="超时任务处理"/>
     <menuConnector id="UpdateSql" name="执行数据库更新语句" note="执行数据库更新语句"/>
+    <menuConnector id="CreateSubpProcessData" name="创建子流程数据" note="启动子流程后需要插入一个默认的数据"/>
+    <menuConnector id="UpdateProcessStatus" name="更新流程状态" note="更新流程状态"/>
+    <menuConnector id="UpdateProcessInstanceId" name="更新业务数据流程实例号" note="更新业务数据流程实例号"/>
   </node>
   <node id="8cd83844-8779-4781-bff2-3f0c5b236117" name="Messaging" ico="images.jpg">
-	<menuConnector id="SendMail" name="发送邮件" note="根据引擎的邮件配置发送邮件"/>
+    <menuConnector id="SendMail" name="发送邮件" note="根据引擎的邮件配置发送邮件"/>
   </node>
-
   <node id="44cc7e59-d627-40a2-bcde-6a80268ad2a6" name="WebServices" ico="apache.png">
     <menuConnector id="SecureWSConnector" name="执行一个Web服务" note="执行一个Web服务"/>
   </node>
