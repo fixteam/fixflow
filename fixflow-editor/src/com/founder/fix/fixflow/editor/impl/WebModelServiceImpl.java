@@ -58,7 +58,7 @@ public class WebModelServiceImpl implements WebModelService {
 	public WebModelServiceImpl(HttpServletRequest request,HttpServletResponse response){
 		this.request = request;
 		this.response = response;
-		this.response.setContentType("application/x-json");
+		this.response.setContentType("application/json");
 		this.response.setCharacterEncoding("utf-8");
 	}
 	
@@ -155,9 +155,11 @@ public class WebModelServiceImpl implements WebModelService {
 	 * @param message
 	 */
 	public void error(String message){
-		String result = "{\"state\":\"error\",\"result\":\"" + message +"\" }";
 		try {
-            response.getWriter().write(result);
+			ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+			jsonNode.put("state", "error");
+			jsonNode.put("result", message);
+            response.getWriter().print(jsonNode);
             response.getWriter().flush();
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
