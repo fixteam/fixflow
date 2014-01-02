@@ -21,6 +21,9 @@ package com.founder.fix.fixflow.core.impl.util;
 
 import java.util.Date;
 
+import org.apache.regexp.ex.RE;
+
+
 
 public class StringUtil {
 	
@@ -43,6 +46,34 @@ public class StringUtil {
     	}else{
     		return ojb1;
     	}
+    }
+    
+    public static boolean matches(String value, String regexp) {
+        String paren = null;
+        RE re = null;
+
+        if (regexp == null) {
+            return false;
+        }
+        
+        if(isEmpty(value))
+        	return true;
+        
+        re = new RE(regexp);
+        if (!re.match(value)) {
+            return false;
+        }
+        paren = re.getParen(0);
+        if (!paren.equals(value)) {
+            return false;
+        }
+
+        return true;
+    }
+    
+    public static boolean isFloat(Object number){
+    	String str = StringUtil.getString(number);
+    	return StringUtil.matches(str, "^(\\d*\\.)?\\d+$");
     }
     
     public static int getInt(Object obj)
