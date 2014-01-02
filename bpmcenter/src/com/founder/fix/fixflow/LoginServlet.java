@@ -127,7 +127,7 @@ public class LoginServlet extends HttpServlet {
 							response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
 						}else{
 							request.setAttribute("action", "getBPA");
-							response.sendRedirect(context+"/FixFlowBPACenter?action=getBPA");
+							response.sendRedirect(context+"/FixFlowBPACenter?action=getBPAMDX");
 						}
 					} else {
 						response.setContentType("text/html;charset=utf-8");
