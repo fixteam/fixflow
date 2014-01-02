@@ -112,6 +112,14 @@
     <servlet-class>com.founder.fix.fixflow.editor.ModelSaveServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+  	<servlet-name>OLAPFixFlowBPACenter</servlet-name>
+  	<servlet-class>com.founder.fix.bpa.servlet.OLAPFixFlowBPACenter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>OLAPFixFlowBPACenter</servlet-name>
+  	<url-pattern>/OLAPFixFlowBPACenter</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ModelSaveServlet</servlet-name>
     <url-pattern>/ModelSaveServlet</url-pattern>
