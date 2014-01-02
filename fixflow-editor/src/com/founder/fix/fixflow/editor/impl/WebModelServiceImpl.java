@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
@@ -55,9 +56,10 @@ public class WebModelServiceImpl implements WebModelService {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	public WebModelServiceImpl(HttpServletRequest request,HttpServletResponse response){
+	public WebModelServiceImpl(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
 		this.request = request;
 		this.response = response;
+		this.request.setCharacterEncoding("utf-8");
 		this.response.setContentType("application/json");
 		this.response.setCharacterEncoding("utf-8");
 	}
@@ -87,7 +89,7 @@ public class WebModelServiceImpl implements WebModelService {
 	@SuppressWarnings("deprecation")
 	public void modelSave() throws ServletException, IOException{
 		String body = getBody(this.request);
-		body = URLDecoder.decode(body);
+		
 		String json_xml = getParameterFromPayload(body,"json_xml");
 		String svg_xml = getParameterFromPayload(body,"svg_xml");
 		String fileName = getParameterFromPayload(body,"fileName");
@@ -272,7 +274,7 @@ public class WebModelServiceImpl implements WebModelService {
 	    try {
 	        InputStream inputStream = request.getInputStream();
 	        if (inputStream != null) {
-	            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+	            bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
 	            char[] charBuffer = new char[128];
 	            int bytesRead = -1;
 	            while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
@@ -292,7 +294,8 @@ public class WebModelServiceImpl implements WebModelService {
 	            }
 	        }
 	    }
-	    body = stringBuilder.toString();
+	    body = new String(stringBuilder.toString().getBytes("ISO-8859-1"), "UTF-8") ;
+	    body = URLDecoder.decode(body, "UTF-8");
 	    return body;
 	}
 	
