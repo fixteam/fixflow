@@ -18,13 +18,13 @@
 package com.founder.fix.fixflow.core.impl.identity;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.List;
 
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Context;
-
 import java.util.Collections;
+
 
 /**
  * @author kenshin
