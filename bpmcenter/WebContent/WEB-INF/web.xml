@@ -112,14 +112,6 @@
     <servlet-class>com.founder.fix.fixflow.editor.ModelSaveServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  <servlet>
-  	<servlet-name>OLAPFixFlowBPACenter</servlet-name>
-  	<servlet-class>com.founder.fix.bpa.servlet.OLAPFixFlowBPACenter</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>OLAPFixFlowBPACenter</servlet-name>
-  	<url-pattern>/OLAPFixFlowBPACenter</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ModelSaveServlet</servlet-name>
     <url-pattern>/ModelSaveServlet</url-pattern>
@@ -152,7 +144,8 @@
     <description></description>
     <display-name>FixFlowBPACenter</display-name>
     <servlet-name>FixFlowBPACenter</servlet-name>
-    <servlet-class>com.founder.fix.bpa.servlet.FixFlowBPACenter</servlet-class>
+    <servlet-class>com.founder.fix.bpa.servlet.OLAPFixFlowBPACenter</servlet-class>
+    <!--这是sql的分析器，现已弃用 <servlet-class>com.founder.fix.bpa.servlet.FixFlowBPACenter</servlet-class> -->
   </servlet>
   <servlet-mapping>
     <servlet-name>FixFlowBPACenter</servlet-name>
