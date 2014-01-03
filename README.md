@@ -65,7 +65,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
 * [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/13OKHM)
 * [插件下载(百度网盘)](http://pan.baidu.com/s/1sZx6J)
-* [5.1 Release 版本 插件下载(百度网盘)](http://pan.baidu.com/s/1bnpGnp1)
+* [5.1 Release 版本 插件下载(百度网盘)(新设计器需要配合新的5.1代码才能使用)](http://pan.baidu.com/s/1bnpGnp1)
 
 
 
