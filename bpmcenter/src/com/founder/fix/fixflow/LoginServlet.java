@@ -97,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 			list.add(password);
 			
 			StringBuffer sb = new StringBuffer();
-			sb.append("select USERID,USERNAME from AU_USERINFO where LOGINID=? and PASSWORD=?");
+			sb.append("SELECT USERID,USERNAME FROM AU_USERINFO WHERE LOGINID=? AND PASSWORD=?");
 			connection = dbcf.createConnection();
 			//这里是自带的数据库操作方式。
 			SqlCommand sqlcommand = new SqlCommand(connection);
