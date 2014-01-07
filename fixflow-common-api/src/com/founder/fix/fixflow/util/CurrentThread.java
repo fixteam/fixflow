@@ -40,10 +40,28 @@ public class CurrentThread {
 	
 	private static final ThreadLocal<LinkedHashMap<String,DBConnection>> ThreadDBPool = new ThreadLocal<LinkedHashMap<String,DBConnection>>();
 	
-	
+	private static final ThreadLocal<LinkedHashMap<String,IThreadCarrier>> ThreadCarriers = new ThreadLocal<LinkedHashMap<String,IThreadCarrier>>();
 	
 	public static ThreadLocal<LinkedHashMap<String,DBConnection>> getThreadDBPool() {
 		return ThreadDBPool;
+	}
+	
+	public static ThreadLocal<LinkedHashMap<String,IThreadCarrier>> getThreadCarrier() {
+		return ThreadCarriers;
+	}
+	
+	public static IThreadCarrier createCarrier(Object obj,Class carr){
+		IThreadCarrier result=null;
+		try {
+			result = (IThreadCarrier) carr.newInstance();
+			result.setObject(obj);
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	public static void setTimer(Date dv){
@@ -56,6 +74,15 @@ public class CurrentThread {
 	
 	public static void init(){
 		getThreadDBPool().set(new LinkedHashMap<String,DBConnection>());
+		getThreadCarrier().set(new LinkedHashMap<String,IThreadCarrier>());
+	}
+	
+	public static boolean isThreadWorks(){
+		boolean result = true;
+		if(getThreadDBPool()==null || getThreadCarrier()==null){
+			result = false;
+		}
+		return result;
 	}
 	
 	public static void rollBack() throws SQLException{
@@ -87,6 +114,13 @@ public class CurrentThread {
 		}
 		ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
 		FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		LinkedHashMap<String,IThreadCarrier> carriers = ThreadCarriers.get();
+		if(carriers!=null){
+			for(Entry<String,IThreadCarrier> tmp:carriers.entrySet()){
+				IThreadCarrier carr = tmp.getValue();
+				carr.close();
+			}
+		}
 	}
 	
 	/**通过线程副本取当前线程中对应的Items
