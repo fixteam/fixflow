@@ -20,6 +20,7 @@
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch10-TenMinuteTutorial.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch11-Bpmn20.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch12-EclipseDesigner.xml"/>
+  <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch22-WebEditor.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch13-TaskCenter.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch14-ManagementCenter.xml"/>
   <xi:include  xmlns:xi="http://www.w3.org/2001/XInclude" href="chapters/ch15-CommonAPI.xml"/>
