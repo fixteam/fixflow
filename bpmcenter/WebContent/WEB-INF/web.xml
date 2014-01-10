@@ -55,9 +55,8 @@
     <servlet-name>DemoServlet</servlet-name>
     <url-pattern>/DemoServlet</url-pattern>
   </servlet-mapping>
-   <!-- fixflow-editor Servlet开始 -->
-   
   
+   <!-- fixflow-editor Servlet开始 -->
    <servlet>
     <description></description>
     <display-name>FlowEditor</display-name>
@@ -69,12 +68,11 @@
     <servlet-name>FlowEditor</servlet-name>
     <url-pattern>/FlowEditor</url-pattern>
   </servlet-mapping>
-  
-  
+
   <!-- fixflow-editor Servlet结束 -->
  
-  <!-- 徐海洋start -->
-  <servlet>
+ <!-- fixflow-explorer Servlet开始 -->
+   <servlet>
     <description></description>
     <display-name>FileAndDirectoryServlet</display-name>
     <servlet-name>FileAndDirectoryServlet</servlet-name>
@@ -84,15 +82,5 @@
     <servlet-name>FileAndDirectoryServlet</servlet-name>
     <url-pattern>/FileAndDirectoryServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>FlowWebManagerServlet</display-name>
-    <servlet-name>FlowWebManagerServlet</servlet-name>
-    <servlet-class>com.founder.fix.fixflow.editor.FlowWebManagerServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FlowWebManagerServlet</servlet-name>
-    <url-pattern>/FlowWebManagerServlet</url-pattern>
-  </servlet-mapping>
-    <!-- 徐海洋end -->
+   <!-- fixflow-explorer Servlet结束 -->
 </web-app>
