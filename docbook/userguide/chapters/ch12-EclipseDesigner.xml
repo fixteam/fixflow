@@ -206,6 +206,7 @@ Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
           </mediaobject>
           <para>结构如上图所示，需要在properties文件里面指定一系列的流程属性，例：</para>
           <programlisting language="properties"><![CDATA[
+
 model_id default_process //流程模板的ID
 model_name 默认模板 //流程模板的名字，显示在新建流程模板的下拉框里
 model_file default_process.bpmn //流程文件名
@@ -223,8 +224,26 @@ model_description 用默认流程模板创建一个新的流程 //流程模板�
   </section>
   <section xml:id="eclipse.dataVariable">
     <title>配置数据变量</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>在设计器上方的菜单中选择“数据变量”。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/eclipse.dataVariable.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>这里的配置与设计器中的使用对应如下图所示。（图片较大，右键可查看原图）</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="800" fileref="images/eclipse.dataVariable.2.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   <section xml:id="eclipse.processEngine">
     <title>流程引擎配置</title>
@@ -233,43 +252,227 @@ model_description 用默认流程模板创建一个新的流程 //流程模板�
   </section>
   <section xml:id="eclipse.time">
     <title>定时任务管理</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>在设计器上方的菜单中选择“定时任务”。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/eclipse.time.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>在这个界面上，我们可以对某一个定时任务进行暂停和继续操作，可以双击或者选中某个任务进行更为细致的编辑。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.time.2.png"/>
+            </imageobject>
+          </mediaobject>
+          <programlisting language="properties"><![CDATA[
+
+暂停 //暂停当前选中定时任务中所有的触发器
+继续 //继续当前选中定时任务中所有的触发器
+删除 //删除当前选中的定时任务
+]]> </programlisting>
+        </listitem>
+        <listitem>
+          <para>在这个界面上，我们可以针对某一个定时任务里的触发器进行单独设定。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.time.3.png"/>
+            </imageobject>
+          </mediaobject>
+          <programlisting language="properties"><![CDATA[
+
+暂停 //暂停当前选中的触发器
+继续 //继续当前选中的触发器
+删除 //删除当前选中的触发器
+]]> </programlisting>
+        </listitem>
+        <listitem>
+          <para>如果定时任务配置中没有已经发布的定时任务（如何发布定时任务？），在设计器上方的菜单中选择“流程引擎”。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/eclipse.time.4.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>在此配置定时任务所连接的数据库。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.time.5.png"/>
+            </imageobject>
+          </mediaobject>
+          <programlisting language="properties"><![CDATA[
+
+是否启用               //勾上：启动定时任务 不勾：不启动定时任务
+是否跟随平台数据库配置 //勾上：跟随数据库标签中的数据库配置 不勾：自己选择数据库配置
+]]> </programlisting>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   <section xml:id="eclipse.def">
     <title>流程定义管理</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+           <para>在设计器上方的菜单中选择“定义管理”。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/eclipse.def.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>这里可以管理当前已经发布的所有流程。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.def.2.png"/>
+            </imageobject>
+          </mediaobject>
+          <programlisting language="properties"><![CDATA[
+
+选中组--删除定义       //删除选中流程定义并清空该流程实例数据
+选中组--删除实例       //删除选中流程实例数据
+所有组--清空实例       //清空所有流程实例数据
+所有组--清空所有       //清空所有流程数据（慎用）
+下载组--下载定义       //下载选中流程的流程图与流程定义
+]]> </programlisting>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   
   <section xml:id="eclipse.theme">
     <title>设计器主题</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>在设计器上方的菜单中选择“界面主题”。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/eclipse.theme.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>这里可以选择流程设计器的整套主题或具体图形的颜色搭配。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.theme.2.png"/>
+            </imageobject>
+          </mediaobject>
+          <programlisting language="properties"><![CDATA[
+
+Connections                   //线条
+Events                        //事件
+Gateways                      //网关
+Activites                     //活动
+Data Elements                 //数据元素
+Containers and Artifacts      //容器和人工
+]]> </programlisting>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   
   <section xml:id="eclipse.cache">
     <title>设计器缓存</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>在设计器上方的菜单中选择“重置缓存”，可以清空当前的流程缓存(数据库连接信息等)。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="300" fileref="images/eclipse.cache.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   
   <section xml:id="eclipse.automaticConnection">
     <title>自动连线</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>在设计器画流程图的时候，在流程图空白处右键，可以选择开启或者关闭自动连线。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.automaticConnection.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   
   <section xml:id="eclipse.lane">
     <title>Lane的技巧</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>在设计器画流程图的时候，用到的嵌套如图所示。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.lane.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   
   <section xml:id="eclipse.subprocesses">
     <title>子流程技巧</title>
-    <para></para>
-    
+    <para>
+      <orderedlist>
+        <listitem>
+          <para>子流程可以折叠。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.subprocess.1.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>折叠后样式。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.subprocess.2.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>子流程可以另开个流程图TAB页进行绘制。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.subprocess.3.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>另开TAB页后的样式。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.subprocess.4.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>原图上的显示。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/eclipse.subprocess.5.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </orderedlist>
+    </para>
   </section>
   
 </chapter>

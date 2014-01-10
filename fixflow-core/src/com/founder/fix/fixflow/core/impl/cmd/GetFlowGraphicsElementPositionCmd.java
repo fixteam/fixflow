@@ -43,14 +43,22 @@ public class GetFlowGraphicsElementPositionCmd implements Command<Map<String, Ma
 	 * 流程定义编号
 	 */
 	protected String processDefinitionId;
+	protected String processDefinitionKey;
+	
 	protected DefinitionsBehavior definitions;
-	public GetFlowGraphicsElementPositionCmd(String processDefinitionId) {
+	public GetFlowGraphicsElementPositionCmd(String processDefinitionId,String processDefinitionKey) {
 		this.processDefinitionId = processDefinitionId;
+		this.processDefinitionKey= processDefinitionKey;
 	}
 
 	public Map<String, Map<String, Object>> execute(CommandContext commandContext) {
 		ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
-		ProcessDefinitionBehavior processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
+		ProcessDefinitionBehavior processDefinition = null;
+		if(processDefinitionId!=null)
+			processDefinition = processDefinitionManager.findLatestProcessDefinitionById(processDefinitionId);
+		else
+			processDefinition = processDefinitionManager.findLatestProcessDefinitionByKey(processDefinitionKey);
+			
 		DefinitionsBehavior definitions = processDefinition.getDefinitions();
 		Map<String, Map<String, Object>> positionInfo=new HashMap<String, Map<String,Object>>();
 		this.definitions=definitions;

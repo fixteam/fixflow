@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.0.0.20130927">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
-    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
-    <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>   
+    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="fixflow" password="fixflow" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
+    <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
-    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
+    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
     <dataBase id="sqlserver" name="sqlserver" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
   </dataBaseConfig>
   <taskCommandConfig commandType="manualclaim">
@@ -20,6 +20,7 @@
     <taskCommandDef id="rollBackTaskByExpression" name="退回-指定步骤" command="com.founder.fix.fixflow.expand.command.RollBackTaskByExpressionCommand" cmd="com.founder.fix.fixflow.expand.cmd.RollBackTaskByExpressionCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.RollBackTaskByExpressionFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="saveTaskDraft" name="保存草稿" command="com.founder.fix.fixflow.expand.command.SaveTaskDraftCommand" cmd="com.founder.fix.fixflow.expand.cmd.SaveTaskDraftCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.SaveTaskDraftFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="terminationProcess" name="终止" command="com.founder.fix.fixflow.expand.command.TerminationProcessCommand" cmd="com.founder.fix.fixflow.expand.cmd.TerminationProcessCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.TerminationProcessFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+    <taskCommandDef id="terminationSubProcessReturn" name="终止子流程返回主流程" command="com.founder.fix.fixflow.expand.command.TerminationSubProcessReturnCommand" cmd="com.founder.fix.fixflow.expand.cmd.TerminationSubProcessReturnCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.TerminationSubProcessReturnFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="deleteTask" name="删除任务" command="com.founder.fix.fixflow.expand.command.DeleteTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.DeleteTaskCmd" isEnabled="false" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.DeleteTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="deleteProcessInstance" name="删除实例" command="com.founder.fix.fixflow.expand.command.DeleteProcessInstanceCommand" cmd="com.founder.fix.fixflow.expand.cmd.DeleteProcessInstanceCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.DeleteProcessInstanceFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
     <taskCommandDef id="suspendTask" name="暂停任务" command="com.founder.fix.fixflow.expand.command.SuspendTaskCommand" cmd="com.founder.fix.fixflow.expand.cmd.SuspendTaskCmd" isEnabled="true" type="toDoTasks" filter="com.founder.fix.fixflow.expand.filter.SuspendTaskFilter" isVerification="true" isSaveData="true" isSimulationRun="false"/>
@@ -43,12 +44,12 @@
     <taskCommandDef id="receiveEnd" name="等待结束" isEnabled="true" type="system" isVerification="false" isSaveData="false" isSimulationRun="false"/>
   </taskCommandConfig>
   <designerOrgConfig dataBaseId="DB_FIX_BIZ_BASE" isDefaultConfig="true">
-    <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="select * from au_userinfo"/>
+    <allUserInfo isEnabled="false" userIdField="USERID" userNameField="USERNAME" sqlText="SELECT * FROM AU_USERINFO"/>
     <groupInfo groupId="dept" groupName="部门" isEnabled="true" isDisplayUser="false" groupIdField="ORGID" groupNameField="ORGNAME" supGroupIdField="SUPORGID" sqlText="select * from au_orginfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.DepartmentGroupImpl">
-      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from au_userinfo t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID"/>
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ORGID" sqlText="select t1.*, t2.GROUP_ID AS ORGID,t3.orgname as ORGNAME from AU_USERINFO t1,  FIX_GROUP_RELATION t2,AU_ORGINFO t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='org' AND T2.GROUP_ID=t3.ORGID"/>
     </groupInfo>
     <groupInfo groupId="role" groupName="角色" isEnabled="true" isDisplayUser="true" groupIdField="ROLEID" groupNameField="NAME" supGroupIdField="ROLEID" sqlText="select * from au_roleinfo" groupDefinitionImpl="com.founder.fix.fixflow.expand.identity.RoleGroupImpl">
-      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID ,t3.name as name from au_userinfo t1,  FIX_GROUP_RELATION t2, au_roleinfo t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role' and t2.group_id =t3.roleid"/>
+      <userInfo userIdField="USERID" userNameField="USERNAME" groupIdField="ROLEID" sqlText="select t1.*, t2.GROUP_ID AS ROLEID ,t3.name as NAME from AU_USERINFO t1,  FIX_GROUP_RELATION t2, au_roleinfo t3 where t1.userid = t2.user_id AND t2.GROUP_TYPE='role' and t2.group_id =t3.roleid"/>
     </groupInfo>
   </designerOrgConfig>
   <sysMailConfig selected="方正国际邮箱">
@@ -83,7 +84,7 @@
     <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>
   </scriptLanguageConfig>
   <internationalizationConfig isEnable="false" folderPath="/fixflow-expand/internationalization/"/>
-  <pigeonholeConfig serverPath="http://&lt;127.0.0.1>:&lt;8080>/&lt;xxweb>" pdfPath="&lt;C:>/&lt;xxfolder>/&lt;xxfolder>"/>
+  <pigeonholeConfig serverPath="http://&lt;127.0.0.1>:&lt;8080>/&lt;xxweb>" pdfPath="&lt;C:>/&lt;xxfolder>/&lt;xxfolder>" isEnable="false"/>
   <expandCmdConfig>
     <expandCmd id="MyTestCmd" name="测试执行器" cmd="com.founder.fix.fixflow.expand.cmd.MyTestCmd"/>
     <expandCmd id="PerformanceInterfaceTask" name="流程绩效部门任务处理时长" cmd="com.founder.fix.fixflow.expand.cmd.PerformanceInterfaceTaskCmd"/>
@@ -115,4 +116,21 @@
     <importDataVariable id="FixCSDB" name="FixCS平台数据库变量" expression="bizData.getMasterValue(processInfo.getProcessDefinitionKey(),processInfo.getBizKey(),&quot;#{FieldName}&quot;)"/>
     <importDataVariable id="GeneralDB" name="通用数据库变量" expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);"/>
   </importDataVariableConfig>
+  <resourcePathConfig>
+    <resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-expand" virtualPath="template"/>
+    <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="template/flow-template/"/>
+    <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="template/node-template/"/>
+    <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" src="template/system-template/" virtualPath="template/system-template"/>
+    <resourcePath id="flowConnector-path" name="流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/flowconnector/FlowConnectorMenu.xml" virtualPath="src/com/founder/fix/fixflow/expand/flowconnector/"/>
+    <resourcePath id="actorConnector-path" name="处理者选择器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/actorconnector/ActorConnectorMenu.xml" virtualPath="src/com/founder/fix/fixflow/expand/actorconnector/"/>
+    <resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
+    <resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>
+  </resourcePathConfig>
+  <rulesResourceConfig>
+    <rulesResource src="com/founder/fix/fixflow/expand/mapping/ProcessInstance.xml"/>
+    <rulesResource src="com/founder/fix/fixflow/expand/mapping/TaskIdentityLink.xml"/>
+    <rulesResource src="com/founder/fix/fixflow/expand/mapping/TaskInstance.xml"/>
+    <rulesResource src="com/founder/fix/fixflow/expand/mapping/Token.xml"/>
+    <rulesResource src="com/founder/fix/fixflow/expand/mapping/Variable.xml"/>
+  </rulesResourceConfig>
 </coreconfig:FixFlowConfig>

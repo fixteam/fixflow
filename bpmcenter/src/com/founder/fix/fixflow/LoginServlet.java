@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.WebApplicationContext;
 
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
@@ -71,7 +72,10 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean("DB_FIX_BIZ_BASE");
+		
+		String dataBaseId=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getSelectedDatabase().getId();
+		
+		DBConnFactory dbcf = (DBConnFactory)SpringConfigLoadHelper.getBean(dataBaseId);
 		Connection connection = null;
 		
 		try {
@@ -93,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 			list.add(password);
 			
 			StringBuffer sb = new StringBuffer();
-			sb.append("select USERID,USERNAME from AU_USERINFO where LOGINID=? and PASSWORD=?");
+			sb.append("SELECT USERID,USERNAME FROM AU_USERINFO WHERE LOGINID=? AND PASSWORD=?");
 			connection = dbcf.createConnection();
 			//这里是自带的数据库操作方式。
 			SqlCommand sqlcommand = new SqlCommand(connection);

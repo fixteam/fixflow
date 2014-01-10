@@ -80,7 +80,7 @@ public class TimeoutHandling implements ConnectorHandler {
 			
 			if(taskInstanceImpl!=null){
 				
-				taskInstanceImpl.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
+				taskInstanceImpl.setAssignee(Authentication.getAuthenticatedUserId());
 				
 				taskInstanceImpl.end();
 				taskInstanceImpl.setDueDate(new Date());

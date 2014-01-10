@@ -187,7 +187,7 @@
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.19.png"/>
     </imageobject></mediaobject>
-    <para>输入账号：admin 密码：1，点击登录，登录成功，进入任务中心界面</para>
+    <para>输入账号：admin 初始密码：888888（演示地址中密码为1），点击登录，登录成功，进入任务中心界面</para>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.20.png"/>
     </imageobject></mediaobject>

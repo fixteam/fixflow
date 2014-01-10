@@ -23,6 +23,7 @@ import java.util.Map;
 
 import com.founder.fix.bpmn2extensions.coreconfig.DesignerOrgConfig;
 import com.founder.fix.bpmn2extensions.coreconfig.GroupInfo;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
@@ -55,7 +56,7 @@ public abstract class GroupDefinition {
 	}
 
 	public String getName() {
-		Boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
+		Boolean booleanTemp=StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
 		// 用户名称国际化处理
 		if (booleanTemp) {
 			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();

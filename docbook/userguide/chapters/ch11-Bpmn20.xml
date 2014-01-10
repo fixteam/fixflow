@@ -20,9 +20,9 @@
     </para>
     <para> <emphasis role="bold">BPMN2.0元素图</emphasis></para>
     <para>
-      <link xlink:href="../../images/BPMN2_0_Poster_EN.png">查看完整图片</link>
+      <link xlink:href="../../images/BPMN2_0_Poster_EN_big.png">查看完整图片</link>
       <mediaobject ><imageobject>
-        <imagedata align="center" contentwidth="900"  fileref="images/BPMN2_0_Poster_EN.png"/>
+        <imagedata align="center" contentwidth="800"  fileref="images/BPMN2_0_Poster_EN.png"/>
       </imageobject></mediaobject>
     </para>
 
@@ -98,13 +98,11 @@
     </para>
     <para>
       BPMN标准是个开放的标准,它为每个元素都提供了扩展的方式,extensionElements可以包含在任务BPMN官方的元素里。
-      <programlisting language="xml"><![CDATA[
-      <bpmn2:extensionElements>
-        <fixflow:taskSubject>
-          <fixflow:expression xsi:type="fixflow:Expression" >"编号为: "+${编号}+" 的测试流程任务主题"</fixflow:expression>
-        </fixflow:taskSubject>
-      </bpmn2:extensionElements>
-      ]]></programlisting>
+      <programlisting language="xml"><![CDATA[<bpmn2:extensionElements>
+  <fixflow:taskSubject>
+    <fixflow:expression xsi:type="fixflow:Expression" >"编号为: "+${编号}+" 的测试流程任务主题"</fixflow:expression>
+  </fixflow:taskSubject>
+</bpmn2:extensionElements>]]></programlisting>
     </para>
     <para>开发者也可以给我们反馈对扩展的意见<link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>,或提出自定义扩展的新思路。谁知道,有一天,你的想法可能会出现在FixFlow引擎中哦。</para>
   </section>
@@ -892,13 +890,13 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center"  contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
         
         <para>
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.2.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -910,7 +908,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ParallelGateway.GraphicalNotation.3.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -932,7 +930,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           包容网关(ExclusiveGateway)图形为一个菱形里边有一个"o"圆圈。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
+            <imagedata align="center"   fileref="images/bpmn.InclusiveGateway.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1004,7 +1002,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para>
           下面这样做法FixFLow引擎是支持的,但是不推荐这么用。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.GraphicalNotation.2.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1015,7 +1013,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <title>设计器配置</title>
         <para> 
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.InclusiveGateway.designer.png"/>
+            <imagedata align="center"  fileref="images/bpmn.InclusiveGateway.designer.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1033,7 +1031,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
       
       <emphasis role="bold">BPMN2.0 Task类型元素图:</emphasis>
       <mediaobject ><imageobject>
-        <imagedata  align="center" contentwidth="600" fileref="images/bpmn.Tasks.1.png"/>
+        <imagedata  align="center"   fileref="images/bpmn.Tasks.1.png"/>
       </imageobject></mediaobject>
     </para>
     
@@ -1051,7 +1049,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           一个人工任务是图形为一个圆角矩形,有一个小的用户图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.GraphicalNotation.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1096,7 +1094,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
         <para> 
           对应的设计器图形表示:
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.assignment.1.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.assignment.1.png"/>
           </imageobject></mediaobject>
         </para>
         
@@ -1135,7 +1133,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           <emphasis role="bold">resourceAssignmentExpression-formalExpression</emphasis>:人员或者组信息的表达式,
           可以是"人员编号"、也可以 return "人员编号"、或者 "人员1,人员2,人员3"、或者是个 List(String) 、也可以直接在这里调用java代码返回人员信息。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.assignment.2.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.assignment.2.png"/>
           </imageobject></mediaobject>
         </para>
         <para>
@@ -1253,7 +1251,7 @@ taskInstance.getPriority();]]></programlisting>
         <para>
           <emphasis role="bold">设计器界面</emphasis>:
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.UserTask.taskInfo.1.png"/>
+            <imagedata align="center"   fileref="images/bpmn.UserTask.taskInfo.1.png"/>
           </imageobject></mediaobject>
         </para>
         <para>
@@ -1311,7 +1309,7 @@ taskInstance.getExpectedExecutionTime();
         <para> 
           脚本任务是图形为一个圆角矩形,有一个小的脚本图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
+            <imagedata align="center" fileref="images/bpmn.ScriptTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1366,7 +1364,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           服务任务是图形为一个圆角矩形,有一个小的齿轮图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.ServiceTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1395,7 +1393,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           服务任务是图形为一个圆角矩形,有一个小的表格图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.BusinessRuleTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1425,7 +1423,7 @@ def title= "单据号为: "+${单据编号}+" 的报销单请审批!";
         <para> 
           发送任务是图形为一个圆角矩形,有一个小的黑色邮件图标在左上角。
           <mediaobject ><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.SendTask.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1570,9 +1568,9 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
       <section xml:id="bpmn.foreach.GraphicalNotation">
         <title>图形符号</title>
         <para> 
-          发送任务是图形为一个圆角矩形,有一个手的图标在左上角。
+          还有并行多实例的活动节点下面都会出现三道竖线。(串行是三道横线)
           <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.ManualTask.GraphicalNotation.1.png"/>
+            <imagedata align="center"  fileref="images/bpmn.foreach.GraphicalNotation.1.png"/>
           </imageobject></mediaobject>
         </para>
       </section>
@@ -1583,32 +1581,27 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
         
         <para>
           XML元素表示如下:
-          <programlisting language="xml"><![CDATA[
-            
-<bpmn2:multiInstanceLoopCharacteristics>
-        <bpmn2:extensionElements>
-          <fixflow:loopDataInputCollection>
-            <fixflow:expression>输入数据集</fixflow:expression>
-          </fixflow:loopDataInputCollection>
-          <fixflow:loopDataOutputCollection>
-            <fixflow:expression>输出数据集</fixflow:expression>
-          </fixflow:loopDataOutputCollection>
-        </bpmn2:extensionElements>
-        <bpmn2:inputDataItem>
-          <bpmn2:extensionElements>
-            <fixflow:expression>输入项编号</fixflow:expression>
-          </bpmn2:extensionElements>
-        </bpmn2:inputDataItem>
-        <bpmn2:outputDataItem>
-          <bpmn2:extensionElements>
-            <fixflow:expression>输出项编号</fixflow:expression>
-          </bpmn2:extensionElements>
-        </bpmn2:outputDataItem>
-        <bpmn2:completionCondition>完成表达式</bpmn2:completionCondition>
-</bpmn2:multiInstanceLoopCharacteristics>            
-            
-            
-            ]]></programlisting>
+          <programlisting language="xml"><![CDATA[<bpmn2:multiInstanceLoopCharacteristics>
+  <bpmn2:extensionElements>
+    <fixflow:loopDataInputCollection>
+      <fixflow:expression>输入数据集</fixflow:expression>
+    </fixflow:loopDataInputCollection>
+    <fixflow:loopDataOutputCollection>
+      <fixflow:expression>输出数据集</fixflow:expression>
+    </fixflow:loopDataOutputCollection>
+  </bpmn2:extensionElements>
+  <bpmn2:inputDataItem>
+    <bpmn2:extensionElements>
+      <fixflow:expression>输入项编号</fixflow:expression>
+    </bpmn2:extensionElements>
+  </bpmn2:inputDataItem>
+  <bpmn2:outputDataItem>
+    <bpmn2:extensionElements>
+      <fixflow:expression>输出项编号</fixflow:expression>
+    </bpmn2:extensionElements>
+  </bpmn2:outputDataItem>
+  <bpmn2:completionCondition>完成表达式</bpmn2:completionCondition>
+</bpmn2:multiInstanceLoopCharacteristics>]]></programlisting>
         </para>
       </section>
     </section>

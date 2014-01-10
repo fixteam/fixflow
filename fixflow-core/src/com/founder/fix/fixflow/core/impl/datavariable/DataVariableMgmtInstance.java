@@ -26,6 +26,13 @@ import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 
 
 public class DataVariableMgmtInstance implements Serializable {
+	
+	
+	public DataVariableMgmtInstance(ProcessInstanceEntity processInstance){
+		
+		this.processInstance=processInstance;
+		
+	}
 
 	/**
 	 * 
@@ -76,15 +83,6 @@ public class DataVariableMgmtInstance implements Serializable {
 		return processInstance;
 	}
 
-	public void setProcessInstance(ProcessInstanceEntity processInstance) {
-
-		this.dataVariableMgmtDefinition=processInstance.getProcessDefinition().getDataVariableMgmtDefinition();
-		
-		this.processInstance = processInstance;
-		this.processInstance.setDataVariableMgmtInstance(this);
-		
-	}
-	
 
 
 	

@@ -48,6 +48,22 @@ public class EMFUtil {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <T> T findElement(String id,EObject eObject,Class<T> class1) {
+		if (id == null || id.isEmpty())
+			return null;
+
+		List<BaseElement> baseElements = getAll(BaseElement.class,eObject);
+
+		for (BaseElement be : baseElements) {
+			if (id.equals(be.getId())&&class1.isInstance(be)) {
+				return (T)be;
+			}
+		}
+
+		return null;
+	}
+	
 	public static FlowElement findFlowElement(String id,EObject eObject) {
 		if (id == null || id.isEmpty())
 			return null;

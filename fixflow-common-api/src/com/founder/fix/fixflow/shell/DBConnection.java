@@ -24,10 +24,14 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
+import com.founder.fix.fixflow.core.db.pagination.Pagination;
+
 public class DBConnection {
 	private DataSource dataSource;
 	
 	private Connection connection;
+	
+	private Pagination pageination;
 	
 	public void close() throws SQLException{
 		if (connection != null && connection.isClosed()==false){
@@ -59,8 +63,39 @@ public class DBConnection {
 		return connection;
 	}
 
-	public void setConnection(Connection connection) {
+	public void setConnection(Connection connection){
 		this.connection = connection;
+		pageination = initDialet(connection);
+	}
+	
+	public static Pagination initDialet(Connection connection){
+		Pagination pageination = null;
+		try{
+			String dbms = connection.getMetaData().getDatabaseProductName();
+			if ( dbms == null || dbms.equals("") ){
+				pageination = (Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl").newInstance();
+			}else if ( dbms.equals("Oracle") ){
+				pageination = (Pagination)(Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl").newInstance();
+			}else if ( dbms.equals("Microsoft SQL Server")){
+				pageination = (Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl").newInstance();
+			}else if ( dbms.indexOf("DB2")!=-1){
+				pageination = (Pagination)Class.forName("com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl").newInstance();
+			}else if ( dbms.equals("MySQL")){
+				pageination = (Pagination)Class.forName("com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl").newInstance();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return pageination;
+	}
+
+	public Pagination getPageination() {
+		return pageination;
+	}
+
+	public void setPageination(Pagination pageination) {
+		this.pageination = pageination;
 	}
 	
 	

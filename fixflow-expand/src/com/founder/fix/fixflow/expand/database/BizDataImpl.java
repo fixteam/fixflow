@@ -59,5 +59,35 @@ public class BizDataImpl implements BizData {
 		}
 	}
 
+	public Object getMasterValue(String defkey, String bizkey, String field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Object> getMasterMap(String defkey, String bizkey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Map<String, Object>> getDetailAll(String defkey, String bizkey, String detailName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Object> getDetailRows(String defkey, String bizkey, String detailName, int rowNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getDetailValue(String defkey, String bizkey, String detailName, int rowNum, String field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Object> getDetailColumnValue(String defkey, String bizkey, String detailName, String field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

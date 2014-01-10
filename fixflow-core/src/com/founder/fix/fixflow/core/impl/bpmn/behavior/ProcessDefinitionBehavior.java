@@ -101,6 +101,10 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	public String getName(){
+		return name;
+	}
 
 	/**
 	 * <!-- 开始-用户-文档 --> 增加流程版本号 <!-- 结束-用户-文档 -->

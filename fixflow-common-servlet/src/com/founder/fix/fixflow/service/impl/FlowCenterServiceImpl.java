@@ -152,7 +152,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =10;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -314,7 +314,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String pageI = StringUtil.getString(filter.get("pageIndex"));
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			int pageIndex=1;
-			int rowNum   =10;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -454,7 +454,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			String rowI = StringUtil.getString(filter.get("pageSize"));
 			
 			int pageIndex=1;
-			int rowNum   =20;
+			int rowNum   =15;
 			if(StringUtil.isNotEmpty(pageI)){
 				pageIndex = Integer.valueOf(pageI);
 			}
@@ -503,6 +503,32 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		}finally{
 			closeProcessEngine();
 		}
+		return result;
+	}
+	
+	public Map<String,Object> getTaskDetailInfoSVG(Map<String,Object> filter) throws SQLException{
+		Map<String,Object> result = new HashMap<String,Object>();
+		Map<String,Object> tmpMap = getTaskDetailInfo(filter);
+		result.putAll(tmpMap);
+		
+		String processInstanceId = StringUtil.getString(filter.get("processDefinitionId"));
+		String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));
+		
+		String userId = (String) filter.get("userId");
+		ProcessEngine engine = getProcessEngine(userId);
+		String svgFlow = null;
+		
+		try{
+			if(StringUtil.isNotEmpty(processInstanceId))
+				svgFlow = engine.getModelService().getFlowGraphicsSvg(processInstanceId);
+			else
+				svgFlow = engine.getModelService().getFlowGraphicsSvgByDefKey(processDefinitionKey);
+			
+			result.put("flowGraph", svgFlow);
+		}finally{
+			closeProcessEngine();
+		}
+		
 		return result;
 	}
 	

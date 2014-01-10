@@ -17,13 +17,10 @@
  */
 package com.founder.fix.fixflow.test.engine;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.impl.ExternalContent;
+
 
 import junit.framework.TestCase;
 
@@ -72,8 +69,5 @@ public class ProcessEngineTest extends TestCase {
 //		assertNotNull(externalContent.getConnection());
 	}
 
-	private static Connection createConnection() throws Exception {
-		return null;
-	}
 
 }

@@ -34,12 +34,6 @@ import com.founder.fix.fixflow.core.impl.cmd.GetProcessCommand;
 import com.founder.fix.fixflow.core.impl.cmd.GetProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.MessageStartProcessInstanceCmd;
 import com.founder.fix.fixflow.core.impl.cmd.NoneStartProcessInstanceCmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceCmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface1Cmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface22Cmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface2Cmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface4Cmd;
-import com.founder.fix.fixflow.core.impl.cmd.ProcessPerformanceInterface5Cmd;
 import com.founder.fix.fixflow.core.impl.cmd.QueryVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveVariablesCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SuspendProcessInstanceCmd;
@@ -264,29 +258,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 		return true;
 	}
 
-	public List<Map<String, Object>> processPerformance(String processKey, String startTime, String endTime, int firstPage, int maxSize) {
-		return commandExecutor.execute(new ProcessPerformanceCmd(processKey, startTime, endTime, firstPage, maxSize));
-	}
-
-	public List<Map<String, Object>> processPerformance(String startTime, String endTime) {
-		return commandExecutor.execute(new ProcessPerformanceInterface1Cmd(startTime, endTime));
-	}
-
-	public List<Map<String, Object>> processPerformance(String[] processKey, String startTime, String endTime) {
-		return commandExecutor.execute(new ProcessPerformanceInterface4Cmd(processKey, startTime, endTime));
-	}
-
-	public List<Map<String, Object>> processPerformance(String startTime, String endTime, String pid) {
-		return commandExecutor.execute(new ProcessPerformanceInterface5Cmd( startTime, endTime, pid));
-	}
-
-	public List<Map<String, Object>> processPerformance(String startTime, String endTime, int firstPage, int maxSize) {
-		return commandExecutor.execute(new ProcessPerformanceInterface2Cmd(startTime, endTime, firstPage, maxSize));
-	}
-
-	public int processPerformance2(String startTime, String endTime) {
-		return commandExecutor.execute(new ProcessPerformanceInterface22Cmd(startTime, endTime));
-	}
+	
 	public <T> T ExpandCmd(String cmdId, Map<String, Object> parameterMap, T classReturn) {
 
 		return commandExecutor.execute(new ExpandCommonCmd<T>(cmdId, parameterMap));

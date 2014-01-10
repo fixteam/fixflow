@@ -209,6 +209,12 @@ public class FlowCenter extends HttpServlet {
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
+			}else if (action.equals("getTaskDetailInfoSVG")) {
+				Map<String, Object> pageResult = getFlowCenter()
+						.getTaskDetailInfoSVG(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
 			} else if (action.equals("getFlowGraph")) {
 				InputStream is = getFlowCenter().getFlowGraph(filter);
 				out = response.getOutputStream();

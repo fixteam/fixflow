@@ -363,7 +363,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 				SqlCommand sqlCommand = getSqlCommand();
 				List<Object> objectParamWhere = new ArrayList<Object>();
 				objectParamWhere.add(groupId);
-				List<Map<String, Object>> dataObj = sqlCommand.queryForList("select USERTABLENEW.* from (SELECT USERTABLENEW.* FROM (" + sqlText
+				List<Map<String, Object>> dataObj = sqlCommand.queryForList(" SELECT USERTABLENEW.* FROM (" + sqlText
 						+ ") USERTABLENEW WHERE USERTABLENEW." + groupIdField + " IN (SELECT USERTABLE." + supGroupIdField + " FROM (" + sqlText
 						+ ") USERTABLE where USERTABLE." + groupIdField + "=?)", objectParamWhere);
 				if (dataObj.size() == 0) {
@@ -372,7 +372,7 @@ public class GroupDefinitionImpl extends GroupDefinition {
 				if (dataObj.get(0).get(groupIdField) == null) {
 					return null;
 				}
-				GroupTo groupTo = new GroupTo(groupId, StringUtil.getString(dataObj.get(0).get(groupNameField)), getId(), dataObj.get(0));
+				GroupTo groupTo = new GroupTo(StringUtil.getString(dataObj.get(0).get(groupIdField)), StringUtil.getString(dataObj.get(0).get(groupNameField)), getId(), dataObj.get(0));
 				cache.putCacheData(getId() + "_findParentGroupByGroupId_" + groupId, groupTo);
 				return groupTo;
 			} catch (Exception e) {

@@ -10,7 +10,7 @@ xmlns:context="http://www.springframework.org/schema/context"
 					http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 					http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 	<!-- 注解配置，如果有新的注解在后逗号分隔，这一段务必保留 -->
-	<context:component-scan base-package="com.founder.fix.fixflow" />
+	<context:component-scan base-package="com.founder.fix" />
 	
 	<!-- 读取数据库配置所在 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">        
@@ -29,4 +29,12 @@ xmlns:context="http://www.springframework.org/schema/context"
 	    <ref bean="fix_biz_base_dataSource"/> 
 	  </property>
 	</bean>
+	
+	<!-- 平台本身的连接配置，DB_FIX_BIZ_BASE是连接名称，改名称与fixflowconfig.xml里的可用连接一一对应-->
+	<bean id="mysql" scope="prototype" class="com.founder.fix.fixflow.shell.DBConnFactory"> 
+	  <property name="dataSource"> 
+	    <ref bean="fix_biz_base_dataSource"/> 
+	  </property>
+	</bean>
+	
 </beans>

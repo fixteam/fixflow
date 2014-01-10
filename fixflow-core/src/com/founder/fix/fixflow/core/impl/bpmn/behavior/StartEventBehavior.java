@@ -125,7 +125,7 @@ public class StartEventBehavior extends StartEventImpl {
 		taskInstance.setDraft(isDraft);
 		
 	
-		taskInstance.setAssigneeId(Authentication.getAuthenticatedUserId());
+		taskInstance.setAssignee(Authentication.getAuthenticatedUserId());
 		//taskInstance.setEndTime(newTaskEndTime);
 		taskInstance.setCommandId(TaskCommandType.STARTEVENT);
 		taskInstance.setCommandType(TaskCommandType.STARTEVENT);
@@ -138,8 +138,8 @@ public class StartEventBehavior extends StartEventImpl {
 		
 		taskInstance.setEndTime(ClockUtil.getCurrentTime());
 		//taskInstance.setCallActivityInstanceId(subProcessInstanceId);
-				
-		Context.getCommandContext().getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstance);
+		executionContext.getProcessInstance().getTaskMgmtInstance().addTaskInstanceEntity(taskInstance);
+		//Context.getCommandContext().getTaskManager().saveTaskInstanceEntity((TaskInstanceEntity)taskInstance);
 		
 	}
 

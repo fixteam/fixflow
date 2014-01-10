@@ -1,0 +1,8400 @@
+body {
+	background-color: #ffffff;
+	font-family	: tahoma,arial,san-serif;
+	font-size	: 11px;
+	margin: 0px;
+	padding:0px;
+}
+
+body, td, input, textarea {
+	font-size: 12px;
+}
+
+body.ext-opera {
+	position: inherit !important;
+}
+
+:focus {
+    outline: 0;
+}
+
+.x-gecko-3-6 .x-form-text {
+	padding-bottom:1px;
+	padding-top:1px;
+}
+
+.x-gecko-10-0 .x-btn-text-icon .x-btn-center .x-btn-text {
+	padding-top:0px;
+}
+
+.x-gecko-12-0 .x-btn-text-icon .x-btn-center .x-btn-text {
+	padding-top:2px;
+}
+
+.x-gecko-14-0 .x-btn-text-icon .x-btn-center .x-btn-text,
+.x-gecko-15-0 .x-btn-text-icon .x-btn-center .x-btn-text {
+	padding-top: 1px;
+}
+
+/* BUGFIX for ridiculously oversized date pickers, e.g. in admin panel*/
+.ext-safari .x-date-picker {
+	width: 196px !important;
+}
+
+.x-border-layout-ct {
+	background:white none repeat scroll 0 0;
+}
+
+a {
+	color	: #10a7d9;
+}
+
+a.x-item-disabled:hover, a.x-item-disabled:focus, a.x-item-disabled:active {
+	color	: white;
+}
+
+a:hover, a:focus, a:active {
+	color	: #82566B;
+}
+
+a.x-button-plain, .x-panel-btns a.x-link-button {
+	color:white;
+	font-size:11px;
+	line-height:13px;
+	display:block;
+	vertical-align:middle;
+	padding:4px;
+}
+
+a.x-button-plain:hover,
+a.x-button-plain:focus,
+a.x-button-plain:active,
+.x-panel-btns a.x-link-button:hover,
+.x-panel-btns a.x-link-button:focus,
+.x-panel-btns a.x-link-button:active {
+	color:#E1E1E1;
+}
+
+.x-tree-node {
+    font-family: tahoma,verdana,helvetica !important;
+}
+.x-ipad body * {
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-text-size-adjust: none;
+}
+
+.x-ipad body textarea,
+.x-ipad body input,
+.x-ipad body a {
+	-webkit-user-select: auto !important;
+}
+
+
+.x-ipad .x-panel-bwrap,
+.x-ipad .x-panel-bwrap > div,
+.x-ipad .x-panel .x-column-inner,
+.x-ipad .x-panel .x-column-inner .x-column,
+.x-ipad .x-panel-body,
+.x-ipad .x-grid3-viewport,
+.x-ipad .x-grid3-viewport .x-grid3-header-inner {
+	position: relative;
+}
+
+.x-ipad .x-btn-center {
+	padding:0 0;
+}
+
+.x-ipad body .x-menu * {
+	-webkit-tap-highlight-color: rgba(100, 100, 100, 0.4);
+}
+
+.x-ipad .x-btn-text-icon .x-btn-center .x-btn-text {
+
+}
+
+.x-ipad .x-btn-text-icon .x-btn-center button.x-btn-text:before {
+	content:"\00A0\00A0\00A0\00A0";
+}
+
+.x-ipad .x-btn-text-icon .x-btn-center em {
+	padding-right:3px;
+}
+
+
+.x-ipad #folder_plugin .x-tree-node-el {
+	font-size:14px;
+	text-shadow:0 -1px 0 #666666;
+	padding:8px 5px;
+	line-height:20px;
+}
+
+.x-ipad .view_plugin .thumb-wrap span {
+	text-shadow:1px 1px 1px #DDDDDD;
+}
+
+.x-ipad .north_view .x-panel-body {
+	height: 71px !important;
+}
+
+.x-predefinied-view {
+	background-color: silver;
+	background-image: none !important;
+}
+
+.x-predefinied-view-combobox {
+	padding-left:2px;
+	padding-right:0px;
+}
+
+
+
+.x-container-view-checkboxen .x-form-cb-label {
+	font-size:12px !important;
+	white-space: nowrap;
+}
+
+.x-predefinied-view-description-panel{
+	padding:2px 2px !important;
+	color: #000000 !important;
+}
+
+.x-container-view-checkboxen* {
+	font-size:12px !important;
+}
+
+.x-ipad .north_view .x-panel-body .x-panel-body {
+	height:35px !important;
+}
+
+.x-ipad .north_view .north_view.x-toolbar {
+	background-position:left -31px !important;
+	height:32px !important;
+	padding:8px 2px 2px;
+	top:33px !important;
+}
+
+.x-ipad .north_view .x-btn-text-icon .x-btn-center .x-btn-text {
+	padding:7px 5px 7px 11px;
+	background-position:0 3px;
+}
+
+.x-ipad .north_view .x-toolbar.north_view .x-btn-icon button {
+	padding:3px 0 24px 24px !important;
+	width: 24px;
+}
+
+.x-ipad .north_view .x-toolbar .x-btn-over .x-btn-left,
+.x-ipad .north_view .x-toolbar .x-btn-over .x-btn-center,
+.x-ipad .north_view .x-toolbar .x-btn-over .x-btn-right,
+.x-ipad .north_view .x-toolbar .x-btn-click .x-btn-left,
+.x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-left,
+.x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-left,
+.x-ipad .north_view .x-toolbar .x-btn-click .x-btn-center,
+.x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-center,
+.x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-center,
+.x-ipad .north_view .x-toolbar .x-btn-click .x-btn-right,
+.x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-right,
+.x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-right {
+	background-image: url("/bpmcenter/fixflow-explorer/images/signavio/24x24/tb-btn-sprite.gif");
+}
+
+
+.x-ipad .north_view .x-toolbar .x-btn-over .x-btn-left {
+	background-position: 0 -1px;
+}
+
+.x-ipad .north_view .x-toolbar .x-btn-over .x-btn-center {
+	background-position: 0 -59px;
+}
+
+.x-ipad .north_view .x-toolbar .x-btn-over .x-btn-right {
+	background-position: 0 -30px;
+}
+
+.x-ipad .north_view .x-toolbar .x-btn-click .x-btn-left,
+.x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-left,
+.x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-left {
+	background-position: 0 -88px;
+}
+
+.x-ipad .north_view .x-toolbar .x-btn-click .x-btn-center,
+.x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-center,
+.x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-center {
+	background-position: 0 -146px;
+}
+
+.x-ipad .north_view .x-toolbar .x-btn-click .x-btn-right,
+.x-ipad .north_view .x-toolbar .x-btn-pressed .x-btn-right,
+.x-ipad .north_view .x-toolbar .x-btn-menu-active .x-btn-right {
+	background-position: 0 -117px;
+}
+
+
+.x-ipad .x-btn-with-menu .x-btn-center em {
+	background-position: right 7px !important;
+}
+
+
+.x-ipad .north_view .x-toolbar td {
+	height:29px !important;
+}
+
+.x-ipad .north_view .x-toolbar .search_plugin td {
+	height:25px !important;
+}
+
+.x-ipad .signavio_repository_header_shadow,
+.x-ipad .signavio_repository_header_shadow2 {
+	top:70px !important;
+}
+
+.x-ipad .search_plugin {
+	margin-bottom:-13px;
+}
+
+.x-ipad .search_plugin .x-table-layout-cell {
+	background-color: #68133B;
+}
+
+.x-ipad .x-form-map-export-branding *,
+.x-ipad .x-window .x-window-body {
+	position: relative;
+}
+
+.x-ipad .x-window-security-center .x-window-security-center-mail .x-form-check-wrap {
+	top:3px;
+}
+
+/** IE 9 SPECIFIC **/
+.x-ie-9-0 textarea {
+	overflow: auto;
+}
+
+.x-ie-9-0 .x-window .x-tree-node-el {
+	height: 18px;
+}
+
+.x-ie-9-0 .x-window .x-tree-node-collapsed .x-tree-node-icon,
+.x-ie-9-0 .x-window .x-tree-node-expanded .x-tree-node-icon,
+.x-ie-9-0 .x-window .x-tree-node-leaf .x-tree-node-icon {
+	margin-top:-1px;
+
+	height: 20px;
+}
+
+.x-ie-9-0 .x-window input.x-tree-node-cb {
+	top: 4px;
+	margin-left: 2px;
+	margin-top: -2px;
+}
+
+.x-ie-9-0 .x-form-field-wrap .x-form-trigger {
+	top: -1px;
+}
+
+.ext-safari .x-form-field-wrap .x-form-trigger {
+	right: auto;
+}
+
+.x-ie-9-0 .x-btn.x-item-disabled {
+	position: relative;
+}
+
+.x-nowrap {
+	white-space:nowrap;
+}
+
+.x-tree-node-el a.x-link {
+	color:#AD0F5B;
+	text-decoration: underline;
+}
+
+.x-tree-node-el a.x-link:hover, .x-tree-node-el a.x-link:focus, .x-tree-node-el a.x-link:active {
+	color	: #82566B;
+}
+
+.x-combo-list-item  {
+	height:14px;
+}
+
+.x-combo-noedit {
+	-moz-user-focus: none;
+	-moz-user-select: none;
+	-webkit-user-focus: none;
+	-webkit-user-select: none;
+	user-focus: none;
+	user-select: none;
+}
+
+.x-combo-used {
+    color: #AAAAAA;
+    font-style: italic;
+    height: 14px;
+    overflow: hidden;
+    padding: 2px 2px 2px 20px;
+    white-space: nowrap;
+    background: none repeat scroll 0 0 white !important;
+    border: 1px solid white !important;
+}
+
+.x-combo-list .x-combo-used.x-combo-selected {
+    background: none repeat scroll 0 0 white !important;
+    border: 1px solid white !important;
+}
+
+.x-mask.x-background-white {
+	background:white;
+	bottom:0;
+	height:100%;
+	left:0;
+	position:absolute;
+	right:0;
+	top:0;
+	width:100%;
+	z-index:100000;
+}
+
+/** UX **/
+.x-form-add-trigger {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/trigger-add.png) !important
+}
+
+.x-form-textfield-list ol {
+	list-style-position:outside !important;
+	list-style-type:decimal !important;
+	margin-left:25px;
+}
+
+.x-form-textfield-list ol li {
+	border: 1px solid white;
+	white-space:normal;
+}
+
+.x-form-textfield-list ol li.x-editing {
+	border: 1px dotted silver;
+	color:silver;
+}
+
+.x-form-textfield-list ol li span {
+	font-size: 10px;
+}
+
+.x-form-textfield-list ol li.x-editing span {
+	display: none;
+}
+
+/** removes icons from treepanel */
+/*.x-tree-node-icon {*/
+.no-icon {
+	display: none;
+}
+
+.ajax_loader {
+	background-image: url(../../data/images/repository/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+.repository_ext_btn_align_center {
+	background-position: 0px center !important;
+	padding: 2px 0 3px 18px !important;
+}
+
+.repository_ext_icon_align_center {
+	height:auto;
+	vertical-align:middle;
+}
+
+.repository_ext_icon_arrow_up {
+	background-image:url(../../data/images/silk/arrow_up.png);
+}
+
+.repository_ext_icon_arrow_down {
+	background-image:url(../../data/images/silk/arrow_down.png);
+}
+
+.repository_rating_filter .x-grid3-scroller{
+	overflow: hidden;
+}
+/**  FIXES FOR EXT 2.0.2 **/
+
+.x-date-middle {
+width: 160px;
+}
+
+.x-grid3 table {
+table-layout:fixed;
+}
+
+
+.x-grid3-row-table {
+	table-layout: fixed;
+}
+
+
+.x-item-disabled * {
+	color:silver !important;
+}
+
+.x-menu-list-item.x-item-disabled * {
+	color:grey !important;
+}
+
+.x-menu-list-item-large {
+	vertical-align: middle;
+	line-height: 20px !important;
+}
+
+.x-menu-item-icon {
+	margin: 0 10px 0 0;
+}
+
+.x-menu a.x-menu-item {
+	padding: 3px 21px 3px 2px;
+}
+
+.item-large {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/list-item-large.gif);
+	background-repeat: repeat-x;
+	background-position:top;
+}
+
+.x-menu-item-icon-large {
+	width: 22px;
+	height: 22px;
+}
+
+.x-menu {
+    background-color: #C6C6C6;
+    background-repeat: repeat-y !important;
+}
+
+.x-menu-large {
+	background: #c4c4c4 url(/bpmcenter/fixflow-explorer/images/signavio/menu-large.gif) repeat-y scroll 0 0;
+}
+
+input.x-tree-node-cb {
+	position:relative;
+	top:1px;
+}
+
+.x-tree-check-panel .x-panel-body {
+	background: #FFFFFF url(../../../libs/ext/resources/images/default/form/text-bg.gif) repeat-x scroll 0 0;
+	border:1px solid #A5A5A5;
+	overflow-x:hidden !important;
+}
+.x-grid3-dirty-cell {
+	background:transparent url(../../../libs/ext/resources/images/default/grid/dirty.gif) no-repeat scroll 0 0 !important;
+}
+.x-dirty-cell-overlay {
+	height:5px;
+	position:absolute;
+	top:0;
+	width:5px;
+	left:0px;
+}
+
+.x-layer.x-menu {
+	width: auto !important;
+}
+
+.x-window-dlg .ext-mb-question {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/help.png) no-repeat scroll left top;
+}
+
+.x-window-dlg .ext-mb-warning {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/messagebox_warning.png) no-repeat scroll left top;
+}
+
+.x-window-dlg .ext-mb-info {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/messagebox_info.png) no-repeat scroll left top;
+}
+
+.x-window-dlg .ext-mb-error {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/32x32/actions/no.png) no-repeat scroll left top;
+}
+
+
+
+.x-tree-arrows .x-tree-elbow-line {
+	visibility: hidden;
+}
+
+.x-grid-cell-selectable-text {
+	-webkit-user-select: text !important;
+	-khtml-user-select: text !important;
+	-moz-user-select: text !important;
+	-o-user-select: text !important;
+	user-select: text !important;
+	white-space: normal;
+}
+
+.x-grid-cell-selectable-text div {
+	overflow: auto;
+	white-space: normal;
+}
+
+.x-tab-scroller-right,
+.x-tab-scroller-left {
+    border-color: #777777;
+    background-color: #8B8B8B;
+}
+
+.x-tab-scroller-right-disabled,
+.x-tab-scroller-left-disabled {
+    opacity: 0.3;
+}
+
+.x-security-center-tab-panel .x-tab-panel-header.x-tab-scrolling {
+    background: url("../../../libs/ext/resources/images/darkgray/tabs/tab-strip-bg.gif") repeat-x scroll left top #7A7A7A;
+    border-bottom: 2px solid #666666;
+    height: 23px;
+    padding-bottom: 0;
+}
+
+.x-captcha-panel {
+	margin-bottom: 2px;
+}
+
+.x-captcha-panel #jcaptcha-img {
+	position: absolute;
+	left: 0;
+}
+
+.x-captcha-panel #jcaptcha-refresh {
+	position: absolute;
+	cursor: pointer;
+	bottom: 4px;
+	right: 6px;
+}
+
+/******************************************************************************
+ * the central widget that contains the list of all models of a user
+ */
+
+.no_items {
+	text-align: center;
+	color: #999;
+	font-style: italic;
+	font-size: 10px;
+	padding: 15px;
+}
+
+.oryx_repository_list_container {
+
+	padding: 0% 0 0 2%;
+}
+
+.oryx_repository_list_item {
+	width: 47%;
+	min-width: 300px;
+	margin: 1% 2% 1% 0;
+	float: left;
+	font-size: 11px;
+	position:relative;
+
+	border: 1px solid #D0D0D0;
+}
+
+.oryx_repository_list_item:hover {
+	border-color: #aaa;
+}
+
+.oryx_repository_list_item .ctrl {
+	display: none;
+	position: absolute;
+	right: 0px;
+	height: 20px;
+}
+
+.oryx_repository_list_item:hover .ctrl {
+	display: block;
+}
+
+.oryx_repository_list_item h3 {
+	padding: 3px 60px 3px 0px;
+	background-color: #D0D0D0;
+	min-height: 12px;
+	border-bottom: 1px solid #d0d0d0;
+}
+
+.oryx_repository_list_item h3,
+.oryx_repository_list_item h3 a {
+	color: #222;
+	text-decoration: none;
+}
+
+.oryx_repository_list_item h3:hover a:hover {
+	color: #fff;
+}
+
+.oryx_repository_list_item:hover h3 a{
+	color: #dedede;
+}
+
+.oryx_repository_list_item:hover h3{
+	border-color: #888;
+	background-color: #888;
+}
+
+.oryx_repository_list_item p {
+	padding: 3px 3px 3px 0px;
+	margin-top: 3px;
+	color: #222;
+}
+
+.oryx_repository_list_item .owner {
+	color: #666;
+}
+
+
+.oryx_repository_list_item img {
+	float: left;
+	margin: 5px;
+	max-width: 80px;
+}
+
+.oryx_repository_list_item h3,
+.oryx_repository_list_item p,
+.oryx_repository_list_item span,
+.oryx_repository_list_item div,
+.oryx_repository_list_item em {
+	padding-left: 90px;
+}
+
+
+/*******************************************************************
+ * login area for the repository
+ */
+
+#header {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/header_logo.png);
+	background-position:center bottom;
+	background-repeat:repeat-x;
+	padding:5px 0 30px;
+	width:100%;
+	position:fixed;
+	top:0px;
+	z-index:100;
+}
+
+#header a {
+	margin-left:40px
+}
+
+#header img {
+	border:none;
+}
+
+/*.content {
+	margin:10px;
+	margin-top:60px;
+}
+.content img {
+	margin:5px;
+}
+
+.content .label {
+	width:50px;
+	float:left;
+}
+.content .value {
+	font-weight:bold;
+}
+.content .model {
+	margin-top:30px;
+}*/
+
+#signavio_repository_header {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/header_background2.png) repeat-x scroll center 0;
+	height:100%;
+	width:100%;
+}
+
+.signavio_repository_header_shadow, .signavio_repository_header_shadow2  {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/header_background2.png) repeat-x scroll center bottom;
+	width:100%;
+	height:10px;
+	position:absolute;
+	top:63px;
+	z-index:1000;
+}
+
+.ext-ie7 .north_view .header_view div.signavio_repository_header_shadow {
+	behavior:expression((this.runtimeStyle.behavior="none")&&
+						(!this._loaded)&&
+						(this._loaded=true)&&
+						(this.className="signavio_repository_header_shadow2")&&
+						(document.body.appendChild(this.cloneNode(true)))&&
+						(this.parentNode.removeChild(this)));
+}
+
+.ext-ie7 .x-menu-list .x-menu-sep-li .x-menu-sep {
+	width: expression((this.parentNode.parentNode.offsetWidth-10)+"px");
+}
+
+.ext-ie7 .x-tree-node {
+	overflow: hidden;
+	float: left !important;
+	width: 100%;
+}
+
+.ext-ie7 .x-tree-root-node {
+	left: 0px !important;
+	position: relative !important;
+}
+
+.x-panel.north_view .x-panel-bwrap,
+.x-panel.north_view .x-panel-body {
+	overflow:visible;
+}
+
+#signavio_repository_header #signavio_repository_logo {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/logo2.png) no-repeat scroll 0 0;
+	height:34px;
+	margin-left:20px;
+	margin-top:0;
+	width:150px;
+}
+#signavio_repository_header > span{
+	left:110px;
+	position:absolute;
+	display:block;
+	top:3px;
+}
+
+#signavio_repository_header span img{
+	position:relative;
+	right:6px;
+	margin-right:6px;
+	width:16px;
+}
+
+#signavio_repository_header.mouseover span{
+	display:inline;
+}
+
+#openid_login {
+	color: #781845;
+    line-height: 14px !important;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#openid_login input {
+	font-size:12px;
+	margin:0px 1px;
+	padding:1px;
+	width:40px;
+}
+
+#openid_login input.button {
+    background-color: transparent;
+    border: medium none;
+	color: #781845;
+    cursor: pointer;
+    font-family: tahoma, arial, sans-serif;
+    font-weight: bold;
+    margin-left: -5px;
+    padding: 0 !important;
+    text-shadow: 0 1px 1px #DDDDDD;
+    width: auto;
+}
+
+.x-ie7 #openid_login input.button {
+	margin-left: -5px !important;
+	margin-right: -10px !important;
+	margin-bottom: 1px !important;
+}
+
+.x-ie-8-0 #openid_login input.button,
+.x-ie-9-0 #openid_login input.button {
+	margin-left: 0px !important;
+}
+
+.ext-opera #openid_login input.button {
+	margin-left: 0 !important;
+}
+
+#openid_login input.button:hover {
+	color: #5D2C43;
+	cursor: pointer !important;
+	text-shadow: 0 1px 1px #FFFFFF !important;
+}
+
+#openid_login input.text {
+	background:#FFFFFF url(../../data/images/style/openid_login_bg.gif) no-repeat scroll 5px 50%;
+	border:1px solid #AA0000;
+	padding-left:25px;
+	width:200px;
+}
+
+#openid_login .login_name {
+	border-right: 1px solid #8D1F54;
+	cursor: default !important;
+    display: inline;
+    font-size: 12px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-shadow: 0 1px 1px #DDDDDD;
+    line-height: 14px;
+}
+
+#openid_login input.text.logged_id {
+	background-color:#F1F1F1;
+	color:#333333;
+}
+
+
+.x-toolbar.north_view {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/header_background2.png) repeat-x scroll left -40px;
+	border:none;
+	height:24px !important;
+}
+
+
+.x-toolbar.north_view.x-no-text-right .x-arrange-right button,
+.x-toolbar.north_view.x-no-text-left .x-arrange-left button,
+.x-toolbar.north_view.x-no-text button,
+.x-toolbar.north_view .x-btn-icon button {
+	color:transparent !important;
+	width:16px !important;
+	overflow:hidden;
+	padding:3px 0 2px 18px !important;
+}
+
+
+.x-toolbar.north_view .ytb-sep {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/vLine.png);
+	margin:0 6px;
+}
+
+.x-toolbar .x-item-disabled, .x-toolbar .x-disabled{
+	filter: alpha(opacity=60);
+}
+
+.x-window .x-window-info {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/48x48/apps/kworldclock.png) no-repeat scroll left top;
+	width:48px;
+	height:48px;
+	margin-right:10px;
+}
+
+.view_view .x-grid3-header-offset {
+	border-left:1px solid gray;
+	border-top:1px solid gray;
+}
+
+.view_view .x-grid3-hd.x-grid3-td-0 {
+	border-left:none !important;
+}
+
+.view_view .x-view-selector-toolbar {
+	background:none repeat scroll 0 0 transparent;
+	border:medium none;
+	opacity:0.7;
+	position:absolute;
+	right:5px;
+	top:10px;
+}
+
+.view_view .x-view-selector-toolbar {
+	background:none repeat scroll 0 0 transparent;
+	border:medium none;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+	position:absolute;
+	right:5px;
+	top:10px;
+}
+
+.view_view .x-view-selector-toolbar button:focus {
+    outline: 0;
+}
+
+.view_view .x-view-selector-toolbar .x-btn-over .x-btn-left,
+.view_view .x-view-selector-toolbar .x-btn-click .x-btn-left,
+.view_view .x-view-selector-toolbar .x-btn-pressed .x-btn-left,
+.view_view .x-view-selector-toolbar .x-btn-menu-active .x-btn-left,
+.view_view .x-view-selector-toolbar .x-btn-over .x-btn-center,
+.view_view .x-view-selector-toolbar .x-btn-click .x-btn-center,
+.view_view .x-view-selector-toolbar .x-btn-pressed .x-btn-center,
+.view_view .x-view-selector-toolbar .x-btn-menu-active .x-btn-center,
+.view_view .x-view-selector-toolbar .x-btn-over .x-btn-right,
+.view_view .x-view-selector-toolbar .x-btn-click .x-btn-right,
+.view_view .x-view-selector-toolbar .x-btn-pressed .x-btn-right,
+.view_view .x-view-selector-toolbar .x-btn-menu-active .x-btn-right {
+	background-image:url(../../../libs/ext/resources/images/gray/toolbar/tb-btn-sprite.gif);
+}
+
+.view_view .x-view-selector-toolbar .x-btn-icon td {
+	background-color:white;
+}
+
+.view_view .x-view-selector-toolbar .ytb-sep {
+	background-image:url(../../../libs/ext/resources/images/vista/grid/grid-split.gif);
+}
+
+.view_view .x-grid3-row {
+	overflow:hidden;
+}
+
+.view_view .x-grid3-row-selected  {
+	border:1px solid #99BBE8;
+	border-top:1px solid #CDDFF4;
+}
+
+.view_view .x-grid3-row-selected.x-grid3-row-first-selected {
+	border-top:1px solid #99BBE8;
+}
+
+/*******************************************************************
+ * some ext extensions
+ */
+
+.create_model_menu {
+	background-image: url(../../data/images/silk/shape_square_add.png) !important;
+	background-repeat: no-repeat;
+}
+
+.start_model_button,
+.edit_model_button,
+.delete_model_button,
+.view_model_button {
+	background-image: url(../../data/images/silk/pencil.png) !important;
+	background-repeat: no-repeat;
+	position: absolute;
+	right: 20px;
+	height: 18px;
+	width: 18px;
+	background-position: 1px 1px;
+	text-decoration: none;
+}
+
+.start_model_button:hover,
+.edit_model_button:hover,
+.view_model_button:hover,
+.delete_model_button:hover {
+	background-color: #eee;
+}
+
+.view_model_button {
+	background-image: url(../../data/images/silk/magnifier.png) !important;
+}
+
+.start_model_button {
+	right: 40px;
+	background-image: url(../../data/images/silk/shape_square_go.png) !important;
+}
+
+.delete_model_button {
+	right: 0px;
+	background-image: url(../../data/images/silk/delete.png) !important;
+}
+
+/* Some test stuff for the new repository
+*/
+
+.test_selected_item {
+	border-color:#FF0000;
+	border-width: 2px;
+}
+
+.test_unselected_item {
+	border-color:#000000;
+	border-width: 2px;
+}
+
+.test_selected_text {
+	font-weight: bold;
+}
+
+.test_unselected_text {
+	font-weight: normal;
+}
+
+/** ***********************************
+ * ************************************
+ * Icon View Plugin
+ * ************************************
+ **/
+
+
+.repository_iconview dl {
+	width		: 100%;
+	max-width	: 1000px;
+}
+
+.repository_iconview dd{
+	width		: 200px;
+	height		: 105px;
+	padding		: 10px;
+	border		: 1px solid #EEEEEE;
+	font-family	: tahoma,arial,san-serif;
+	font-size	: 9px;
+	display		: block;
+	margin		: 5px;
+	text-align	: left;
+	float		: left;
+}
+
+.repository_iconview dd.over{
+	background-color	: #fff5e1;
+}
+
+.repository_iconview dd.selected{
+	border-color: #FC8B03;
+}
+
+.repository_iconview dd img{
+	max-width	: 190px;
+	max-height	: 70px;
+}
+
+.repository_iconview dd .image{
+	width	: 200px;
+	height	: 80px;
+	padding-bottom	: 10px;
+	text-align		: center;
+	vertical-align	: middle;
+	display	:table-cell;
+}
+.repository_iconview dd .title{
+	font-weight	: bold;
+	font-size	: 11px;
+	color		: #555555;
+}
+
+.repository_iconview dd .author{
+	margin-left	: 5px;
+}
+
+.repository_iconview dd .type{
+
+}
+
+.view_plugin {
+	overflow:auto;
+}
+.view_plugin .x-panel-body{
+	background: white;
+	font: 11px Arial, Helvetica, sans-serif;
+}
+.view_plugin .thumb{
+	padding: 3px;
+	text-align:center;
+	height:64px;
+	line-height:64px;
+	vertical-align:middle;
+}
+
+.view_plugin .thumb.model {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/icon-model-background.png) no-repeat scroll center center;
+}
+
+.view_plugin .thumb.view {
+    background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/icon-view-background.png) no-repeat scroll center center;
+}
+
+.view_plugin .thumb img{
+}
+
+.view_plugin .thumb.model img.x-thumb-icon {
+	max-height: 62px;
+	max-width:52px;
+	vertical-align: middle;
+	margin-top:-4px;
+	position: relative;
+	top: expression(((68-clientHeight)/2)+"px");
+}
+
+
+.view_plugin .thumb-wrap {
+	-moz-user-select:none !important;
+	border:1px solid transparent;
+	cursor:pointer;
+	float:left;
+	margin:4px 0 4px 4px;
+	padding:4px;
+	position:relative;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	width:90px;
+}
+
+
+.view_plugin .thumb-wrap span {
+	-moz-user-select:none !important;
+	display:block;
+	font-size:11px;
+	overflow:hidden;
+	text-align:center;
+	width:90px;
+	white-space:nowrap;
+	height:26px;
+}
+
+.view_plugin .thumb-wrap .x-badge {
+	left:19px;
+	position:absolute;
+	top:57px;
+}
+
+
+
+.view_plugin .thumb-wrap.x-view-over .ak-comment-badge,
+.view_plugin .thumb-wrap.x-view-selected .ak-comment-badge {
+	opacity: 1.0;
+}
+
+.view_plugin .thumb-wrap .ak-comment-badge {
+	left: auto;
+    opacity: 0.6;
+    position: absolute;
+    right: 18px;
+    text-align: right;
+    top: -2px;
+}
+
+.view_plugin .thumb-wrap  .ak-comment-badge img {
+	height: 16px;
+    opacity: 0.8;
+    position: relative;
+    top: 4px;
+    width: 16px;
+}
+
+.x-ie7 .ak-explorer-table-view-comments-badge {
+	background-color:white;
+
+}
+
+.ak-explorer-table-view-comments-badge {
+    margin-left: 5px;
+    margin-top: -1px;
+    opacity: 0.6;
+    position: absolute;
+	filter:Alpha(Opacity=60);
+}
+
+.view_plugin .thumb-wrap .ak-comment-badge  .ak-comment-badge-count {
+	color: #AD0F5B;
+    display: inline !important;
+    font-size: 7px;
+    font-weight: bold;
+    height: auto !important;
+    padding-right: 2px;
+    position: relative;
+    text-align: right;
+    top: -7px;
+    width: 100% !important;
+}
+
+
+.view_plugin .thumb-wrap .x-badge img {
+	height: 16px;
+	width: 16px;
+	opacity: 0.8;
+}
+
+
+
+
+.view_plugin.trash .thumb-wrap span{
+	color:gray;
+	font-style:italic;
+}
+
+.view_plugin.trash .thumb-wrap img{
+	opacity:0.7;
+}
+
+
+.view_plugin .empty-directory {
+	float: left;
+	margin: 4px;
+	margin-right: 0;
+	padding: 5px;
+	cursor:pointer;
+	position:relative;
+	width:90px;
+}
+.view_plugin .empty-directory img{
+	opacity:0.1;
+	filter: alpha(opacity=10);
+}
+.view_plugin .empty-directory span{
+	color:gray;
+	display:block;
+	font-style:italic;
+	overflow:hidden;
+	position:absolute;
+	text-align:center;
+	top:35px;
+	width:90px;
+}
+
+.view_plugin .x-view-over{
+    border:1px solid #dddddd;
+    background: #efefef;
+}
+
+.view_plugin .x-view-selected{
+	background: #eff5fb;
+	border:1px solid #99bbe8;
+	padding: 4px;
+}
+.x-window .x-panel-body .y-stencilgrid .x-grid3-cell-inner{
+	padding: 3px 3px 0 5px;
+	overflow: visible;
+}
+.x-window .x-panel-body .y-stencilgrid .x-grid3-cell-first{
+	width: 16px;
+	padding-right:0px !important;
+}
+.x-window .x-panel-body .y-stencilgrid .x-grid3-td-stencils div{
+	padding-left: 20px !important;
+}
+.x-window .x-panel-body .y-stencilgrid .x-grid3-td-stencils img{
+	left: 0px !important;
+}
+.x-window .x-panel-body .y-stencilgrid .x-grid3-row td{
+	line-height:12px !important;
+	background-image: none !important;
+}
+.x-window .x-panel-body .y-stencilgrid .x-view-over,
+.x-window .x-panel-body .y-stencilgrid .x-view-selected,
+{
+	border: none;
+}
+
+.x-window .y-grids .x-panel-header {
+	background-image: url(../../../libs/ext/resources/images/gray/panel/white-top-bottom.gif);
+}
+
+.x-window .y-grids .x-toolbar.x-small-editor {
+	background-image: url(../../../libs/ext/resources/images/gray/toolbar/bg.gif);
+}
+
+/* The colors */
+.x-window .y-grids .x-panel-header,
+.x-window .y-grids .x-toolbar button {
+	color: #777777;
+}
+
+/* The border colors */
+.x-window .y-grids .x-panel-header,
+.x-window .y-grids .x-panel-body,
+.x-window .y-grids .x-toolbar.x-small-editor {
+	border-color: #A5A5A5;
+}
+
+.x-ux-window .y-grids .x-toolbar .x-btn-over .x-btn-left,
+.x-ux-window .y-grids .x-toolbar .x-btn-over .x-btn-center,
+.x-ux-window .y-grids .x-toolbar .x-btn-over .x-btn-right,
+.x-ux-window .y-grids .x-toolbar .x-btn-click .x-btn-left,
+.x-ux-window .y-grids .x-toolbar .x-btn-pressed .x-btn-left,
+.x-ux-window .y-grids .x-toolbar .x-btn-menu-active .x-btn-left,
+.x-ux-window .y-grids .x-toolbar .x-btn-click .x-btn-center,
+.x-ux-window .y-grids .x-toolbar .x-btn-pressed .x-btn-center,
+.x-ux-window .y-grids .x-toolbar .x-btn-menu-active .x-btn-center,
+.x-ux-window .y-grids .x-toolbar .x-btn-click .x-btn-right,
+.x-ux-window .y-grids .x-toolbar .x-btn-pressed .x-btn-right,
+.x-ux-window .y-grids .x-toolbar .x-btn-menu-active .x-btn-right {
+	background-image:url(../../../libs/ext/resources/images/gray/toolbar/tb-btn-sprite.gif);
+}
+
+.x-ux-window .y-glossary-categories .x-tree-node-loading .x-tree-node-icon {
+	background-image:none !important;
+}
+
+.x-window .x-panel-body .y-glossary-categories img.x-tree-node-icon{
+	height: 12px;
+	margin-right: 5px;
+	position: relative;
+	top: 4px;
+	width: 12px;
+	box-shadow: 0 0 6px -3px black inset;
+}
+
+
+.x-window .x-panel-body .y-glossary-categories .x-grid3-cell-inner {
+    padding: 1px 3px 5px 5px;
+}
+
+
+.x-window .x-panel-body .y-glossary-categories img.x-org_unit {
+	background: #c22f1e /*transparent url(images/famfamfam/building.png) no-repeat center center !important*/;
+}
+
+.x-window .x-panel-body .y-glossary-categories img.x-document {
+	background: #f0ad26; /*transparent url(images/famfamfam/page.png) no-repeat center center !important;*/
+}
+
+.x-window .x-panel-body .y-glossary-categories img.x-it_system {
+	background: #b8cc00; /*transparent url(images/nuvola/16x16/apps/mycomputer.png) no-repeat center center !important;*/
+}
+
+.x-window .x-panel-body .y-glossary-categories img.x-activity {
+	background: #61aef2; /*transparent url(images/nuvola/16x16/apps/kcmdf.png) no-repeat center center !important;*/
+}
+
+.x-window .x-panel-body .y-glossary-categories img.x-state {
+	background: #00a7ac; /*transparent url(images/nuvola/16x16/apps/ksysv.png) no-repeat center center !important;*/
+}
+
+.x-window .x-panel-body .y-glossary-categories img.x-misc {
+	background: #7f7f7f;
+}
+
+/** ***********************************
+ * ************************************
+ * Table View Plugin
+ * ************************************
+ **/
+
+.x-tableview-plugin {
+	padding:5px;
+}
+
+
+.x-tableview-plugin .folder.x-tree-node-collapsed .x-tree-node-icon,
+.folder.x-tree-node-collapsed .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .folder.x-tree-node-icon,
+.folder.x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .folder.x-tree-node-expanded .x-tree-node-icon,
+.folder.x-tree-node-expanded .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_open.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .x-glossary .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/book_silver.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .folder.x-tree-node-leaf.x-disabled .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	opacity:0.6;
+	color:silver;
+}
+
+.x-tree-node .x-tree-node-inline-icon {
+	height:16px !important;
+	margin:1px 0 0 !important;
+	background:transparent none repeat scroll 0 0 !important;
+}
+
+.x-tableview-plugin .folder.x-locked.x-tree-node-leaf.x-disabled .x-tree-node-icon,
+.x-tableview-plugin .folder.x-locked.x-tree-node-collapsed .x-tree-node-icon {
+	background-image:url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_locked.png);
+}
+
+.x-tableview-plugin .folder.x-locked .x-tree-node-icon {
+	background-image:url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_open_locked.png);
+}
+
+
+.x-tableview-plugin .model.x-tree-node-leaf .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .model.model-bpmn.x-tree-node-leaf .x-tree-node-icon {
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/bpmn-16x16-2.png);
+}
+
+.x-tableview-plugin .model.model-epc.x-tree-node-leaf .x-tree-node-icon {
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/epc-16x16-2.png);
+}
+
+.x-tableview-plugin .model.model-processmap.x-tree-node-leaf .x-tree-node-icon {
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/processmap-16x16-2.png);
+}
+
+.x-tableview-plugin .model.model-organigram.x-tree-node-leaf .x-tree-node-icon {
+	background-image: url(/bpmcenter/fixflow-explorer/images/diagrams/organigram-16x16-2.png);
+}
+
+.x-tableview-plugin .model.model-empty.x-tree-node-leaf .x-tree-node-icon {
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white.png);
+}
+
+.x-tableview-plugin .model-isPublished.x-tree-node-leaf .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/browser.png) no-repeat scroll 0 0;
+}
+.x-tableview-plugin .model-oldPublished.x-tree-node-leaf .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/browser_black.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .x-no-directory.x-tree-node-leaf .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	opacity:0.5;
+	filter: alpha(opacity=50);
+}
+
+.x-tableview-plugin .x-no-directory.x-tree-node-leaf  span {
+	color:silver;
+	font-style:italic;
+}
+
+.x-tableview-plugin .file-word .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_word_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-picture .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_picture_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-pdf .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_pdf_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-zip .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_zip_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-excel .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_excel_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-powerpoint .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_powerpoint_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-file .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white_file_sw.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .file-empty .x-tree-node-icon,
+.x-tableview-plugin .file-undefined .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page_white.png) no-repeat scroll 0 0;
+}
+
+.x-tableview-plugin .x-tree-node-icon {
+	background-position: 0 2px !important;
+}
+
+/** ***********************************
+ * ************************************
+ * Info Plugin
+ * ************************************
+ **/
+
+
+.info_plugin .details {
+	padding:10px;
+}
+
+.info_plugin .details .key {
+	color:gray;
+	font-weight:bold;
+	padding-right:5px;
+	width:70px;
+	text-align:right;
+	display:table-cell;
+}
+
+.info_plugin .details .value {
+	display:block;
+	width:100%;
+	min-height:16px;
+	white-space:pre;
+}
+
+.info_plugin .details th {
+	vertical-align:top;
+}
+
+.info_plugin .details td {
+	width:100%;
+}
+
+.info_plugin .details .value.read {
+	color:gray;
+	font-style:italic;
+}
+
+
+.info_plugin .details .preview img.inactive {
+	max-width:100px;
+	opacity:0.2;
+}
+
+.info_plugin .details .preview {
+	text-align:center;
+}
+
+.info_plugin .details .preview table {
+	margin:auto;
+	width:100%;
+}
+
+.info_plugin .details .preview td {
+	border:1px solid #e1e1e1;
+	vertical-align:middle;
+	text-align:center;
+}
+
+
+.info_plugin .details .preview .items-1 td {
+	border:none;
+}
+
+.info_plugin .details .preview table.inactive td {
+	border:none;
+}
+
+.info_plugin hr {
+	border:none;
+	border-top:1px solid #ad0f5b;
+}
+
+.x-info * {
+	background-color:transparent;
+	position: relative;
+}
+
+.x-info {
+	position:absolute;
+	top:100%;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left_small.png) repeat-y left;
+	bottom: 0;
+}
+
+.x-info .x-revision,
+.x-info .x-layout-collapsed-east {
+	position: absolute;
+}
+
+.x-info.x-info-fullview {
+
+}
+
+.y-revert-to-revision-comment {
+	margin-top:10px;
+	width: 458px !important; 
+}
+
+.x-info .x-info-box {
+	padding-left:5px;
+	position: relative !important;
+}
+
+.x-info-box .x-panel-body {
+	padding:5px;
+	background-color:white;
+}
+
+.x-info-box .x-info-updated,
+.x-info-box .x-info-author {
+	color:gray;
+	display:inline;
+	padding-left:6px;
+	font-size:11px;
+}
+
+.x-info-box .x-info-count {
+	display:inline;
+}
+
+.x-info-box .x-info-updated span,
+.x-info-box .x-info-author span {
+	font-weight:bold;
+}
+
+.x-info-box .x-info-name {
+	display:inline;
+	font-weight:bold;
+}
+
+.x-info-box .x-info-name.x-editable {
+	background-image:url(/bpmcenter/fixflow-explorer/images/famfamfam/pencil_small.png);
+	background-position:right center;
+	background-repeat:no-repeat;
+	padding-right:15px;
+}
+
+
+.x-info-fullview .x-info-description br {
+	display:inline;
+}
+
+.x-info-description br {
+	display:none;
+}
+
+.x-info-box .x-info-description {
+	margin-top:5px;
+}
+
+.x-info-box .x-info-name.x-default,
+.x-info-box .x-info-description.x-default,
+.x-info-box .x-no-selection {
+	font-style:italic;
+	color:gray;
+}
+
+.x-info-box .x-over {
+	background-color:#F1F1F1;
+}
+
+.x-info-box img {
+	max-width:100%;
+	max-height:100%;
+	top:0px;
+	left:0px;
+	position: absolute;
+}
+
+* html .x-info .x-info-box img {
+	background-color:white !important;
+}
+
+.x-info-box .x-msg-loading{
+	left:50%;
+	position:absolute;
+	top:50%;
+	z-index:1000;
+}
+
+
+.x-info-box .x-scrollable img {
+	max-width:none;
+	max-height:none;
+}
+
+/*div.x-info-box div.x-info-details {
+	padding-right: 200px;
+}
+
+div.x-info-fullview div.x-info-details {
+	padding-right: 0px;
+}
+*/
+
+div.x-info-fullview div.x-info-details {
+	max-height: 30%;		
+}
+
+/*div.x-info-details span.x-info-name {
+	padding-right: 200px !important;
+}*/
+
+div.x-info-description {
+	overflow-y: auto;	
+}
+
+div.x-info-box div.x-info-details div.x-info-model {
+	position:relative;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	display:none;	
+}
+
+
+.x-info-fullview .x-info-box .x-scrollenable.x-info-model {
+	cursor:-moz-zoom-in;
+	cursor:-webkit-zoom-in;
+}
+
+.x-info-fullview .x-info-box .x-scrollenable.x-scrollable.x-info-model {
+	cursor:-moz-zoom-out;
+	cursor:-webkit-zoom-out;
+}
+
+.x-info-model {
+	display:none;
+}
+
+.x-info-fullview .x-info-model {
+	display:block;
+	margin-top: 9px;
+}
+
+/* INFO - FILES */
+
+#signavio_repository_header span.y-file-quota-warning {
+    background: url("/bpmcenter/fixflow-explorer/images/famfamfam/error.png") no-repeat scroll 0 0 transparent;
+    margin-right: 100px;
+    padding-left: 20px;
+}
+
+.x-info-fullview .x-info-model .y-file-container {
+	left: 50%;
+	margin-left: -250px;
+	opacity: 1;
+	padding-top: 100px;
+	position: absolute;
+}
+
+.x-info-fullview .x-info-model .y-file-container .y-file-imgcontainer {
+    display: block;
+    float: left;
+    height: 100px;
+    margin-top: 11px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+    position: absolute;
+}
+
+.x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer {
+	text-align: center;
+}
+
+.x-info-fullview .x-info-model .y-file-container .y-file-image {
+	margin:auto;
+	position:relative;
+	background:url('/bpmcenter/fixflow-explorer/images/signavio/icon-model-background.png') no-repeat scroll -1px 0 transparent;
+}
+
+.x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer a:link,
+.x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer a:hover,
+.x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer a:active,
+.x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer a:visited {
+	color:#AD0F5B;
+	text-decoration:none;
+	cursor: pointer;
+}
+
+.x-info-fullview .x-info-model .y-file-container .y-file-descContainer {
+	line-height: 24px;
+	float: left;
+	width: 250px;
+	left: 150px;
+    position: absolute;
+}
+
+.x-info-fullview .x-info-model .y-file-container .y-file-dlcontainer a:hover {
+	text-decoration: underline;
+}
+
+.x-info-fullview .x-info-model .y-file-information-key {
+    color: #BBBBBB;
+    float: left;
+    padding-right: 10px;
+    text-align: right;
+    width: 100px;
+    white-space: nowrap;
+}
+
+.x-info-fullview .x-info-model .y-file-information-value {
+    display: block;
+    float: left;
+    width: 120px;
+    white-space: nowrap;
+}
+
+.x-info .x-header-info {
+	border:none;
+	background:none;
+	position: relative;
+
+}
+
+.x-info .x-panel-body {
+	border-bottom:none;
+	border-right:none;
+	position: relative;
+}
+
+.x-info .x-header-info {
+	border:none;
+	background:none;
+	position: relative;
+	z-index: 2000;
+}
+
+.x-info .x-header-info .x-tool.x-tool-toggle {
+	background: url('/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png') repeat-x scroll 0 0 transparent;
+	border: 1px solid lightgray;
+	color: #AD0F5B;
+	height:17px;
+	right: 10px;
+	padding-left: 10px;
+	padding-top: 1px;
+	position:absolute;
+	text-align: center;
+	top: 7px;
+	width:120px;
+	z-index:1000;
+}
+
+.x-info .x-header-info .x-tool.x-tool-toggle img {
+	background-color: transparent;
+    background-image: url('/bpmcenter/fixflow-explorer/images/signavio/arrow-move-up-no-shadow.png');
+    height: 24px;
+    left: 1px;
+    position: absolute;
+    opacity: 1;
+    top: -4px;
+    width: 24px;
+}
+
+.x-info .x-header-info .x-tool.x-tool-toggle.y-close-diagram-preview img {
+	background-image: url('/bpmcenter/fixflow-explorer/images/signavio/arrow-move-down-no-shadow.png');
+}
+
+.x-info .x-header-info .x-tool.x-tool-toggle.x-disabled img {
+	opacity: 0.8;
+}
+
+.x-info.x-info-fullview .x-header-info .x-tool.x-tool-toggle img {
+	top: -2px;
+}
+
+.x-info .x-header-info .x-tool.x-tool-toggle.x-tool-toggle-over {
+	background-position: 0 -18px;
+}
+
+.x-info .x-header-info .x-tool.x-disabled {
+	cursor:default;
+	opacity:0.5;
+	background-position:-34px -61px !important;
+}
+
+.x-info .x-header-info .x-tool-open {
+	background-position:0 0;
+	right:40px;
+}
+
+.x-info .x-header-info .x-tool-open-over {
+	background-position:-34px bottom;
+}
+
+/*.x-info .x-header-info .x-tool-toggle {
+	background-position:0 -61px;
+}*/
+
+/*
+.x-info.x-panel-collapsed .x-header-info .x-tool-toggle  {
+	background-position:0 -62px;
+	top:-20px;
+}
+.x-info.x-panel-collapsed .x-header-info .x-tool-toggle-over  {
+	background-position:-34px -62px;
+}
+*/
+.x-info .x-header-info.x-panel-header {
+	height:10px;
+	padding:0;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/bgr_top_small.png) repeat-x top;
+	overflow: visible;
+}
+
+.x-info .x-header-info.x-panel-header span {
+	background:white url(/bpmcenter/fixflow-explorer/images/signavio/bgr_lefttop_small.png) no-repeat left top;
+	display:block;
+	height:9px;
+	width:9px;
+}
+
+.x-info .x-layout-collapsed.x-layout-collapsed-east {
+	width:30px;
+	border:none;
+	overflow:hidden;
+}
+
+.x-info .x-tool.x-tool-expand-east {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/revision.png) no-repeat left top;
+	height:100px;
+	position:absolute;
+	right:0px;
+	top:50px;
+	width:25px;
+}
+
+.x-info .x-tool.x-tool-expand-east-over {
+	background-position: -34px top;
+}
+
+body .ext-overlay-model {
+	max-height:90%;
+	max-width:90%;
+}
+
+body .ext-overlay-model div {
+	cursor:default;
+	background:white;
+}
+
+body .ext-overlay-model img {
+	width:100%;
+	height:100%;
+}
+
+body .ext-overlay-model div div{
+	border:none;
+	color:#ad0f5b;
+	font-weight:bold;
+	padding:5px;
+}
+
+/** ***********************************
+ * ************************************
+ * Folder Plugin
+ * ************************************
+ **/
+
+.left_view,
+.left_view .x-panel-bwrap,
+.left_view .x-panel-body {
+	position: relative;
+}
+
+.left_view * {
+	background:none;
+}
+
+.left_view .x-panel-body {
+	background:#b1b1b1 url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png) repeat-y right;
+}
+
+.left_view .x-panel-body .x-tree-root-ct {
+	padding-top:10px;
+}
+
+.x-layout-split-west .x-layout-mini-west {
+    margin-left: -5px;
+}
+
+.x-panel.right_view .x-panel .x-panel-body {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_right_small.png") repeat-y scroll -1px 0 transparent;
+}
+
+#folder_plugin .x-tree-node-el {
+	padding:5px;
+
+	line-height: 22px;
+
+	font-size:13px;
+	color:#FFFFFF;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#folder_plugin .x-panel-body {
+	overflow:hidden;
+}
+
+
+/*#folder_plugin .x-tree-node .x-tree-node div.x-tree-node-el {
+	padding-left:20px;
+}
+*/
+#folder_plugin .x-tree-node a span {
+	text-shadow: 1px 1px 0px rgb(106, 106, 106);
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.4);
+	/*padding-left:10px;*/
+	color:#FFFFFF;
+}
+/*
+#folder_plugin .x-tree-node-indent,
+#folder_plugin .x-tree-ec-icon.x-tree-elbow,
+#folder_plugin .x-tree-ec-icon.x-tree-elbow-end,
+#folder_plugin .x-tree-ec-icon.x-tree-elbow-minus,
+#folder_plugin .x-tree-ec-icon.x-tree-elbow-end-minus,
+#folder_plugin .x-tree-ec-icon.x-tree-elbow-plus,
+#folder_plugin .x-tree-ec-icon.x-tree-elbow-end-plus,
+#folder_plugin .root .x-tree-node-icon {
+	display:none;
+}
+*/
+#folder_plugin .x-tree-node-icon {
+	height:22px;
+	width:22px;
+
+	margin-right: 5px;
+}
+
+
+#folder_plugin .folder.x-tree-node-collapsed .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
+}
+
+#folder_plugin .folder .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/folder_grey_open.png) no-repeat scroll 0 2px;
+}
+
+#folder_plugin .x-tree-node-loading .x-tree-node-icon {
+	background-position:center;
+}
+
+
+#folder_plugin .folder.x-tree-node-leaf.x-disabled .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
+	opacity:0.6;
+	filter: alpha(opacity=60);
+	color:silver;
+}
+
+#folder_plugin .x-tree-arrows .x-tree-elbow-plus,
+#folder_plugin .x-tree-arrows .x-tree-elbow-end-plus {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/arrows.png) no-repeat 0 0;
+}
+
+#folder_plugin .x-tree-arrows .x-tree-elbow-minus,
+#folder_plugin .x-tree-arrows .x-tree-elbow-end-minus {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/arrows.png) no-repeat -19px 0px;
+}
+
+#folder_plugin .trash .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/trashcan_grey_full.png) no-repeat scroll 0 0;
+}
+
+#folder_plugin .internal .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/notebook.png) no-repeat scroll -2px -1px;
+}
+
+#folder_plugin .x-glossary .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/22x22/filesystems/glossary.add.png) no-repeat scroll 0 0;
+}
+
+#folder_plugin .x-glossary .x-tree-node-anchor span img {
+	position:relative;
+	top:-2px;
+}
+
+
+#folder_plugin .root .x-tree-ec-icon,
+#folder_plugin .root .x-tree-node-icon {
+	display:none;
+}
+
+/*
+#folder_plugin .x-tree-node-leaf .x-tree-node-icon {
+	background:transparent url(images/nuvola/22x22/filesystems/folder_grey.png) no-repeat scroll 0 0;
+}
+
+#folder_plugin .x-tree-selected.x-tree-node-leaf .x-tree-node-icon {
+	background:transparent url(images/nuvola/22x22/filesystems/folder_grey_open.png) no-repeat scroll 0 2px;
+}
+
+#folder_plugin .trash.x-tree-node-leaf .x-tree-node-icon,
+#folder_plugin .trash.x-tree-node-leaf.x-tree-selected .x-tree-node-icon {
+	background:transparent url(images/nuvola/22x22/filesystems/trashcan_grey_full.png) no-repeat scroll 0 0;
+}
+
+
+#folder_plugin .x-tree-node-expanded .x-tree-node-icon {
+	background:transparent url(images/nuvola/16x16/actions/1downarrow.png) no-repeat scroll 0 1px;
+	display:none;
+}
+
+#folder_plugin .x-tree-node-collapsed .x-tree-node-icon {
+	background:transparent url(images/nuvola/16x16/actions/1rightarrow.png) no-repeat scroll 0 1px;
+	display:none;
+}
+*/
+
+#folder_plugin .x-tree-node .x-tree-node-over{
+	background:rgb(189, 189, 189) url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png) repeat-y scroll right center;
+}
+
+#folder_plugin .x-tree-node .x-tree-selected {
+	background:rgb(200, 200, 200) url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png) repeat-y scroll right center;
+}
+
+/** ***********************************
+ * ************************************
+ * Message Plugin
+ * ************************************
+ **/
+
+.x-message {
+	position: absolute;
+}
+
+.x-message .x-message-item {
+	padding:10px;
+	/*border:1px solid #ad0f5b;
+	background:white;*/
+	border-top:none;
+	position:relative;
+	top:-5px;
+}
+
+/** ***********************************
+ * ************************************
+ * Access Plugin
+ * ************************************
+ **/
+
+.access_plugin .access_plugin_content {
+	padding:10px;
+}
+
+
+.access_plugin .details .header {
+	color:gray;
+	font-weight:bold;
+	font-style:italic;
+	margin: 10px 0px 5px 0px;
+}
+
+.x-hoverbutton {
+	float:right;
+	display:block;
+	position:relative;
+	cursor:pointer;
+}
+
+.access_plugin .details .nouser {
+	color:gray;
+	font-style:italic;
+}
+
+.access_plugin #access_plugin_contentpane {
+	margin-bottom:20px;
+}
+
+.access_plugin .x-form-field-wrap {
+	margin-left:-1px;
+}
+
+.x-panel-access th {
+	width:100%;
+	padding-bottom:3px;
+}
+
+.x-panel-added-item .cb-access-right {
+	text-align:center;
+	width:20px;
+}
+
+.x-disabled .x-panel-access th {
+	color:silver;
+}
+
+.cb-access {
+	font-size:10px !important;
+	height:13px !important;
+	width:90% !important;
+	margin-right:5px;
+	margin-top:-4px;
+}
+
+.x-panel-access {
+	width:100%;
+	padding:10px;
+}
+
+.x-panel-access td, .x-panel-access th {
+	white-space:nowrap;
+}
+
+.x-disable-hidden {
+	display:none;
+}
+
+div.x-cb-enabled {
+	width:10px;
+	height:10px;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok_small.png) no-repeat scroll center center;
+	margin:auto;
+}
+
+.x-access-no-rights {
+	color:silver;
+	font-style:italic;
+}
+
+.x-tool-access-over {
+	background-position:-15px -90px !important;
+}
+
+
+.x-tree-admin-user.x-tree-access .x-checked .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok_small.png) no-repeat scroll center center;
+}
+
+.x-tree-admin-user.x-tree-access .x-tree-node-icon {
+	background:transparent url(../../../libs/ext/resources/images/default/s.gif);
+}
+
+.x-tree-admin-user.x-tree-access.x-editable .x-tree-node-icon,
+.x-tree-admin-user.x-tree-access input {
+	display:none;
+}
+
+.x-tree-admin-user.x-tree-access.x-editable input {
+	display:inline;
+}
+
+.x-tree-admin-user.x-tree-access .x-checked .x-tree-node-anchor span {
+ 	color:black;
+}
+
+.x-tree-admin-user.x-tree-access .x-tree-node-anchor span,
+.x-tree-admin-user.x-tree-access .x-access-inherited .x-tree-node-anchor span  {
+	color:silver;
+}
+
+.x-tree-admin-user.x-tree-access .x-access-inherited .x-tree-node-anchor span span{
+	font-style:italic;
+}
+
+/** ***********************************
+ * ************************************
+ * Breadcrumb Plugin
+ * ************************************
+ **/
+
+.breadcrumb_plugin {
+	margin-top:8px;
+}
+
+.breadcrumb_plugin .details {
+	padding:10px;
+	white-space:nowrap;
+}
+
+.breadcrumb_plugin .details a {
+	cursor:pointer;
+	font-weight:bold;
+	padding:15px 5px;
+}
+
+.breadcrumb_plugin .details a.x-disabled {
+	cursor:default;
+	font-style: normal;
+	color: silver !important;
+}
+
+.breadcrumb_plugin .search_title {
+	color:gray;
+}
+
+.breadcrumb_plugin .search_query {
+	font-weight:bold;
+	color:#ad0f5b;
+}
+
+.x-disabled {
+	color:silver;
+	font-style:italic;
+}
+.breadcrumb_plugin .x-breadcrumb-wrapper {
+	line-height:40px;
+	position:absolute;
+	top:-5px;
+	white-space:nowrap;
+}
+
+.x-msg-loading {
+	height:16px;
+	width:16px;
+	margin-bottom:-3px;
+	margin-top:5px;
+	background: transparent url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat center;
+	position:absolute;
+	right:-10px;
+	top:2px;
+}
+
+.breadcrumb_plugin .x-breadcrumb-wrapper .x-msg-loading {
+	margin-top:10px;
+}
+
+.x-bread-search-pages {
+	margin-right:15px;
+}
+
+.x-breadcrumb-bottom-bar {
+	text-align:center;
+}
+
+.x-breadcrumb-bottom-bar .x-bread-search-pages {
+	display:block;
+	padding-bottom:20px;
+	padding-top:10px;
+}
+
+.x-bread-search-pages .x-disabled {
+	font-style:normal;
+}
+
+.x-bread-search-pages a {
+	text-decoration:none;
+}
+
+.x-bread-search-pages .x-first,
+.x-bread-search-pages .x-last {
+	letter-spacing:-2px;
+}
+
+
+/** ***********************************
+ * ************************************
+ * Drawer Button Plugin
+ * ************************************
+ **/
+
+.x-layout-collapsed-east {
+	overflow:visible;
+}
+
+.drawer_plugin {
+	left:-210px;
+	top:200px;
+	position:absolute;
+	text-align:right;
+	z-index:100;
+	width:400px;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+}
+
+.drawer_plugin_background {
+    display: block;
+    left: -20px;
+    position: absolute;
+    top: 10px;
+    z-index: 99;
+}
+
+.x-ie7 .drawer_plugin,
+.x-ie-6-0 .drawer_plugin,
+.x-ie-8-0 .drawer_plugin {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	left:-20px;
+	top:10px;
+}
+
+.x-ie7 .x-layout-collapsed .drawer_plugin,
+.x-ie-6-0 .x-layout-collapsed .drawer_plugin,
+.x-ie-8-0 .x-layout-collapsed .drawer_plugin,
+.x-ie-9-0 .x-layout-collapsed .drawer_plugin {
+	left:-14px;
+}
+
+.drawer_plugin_background .x-btn {
+    border: none;
+    margin-bottom: 4px;
+    width: 19px;
+    cursor: pointer;
+    background: white;
+    opacity:0;
+    filter: Alpha(opacity=0);
+}
+
+.drawer_plugin .x-btn {
+	background:url("/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png") repeat-x scroll 0 0 white;
+	border-color:gray;
+	border-style:solid solid none;
+	border-width:1px;
+	cursor:pointer;
+	display:block;
+	float:right;
+	height:17px;
+	margin-left:4px;
+	padding:0 10px 1px;
+	text-align:center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.drawer_plugin .x-btn.x-disabled,
+.drawer_plugin .x-btn.x-disabled * {
+	cursor: default;
+}
+
+.drawer_plugin .x-btn.x-disabled a {
+	color: gray;
+}
+
+.drawer_plugin .x-btn.activated {
+	font-weight:bold;
+	color:black;
+}
+
+.x-layout-collapsed .drawer_plugin .x-btn.activated {
+	font-weight: normal;
+}
+
+.drawer_plugin .x-btn:hover {
+	color:gray;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png) 0 -18px repeat-x;
+}
+
+.drawer_plugin .x-btn.x-disabled:hover {
+	background:url("/bpmcenter/fixflow-explorer/images/signavio/drawer_bg.png") repeat-x scroll 0 0 white;
+}
+
+
+.x-layout-collapsed .drawer_plugin {
+	left:-204px;
+}
+
+.x-layout-collapsed .drawer_plugin_background {
+	left:-13px;
+}
+
+/** ***********************************
+ * ************************************
+ * Search Plugin
+ * ************************************
+ **/
+.search_plugin {
+	margin-bottom:-1px;
+	margin-left:10px;
+	margin-right:25px;
+}
+
+.search_plugin .x-panel-body {
+	background:transparent;
+}
+
+.search_plugin.activated,
+.search_plugin.activated  * {
+
+}
+
+.search_plugin .x-form-field {
+	border:none;
+	padding:3px;
+	background: none;
+}
+
+
+.search_plugin .x-table-layout-cell {
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_background2.png) repeat-x 0 -80px;
+}
+
+.search_plugin .x-table-layout-cell .search_field_left {
+	height:22px;
+	padding-top:3px;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_background2.png) no-repeat 0px -54px;
+}
+
+.search_plugin .x-table-layout-cell .search_field_right {
+	height:22px;
+	padding-top:3px;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_background2.png) no-repeat -40px -54px;
+}
+
+
+div.search_plugin .x-table-layout-cell.x-focus,
+div.search_plugin.activated .x-table-layout-cell {
+	background-position:0 -28px !important;
+}
+
+div.search_plugin .x-focus .x-table-layout-cell div.search_field_right,
+div.search_plugin.activated .x-table-layout-cell div.search_field_right {
+	background-position:-40px -2px !important;
+}
+
+div.search_plugin .x-focus .x-table-layout-cell div.search_field_left,
+div.search_plugin.activated .x-table-layout-cell div.search_field_left {
+	background-position:0px -2px !important;
+}
+
+
+
+
+
+
+
+
+
+.search_plugin .x-btn {
+	height:22px;
+	margin-top:-3px;
+	background: url(/bpmcenter/fixflow-explorer/images/signavio/search_button.png) no-repeat 0 0;
+}
+
+.search_plugin .x-btn.x-btn-over {
+	background-position:-45px 0px;
+}
+.search_plugin .x-btn.x-btn-click {
+	background-position:-90px 0px;
+}
+
+.search_plugin .x-btn .x-btn-center {
+	width:28px;
+	padding-bottom:2px;
+}
+
+.search_plugin .x-btn .x-btn-center button {
+	padding-left:6px;
+}
+.search_plugin .x-btn * {
+	background: none;
+}
+.search_plugin .x-form-field.x-form-focus {
+
+}
+
+/** ***********************************
+ * ************************************
+ * Mask Loading
+ * ************************************
+ **/
+.mask-logo {
+	display:block;
+	width:391px;
+}
+
+.mask-version {
+	color:#ad0f5b;
+	padding-right:10px;
+}
+
+.mask-text {
+	display:block;
+	position:relative;
+	text-align:right;
+	top:0;
+	width:100%;
+	height:20px;
+}
+.mask-title {
+	color:#ad0f5b;
+	font-weight:bold;
+	padding-right:10px;
+}
+.mask-logo span img {
+	height:16px;
+	width:16px;
+	margin-bottom:-4px;
+	background: transparent url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat center;
+}
+
+.mask-logo div img {
+	padding-bottom:10px;
+	border-bottom:1px solid #ad0f5b;
+}
+/** ***********************************
+ * ************************************
+ * Revision Plugin
+ * ************************************
+ **/
+.x-panel-body .x-revision-plugin  {
+	padding:5px;
+}
+
+.x-info .x-layout-split.x-layout-split-east {
+	border: none;
+	padding-left: 1px;
+	position: absolute;
+}
+
+.x-panel.x-revision {
+	padding-top: 58px;
+	background:url("/bpmcenter/fixflow-explorer/images/signavio/bgr_right_small_fade.png") repeat-y scroll -1px 0 white;
+}
+
+.x-revision .x-panel-header {
+	/*
+	background:transparent url(images/signavio/bgr_bottom.png) repeat-x scroll center top;
+	border:none;
+	height:5px;
+	overflow:visible;
+	position:absolute;
+	top:0;
+	width:100%;
+	*/
+}
+
+.x-revision .x-panel-body {
+	padding-left:1px;
+}
+
+.x-revision .x-panel-body .x-revision-plugin {
+	padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0px;
+    width: auto;
+}
+
+.x-revision .x-tool-toggle {
+	/*
+	background:transparent url(images/signavio/btn_sprite.png) no-repeat left -90px;
+	height:30px;
+	position:absolute;
+	right:18px;
+	width:30px;
+	z-index:100;
+	top:-15px;
+	*/
+}
+
+.x-revision .x-tool-toggle-over {
+	background-position:-34px -90px;
+}
+
+.x-revision-plugin .x-revision-item{
+	padding:5px;
+	margin-bottom:5px;
+	cursor:pointer;
+	border:1px solid #DDDDDD;
+	box-shadow: 1px 1px 6px -2px #aaa;
+	-moz-box-shadow: 1px 1px 6px -2px #aaa;
+	-webkit-box-shadow: 1px 1px 6px -2px #aaa;
+}
+
+.x-revision-plugin .x-revision-item .revision {
+	font-weight:bold;
+}
+
+.x-revision-plugin .x-revision-item .revision {
+	font-weight:bold;
+}
+
+.x-revision-plugin .x-revision-item .author,
+.x-revision-plugin .x-revision-item .date {
+	color:gray;
+	font-size:11px;
+}
+
+.x-revision-plugin .x-revision-item .author span,
+.x-revision-plugin .x-revision-item .date span{
+	font-weight:bold;
+}
+
+.x-revision-plugin .x-revision-item .author {
+	display:block;
+}
+
+.x-revision-plugin .x-revision-item .comment {
+	padding-top:10px;
+	white-space:pre;
+	overflow:hidden;
+	white-space:normal;
+}
+
+.x-revision-plugin .x-revision-item.x-view-selected {
+	background:white;
+	border:1px solid #B70F5B;
+	box-shadow: 1px 1px 6px 0 #AAAAAA inset;
+	-moz-box-shadow: 1px 1px 6px 0 #AAAAAA inset;
+	-webkit-box-shadow: 1px 1px 6px 0 #AAAAAA inset;
+}
+
+
+.x-revision-plugin .x-view-select.x-view-selected {
+	color:gray !important;
+	text-decoration:none !important;
+}
+
+.x-revision-plugin .x-views img {
+	margin-left:4px;
+	position:relative;
+	top:2px;
+}
+
+.x-revision-plugin .x-revision-item-over {
+	background:white;
+	border:1px solid #888888;
+}
+
+
+.x-revision-plugin .x-revision-item .x-revision-item-header {
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.x-revision-item-header img {
+	height:16px;
+	margin-right:5px;
+	margin-top:-4px;
+	position:relative;
+	top:4px;
+	width:16px;
+}
+
+.x-revision-item-extension img{
+	width:100%;
+	height:100%;
+}
+
+.x-revision-item-extension {
+	padding:5px;
+	margin-top:5px;
+	background:#F9FBFD;
+	border:1px solid #B4CDEE;
+}
+
+.x-revision-collapsed .x-revision-item-extension {
+	display:none;
+}
+
+.x-revision-model {
+	border-top:1px solid #AD0F5B;
+	color:gray;
+	margin:20px 0 5px;
+	padding-bottom:5px;
+	padding-top:15px;
+
+}
+
+.x-revision-mode-first {
+	border-top:none;
+	margin-top:5px;
+	padding-top:0px;
+}
+
+.x-revision-model span{
+	font-weight:bold;
+	text-decoration:underline;
+	color:#ad0f5b;
+}
+
+.x-revision-plugin .x-revision-no {
+	padding:5px;
+	font-style:italic;
+	color:silver;
+}
+
+.x-revision-plugin .x-form-cb-label {
+	padding:0px;
+}
+
+
+.x-revision-plugin .x-revert {
+    padding-top: 20px;
+    position: relative;
+    text-align: right;
+    vertical-align: bottom;
+    line-height: 16px;
+}
+
+.x-revision-plugin .x-link-revert,
+.x-revision-plugin .x-link-approve,
+.x-revision-plugin .x-link-compare {
+    display: inline;
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 10px;
+    text-align: right;
+}
+
+
+.x-revision-plugin .x-views {
+    font-size: 11px;
+}
+
+/** ***********************************
+ * ************************************
+ * Move Plugin
+ * ************************************
+ **/
+
+.x-plugin-move-window .x-form-checkbox {
+	position:relative;
+	top:2px;
+}
+
+.x-plugin-move-window .x-disabled a span {
+	color:#999 !important;
+	font-style: italic;
+}
+
+.x-tableview-plugin.x-div-textbackground .x-panel-body {
+	padding: 2px 0px !important;
+}
+
+/** ***********************************
+ * ************************************
+ * Rename Plugin
+ * ************************************
+ **/
+.x-plugin-rename-window .x-window-body {
+	padding:5px;
+	background:white;
+}
+
+.x-plugin-rename-window .x-tableview-plugin {
+	padding:0px;
+}
+
+.x-plugin-rename-window label {
+	display:block;
+	padding-bottom:5px;
+}
+
+.x-plugin-rename-window .x-disabled a span {
+	color:#999 !important;
+	font-style: italic;
+}
+
+.x-tableview-plugin.x-div-textbackground .x-panel-body {
+	padding: 2px 0px !important;
+}
+
+
+
+/** ***********************************
+ * ************************************
+ * Configuration/Administration Plugin
+ * ************************************
+ **/
+
+.configuration_window_form .x-panel-body {
+	padding:10px;
+}
+.configuration_window_form .x-panel-body .x-panel-body {
+	padding:0px;
+}
+
+.configuration_window_form .x-form-item label {
+
+}
+
+.configuration_window_form .x-form-item {
+	text-align:right;
+}
+
+.configuration_window_form .x-form-item .x-form-element {
+	text-align:left;
+}
+
+.configuration_window_form .x-item-disabled {
+	filter:none !important;
+}
+
+.x-form-item .x-disable .x-form-element {
+	color:silver;
+}
+
+.administration_plugin_tree .folder.x-tree-node-collapsed .x-tree-node-icon.x-tree-node-inline-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey.png) no-repeat scroll 0 0;
+}
+
+.administration_plugin_tree .folder.x-tree-node-expanded .x-tree-node-icon.x-tree-node-inline-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/filesystems/folder_grey_open.png) no-repeat scroll 0 0;
+}
+
+
+.administration_plugin_tree .user.x-tree-node-leaf .x-tree-node-icon,
+.administration_plugin_tree .user.x-tree-node-el .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/user.png) no-repeat scroll 0 2px;
+}
+
+.administration_plugin_tree .userapiaccess.x-tree-node-leaf .x-tree-node-icon,
+.administration_plugin_tree .userapiaccess.x-tree-node-el .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/server.png) no-repeat scroll 0 2px;
+}
+
+.administration_plugin_tree .userquickmodel.x-tree-node-leaf .x-tree-node-icon,
+.administration_plugin_tree .userquickmodel.x-tree-node-el .x-tree-node-icon {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/vcard.png) no-repeat scroll 0 2px;
+}
+
+.administration_plugin_tree .y-user-select-empty-text {
+    color: #DDDDDD;
+    display: block;
+    font-style: italic;
+    padding: 10px;
+}
+
+.administration_plugin_tree .x-tree-removed {
+	text-decoration:line-through;
+	opacity:0.6;
+	filter: alpha(opacity=60);
+}
+
+.administration_plugin_tree .group.x-tree-node-leaf .x-tree-node-icon,
+.administration_plugin_tree .group.x-tree-node-el .x-tree-node-icon  {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/group.png) no-repeat scroll 0 0;
+}
+
+.administration_plugin_tree .application.x-tree-node-leaf .x-tree-node-icon,
+.administration_plugin_tree .application.x-tree-node-el .x-tree-node-icon  {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/application.png) no-repeat scroll 0 0;
+}
+
+
+.administration_panel_window .x-layout-split-west,
+.administration_panel_window .x-layout-split-east  {
+	background:#ABADAF;
+	width:2px !important;
+}
+
+.administration_panel_window .x-default {
+	color:gray;
+	font-style:italic;
+}
+
+.x-tree-admin-user .x-tree-ec-icon {
+	display:none;
+}
+
+.x-manage-user-register-new-user .x-panel-body {
+    border-top: 1px solid #E1E1E1;
+    margin-left: 105px;
+    margin-top: 20px;
+    padding-top: 5px !important;
+}
+
+.x-manage-user-register-new-user .x-panel-body a {
+	padding-left: 20px;
+	background: url('/bpmcenter/fixflow-explorer/images/famfamfam/group.png') no-repeat left center transparent;
+}
+
+
+.administration_panel_window .ext-el-mask {
+	background-color:#EEEEEE;
+	border:1px solid #A5A5A5;
+}
+
+.x-admin-btn {
+	padding-left:105px;
+}
+
+.x-admin-btn table{
+	display:inline;
+	margin-right:5px;
+}
+
+.x-admin-btn .x-panel-bwrap,
+.x-admin-btn .x-panel-body {
+	overflow:visible;
+}
+.x-admin-btn img {
+	width:16px;
+	height:16px;
+	left:-22px;
+	top:2px;
+	position:absolute;
+	display:none;
+}
+
+.x-admin-btn img.x-ok{
+	background:white url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok.png) no-repeat scroll center center;
+}
+
+.x-admin-btn img.x-failed{
+	background:white url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/button_cancel.png) no-repeat scroll center center;
+}
+
+.x-admin-purchaseHint {
+	margin-bottom:10px;
+}
+
+.x-window-settings-btn {
+	padding:5px;
+}
+
+.x-window-settings-btn table{
+	display:inline;
+	margin-right:5px;
+}
+
+.x-form-right-label {
+	color:gray;
+	font-style:italic;
+	margin-left:360px;
+	margin-top:-22px;
+	position:absolute;
+}
+
+.df-x-form-pw-box {
+	font-style:italic;
+	margin-left:145px;
+	margin-bottom:10px;
+/* 	position:absolute; */
+	color: #ad0f5b;
+}
+
+.df-x-form-pw-box ul li{
+	margin-left: 12px;
+	list-style-type:square;
+}
+
+/* .df-x-form-pw-box div{ */
+/* 	list-style-type:square; */
+/* } */
+
+.df-x-iplisttree div.x-panel-bwrap div.x-panel-body li div img {
+	width:0px;
+	height:0px;
+}
+.df-x-iplisttree div.x-panel-bwrap div.x-panel-body li div span {
+	margin-left: 5px;
+}
+
+div.df-x-iplisttree {
+
+    width: 140px;
+    margin-bottom:10px;
+    margin-left: 5px;
+}
+
+
+
+
+div.df-ip-add-window div.x-window-bwrap .x-window-ml .x-window-mr div.x-window-mc {
+	padding-top: 5px;
+}
+
+div.df-ip-add-window div.x-window-bwrap .x-window-ml .x-window-mr .x-window-mc .x-window-body input {
+	width: 210px !important;
+}
+
+
+
+
+.x-administration-iframe {
+	border:none;
+	width:100%;
+	height:100%;
+}
+
+.x-waiting {
+	width:16px;
+	height:16px;
+	position:absolute;
+	top:5px;
+	left:5px;
+	background: transparent url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat scroll 0 0;
+}
+
+.x-waiting-box div {
+	margin-left:10px;
+	padding-left:30px;
+	background: transparent url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat scroll left center;
+	border: none;
+}
+
+.x-panel-added .x-panel-added-list {
+	margin-top:3px;
+}
+
+.x-panel-added .x-no-group .x-panel-added-list {
+	color:gray;
+	font-style:italic;
+}
+
+.x-panel-added .x-no-group .x-panel-added-list img{
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+
+.x-panel-added .x-panel-added-item img {
+	margin-right:5px;
+	position:relative;
+	top:-1px;
+}
+
+.x-panel-added .x-panel-added-item span {
+	vertical-align:top;
+}
+
+.x-panel-added-trigger {
+	background-image:url(../../../libs/ext/resources/images/darkgray/form/add-trigger.gif) !important;
+}
+
+.x-panel-added-cb-list .search-item {
+	padding:3px;
+	border:1px solid white;
+}
+
+.x-panel-added-cb-list .x-combo-list-inner {
+	overflow-x:hidden !important;
+}
+
+.search-item .name, .search-item .mail, .search-item .principal {
+	display:block;
+	font-style:italic;
+}
+
+.search-item .name {
+	font-weight:bold;
+	font-style:normal;
+}
+
+.x-admin-check.x-admin-trial {
+
+}
+
+.x-admin-check .x-form-check-wrap {
+	padding:3px;
+}
+
+.x-admin-check small {
+	font-size:11px;
+}
+
+.x-admin-check .x-form-check-wrap label{
+	top:-2px;
+}
+
+input.x-plain {
+	border-color:white !important;
+	background:white !important;
+	color:black !important;
+	opacity:1;
+}
+
+.filterLink{
+	left: 152px !important;
+	position: absolute !important;
+	top: 6px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+
+
+.ext-safari .filterLink{
+	left: 152px !important;
+	position: absolute !important;
+	top: 4px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.x-ie-9-0 .filterLink{
+	left: 152px !important;
+	position: absolute !important;
+	top: 4px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.x-ie-8-0 .filterLink{
+	left: 148px !important;
+	position: absolute !important;
+	top: -6px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.x-ie7 .filterLink{
+	left: 152px !important;
+	position: absolute !important;
+	top: 4px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.x-ie-6-0 .filterLink{
+	left: 145px !important;
+	position: absolute !important;
+	top: 3px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.addGroupLink{
+	right: 0px !important;
+	position: absolute !important;
+	top: 4px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.x-ie-8-0 .addGroupLink{
+	right: 14px !important;
+	position: absolute !important;
+	top: -6px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+.x-ie7 .addGroupLink{
+	right: 0px !important;
+	position: absolute !important;
+	top: 4px !important;
+	cursor: pointer;
+	z-index:10000 !important;
+}
+
+/** ***********************************
+ * ************************************
+ * Buy Plugin
+ * ************************************
+ **/
+
+.x-purchase-payment .x-panel-body {
+	padding:5px !important;
+
+}
+
+
+/** ***********************************
+ * ************************************
+ * TalkAbout Plugin
+ * ************************************
+ **/
+.x-talkabout-iframe {
+	width:100%;
+	height:100%;
+	border:none;
+}
+
+.x-talkabout-iframe html {
+	border:none;
+}
+
+.x-talkabout {
+	display:block;
+	height:96% !important;
+	left:2% !important;
+	top:2% !important;
+	width:96% !important;
+}
+
+.x-talkabout * {
+	overflow:visible;
+}
+
+.x-hint {
+	position:absolute;
+	bottom:100%;
+	font-weight:bold;
+}
+
+
+.x-talkabout .x-panel,
+.x-talkabout .x-panel-bwrap,
+.x-talkabout .x-panel-body,
+.x-talkabout .x-window-bwrap,
+.x-talkabout .x-window-mr,
+.x-talkabout .x-window-mc,
+.x-talkabout .x-window-body {
+	height:100%;
+}
+
+.x-talkabout .x-window-ml {
+	height:92%;
+}
+
+
+
+
+.x-talkabout .x-tool-close {
+	position:absolute;
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/btn_sprite.png) no-repeat scroll 0 0;
+	height:30px;
+	width:30px;
+	right:40px;
+	top:-5px;
+}
+
+.x-talkabout .x-tool-close-over {
+	background-position:-34px 0;
+}
+
+.x-talkabout .x-window-bwrap {
+	z-index:500;
+}
+
+.x-talkabout .x-window-tl {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_lefttop.png);
+	padding-left:18px;
+	z-index:1000;
+}
+
+.x-talkabout .x-window-tr {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_righttop.png);
+	padding-right:18px;
+}
+
+.x-talkabout .x-window-tc {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_top.png);
+	height:13px;
+}
+
+.x-talkabout .x-window-ml {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png);
+	background-position:left center;
+	padding-left:15px;
+}
+
+.x-talkabout .x-window-mr {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_right.png);
+	padding-right:17px;
+}
+
+.x-talkabout .x-window-bl {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_leftbottom.png);
+	background-position:-1px 50%;
+	height:14px;
+	padding-left:17px;
+}
+
+.x-talkabout .x-window-br {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_rightbottom.png);
+	height:14px;
+	padding-right:18px;
+}
+
+.x-talkabout .x-window-bc {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/bgr_bottom.png);
+	height:14px;
+}
+
+.x-talkabout .x-panel-nofooter .x-window-bc {
+	height:14px;
+}
+
+.x-talkabout .x-window-mc {
+	background:white none repeat scroll 0 0;
+	border:medium none;
+}
+
+
+.x-talkabout .x-window-header-text {
+	cursor:pointer;
+	display:none;
+}
+
+
+
+
+
+/** ***********************************
+ * ************************************
+ * New Plugin
+ * ************************************
+ **/
+.x-window .x-window-ffonly {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/nuvola/48x48/actions/fileclose.png) no-repeat scroll left top;
+	height:48px;
+	margin-right:10px;
+	width:48px;
+}
+
+
+/** ***********************************
+ * ************************************
+ * Help - Feedback-Plugin
+ * ************************************
+ **/
+.x-help-iframe {
+	width:100%;
+	height:100%;
+	border:none;
+}
+
+.x-help-iframe html {
+	border:none;
+}
+
+.x-help {
+	display:block;
+	height:96% !important;
+	width:96% !important;
+}
+
+.x-help.x-help-screencasts {
+	display:block;
+	height:96% !important;
+	width:880px !important;
+}
+
+.x-help * {
+	overflow:visible;
+}
+.x-help .x-panel,
+.x-help .x-panel-bwrap,
+.x-help .x-panel-body,
+.x-help .x-window-bwrap,
+.x-help .x-window-mr,
+.x-help .x-window-mc,
+.x-help .x-window-body {
+	height:100%;
+}
+
+.x-help .x-window-ml {
+	height:92%;
+}
+
+.x-help .x-help-a {
+	color:white;
+	padding:5px 5px 7px 4px;
+	position:absolute;
+	right:20px;
+	top:-23px;
+	z-index:100;
+}
+
+
+/** ***********************************
+ * ************************************
+ * Purchase
+ * ************************************
+ **/
+.x-plugin-purchase form {
+	padding:10px;
+	font-size:13px;
+}
+
+.x-plugin-purchase form label {
+    font-size: 11px;
+    margin-left: 10px;
+    position: relative;
+    top: -2px;
+}
+
+.x-plugin-purchase form.x-form-button {
+	padding: 0;
+	font-size: 12px;
+}
+
+.x-plugin-purchase form.x-form-button .x-button-plain {
+	display: inline-block;
+}
+
+.x-plugin-purchase .x-purchase-licenses label {
+    font-weight: bold;
+}
+
+.x-plugin-purchase .x-purchase-licenses label a,
+.x-plugin-purchase .x-purchase-licenses label.x-disabled {
+    font-weight: normal;
+}
+
+
+.x-plugin-purchase form .x-purchase-license-count {
+	margin-right:5px;
+	width:25px;
+	position: relative;
+    top: 1px;
+}
+
+.x-plugin-purchase .x-disabled {
+	color:gray;
+	font-style:italic;
+}
+
+.x-plugin-purchase .x-purchase-box {
+	border:1px solid #AD0F5B;
+	margin:10px 0px 20px;
+	padding:10px;
+	overflow:auto;
+}
+
+
+.x-plugin-purchase .x-purchase-box.x-purchase-license {
+	max-height:110px;
+	position:relative;
+}
+
+.x-plugin-purchase .x-purchase-license.x-label-title {
+	margin-top:-9px;
+}
+
+.x-plugin-purchase input {
+	margin-bottom:5px;
+}
+
+.x-ie7 .x-plugin-purchase input {
+	margin-bottom:0px !important;
+}
+
+.x-ie7 .x-plugin-purchase .x-purchase-box {
+	padding-bottom:5px !important;
+}
+
+.x-ie7 .administration_panel_window .x-administration-general .x-panel-body {
+	height:350px !important;
+}
+
+.x-ie7 .administration_panel_window .x-administration-general .x-panel-body .x-panel-body {
+	height:auto !important;
+}
+
+.x-plugin-purchase input.x-more-licences{
+	margin-bottom:0px;
+	margin-top:10px;
+}
+
+.x-plugin-purchase .x-calc {
+	display:block;
+	left:190px;
+	position:absolute;
+	text-align:right;
+	top:0;
+}
+.x-plugin-purchase  .x-purchase-line-calc {
+	height:50px;
+	position:relative;
+}
+
+.x-plugin-purchase .x-purchase-dates {
+	display:block;
+}
+
+.x-plugin-purchase .x-purchase-dates img {
+	position:absolute;
+	margin-left:10px;
+}
+
+.x-plugin-purchase .x-purchase-line {
+	margin-bottom:5px;
+}
+
+.x-plugin-purchase .x-purchase-line.x-purchase-interval {
+	margin-bottom:15px;
+}
+
+
+.x-plugin-purchase .x-label-title {
+	background:white;
+	color:#AD0F5B;
+	font-size:11px;
+	font-weight:bold;
+	margin-top:-20px;
+	position:absolute;
+	left:8px;
+	padding:2px;
+	z-index:10000;
+}
+
+.x-plugin-purchase .x-purchase-label {
+	float:left;
+	width:190px;
+	height:20px;
+}
+
+.x-plugin-purchase .x-sum {
+	border-top:3px double silver;
+	display:block;
+	margin-top:4px;
+	font-weight:bold;
+}
+
+.x-plugin-purchase .x-purchase-invoice-hint{
+	font-size:11px;
+	color:gray;
+}
+
+.x-plugin-purchase form .x-purchase-billing label {
+	color:#AD0F5B;
+	margin-left:0;
+	margin-right:10px;
+	position:relative;
+	top:-1px;
+}
+
+.x-plugin-purchase .x-purchase-billing .x-purchase-method img {
+	position:relative;
+	top:4px;
+}
+
+.x-plugin-purchase .x-purchase-billing .x-purchase-method input {
+	width:auto;
+}
+
+.x-plugin-purchase .x-purchase-billing .x-purchase-method label {
+	color:black;
+	margin-left:5px;
+}
+
+
+.x-plugin-purchase .x-purchase-billing input.x-default {
+	color:silver;
+	font-style:italic;
+}
+
+.x-plugin-purchase .x-purchase-billing input {
+	display:inline;
+	margin-bottom:5px;
+	padding:2px;
+	width:300px;
+}
+
+.x-plugin-purchase .x-purchase-billing input.x-purchase-zip,
+.x-plugin-purchase .x-purchase-billing input.x-purchase-phone {
+	display:block;
+	float:left;
+	margin-right:0px;
+	width:52px;
+}
+
+.x-plugin-purchase .x-purchase-intro {
+	padding:5px 0px 10px 0px;
+}
+
+.x-plugin-purchase .x-label-hint {
+	display:block;
+	font-size:11px;
+	margin-bottom:10px;
+}
+
+
+.x-plugin-purchase .x-purchase-billing input.x-purchase-phone,
+.x-plugin-purchase .x-purchase-billing input.x-purchase-fax {
+	width:138px;
+}
+
+.x-plugin-purchase .x-purchase-billing input.x-purchase-city {
+	width:224px;
+}
+
+/*.x-plugin-purchase .x-purchase-billing input.x-invalid {
+	background:transparent url(images/famfamfam/arrow_left_light.png) no-repeat right center;
+	border-width:1px;
+}*/
+
+.x-plugin-purchase .x-purchase-billing .x-invalid {
+	font-weight:bold;
+}
+
+
+.x-plugin-purchase .x-purchase-summary .x-purchase-hints {
+	font-size:10px;
+}
+
+.x-plugin-purchase .x-purchase-summary .agb {
+	text-align:right;
+}
+
+.x-plugin-purchase .x-purchase-summary .agb label {
+	position:relative;
+	top:-2px;
+	margin-left:10px;
+}
+
+
+.x-purchase-link {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/purchase3.png) no-repeat scroll center center;
+	color:white;
+	margin-right:-100px;
+	padding:15px 30px;
+	position:absolute;
+	right:33%;
+	text-decoration:none;
+	top:-7px;
+	z-index:1000;
+}
+
+.x-purchase-link u {
+	font-weight:bold;
+}
+
+a.x-purchase-link:hover, a.x-purchase-link:active, a.x-purchase-link:focus {
+	color:#f1f1f1;
+}
+
+.x-purchase-link img {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/purchase.png) no-repeat scroll left 0;
+	height:49px;
+	width:170px;
+}
+
+.x-plugin-purchase .x-purchase-has-license {
+	font-style:italic;
+}
+.x-purchase-link span {
+	color:white;
+	display:block;
+	font-size:12px;
+	position:absolute;
+	right:105px;
+	text-align:center;
+	top:9px;
+	width:30px;
+}
+
+.en .x-purchase-link span {
+	right:69px;
+}
+
+.en .x-purchase-link img {
+	background:transparent url(/bpmcenter/fixflow-explorer/images/signavio/purchase.png) no-repeat scroll right 0;
+}
+
+
+/**
+ * SECURITY CENTER
+ */
+
+.x-purl-panel.x-editable .x-remove-entry {
+	display:inline;
+}
+
+.x-purl-panel .x-remove-entry  {
+	display:none;
+}
+
+.x-window-security-center .ext-el-mask {
+	background:transparent;
+	filter:none;
+}
+
+.x-window-security-center .x-item-disabled,
+.x-window-security-center .x-item-disabled:hover {
+	opacity:1;
+	color:silver;
+}
+.x-window-security-center textarea,
+.x-window-security-center input {
+	font-size:11px;
+}
+
+.x-window-security-center .x-info-img {
+	left:3px;
+	position:relative;
+	top:3px;
+	margin-top:-4px;
+}
+
+.x-window-security-center .x-form-cb-label {
+	bottom:2px;
+	position:relative;
+}
+
+.ext-ie7 .x-window-security-center .x-form-cb-label {
+	bottom:0px;
+}
+
+.x-window-security-center .x-item-disabled .x-panel-footer {
+	opacity:0.1
+}
+
+
+.x-div-textbackground .x-panel-body {
+	border: 1px solid #A5A5A5 !important;
+	padding: 1px !important;
+	background: transparent url(../../../libs/ext/resources/images/default/form/text-bg.gif) repeat-x 0 0;
+}
+
+.x-groups-parent.x-div-textbackground .x-panel-body {
+	padding: 1px 3px !important;
+}
+
+.x-div-textbackground {
+	background: white;
+}
+
+.x-div-textbackground.x-loading {
+	background: white url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat center center;
+}
+
+.x-div-textbackground .ext-el-mask {
+	background-color:white;
+	opacity:0.2;
+}
+
+.x-div-textbackground .x-panel-body .x-panel-body {
+	border: none !important;
+	padding: 0;
+	background: none;
+}
+
+.x-window-security-center-manage-entry img.x-remove-entry {
+	right:10px;
+	position:absolute;
+	top:3px;
+	cursor: pointer;
+}
+
+.x-window-security-center-manage-entry .x-remove-entry.x-hover {
+
+}
+
+
+.x-window-security-center-manage-entry .x-remove-entry.x-disabled {
+	color:grey !important;
+}
+
+.x-window-security-center-manage-entry span {
+	position: absolute;
+	top:1px;
+	left:20px;
+	white-space: nowrap;
+}
+
+.x-window-security-center-manage-entry a.x-remove-entry {
+	float:right;
+	position:absolute;
+	top:1px;
+	right:5px;
+}
+
+.x-window-security-center-manage-entry.x-empty {
+	color:grey;
+	font-style: italic;
+}
+
+
+.x-window-security-center .x-window-security-center-mail .x-form-check-wrap {
+	position: relative;
+	top:5px;
+}
+
+.ext-ie7 .x-window-security-center .x-window-security-center-mail .x-form-check-wrap {
+	position: relative;
+	top:2px;
+}
+
+.x-window-security-center .x-window-security-center-mail .x-div-textbackground .x-form-check-wrap {
+	top: 0px;
+}
+
+
+.x-window-security-center .x-link-deselect-all {
+	margin-left:5px;
+}
+
+.x-security-center-cb-user {
+	padding-left:20px;
+	position:relative;
+	white-space: normal;
+	word-wrap: break-word;
+	height: auto;
+}
+
+.x-security-center-cb-user img {
+	position: absolute;
+	left: 2px;
+	top: 2px;
+}
+.x-info-notify {
+	display:inline;
+	font-size:11px;
+	font-style:italic;
+	padding-left:10px;
+	color:grey;
+}
+
+.x-attr-image-column{
+	position:absolute;
+	top:3px;
+	left:1px;
+}
+
+.x-attr-image {
+	width:16px;
+	height: 16px;
+	background: no-repeat center center;
+}
+
+.x-attr-color {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border: 1px solid silver;
+    position: relative;
+    padding: 0 !important;
+    display: block;
+}
+
+.x-info-notify-link {
+	padding-left:5px;
+}
+
+.x-plugin-archive .x-form-check-wrap {
+	margin-top:3px;
+}
+
+.y-import-hidden-field {
+	display: none;
+}
+
+.y-import-dialog-no-admin-hint{
+	background-color: #FBF6E5;
+    border-top: 1px solid #ECE5CF;
+    color: #9C9377;
+    left: -10px;
+    margin-bottom: 4px;
+    opacity: 0.75;
+    padding: 3px 10px 10px;
+    position: relative;
+    top: 16px;
+    width: 470px;
+}
+
+.y-certificate-dialog-no-quota-hint .x-panel-body{
+	background-color: #FBF6E5;
+    color: #9C9377;
+    opacity: 0.75;
+}
+
+.y-certificate-dialog-no-quota-hint{
+	background-color: #FBF6E5;
+    border-bottom: 1px solid #ECE5CF;
+    color: #9C9377;
+    left: -10px;
+    margin-bottom: 3px;
+    opacity: 0.75;
+    padding: 3px 10px 3px;
+    top: -10px;
+    position: relative;
+    width: 470px;
+}
+.x-plugin-archive .x-form-check-wrap .x-form-cb-label {
+	bottom:2px;
+	position:relative;
+}
+
+.x-grid3-row-selected {
+	color:#000000 !important;
+	background:#D9E8FB none repeat scroll 0 0 !important;
+}
+
+.x-waiting-panel .ext-el-mask {
+	opacity:1;
+	background: transparent url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat center center;
+}
+
+.x-grid3-header {
+	background-image:url(../../../libs/ext/resources/images/darkgray/grid/grid3-hrow-over.gif);
+	border:none;
+	padding:0px;
+}
+
+td.x-grid3-hd-over, td.sort-desc, td.sort-asc, td.x-grid3-hd-menu-open {
+	border-left:1px solid white;
+	border-right:1px solid silver;
+}
+
+.x-grid3-row-over {
+	background:#EEEEEE;
+	border:1px solid #DDDDDD;
+}
+
+.x-grid3 table {
+	border-right:1px solid #EEEEEE;
+}
+
+.x-security-center-tab-panel .x-grid3-cell-inner img {
+	position: absolute;
+	top:2px;
+	left:2px;
+}
+
+.x-security-center-tab-panel .x-grid3-cell-inner .x-column-user {
+	padding-left:18px;
+	position:relative;
+}
+
+.x-security-center-tab-panel .x-grid3-cell-inner .x-column-user img {
+	left:-2px;
+	position:absolute;
+	top:-1px;
+}
+
+.x-window-login .x-form-item-label {
+	float:none;
+}
+
+.x-window-login .x-form-element {
+	padding-left:0px !important;
+}
+
+.x-gecko-3-0 .x-security-center-tab-panel .ext-el-mask {
+	opacity:0;
+}
+
+.x-security-center-tab-panel .x-panel.administration_plugin_tree.x-tree-admin-user .class_bugfixing {
+	background-position: center 1px;
+}
+
+/**
+ * MAP EXPORT
+ *
+ */
+.x-plugin-map-view {
+	position:relative;
+	white-space: nowrap;
+	width: 250px;
+}
+
+.x-plugin-map-view .thumb-wrap {
+	float: left;
+	margin: 4px;
+	margin-right: 0;
+	padding: 5px;
+	cursor:pointer;
+	width:140px;
+	height: 95px;
+	-moz-user-select:none !important;
+	text-align: center;
+	border: 1px solid transparent;
+	white-space: normal;
+}
+
+.x-form-map-export-branding {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.x-form-map-export-branding .x-form-item {
+	overflow: hidden !important;
+}
+
+* html .x-plugin-map-view .thumb-wrap {
+	width:135px;
+}
+
+.x-plugin-process-documentation {
+	height:117px;
+}
+
+.x-plugin-process-documentation .thumb-wrap {
+	width : 100px !important;
+	position:relative;
+}
+
+.x-plugin-process-documentation .thumb-wrap .thumb {
+	left:0;
+	position:absolute;
+	text-align:center;
+	top:40px;
+	width:100%;
+}
+
+
+.x-plugin-map-view .thumb-wrap .thumb {
+	position:relative;
+	text-align:center;
+	top:10px;
+}
+
+.y-ownAttrContainer .x-tab-panel-header{
+    border: 0px;
+}
+
+.y-ownAttrContainer .x-tab-strip-wrap .x-tab-strip{
+background: #ffffff;
+border: 0px;
+}
+
+.x-plugin-map-view .thumb-wrap.x-view-over{
+    border:1px solid #dddddd;
+    background: #efefef;
+}
+
+.x-plugin-map-view .thumb-wrap.x-view-selected{
+	background: #eff5fb;
+	border:1px solid #99bbe8;
+}
+
+.x-plugin-map-view .thumb-wrap .thumb-format {
+	display:block;
+	text-align: center;
+	font-style: italic;
+	font-size: 11px;
+}
+
+#plugin-purl-embedPanel label {
+	position: relative;
+	top: -3px;
+}
+
+#plugin-purl-embedPanel label img {
+	position: relative;
+	top: 3px;
+}
+
+#plugin-purl-embedPanel.x-item-disabled {
+	opacity:0.5
+}
+
+#plugin-purl-embedPanel input.auto {
+	color:gray;
+	font-style:italic;
+}
+
+#plugin-purl-embedPanel ul.x-tab-strip-top {
+	background: white none;
+}
+
+#plugin-purl-embedPanel .x-tab-panel-header {
+	border-style: none;
+	background: none;
+	border-style: none none solid none;
+	border-color: 646464;
+	border-width: 2px;
+	padding: 0 1px 0px 1px;
+}
+
+.plugin-purl-previewimg {
+	border: 1px solid gray;
+}
+
+
+/*** Master Thesis ***/
+.thumb-wrap.x-variation-type {
+	padding:5px;
+	border: 1px solid white;
+	margin:1px;
+}
+
+.thumb-wrap.x-variation-type.x-view-over,
+.thumb-wrap.x-variation-type.x-view-selected  {
+	background:none repeat scroll 0 0 #EFF5FB;
+	border:1px solid #99BBE8;
+}
+
+
+/*** MANAGE META DATA ***/
+/* description in meta window */
+.x-window .x-panel-body .y-stencilsets-description{
+}
+.x-window .x-panel-body .y-glossary-description{
+}
+
+/* grid container in meta window*/
+.x-window .x-panel-body .y-grids{
+}
+.x-window .x-panel-body .y-stencilset-tree{
+	margin-right:10px;
+}
+.x-window .x-panel-body .y-stencilgrid{
+	margin-right:10px;
+}
+.y-stencilset-add-edit-window-description {
+	color: #666666;
+	display: block;
+    margin-bottom: 15px;
+}
+.y-stencilset-add-edit-window .x-window-footer{
+	height: 35px !important;
+}
+.y-stencilset-add-edit-window-form-item {
+	margin-top: 5px;
+	font-size: 11px;
+}
+.y-stencilset-add-edit-window-no-grouping-checkbox {
+	left: 0 !important;
+    position: relative !important;
+    top: 9px !important;
+}
+.x-window .x-panel-body .x-grid3-row{
+	border: none;
+}
+.x-window .x-panel-body .y-glossary-categories{
+	margin-right:10px;
+}
+.x-window .x-panel-body .y-ownAttrgrid{
+	margin-bottom:10px;
+}
+.x-window .x-panel-body .y-ownAttrgrid .x-grid3-dirty-cell,
+.x-window .x-panel-body .y-glossary-attrgrid .x-grid3-dirty-cell {
+	background: none !important;
+}
+
+.x-window .x-panel-body .y-glossary-attrgrid{
+	margin-bottom:10px;
+}
+
+.x-window .x-panel-body .y-glossary-attrgrid .x-panel-header {
+	background-image: url(../../../libs/ext/resources/images/gray/panel/white-top-bottom.gif);
+}
+
+.x-window .x-panel-body .y-glossary-attrgrid .x-toolbar.x-small-editor {
+	background-image: url(../../../libs/ext/resources/images/gray/toolbar/bg.gif);
+}
+
+.x-window .x-panel-body .y-attr-desc{
+	color:#888888;
+	font-size:11px;
+	padding-left:5px;
+	padding-right:10px;
+	padding-top:5px;
+	text-align:left;
+	vertical-align:top;
+	min-width:60px;
+}
+.x-window .x-panel-body .y-attr-val{
+	padding-top:5px;
+}
+.x-window .x-panel-body .y-used-in-annotation{
+	font-size:11px;
+	font-style:italic;
+	color:#888888;
+}
+.x-window .x-panel-body .y-stencilset-checkbox{
+	position:relative;
+	top:1px;
+	margin-right:2px;
+}
+
+.x-window-body .y-export-window-description{
+	padding-top:5px;
+	padding-bottom: 5px;
+	padding-left:5px;
+	display:block;
+}
+.x-window-body .y-export-radio-original{
+	font-size:11px;
+	margin-left:5px;
+}
+
+.x-window-body .y-export-radio{
+	font-size:11px;
+	margin-left:5px;
+}
+
+.x-window #stencilGrid .x-grid-empty img {
+	margin-right:5px;
+	margin-top:-5px;
+	opacity:0.5;
+	position:relative;
+	top:3px;
+}
+
+.x-toolbar button {
+	color:white;
+}
+
+.x-btn-over {
+	color:white;
+}
+.x-window-body .y-stencilgrid{
+	border: none;
+}
+.x-window-body .y-stencil-row div{
+	position:relative;
+	padding-left:20px;
+}
+
+
+.x-checkbox-left {
+	left: 1px !important;
+	top:3px !important;
+}
+
+
+.x-window-socialize .x-form-cb-label,
+.x-window-socialize .x-form-item {
+	font-size: 11px;
+	top:-2px;
+}
+
+.x-window-socialize .x-form-checkbox {
+	float: left;
+	margin-bottom: 30px;
+	margin-right: 5px;
+}
+
+.x-window-socialize .x-form-cb-label {
+	margin-left:0;
+	padding:0;
+}
+
+.x-activate-certificate {
+	font-weight: bold;
+}
+
+.x-sharepoint-download.x-masked .ext-el-mask{
+	background: white;
+	opacity: 0.7;
+}
+
+.x-sharepoint-download .x-form-field-wrap {
+	margin-top: 7px;
+}
+
+.x-sharepoint-connector .x-form-button,
+.x-sharepoint-connector .x-form-button-container {
+	display: inline;
+}
+
+.x-sharepoint-connector .x-form-button {
+	position: absolute;
+}
+
+.x-sharepoint-connector label {
+	display: block;
+	margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+.x-sharepoint-connector .x-success {
+	background: url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/ok.png) no-repeat 0 0 transparent;
+    height: 16px;
+    margin-left: 5px;
+    position: relative;
+    top: 1px;
+    width: 16px;
+}
+
+.x-sharepoint-connector .x-failed {
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/cross.png) !important;
+}
+
+.x-sharepoint-connector .x-warning {
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/error.png) !important;
+}
+
+.x-sharepoint-connector .x-loading {
+	background-image: url(/bpmcenter/fixflow-explorer/images/famfamfam/loading.gif) !important;
+}
+
+.x-layout-split.x-layout-split-east {
+	width:3px;
+}
+
+.x-layout-split.x-layout-split-east {
+	width:3px;
+	border-right:1px solid silver;
+}
+
+
+.x-layout-split.x-layout-split-east .x-layout-mini-east {
+	left:3px;
+}
+
+.x-layout-collapsed-east.x-layout-cmini-east {
+	background:transparent;
+}
+
+.x-layout-collapsed-east.x-layout-cmini-east .x-layout-mini {
+	left:0;
+}
+
+.x-combo-list .x-toolbar {
+	background:none repeat scroll 0 0 #DDECFE;
+	border:0 none;
+	padding:1px;
+	padding-bottom:0px;
+}
+
+.x-combo-list .x-toolbar .x-paging-info {
+	color:gray;
+}
+
+.x-combo-list .x-toolbar .x-btn-over .x-btn-left,
+.x-combo-list .x-toolbar .x-btn-click .x-btn-left,
+.x-combo-list .x-toolbar .x-btn-pressed .x-btn-left,
+.x-combo-list .x-toolbar .x-btn-over .x-btn-center,
+.x-combo-list .x-toolbar .x-btn-menu-active .x-btn-center,
+.x-combo-list .x-toolbar .x-btn-click .x-btn-center,
+.x-combo-list .x-toolbar .x-btn-pressed .x-btn-center,
+.x-combo-list .x-toolbar .x-btn-menu-active .x-btn-center,
+.x-combo-list .x-toolbar .x-btn-over .x-btn-right,
+.x-combo-list .x-toolbar .x-btn-click .x-btn-right,
+.x-combo-list .x-toolbar .x-btn-pressed .x-btn-right,
+.x-combo-list .x-toolbar .x-btn-menu-active .x-btn-right  {
+	background-image:url("../../../libs/ext/resources/images/default/toolbar/tb-btn-sprite.gif");
+}
+
+.x-smaller-header #signavio_repository_header{
+	display: none;
+}
+
+.x-smaller-header .north_view .x-panel-body {
+	height: 28px !important;
+}
+
+.x-smaller-header .signavio_repository_header_shadow,
+.x-smaller-header .signavio_repository_header_shadow2 {
+    top: 28px !important;
+}
+
+.x-smaller-header .x-toolbar.north_view .x-btn-wrap {
+    margin-top: -2px;
+}
+
+.x-window-add-meta-data .x-form-textfield-list .x-form-field-wrap div {
+	width: 291px;
+	max-height: 250px;
+	overflow: auto;
+}
+
+.x-window-add-meta-data .x-form-textfield-list .x-form-field-wrap div .x-smaller {
+	white-space: nowrap;
+}
+
+.x-window-add-meta-data .y-meta-data-error-hint {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	background: url("../../../libs/ext/resources/images/default/form/exclamation.gif") no-repeat transparent;
+}
+
+.y-error-hint{
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	background: url("../../../libs/ext/resources/images/default/form/exclamation.gif") no-repeat transparent;
+}
+
+
+.x-window-dlg .x-window-header-text {
+	font-size: 11px;
+}
+
+.y-ownAttrgrid .x-editing .x-grid3-cell-inner,
+.y-glossary-attrgrid .x-editing .x-grid3-cell-inner {
+    background: url("../../../libs/ext/resources/images/default/tree/loading.gif") no-repeat scroll 5px 2px transparent;
+    font-style: italic;
+    opacity: 0.5;
+    padding-left: 24px;
+}
+
+/* Analytics Changes */
+.north_view .x-view-selector-toolbar {
+	background:none repeat scroll 0 0 transparent;
+	border:medium none;
+	opacity:0.7;
+	position:absolute;
+	right:5px;
+	top:10px;
+}
+
+.north_view .x-view-selector-toolbar {
+	background:none repeat scroll 0 0 transparent;
+	border:medium none;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+	position:absolute;
+	right:5px;
+	top:10px;
+}
+
+.north_view .x-view-selector-toolbar button:focus {
+    outline: 0;
+}
+
+.north_view .x-view-selector-toolbar .x-btn-over .x-btn-left,
+.north_view .x-view-selector-toolbar .x-btn-click .x-btn-left,
+.north_view .x-view-selector-toolbar .x-btn-pressed .x-btn-left,
+.north_view .x-view-selector-toolbar .x-btn-menu-active .x-btn-left,
+.north_view .x-view-selector-toolbar .x-btn-over .x-btn-center,
+.north_view .x-view-selector-toolbar .x-btn-click .x-btn-center,
+.north_view .x-view-selector-toolbar .x-btn-pressed .x-btn-center,
+.north_view .x-view-selector-toolbar .x-btn-menu-active .x-btn-center,
+.north_view .x-view-selector-toolbar .x-btn-over .x-btn-right,
+.north_view .x-view-selector-toolbar .x-btn-click .x-btn-right,
+.north_view .x-view-selector-toolbar .x-btn-pressed .x-btn-right,
+.north_view .x-view-selector-toolbar .x-btn-menu-active .x-btn-right {
+	background-image:url(../../../libs/ext/resources/images/gray/toolbar/tb-btn-sprite.gif);
+}
+
+.north_view .x-view-selector-toolbar .x-btn-icon td {
+	background-color:white;
+}
+	
+.north_view .x-view-selector-toolbar .ytb-sep {
+	background-image:url(../../../libs/ext/resources/images/vista/grid/grid-split.gif);
+}
+
+/* GWT-EXT-UX Slidezone - Start */
+.x-slide-zone-horizontal {
+	height: 40px;
+	background-repeat: repeat-x;
+	background-image: url('../../../libs/ux/slidezone/slider-bg-h.gif');
+	z-index: 1;
+
+}
+
+.x-thumb-slider-horizontal {
+	width: 18px;
+	height: 20px;
+	/* Using margin-top in Safari applies the style twice after 
+	  the first drag start. Use top instead. */
+	top: 11px; 
+	background: url('../../../libs/ux/slidezone/slider-thumb-h.gif') no-repeat;
+	z-index: 10;
+}
+
+.x-range-slider-horizontal {
+	top: 0px;
+	height: 10px;
+	background: url('../../../libs/ux/slidezone/slider-range-h.gif') repeat-x;
+	/*opacity: .25*/;
+}
+
+
+
+.x-slide-zone-vertical {
+	width: 40px;
+	background-repeat: repeat-y;
+	background-image: url('../../../libs/ux/slidezone/slider-bg-v.gif');
+	background-position: 9px 0px;
+	z-index: 1;
+}
+
+.x-thumb-slider-vertical {
+	background: url('../../../libs/ux/slidezone/slider-thumb-v.gif') no-repeat;
+	width: 20px;
+	height: 18px;
+	z-index: 10
+}
+.x-range-slider-vertical {
+	left: 0px;
+	background: url('../../../libs/ux/slidezone/slider-range-v.gif') repeat-y;
+	/*opacity: .25*/;
+}
+
+
+.x-slide-zone-area {
+	border-left: 1px solid #999;
+	border-top: 1px solid #999;
+	background-image: url('../../../libs/ux/slidezone/slider-bg-a2.gif');
+	z-index: 1;
+}
+
+.x-thumb-slider-area {
+	background: url('../../../libs/ux/slidezone/slider-a.gif') no-repeat;
+	width: 16px;
+	height: 18px;
+	z-index: 10;
+}
+
+.x-range-slider-area {
+	background-color: #453854;
+	opacity: 0.50;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.50
+	z-index: 10;
+}
+
+.custom_slider_class {
+	background-color: #92E72D;
+}
+
+
+.top	{ 
+	top: 0px;
+}
+
+.bottom {
+	top: 16px
+}
+
+/* GWT-EXT-UX Slidezone - END */
+}
+
+/* ---------------------------- The Wizard Window ------------------------------------------------------------- */
+
+.y-wizard-window {}
+
+.y-wizard .x-tab-panel-body {
+	border		: none;
+	background-color: #ffffff;
+}
+
+.y-wizard-filter-button {
+	display: block;
+
+	margin-top: 10px;
+}
+
+.y-wizard label {
+	display: block;
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.y-wizard input + label {
+	display: inline;
+}
+
+.y-wizard form > * {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+.y-wizard form > *:last-child {
+	margin-bottom: 10px;
+}
+
+.y-wizard-page {}
+.y-wizard-tree-page {}
+.y-wizard-option-page {}
+
+.y-wizard-description-label {
+	display: block;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+.y-wizard-tree {
+    padding			: 0 !important;
+}
+
+.y-wizard-options {
+	padding-bottom	: 0;
+    overflow-x		: auto;
+}
+
+
+.y-wizard-options-waiting-box {
+    left: 223px;
+    position: absolute;
+    top: 50%;
+}
+
+.y-wizard-options-waiting-box div {
+	margin-left:10px;
+	padding-left:30px;
+	background: transparent url(../../../libs/ext/resources/images/default/tree/loading.gif) no-repeat scroll left center;
+	border: none;
+}
+
+.y-wizard .y-wizard-options-container {
+	position: relative;
+	
+	border	: 1px solid #AD0F5B;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.y-wizard-options-container .x-panel-body {
+	padding	: 10px;
+	border	: none;
+}
+
+.y-wizard-options-container > label {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.y-wizard-options-container .x-panel-body > *:first-child {
+	margin-top: 5px;
+}
+
+.x-ie .y-wizard-options-container .x-panel-body > *:first-child {
+	margin-top: 10px;
+}
+
+.y-wizard-options-container label.x-form-item-label:first-child {
+	margin: 0px;
+}
+
+.y-wizard-options-container label.y-label-with-space {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.y-panel-no-padding .x-panel-body {
+	padding: 0px;
+}
+
+.y-wizard-options-container .x-form-check-wrap{
+    display		: block;
+    float		: none;
+    overflow	: hidden;
+    padding-left: 5px;
+}
+
+.y-wizard-options-container .x-form-cb-label {
+    clear		: none !important;
+    display		: inline !important;
+    float		: none !important;
+    left		: 13px;
+    margin-left	: 0px;
+    position	: relative;
+    top			: -2px;
+}
+
+.y-wizard-options-container-ie7 .x-form-cb-label {
+    top			: 1px !important;
+}
+
+.y-wizard-options-title {
+	background	: none repeat scroll 0 0 white;
+    margin-left	: 16px;
+    padding		: 2px;
+    position	: absolute;
+    z-index		: 2;
+    font-weight	: bold;
+    font-size	: 11px;
+    color		: #AD0F5B;
+    top			: -10px;
+}
+.y-wizard-options-description {
+    display		: block;
+    float		: none;
+    font-size	: 11px;
+    margin		: 0px -3px 5px;
+    margin-top	: 0;
+    width		: 100%;
+}
+.y-wizard-options-radio {}
+
+.y-wizard-map-view-container {
+	/*margin		: 10px 10px 0 !important;*/
+    position	: relative;
+}
+
+.y-wizard-map-view-container .x-panel-body {
+	overflow-x	: hidden;
+	overflow-y	: scroll;
+	position	: relative;
+	height		: 234px !important;
+}
+
+.y-wizard-map-view {
+	left		: 50%;
+    margin-left	: -156px;
+    position	: relative;
+    width		: 312px !important;
+}
+
+.y-wizard-form-checkbox input {
+	left		: 0px !important;
+	position	: relative;
+	top			: 3px !important;
+	margin-left	: -5px;
+}
+
+.y-wizard-form-layout .x-form {
+	/*height		: 100% !important;*/
+}
+
+.y-wizard-options-form .x-panel-body {
+	padding		: 0;
+	margin		: 0;
+}
+
+.y-wizard-form-layout-ie .y-wizard-form-combobox-ie8 img {
+	top			: -1px !important;
+}
+
+.y-wizard-form-layout-ie .x-form .x-panel-body {
+	padding-top		: 1px !important;
+}
+
+.y-wizard-form-dataview-ct-ie7 {
+	overflow	: hidden;
+	position	: relative;
+}
+
+.y-wizard-form-textarea-ie textarea{
+	overflow		: auto;
+}
+
+.y-second-personal-dialog-field-panel {
+	padding-left: 9px;
+}
+
+.x-ie-9-0 .y-second-personal-dialog-field-panel-hint {
+	 top: 2px;
+	 left: 307px;
+}
+
+.x-ie .y-second-personal-dialog-field-panel .x-form-text.x-form-field.x-form-num-field{
+	margin-top: 0px !important;
+}
+
+.x-ie7 .y-second-personal-dialog-field-panel .x-form-text.x-form-field.x-form-num-field,
+.x-ie-6-0 .y-second-personal-dialog-field-panel .x-form-text.x-form-field.x-form-num-field{
+	margin-bottom: 0px !important;
+}
+
+.x-ie7 .y-second-personal-dialog-field-panel label,
+.x-ie-6-0 .y-second-personal-dialog-field-panel label{
+	position: relative !important;
+	top: 1px !important;
+}
+
+.x-ie-6-0 .y-second-personal-dialog-field-panel-hint{
+	left:130px !important;
+}
+
+.y-second-personal-dialog-field-panel-hint {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/information.png");
+    height: 16px;  
+    position: absolute;   
+    width: 16px;
+}
+
+.y-second-personal-dialog-field-panel .y-second-personal-dialog-field-checkbox{
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+
+.y-second-personal-dialog-field-panel .y-second-personal-dialog-field-checkbox .x-form-cb-label {
+	top: -2px;
+	position: relative;
+}
+
+.y-second-personal-dialog-field-panel .x-form-item-label {
+	width: 164px !important;
+}
+
+
+
+/****************************** THE UX-WINDOW COMPONENT ************************************************/
+
+.x-ux-window {}
+
+/*
+.x-ux-window .x-panel-btns-ct {
+	background	: #666666;
+}
+*/
+
+.x-smaller {
+	font-size:10px;
+}
+
+.x-url-link-field-list ol li a {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/external-link-ltr-icon.png") no-repeat scroll right center transparent;
+    padding-right: 13px;
+    font-size: 11px;
+    margin-right: 5px;
+}
+
+.x-url-link-field-list ol li {
+	margin-left: 3px;
+}
+
+.x-url-link-field-list ol li .x-smaller a {
+    background: none;
+    padding-right: 0;
+    margin-right: 0;
+    font-size: 10px;
+}
+
+
+
+.x-form-textfield-list .x-smaller.x-icons {
+	float: right;
+	margin-right: 5px;
+}
+
+.x-form-textfield-list .x-smaller.x-icons a {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	text-decoration: none;
+	opacity: 0.6;
+}
+
+
+.x-form-textfield-list .x-smaller.x-icons a:hover {
+	opacity: 1.0;
+}
+
+.x-form-textfield-list .x-smaller.x-icons a.x-move-up {
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/up_arrow.png");
+	width: 12px;
+}
+
+.x-form-textfield-list .x-smaller.x-icons a.x-move-down {
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/down_arrow.png");
+	width: 12px;
+}
+
+.x-form-textfield-list .x-smaller.x-icons a.x-edit {
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/pencil.png");
+}
+
+.x-form-textfield-list .x-smaller.x-icons a.x-remove {
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/bin.png");
+}
+
+.x-form-textfield-list .x-smaller.x-icons a.x-star {
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/star_empty.png");
+}
+
+.x-form-textfield-list .x-smaller.x-icons a.x-star.x-stared {
+	background-image: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/star.png");
+}
+
+.x-form-textfield-list ol li {
+	clear: both;
+}
+
+
+.x-window-manage-configuration .x-form-item label {
+	font-size: 11px;
+	padding-top: 4px;
+	padding-bottom: 1px;
+}
+
+.x-window-manage-configuration .x-description {
+    clear: left;
+    color: gray;
+    float: left;
+    font-size: 10px;
+    width: 245px;
+}
+
+.x-window-manage-configuration .ext-el-mask-msg {
+    background: url("../../../libs/ext/resources/images/default/tree/loading.gif") no-repeat scroll 8px center transparent;
+    border: 1px solid silver;
+    padding: 2px 2px 2px 24px;
+    opacity: 0.6;
+}
+
+.x-window-manage-configuration .ext-el-mask-msg div {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+
+.x-window-manage-configuration .x-form-item {
+    margin-bottom: 14px;
+}
+
+.x-window-manage-configuration .x-form-checkbox.x-form-field {
+	top: 3px !important;
+}
+
+.x-window-security-center .x-hide-header .x-tab-panel-header {
+	display: none;
+}
+
+.x-ie-9-0 .x-window-security-center .x-purl-hint .x-panel-body {
+	margin-top: 5px;
+}
+
+.x-ie-9-0 .x-window-security-center-mail .x-form-check-wrap input {
+	position: relative;
+	top: 3px;
+}
+
+.x-form *,
+.x-window-security-center .x-window-body * {
+	overflow: visible;
+}
+
+
+.x-menu-list img.x-signavio-premium {
+    cursor: pointer !important;
+    margin-left: 5px;
+    position: relative;
+    top: 1px;
+}
+
+
+
+.x-panel-body .x-column-inner div.df-ip-tree {
+	padding: 0 0 5px 5px;
+}
+
+.x-panel .x-column-inner .x-panel .x-panel-bwrap .x-panel-body div.df-ip-box {
+	margin-top: -10px;
+}
+
+.x-panel .x-column-inner .x-panel .x-panel-bwrap .x-panel-body table.df-ip-delete-btn {
+	padding-top:10px;
+}
+
+.ak-views-iframepanel-header .x-panel-body,
+.ak-views-iframepanel-header .ext-el-mask  {
+	-moz-box-shadow: 0 0 10px silver inset;
+	-webkit-box-shadow: 0 0 10px silver inset;
+	-o-box-shadow: 0 0 10px silver inset;
+	box-shadow: 0 0 10px silver inset;
+}
+
+.x-predefinied-view-description-panel .x-panel-body.x-panel-body-noheader.x-panel-body-noborder{
+	padding-left: 8px !important;
+}
+
+.ak-views-iframepanel-header .x-panel-header.x-unselectable {
+	 margin-left: 0px !important;
+	-moz-background-clip: border  !important;
+    -moz-background-origin: padding  !important;
+    -moz-background-size: auto auto  !important;
+    -moz-border-radius: 0 0 10px 0;
+    -moz-box-shadow: 1px 1px 10px silver  !important;
+    -moz-user-select: none  !important;
+
+    background-clip: border  !important;
+    background-origin: padding  !important;
+    background-size: auto auto  !important;
+    border-radius-bottomleft: 0  !important;
+    border-radius-bottomright: 10px  !important;
+    border-radius-topleft: 0  !important;
+    border-radius-topright: 0  !important;
+    box-shadow: 1px 1px 10px silver  !important;
+    user-select: none  !important;
+
+     -webkit-border-radius: 0 0 10px 0;
+     -webkit-box-shadow: 1px 1px 10px silver  !important;
+     -webkit-user-select: none  !important;
+
+    background-attachment: scroll  !important;
+    background-color: #E1E1E1  !important;
+    background-image: url("../../../libs/ext/resources/images/darkgray/grid/grid3-hrow-large.gif") !important;
+    background-position: 0 -3px  !important;
+    background-repeat: repeat-x  !important;
+    border: 1px solid #777777;
+    border-top: none;
+    border-left:none;
+    color: #555555 !important;
+    display: inline !important;
+    padding-bottom: 3px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 3px !important;
+    position: absolute !important;
+    text-shadow: 1px 1px 1px white !important;
+    z-index: 100000 !important;
+}
+
+.x-ie-6-0 .ak-views-iframepanel-header .x-panel-header.x-unselectable{
+	margin-left:3px !important;
+	margin-top: 2px !important;
+}
+
+.x-ie-6-0 .ak-views-checkbox-position .x-form-cb-label{
+	position: relative;
+    top: 1px;
+}
+
+
+.x-ie-6-0 .ak-views-combobox .x-form-arrow-trigger {
+	margin-top: 1px;
+}
+
+.x-ie-6-0 .ak-views-too-long-header .x-tab-panel-header .x-tab-strip-wrap .x-tab-strip{
+	width: 100% !important;
+}
+
+
+
+.x-ie-6-0 .ak-views-relative-column {
+	position: relative;
+    top: -21px;
+    left: 16px;
+    width: 300px;
+}
+
+.x-ie-6-0 .ak-views-relative-column2 {
+	position: relative;
+    top: -21px;
+    width: 250px;
+}
+
+.x-ie7  .ak-views-combobox .x-predefinied-view-combobox{
+	margin-top: -3px;
+}
+
+.x-ie7  .ak-views-combobox .x-form-arrow-trigger{
+	margin-top: -1px;
+}
+
+
+
+.x-ie7 .ak-views-too-long-header .x-tab-panel-header .x-tab-strip-wrap .x-tab-strip{
+	width: 100% !important;
+}
+
+.x-ie7 .ak-views-iframepanel-header .x-panel-header.x-unselectable{
+	margin-left:3px !important;
+	margin-top: 2px !important;
+}
+
+.x-ie-8-0 .ak-views-iframepanel-header .x-panel-header.x-unselectable{
+	margin-left:3px !important;
+	margin-top: 2px !important;
+}
+
+.x-ie-8-0 .ak-views-relative-column {
+	margin-top: 6px;
+}
+
+.x-ie-8-0  .ak-views-combobox .x-form-arrow-trigger{
+	margin-top: -1px;
+}
+
+
+.x-ie-9-0 .ak-views-checkbox-position .x-form-cb-label{
+	position: relative;
+    top: -3px;
+}
+
+
+
+.y-meta-data-icon {
+	position:absolute;
+	top:1px;
+	left:1px;
+	background: no-repeat center center;
+	width:16px;
+	height:16px;
+}
+
+.df-x-iplisttree .x-panel-bwrap div.x-panel-body {
+	overflow-y: auto;
+}
+
+
+.df-controlrightsdescription .x-panel-bwrap div.x-panel-body{
+	padding-bottom: 5px !important;
+	border: none;
+}
+
+div.df-ip-add-window div.x-window-bwrap div.x-panel div.x-panel-body-noheader {
+	border: 0px;
+	margin-left: 11px;
+	margin-right: 11px;
+}
+
+html.x-ie-6-0  div.df-conf-topicpanel div.x-panel-bwrap div{
+	width: 538px;
+}
+
+html.x-ie-6-0  div.df-conf-topicpanel div{
+	width: 540px;
+}
+
+/***************************************************************/
+/***************************************************************/
+/***************************************************************/
+/*****************           TEMPLATES          ****************/
+/***************************************************************/
+/***************************************************************/
+/***************************************************************/
+
+
+/*** SAPERION Specific Template ***/
+
+.x-license-saperion #signavio_repository_header,
+.x-license-saperion .signavio_repository_header_shadow,
+.x-license-saperion .signavio_repository_header_shadow2,
+.x-license-saperion .x-toolbar.north_view  {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/header_background2.png) !important;
+}
+
+
+.x-license-saperion div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/header_background2.png',sizingMethod='scale') !important;
+}
+
+.x-license-saperion div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
+	background-image:none !important;
+}
+
+.x-license-saperion #signavio_repository_header #signavio_repository_logo {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/logo2.png);
+	margin-left: 6px;
+	width: 355px;
+}
+
+.x-license-saperion .search_plugin .x-table-layout-cell,
+.x-license-saperion .search_plugin .x-table-layout-cell .search_field_left,
+.x-license-saperion .search_plugin .x-table-layout-cell .search_field_right {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/search_background2.png) !important;
+}
+
+.x-license-saperion .x-toolbar.north_view .ytb-sep {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/vLine.png);
+}
+
+.x-license-saperion .search_plugin .search_field_right img {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/cross-search.png) !important;
+}
+
+body.x-license-saperion  div .searching div.search_field_right img {
+	background-image:url("/bpmcenter/fixflow-explorer/images/signavio/loading.gif") !important;
+}
+
+.x-license-saperion div.search_plugin.x-search-predefined .x-table-layout-cell div.x-panel.search_field_left {
+	background-image: url("/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/clear-search.png") !important;
+}
+
+.x-license-saperion .x-toolbar-model-name span {
+    color: #C0CAD1;
+}
+
+.x-license-saperion a {
+    color: #f06e03;
+}
+
+.x-license-saperion a:hover,
+.x-license-saperion a:focus,
+.x-license-saperion a:active {
+    color: #F2AA6F;
+}
+
+.x-license-saperion .x-menu a.x-menu-item {
+    color: #222222;
+}
+
+.x-license-saperion .x-linked-model a {
+    border: 2px dashed #f06e03;
+}
+
+.x-license-saperion .mask-logo div img {
+	border-bottom: 1px solid #506372;
+}
+
+.x-license-saperion .mask-title,
+.x-license-saperion .mask-version {
+    color: #506372;
+}
+
+.x-license-saperion .mask-text {
+	padding-top: 3px;
+}
+
+.x-license-saperion .mask-logo div img {
+    visibility: hidden;
+}
+
+.x-license-saperion .mask-logo div {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/saperion/SAPERION_ECM_Logo.png") no-repeat scroll center top transparent;
+    border-bottom: 1px solid #506372;
+    height: 95px;
+}
+
+.x-license-saperion .mask-logo {
+    width: 300px;
+    margin-left: -141px !important;
+	margin-top: -50px;
+}
+
+.x-license-saperion .x-talk-entree.x-selected,
+.x-license-saperion ul.stencil-legend li.x-selected,
+.x-license-saperion #right-panel .x-selected {
+	border-top:1px solid #f06e03 !important;
+	border-bottom:1px solid #f06e03 !important;
+	background-color: #FFF3EA;
+}
+
+.x-license-saperion .x-title-preview span {
+/*  opacity: 0.2;
+    text-shadow: 0 0 0;*/
+    color: #8E9AA4;
+    opacity: 1;
+    text-shadow: 0 1px 1px #222222;
+}
+
+.x-license-saperion #openid_login .login_name {
+    color: #8E9AA4;
+    border-right: 1px solid #8E9AA4;
+    text-shadow: 0 1px 1px #222222;
+}
+
+.x-license-saperion #openid_login input.button {
+    color: #8E9AA4;
+    font-family: tahoma, arial, sans-serif;
+    text-shadow: 0 1px 1px #222222;
+}
+
+.x-license-saperion #openid_login input.button:hover {
+    color: #A5AEB6;
+    text-shadow: 0 1px 1px #222222 !important;
+}
+
+.x-license-saperion .x-linked-model {
+    border: 2px dashed #f06e03;
+}
+
+.x-license-saperion .x-revision-plugin .x-revision-item.x-view-selected {
+    border: 1px solid #f06e03;
+}
+
+.x-license-saperion  .view_plugin .x-view-over {
+    background: none repeat scroll 0 0 #F6F7F8;
+    border: 1px solid #e4e5e7;
+}
+
+.x-license-saperion  .view_plugin .x-view-selected {
+    background: none repeat scroll 0 0 #F6F7F8;
+    border: 1px solid #506372;
+}
+
+.x-license-saperion  .search_plugin {
+    margin: 1px 25px -1px 10px;
+}
+
+.x-license-saperion .left_view .x-panel-body {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+}
+
+
+.x-license-saperion .x-grid-group-hd div {
+    color: #f06e03 !important;
+}
+
+.x-license-saperion .x-grid-group-hd {
+	border-bottom-color: #F2AA6F !important;
+}
+
+.x-license-saperion .y-wizard-options-title {
+	color: #F06E03;
+}
+
+.x-license-saperion .y-wizard-options-container {
+    border: 1px solid #F06E03;
+}
+
+.x-window-saperion .x-window-header-text {
+    background: url("/bpmcenter/fixflow-explorer/images/misc/saperion.png") no-repeat scroll 0 -1px transparent;
+    padding: 1px 20px 0;
+}
+
+
+
+
+
+
+/*** CoMMed (CareStation) Specific Template ***/
+
+.x-license-commed #signavio_repository_header,
+.x-license-commed .signavio_repository_header_shadow,
+.x-license-commed .signavio_repository_header_shadow2,
+.x-license-commed .x-toolbar.north_view  {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/header_background2.png) !important;
+}
+
+
+.x-license-commed div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/commed/header_background2.png',sizingMethod='scale') !important;
+}
+
+.x-license-commed div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
+	background-image:none !important;
+}
+
+.x-license-commed #signavio_repository_header #signavio_repository_logo {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/logo2.png);
+	margin-left: 6px;
+	width: 220px;
+}
+
+.x-license-commed .search_plugin .x-table-layout-cell,
+.x-license-commed .search_plugin .x-table-layout-cell .search_field_left,
+.x-license-commed .search_plugin .x-table-layout-cell .search_field_right {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/search_background2.png) !important;
+}
+
+.x-license-commed .x-toolbar.north_view .ytb-sep {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/vLine.png);
+}
+
+.x-license-commed .search_plugin .search_field_right img {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/commed/cross-search.png) !important;
+}
+
+body.x-license-commed  div .searching div.search_field_right img {
+	background-image:url("/bpmcenter/fixflow-explorer/images/signavio/loading.gif") !important;
+}
+
+.x-license-commed div.search_plugin.x-search-predefined .x-table-layout-cell div.x-panel.search_field_left {
+	background-image: url("/bpmcenter/fixflow-explorer/images/signavio/templates/commed/clear-search.png") !important;
+}
+
+.x-license-commed .x-toolbar-model-name span {
+    color: #C0CAD1;
+}
+
+.x-license-commed .x-title-preview span {
+/*  opacity: 0.2;
+    text-shadow: 0 0 0;*/
+    color: #B2BCE0;
+    opacity: 1;
+    text-shadow: 0 1px 1px #283B7A;
+}
+
+.x-license-commed #openid_login .login_name {
+    color: #2B428D;
+    border-right: 1px solid #283B7A;
+    text-shadow: 0 1px 1px #DDDDDD;
+}
+
+.x-license-commed #openid_login input.button {
+    color: #2B428D;
+    font-family: tahoma, arial, sans-serif;
+    text-shadow: 0 1px 1px #DDDDDD;
+}
+
+.x-license-commed #openid_login input.button:hover {
+    text-shadow: 0 1px 1px #FFFFFF !important;
+}
+
+.x-license-commed a {
+    color: #F07D00;
+}
+
+.x-license-commed a:hover,
+.x-license-commed a:focus,
+.x-license-commed a:active {
+    color: #FFA749;
+}
+
+.x-license-commed .x-menu a.x-menu-item {
+    color: #222222;
+}
+
+.x-license-commed .x-linked-model a {
+    border: 2px dashed #F07D00;
+}
+
+.x-license-commed .mask-logo div img {
+	border-bottom: 1px solid #F07D00;
+}
+
+.x-license-commed .mask-title,
+.x-license-commed .mask-version {
+    color: #F07D00;
+}
+
+.x-license-commed .mask-text {
+	padding-top: 3px;
+}
+
+.x-license-commed .mask-logo div img {
+    visibility: hidden;
+}
+
+.x-license-commed .mask-logo div {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/commed/logo.png") no-repeat scroll center top transparent;
+    border-bottom: 1px solid #F07D00;
+    height: 170px;
+}
+
+.x-license-commed .mask-logo {
+    width: 300px;
+    margin-left: -141px !important;
+	margin-top: -100px;
+}
+
+.x-license-commed .x-talk-entree.x-selected,
+.x-license-commed ul.stencil-legend li.x-selected,
+.x-license-commed #right-panel .x-selected {
+	border-top:1px solid #F07D00 !important;
+	border-bottom:1px solid #F07D00 !important;
+	background-color: #FFF8F2;
+}
+
+.x-license-commed .x-linked-model {
+    border: 2px dashed #F07D00;
+}
+
+.x-license-commed .x-revision-plugin .x-revision-item.x-view-selected {
+    border: 1px solid #F07D00;
+}
+
+.x-license-commed .view_plugin .x-view-over {
+    background: none repeat scroll 0 0 #F6F7F8;
+    border: 1px solid #e4e5e7;
+}
+
+.x-license-commed .view_plugin .x-view-selected,
+.x-license-commed .view_view .x-grid3-row-selected {
+    background: none repeat scroll 0 0 #F6F7F8 !important;
+}
+
+.x-license-commed .search_plugin {
+	margin-top: 2px;
+}
+
+.x-license-commed .left_view .x-panel-body {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+}
+
+
+.x-license-commed .x-grid-group-hd div {
+    color: #F07D00 !important;
+}
+
+.x-license-commed .x-grid-group-hd {
+	border-bottom-color: #F07D00 !important;
+}
+
+.x-license-commed .y-wizard-options-title {
+	color: #F07D00;
+}
+
+.x-license-commed .y-wizard-options-container {
+    border: 1px solid #F07D00;
+}
+
+
+
+
+
+
+
+
+
+/*** T!M Specific Template ***/
+
+
+.x-license-deploy2tim #signavio_repository_header,
+.x-license-deploy2tim .signavio_repository_header_shadow,
+.x-license-deploy2tim .signavio_repository_header_shadow2,
+.x-license-deploy2tim .x-toolbar.north_view  {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/header_background2.png) !important;
+}
+
+
+.x-license-deploy2tim div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/tim/header_background2.png',sizingMethod='scale') !important;
+}
+
+.x-license-deploy2tim div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
+	background-image:none !important;
+}
+
+.x-license-deploy2tim #signavio_repository_header #signavio_repository_logo {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/logo2.png);
+	margin-left: 15px;
+	width: 150px;
+}
+
+.x-license-deploy2tim .search_plugin .x-table-layout-cell,
+.x-license-deploy2tim .search_plugin .x-table-layout-cell .search_field_left,
+.x-license-deploy2tim .search_plugin .x-table-layout-cell .search_field_right {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/search_background2.png) !important;
+}
+
+.x-license-deploy2tim .x-toolbar.north_view .ytb-sep {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/tim/vLine.png);
+}
+
+body.x-license-deploy2tim  div .searching div.search_field_right img {
+	background-image:url("/bpmcenter/fixflow-explorer/images/signavio/loading.gif") !important;
+}
+
+.x-license-deploy2tim .x-toolbar-model-name span {
+    color: #C0CAD1;
+}
+
+.x-license-deploy2tim a {
+    color: #9DB72F;
+}
+
+.x-license-deploy2tim a:hover,
+.x-license-deploy2tim a:focus,
+.x-license-deploy2tim a:active {
+    color: #AFCC32;
+}
+
+.x-license-deploy2tim .x-menu a.x-menu-item {
+    color: #222222;
+}
+
+.x-license-deploy2tim .x-linked-model a {
+    border: 2px dashed #9DB72F;
+}
+
+.x-license-deploy2tim .mask-logo div img {
+	border-bottom: 1px solid #9DB72F;
+}
+
+.x-license-deploy2tim .mask-title,
+.x-license-deploy2tim .mask-version {
+    color: #9DB72F;
+}
+
+.x-license-deploy2tim .mask-text {
+	padding-top: 3px;
+}
+
+.x-license-deploy2tim .mask-logo div img {
+    visibility: hidden;
+}
+
+.x-license-deploy2tim .mask-logo div {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/tim/signavio_logo.jpg") no-repeat scroll center top transparent;
+    border-bottom: 1px solid #9DB72F;
+    height: 164px;
+}
+
+.x-license-deploy2tim .mask-logo {
+    width: 377px;
+    margin-left: -161px !important;
+	margin-top: -50px;
+}
+
+.x-license-deploy2tim .x-talk-entree.x-selected,
+.x-license-deploy2tim ul.stencil-legend li.x-selected,
+.x-license-deploy2tim #right-panel .x-selected {
+	border-top:1px solid #9DB72F !important;
+	border-bottom:1px solid #9DB72F !important;
+	background-color: #FFF3EA;
+}
+
+.x-license-deploy2tim .x-title-preview span {
+    color: #9DB72F;
+    opacity: 1;
+    text-shadow: 0 1px 1px #222222;
+}
+
+.x-license-deploy2tim .x-linked-model {
+    border: 2px dashed #9DB72F;
+}
+
+.x-license-deploy2tim .x-revision-plugin .x-revision-item.x-view-selected {
+    border: 1px solid #9DB72F;
+}
+
+.x-license-deploy2tim  .view_plugin .x-view-over {
+    background: none repeat scroll 0 0 #F6F7F8;
+    border: 1px solid #e4e5e7;
+}
+
+.x-license-deploy2tim  .view_plugin .x-view-selected {
+    background: none repeat scroll 0 0 #F8F9F4;
+    border: 1px solid #9DB72F;
+}
+
+.x-license-deploy2tim  .search_plugin {
+    margin: 1px 25px -1px 10px;
+}
+
+.x-license-deploy2tim .left_view .x-panel-body {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+}
+
+
+.x-license-deploy2tim .x-grid-group-hd div {
+    color: #9DB72F !important;
+}
+
+.x-license-deploy2tim .x-grid-group-hd {
+	border-bottom-color: #9DB72F !important;
+}
+
+.x-license-deploy2tim .y-wizard-options-title {
+	color: #9DB72F;
+}
+
+.x-license-deploy2tim .y-wizard-options-container {
+    border: 1px solid #9DB72F;
+}
+
+
+.x-license-deploy2tim #openid_login .login_name {
+    color: #828C01;
+    border-right: 1px solid #828C01;
+    text-shadow: 0 1px 1px #DDDDDD;
+}
+
+.x-license-deploy2tim #openid_login input.button {
+    color: #626A00;
+    font-family: tahoma, arial, sans-serif;
+    text-shadow: 0 1px 1px #DDDDDD;
+}
+
+.x-license-deploy2tim #openid_login input.button:hover {
+    text-shadow: 0 1px 1px #FFFFFF;
+}
+
+
+
+
+
+
+/*** VEUREKA Specific Template ***/
+
+.x-license-veureka #signavio_repository_header #signavio_repository_logo {
+	width: 280px;
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/veureka/logo2.png);
+	margin-left: 14px;
+}
+
+.x-license-veureka .mask-logo div {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/veureka/signavio_logo.jpg") no-repeat scroll center top transparent;
+	border-bottom: 1px solid #ad0f5b;
+    height: 226px;
+    width: 361px;
+}
+
+.x-license-veureka .mask-text {
+	padding-top: 3px;
+}
+
+.x-license-veureka .mask-logo div img {
+    visibility: hidden;
+}
+
+.x-license-veureka .mask-logo {
+    width: 361px;
+    margin-left: -171px !important;
+	margin-top: -100px;
+}
+
+.y-export-top-panel {
+	border-bottom: 1px solid #b5b5b5;
+}
+
+.y-export-top-panel .x-form-item {
+	margin-top: 10px;
+}
+
+.y-export-view-selector {
+	border-top: 1px solid #ededed;
+}
+
+.view_plugin .thumb.view img.x-thumb-icon {
+	max-height: 55px;
+    max-width:50px;
+    vertical-align: middle;
+    margin-top:-4px;
+    position: relative;
+}
+
+
+
+
+
+
+
+/*** Camunda Template ***/
+
+
+.x-license-camunda #signavio_repository_header,
+.x-license-camunda .signavio_repository_header_shadow,
+.x-license-camunda .signavio_repository_header_shadow2,
+.x-license-camunda .x-toolbar.north_view  {
+	background-image:url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/header_background2.png) !important;
+}
+
+
+.x-license-camunda div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow img{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/header_background2.png',sizingMethod='scale') !important;
+}
+
+.x-license-camunda div#signavio_repository_header_shadow_moved.signavio_repository_header_shadow {
+	background-image:none !important;
+}
+
+.x-license-camunda #signavio_repository_header #signavio_repository_logo {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/logo.png);
+    background-position: 0 4px;
+    margin-left: 15px;
+    width: 320px;
+}
+
+.x-license-camunda .search_plugin .x-table-layout-cell,
+.x-license-camunda .search_plugin .x-table-layout-cell .search_field_left,
+.x-license-camunda .search_plugin .x-table-layout-cell .search_field_right {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/search_background2.png) !important;
+}
+
+.x-license-camunda .x-toolbar.north_view .ytb-sep {
+	background-image: url(/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/vLine.png);
+}
+
+.x-license-camunda .x-toolbar-model-name span {
+	color: #EBC4C7;
+}
+
+.x-license-camunda a {
+    color: #B41A28;
+}
+
+.x-license-camunda a:hover,
+.x-license-camunda a:focus,
+.x-license-camunda a:active {
+    color: #D94C58;
+}
+
+.x-license-camunda .x-menu a.x-menu-item {
+    color: #222222;
+}
+
+.x-license-camunda .x-linked-model a {
+    border: 2px dashed #B41A28;
+}
+
+.x-license-camunda .mask-logo div img {
+	border-bottom: 1px solid #B41A28;
+}
+
+.x-license-camunda .mask-title,
+.x-license-camunda .mask-version {
+    color: #B41A28;
+}
+
+.x-license-camunda .mask-text {
+	padding-top: 3px;
+}
+
+.x-license-camunda .mask-logo div img {
+    visibility: hidden;
+}
+
+.x-license-camunda .mask-logo div {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/templates/camunda/FoxModeler_rgb_w.png") no-repeat scroll center top transparent;
+    border-bottom: 1px solid #B41A28;
+    height: 190px;
+}
+
+.x-license-camunda .mask-logo {
+    width: 432px;
+    margin-left: -216px !important;
+	margin-top: -90px;
+}
+
+.x-license-camunda .x-talk-entree.x-selected,
+.x-license-camunda ul.stencil-legend li.x-selected,
+.x-license-camunda #right-panel .x-selected {
+	border-top:1px solid #B41A28 !important;
+	border-bottom:1px solid #B41A28 !important;
+	background-color: #FCF6F6;
+}
+
+.x-license-camunda .x-title-preview span {
+    color: #EBC4C7;
+    opacity: 1;
+    text-shadow: 0 1px 1px #B41A28;
+}
+
+.x-license-camunda .x-linked-model {
+    border: 2px dashed #B41A28;
+}
+
+.x-license-camunda .x-revision-plugin .x-revision-item.x-view-selected {
+    border: 1px solid #B41A28;
+}
+
+.x-license-camunda  .view_plugin .x-view-over {
+    background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #C1C1C1;
+}
+
+.x-license-camunda  .view_plugin .x-view-selected {
+    background: none repeat scroll 0 0 #FCF6F7;
+    border: 1px solid #E5B0B4;
+}
+
+.x-license-camunda  .search_plugin {
+    margin: 1px 25px -1px 10px;
+}
+
+.x-license-camunda .left_view .x-panel-body {
+    background: url("/bpmcenter/fixflow-explorer/images/signavio/bgr_left.png") repeat-y scroll right center #B1B3B6;
+}
+
+
+.x-license-camunda .y-wizard-options-title {
+	color: #9DB72F;
+}
+
+.x-license-camunda .y-wizard-options-container {
+    border: 1px solid #B41A28;
+}
+
+
+.x-license-camunda #openid_login .login_name {
+    border-right: 1px solid white;
+    color: white;
+    text-shadow: 0 1px 1px #B41A28;
+}
+
+.x-license-camunda #openid_login input.button {
+    font-family: tahoma, arial, sans-serif;
+	color: white;
+    text-shadow: 0 1px 1px #B41A28;
+}
+
+.x-license-camunda #openid_login input.button:hover {
+    color: white;
+    text-shadow: 0 1px 1px #E5B0B4 !important;
+}
+
+.x-license-camunda .x-info .x-header-info .x-tool.x-tool-toggle {
+    color: #B41A28;
+}
+
+
+/***************************************************************/
+/***************************************************************/
+/***************************************************************/
+/*****************       END TEMPLATES          ****************/
+/***************************************************************/
+/***************************************************************/
+/***************************************************************/
+
+.x-support-checkbox input {
+	position: relative;
+	top: 2px;
+}
+
+.x-support-checkbox .x-form-cb-label img,
+.x-support-textarea .x-form-item-label img {
+	position: relative;
+	top: 3px;
+}
+
+.y-wizard-filter {
+    margin-bottom: 10px !important;
+}
+
+.x-glossary-support .x-no-entry {
+	padding: 2px 5px;
+	border:1px solid transparent;
+	font-size:11px;
+	color: gray;
+	font-style: italic;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+.x-glossary-support .search-item {
+	border:1px solid transparent;
+	font-size:11px;
+	overflow:hidden;
+	padding:2px 5px 2px 20px;
+	position:relative;
+	white-space:nowrap;
+}
+
+.x-glossary-support .search-item img.x-image {
+	width:16px;
+	height:16px;
+	position:absolute;
+	left:1px;
+	top:1px;
+}
+
+
+.y-wizard-filter img.x-org_unit, .x-org_unit .x-tree-node-icon, .x-org_unit.x-image {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/building.png) no-repeat center center;
+}
+
+.y-wizard-filter img.x-document, .x-document .x-tree-node-icon, .x-document.x-image {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/page.png) no-repeat center center;
+}
+
+.y-wizard-filter img.x-it_system, .x-it_system .x-tree-node-icon, .x-it_system.x-image {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/mycomputer.png) no-repeat center center;
+}
+
+.y-wizard-filter img.x-activity, .x-activity .x-tree-node-icon, .x-activity.x-image {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/kcmdf.png) no-repeat center center;
+}
+
+.y-wizard-filter img.x-state, .x-state .x-tree-node-icon, .x-state.x-image {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/apps/ksysv.png) no-repeat center center;
+}
+
+.y-wizard-filter img.x-search, .x-search .x-tree-node-icon, .x-search.x-image {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/nuvola/16x16/actions/viewmag.png) no-repeat center center;
+}
+
+.y-filter-grid-no-background {
+    background: transparent !important;
+}
+
+.y-filter-value-editor .x-small-editor {
+	height: 18px !important;
+}
+
+.x-box {
+    margin-top: -8px;
+}
+
+.x-box .x-box-tl, .x-box .x-box-tc, .x-box .x-box-tr {
+    background: transparent;
+}
+
+.x-box .x-box-mr {
+    padding-right: 3px;
+}
+
+.x-box .x-box-mc {
+    padding: 0px 0px 1px;
+}
+
+.x-box .x-box-ml {
+    padding-left: 3px;
+}
+
+.x-form-textfield-list ol li {
+    border: 0px solid;
+}
+
+.y-wizard-filter-active-count {
+    color: #575757 !important;
+}
+
+.y-wizard-filter-link {
+    padding-left: 20px;
+
+    background: transparent url(/bpmcenter/fixflow-explorer/images/famfamfam/filter.png) no-repeat;
+}
+
+.y-filter-combo-list {
+    padding: 5px 5px 0px 5px;
+    display: block;
+    font-size: 11px;
+}
+
+.y-filter-combo-list .x-smaller {
+    font-size: 10px;
+}
+
+.x-grid-group-hd {
+    border-bottom: 2px solid #AF356F;
+}
+
+.x-grid-group-hd div {
+    color: #AF356F;
+}
+
+.y-filter-combo-list.x-editing {
+	border: 1px dotted silver;
+	color:silver;
+}
+
+.y-filter-combo-list.x-editing span {
+	display: none;
+}
+
+.y-date-editor-between div {
+    display: inline;
+    padding-right: 20px;
+    vertical-align: top;
+}
+
+.y-date-editor-between .x-form-text {
+	vertical-align:top;
+}
+
+.y-date-editor-chrome div {
+	padding-right: 12px;
+	margin-right: 10px;
+}
+
+img.x-checkbox-image {
+	background-image: url(../../../libs/ext/resources/images/default/grid/row-check-sprite.gif);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;
+}
+
+img.x-checkbox-image.x-checked {
+	background-position: -24px 1px;
+}
+
+.y-list-item-default {
+    border: 1px solid #FFFFFF;
+    color: #808080;
+    font-size: 11px;
+    font-style: italic;
+    height: 14px;
+    overflow: hidden;
+    padding: 6px 0 1px 2px;
+}
+
+.y-deprecated-options-panel .ext-el-mask {
+	background-color: #ffffff;
+}
+
+.x-language-switch {
+    padding-left: 22px !important;
+}
+
+.x-language-switch-flag {
+    background-repeat: no-repeat;
+    height: 11px;
+    width: 16px;
+    left: 4px;
+    position: absolute;
+    top: 6px;
+}
+
+.y-language-selection-grid .x-grid3 table {
+	border-right: 0px solid;
+}
+
+.y-language-selection-grid .x-grid3-row-over {
+	background: #ffffff;
+}
+
+.y-language-selection-grid .x-grid3-row-selected {
+	background: #ffffff !important;
+}
+
+.y-language-selection-grid .x-grid-empty {
+    font-size: 10px;
+    padding: 5px 0;
+}
+
+
+.x-checkbox-special-box-label .x-form-checkbox {
+	margin-top: 5px;
+}
+
+.x-checkbox-special-box-label .x-form-cb-label {
+	color: silver;
+    display: block !important;
+    font-size: 11px;
+    margin-left: 20px;
+    position: relative;
+    top: -23px;
+    width: 250px;
+}
+
+.ak-security-center-mail-search-input-cross {
+	cursor: pointer;  
+    position: absolute !important;
+    right: 20px;
+    top: 2px;
+    z-index: 1000;    
+}
+
+.ak-security-center-mail-search-input {
+	padding-right: 14px;
+	height: 14px !important;
+}
+
+.ak-security-center-mail-search-container {
+	width: 100% !important;
+	height: 16px;
+	opacity: 0.7;
+	cursor:pointer;
+	position: absolute;     
+}
+
+.x-window-security-center-mail Div.ak-hidden-by-filter {
+	display:none;
+}
+
+.ak-security-center-mail-sort-button {	
+	width: 16px;
+	height: 16px;
+	opacity: 0.7;
+	cursor:pointer;
+	position: absolute;
+    right: 1px;	
+    top: 1px;
+}
+
+.ak-list-sort-ascending.ak-security-center-mail-sort-button  {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/fugue/icons/sort-alphabet.png) no-repeat;
+}
+
+.ak-list-sort-descending.ak-security-center-mail-sort-button  {
+	background: transparent url(/bpmcenter/fixflow-explorer/images/fugue/icons/sort-alphabet-descending.png) no-repeat;
+}
+
+.ak-security-center-mail-sort-button:hover {
+	opacity: 1.0;
+}
+
+.ak-security-center-mail-list-tools {
+	height: 18px;  
+    width: 100% !important;
+    margin-bottom: 4px;   
+    display: none;
+}
+
+.y-security-center-visible-tools {
+	display: block;
+}
+
+.ak-security-center-mail-list-tools .x-panel-body {
+	width: 100% !important;
+}
+
+.y-select-link-container {
+	margin-top: 3px;
+}
+
+.y-write-access-count {
+	color: gray;   
+	margin-right: 5px;
+}
+
+/** Modelling Guide Lines **/
+
+.ak-guide-lines-grid {
+	margin-top: 10px;
+	border: 1px solid #AAAAAA;
+    border-radius: 5px 5px 5px 5px;
+    background: transparent !important;
+}
+
+.ak-guide-lines-grid .x-grid3-cell-selected,
+.ak-guide-lines-grid .x-grid3-cell-selected span{
+	color: #666666 !important;
+}
+
+.ak-guide-lines-grid .x-grid3-cell-selected.ak-config-cell {
+	background: transparent !important;
+}
+
+.ak-guide-lines-grid .x-panel-body{
+	border: none !important;
+    border-radius: 5px 5px 5px 5px;
+    background: transparent !important;
+}
+
+.ak-guide-lines-grid .x-grid3-cell{
+	border-right: 1px solid lightGrey;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+
+.ak-guide-lines-grid .x-grid3-header .x-grid3-cell{
+	/*padding-right: 1px;*/
+	padding-right: 0px;
+	color: #EEEEEE;
+}
+
+.ak-guide-lines-grid .x-grid3-hd-row {
+	background-image: none !important;
+	height: 58px;
+}
+.ak-guide-lines-grid .x-grid3-locked .x-grid3-header .x-grid3-cell:first-child {
+	border-left: medium none;
+    border-right: medium none;
+}
+
+.ak-guide-lines-grid .x-grid3-hd-modellingMetaGuideLines {
+    color: gray !important;
+    font-size: 18px;
+    left: -10px;
+    position: relative;
+    top: 1px;
+}
+
+
+
+.ak-guideline-grid-legend-could-text,
+.ak-guideline-grid-legend-should-text,
+.ak-guideline-grid-legend-must-text {
+    border-radius: 0 1px 1px 0;
+    color: #555555;
+    float: left;
+    font-size: 10px;
+    height: 15px;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0;
+}
+
+.ak-guideline-grid-legend-could-text {
+    background-color: #FAF2AA;
+}
+
+.ak-guideline-grid-legend-should-text {
+	background-color: #F7DDA8;
+}
+
+.ak-guideline-grid-legend-must-text {
+	background-color: #F5B7B0;
+}
+
+.ak-guideline-grid-legend-could-symbol{
+	height: 15px;
+	width: 15px;
+	float:left;
+	background-color: #FAE100;
+	border-radius: 0;
+}
+
+.ak-guideline-grid-legend-should-symbol{
+	height: 15px;
+	width: 15px;
+	float:left;
+	background-color: #F0AD26;
+	border-radius: 0;
+}
+
+
+.ak-guideline-grid-legend-must-symbol{
+	height: 15px;
+	width: 15px;
+	float:left;
+	background-color: #C22F1E;
+
+	border-radius: 0;
+}
+
+.ak-guide-lines-grid .x-grid3-header-offset{
+	background-color: white !important;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .x-grid3-hd-inner{
+    background: none repeat scroll 0 0 #F0F0F0 !important;
+    border-bottom: 1px solid silver;
+    color: #3A3A3A;
+    font-size: 12px;
+    padding: 6px 24px 4px 7px !important;
+    text-align: left;
+    text-shadow: 1px 1px 2px #FFFFFF;
+    top: 0;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .ak-mg-header-remove-link {
+	background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_small.png");
+    background-origin: padding-box;
+    background-position: 4px 3px;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    cursor: pointer;
+    font-size: 11px;
+    height: 17px;
+    left: 7px;
+    padding-left: 20px;
+    position: absolute;
+    top: 9px;
+    text-decoration: underline;
+}
+
+.ak-guide-lines-grid-legend .x-panel-body {
+	background: none repeat scroll 0 0 transparent !important;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .ak-mg-header-remove-link.ak-mg-disabled-remove-link {
+	opacity: 0.5;
+	color: gray !important;
+	cursor: not-allowed;
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_disabled.png") !important;
+	display: none;
+}
+
+.ak-mg-header-tool-active-container {
+	 width: 100%;
+	 height: 25px;
+}
+
+.ak-guide-lines-grid-legend,
+.ak-guide-lines-grid-legend .x-panel-body {
+	width: 100% !important;
+}
+
+.ak-mg-header-options-save-at-checkbox {
+	color: #333333;
+    font-size: 13px;
+    font-size:11px;
+    float: left;
+    margin-left: 8px;
+    position: relative;
+    top: 16px;
+}
+
+.ak-mg-header-options-save-at-checkbox input,
+.ak-mg-header-options-button-at-checkbox input {
+	position: relative;
+}
+
+.ak-mg-header-options-save-at-checkbox label,
+.ak-mg-header-options-button-at-checkbox label {
+	position: relative;
+    top: -2px;
+}
+
+.ak-mg-header-options-button-at-checkbox {
+	color: #333333;
+    font-size: 13px;
+    font-size:11px;
+    float: left;
+    margin-left: 11px;  
+    position: relative;
+    top: 16px;
+}
+
+.ak-mg-header-non-active  .ak-mg-header-tool-active-container {
+	display: none;
+}
+
+.ak-mg-header-active .ak-mg-header-remove-link {
+	display: none;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .ak-mg-header-tool-container {
+	height: 29px;
+    position: relative;
+    top: 0px;
+    width: 100%;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .x-grid3-hd-inner .ak-mg-activate-checkbox{
+	position: absolute;
+    right: 7px;
+    top: 7px;
+}
+
+.ak-guide-lines-grid .x-grid3-header .x-grid3-cell:nth-child(2) {
+	/*padding-right: 3px !important;*/
+	/*border-left: none;*/
+}
+
+.ak-category-column-cell{
+	background-color: white !important;
+	color: #666 !important;
+}
+
+.ak-index-column-cell{
+	background-color: #FAFAFA !important;
+	color: #666 !important;
+}
+
+.ak-guide-lines-grid .ak-category-cell {
+	font-weight: bold;
+    color: black;
+    font-size: 12px;
+    border-top: 1px solid silver;
+}
+
+.ak-guide-lines-grid .x-grid3-row:first-child .ak-category-cell {
+	border-top: none !important;	
+}
+
+.ak-guide-lines-grid .ak-empty-cell {
+    border-bottom: 1px solid white !important;
+    border-right: 1px solid white !important;
+    border-top: 1px solid silver;
+    background-color: white !important;
+}
+
+.ak-sub-rule-cell .x-grid3-cell-inner,
+.ak-gc-rule-cell .x-grid3-cell-inner{
+	padding-left: 12px !important;
+}
+
+.ak-guide-lines-grid  .x-grid3 table{
+	border-right: 1px solid white !important;
+}
+.ak-guide-lines-grid .x-grid3-hd {
+	border-top: 0 none;
+    font-size: 15px;
+    height: 60px;
+    text-align: center;
+    background-color: #FAFAFA !important;
+    border-bottom: 1px solid #AAAAAA;
+}
+
+
+
+.ak-guide-lines-grid .x-grid3-header {
+	background: none repeat scroll 0 0 transparent !important;
+}
+
+.ak-guide-lines-panel .ak-guide-lines-addconfig-panel {
+	width: 100% !important;
+}
+
+.ak-guide-lines-panel .ak-guide-lines-addconfig-panel .x-panel-body {
+	float: right !important;
+	left: 5px;
+}
+
+.ak-guide-lines-panel .ak-guide-lines-add-config-textbox {
+	left: 10px;
+    position: relative;
+    width: 112px;
+    border-radius: 3px 0 0 0;
+    top: 4px;
+    font-size: 11px;
+}
+
+
+.ak-guide-lines-add-config-link {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/add.png");
+    background-position: 1px -1px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    padding-left: 22px;
+    position: absolute;
+    right: 11px;
+    visibility:hidden;
+    z-index: 100;
+}
+
+.ak-guidelines-editable-mode .ak-guide-lines-add-config-link{
+	visibility: visible !important;
+}
+
+.ak-guide-lines-add-config-name-radio-button {
+	position: relative;
+	top: 2px;
+}
+
+.ak-guide-lines-add-config-name-textfield {
+	left: 45px;
+    position: relative;
+    top: -17px;
+}
+
+.ak-guide-lines-add-config-copy-radio-button-container .x-form-field-wrap {
+	left: 90px;
+    position: relative;
+    top: -17px;
+}
+
+.ak-guide-lines-add-config-name-radio-button-container .x-form-check-wrap {
+	position: relative;
+    top: 2px;
+}
+
+.ak-three-states-buttons-option-container {
+	float:left;
+	margin-left:5px;
+	height:22px;
+	position:relative;
+	top:4px;
+}
+
+
+
+
+.ak-guide-lines-grid .x-grid3-row-table {
+	height: 25px;
+}
+
+.ak-guide-lines-grid .x-empty-row,
+.ak-guide-lines-grid .x-empty-row table {
+	height: 10px;
+}
+
+.ak-guide-lines-grid .x-empty-row td.ak-empty-cell {
+	background-color: #efefef;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-container {
+	height: 24px;
+	width: 85px;
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+}
+
+.ak-guide-lines-grid .ak-combox-container {
+	float: left;
+	height: 24px;
+}
+
+.ak-guide-lines-grid .ak-combox-container label{
+	margin-left: 7px;
+	margin-right: 3px;
+}
+
+.ak-guide-lines-grid .x-grid3-cell {
+	vertical-align: top;
+}
+
+.ak-guide-lines-grid .x-grid3-locked .x-grid3-cell {
+	vertical-align: middle;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button {
+	height: 22px;
+	border: 1px solid silver;
+	opacity: 0.9;
+	float: left;
+	background: none repeat scroll 0 0 white;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button.ak-guide-lines-grid-selected-button {
+	background: #cccccc; /* Old browsers */
+	background: -moz-linear-gradient(top, #cccccc 0%, #eeeeee 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(99%,#eeeeee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #cccccc 0%,#eeeeee 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #cccccc 0%,#eeeeee 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #cccccc 0%,#eeeeee 99%); /* IE10+ */
+	background: linear-gradient(to bottom, #cccccc 0%,#eeeeee 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button.ak-three-states-buttons-button-first{
+	width: 28px;
+	border-radius: 6px 0 0 6px;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button.ak-three-states-buttons-button-second{
+	border-right: none;
+	border-left: none;
+	width: 25px;
+
+}
+
+.ak-guidelines-mulit-select-option {
+	padding-bottom: 2px;
+    padding-top: 2px;
+    cursor: pointer;
+}
+
+
+
+.ak-guidelines-mulit-select-option-label {
+	left: 21px;
+    position: relative;
+    top: -15px;
+    float: left;
+    white-space: nowrap !important;
+}
+
+.ak-guide-lines-add-copy-config-name-textfield {
+	left: 36px;
+    position: relative;
+    top: -11px;
+    width: 162px;
+}
+
+.ak-guide-lines-add-copy-config-name-label {
+	left: 29px;
+    position: relative;
+    top: -10px;
+}
+
+.ak-guide-lines-grid .ak-must-marked-cell {
+	background-color: rgb(252,216,210);
+}
+
+.ak-guide-lines-grid .ak-should-marked-cell {
+	background-color: rgb(250,249,211);
+}
+
+.ak-guide-lines-grid .ak-can-marked-cell {
+	background-color: rgb(228,237,211);
+}
+
+
+.ak-empty-irrelevant-rule {
+	font-style: italic;
+	color: #999;
+}
+
+.ak-modelling-guidelines-column-checkbox {
+	float: right;
+    position: relative;
+    right: 6px;
+    top: -8px;
+}
+
+.ak-modelling-guidelines-column-remove {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/page_white_remove.png");
+    background-repeat: no-repeat;
+    color: white;
+    float: right;
+    font-size: 13px;
+    left: -24px;
+    padding-left: 20px;
+    padding-top: 0;
+    position: relative;
+    text-decoration: underline;
+    top: -10px;
+    cursor: pointer;
+}
+
+.ak-modelling-guidelines-column-menu {
+	float:right;
+	border-right: 0 none transparent !important;
+	position: relative;
+    right: 4px;
+    top: -15px;
+}
+
+.ak-modelling-guidelines-column-menu BUTTON.x-btn-text {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/wrench_orange.png");
+    background-repeat: no-repeat;
+    padding-left: 10px;
+}
+
+.ak-modelling-guidelines-column-menu td.x-btn-left{
+	border-right: 0 none transparent !important;
+	border-left: 0 none transparent !important;
+	background: transparent !important;
+}
+
+.ak-modelling-guidelines-column-menu td.x-btn-right{
+	border-right: 0 none transparent !important;
+	border-left: 0 none transparent !important;
+	background: transparent !important;
+}
+
+.ak-modelling-guidelines-column-menu td.x-btn-center{
+	border-right: 0 none transparent !important;
+	border-left: 0 none transparent !important;
+	background: transparent !important;
+}
+
+.ak-guide-lines-grid .x-grid3-hd-inner {
+	height: 16px !important;
+}
+
+.ak-guide-lines-grid .x-grid3-body {
+
+}
+
+.ak-guide-lines-grid .ak-rule-tooltip {
+	cursor:help;
+}
+
+.ak-editor-state-container {
+	/*margin-left: 2px;
+	float: left;
+	margin-top: 2px;*/
+	position: absolute;
+
+	left: 18px;
+
+}
+
+.ak-editor-inactive .ak-editor-config-container{
+	opacity: 0.5;
+}
+
+.ak-editor-inactive.ak-editor-disabled .ak-editor-config-container{
+	opacity: 1.0 !important;
+}
+
+.ak-editor-disabled .ak-editor-checkbox-container{
+	display: none;
+}
+
+.ak-editor-disabled .ak-editor-must-button-circle,
+.ak-editor-disabled .ak-editor-should-button-circle,
+.ak-editor-disabled .ak-editor-could-button-circle {
+	display: none;
+}
+
+.ak-editor-disabled .ak-editor-must-button-inner-circle,
+.ak-editor-disabled .ak-editor-should-button-inner-circle,
+.ak-editor-disabled .ak-editor-could-button-inner-circle {
+	display: none;
+}
+
+.ak-editor-disabled .ak-editor-state-container {
+	left: 0;
+}
+
+.ak-guide-lines-grid .ak-editor-disabled .ak-editor-config-container {
+	left: 70px;
+	top: 1px;
+}
+
+.ak-editor-must-button-circle,
+.ak-editor-should-button-circle,
+.ak-editor-could-button-circle {
+	background-color: white;
+    border-radius: 7px 7px 7px 7px;
+    height: 14px;
+    left: 3px;
+    position: relative;
+    top: 3px;
+    width: 14px;
+}
+
+.ak-editor-must-button-inner-circle,
+.ak-editor-should-button-inner-circle,
+.ak-editor-could-button-inner-circle {
+	background-color: rgb(85,85,85);
+    border-radius: 5px 5px 5px 5px;
+    height: 8px;
+    left: 6px;
+    position: relative;
+    top: -8px;
+    width: 8px;
+    visibility:hidden;
+}
+.ak-editor-selected-state-button .ak-editor-must-button-inner-circle,
+.ak-editor-selected-state-button .ak-editor-should-button-inner-circle,
+.ak-editor-selected-state-button .ak-editor-could-button-inner-circle {
+	visibility:visible !important;
+}
+
+.ak-editor-could-button-container.ak-editor-state-button-disabled,
+.ak-editor-should-button-container.ak-editor-state-button-disabled,
+.ak-editor-must-button-container.ak-editor-state-button-disabled{
+	cursor: default;
+}
+
+.ak-editor-could-button-container {
+	left: 44px;
+}
+
+.ak-editor-should-button-container {
+	left: 22px;
+}
+
+.ak-editor-must-button-container {
+	left: 0px;
+}
+
+.ak-editor-could-button-container,
+.ak-editor-should-button-container,
+.ak-editor-must-button-container{
+	width: 20px;
+	height: 20px;
+	background-color: rgb(221,221,221);
+	/*margin-left: 5px;
+	float:left;*/
+	position: absolute;
+	cursor: pointer;
+}
+
+.ak-editor-could-button-container.ak-editor-selected-state-button{
+	background-color: #FAE100;
+}
+
+.ak-editor-should-button-container.ak-editor-selected-state-button{
+	background-color: #F0AD26;
+}
+
+.ak-editor-must-button-container.ak-editor-selected-state-button{
+	background-color: #C22F1E;
+}
+
+.ak-editor-could-button-container.ak-editor-selected-state-button:hover,
+.ak-editor-could-button-container.ak-editor-selected-state-button.ak-editor-state-button-disabled:hover{
+	background-color: #FAE100;
+}
+
+.ak-editor-should-button-container.ak-editor-selected-state-button:hover,
+.ak-editor-should-button-container.ak-editor-selected-state-button.ak-editor-state-button-disabled:hover{
+	background-color: #F0AD26;
+}
+
+.ak-editor-must-button-container.ak-editor-selected-state-button:hover,
+.ak-editor-must-button-container.ak-editor-selected-state-button.ak-editor-state-button-disabled:hover{
+	background-color:  #C22F1E;
+}
+
+.ak-editor-could-button-container:hover{
+	background-color: #FAF2AA;
+}
+
+.ak-editor-should-button-container:hover{
+	background-color: #F7DDA8;
+}
+
+.ak-editor-must-button-container:hover{
+	background-color: #F5B7B0;
+}
+
+.ak-editor-could-button-container.ak-editor-state-button-disabled:hover{
+	background-color: #DDDDDD;
+	cursor: default !important;
+}
+
+.ak-editor-should-button-container.ak-editor-state-button-disabled:hover{
+	background-color: #DDDDDD;
+	cursor: default !important;
+}
+
+.ak-editor-must-button-container.ak-editor-state-button-disabled:hover{
+	background-color: #DDDDDD;
+	cursor: default !important;
+}
+
+.ak-guideline-grid-legend-span {
+	position: relative;
+	left: 18px;
+	font-size: 10px;
+	color: rgb(51, 51, 51);
+	top: -15px;
+}
+
+.ak-editor-multi-select-box-value-span {
+	position: relative;
+    top: 3px;
+    white-space: nowrap;
+}
+
+.ak-editor-single-select-box-value-span {
+	position: relative;
+    top: 3px;
+    white-space: nowrap;
+}
+
+.ak-guidelines-mulit-select-option-checkbox {
+    background: url("../../../libs/ext/resources/images/default/grid/row-check-sprite.gif") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 14px;
+    margin-left: 3px;
+    width: 14px;
+}
+
+.ak-guidelines-mulit-select-option-checkbox.ak-guidelines-mulit-select-option-checkbox-selected{
+    background-position: -25px 0;
+}
+
+
+.ak-guide-lines-grid .ak-editor-container {
+	position:relative;
+	left: 4px;
+	top: 2px;
+}
+
+.ak-guide-lines-grid .ak-editor-checkbox-container {
+	width: 14px;
+	/*float: left;*/
+	height: 22px;
+
+	position: absolute;
+}
+
+.ak-guide-lines-grid .ak-editor-slider-container {
+    float: left;
+    height: 11px;
+    margin-left: 8px;
+    position: relative;
+    width: 84px;
+}
+
+.ak-guide-lines-grid .ak-editor-config-container {
+	/*float: left;*/
+	position: absolute;
+	left: 85px;
+	top: -1px;
+
+	/*margin-top: 1px;
+	margin-left: 8px;*/
+}
+
+.ak-guide-lines-grid .ak-editor-checkbox{
+    position: relative;
+    top: 3px;
+}
+
+.ak-guide-lines-add-custom-rule-window .x-form-item {
+	overflow: hidden !important;
+}
+
+.ak-guide-lines-add-custom-rule-name-textbox {
+	left: 8px;
+    position: relative;
+    width: 265px;
+}
+
+.ak-guide-lines-add-custom-rule-description-textbox {
+	left: 8px;
+    position: relative;
+    width: 265px !important;
+}
+
+.ak-guide-lines-add-custom-rule-description-form-item {
+	margin-top: 8px;
+}
+
+.ak-guidelines-icon {
+	display: inline-block;
+	position: relative;
+	top: 1px;
+	left: 5px;
+	height: 10px;
+	width: 10px;
+	background-repeat: no-repeat;
+    background-position: center center;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.ak-icon-edit {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/pencil_small.png");
+}
+
+.add-custom-rule-link {
+	visibility: hidden;
+}
+
+.ak-guidelines-editable-mode .add-custom-rule-link {
+	visibility: visible !important;
+}
+
+.ak-guidelines-editable-mode .ak-guidelines-icon {
+	 visibility: visible !important;
+}
+
+.ak-icon-view {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/magnifier_small.png");		
+}
+
+.ak-mapping-rule-link {
+	visibility: hidden;
+}
+
+.ak-guidelines-editable-mode .ak-mapping-rule-link {
+	visibility: visible !important;
+}
+
+.ak-guidelines-grid-header-check-label {
+    color: #AAAAAA;
+    font-size: 11px;
+    left: 10px;
+    position: absolute;
+    text-align: left;
+    top: 2px;
+}
+
+.ak-guide-lines-remove-attribute-mapping {
+	position: absolute;
+
+    left: 10px;
+    bottom: 13px;
+}
+
+.ak-guide-lines-add-custom-rule-remove-button {
+	position: absolute;
+	top: 130px;
+	left: 9px;
+}
+
+.ak-complex-type-grid-hidden {
+	display:none;
+}
+
+.ak-complex-type-grid {
+	left: 152px;
+    position: absolute;
+    margin-top: 5px;
+}
+
+.ak-complex-type-grid .x-grid3-cell-selected {
+	background-color: white !important;
+}
+
+.ak-complex-type-grid .x-grid3-row-table {
+	height: 27px !important;
+}
+
+.ak-complex-type-grid .x-grid3-dirty-cell {
+	background: none !important;
+}
+
+
+
+.ak-complex-type-grid .x-grid3-cell-inner{
+	line-height: 20px;
+}
+
+.ak-complex-type-specfic-data-cell,
+.ak-complex-type-width-cell,
+.ak-complex-type-tools-cell {
+	padding-right: 0px !important;
+}
+
+.ak-complex-type-grid-cell {
+	border-bottom: 1px solid silver;
+    border-right: 1px solid silver;
+    padding-bottom: 4px !important; 
+    padding-top: 4px !important;    
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+  	-ms-user-select: text !important;
+}
+
+.ak-complex-type-grid .x-form-trigger.x-form-add-trigger {
+	right: 0 !important;
+}
+
+.x-ie-10-0 .ak-complex-type-grid .x-form-trigger{
+	top: -1px !important;
+}
+
+.x-ie-8-0 .ak-complex-type-grid .x-form-trigger{
+	top: -2px !important;
+}
+
+.ak-complex-type-grid-element-label{
+	width:70px !important;
+	float:left !important;
+	line-height: 24px;
+	margin-left: 3px;
+	margin-right: 7px;
+}
+
+.ak-complex-type-grid-attributes-label {
+	font: 12px tahoma,arial,helvetica,sans-serif;
+    position: absolute;
+    width: 130px;
+    top: 0;
+    left: -135px;
+    text-align: right;
+}
+
+.ak-complex-type-grid-attributes-remove-link {
+	background: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/bin.png") no-repeat scroll 0 4px transparent;
+    cursor: pointer;
+    height: 22px;
+    float: left;
+    opacity: 0.6;
+    position: relative;
+    width: 12px;  
+    margin-left: 6px;
+}
+
+
+.ak-complex-type-grid-attributes-top-arrow-link {
+	background: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/up_arrow.png") no-repeat scroll 0 4px transparent;
+    cursor: pointer;
+    float: left;
+    height: 22px;
+    margin-left: 5px;
+    opacity: 0.6;
+    position: relative;
+    width: 12px;
+}
+
+.ak-complex-type-grid-attributes-bottom-arrow-link {
+	background: url("/bpmcenter/fixflow-explorer/images/glyphicons/small/down_arrow.png") no-repeat scroll 0 4px transparent;
+    cursor: pointer;
+    height: 22px;
+    margin-right: 5px; 
+    padding-top: 0;
+    width: 12px;
+    opacity: 0.6;
+    position: relative;
+    float: left;
+}
+
+.ak-guideline-grid-legend-could-text {
+    background-color: #FAF2AA;
+}
+
+.ak-guideline-grid-legend-should-text {
+	background-color: #F7DDA8;
+}
+
+.ak-guideline-grid-legend-must-text {
+	background-color: #F5B7B0;
+}
+
+.ak-guideline-grid-legend-could-symbol{
+	height: 15px;
+	width: 15px;
+	float:left;
+	background-color: #FAE100;
+	border-radius: 0;
+}
+
+.ak-guideline-grid-legend-should-symbol{
+	height: 15px;
+	width: 15px;
+	float:left;
+	background-color: #F0AD26;
+	border-radius: 0;
+}
+
+
+.ak-guideline-grid-legend-must-symbol{
+	height: 15px;
+	width: 15px;
+	float:left;
+	background-color: #C22F1E;
+
+	border-radius: 0;
+}
+
+.ak-guide-lines-grid .x-grid3-header-offset{
+	background-color: white !important;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .x-grid3-hd-inner{
+    background: none repeat scroll 0 0 #F0F0F0 !important;
+    border-bottom: 1px solid silver;
+    color: #3A3A3A;
+    font-size: 12px;
+    padding: 6px 24px 4px 7px !important;
+    text-align: left;
+    text-shadow: 1px 1px 2px #FFFFFF;
+    top: 0;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .ak-mg-header-remove-link {
+	background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_small.png");
+    background-origin: padding-box;
+    background-position: 4px 3px;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    cursor: pointer;
+    font-size: 11px;
+    height: 17px;
+    left: 7px;
+    padding-left: 20px;
+    position: absolute;
+    top: 9px;
+    text-decoration: underline;
+}
+
+.ak-guide-lines-grid-legend .x-panel-body {
+	background: none repeat scroll 0 0 transparent !important;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .ak-mg-header-remove-link.ak-mg-disabled-remove-link {
+	opacity: 0.5;
+	color: gray !important;
+	cursor: not-allowed;
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/cross_disabled.png") !important;
+	display: none;
+}
+
+.ak-mg-header-tool-active-container {
+	 width: 100%;
+	 height: 25px;
+}
+
+.ak-guide-lines-grid-legend,
+.ak-guide-lines-grid-legend .x-panel-body {
+	width: 100% !important;
+}
+
+.ak-mg-header-options-save-at-checkbox {
+	color: #333333;
+    font-size: 13px;
+    font-size:11px;
+    float: left;
+    position: relative;
+    top: 16px;
+}
+
+.ak-mg-header-options-save-at-checkbox input,
+.ak-mg-header-options-button-at-checkbox input {
+	position: relative;
+}
+
+.ak-complex-type-grid-attributes-top-arrow-link:hover,
+.ak-complex-type-grid-attributes-bottom-arrow-link:hover,
+.ak-complex-type-grid-attributes-remove-link:hover {
+	opacity: 1.0;
+}
+
+.ak-mg-header-options-button-at-checkbox {
+	color: #333333;
+    font-size: 13px;
+    font-size:11px;
+    float: left;
+    margin-left: 11px;  
+    position: relative;
+    top: 16px;
+}
+
+.ak-mg-header-non-active  .ak-mg-header-tool-active-container {
+	display: none;
+}
+
+.ak-mg-header-active .ak-mg-header-remove-link {
+	display: none;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .ak-mg-header-tool-container {
+	height: 29px;
+    position: relative;
+    top: 0px;
+    width: 100%;
+}
+
+.ak-guide-lines-grid .ak-header-cell-mg .x-grid3-hd-inner .ak-mg-activate-checkbox{
+	position: absolute;
+    right: 7px;
+    top: 7px;
+}
+
+.ak-guide-lines-grid .x-grid3-header .x-grid3-cell:nth-child(2) {
+	/*padding-right: 3px !important;*/
+	/*border-left: none;*/
+}
+
+.ak-category-column-cell{
+	background-color: white !important;
+	color: #666 !important;
+}
+
+.ak-index-column-cell{
+	background-color: #FAFAFA !important;
+	color: #666 !important;
+}
+
+.ak-guide-lines-grid .ak-category-cell {
+	font-weight: bold;
+    color: black;
+    font-size: 12px;
+    border-top: 1px solid silver;
+}
+
+.ak-guide-lines-grid .x-grid3-row:first-child .ak-category-cell {
+	border-top: none !important;	
+}
+
+.ak-guide-lines-grid .ak-empty-cell {
+    border-bottom: 1px solid white !important;
+    border-right: 1px solid white !important;
+    border-top: 1px solid silver;
+    background-color: white !important;
+}
+
+.ak-sub-rule-cell .x-grid3-cell-inner,
+.ak-gc-rule-cell .x-grid3-cell-inner{
+	padding-left: 12px !important;
+}
+
+.ak-guide-lines-grid  .x-grid3 table{
+	border-right: 1px solid white !important;
+}
+.ak-guide-lines-grid .x-grid3-hd {
+	border-top: 0 none;
+    font-size: 15px;
+    height: 60px;
+    text-align: center;
+    background-color: #FAFAFA !important;
+    border-bottom: 1px solid #AAAAAA;
+}
+
+
+
+.ak-guide-lines-grid .x-grid3-header {
+	background: none repeat scroll 0 0 transparent !important;
+}
+
+.ak-guide-lines-panel .ak-guide-lines-addconfig-panel {
+	width: 100% !important;
+}
+
+.ak-guide-lines-panel .ak-guide-lines-addconfig-panel .x-panel-body {
+	float: right !important;
+	left: 5px;
+}
+
+.ak-guide-lines-panel .ak-guide-lines-add-config-textbox {
+	left: 10px;
+    position: relative;
+    width: 112px;
+    border-radius: 3px 0 0 0;
+    top: 4px;
+    font-size: 11px;
+}
+
+
+.ak-guide-lines-add-config-link {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/add.png");
+    background-position: 1px -1px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    padding-left: 22px;
+    position: absolute;
+    right: 11px;
+    visibility:hidden;
+    z-index: 100;
+}
+
+.ak-guidelines-editable-mode .ak-guide-lines-add-config-link{
+	visibility: visible !important;
+}
+
+.ak-guide-lines-add-config-name-radio-button {
+	position: relative;
+	top: 2px;
+}
+
+.ak-guide-lines-add-config-name-textfield {
+	left: 45px;
+    position: relative;
+    top: -17px;
+}
+
+.ak-guide-lines-add-config-copy-radio-button-container .x-form-field-wrap {
+	left: 90px;
+    position: relative;
+    top: -17px;
+}
+
+.ak-guide-lines-add-config-name-radio-button-container .x-form-check-wrap {
+	position: relative;
+    top: 2px;
+}
+
+.ak-three-states-buttons-option-container {
+	float:left;
+	margin-left:5px;
+	height:22px;
+	position:relative;
+	top:4px;
+}
+
+
+
+
+.ak-guide-lines-grid .x-grid3-row-table {
+	height: 25px;
+}
+
+.ak-guide-lines-grid .x-empty-row,
+.ak-guide-lines-grid .x-empty-row table {
+	height: 10px;
+}
+
+.ak-guide-lines-grid .x-empty-row td.ak-empty-cell {
+	background-color: #efefef;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-container {
+	height: 24px;
+	width: 85px;
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+}
+
+.ak-guide-lines-grid .ak-combox-container {
+	float: left;
+	height: 24px;
+}
+
+.ak-guide-lines-grid .ak-combox-container label{
+	margin-left: 7px;
+	margin-right: 3px;
+}
+
+.ak-guide-lines-grid .x-grid3-cell {
+	vertical-align: top;
+}
+
+.ak-guide-lines-grid .x-grid3-locked .x-grid3-cell {
+	vertical-align: middle;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button {
+	height: 22px;
+	border: 1px solid silver;
+	opacity: 0.9;
+	float: left;
+	background: none repeat scroll 0 0 white;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button.ak-guide-lines-grid-selected-button {
+	background: #cccccc; /* Old browsers */
+	background: -moz-linear-gradient(top, #cccccc 0%, #eeeeee 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(99%,#eeeeee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #cccccc 0%,#eeeeee 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #cccccc 0%,#eeeeee 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #cccccc 0%,#eeeeee 99%); /* IE10+ */
+	background: linear-gradient(to bottom, #cccccc 0%,#eeeeee 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button.ak-three-states-buttons-button-first{
+	width: 28px;
+	border-radius: 6px 0 0 6px;
+}
+
+.ak-guide-lines-grid .ak-three-states-buttons-button.ak-three-states-buttons-button-second{
+	border-right: none;
+	border-left: none;
+	width: 25px;
+
+}
+
+.ak-guidelines-mulit-select-option {
+	padding-bottom: 2px;
+    padding-top: 2px;
+    cursor: pointer;
+}
+
+
+
+.ak-guidelines-mulit-select-option-label {
+	left: 21px;
+    position: relative;
+    top: -15px;
+    float: left;
+    white-space: nowrap !important;
+}
+
+.ak-guide-lines-add-copy-config-name-textfield {
+	left: 36px;
+    position: relative;
+    top: -11px;
+    width: 162px;
+}
+
+.ak-guide-lines-add-copy-config-name-label {
+	left: 29px;
+    position: relative;
+    top: -10px;
+}
+
+.ak-guide-lines-grid .ak-must-marked-cell {
+	background-color: rgb(252,216,210);
+}
+
+.ak-guide-lines-grid .ak-should-marked-cell {
+	background-color: rgb(250,249,211);
+}
+
+.ak-guide-lines-grid .ak-can-marked-cell {
+	background-color: rgb(228,237,211);
+}
+
+
+.ak-empty-irrelevant-rule {
+	font-style: italic;
+	color: #999;
+}
+
+.ak-modelling-guidelines-column-checkbox {
+	float: right;
+    position: relative;
+    right: 6px;
+    top: -8px;
+}
+
+.ak-modelling-guidelines-column-remove {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/page_white_remove.png");
+    background-repeat: no-repeat;
+    color: white;
+    float: right;
+    font-size: 13px;
+    left: -24px;
+    padding-left: 20px;
+    padding-top: 0;
+    position: relative;
+    text-decoration: underline;
+    top: -10px;
+    cursor: pointer;
+}
+
+.ak-modelling-guidelines-column-menu {
+	float:right;
+	border-right: 0 none transparent !important;
+	position: relative;
+    right: 4px;
+    top: -15px;
+}
+
+.ak-modelling-guidelines-column-menu BUTTON.x-btn-text {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/wrench_orange.png");
+    background-repeat: no-repeat;
+    padding-left: 10px;
+}
+
+.ak-modelling-guidelines-column-menu td.x-btn-left{
+	border-right: 0 none transparent !important;
+	border-left: 0 none transparent !important;
+	background: transparent !important;
+}
+
+.ak-modelling-guidelines-column-menu td.x-btn-right{
+	border-right: 0 none transparent !important;
+	border-left: 0 none transparent !important;
+	background: transparent !important;
+}
+
+.ak-modelling-guidelines-column-menu td.x-btn-center{
+	border-right: 0 none transparent !important;
+	border-left: 0 none transparent !important;
+	background: transparent !important;
+}
+
+.ak-guide-lines-grid .x-grid3-hd-inner {
+	height: 16px !important;
+}
+
+.ak-guide-lines-grid .x-grid3-body {
+
+}
+
+.ak-guide-lines-grid .ak-rule-tooltip {
+	cursor:help;
+}
+
+.ak-editor-state-container {
+	/*margin-left: 2px;
+	float: left;
+	margin-top: 2px;*/
+	position: absolute;
+
+	left: 18px;
+
+}
+
+.ak-editor-inactive .ak-editor-config-container{
+	opacity: 0.5;
+}
+
+.ak-editor-inactive.ak-editor-disabled .ak-editor-config-container{
+	opacity: 1.0 !important;
+}
+
+.ak-editor-disabled .ak-editor-checkbox-container{
+	display: none;
+}
+
+.ak-editor-disabled .ak-editor-must-button-circle,
+.ak-editor-disabled .ak-editor-should-button-circle,
+.ak-editor-disabled .ak-editor-could-button-circle {
+	display: none;
+}
+
+.ak-editor-disabled .ak-editor-must-button-inner-circle,
+.ak-editor-disabled .ak-editor-should-button-inner-circle,
+.ak-editor-disabled .ak-editor-could-button-inner-circle {
+	display: none;
+}
+
+.ak-editor-disabled .ak-editor-state-container {
+	left: 0;
+}
+
+.ak-guide-lines-grid .ak-editor-disabled .ak-editor-config-container {
+	left: 70px;
+	top: 1px;
+}
+
+.ak-editor-must-button-circle,
+.ak-editor-should-button-circle,
+.ak-editor-could-button-circle {
+	background-color: white;
+    border-radius: 7px 7px 7px 7px;
+    height: 14px;
+    left: 3px;
+    position: relative;
+    top: 3px;
+    width: 14px;
+}
+
+.ak-editor-must-button-inner-circle,
+.ak-editor-should-button-inner-circle,
+.ak-editor-could-button-inner-circle {
+	background-color: rgb(85,85,85);
+    border-radius: 5px 5px 5px 5px;
+    height: 8px;
+    left: 6px;
+    position: relative;
+    top: -8px;
+    width: 8px;
+    visibility:hidden;
+}
+.ak-editor-selected-state-button .ak-editor-must-button-inner-circle,
+.ak-editor-selected-state-button .ak-editor-should-button-inner-circle,
+.ak-editor-selected-state-button .ak-editor-could-button-inner-circle {
+	visibility:visible !important;
+}
+
+.ak-editor-could-button-container.ak-editor-state-button-disabled,
+.ak-editor-should-button-container.ak-editor-state-button-disabled,
+.ak-editor-must-button-container.ak-editor-state-button-disabled{
+	cursor: default;
+}
+
+.ak-editor-could-button-container {
+	left: 44px;
+}
+
+.ak-editor-should-button-container {
+	left: 22px;
+}
+
+.ak-editor-must-button-container {
+	left: 0px;
+}
+
+.ak-editor-could-button-container,
+.ak-editor-should-button-container,
+.ak-editor-must-button-container{
+	width: 20px;
+	height: 20px;
+	background-color: rgb(221,221,221);
+	/*margin-left: 5px;
+	float:left;*/
+	position: absolute;
+	cursor: pointer;
+}
+
+.ak-editor-could-button-container.ak-editor-selected-state-button{
+	background-color: #FAE100;
+}
+
+.ak-editor-should-button-container.ak-editor-selected-state-button{
+	background-color: #F0AD26;
+}
+
+.ak-editor-must-button-container.ak-editor-selected-state-button{
+	background-color: #C22F1E;
+}
+
+.ak-editor-could-button-container.ak-editor-selected-state-button:hover,
+.ak-editor-could-button-container.ak-editor-selected-state-button.ak-editor-state-button-disabled:hover{
+	background-color: #FAE100;
+}
+
+.ak-editor-should-button-container.ak-editor-selected-state-button:hover,
+.ak-editor-should-button-container.ak-editor-selected-state-button.ak-editor-state-button-disabled:hover{
+	background-color: #F0AD26;
+}
+
+.ak-editor-must-button-container.ak-editor-selected-state-button:hover,
+.ak-editor-must-button-container.ak-editor-selected-state-button.ak-editor-state-button-disabled:hover{
+	background-color:  #C22F1E;
+}
+
+.ak-editor-could-button-container:hover{
+	background-color: #FAF2AA;
+}
+
+.ak-editor-should-button-container:hover{
+	background-color: #F7DDA8;
+}
+
+.ak-editor-must-button-container:hover{
+	background-color: #F5B7B0;
+}
+
+.ak-editor-could-button-container.ak-editor-state-button-disabled:hover{
+	background-color: #DDDDDD;
+	cursor: default !important;
+}
+
+.ak-editor-should-button-container.ak-editor-state-button-disabled:hover{
+	background-color: #DDDDDD;
+	cursor: default !important;
+}
+
+.ak-editor-must-button-container.ak-editor-state-button-disabled:hover{
+	background-color: #DDDDDD;
+	cursor: default !important;
+}
+
+.ak-guideline-grid-legend-span {
+	position: relative;
+	left: 18px;
+	font-size: 10px;
+	color: rgb(51, 51, 51);
+	top: -15px;
+}
+
+.ak-editor-multi-select-box-value-span {
+	position: relative;
+    top: 3px;
+    white-space: nowrap;
+}
+
+.ak-editor-single-select-box-value-span {
+	position: relative;
+    top: 3px;
+    white-space: nowrap;
+}
+
+.ak-guidelines-mulit-select-option-checkbox {
+    background: url("../../../libs/ext/resources/images/default/grid/row-check-sprite.gif") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 14px;
+    margin-left: 3px;
+    width: 14px;
+}
+
+.ak-guidelines-mulit-select-option-checkbox.ak-guidelines-mulit-select-option-checkbox-selected{
+    background-position: -25px 0;
+}
+
+
+.ak-guide-lines-grid .ak-editor-container {
+	position:relative;
+	left: 4px;
+	top: 2px;
+}
+
+.ak-guide-lines-grid .ak-editor-checkbox-container {
+	width: 14px;
+	/*float: left;*/
+	height: 22px;
+
+	position: absolute;
+}
+
+.ak-guide-lines-grid .ak-editor-slider-container {
+    float: left;
+    height: 11px;
+    margin-left: 8px;
+    position: relative;
+    width: 84px;
+}
+
+.ak-guide-lines-grid .ak-editor-config-container {
+	/*float: left;*/
+	position: absolute;
+	left: 85px;
+	top: -1px;
+
+	/*margin-top: 1px;
+	margin-left: 8px;*/
+}
+
+.ak-guide-lines-grid .ak-editor-checkbox{
+    position: relative;
+    top: 3px;
+}
+
+.ak-guide-lines-add-custom-rule-window .x-form-item {
+	overflow: hidden !important;
+}
+
+.ak-guide-lines-add-custom-rule-name-textbox {
+	left: 8px;
+    position: relative;
+    width: 265px;
+}
+
+.ak-guide-lines-add-custom-rule-description-textbox {
+	left: 8px;
+    position: relative;
+    width: 265px !important;
+}
+
+.ak-guide-lines-add-custom-rule-description-form-item {
+	margin-top: 8px;
+}
+
+.ak-guidelines-icon {
+	display: inline-block;
+	position: relative;
+	top: 1px;
+	left: 5px;
+	height: 10px;
+	width: 10px;
+	background-repeat: no-repeat;
+    background-position: center center;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.ak-icon-edit {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/pencil_small.png");
+}
+
+.add-custom-rule-link {
+	visibility: hidden;
+}
+
+.ak-guidelines-editable-mode .add-custom-rule-link {
+	visibility: visible !important;
+}
+
+.ak-guidelines-editable-mode .ak-guidelines-icon {
+	 visibility: visible !important;
+}
+
+.ak-icon-view {
+	background-image: url("/bpmcenter/fixflow-explorer/images/famfamfam/magnifier_small.png");		
+}
+
+.ak-mapping-rule-link {
+	visibility: hidden;
+}
+
+.ak-guidelines-editable-mode .ak-mapping-rule-link {
+	visibility: visible !important;
+}
+
+.ak-guidelines-grid-header-check-label {
+    color: #AAAAAA;
+    font-size: 11px;
+    left: 10px;
+    position: absolute;
+    text-align: left;
+    top: 2px;
+}
+
+.ak-guide-lines-add-custom-rule-remove-button {
+	position: absolute;
+	top: 130px;
+	left: 9px;
+}
+
+.ak-complex-type-grid-hidden {
+	display:none;
+}
+
+.ak-complex-type-grid {
+	left: 152px;
+    position: absolute;
+    margin-top: 5px;
+}
+
+.ak-complex-type-grid .x-grid3-cell-selected {
+	background-color: white !important;
+}
+
+.ak-complex-type-grid .x-grid3-row-table {
+	height: 27px !important;
+}
+
+.ak-complex-type-grid .x-grid3-dirty-cell {
+	background: none !important;
+}
+
+
+
+.ak-complex-type-grid .x-grid3-cell-inner{
+	line-height: 20px;
+}
+
+.ak-complex-type-grid-cell {
+	border-bottom: 1px solid silver;
+    border-right: 1px solid silver;
+    padding-bottom: 4px !important; 
+    padding-top: 4px !important;    
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+  	-ms-user-select: text !important;
+}
+
+.ak-complex-type-grid .x-form-trigger.x-form-add-trigger {
+	right: 0 !important;
+}
+
+.x-ie-10-0 .ak-complex-type-grid .x-form-trigger{
+	top: -1px !important;
+}
+
+.x-ie-8-0 .ak-complex-type-grid .x-form-trigger{
+	top: -2px !important;
+}
+
+.ak-complex-type-grid-element-label{
+	width:70px !important;
+	float:left !important;
+	line-height: 24px;
+	margin-left: 3px;
+	margin-right: 7px;
+}
+
+.ak-complex-type-grid-attributes-label {
+	font: 12px tahoma,arial,helvetica,sans-serif;
+    position: absolute;
+    width: 130px;
+    top: 0;
+    left: -135px;
+    text-align: right;
+}
+
+.ak-complex-type-grid-attributes-hidden-arrow-link {
+	visibility: hidden;
+}
+
+.ak-complex-type-grid-attributes-top-arrow-link:hover,
+.ak-complex-type-grid-attributes-bottom-arrow-link:hover {
+	opacity: 1.0;
+}
+
+.ak-complex-type-grid-element-MetaDataNumberInfo {
+	width: 42px !important;
+}
+
+.ak-complex-type-grid-vertical-align-column {
+	vertical-align: middle !important;	
+}
+
+.ak-complex-type-grid-attributes-remove-link:hover {
+	opacity: 1.0;
+}
+
+.ak-complex-type-grid-fields-wrapper .x-panel-body.x-panel-body-noheader.x-panel-body-noborder {
+	height: inherit !important;
+}
+
+.ak-complex-type-grid-fields-wrapper .x-form-textfield-list .x-form-field-wrap div {
+	width: 146px !important;
+}
+
+.ak-complex-type-grid-fields-wrapper  .x-form-textfield-list .x-form-field-wrap{
+	width: 139px !important;
+}
+
+.ak-complex-type-grid-fields-wrapper .ak-complex-type-grid-element-MetaDataEnum {
+	width: 114px !important;
+	margin-bottom: 5px !important;
+}
+
+.ak-complex-type-grid-element-label.ak-complex-type-grid-element-label-MetaDataNumberInfo {
+	width: 45px !important;
+}
+
+.ak-complex-type-grid-no-fields-text {
+	color: #CCCCCC;
+    font-size: 11px;
+    font-style: italic;
+    left: 6px;
+    position: relative;
+    top: 4px;
+    height: 20px;
+}
+
+.ak-complex-type-grid .x-grid3-hd-inner {
+	font-size: 12px;
+}
+
+.ak-complex-type-grid-specific-label {
+	float: left;
+	line-height: 24px;
+	margin-left: 3px;
+	margin-right: 7px;
+}
+
+.ak-complex-type-grid-fields-wrapper .x-form-textarea{
+	margin-top: 2px;
+	width: 130px !important;
+	height: 45px !important;
+	margin-bottom: 2px;
+}
+
+.ak-complex-type-grid-fields-wrapper .x-form-field-wrap {
+	margin-top: 2px;
+}
+
+.ak-complex-type-grid-input {
+	margin-top: 2px;
+	margin-right: 5px;
+}
+
+.ak-complex-type-grid-element-MetaDataStringInfo {
+	width: 130px !important;
+}
+
+.ak-complex-type-grid-info {
+	margin-right: 2px;
+    position: relative;
+    top: 4px;
+}
+
+.ak-complex-type-grid-element-MetaDataDate{
+	width: 200px !important;
+}
+
+.ak-complex-type-grid-type-field{
+	left: 3px;
+    position: relative;
+   }
+
+.ak-complex-type-grid-type-field INPUT,
+.ak-complex-type-grid-type-field-list .x-combo-list-item {
+	font-size: 11px !important;
+}
+
+.ak-complex-type-grid-name-field{
+	font-size: 11px;
+    left: 4px;
+    position: relative;    
+}
+
+.ak-complex-type-grid-width-field-label {
+	float: left;
+    margin-left: 7px;
+    margin-top: 7px;   
+    width: 13px;
+}
+
+.ak-complex-type-grid-width-field{
+	font-size: 11px;
+    left: 4px;
+    position: relative;  
+    width: 30px !important;  
+    text-align: right;
+    float:left;
+}
+
+.ak-complex-type-grid .x-grid3-scroller{
+	overflow-x: hidden;
+}
+
+.ak-complex-type-grid .x-grid3-row-selected {
+	background-color: white !important;
+}
+
+.ak-complex-type-grid-fields-wrapper {
+	width: 220px !important;
+}
+
+.ak-complex-type-grid-fields-wrapper .x-form-field-wrap,
+.ak-complex-type-grid-fields-wrapper .x-form-text,
+.ak-complex-type-grid-fields-wrapper LABEL {
+	float: left !important;
+}
+
+.x-ie-8-0 .ak-guide-lines-grid .x-form-field-wrap .x-form-trigger{
+	top: -2px !important;
+}
+
+
+.x-ie-8-0 .ak-guide-lines-grid .ak-editor-config-container {
+	top: 1px !important;
+}
+
+.x-ie-9-0 .ak-guide-lines-grid .x-form-field-wrap .x-form-trigger {
+	top: -2px !important;
+}
+
+.x-ie-9-0 .ak-guide-lines-grid .ak-editor-config-container{
+	top: 1px !important;
+}
+
+.x-ie-10-0 .ak-guide-lines-grid .x-form-field-wrap .x-form-trigger{
+	top: -1px !important;
+}
+
+/*****/
+
+/**
+Fixes for IE10
+*/
+
+
+.x-ie-10-0 .x-purl-hint .x-simplified-view {
+	position: relative;
+	top: 5px !important;
+}
+
+.x-ie-10-0 .x-purl-hint .x-info-img {
+	padding-top: 10px !important;
+}
+
+.x-ie-10-0 textarea {
+	overflow: auto !important;
+}
+
+.x-ie-10-0 .x-ie-shadow {
+	margin-left: 5px;
+	margin-top:4px;
+	opacity: 0.5 !important;
+	box-shadow: 0px 0px 4px 4px rgba(119,119,119,0.5) !important;
+}
+
+.x-ie-10-0 .x-tree-node-cb {
+	left: 2px !important;
+	top: 5px !important;
+}
+
+.x-ie-10-0 .x-tree-node-anchor {
+	position: relative;
+	left: 2px;
+	top: 2px;
+}
+
+.x-ie-10-0 .x-form-check-wrap .x-form-checkbox {
+	top: 2px !important;
+}
+
+.x-ie-10-0 .x-form-text.x-form-field {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.x-ie-10-0 .x-tableview-plugin.x-div-textbackground.y-wizard-tree {
+	margin-left: 10px;
+}
+
+.x-ie-10-0 .x-tableview-plugin.x-div-textbackground.y-wizard-tree .x-panel-body.x-panel-body-noheader.x-panel-body-noborder {
+	margin-left: 0px !important;
+}
+
+/* hide cross for input-fields which dont use the new IE10-Cross http://msdn.microsoft.com/en-us/library/windows/apps/hh465740.aspx */
+.x-ie-10-0 .x-no-clear-input::-ms-clear {
+	display: none;
+}
+
+.x-ie-10-0 .y-second-personal-dialog-field-panel-hint {
+	left: 307px !important;
+}
+
+.x-ie-10-0 .g-hr-planning-countallowance-textbox {
+	top: 23px !important;
+	position: relative;
+}
+
+.x-ie-10-0 .g-hr-planning-name-textbox{
+	top: 13px !important;
+	position: relative;
+}
+
+.x-ie-10-0 .g-hr-planning-minutes-per-manager-textbox {
+	top: 16px !important;
+	position: relative;
+}
+
+.x-ie-10-0 .g-hr-planning-box-minutes-per-manager {
+	top: -9px !important;
+	position: relative;
+}
+
+.x-ie-10-0 .ak-views-checkbox-position .x-form-cb-label {
+	top: -3px;
+}
+
+.x-ie-10-0 .x-window-security-center-mail .x-form-checkbox.x-form-field {
+	position: relative;
+	top: 4px !important;
+}
+
+.x-ie-10-0 .y-wizard-options-container .x-panel-body.x-panel-body-noheader.x-panel-body-noborder {
+	margin-top: 8px;
+}
+
+
+/**
+End Fixes for IE10
+*/
+
+/** Start - Custom Layers */
+.y-visualization-entry {
+	pointer-events: none;
+}
+
+.y-visualization-entry img {
+	position: absolute;
+	height: 16px;
+	width: 16px;
+	margin-top: 2px;
+}
+
+.x-ie7 .y-visualization-entry img {
+	left: 4px;
+}
+
+.y-visualization-entry-text,
+.y-color-value-text {
+	display: inline-block;
+	margin-left: 20px;
+	/* IE 7 Hack */
+	zoom: 1;  *display: inline; 
+}
+
+.y-color-value {
+	position: absolute;
+	width: 16px; 
+	height: 16px;
+	margin-top: 2px;
+}
+
+.x-ie7 .y-color-value {
+	left: 6px;
+}
+
+.x-ie7 .y-cell-value .y-color-value {
+	left: 0px;
+}
+
+.y-color-value img {
+	width: 12px; 
+	height: 12px; 
+	margin: 2px;
+}
+
+.y-nestedgrid-parent .x-grid3-nested-col .y-cell-value .y-color-value img {
+	position: relative;
+	opacity: 1;
+	width: 12px; 
+	height: 12px; 
+	margin: 2px;
+}
+
+.y-nestedgrid-parent .x-grid-editor.x-small-editor .x-form-color-trigger {
+	height: 24px !important;
+}
+
+.y-nestedgrid-parent .y-description-label {
+	color: rgb(102, 102, 102);
+}
+
+.x-form-field-wrap .x-form-color-trigger {
+	background:transparent url("../../../libs/ext/resources/images/default/form/color-trigger.png") no-repeat 0 0;
+    cursor:pointer;
+}
+
+.ie6 .x-form-field-wrap .x-form-color-trigger {
+	background:transparent url("../../libs/ext/resources/images/default/form/color-trigger.gif") no-repeat 0 0;
+}
+
+/** End - Custom Layers */
+
+/** Start - NPB */
+
+.cw-npb-panel {
+	margin-bottom: 10px;
+	width: 100%;
+	text-align: justify;
+}
+
+.cw-npb-panel-optional {
+	margin-top: 10px;
+	width: 100%;
+	text-align: justify;
+}
+
+.cw-npb-panel .cw-npb-desc {
+	margin-bottom: 10px;
+}
+
+.cw-npb-choices .x-form-cb-label,
+.cw-npb-panel .x-form-item-label {
+	font-size: 11px;
+}
+
+.cw-npb-choices .x-form-cb-label {
+	width: 280px;
+}
+
+.cw-npb-button-hidden {
+	padding: 0 !important;
+}
+
+.cw-npb-linkbutton {
+	margin-bottom: 10px;
+}
+
+.cw-npb-download-label {
+	margin-right: 10px;
+}
+
+.x-ie-8-0 .cw-npb-panel .x-form-trigger,
+.x-ie-9-0 .cw-npb-panel .x-form-trigger {
+	top: 0;
+}
+
+.x-ie-8-0 .cw-npb-panel .x-form-text,
+.x-ie-8-0 .cw-npb-panel .x-form-trigger,
+.x-ie-9-0 .cw-npb-panel .x-form-text,
+.x-ie-9-0 .cw-npb-panel .x-form-trigger {
+	margin-top: 1px;
+}
+
+/** End - NPB */
+
+/** Effektif specific template */
+.x-window-effektif .x-window-header-text {
+    background: url("/bpmcenter/fixflow-explorer/images/effektif/effektif.png") no-repeat scroll 0 -1px transparent;
+    padding: 1px 20px 0;
+}
+
+/** Astah import */
+.cw-astah-upload-info,
+.cw-astah-upload-existing {
+	margin-bottom: 4px;
+}
+
+.cw-astah-upload-info ul {
+	list-style: disc inside;
+	margin: 4px 0 4px 10px;
+}
+
+.cw-astah-upload-form .x-form-field,
+.cw-astah-upload-form label,
+.cw-astah-dir-list-entry,
+.cw-astah-upload-content-trigger {
+	padding: 4px 0;
+}
+
+.cw-astah-upload-form label,
+.cw-astah-upload-content-trigger {
+	display: block;
+}
+
+.cw-astah-upload-form-extended,
+.cw-astah-dir-list-entry-button {
+	margin-left: 10px;	
+}
+
+.cw-astah-upload-form label.cw-astah-dir-list-entry-label {
+	margin-left: 20px;
+	display: inline;
+}
+
+.cw-astah-upload-hint {
+	font-style: italic;
+}
+

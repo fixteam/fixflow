@@ -17,7 +17,10 @@
  */
 package com.founder.fix.fixflow.core.impl.persistence;
 
+import java.util.Map;
+
 import com.founder.fix.fixflow.core.impl.db.DbSqlSession;
+import com.founder.fix.fixflow.core.impl.db.MappingSqlSession;
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 
@@ -27,16 +30,35 @@ import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 public abstract class AbstractManager {
 
 	public void insert(String insertStatement, PersistentObject persistentObject) {
-		getDbSqlSession().insert(insertStatement, persistentObject);
+		getMappingSqlSession().insert(insertStatement, persistentObject);
 	}
 
 	public void delete(String deleteStatement, PersistentObject persistentObject) {
-		getDbSqlSession().delete(deleteStatement, persistentObject.getId());
+		delete(deleteStatement, persistentObject.getId());
+	}
+	
+	public void delete(String deleteStatement, String parameter) {
+		getMappingSqlSession().delete(deleteStatement, parameter);
+	}
+	
+	public void update(String updateStatement, PersistentObject persistentObject){
+		getMappingSqlSession().update(updateStatement, persistentObject);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getPersistentDbMap(String statement, PersistentObject persistentObject){
+
+		return (Map<String, Object>)getMappingSqlSession().selectOne(statement, persistentObject);
 	}
 
 	protected DbSqlSession getDbSqlSession() {
 
 		return commandContext.getDbSqlSession();
+	}
+	
+	protected MappingSqlSession getMappingSqlSession() {
+
+		return commandContext.getMappingSqlSession();
 	}
 
 	protected CommandContext commandContext;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="RunExpression" name="执行表达式" note="执行Groovy或BeanShell表达式" categoryId="072110c3-6064-47ed-a41f-abab02377235" icon="RunExpression.jpg">
+  <input id="expressionText" type="java.lang.Object" mandatory="Mandatory" defaultValue=""/>
+  <output id="outputObj" name="表达式返回值" type="java.lang.Object"/>
+  <page id="page1" name="表达式内容" note="表达式内容">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="脚本表达式" inputId="expressionText">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="RunExpression" packageName="com.founder.fix.fixflow.expand.flowconnector.RunExpression"/>
+</flowconnector:FlowConnectorDefinition>

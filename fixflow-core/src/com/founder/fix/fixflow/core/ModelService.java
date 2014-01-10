@@ -97,6 +97,12 @@ public interface ModelService extends ProcessService{
 	 */
 	String getFlowGraphicsSvg(String processDefinitionId);
 	
+	@Deprecated
+	/**
+	 * 获取流程图(SVG格式)
+	 */
+	String getFlowGraphicsSvgByDefKey(String processDefinitionKey);
+	
 	
 	/**
 	 * 获取流程定义的默认表单
@@ -106,7 +112,7 @@ public interface ModelService extends ProcessService{
 	String getDefaultFromUri(String processDefinitionId);
 	
 	/**
-	 * 获取流程定义
+	 * 获取流程定义(内置缓存)
 	 * @param processDefinitionId 流程唯一编号
 	 * @return 获取流程定义
 	 */
@@ -120,7 +126,6 @@ public interface ModelService extends ProcessService{
 	 */
 	List<Map<String, Object>> selectProcessDefinitionGroupKey();
 	
-	@Deprecated
 	/**
 	 * 获取流程图图片地址
 	 * @param processDefinitionId 流程唯一编号
@@ -135,6 +140,8 @@ public interface ModelService extends ProcessService{
 	 */
 	Map<String, Map<String, Object>> GetFlowGraphicsElementPosition(String processDefinitionId);
 	
+	
+	Map<String, Map<String, Object>> GetFlowGraphicsElementPositionByKey(String processDefinitionKey);
 	/**
 	 * 获取资源国际化信息
 	 * @param resourcesType 资源的类型 (FixFlowResources.FlowNameResource)
@@ -220,6 +227,21 @@ public interface ModelService extends ProcessService{
 	String deploymentByZip(ZipInputStream zipInputStream);
 	
 	/**
+	 * 通过流发布流程定义，必须要bpmn流和png的流，其他inputStream会发布到FIXFLOW_DEF_BYTEARRAY表中 
+	 * @param inputStreamMap key:filename value inputsteam
+	 * @return
+	 */
+	String deploymentByStream(Map<String, InputStream> inputStreamMap);
+	
+	/**
+	 * 通过通过流更新流程定义，必须要bpmn流和png的流，其他inputStream会发布到FIXFLOW_DEF_BYTEARRAY表中 
+	 * @param fileInputStreamMap inputStreamMap key:filename value inputsteam
+	 * @param deploymentId 发布号
+	 * @return
+	 */
+	public String updateDeploymentByStream(Map<String, InputStream> fileInputStreamMap,String deploymentId);
+	
+	/**
 	 * 通过zip文件发布流程
 	 * @param path zip文件路径
 	 * @param deploymentId 发布号
@@ -241,6 +263,8 @@ public interface ModelService extends ProcessService{
 	 * @return 发布号
 	 */
 	DeploymentEntity getDeploymentEntity(String deploymentId);
+	
+	
 	
 }
   

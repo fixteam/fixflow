@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.founder.fix.fixflow.config.to.FixConfigTo;
+import com.founder.fix.fixflow.config.to.bpaconf.FixConfigBPAConf;
 
 /**
  * @ClassName: FixConfigUtil
@@ -62,6 +63,10 @@ public class FixConfigUtil {
 	
 	public static String getFixItem(String key){
 		return thisBean.fixConfigTo.getItems().getMapItem(key).getValue();
+	}
+	
+	public static FixConfigBPAConf getFixBPAConf(){
+		return thisBean.fixConfigTo.getBpaConf();
 	}
 
 }

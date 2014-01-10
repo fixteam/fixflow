@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.LinkedList;
+
 import javax.sql.ConnectionEvent;
 import javax.sql.ConnectionEventListener;
 import javax.sql.ConnectionPoolDataSource;
@@ -237,6 +238,7 @@ public class MiniConnectionPoolManager {
 			return null;
 		}
 		rtime = timeoutTime - System.currentTimeMillis();
+		@SuppressWarnings("unused")
 		int rtimeSecs = Math.max(1, (int) ((rtime + 999) / 1000));
 		try {
 			if (conn!=null) {

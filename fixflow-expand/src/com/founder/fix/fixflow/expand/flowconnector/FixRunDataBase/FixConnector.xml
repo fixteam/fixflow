@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="FixRunDataBase" name="执行数据库语句" note="通过Engine的connection执行数据库语句，可以保证事务一致" categoryId="817b5afa-117e-4da4-ac53-b94bdc05eac8" icon="FixRunDataBase.jpg">
+  <input id="sqlText" type="java.lang.String" mandatory="Mandatory" defaultValue=""/>
+  <page id="FixRunDataBasePage" name="执行数据库语句" note="输入一个数据库执行语句">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="数据库语句" inputId="sqlText">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="FixRunDataBase" packageName="com.founder.fix.fixflow.expand.flowconnector.FixRunDataBase"/>
+</flowconnector:FlowConnectorDefinition>

@@ -28,6 +28,7 @@ import org.eclipse.bpmn2.impl.FlowNodeImpl;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicy;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
 import com.founder.fix.bpmn2extensions.fixflow.AssignPolicyType;
+import com.founder.fix.bpmn2extensions.fixflow.FormUri;
 import com.founder.fix.fixflow.core.action.AssignmentHandler;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -37,11 +38,11 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.identity.Authentication;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
+import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
-import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.Assignable;
 import com.founder.fix.fixflow.core.task.IdentityLinkType;
@@ -51,7 +52,12 @@ import com.founder.fix.fixflow.core.task.TaskMgmtInstance;
 
 public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
-	List<TaskInstanceEntity> taskInstances = new ArrayList<TaskInstanceEntity>();
+	
+	protected ProcessInstanceEntity processInstance;
+	
+	List<TaskInstanceEntity> taskInstances;
+
+	
 
 	public TaskMgmtInstanceImpl() {
 	}
@@ -148,12 +154,19 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 				} else {
 
-					String defaultFormUri = token.getProcessInstance().getProcessDefinition().getDefaultFormUri();
-					if (defaultFormUri != null && !defaultFormUri.equals("")) {
-
-						taskInstance.setFormUri(defaultFormUri);
-
-					} else {
+					
+					FormUri formUriObj=token.getProcessInstance().getProcessDefinition().getFormUriObj();
+					
+					String expressionValue=null;
+					if (formUriObj != null && formUriObj.getExpression() != null) {
+						expressionValue = formUriObj.getExpression().getValue();
+					} 
+					
+					Object returnObject = ExpressionMgmt.execute(expressionValue, executionContext);
+					if (returnObject != null) {
+						taskInstance.setFormUri(StringUtil.getString(returnObject));
+					}
+				   else {
 						throw new FixFlowException(userTask.getId() + " 节点没有指定表单,请检查流程配置!");
 					}
 				}
@@ -238,15 +251,16 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	}
 
 	public void addTaskInstanceEntity(TaskInstanceEntity taskInstance) {
-		if (taskInstances == null)
-			taskInstances = new ArrayList<TaskInstanceEntity>();
-		taskInstances.add(taskInstance);
+		if (getTaskInstanceEntitys() == null){
+			this.taskInstances = new ArrayList<TaskInstanceEntity>();
+		}
+			
+		getTaskInstanceEntitys().add(taskInstance);
 		taskInstance.setTaskMgmtInstance(this);
 	}
 
-	public void setProcessInstance(ProcessInstance processInstance) {
-		// TODO Auto-generated method stub
-
+	public void setProcessInstance(ProcessInstanceEntity processInstance) {
+		this.processInstance=processInstance;
 	}
 
 	public void performAssignment(TaskDefinition taskDefinition, Assignable assignable, ExecutionContext executionContext) {
@@ -372,6 +386,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 			for (AssignPolicy assignPolicyObj : assignPolicyConfig.getAssignPolicy()) {
 				if (assignPolicyObj.getId().equals(typeId)) {
 					assignPolicy = assignPolicyObj;
+					break;
 				}
 			}
 			if (assignPolicy.getClassImpl() == null || assignPolicy.getClassImpl().equals("")) {
@@ -439,8 +454,8 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		if (token == null) {
 			throw new FixFlowException("暂停任务实例的时候令牌不能为空!");
 		}
-		if (taskInstances != null) {
-			for (TaskInstanceEntity taskInstance : taskInstances) {
+		if (getTaskInstanceEntitys() != null) {
+			for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 				if (token.equals(taskInstance.getToken())) {
 					taskInstance.suspend();
 				}
@@ -455,8 +470,8 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 		if (token == null) {
 			throw new FixFlowException("恢复任务实例的时候令牌不能为空!");
 		}
-		if (taskInstances != null) {
-			for (TaskInstanceEntity taskInstance : taskInstances) {
+		if (getTaskInstanceEntitys() != null) {
+			for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 				if (token.equals(taskInstance.getToken())) {
 					taskInstance.resume();
 				}
@@ -466,9 +481,9 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 	public Set<TaskInstanceEntity> getUnfinishedTasks(Token token) {
 		Set<TaskInstanceEntity> unfinishedTasks = new HashSet<TaskInstanceEntity>();
-		if (taskInstances != null) {
+		if (getTaskInstanceEntitys() != null) {
 
-			for (TaskInstanceEntity taskInstance : taskInstances) {
+			for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 
 				if ((!taskInstance.hasEnded()) && (token != null) && (token.getId().equals(taskInstance.getToken().getId()))) {
 					unfinishedTasks.add(taskInstance);
@@ -483,7 +498,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 		List<TaskInstanceEntity> taskInstancesTemp = new ArrayList<TaskInstanceEntity>();
 
-		for (TaskInstanceEntity taskInstance : taskInstances) {
+		for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 			if (taskInstance.getToken().getId().equals(token.getId())) {
 				taskInstancesTemp.add(taskInstance);
 			}
@@ -495,7 +510,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	public TaskInstanceEntity getTaskInstanceEntitys(String taskId) {
 
 		
-		for (TaskInstanceEntity taskInstance : taskInstances) {
+		for (TaskInstanceEntity taskInstance : getTaskInstanceEntitys()) {
 			if (taskInstance.getId().equals(taskId)) {
 				return taskInstance;
 			}
@@ -505,7 +520,22 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 	}
 
 	public List<TaskInstanceEntity> getTaskInstanceEntitys() {
+		
+		if(this.taskInstances==null){
+			this.taskInstances= new ArrayList<TaskInstanceEntity>();
+
+		}
+
+		
 		return taskInstances;
+	}
+	
+	public List<TaskInstanceEntity> getTaskInstancesNoDB() {
+		
+		if(this.taskInstances==null){
+			this.taskInstances=new ArrayList<TaskInstanceEntity>();
+		}
+		return this.taskInstances;
 	}
 
 }

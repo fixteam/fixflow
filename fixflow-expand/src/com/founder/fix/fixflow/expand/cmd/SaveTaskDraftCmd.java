@@ -156,6 +156,9 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			// startProcessInstanceCommand.setVariables(Variables);
 			ProcessInstance processInstanceQueryTo = runtimeService
 					.noneStartProcessInstance(startProcessInstanceCommand);
+			
+			
+			
 
 			// 任务第一步提交完还需找到一个待办事宜再执行掉才算真正完成
 			String processInstanceId = processInstanceQueryTo.getId();
@@ -168,36 +171,55 @@ public class SaveTaskDraftCmd extends AbstractExpandTaskCmd<SaveTaskDraftCommand
 			List<TaskInstance> taskQueryList = taskQuery.taskAssignee(Authentication.getAuthenticatedUserId()).taskNotEnd()
 					.list();
 
-			
+			TaskInstanceEntity taskInstanceNew=null;
 			if(taskQueryList.size()>0){
-				TaskInstanceEntity taskInstance=(TaskInstanceEntity)taskQueryList.get(0);
-				taskInstance.setDraft(true);
+				taskInstanceNew=(TaskInstanceEntity)taskQueryList.get(0);
+				taskInstanceNew.setDraft(true);
 				if(this.agent!=null&&!this.agent.equals("")){
-					taskInstance.setAgent(Authentication.getAuthenticatedUserId());
-					taskInstance.setAssigneeWithoutCascade(this.agent);
+					taskInstanceNew.setAgent(Authentication.getAuthenticatedUserId());
+					taskInstanceNew.setAssignee(this.agent);
 				}else{
-					taskInstance.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-					taskInstance.setAgent(null);
+					taskInstanceNew.setAssignee(Authentication.getAuthenticatedUserId());
+					taskInstanceNew.setAgent(null);
 				}
 				//taskInstance.setAssignee(Authentication.getAuthenticatedUserId());
-				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstance);
+				commandContext.getTaskManager().saveTaskInstanceEntity(taskInstanceNew);
 			}
 			else{
 				TaskQuery taskQueryNew=taskService.createTaskQuery().processInstanceId(processInstanceId);
 				List<TaskInstance> taskQueryCandidateList = taskQueryNew.taskCandidateUser(Authentication.getAuthenticatedUserId()).taskNotEnd().list();
 				if(taskQueryCandidateList.size()>0){
-					TaskInstanceEntity taskInstanceCandidate=(TaskInstanceEntity)taskQueryCandidateList.get(0);
-					taskInstanceCandidate.setDraft(true);
+					taskInstanceNew=(TaskInstanceEntity)taskQueryCandidateList.get(0);
+					taskInstanceNew.setDraft(true);
 					if(this.agent!=null&&!this.agent.equals("")){
-						taskInstanceCandidate.setAgent(Authentication.getAuthenticatedUserId());
-						taskInstanceCandidate.setAssigneeWithoutCascade(this.agent);
+						taskInstanceNew.setAgent(Authentication.getAuthenticatedUserId());
+						taskInstanceNew.setAssignee(this.agent);
 					}else{
-						taskInstanceCandidate.setAssigneeWithoutCascade(Authentication.getAuthenticatedUserId());
-						taskInstanceCandidate.setAgent(null);
+						taskInstanceNew.setAssignee(Authentication.getAuthenticatedUserId());
+						taskInstanceNew.setAgent(null);
 					}
 					//taskInstanceCandidate.setAssignee(Authentication.getAuthenticatedUserId());
-					commandContext.getTaskManager().saveTaskInstanceEntity(taskInstanceCandidate);
+					commandContext.getTaskManager().saveTaskInstanceEntity(taskInstanceNew);
 				}
+			}
+			
+			
+			
+			if(taskInstanceNew!=null){
+				this.taskId=taskInstanceNew.getId();
+				
+				//初始化任务命令执行所需要的常用对象
+				loadProcessParameter(commandContext);
+				
+				//将外部变量注册到流程实例运行环境中
+				addVariable();
+				
+				//执行处理命令中的开发人员设置的表达式
+				runCommandExpression();
+				
+				//持久化流程实例
+				saveProcessInstance(commandContext);
+				
 			}
 		
 		}

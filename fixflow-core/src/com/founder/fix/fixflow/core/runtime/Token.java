@@ -22,7 +22,9 @@ import java.util.Date;
 import java.util.Map;
 
 
+
 import com.founder.fix.fixflow.core.impl.db.PersistentObject;
+import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 
 public interface Token  extends PersistentObject, Serializable {
 
@@ -102,4 +104,7 @@ public interface Token  extends PersistentObject, Serializable {
 	 * @return 任务扩展字段值
 	 */
 	Object getExtensionField(String fieldName);
+	
+	
+	Map<String, TokenEntity> getChildren();
 }

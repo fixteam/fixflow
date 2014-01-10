@@ -21,7 +21,12 @@ body { background-color: #f2f2f2;}
 .menu li a.select { color:#FFF; background-image:url(../images/menu-selected.png); background-repeat:no-repeat;}
 .menu li a h1 { font-size:18px; font-family:"微软雅黑"; line-height:20px;}
 .menu li a h4 { margin-top:4px; font-size:12px; font-family:Arial, Helvetica, sans-serif; line-height:12px;}
-
+.second-nav { padding:4px 0; height:28px; overflow:hidden; background:#a8a9ad;}
+.second-nav ul {}
+.second-nav li { padding:0 10px; float:left;}
+.second-nav li a { display:block; padding:0 15px; color:#f1f1f1; line-height:26px; height:28px; font-family:"微软雅黑"; font-size:14px; text-decoration:none;}
+.second-nav li a:hover { color:#333; background:#fff;}
+.second-nav li a.select { color:#fff; font-weight:bold;}
 .center-panel { display:table-row; width:100%; height:100%; background:#F2F2F2; position:relative;}
 
 
@@ -64,26 +69,6 @@ body { background-color: #f2f2f2;}
 .tool-content { padding:12px; height:auto; overflow:hidden;}
 .tool-title h4 { margin-left:14px; font-size:12px; font-weight:bold; color:#333; line-height:24px; font-family:"微软雅黑";}
 
-
-/* 按钮 */
-.btn-normal { margin-left: 10px;}
-.btn-normal a { display:inline-block; padding:3px 8px; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
-.btn-normal a:hover { background:#fff;}
-.btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
-.btn-normal a:hover .arrow-small { background-position:0 -12px;}
-.btn-disable { display:inline-block; }
-.btn-disable a,.btn-disable a:hover { display:inline-block; padding:3px 8px; border:2px solid #ddd; background:#ddd; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#999; text-decoration:none;}
-
-/* input按钮样式 */
-.fix-input { width:160px; padding:3px 5px; border:1px solid #ddd; font-size:12px; line-height:14px; color:#333;}
-.fix-input-data { width:68px; }
-input[type="reset"]::-moz-focus-inner,
-input[type="button"]::-moz-focus-inner,
-input[type="submit"]::-moz-focus-inner,
-input[type="file"] > input[type="button"]::-moz-focus-inner{
-    border:none;padding:0;
-}
-
 /* 表单 */
 .fix-table { margin:0; color:#444;}
 .fix-table th { padding:5px 0; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border-right: 1px solid #fff; text-align:center;border-bottom:1px solid #fff;}
@@ -92,7 +77,18 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .fix-table td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;}
 .fix-table td.time { text-align:center;}
 .fix-table tr.odd { background:#f7f7f7;}
+.fix-table tr.ver { background:#f0f8fa;cursor: pointer;}
+.fix-table tr.ver td.first { background-color: #fff}
+.fix-table tr.ver td.bleft { border-left: solid red 1px;border-left-style: dashed;}
+.fix-table tr.ver td.bright { border-right: solid red 1px;border-right-style: dashed;}
+.fix-table tr.ver td.btop { border-top: solid red 1px;border-top-style: dashed;}
+.fix-table tr.ver td.bbottom { border-bottom: solid red 1px;border-bottom-style: dashed;}
 .fix-table tbody tr:HOVER {cursor:pointer;}
+
+.fix-table2 { margin:0; color:#444;}
+.fix-table2 td { padding:10px 0;}
+.fix-table2 td.title-r { text-align:right; color:#666; padding-right:20px;}
+.fix-table2 .fix-input { padding:4px 5px; background:#f2f2f2; border:none; font-size:12px; line-height:12px; color:#333;}
 
 /* 分页 */
 .page { padding:10px 15px; height:18px; overflow:hidden; text-align:right;}
@@ -112,3 +108,50 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
 .type-box .type a div { font-size:14px; text-align:left; font-family:"微软雅黑";}
 .type-box .type a div:first-letter {font-size:200%;font-weight:bold;float:left;margin:0 5px;}
 .type-box .type a:hover { background:#eee ;}
+
+/* 弹出框 */
+.popup-A { width:380px; height:auto; overflow:hidden; z-index:200; top:300px; right:300px;}
+.popup-A .title { height:30px; background:#aaa; border:1px solid #cfedf7; border-bottom:none;}
+.popup-A .title h4 { color:#fff; font:14px/26px "微软雅黑"; padding-left:10px;}
+.popup-A .content { padding:12px; min-height:220px; height:auto; overflow:hidden; background:#FFF; border:1px solid #cfedf7;}
+.select { background-color: #10a7d9};
+.m-r-30 { margin-right:30px;}
+.popup-tb table {  margin:0 auto; color:#444; background:#fff;}
+.popup-tb th { padding:4px 0; background:#d1f2fa; font-family:"微软雅黑"; border-right: 1px solid #fff; text-align:center;}
+.popup-tb td { padding:3px 0; text-align:center; border-top:1px solid #fff;}
+.popup-tb tr.gray { background:#f7f7f7;}
+.popup-tb td.left { text-align:left; color:#666; padding-left:10px;}
+.popup-tb a { color:#444;}
+.popup-tb a:hover { color:#10a7d9;}
+
+/* 遮罩层 */
+.bg {display: none; width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; background-color: gray; opacity:0.5; z-index:100;}
+
+/* TOP10 */
+.td-top10 {padding: 6px; width: 50%}
+.top10 { width:100%; height:auto; overflow:hidden;border:1px solid #cfedf7;background:#FFF; }
+.top10 #listAvgTimeDesc,#listAvgTimeAsc,#listDoneCountDesc,#listDoneCountAsc {height: 320px}
+
+.top10 .title { height:30px; background:#aaa; border:1px solid #cfedf7; border-bottom:none;}
+.top10 .title { color:#fff; font:14px/26px "微软雅黑"; text-align:center;}
+.top10 .title a { color:#fff; font:14px/26px "微软雅黑"; text-decoration:none;cursor: pointer;}
+.top10 .content { padding:6px; min-height:240px; height:auto; overflow:hidden; background:#FFF;}
+
+/* 按钮 */
+.btn-normal { margin-left: 10px;}
+.btn-normal a { display:inline-block; padding:3px 8px; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
+.btn-normal a:hover { background:#fff;}
+.btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
+.btn-normal a:hover .arrow-small { background-position:0 -12px;}
+.btn-disable { display:inline-block; }
+.btn-disable a,.btn-disable a:hover { display:inline-block; padding:3px 8px; border:2px solid #ddd; background:#ddd; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#999; text-decoration:none;}
+
+/* input按钮样式 */
+.fix-input { width:160px; padding:3px 5px; border:1px solid #ddd; font-size:12px; line-height:14px; color:#333;}
+.fix-input-data { width:68px; }
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner{
+    border:none;padding:0;
+}

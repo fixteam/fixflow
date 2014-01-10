@@ -70,6 +70,7 @@ public class QuartzTest extends AbstractFixFlowTestCase {
 		Date nowDate = new Date();
 		long startDate = nowDate.getTime() + (24 * 60 * 60 * 1000);
 		Date triggerStartTime = new Date(startDate);
+		@SuppressWarnings("deprecation")
 		int hour = nowDate.getHours();
 
 		String cronExpr = "* * 7/24 * * ?";

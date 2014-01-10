@@ -21,6 +21,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.founder.fix.fixflow.config.to.bpaconf.FixConfigBPAConf;
+
 /**
  * @ClassName: FixConfigTo
  * @Description: TODO
@@ -32,6 +34,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FixConfigTo {
 	
 	private FixConfigItems items;
+	
+	private FixConfigBPAConf bpaConf;
+	
+
+	public FixConfigBPAConf getBpaConf() {
+		return bpaConf;
+	}
+
+	public void setBpaConf(FixConfigBPAConf bpaConf) {
+		this.bpaConf = bpaConf;
+	}
 
 	public FixConfigItems getItems() {
 		return items;

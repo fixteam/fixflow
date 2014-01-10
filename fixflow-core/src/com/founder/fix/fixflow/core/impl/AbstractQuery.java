@@ -182,13 +182,7 @@ public abstract class AbstractQuery<T extends Query<?, ?>, U> implements Command
 
 	public abstract long executeCount(CommandContext commandContext);
 
-	/**
-	 * Executes the actual query to retrieve the list of results.
-	 * 
-	 * @param page
-	 *            used if the results must be paged. If null, no paging will be
-	 *            applied.
-	 */
+
 	public abstract List<U> executeList(CommandContext commandContext, Page page);
 
 	public U executeSingleResult(CommandContext commandContext) {

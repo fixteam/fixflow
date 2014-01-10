@@ -22,7 +22,7 @@ import java.sql.SQLException;
 
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.impl.db.FixConnectionResult;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
+//import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 
 
 
@@ -49,14 +49,14 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 	public Connection getConnection() {
 		try {
 			if (this.connection == null) {
-				this.connection = FixFlowShellProxy.getConnection(dbId);
+				//this.connection = FixFlowShellProxy.getConnection(dbId);
 
 				return this.connection;
 			} else {
 				return this.connection;
 
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FixFlowDbException(e.getMessage(), e);
 		}

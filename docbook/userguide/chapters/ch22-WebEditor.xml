@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+
+<chapter>
+<title>web设计器</title>
+
+  <section xml:id="webEditor.construtor">
+  <title>项目结构</title>
+    <para>web设计器有三个项目组成，fixflow-editor、fixflow-explorer、fixflow-converter</para>
+    <itemizedlist>
+      <listitem><para>fixflow-editor：设计器主项目，用于BPMN文件的web编辑，来源修改于开源项目signavio。</para></listitem>
+      <listitem><para>fixflow-explorer：资源管理器项目，用于BPMN文件的管理。</para></listitem>
+      <listitem><para>fixflow-converter：转换器项目，用户json和bpmn定义之间的项目转换功能。</para></listitem>
+    </itemizedlist>
+    
+  </section>
+  
+  <section xml:id="webEidtor.integration">
+  <title>项目集成</title>
+    <para>项目的集成分为两种情况：集成BPMCENTER演示项目的系统；集成fixflow内核版本的用户。</para>
+    <orderedlist>
+      <listitem>
+        <para>集成bpmcenter演示项目的系统</para>
+        <para>用户可查看bpmcenter/.setting/org.eclipse.wst.common.component文件,如下：</para>
+        <mediaobject>
+          <imageobject>
+            <imagedata align="center" contentwidth="600" fileref="images/webEditor.1.png"/>
+          </imageobject>
+        </mediaobject>
+        <orderedlist>
+          <listitem>
+            <para>拷贝文件：</para>
+            <para>源码集成用户，仅需下载源码之后将linksource配置如上图即可（fixflowconvetersrc等变量的配置参考项目的.project文件）。</para>
+            <para>
+              Jar包集成用户：仅需要将上图对应的src、webContent拷贝到自己项目对应路径，保证src被编译到classes下，webContent发布到web根目录即可。</para>
+          </listitem>
+          <listitem>
+            <para>配置web.xml，将webEditor需要的servlet配置即可</para>
+            <programlisting>&lt;!-- fixflow-editor Servlet开始 --> 
+           &lt;servlet>
+              &lt;description>&lt;/description>
+               &lt;display-name>FlowEditor&lt;/display-name>
+               &lt;servlet-name>FlowEditor&lt;/servlet-name>
+               &lt;servlet-class>com.founder.fix.fixflow.editor.FlowEditorServlet&lt;/servlet-class>
+               &lt;load-on-startup>1&lt;/load-on-startup>
+           &lt;/servlet>
+           &lt;servlet-mapping>
+               &lt;servlet-name>FlowEditor&lt;/servlet-name>
+               &lt;url-pattern>/FlowEditor&lt;/url-pattern>
+           &lt;/servlet-mapping>
+  &lt;!-- fixflow-editor Servlet结束 -->           
+            </programlisting>
+          </listitem>
+        </orderedlist>
+      </listitem>
+      <listitem><para>针对内核集成用户</para>
+        <para>除上述操作外还需要引用bpmcenter项目的一些CSS、Js和image，具体需要文件可参考fixflow-explorer/webContent/fixflow-explorer/flowLibrary.jsp项目中需要的文件（注意修改文件引用路径）。</para>
+      </listitem>
+    </orderedlist>
+    
+  </section>
+
+  <section xml:id="webEditor.use">
+  <title>项目使用</title>
+    <section xml:id="webEditor.use.config">
+   <title>配置</title>
+    <para>Web设计器项目上分为资源管理器和web设计器,资源管理器要配置公共文件路径和私有文件路径，见fixflowconfig.xml:</para>
+    <programlisting>&lt;resourcePathConfig>
+    &lt;resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
+    &lt;resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>
+    &lt;/resourcePathConfig>  </programlisting>
+    <para>这里的路径指的是服务器的绝对路径。</para>
+    </section>
+    <section xml:id="webEditor.use.use">
+      <title>使用示例</title>
+      <orderedlist>
+        <listitem>
+          <para>进入管控中心，点击流程库-->归档库：</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.2.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>点击“新建文件夹”，输入文件夹名test（非中文），回车：</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.3.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>双击test文件夹图标，进入test文件夹目录，点击“新建流程”，输入流程编号和名称，点击确定：</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.4.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>双击创建好的流程文件，进入web流程设计器，如图：</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.5.png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+        <listitem>
+          <para>这里编辑和eclipse端的设计器基本一致，用户自己摸索，编辑完成后点击左上角保存：</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.6.png"/>
+            </imageobject>
+          </mediaobject>
+          <para>此次保存，会将编辑的文件保存到对应路径的bpmn文件，不会保存到数据库。</para>
+        </listitem>
+        <listitem>
+          <para>关闭web设计器，回到资源管理器，选中文件，点击“发布流程”，选择点击发布或更新原有版本</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.6.png"/>
+            </imageobject>
+          </mediaobject>
+          <para>这里发布会根据流程定义中配置的是否验证进行验证，如不需要验证请在流程设计中将“发布校验”设置为false（正常状态请开启验证，以免错误流程影响正常使用）。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.8.png"/>
+            </imageobject>
+          </mediaobject>
+          <para>排除提示错误后，可以将流程定义发布到数据库。</para>
+          <mediaobject>
+            <imageobject>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.9.png"/>
+            </imageobject>
+          </mediaobject>
+          
+          <para>常见问题：</para>
+          <orderedlist>
+            <listitem><para>流程第一次创建没有PNG文件，发布时报错：“指定路径找不到***.PNG文件”，将流程打开重新保存生成PNG文件即可。</para></listitem>
+          </orderedlist>
+        </listitem>
+      </orderedlist>
+      
+      
+    </section>
+</section>
+
+  <section xml:id="webEditor.software">
+  <title>工作原理</title>
+    <para>Fixflow-editor项目工作 原理介绍，不集成fixflow-explorer资源管理器项目的用户，参考fixflow-editor项目的工作原理、处理参数来实现自己的资源管理器项目。</para>
+    <para>FlowEditorServlet接收参数
+      <itemizedlist>
+        <listitem><para>action  功能 参数值：loadBPMNWeb，加载流程图</para></listitem>
+        <listitem><para>path  文件相对路径</para></listitem>
+        <listitem><para>fileName 文件名称</para></listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      FlowEditorServlet 隐藏处理参数（配置在fixflowconfig.xml文件中）
+      <itemizedlist>
+        <listitem><para>fixflow-editor-public-repository 公共资源路径</para></listitem>
+        <listitem><para>fixflow-editor-private-repository 私有资源路径</para></listitem>
+        <listitem><para>session中的“LOGIN_USER_ID”  当前登陆用户（WebModelServiceImpl.java，自己集成用户需修改此处）</para></listitem>
+      </itemizedlist>
+    </para>
+    <para>例如下面参数：
+      <itemizedlist>
+        <listitem><para>action=loadBPMNWeb</para></listitem>
+        <listitem><para>path=private,xiangmu1,xiangmu2</para></listitem>
+        <listitem><para>fileName=process_1.bpmn</para></listitem>
+        <listitem><para>fixflow-editor-public-repository = D:\fixflow\public</para></listitem>
+        <listitem><para>fixflow-editor-private-repository = D:\fixflow\private</para></listitem>
+      </itemizedlist>
+
+      则上面的path和fileName解析为服务器路径：
+      <programlisting> D:\fixflow\private\100001\xiangmu1\xiangmu2\process_1.bpmn</programlisting>
+      将此路径的文件用editor打开，编辑，并保存回去
+      
+    </para>
+</section>
+
+  <section xml:id="webEditor.note">
+  <title>备注</title>
+  <para>
+    Fixflow5.1的web设计器仅仅是预览版，实现了80%以上的功能，但是距离投入项目使用仍有差距，需要5.2版本才能发布可用于正式项目的版本。
+  </para>
+    <para>已知功能不完善</para>
+    <orderedlist>
+      <listitem><para>连接器未处理，web设计器编辑后，会导致连接器失效。</para></listitem>
+      <listitem><para>边界事件目前未处理，web设计器编辑后，边界事件会失效。</para></listitem>
+    </orderedlist>
+  </section>
+
+
+</chapter>
+  

@@ -68,10 +68,10 @@ public class TransferTaskCmd extends AbstractExpandTaskCmd<TransferTaskCommand, 
 			// 拷贝出一个新的任务
 			TaskInstanceEntity taskInstanceNew = taskInstance.clone();
 
-			taskInstanceNew.setIdWithoutCascade(GuidUtil.CreateGuid());
-			taskInstanceNew.setAssigneeWithoutCascade(transferUserId);
-			taskInstanceNew.setCreateTimeWithoutCascade(ClockUtil.getCurrentTime());
-			taskInstanceNew.setEndTimeWithoutCascade(null);
+			taskInstanceNew.setId(GuidUtil.CreateGuid());
+			taskInstanceNew.setAssignee(transferUserId);
+			taskInstanceNew.setCreateTime(ClockUtil.getCurrentTime());
+			taskInstanceNew.setEndTime(null);
 			taskInstanceNew.setCommandId(null);
 			taskInstanceNew.setCommandType(null);
 			taskInstanceNew.setCommandMessage(null);
