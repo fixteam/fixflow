@@ -84,6 +84,10 @@ public class FixFlowConverter {
 		return jsonNode;
 	}
 	
+	/**
+	 * 测试方法 不可用
+	 * @param defintion
+	 */
 	public void save(Definitions defintion){
 		ResourceSet resourceSet = getResourceSet();
 		Bpmn2Resource resource = (Bpmn2Resource) resourceSet.getResource(URI.createFileURI("d:\\node_template.bpmn"), true);
@@ -105,19 +109,12 @@ public class FixFlowConverter {
 	public void createBPMNFile(String path,String processId,String processName){
 		File newFile = new File(path);
 		InputStream inputStream = null;
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/editor/language/default_process.bpmn").toString();
+		String filePath = "com/founder/fix/fixflow/editor/language/default_process.bpmn";
 		try {
-			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/editor/language/default_process.bpmn").getFile(), "utf-8");
-				inputStream = new FileInputStream(filePath);
-			} else {
-				inputStream = new FileInputStream(filePath);
-			}
+			inputStream = ReflectUtil.getResourceAsStream(filePath);
 		}catch(Exception ex){
 			throw new FixFlowException("读取default_process.bpmn出错："+ex.getMessage());
 		}
-		
-		
 		FileOutputStream outputStream = null;
 		BufferedOutputStream buffOS = null;
 		InputStream inputStreamNewFile = null;
@@ -186,15 +183,10 @@ public class FixFlowConverter {
 	 */
 	public Definitions getNoneDefinitions(){
 		Definitions definitions = null;
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/editor/language/node_template.bpmn").toString();
+		String filePath = "com/founder/fix/fixflow/editor/language/node_template.bpmn";
 		try {
 			InputStream in = null;
-			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/editor/language/node_template.bpmn").getFile(), "utf-8");
-				in = new FileInputStream(filePath);
-			} else {
-				in = new FileInputStream(filePath);
-			}
+			in = ReflectUtil.getResourceAsStream(filePath);
 			definitions = getDefinitions("node-tempplate",in);
 			return definitions;
 		}catch(Exception ex){
@@ -212,14 +204,13 @@ public class FixFlowConverter {
 	 */
 	public Definitions getDefinitions(String processKey,InputStream input){
 		ResourceSet resourceSet = getResourceSet();
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/bpmn/converter/fixflowfile.bpmn").toString();
+		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
 		Resource ddddResource = null;
 		if (!filePath.startsWith("jar")) {
 			try {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/bpmn/converter/fixflowfile.bpmn").getFile(),
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(),
 						"utf-8");
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
 				throw new FixFlowException("流程定义文件加载失败！", e);
 			}
 			ddddResource = resourceSet.createResource(URI.createFileURI(filePath));

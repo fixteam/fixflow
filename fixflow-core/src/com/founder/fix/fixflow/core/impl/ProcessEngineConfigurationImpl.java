@@ -269,23 +269,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		List<RulesResource> rulesResources = rulesResourceConfig.getRulesResource();
 
 		for (RulesResource rulesResource : rulesResources) {
-
 			String classPath = rulesResource.getSrc();
-
-			String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 			Document document = null;
 			try {
-
-				if (!filePath.startsWith("jar")) {
-					filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
-
-					InputStream in = new FileInputStream(filePath);
-					document = XmlUtil.read(in);
-				} else {
-					InputStream in = new FileInputStream(filePath);
-					document = XmlUtil.read(in);
-				}
-
+				InputStream in = ReflectUtil.getResourceAsStream(classPath);
+				document = XmlUtil.read(in);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
