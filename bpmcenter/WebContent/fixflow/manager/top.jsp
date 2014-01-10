@@ -17,10 +17,10 @@
     <div class="menu">
 		<div class="logo"></div>
         <ul>
-        	<li><a id="tg1" href="#" class="select"><h1>流程库</h1><h4>Liu Cheng Ku</h4></a></li>
-       		<li><a id="tg2" href="#"><h1>组织机构</h1><h4>Zu Zhi Ji Gou</h4></a></li>
-       		<li><a id="tg4" href="#"><h1>运维管理</h1><h4>Yun Wei Guan Li</h4></a></li>
-        	<li><a id="tg5" href="#"><h1>系统配置</h1><h4>System</h4></a></li>
+        	<li><a id="tg1" href="#" class="select"><h1>流程库</h1><h4>Process Library</h4></a></li>
+       		<li><a id="tg2" href="#"><h1>组织机构</h1><h4>Organization</h4></a></li>
+       		<li><a id="tg4" href="#"><h1>运维管理</h1><h4>Management</h4></a></li>
+        	<li><a id="tg5" href="#"><h1>系统配置</h1><h4>System Config</h4></a></li>
        </ul>
     </div>
     <div class="second-nav">

@@ -15,10 +15,10 @@
     <div class="menu">
         <div class="logo"></div>
         <ul>
-        <li><a id="getMyProcess" href="FlowCenter?action=getMyProcess"><h1>${applicationScope.appInfo["module.startFlow"]}</h1><h4>start flow</h4></a></li>
-        <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>${applicationScope.appInfo["module.schedule"]}</h1><h4>to do task</h4></a></li>
-        <li><a id="getAllProcess" href="FlowCenter?action=getAllProcess"><h1>${applicationScope.appInfo["module.flowQuery"]}</h1><h4>flow query</h4></a></li>
-        <li><a id="getPlaceOnFile" href="FlowCenter?action=getPlaceOnFile"><h1>${applicationScope.appInfo["module.placeOnFile"]}</h1><h4>archiving flow</h4></a></li>
+        <li><a id="getMyProcess" href="FlowCenter?action=getMyProcess"><h1>${applicationScope.appInfo["module.startFlow"]}</h1><h4>Start Flow</h4></a></li>
+        <li><a id="getMyTask" href="FlowCenter?action=getMyTask"><h1>${applicationScope.appInfo["module.schedule"]}</h1><h4>To Do Task</h4></a></li>
+        <li><a id="getAllProcess" href="FlowCenter?action=getAllProcess"><h1>${applicationScope.appInfo["module.flowQuery"]}</h1><h4>Flow Query</h4></a></li>
+        <li><a id="getPlaceOnFile" href="FlowCenter?action=getPlaceOnFile"><h1>${applicationScope.appInfo["module.placeOnFile"]}</h1><h4>Archiving Flow</h4></a></li>
         </ul>
     </div>
 </div>
