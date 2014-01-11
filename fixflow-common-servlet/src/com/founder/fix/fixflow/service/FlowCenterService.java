@@ -71,7 +71,7 @@ public interface FlowCenterService {
 	/**
 	  * queryMyTaskNotEnd
 	  * @Title: queryMyTaskNotEnd
-	  * @Description: 获取某人的所有的未完结的任务
+	  * @Description: 获取某人的所有的已完结的任务
 	  * @param map<br>
 	  * "userId" 用户编号<br>
 	  * "pdkey" 流程编号(可选)<br>
