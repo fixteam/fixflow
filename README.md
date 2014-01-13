@@ -63,7 +63,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 (国内最强大的BPMN设计器)
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
 * [完整版设计器下载 5.1(百度网盘)](http://pan.baidu.com/s/1kTiEAzH)
-* [插件下载 5.1(百度网盘)](http://pan.baidu.com/s/1dDoW0fB)
+* [插件下载 5.1(百度网盘)](http://pan.baidu.com/s/1sjHEqkd)
 
 
 
