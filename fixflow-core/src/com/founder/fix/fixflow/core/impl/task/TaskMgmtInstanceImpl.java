@@ -403,7 +403,7 @@ public class TaskMgmtInstanceImpl implements TaskMgmtInstance {
 
 	}
 
-	private List<String> executionExpression(String expression, ExecutionContext executionContext) {
+	public List<String> executionExpression(String expression, ExecutionContext executionContext) {
 
 		List<String> resultList = new ArrayList<String>();
 

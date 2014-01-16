@@ -39,6 +39,17 @@ public class UserTo {
 	 * 扩展属性集合
 	 */
 	protected Map<String, Object> propertyMap;
+	
+	
+	/**
+	 * 创建一个用于用户
+	 * 
+	 * @param userId
+	 *            用户的编号
+	 */
+	public UserTo(String userId) {
+		this.userId = userId;
+	}
 
 	/**
 	 * 创建一个用于用户
