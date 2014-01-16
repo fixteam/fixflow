@@ -157,7 +157,13 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 在Fixteam/FixFlow项目上点击Issues->New Issue提交bug,在标签栏选择bug、优先级、状态（未解决）三个标签，然后提交。我们会根据bug内容反馈相关信息给您。
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Bug20130917093746.png)
 
+#未来的版本
+### 5.2.0（2014-？）
+功能方向：BPMN2.0事件全方位支持 同时引入  Dubbo、MuleEsb、ActiveMQ、RocketMQ 支持
 
+1.事件支持(Message、Error、Signal、Link、Compensation、Escalation、Conditional)
+2.串行多实例、事务节点、事件子流程、事件网关
+3.全新的处理人选择器,方便开发人员选择处理者,积累处理者选择规则。
 
 
 #历史的脚印
