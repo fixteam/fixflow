@@ -158,7 +158,7 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 #未来的版本
 ### 5.2.0（2014-？）
-功能方向：BPMN2.0事件全方位支持 同时引入  Dubbo、MuleEsb、ActiveMQ、RocketMQ 支持
+功能方向：BPMN2.0事件全方位支持 同时引入  Dubbo、MuleEsb、ActiveMQ 支持
 
 1.可扩展的实现事件支持(Message、Error、Signal、Link、Compensation、Escalation、Conditional)
 
