@@ -17,7 +17,6 @@
  */
 package com.founder.fix.fixflow.core.impl;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -178,6 +177,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected PriorityConfig priorityConfig;
 
 	protected ExpandClassConfig expandClassConfig;
+	
+
+	protected Map<String, Class<?>> expandClassMap=new HashMap<String, Class<?>>();
+
+	
 
 	protected SchedulerFactory schedulerFactory;
 
@@ -754,6 +758,18 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected void initExpandClassConfig() {
 		this.expandClassConfig = fixFlowConfig.getExpandClassConfig();
 		for (ExpandClass expandClass : expandClassConfig.getExpandClass()) {
+			
+			String classPathString=expandClass.getClassImpl();
+			
+			if(StringUtil.isNotEmpty(classPathString)){
+				Class<?> classObj=ReflectUtil.loadClass(classPathString);
+				if(classObj!=null){
+					expandClassMap.put(expandClass.getClassId(), classObj);
+				}
+			}
+			
+			
+			
 			if (expandClass.getClassId().equals("Authentication")) {
 				this.authenticationInstance = (AbstractAuthentication) ReflectUtil.instantiate(expandClass.getClassImpl());
 			}
@@ -1448,6 +1464,16 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	public Class<?> getRuleClass(String id) {
 		return ruleClassMap.get(id);
+	}
+
+	
+	public Map<String, Class<?>> getExpandClassMap() {
+		return expandClassMap;
+	}
+	
+	
+	public Class<?> getExpandClass(String classId) {
+		return expandClassMap.get(classId);
 	}
 
 

@@ -28,7 +28,7 @@ import com.founder.fix.fixflow.core.subscription.EventSubscriptionType;
 
 
 
-public class SendTaskbehavior extends SendTaskImpl {
+public class SendTaskBehavior extends SendTaskImpl {
 
 	@Override
 	public void execute(ExecutionContext executionContext) {
