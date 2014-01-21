@@ -30,7 +30,7 @@ public class ErrorEventDefinitionBehavior extends ErrorEventDefinitionImpl {
 	
 	
 	
-	public boolean execute(ExecutionContext executionContext,Event event) {
+	public void execute(ExecutionContext executionContext,Event event) {
 
 		/*
 		if(event instanceof CatchEvent){
@@ -85,7 +85,7 @@ public class ErrorEventDefinitionBehavior extends ErrorEventDefinitionImpl {
 		}
 		
 		return false;*/
-		return false;
+
 	}
 	/*
 	private TokenEntity getSubProcessToken(TokenEntity token,SubProcess subProcess){

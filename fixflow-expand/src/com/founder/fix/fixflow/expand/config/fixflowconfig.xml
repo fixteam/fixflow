@@ -91,6 +91,12 @@
 	<expandClass classId="ErrorEventDefinition" className="错误事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior" remarks=""/>
 	<expandClass classId="EndEvent" className="结束事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior" remarks=""/>
 	<expandClass classId="BoundaryEvent" className="边界事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior" remarks=""/>
+ 	<expandClass classId="MessageEventDefinition" className="消息事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.MessageEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.MessageEventDefinitionBehavior" remarks=""/>
+ 	<expandClass classId="IntermediateThrowEvent" className="抛出事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateThrowEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateThrowEventBehavior" remarks=""/>
+ 
+ 
+ 
+ 
  
   	<!-- Gateway -->
   	<expandClass classId="ParallelGateway" className="并行网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior" remarks=""/>

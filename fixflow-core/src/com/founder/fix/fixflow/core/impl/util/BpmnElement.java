@@ -12,6 +12,11 @@ public class  BpmnElement {
 	public static String IntermediateCatchEvent="IntermediateCatchEvent";
 	public static String ErrorEventDefinition="ErrorEventDefinition";
 	public static String BoundaryEvent="BoundaryEvent";
+	public static String MessageEventDefinition="MessageEventDefinition";
+	public static String IntermediateThrowEvent="IntermediateThrowEvent";
+	
+
+	
 	
 	
 	//	Gateway

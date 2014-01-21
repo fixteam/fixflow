@@ -1205,7 +1205,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public IntermediateThrowEvent createIntermediateThrowEvent() {
-        IntermediateThrowEventImpl intermediateThrowEvent = new IntermediateThrowEventImpl();
+        IntermediateThrowEventImpl intermediateThrowEvent = BpmnElement.getInstance(BpmnElement.IntermediateThrowEvent);
         return intermediateThrowEvent;
     }
 
@@ -1285,7 +1285,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public MessageEventDefinition createMessageEventDefinition() {
-        MessageEventDefinitionImpl messageEventDefinition = new MessageEventDefinitionImpl();
+        MessageEventDefinitionImpl messageEventDefinition = BpmnElement.getInstance(BpmnElement.MessageEventDefinition);
         return messageEventDefinition;
     }
 
