@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.0.0.20130927">
   <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="true">
-    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
+    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="fixflow" password="fixflow" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
     <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
@@ -56,9 +56,6 @@
     <mailInfo mailAddress="jiang_nan@founder.com" mailName="方正国际邮箱" smtpHost="mail.founder.com.cn" smtpPort="25" userName="kenshin" passWord="kenshin"/>
   </sysMailConfig>
   <expandClassConfig>
-  	
-  	<!-- 流程运行内部类 -->
-  	
     <expandClass classId="TaskMgmtInstance" className="任务管理器" classInterface="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstance" classImpl="com.founder.fix.fixflow.core.impl.task.TaskMgmtInstanceImpl" remarks="任务管理器负责任务分配"/>
     <expandClass classId="FixFlowResources" className="国际化资源处理" classInterface="com.founder.fix.fixflow.core.internationalization.FixFlowResources" classImpl="com.founder.fix.fixflow.expand.internationalization.FixFlowResourcesImpl" remarks="国际化资源处理"/>
     <expandClass classId="BizData" className="业务数据操作对象" classInterface="com.founder.fix.fixflow.core.variable.BizData" classImpl="com.founder.fix.fixflow.expand.database.BizDataImpl" remarks="业务数据操作对象"/>
@@ -79,47 +76,29 @@
     <expandClass classId="IdentityLinkQuery" className="任务候选人查询" classInterface="com.founder.fix.fixflow.core.runtime.IdentityLinkQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.IdentityLinkQueryImpl" remarks="任务候选人查询"/>
     <expandClass classId="TokenQuery" className="令牌查询" classInterface="com.founder.fix.fixflow.core.runtime.TokenQuery" classImpl="com.founder.fix.fixflow.core.impl.runtime.TokenQueryImpl" remarks="令牌查询"/>
     <expandClass classId="ProcessDefinitionQuery" className="流程定义查询" classInterface="com.founder.fix.fixflow.core.model.ProcessDefinitionQuery" classImpl="com.founder.fix.fixflow.core.impl.ProcessDefinitionQueryImpl" remarks="流程定义查询"/>
-  
-	<!-- BPMN节点实现  需要重写节点实现的请继承classInterface上指定的类-->
-	
-	
-	<!-- Event -->
-	<expandClass classId="StartEvent" className="开始事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior" remarks=""/>
-  	<expandClass classId="TimerEventDefinition" className="定时器事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.TimerEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.TimerEventDefinitionBehavior" remarks=""/>
-  	<expandClass classId="TerminateEventDefinition" className="终止事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.TerminateEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.TerminateEventDefinitionBehavior" remarks=""/>
-  	<expandClass classId="IntermediateCatchEvent" className="捕获事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior" remarks=""/>
-	<expandClass classId="ErrorEventDefinition" className="错误事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior" remarks=""/>
-	<expandClass classId="EndEvent" className="结束事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior" remarks=""/>
-	<expandClass classId="BoundaryEvent" className="边界事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior" remarks=""/>
- 	<expandClass classId="MessageEventDefinition" className="消息事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.MessageEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.MessageEventDefinitionBehavior" remarks=""/>
- 	<expandClass classId="IntermediateThrowEvent" className="抛出事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateThrowEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateThrowEventBehavior" remarks=""/>
- 
- 
- 
- 
- 
-  	<!-- Gateway -->
-  	<expandClass classId="ParallelGateway" className="并行网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior" remarks=""/>
- 	<expandClass classId="InclusiveGateway" className="包容网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior" remarks=""/>
-	<expandClass classId="ExclusiveGateway" className="排他网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior" remarks=""/>
-	<expandClass classId="EventBasedGateway" className="事件网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior" remarks=""/>
-	<expandClass classId="ComplexGateway" className="复杂网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ComplexGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ComplexGatewayBehavior" remarks=""/>
-	
-	<!-- Activity -->
-	<expandClass classId="UserTask" className="人工任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior" remarks="人工任务节点的实现类"/>
-  	<expandClass classId="SubProcess" className="内部子流程" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior" remarks=""/>
- 	<expandClass classId="SendTask" className="发送任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskBehavior" remarks=""/>
-	<expandClass classId="ScriptTask" className="脚本任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior" remarks=""/>
-	<expandClass classId="ReceiveTask" className="接收任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior" remarks=""/>
-	<expandClass classId="CallActivity" className="调用活动" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior" remarks=""/>
-	
-	
-	<!-- Other -->
-	<expandClass classId="SequenceFlow" className="顺序流" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior" remarks=""/>
- 	<expandClass classId="ProcessDefinition" className="流程定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior" remarks=""/>
-	<expandClass classId="Definitions" className="BPMN定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior" remarks=""/>
-	
-  
+    <expandClass classId="StartEvent" className="开始事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior" remarks=""/>
+    <expandClass classId="TimerEventDefinition" className="定时器事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.TimerEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.TimerEventDefinitionBehavior" remarks=""/>
+    <expandClass classId="TerminateEventDefinition" className="终止事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.TerminateEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.TerminateEventDefinitionBehavior" remarks=""/>
+    <expandClass classId="IntermediateCatchEvent" className="捕获事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior" remarks=""/>
+    <expandClass classId="ErrorEventDefinition" className="错误事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior" remarks=""/>
+    <expandClass classId="EndEvent" className="结束事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior" remarks=""/>
+    <expandClass classId="BoundaryEvent" className="边界事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior" remarks=""/>
+    <expandClass classId="MessageEventDefinition" className="消息事件定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.MessageEventDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.MessageEventDefinitionBehavior" remarks=""/>
+    <expandClass classId="IntermediateThrowEvent" className="抛出事件" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateThrowEventBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateThrowEventBehavior" remarks=""/>
+    <expandClass classId="ParallelGateway" className="并行网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior" remarks=""/>
+    <expandClass classId="InclusiveGateway" className="包容网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior" remarks=""/>
+    <expandClass classId="ExclusiveGateway" className="排他网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior" remarks=""/>
+    <expandClass classId="EventBasedGateway" className="事件网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior" remarks=""/>
+    <expandClass classId="ComplexGateway" className="复杂网关" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ComplexGatewayBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ComplexGatewayBehavior" remarks=""/>
+    <expandClass classId="UserTask" className="人工任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior" remarks="人工任务节点的实现类"/>
+    <expandClass classId="SubProcess" className="内部子流程" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior" remarks=""/>
+    <expandClass classId="SendTask" className="发送任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskBehavior" remarks=""/>
+    <expandClass classId="ScriptTask" className="脚本任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior" remarks=""/>
+    <expandClass classId="ReceiveTask" className="接收任务" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior" remarks=""/>
+    <expandClass classId="CallActivity" className="调用活动" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior" remarks=""/>
+    <expandClass classId="SequenceFlow" className="顺序流" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior" remarks=""/>
+    <expandClass classId="ProcessDefinition" className="流程定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior" remarks=""/>
+    <expandClass classId="Definitions" className="BPMN定义" classInterface="com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior" classImpl="com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior" remarks=""/>
   </expandClassConfig>
   <eventSubscriptionConfig serverAddress="172.29.128.91" serverPort="61616" messageInfo="fixflowmessage" signalInfo="signalmessage" isEnable="false"/>
   <quartzConfig isEnable="true" isDefaultConfig="true" dataBaseId="oracle"/>

@@ -469,9 +469,7 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
           <programlisting language="xml">
 <![CDATA[<bpmn2:startEvent id="StartEvent_1" fixflow:isPersistence="false" name="启动">]]></programlisting>
           <emphasis>例如: </emphasis>一个频繁触发的定时启动流程。 参见:<link linkend="bpmn.event.TimerStartEvent">定时启动</link>
-          <mediaobject ><imageobject>
-            <imagedata align="center"  fileref="images/bpmn.event.NoneStartEvent.CustomExtensions.2.png"/>
-          </imageobject></mediaobject>
+         
         </para>
       </section>
     </section>
@@ -479,8 +477,11 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     <section xml:id="bpmn.event.TimerStartEvent">
       <title>Timer Start Event</title>
       <para>
-        
+        将时间定义放到开始事件上，就组成了定时启动事件。 
       </para>
+      <mediaobject ><imageobject>
+        <imagedata align="center"  fileref="images/bpmn.event.NoneStartEvent.CustomExtensions.2.png"/>
+      </imageobject></mediaobject>
     </section>
     
     <section xml:id="bpmn.event.EndEvents">
@@ -588,15 +589,18 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     <section xml:id="bpmn.event.BoundaryEvents">
       <title>Boundary Events</title>
       <para>
-        
+        边界事件都是捕获事件，它会附在一个环节上。 （边界事件不可能触发事件）。这意味着，当节点运行时， 事件会监听对应的触发类型。 当事件被捕获，就会执行事件的后续连线。可以根据需要选择是否中断宿主。
       </para>
     </section>
     
     <section xml:id="bpmn.event.TimerBoundaryEvent">
       <title>Timer Boundary Event</title>
       <para>
-        
+        定时边界事件就是一个暂停等待警告的时钟。当流程执行到绑定了边界事件的环节， 会启动一个定时器。 当定时器触发时（比如，一定时间之后）， 并沿着定时边界事件的外出连线继续执行。并可以根据需要选择是否中断宿主。
       </para>
+      <mediaobject ><imageobject>
+        <imagedata align="center"  fileref="images/bpmn.event.TimerCatchEvent.png"/>
+      </imageobject></mediaobject>
     </section>
     
     <section xml:id="bpmn.event.IntermediateCatchingEventst">
@@ -1613,20 +1617,32 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
   <section xml:id="bpmn.Sub-ProcessesAndCallActivities">
     <title>Sub-Processes and Call Activities</title>
     <para>
-      
+      bpmn 2.0区分了普通子流程， 也叫做内嵌子流程，和调用节点(外部子流程)，看起来很相似。 上概念上讲，当流程抵达及诶单时，两者都会调用子流程。 
+    </para> 
+    <para>
+      不同点是调用节点引用流程定义外部的一个流程，子流程 会内嵌到原始的流程定义中。使用调用节点的主要场景是需要重用流程定义， 这个流程定义需要被很多其他流程定义调用的时候。 
+    </para> 
+    <para>
+      当流程执行到调用节点，会创建一个新分支，它是到达调用节点的流程的分支。 这个分支会用来执行子流程，默认创建并行子流程，就像一个普通的流程。 上级流程会等待子流程完成，然后才会继续向下执行。 
     </para>
     
     <section xml:id="bpmn.Sub-Process">
       <title>Sub-Process</title>
       <para>
-        
+        Sub-Process 可以将一部分节点步骤作为一个整体，进行多实例，跳过策略，连接器的配置，并可以折叠隐藏关键业务步骤。
       </para>
+      <mediaobject ><imageobject>
+        <imagedata align="center"  fileref="images/bpmn.SubProcess.1.png"/>
+      </imageobject></mediaobject>
     </section>
     
     <section xml:id="bpmn.CallActivity">
       <title>Call activity (subprocess)</title>
       <para>
-        
+        使用调用节点的主要场景是需要重用流程定义， 这个流程定义需要被很多其他流程定义调用的时候。 
+      </para>
+      <para>
+        当流程执行到调用节点，会创建一个新分支，它是到达调用节点的流程的分支。 这个分支会用来执行子流程，默认创建并行子流程，就像一个普通的流程。 上级流程会等待子流程完成，然后才会继续向下执行。 
       </para>
     </section>
     
@@ -1636,15 +1652,20 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
   <section xml:id="bpmn.Lane">
     <title>Lane</title>
     <para>
-      
+      Lane，泳道，图形元素，用来做交互式流程和布局用。
     </para>
-  
+    <mediaobject ><imageobject>
+      <imagedata align="center"  fileref="images/bpmn.lane.png"/>
+    </imageobject></mediaobject>
+    <para>
+      Fixflow目前不支持交互式流程图（会在后面版本支持），所以目前Lane只是作为布局工具使用。
+    </para>
   </section>
   
   <section xml:id="bpmn.Data">
     <title>Data</title>
     <para>
-      
+      图形元素，暂无用处。
     </para>
     
   </section>
@@ -1653,7 +1674,7 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
   <section xml:id="bpmn.Artifacts">
     <title>Artifacts</title>
     <para>
-      
+      图形元素，暂无用处。
     </para>
     
   </section>

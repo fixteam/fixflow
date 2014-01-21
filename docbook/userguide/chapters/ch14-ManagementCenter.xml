@@ -5,45 +5,74 @@
 <chapter>
   <title>管控中心</title>
 
+  
   <section xml:id="management.def">
-    <title>定义管理</title>
-    <para>
-      
-    </para>
+    <title>流程库</title>
+    <orderedlist>
+      <listitem>
+        <para>
+        流程定义：管理流程定义，包括流程发布，更新，删除等操作。
+        </para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="800"   fileref="images/managercenter.definitions.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>
+          归档库：用来管理web设计器设计的bpmn文件。
+        </para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="800"   fileref="images/managercenter.flowLibrary.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+    </orderedlist>
+    
   </section>
   
   <section xml:id="management.processInstance">
-    <title>实例管理</title>
-    <para>
-      
-    </para>
-  </section>
-  
-  <section xml:id="management.task">
-    <title>任务管理</title>
-    <para>
-      
-    </para>
-  </section>
-  
-  <section xml:id="management.job">
-    <title>定时任务</title>
-    <para>
-      
-    </para>
+    <title>运维管理</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          流程实例管理：管理流程实例，包括删除、终止、作废、变量、归档等操作。 
+        </para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="800"   fileref="images/managercenter.processinstance.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>
+          任务干预：运维中对流程任务的干预，包括暂停任务，恢复任务，转发，退回等操作。 
+        </para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="800"   fileref="images/managercenter.taskinstance.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>
+          定时任务：查看并维护引擎中的定时任务，暂停或恢复job、trigger等。
+        </para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="800"   fileref="images/managercenter.job.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+    </orderedlist>
   </section>
   
   <section xml:id="management.org">
     <title>组织结构</title>
     <para>
-      
+      查看配置的组织机构，Fixflow不提供组织机构的维护，只提供查看。 
     </para>
+    <mediaobject ><imageobject>
+      <imagedata align="center" contentwidth="800"   fileref="images/managercenter.orgconfig.png"/>
+    </imageobject></mediaobject>
   </section>
   
   <section xml:id="management.config">
     <title>系统配置</title>
     <para>
-      
+      配置引擎运转的基本配置。
     </para>
   </section>
  

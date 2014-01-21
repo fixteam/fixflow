@@ -4,65 +4,6 @@
 
 <chapter>
 <title>web设计器</title>
-
-  <section xml:id="webEditor.construtor">
-  <title>项目结构</title>
-    <para>web设计器有三个项目组成，fixflow-editor、fixflow-explorer、fixflow-converter</para>
-    <itemizedlist>
-      <listitem><para>fixflow-editor：设计器主项目，用于BPMN文件的web编辑，来源修改于开源项目signavio。</para></listitem>
-      <listitem><para>fixflow-explorer：资源管理器项目，用于BPMN文件的管理。</para></listitem>
-      <listitem><para>fixflow-converter：转换器项目，用户json和bpmn定义之间的项目转换功能。</para></listitem>
-    </itemizedlist>
-    
-  </section>
-  
-  <section xml:id="webEidtor.integration">
-  <title>项目集成</title>
-    <para>项目的集成分为两种情况：集成BPMCENTER演示项目的系统；集成fixflow内核版本的用户。</para>
-    <orderedlist>
-      <listitem>
-        <para>集成bpmcenter演示项目的系统</para>
-        <para>用户可查看bpmcenter/.setting/org.eclipse.wst.common.component文件,如下：</para>
-        <mediaobject>
-          <imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/webEditor.1.png"/>
-          </imageobject>
-        </mediaobject>
-        <orderedlist>
-          <listitem>
-            <para>拷贝文件：</para>
-            <para>源码集成用户，仅需下载源码之后将linksource配置如上图即可（fixflowconvetersrc等变量的配置参考项目的.project文件）。</para>
-            <para>
-              Jar包集成用户：仅需要将上图对应的src、webContent拷贝到自己项目对应路径，保证src被编译到classes下，webContent发布到web根目录即可。</para>
-          </listitem>
-          <listitem>
-            <para>配置web.xml，将webEditor需要的servlet配置即可</para>
-            <programlisting>&lt;!-- fixflow-editor Servlet开始 --> 
-           &lt;servlet>
-              &lt;description>&lt;/description>
-               &lt;display-name>FlowEditor&lt;/display-name>
-               &lt;servlet-name>FlowEditor&lt;/servlet-name>
-               &lt;servlet-class>com.founder.fix.fixflow.editor.FlowEditorServlet&lt;/servlet-class>
-               &lt;load-on-startup>1&lt;/load-on-startup>
-           &lt;/servlet>
-           &lt;servlet-mapping>
-               &lt;servlet-name>FlowEditor&lt;/servlet-name>
-               &lt;url-pattern>/FlowEditor&lt;/url-pattern>
-           &lt;/servlet-mapping>
-  &lt;!-- fixflow-editor Servlet结束 -->           
-            </programlisting>
-          </listitem>
-        </orderedlist>
-      </listitem>
-      <listitem><para>针对内核集成用户</para>
-        <para>除上述操作外还需要引用bpmcenter项目的一些CSS、Js和image，具体需要文件可参考fixflow-explorer/webContent/fixflow-explorer/flowLibrary.jsp项目中需要的文件（注意修改文件引用路径）。</para>
-      </listitem>
-    </orderedlist>
-    
-  </section>
-
-  <section xml:id="webEditor.use">
-  <title>项目使用</title>
     <section xml:id="webEditor.use.config">
    <title>配置</title>
     <para>Web设计器项目上分为资源管理器和web设计器,资源管理器要配置公共文件路径和私有文件路径，见fixflowconfig.xml:</para>
@@ -120,7 +61,7 @@
           <para>关闭web设计器，回到资源管理器，选中文件，点击“发布流程”，选择点击发布或更新原有版本</para>
           <mediaobject>
             <imageobject>
-              <imagedata align="center" contentwidth="600" fileref="images/webEditor.6.png"/>
+              <imagedata align="center" contentwidth="600" fileref="images/webEditor.7.png"/>
             </imageobject>
           </mediaobject>
           <para>这里发布会根据流程定义中配置的是否验证进行验证，如不需要验证请在流程设计中将“发布校验”设置为false（正常状态请开启验证，以免错误流程影响正常使用）。</para>
@@ -145,7 +86,6 @@
       
       
     </section>
-</section>
 
   <section xml:id="webEditor.software">
   <title>工作原理</title>

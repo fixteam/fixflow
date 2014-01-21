@@ -27,7 +27,7 @@ import org.eclipse.bpmn2.Bpmn2Factory;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.SendTask;
 
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskbehavior;
+import com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskBehavior;
 
 public class SendTaskJsonConverter extends BaseBpmnJsonConverter {
 
@@ -43,7 +43,7 @@ public class SendTaskJsonConverter extends BaseBpmnJsonConverter {
 	}
 		  
 	public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-		 convertersToJsonMap.put(SendTaskbehavior.class, SendTaskJsonConverter.class);
+		 convertersToJsonMap.put(SendTaskBehavior.class, SendTaskJsonConverter.class);
 	}
 	@Override
 	protected void convertElementToJson(ObjectNode propertiesNode,
