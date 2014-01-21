@@ -604,16 +604,18 @@ ProcessInstance processInstance = runtimeService.noneStartProcessInstance(startP
     </section>
     
     <section xml:id="bpmn.event.IntermediateCatchingEventst">
-      <title>Intermediate Catching Eventst</title>
+      <title>Intermediate Catching Events</title>
       <para>
-        
+        捕获事件
       </para>
     </section>
     
     <section xml:id="bpmn.event.TimerIntermediateCatchingEvent">
       <title>Timer Intermediate Catching Event</title>
       <para>
-        
+        时间捕获事件
+      </para>
+      <para>流程走到这里就会停住，在指定的时间或者一定的时间规则下恢复过来。
       </para>
     </section>
 
