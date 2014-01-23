@@ -83,4 +83,17 @@
     <url-pattern>/FileAndDirectoryServlet</url-pattern>
   </servlet-mapping>
    <!-- fixflow-explorer Servlet结束 -->
+
+ <!-- fixflow-bpa Servlet开始 -->
+   <servlet>
+    <description></description>
+    <display-name>FixFlowBPACenter</display-name>
+    <servlet-name>FixFlowBPACenter</servlet-name>
+    <servlet-class>com.founder.fix.bpa.servlet.OLAPFixFlowBPACenter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FixFlowBPACenter</servlet-name>
+    <url-pattern>/FixFlowBPACenter</url-pattern>
+  </servlet-mapping>
+   <!-- fixflow-bpa Servlet结束 -->
 </web-app>

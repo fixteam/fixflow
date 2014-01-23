@@ -21,6 +21,8 @@
        		<li><a id="tg2" href="#"><h1>组织机构</h1><h4>Organization</h4></a></li>
        		<li><a id="tg4" href="#"><h1>运维管理</h1><h4>Management</h4></a></li>
         	<li><a id="tg5" href="#"><h1>系统配置</h1><h4>System Config</h4></a></li>
+        	<li><a id="tg6" href="#"><h1>BPA分析</h1><h4>BPA Analysis</h4></a></li>
+        	<li><a id="tg7" href="#"><h1>BPA抽取</h1><h4>BPA Feeds</h4></a></li>
        </ul>
     </div>
     <div class="second-nav">
@@ -35,6 +37,14 @@
 	        <li><a id="processManageList" href="FlowManager?action=processManageList">流程实例管理</a></li>
 	        <li><a id="taskInstanceList" href="FlowManager?action=taskInstanceList">任务干预</a></li>
 	        <li><a id="jobManager" href="FlowManager?action=getJobList">定时任务</a></li>
+        </ul>
+    	<ul tg="tg6" style="display:none;">
+	        <li><a id="getBPA" href="FixFlowBPACenter?action=getBPA">流程总列表</a></li>
+	        <li><a id="getFlowDetail" href="FixFlowBPACenter?action=getFlowDetail">流程详细</a></li>
+        </ul>
+    	<ul tg="tg7" style="display:none;">
+	        <li><a id="doBPMAnalysis" href="#" onclick="bpa(this);">全量流程分析</a></li>
+	        <li><a id="doBPMAnalysisIncrement" href="#" onclick="bpa(this);">增量流程分析</a></li>
         </ul>
     </div>
 </div>
@@ -96,6 +106,15 @@ $(function(){
 	chooseSelect();
 })
 
+function bpa(This){
+ var action = $(This).attr('id');
+ var r=confirm("确认进行分析？该操作很可能会耗时十分钟以上！")
+ if (r==true)
+ {
+	var obj = {};
+	window.open("FixFlowBPACenter?action="+action);
+ }
+}
 
 function updateMyself(){
 	var obj = {};

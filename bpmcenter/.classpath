@@ -15,8 +15,17 @@
 	<classpathentry kind="src" path="flowmanageservletsrc"/>
 	<classpathentry kind="src" path="fixfloweditorsrc"/>
 	<classpathentry kind="src" path="fixfloweditorwebcontent"/>
+	<classpathentry kind="src" path="fixflowbpasrc"/>
+	<classpathentry kind="src" path="fixflowbpawebcontent"/>
 	<classpathentry kind="src" path="fixflowexplorersrc"/>
 	<classpathentry kind="src" path="fixflowexplorerwebcontent"/>
+	<classpathentry kind="src" path="bpaanalysissrc"/>
+	<classpathentry kind="src" path="bpaanalysisconf"/>
+	<classpathentry kind="src" path="bpadatafeedssrc"/>
+	<classpathentry kind="lib" path="bpadatafeedslib"/>
+	<classpathentry kind="src" path="bpadatapushersrc"/>
+	<classpathentry kind="src" path="bpadatapusherpage"/>
+	<classpathentry kind="src" path="bpadatapusherlib"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
