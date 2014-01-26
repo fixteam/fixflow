@@ -84,7 +84,7 @@ public class MappingSqlSession {
 					InsertRulesScript insertRulesScript = (InsertRulesScript) classObj.newInstance();
 					insertRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException("Class : " + classPath + "未找到!");
+					throw new FixFlowException(e.getMessage(),e);
 				}
 			} else {
 				throw new FixFlowException("Class : " + classPath + "未找到!");
