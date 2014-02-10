@@ -20,8 +20,11 @@ package com.founder.fix.fixflow.config.to.bpaconf;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
+
+import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigBPATigger;
+import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
+import com.founder.fix.fixflow.config.to.bpaconf.datafeed.FixConfigDataFeeds;
+import com.founder.fix.fixflow.config.to.bpaconf.datapublisher.FixConfigDataPublishers;
 
 /**
  * @ClassName: FixConfigBPAAnlysisEngine
@@ -29,62 +32,35 @@ import javax.xml.bind.annotation.XmlElements;
  * @author shao
  *
  */
-public class FixConfigBPAAnlysisEngine {
-	private String id;
+public class FixConfigBPAAnlysisEngine extends FixConfigUnit {
+
+	private FixConfigDataFeeds dataFeeds;
 	
-	private String engine;
+	private FixConfigDataPublishers dataPublishers;
 	
-	private FixConfigBPAWorkspace workspace;
-	
-	private FixConfigBPATigger tigger;
-	
-	private FixConfigBPAOutPutDB outPutDB;
-	
-	@XmlAttribute
-	public String getId() {
-		return id;
+	private List<FixConfigBPATigger> tigger;
+
+	public FixConfigDataFeeds getDataFeeds() {
+		return dataFeeds;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setDataFeeds(FixConfigDataFeeds dataFeeds) {
+		this.dataFeeds = dataFeeds;
 	}
 
-	@XmlAttribute
-	public String getEngine() {
-		return engine;
+	public FixConfigDataPublishers getDataPublishers() {
+		return dataPublishers;
 	}
 
-	public void setEngine(String engine) {
-		this.engine = engine;
+	public void setDataPublishers(FixConfigDataPublishers dataPublishers) {
+		this.dataPublishers = dataPublishers;
 	}
 
-	@XmlElement
-	public FixConfigBPAWorkspace getWorkspace() {
-		return workspace;
-	}
-
-	public void setWorkspace(FixConfigBPAWorkspace workspace) {
-		this.workspace = workspace;
-	}
-
-	@XmlElement
-	public FixConfigBPATigger getTigger() {
+	public List<FixConfigBPATigger> getTigger() {
 		return tigger;
 	}
 
-	public void setTigger(FixConfigBPATigger tigger) {
+	public void setTigger(List<FixConfigBPATigger> tigger) {
 		this.tigger = tigger;
 	}
-
-	@XmlElement
-	public FixConfigBPAOutPutDB getOutPutDB() {
-		return outPutDB;
-	}
-
-	public void setOutPutDB(FixConfigBPAOutPutDB outPutDB) {
-		this.outPutDB = outPutDB;
-	}
-	
-	
-	
 }

@@ -62,7 +62,7 @@ public class FixConfigUtil {
 	}
 	
 	public static String getFixItem(String key){
-		return thisBean.fixConfigTo.getItems().getMapItem(key).getValue();
+		return thisBean.fixConfigTo.getMapItem(key).getValue();
 	}
 	
 	public static FixConfigBPAConf getFixBPAConf(){

@@ -15,19 +15,30 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf;
+package com.founder.fix.fixflow.config.to.bpaconf.base;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * @ClassName: FixConfigBPATigger
+ * @ClassName: FixConfigBPASource
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigBPATigger {
+public class FixConfigBPASource extends FixConfigUnit{
+	private String key;
+	
 	private String value;
+	
+	@XmlAttribute
+	public String getKey() {
+		return key;
+	}
 
+	public void setKey(String key) {
+		this.key = key;
+	}
+	
 	@XmlAttribute
 	public String getValue() {
 		return value;
@@ -36,6 +47,4 @@ public class FixConfigBPATigger {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
 }

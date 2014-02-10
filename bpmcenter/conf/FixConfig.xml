@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <fixConfig>
 	<bpaConf>
-		<analysisEngine id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
-			<tigger value="234"/>
-			<workspace>
-				<source key="bpmDB" value="DB_BPA_BASE"/>
-			</workspace>
-			<outPutDB value="DB_BPA_BASE2"/>
+		<analysisEngine id="flowProcessAnalysis">
+			<dataFeeds id="flowProcessAnalysis">
+				<dataFeed id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+					<tigger value="234"/>
+					<workspace>
+						<source key="bpmDB" value="DB_BPA_BASE"/>
+					</workspace>
+					<outPutDB value="DB_BPA_BASE2"/>
+				</dataFeed>
+				<dataFeed id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+					<tigger value="234"/>
+					<workspace>
+						<source key="bpmDB" value="DB_BPA_BASE"/>
+					</workspace>
+					<outPutDB value="DB_BPA_BASE2"/>
+				</dataFeed>
+			</dataFeeds>
+			<dataPublishers id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+				<dataPublisher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+					<tigger value="234"/>
+					<workspace>
+						<source key="bpmDB" value="DB_BPA_BASE"/>
+					</workspace>
+					<outPutDB value="DB_BPA_BASE2"/>
+				</dataPublisher>
+				<dataPublisher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+					<tigger value="234"/>
+					<workspace>
+						<source key="bpmDB" value="DB_BPA_BASE"/>
+					</workspace>
+					<outPutDB value="DB_BPA_BASE2"/>
+					<mdx id="123" parentId="312" target="54">
+						<columns>
+							<column id="54" name="45"/>
+							<column id="45" name="45"/>
+						</columns>
+						<content>
+							23fsdfasdfasdfsadfadsfasdf
+						</content>
+					</mdx>
+					
+				</dataPublisher>
+			</dataPublishers>
 		</analysisEngine>
 	</bpaConf>
-	<items>
+
 		<item>
 			<key>FIXBPA_FLOW_PROCESSINSTANCE</key>
 			<value>
@@ -120,5 +157,4 @@
 		        SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE ASSIGNEE IS NOT NULL
 		    </value>
 		</item>
-	</items>
 </fixConfig>

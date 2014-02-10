@@ -15,32 +15,26 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf;
+package com.founder.fix.fixflow.config.to.bpaconf.datafeed;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
+import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 
 /**
- * @ClassName: FixConfigBPAWorkspace
+ * @ClassName: FixConfigDataFeed
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigBPAWorkspace {
-	
-	
-	private List<FixConfigBPASource> source;
+public class FixConfigDataFeeds extends FixConfigUnit {
+	private List<FixConfigDataFeed> dataFeed;
 
-	@XmlElements(value = { @XmlElement (name="source",type=FixConfigBPASource.class)})
-	public List<FixConfigBPASource> getSource() {
-		return source;
+	public List<FixConfigDataFeed> getDataFeed() {
+		return dataFeed;
 	}
 
-	public void setSource(List<FixConfigBPASource> source) {
-		this.source = source;
+	public void setDataFeed(List<FixConfigDataFeed> dataFeed) {
+		this.dataFeed = dataFeed;
 	}
-	
-	
 }

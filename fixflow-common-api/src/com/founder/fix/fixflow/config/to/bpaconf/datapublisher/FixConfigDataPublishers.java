@@ -15,36 +15,26 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf;
+package com.founder.fix.fixflow.config.to.bpaconf.datapublisher;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import java.util.List;
+
+import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 
 /**
- * @ClassName: FixConfigBPASource
+ * @ClassName: FixConfigDataFeed
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigBPASource {
-	private String key;
-	
-	private String value;
-	
-	@XmlAttribute
-	public String getKey() {
-		return key;
+public class FixConfigDataPublishers extends FixConfigUnit {
+	private List<FixConfigDataPublisher> dataPublisher;
+
+	public List<FixConfigDataPublisher> getDataPublisher() {
+		return dataPublisher;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
-	}
-	
-	@XmlAttribute
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
+	public void setDataPublisher(List<FixConfigDataPublisher> dataPublisher) {
+		this.dataPublisher = dataPublisher;
 	}
 }

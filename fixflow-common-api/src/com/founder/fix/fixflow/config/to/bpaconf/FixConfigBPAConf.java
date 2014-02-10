@@ -24,13 +24,15 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
+import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
+
 /**
  * @ClassName: FixConfigBPAConf
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigBPAConf {
+public class FixConfigBPAConf extends FixConfigUnit{
 	private List<FixConfigBPAAnlysisEngine> analysisEngine;
 	
 	private Map<String,FixConfigBPAAnlysisEngine> mapAnalysisEngine = new HashMap<String,FixConfigBPAAnlysisEngine>();

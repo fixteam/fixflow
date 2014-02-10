@@ -15,20 +15,26 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to;
+package com.founder.fix.fixflow.config.to.bpaconf.base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+
 /**
  * @ClassName: Item
- * @Description: TODO
+ * @Description: 基础类
  * @author shao
  *
  */
-public class FixConfigItems {
+public class FixConfigUnit {
+	
+	private String id;
 
 	private List<FixConfigItem> item = new ArrayList<FixConfigItem>();
 	
@@ -48,4 +54,15 @@ public class FixConfigItems {
 	public FixConfigItem getMapItem(String key){
 		return mapItem.get(key);
 	}
+	
+	@XmlAttribute
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
 }

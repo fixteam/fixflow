@@ -15,34 +15,31 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to;
+package com.founder.fix.fixflow.config.to.bpaconf.base;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 
 /**
- * @ClassName: Item
+ * @ClassName: FixConfigBPAWorkspace
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigItem {
-	private String key;
+public class FixConfigBPAWorkspace extends FixConfigUnit{
 	
-	private String value;
+	
+	private List<FixConfigBPASource> source;
 
-	public String getKey() {
-		return key;
+	@XmlElements(value = { @XmlElement (name="source",type=FixConfigBPASource.class)})
+	public List<FixConfigBPASource> getSource() {
+		return source;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
+	public void setSource(List<FixConfigBPASource> source) {
+		this.source = source;
 	}
 	
 	

@@ -15,26 +15,27 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf;
+package com.founder.fix.fixflow.config.to.bpaconf.datapublisher;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
+
 /**
- * @ClassName: FixConfigBPAOutPutDB
+ * @ClassName: FixConfigBPAMDX
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigBPAOutPutDB {
-	private String value;
+public class FixConfigBPAColumn extends FixConfigUnit {
+	private String name;
 
 	@XmlAttribute
-	public String getValue() {
-		return value;
+	public String getName() {
+		return name;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
 }
