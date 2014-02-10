@@ -9,6 +9,10 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 #支持企业
 
+Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,我们欢迎更多的企业来使用Fixflow,并为社区做出贡献。
+
+##方正国际软件有限公司
+
 ![方正国际软件有限公司](http://www.founderinternational.com/images/logo.jpg)
 
 
