@@ -103,8 +103,6 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 **团队Blog地址**: [http://fixteam.github.io/fixflow/blog/](http://fixteam.github.io/fixflow/blog/)
 
-**更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
-
 **Fixflow开放日活动视频**: [开放日视频](http://pan.baidu.com/s/1pbS4u)
 
 
