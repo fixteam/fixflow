@@ -7,7 +7,7 @@ Fixflow是一款开源的基于BPMN2.0标准的工作流引擎,由开源基金�
 FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于集成到现有系统的引擎。
 
 
-#支持企业
+#贡献企业
 
 Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,我们欢迎更多的企业来使用Fixflow,并为社区做出贡献。
 
@@ -16,7 +16,7 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 产品: 方正飞鸿CS中间件平台
 
-地址: http://www.founderfix.com  http://www.founderinternational.com
+地址: http://www.founderfix.com 或者 http://www.founderinternational.com
 
 
 
