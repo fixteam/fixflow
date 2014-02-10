@@ -157,8 +157,10 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Bug20130917093746.png)
 
 #未来的版本
-### 5.2.0（2014-？）
-功能方向：BPMN2.0事件全方位支持 同时引入  Dubbo、MuleEsb、ActiveMQ 支持
+### 6.0.0（2014-？）
+功能方向：
+ 
+设立开源组织 Fixflow Org管理,全新版本,BPMN2.0规范全方位支持,同时引入  Dubbo、MuleEsb、ActiveMQ 支持
 
 1.可扩展的实现事件支持(Message、Error、Signal、Link、Compensation、Escalation、Conditional)
 
