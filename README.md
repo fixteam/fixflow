@@ -8,7 +8,8 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 
 #支持企业
-方正国际软件有限公司
+
+![方正国际软件有限公司](http://www.founderinternational.com/images/logo.jpg)
 
 
 #5.1版本新功能介绍
