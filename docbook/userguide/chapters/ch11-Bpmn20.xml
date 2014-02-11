@@ -2010,7 +2010,110 @@ return triggers;&lt;/fixflow:expression>
         </orderedlist>
         
       </section>
+      <section xml:id="bpmn.ExtensionElements.connector.time">
+        <title>定时连接器</title>
+        <para>为了完成定时提醒、超时处理功能,同时又不限定死到了时间我们要做的事情,于是加了以下这个功能,让连接器有了延迟执行、间歇性执行功能。</para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.time.1.png"/>
+        </imageobject></mediaobject>
+        <para>
+          当勾选了定时器配置中的 启用定时器之后 便可以在时间表达式中去指定 Trigger（触发器）。
+          对于时间表达式我们使用的是Quartz定时任务框架所带的功能。
+          Quartz是什么，怎么使用，Corn表达式该怎么，这些直接问Google好了，遍地都是。
+          这里我们说明一下：我们的时间表达式配置里边,可以指定一个Trigger，
+          也可以指定多个Trigger,可以指定在指定时间触发的Trigger，
+          也可以指定复杂的间歇性Trigger。
+        </para>
+        <para>例如:</para>
+        <programlisting language="java"><![CDATA[import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
+cal = Calendar.getInstance();  
+cal.add(Calendar.MINUTE, +3);
+return QuartzUtil.createSimpleTrigger(processInfo, cal.getTime());]]>
+        </programlisting>
+        <para>
+          这样一段表达式是创建一个在指定时间执行的Trigger,指定的时间为当前触发的时间+3分钟。
+          QuartzUtil.createSimpleTrigger 创建一个指定时间执行的Trigger。
+        </para>
+        <para>例如:</para>
+        <programlisting language="java"><![CDATA[import org.quartz.Trigger;
+
+import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
+
+cal = Calendar.getInstance();
+cal.add(Calendar.MINUTE, +1);
+trigger1=QuartzUtil.createSimpleTrigger(processInfo,cal.getTime());
+trigger2=QuartzUtil.createCronTrigger(processInfo, "0 0 12 * * ?");
+
+List<Trigger> triggers=new ArrayList<Trigger>();
+triggers.add(trigger1);
+triggers.add(trigger2);
+return triggers;]]>
+        </programlisting>
+        <para>
+          这样一段表达式创建两个Trigger
+          一个是在指定时间触发：当前触发时间+1分钟。
+          一个是在每天中午12点触发一次。
+          
+          QuartzUtil.createCronTrigger 用来创建一个基于Corn表达式的间歇性Trigger,可以周期性的执行连接器。
+        </para>
+        <programlisting language="java"><![CDATA["0 0 12 * * ?" 每天中午12点触发 
+"0 15 10 ? * *" 每天上午10:15触发 
+"0 15 10 * * ?" 每天上午10:15触发 
+"0 15 10 * * ? *" 每天上午10:15触发 
+"0 15 10 * * ? 2005" 2005年的每天上午10:15触发 
+"0 * 14 * * ?" 在每天下午2点到下午2:59期间的每1分钟触发 
+"0 0/5 14 * * ?" 在每天下午2点到下午2:55期间的每5分钟触发 
+"0 0/5 14,18 * * ?" 在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 
+"0 0-5 14 * * ?" 在每天下午2点到下午2:05期间的每1分钟触发 
+"0 10,44 14 ? 3 WED" 每年三月的星期三的下午2:10和2:44触发 
+"0 15 10 ? * MON-FRI" 周一至周五的上午10:15触发 
+"0 15 10 15 * ?" 每月15日上午10:15触发 
+"0 15 10 L * ?" 每月最后一日的上午10:15触发 
+"0 15 10 ? * 6L" 每月的最后一个星期五上午10:15触发 
+"0 15 10 ? * 6L 2002-2005" 2002年至2005年的每月的最后一个星期五上午10:15触发 
+"0 15 10 ? * 6#3" 每月的第三个星期五上午10:15触发 ]]>
+        </programlisting>
+        <para>上面是一些常用的Corn表达式写法，具体的不用问我了，直接查Google，上面说的很明白。</para>
+        
+        
+        
+        <para>时间到了怎么自动处理任务呢？</para>
+        <para>新建连接器的时候选那个超时任务处理就可以了</para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.time.2.png"/>
+        </imageobject></mediaobject>
+        <para>简单配置下参数：</para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.time.3.png"/>
+        </imageobject></mediaobject>
+       
+        <para>
+          有了以上功能组合使用就能完成，一些变态的需求。
+          
+          例如任务到期后2天后没天提醒一次，到期5天后每半天提醒一次，7天后没1小时提醒一次，10天后给我自动处理！
+          
+          超时发邮件、发短信、更新数据库、调用webservice之类的就更不在话下了。
+          
+          说到工作日历的排除,这个需要项目开发人员自己去计算平台的日历表,组合使用Trigger来完成了。
+          
+          对于Quartz框架来说上述功能就是他最基础的功能,他还有很多更强大的功能,二次开发的人员可以自己研究一下。
+        </para>
+        
+        <para>下面是管理界面：</para>
+        <para> 
+          主数据为Job 点击一个Job可以查看他的多个Trigger
+          一个定时启动是一个Job，
+          一个定时连接器也是一个Job，
+          一个Job可以有多个Trigger触发器。
+        </para>
+        <mediaobject ><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.time.4.png"/>
+        </imageobject></mediaobject>
+      </section>
     </section>
+    
+    
+    
     
     <section xml:id="bpmn.ExtensionElements.dataVariable">
       <title>数据变量</title>

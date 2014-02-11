@@ -3,12 +3,12 @@
                '../dtd/docbook.dtd'> 
 
 <chapter>
-  <title>EmapBPA</title>
+  <title>FixflowBPA</title>
 
 
   
   <section xml:id="bpa.zt">
-    <title>EmapBPA 流程总体统计</title>
+    <title>FixflowBPA 流程总体统计</title>
     <para>
       可统计系统中的所有流程的总体信息,可以查询。
       <mediaobject><imageobject>
@@ -17,7 +17,7 @@
     </para>
   </section>
   <section xml:id="bpa.zttb">
-    <title>EmapBPA 流程总体统计图表</title>
+    <title>FixflowBPA 流程总体统计图表</title>
     <para>
       流程总体信息以图表的形式展现
       <mediaobject><imageobject>
@@ -26,7 +26,7 @@
     </para>
   </section>  
   <section xml:id="bpa.dlc">
-    <title>EmapBPA 单流程统计信息</title>
+    <title>FixflowBPA 单流程统计信息</title>
     <para>
       单个流程的信息统计,可统计每个节点的发起次数完成次数等等
       <mediaobject><imageobject>
@@ -35,7 +35,7 @@
     </para>
   </section>  
   <section xml:id="bpa.dlctrd">
-    <title>EmapBPA 流程图热点标识</title>
+    <title>FixflowBPA 流程图热点标识</title>
     <para>
       可以通过图形方式标识出流程中的节点使用程度
       <mediaobject><imageobject>
@@ -45,7 +45,7 @@
   </section>  
   
   <section xml:id="bpa.lcsl">
-    <title>EmapBPA 流程实例统计</title>
+    <title>FixflowBPA 流程实例统计</title>
     <para>
       单个流程实例信息统计
       <mediaobject><imageobject>
@@ -55,7 +55,7 @@
   </section>
  
   <section xml:id="bpa.jdxxtj">
-    <title>EmapBPA 单节点信息统计</title>
+    <title>FixflowBPA 单节点信息统计</title>
     <para>
       查看单个节点的历史执行信息
       <mediaobject><imageobject>
