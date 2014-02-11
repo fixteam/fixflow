@@ -129,8 +129,21 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 * [FAQ](#)
 
 
-
+#登录界面
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20130916_1.png)
+
+
+#引擎构架图
+![引擎构架图](http://images.cnitblog.com/blog/20120/201401/231607436798.png)
+
+#功能模块图
+![功能模块图](http://images.cnitblog.com/blog/20120/201401/231629069445.png)
+
+#Eclipse设计器界面
+![Eclipse设计器界面](http://images.cnitblog.com/blog/20120/201401/231630266632.png)
+
+#Web设计器界面
+![Web设计器界面](http://images.cnitblog.com/blog/20120/201401/231631074447.png)
 
 
 #如何提交bug或者问题
