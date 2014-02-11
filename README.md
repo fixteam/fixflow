@@ -1,6 +1,6 @@
 #简介
 
-Fixflow是一款开源的基于BPMN2.0标准的工作流引擎,由开源基金会组织 Fixflow Foundation 进行管理,引擎底层直接支持BPMN2.0国际标准,
+Fixflow是一款开源的基于BPMN2.0标准的工作流引擎,Fixflow开源联盟组织(Fixflow OpenSource Union) 进行社区化管理,引擎底层直接支持BPMN2.0国际标准,
 吸纳了 jBPM3 、 Activiti5、BonitaBPM 等国际开源流程引擎的精髓,
 同时提供了强大的中国式流程流转处理,引擎采用微内核+插件形式设计,提供灵活的扩展模式, 建模采 用基于BPMN2.0标准的Eclipse设计器和基于Web的流程设计器,不仅仅为审批流程提供了解决方案, 同时还为复杂业务流程编排提供了强大的支持。
 
