@@ -3,10 +3,10 @@
   <input id="commandId" type="java.lang.String" mandatory="是" defaultValue=""/>
   <input id="opinion" type="java.lang.String" mandatory="是" defaultValue=""/>
   <page id="page1" name="任务参数" note="超时自动处理任务参数配置">
-    <widget xsi:type="flowconnector:Text" id="Widget_0" name="查询语句" inputId="commandId">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="处理命令编号" inputId="commandId">
       <widgetExpression expressionValue=""/>
     </widget>
-    <widget xsi:type="flowconnector:Text" id="Widget_0" name="查询语句" inputId="opinion">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="处理意见" inputId="opinion">
       <widgetExpression expressionValue=""/>
     </widget>
   </page>
