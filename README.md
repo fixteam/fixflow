@@ -15,6 +15,7 @@ Fixflow开源联盟（Fixflow OpenSource Union，简称FOSU）是一个由在中
 国内访问速度比较慢的朋友可以考虑从国内的Git仓库拉取代码:
 
 **开源中国社区-中国**:(https://git.oschina.net/kenshinnet/fixflow)
+
 **GitHub-美国**:(https://github.com/fixteam/fixflow)
 
 #贡献企业
