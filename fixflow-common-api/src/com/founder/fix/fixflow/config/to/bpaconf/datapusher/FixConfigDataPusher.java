@@ -15,8 +15,9 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf.datapublisher;
+package com.founder.fix.fixflow.config.to.bpaconf.datapusher;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,20 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigProcessor;
  * @author shao
  *
  */
-public class FixConfigDataPublisher extends FixConfigProcessor {
-	private List<FixConfigBPAMDX> mdx;
+public class FixConfigDataPusher extends FixConfigProcessor {
+	private List<FixConfigBPAMDX> mdx = new ArrayList<FixConfigBPAMDX>();
 	
 	private Map<String,FixConfigBPAMDX> mapItem = new HashMap<String,FixConfigBPAMDX>();
+	
+	private List<FixConfigBPAMDX> mdxTree = new ArrayList<FixConfigBPAMDX>();
+	
+	public List<FixConfigBPAMDX> getMdxTree() {
+		return mdxTree;
+	}
+
+	public void setMdxTree(List<FixConfigBPAMDX> mdxTree) {
+		this.mdxTree = mdxTree;
+	}
 
 	public List<FixConfigBPAMDX> getMdx() {
 		return mdx;

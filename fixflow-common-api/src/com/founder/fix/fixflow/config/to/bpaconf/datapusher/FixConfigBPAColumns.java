@@ -15,26 +15,29 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf.datapublisher;
+package com.founder.fix.fixflow.config.to.bpaconf.datapusher;
 
 import java.util.List;
 
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 
 /**
- * @ClassName: FixConfigDataFeed
+ * @ClassName: FixConfigBPAMDX
  * @Description: TODO
  * @author shao
  *
  */
-public class FixConfigDataPublishers extends FixConfigUnit {
-	private List<FixConfigDataPublisher> dataPublisher;
+public class FixConfigBPAColumns extends FixConfigUnit {
+	
+	private List<FixConfigBPAColumn> column;
 
-	public List<FixConfigDataPublisher> getDataPublisher() {
-		return dataPublisher;
+	public List<FixConfigBPAColumn> getColumn() {
+		return column;
 	}
 
-	public void setDataPublisher(List<FixConfigDataPublisher> dataPublisher) {
-		this.dataPublisher = dataPublisher;
+	public void setColumn(List<FixConfigBPAColumn> column) {
+		this.column = column;
 	}
+	
+	
 }

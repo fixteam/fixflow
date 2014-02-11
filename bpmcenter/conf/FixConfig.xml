@@ -18,15 +18,15 @@
 					<outPutDB value="DB_BPA_BASE2"/>
 				</dataFeed>
 			</dataFeeds>
-			<dataPublishers id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
-				<dataPublisher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+			<dataPushers id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+				<dataPusher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
 					<tigger value="234"/>
 					<workspace>
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
-				</dataPublisher>
-				<dataPublisher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+				</dataPusher>
+				<dataPusher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
 					<tigger value="234"/>
 					<workspace>
 						<source key="bpmDB" value="DB_BPA_BASE"/>
@@ -41,9 +41,44 @@
 							23fsdfasdfasdfsadfadsfasdf
 						</content>
 					</mdx>
-					
-				</dataPublisher>
-			</dataPublishers>
+					<mdx id="12333" parentId="312" target="54">
+						<columns>
+							<column id="54" name="45"/>
+							<column id="45" name="45"/>
+						</columns>
+						<content>
+							23fsdfasdfasdfsadfadsfasdf
+						</content>
+					</mdx>
+					<mdx id="1233333" parentId="12333" target="54">
+						<columns>
+							<column id="54" name="45"/>
+							<column id="45" name="45"/>
+						</columns>
+						<content>
+							23fsdfasdfasdfsadfadsfasdf
+						</content>
+					</mdx>
+					<mdx id="312" parentId="" target="54">
+						<columns>
+							<column id="54" name="45"/>
+							<column id="45" name="45"/>
+						</columns>
+						<content>
+							23fsdfasdfasdfsadfadsfasdf
+						</content>
+					</mdx>
+					<mdx id="3123" parentId="" target="54">
+						<columns>
+							<column id="54" name="45"/>
+							<column id="45" name="45"/>
+						</columns>
+						<content>
+							23fsdfasdfasdfsadfadsfasdf
+						</content>
+					</mdx>
+				</dataPusher>
+			</dataPushers>
 		</analysisEngine>
 	</bpaConf>
 

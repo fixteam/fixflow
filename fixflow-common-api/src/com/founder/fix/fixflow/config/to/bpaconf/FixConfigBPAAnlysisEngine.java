@@ -17,14 +17,16 @@
  */
 package com.founder.fix.fixflow.config.to.bpaconf;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlAttribute;
 
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigBPATigger;
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 import com.founder.fix.fixflow.config.to.bpaconf.datafeed.FixConfigDataFeeds;
-import com.founder.fix.fixflow.config.to.bpaconf.datapublisher.FixConfigDataPublishers;
+import com.founder.fix.fixflow.config.to.bpaconf.datapusher.FixConfigBPAMDX;
+import com.founder.fix.fixflow.config.to.bpaconf.datapusher.FixConfigDataPusher;
+import com.founder.fix.fixflow.config.to.bpaconf.datapusher.FixConfigDataPushers;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
  * @ClassName: FixConfigBPAAnlysisEngine
@@ -36,7 +38,7 @@ public class FixConfigBPAAnlysisEngine extends FixConfigUnit {
 
 	private FixConfigDataFeeds dataFeeds;
 	
-	private FixConfigDataPublishers dataPublishers;
+	private FixConfigDataPushers dataPushers;
 	
 	private List<FixConfigBPATigger> tigger;
 
@@ -48,12 +50,43 @@ public class FixConfigBPAAnlysisEngine extends FixConfigUnit {
 		this.dataFeeds = dataFeeds;
 	}
 
-	public FixConfigDataPublishers getDataPublishers() {
-		return dataPublishers;
+	public FixConfigDataPushers getDataPushers() {
+		return dataPushers;
 	}
 
-	public void setDataPublishers(FixConfigDataPublishers dataPublishers) {
-		this.dataPublishers = dataPublishers;
+	public void setDataPushers(FixConfigDataPushers dataPushers) {
+		this.dataPushers = dataPushers;
+		List<FixConfigDataPusher> pushers= dataPushers.getDataPusher();
+		for(FixConfigDataPusher tmp1:pushers){
+			List<FixConfigBPAMDX> mdxTree = new ArrayList<FixConfigBPAMDX>();
+			List<FixConfigBPAMDX> lessMdx = new ArrayList<FixConfigBPAMDX>();
+			List<FixConfigBPAMDX> tmpList = tmp1.getMdx();
+			lessMdx.addAll(tmpList);
+			
+			for(FixConfigBPAMDX tmp2 : tmpList){
+				if(StringUtil.isEmpty(tmp2.getParentId())){
+					mdxTree.add(tmp2);
+					lessMdx.remove(tmp2);
+				}
+			}
+			
+			for(FixConfigBPAMDX tmp2 : mdxTree){
+				processMDXTree(tmp2,lessMdx);
+			}
+			
+			tmp1.setMdxTree(mdxTree);
+		}
+	}
+	
+	public void processMDXTree(FixConfigBPAMDX node,List<FixConfigBPAMDX> list){
+		for(int i=list.size()-1;i>=0;i--){
+			FixConfigBPAMDX tmp = list.get(i);
+			if(node.getId().equals(tmp.getParentId())){
+				node.getRelMDX().add(tmp);
+				list.remove(i);
+				processMDXTree(tmp,list);
+			}
+		}
 	}
 
 	public List<FixConfigBPATigger> getTigger() {

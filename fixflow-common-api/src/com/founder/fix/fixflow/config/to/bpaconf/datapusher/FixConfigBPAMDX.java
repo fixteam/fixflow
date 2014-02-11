@@ -15,7 +15,10 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf.datapublisher;
+package com.founder.fix.fixflow.config.to.bpaconf.datapusher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
@@ -35,6 +38,16 @@ public class FixConfigBPAMDX extends FixConfigUnit {
 	private FixConfigBPAColumns columns;
 	
 	private String content;
+	
+	private List<FixConfigBPAMDX> relMDX = new ArrayList<FixConfigBPAMDX>();
+
+	public List<FixConfigBPAMDX> getRelMDX() {
+		return relMDX;
+	}
+
+	public void setRelMDX(List<FixConfigBPAMDX> relMDX) {
+		this.relMDX = relMDX;
+	}
 
 	@XmlAttribute
 	public String getParentId() {

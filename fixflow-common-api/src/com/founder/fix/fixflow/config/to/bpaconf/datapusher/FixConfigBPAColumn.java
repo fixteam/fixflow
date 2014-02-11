@@ -15,7 +15,7 @@
  * 
  * @author shao
  */
-package com.founder.fix.fixflow.config.to.bpaconf.datapublisher;
+package com.founder.fix.fixflow.config.to.bpaconf.datapusher;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
