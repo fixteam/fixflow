@@ -15,14 +15,6 @@ Fixflow开源联盟（Fixflow OpenSource Union，简称FOSU）是一个由在中
 Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,我们欢迎更多的企业来使用Fixflow,并为社区做出贡献。
 
 
-名称: 方正国际软件有限公司
-
-产品: 方正飞鸿CS中间件平台
-
-地址: http://www.founderfix.com 或者 http://www.founderinternational.com
-
-
-持。
 
 
 #5.1版本新功能介绍
