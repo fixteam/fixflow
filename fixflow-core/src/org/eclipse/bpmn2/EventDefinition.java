@@ -33,5 +33,5 @@ public interface EventDefinition extends RootElement {
 	 * 事件定义的执行事件
 	 * @param executionContext 流程内容上下文
 	 */
-	public abstract  boolean execute(ExecutionContext executionContext,Event event);
+	public abstract void execute(ExecutionContext executionContext,Event event);
 } // EventDefinition

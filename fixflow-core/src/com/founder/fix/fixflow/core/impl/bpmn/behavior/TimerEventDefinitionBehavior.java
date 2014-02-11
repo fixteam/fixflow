@@ -46,7 +46,7 @@ import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 	
 	@SuppressWarnings("unchecked")
-	public boolean execute(ExecutionContext executionContext,Event event) {
+	public void execute(ExecutionContext executionContext,Event event) {
 		
 		
 		Expression expression=this.getTimeDate();
@@ -55,7 +55,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 			formalExpression=(FormalExpression)expression;
 		}
 		if(formalExpression==null){
-			return false;
+			return ;
 		}
 		
 		String expressionText=formalExpression.getBody();
@@ -199,7 +199,7 @@ public class TimerEventDefinitionBehavior extends TimerEventDefinitionImpl {
 			throw new FixFlowException("超时任务启动记录失败!错误信息: "+e.toString(), e);
 		}
 		
-		return false;
+	
 	}
 	
 

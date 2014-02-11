@@ -4,56 +4,57 @@
                
 <chapter>
   <title>任务中心</title>
-
-  <section xml:id="taskcenter.taskAgents">
-    <title>代办任务</title>
-    <para>
-      
-    </para>
-  </section>
-  
   <section xml:id="taskcenter.startPorcess">
     <title>可发起流程</title>
     <para>
-      
+      根据当前登陆用户查询有权限发起的流程和最近使用的流程。
     </para>
+    <mediaobject ><imageobject>
+      <imagedata align="center" contentwidth="800"   fileref="images/TaskCenter.startTask.png"/>
+    </imageobject></mediaobject>
   </section>
   
+  <section xml:id="taskcenter.taskAgents">
+    <title>代办任务</title>
+    <para>
+      查询当前用户所有的待办事项，包括代理流程。
+    </para>
+    <mediaobject ><imageobject>
+      <imagedata align="center" contentwidth="800"   fileref="images/TaskCenter.MyTask.png"/>
+    </imageobject></mediaobject>
+  </section>
+  
+ 
   
   <section xml:id="taskcenter.processInstanceQuery">
     <title>流程查询</title>
     <para>
-      
+      查询当前用户所有参与过的流程。
     </para>
+    <mediaobject ><imageobject>
+      <imagedata align="center" contentwidth="800"   fileref="images/TaskCenter.MyProcess.png"/>
+    </imageobject></mediaobject>
   </section>
   
   <section xml:id="taskcenter.archive">
     <title>归档查询</title>
     <para>
-      
+      查询当前用户已经归档的所有流程信息。 
     </para>
+    <mediaobject ><imageobject>
+      <imagedata align="center" contentwidth="800"   fileref="images/TaskCenter.Archiveprocess.png"/>
+    </imageobject></mediaobject>
   </section>
   
   
   <section xml:id="taskcenter.agent">
     <title>委托授权</title>
     <para>
-      
+      给指定流程指定代理人。 
     </para>
-  </section>
-  
-  <section xml:id="taskcenter.myInfo">
-    <title>个人信息</title>
-    <para>
-      
-    </para>
-  </section>
-  
-  <section xml:id="taskcenter.messageCenter">
-    <title>消息中心</title>
-    <para>
-      
-    </para>
+    <mediaobject ><imageobject>
+      <imagedata align="center" contentwidth="800"   fileref="images/TaskCenter.delegation.1.png"/>
+    </imageobject></mediaobject>
   </section>
   
 </chapter>

@@ -3,7 +3,7 @@
                '../dtd/docbook.dtd'> 
 
 <chapter>
-<title>介绍</title>
+<title>项目介绍</title>
 
   <section xml:id="license">
   <title>授权</title>

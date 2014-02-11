@@ -27,10 +27,7 @@
     <title>设计流程</title>
     <orderedlist>
       <listitem>
-        <para>打开设计器，选中一个文件夹，我这里选中了bpmcenter/WebContent/fixflow/bpmn，点击File->New->Other->飞鸿流程，点击“Next”</para>
-        <mediaobject><imageobject>
-          <imagedata align="center" contentwidth="600" fileref="images/tenmt.processDiagram.2.png"/>
-        </imageobject></mediaobject>
+        <para>打开设计器，选中一个文件夹，我这里选中了bpmcenter/WebContent/fixflow/bpmn，点击File->New->Other->Fixflow，点击“Next”</para>
       </listitem>
       <listitem>
         <para>选择“默认模板”，点击“Next”</para>

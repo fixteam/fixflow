@@ -22,27 +22,29 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ComplexGatewayBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskbehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.TerminateEventDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.TimerEventDefinitionBehavior;
-import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
+import com.founder.fix.fixflow.core.impl.util.BpmnElement;
+
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.BoundaryEventBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.CallActivityBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ComplexGatewayBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.EndEventBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ErrorEventDefinitionBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.EventBasedGatewayBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ExclusiveGatewayBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.InclusiveGatewayBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.IntermediateCatchEventBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ParallelGatewayBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ReceiveTaskBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.ScriptTaskBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.SendTaskBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.StartEventBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.TerminateEventDefinitionBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.TimerEventDefinitionBehavior;
+//import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 
 /**
  * <!-- begin-user-doc -->
@@ -503,7 +505,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public BoundaryEvent createBoundaryEvent() {
-        BoundaryEventImpl boundaryEvent = new BoundaryEventBehavior();
+        BoundaryEventImpl boundaryEvent =  BpmnElement.getInstance(BpmnElement.BoundaryEvent);
         return boundaryEvent;
     }
 
@@ -523,7 +525,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public CallActivity createCallActivity() {
-        CallActivityImpl callActivity = new CallActivityBehavior();
+        CallActivityImpl callActivity = BpmnElement.getInstance(BpmnElement.CallActivity);
         return callActivity;
     }
 
@@ -643,7 +645,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public ComplexGateway createComplexGateway() {
-        ComplexGatewayImpl complexGateway = new ComplexGatewayBehavior();
+        ComplexGatewayImpl complexGateway = BpmnElement.getInstance(BpmnElement.ComplexGateway);
         return complexGateway;
     }
 
@@ -853,7 +855,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public Definitions createDefinitions() {
-        DefinitionsImpl definitions = new DefinitionsBehavior();
+        DefinitionsImpl definitions = BpmnElement.getInstance(BpmnElement.Definitions);
         return definitions;
     }
 
@@ -873,7 +875,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public EndEvent createEndEvent() {
-        EndEventImpl endEvent = new EndEventBehavior();
+        EndEventImpl endEvent = BpmnElement.getInstance(BpmnElement.EndEvent);
         return endEvent;
     }
 
@@ -903,7 +905,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public ErrorEventDefinition createErrorEventDefinition() {
-        ErrorEventDefinitionImpl errorEventDefinition = new ErrorEventDefinitionBehavior();
+        ErrorEventDefinitionImpl errorEventDefinition = BpmnElement.getInstance(BpmnElement.ErrorEventDefinition);
         return errorEventDefinition;
     }
 
@@ -933,7 +935,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public EventBasedGateway createEventBasedGateway() {
-        EventBasedGatewayImpl eventBasedGateway = new EventBasedGatewayBehavior();
+        EventBasedGatewayImpl eventBasedGateway = BpmnElement.getInstance(BpmnElement.EventBasedGateway);
         return eventBasedGateway;
     }
 
@@ -953,7 +955,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public ExclusiveGateway createExclusiveGateway() {
-        ExclusiveGatewayImpl exclusiveGateway = new ExclusiveGatewayBehavior();
+        ExclusiveGatewayImpl exclusiveGateway = BpmnElement.getInstance(BpmnElement.ExclusiveGateway);
         return exclusiveGateway;
     }
 
@@ -1133,7 +1135,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public InclusiveGateway createInclusiveGateway() {
-        InclusiveGatewayImpl inclusiveGateway = new InclusiveGatewayBehavior();
+        InclusiveGatewayImpl inclusiveGateway = BpmnElement.getInstance(BpmnElement.InclusiveGateway);
         return inclusiveGateway;
     }
 
@@ -1193,7 +1195,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public IntermediateCatchEvent createIntermediateCatchEvent() {
-        IntermediateCatchEventImpl intermediateCatchEvent = new IntermediateCatchEventBehavior();
+        IntermediateCatchEventImpl intermediateCatchEvent = BpmnElement.getInstance(BpmnElement.IntermediateCatchEvent);
         return intermediateCatchEvent;
     }
 
@@ -1203,7 +1205,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public IntermediateThrowEvent createIntermediateThrowEvent() {
-        IntermediateThrowEventImpl intermediateThrowEvent = new IntermediateThrowEventImpl();
+        IntermediateThrowEventImpl intermediateThrowEvent = BpmnElement.getInstance(BpmnElement.IntermediateThrowEvent);
         return intermediateThrowEvent;
     }
 
@@ -1283,7 +1285,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public MessageEventDefinition createMessageEventDefinition() {
-        MessageEventDefinitionImpl messageEventDefinition = new MessageEventDefinitionImpl();
+        MessageEventDefinitionImpl messageEventDefinition = BpmnElement.getInstance(BpmnElement.MessageEventDefinition);
         return messageEventDefinition;
     }
 
@@ -1353,7 +1355,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public ParallelGateway createParallelGateway() {
-        ParallelGatewayImpl parallelGateway = new ParallelGatewayBehavior();
+        ParallelGatewayImpl parallelGateway =BpmnElement.getInstance(BpmnElement.ParallelGateway);
         return parallelGateway;
     }
 
@@ -1433,7 +1435,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public org.eclipse.bpmn2.Process createProcess() {
-        ProcessImpl process = new ProcessDefinitionBehavior();
+        ProcessImpl process = BpmnElement.getInstance(BpmnElement.ProcessDefinition);
         return process;
     }
 
@@ -1453,7 +1455,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public ReceiveTask createReceiveTask() {
-        ReceiveTaskImpl receiveTask = new ReceiveTaskBehavior();
+        ReceiveTaskImpl receiveTask = BpmnElement.getInstance(BpmnElement.ReceiveTask);
         return receiveTask;
     }
 
@@ -1543,7 +1545,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public ScriptTask createScriptTask() {
-        ScriptTaskImpl scriptTask = new ScriptTaskBehavior();
+        ScriptTaskImpl scriptTask = BpmnElement.getInstance(BpmnElement.ScriptTask);
         return scriptTask;
     }
 
@@ -1553,7 +1555,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public SendTask createSendTask() {
-        SendTaskImpl sendTask = new SendTaskbehavior();
+        SendTaskImpl sendTask = BpmnElement.getInstance(BpmnElement.SendTask);
         return sendTask;
     }
 
@@ -1563,7 +1565,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public SequenceFlow createSequenceFlow() {
-        SequenceFlowImpl sequenceFlow = new SequenceFlowBehavior();
+        SequenceFlowImpl sequenceFlow = BpmnElement.getInstance(BpmnElement.SequenceFlow);
         return sequenceFlow;
     }
 
@@ -1613,7 +1615,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public StartEvent createStartEvent() {
-        StartEventImpl startEvent = new StartEventBehavior();
+        StartEventImpl startEvent =BpmnElement.getInstance(BpmnElement.StartEvent);
         return startEvent;
     }
 
@@ -1643,7 +1645,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public SubProcess createSubProcess() {
-        SubProcessImpl subProcess = new SubProcessBehavior();
+        SubProcessImpl subProcess =BpmnElement.getInstance(BpmnElement.SubProcess);
         return subProcess;
     }
 
@@ -1663,7 +1665,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public TerminateEventDefinition createTerminateEventDefinition() {
-        TerminateEventDefinitionImpl terminateEventDefinition = new TerminateEventDefinitionBehavior();
+        TerminateEventDefinitionImpl terminateEventDefinition = BpmnElement.getInstance(BpmnElement.TerminateEventDefinition);
         return terminateEventDefinition;
     }
 
@@ -1683,7 +1685,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public TimerEventDefinition createTimerEventDefinition() {
-        TimerEventDefinitionImpl timerEventDefinition = new TimerEventDefinitionBehavior();
+        TimerEventDefinitionImpl timerEventDefinition = BpmnElement.getInstance(BpmnElement.TimerEventDefinition);
         return timerEventDefinition;
     }
 
@@ -1703,7 +1705,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public UserTask createUserTask() {
-        UserTaskImpl userTask = new UserTaskBehavior();
+        UserTaskImpl userTask = BpmnElement.getInstance(BpmnElement.UserTask);
         return userTask;
     }
 

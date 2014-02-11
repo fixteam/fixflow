@@ -15,8 +15,10 @@
 package org.eclipse.bpmn2.impl;
 
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.CatchEvent;
 import org.eclipse.bpmn2.Event;
 import org.eclipse.bpmn2.EventDefinition;
+import org.eclipse.bpmn2.ThrowEvent;
 import org.eclipse.emf.ecore.EClass;
 
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
@@ -53,9 +55,32 @@ public class EventDefinitionImpl extends RootElementImpl implements EventDefinit
     
     
 	
-	public boolean  execute(ExecutionContext executionContext, Event event) {
-		// TODO Auto-generated method stub
-		return true;
+	public void  execute(ExecutionContext executionContext, Event event) {
+		
+		
+		if(event instanceof CatchEvent){
+			catchExecute(executionContext,(CatchEvent)event);
+		}
+		if(event instanceof ThrowEvent){
+			throwExecute(executionContext,(ThrowEvent)event);
+		}
+		
+		
+		
+	}
+	
+	//捕获型执行事件定义
+	public void  catchExecute(ExecutionContext executionContext, CatchEvent event) {
+		
+		
+		
+	}
+	
+	//抛出型执行事件定义
+	public void  throwExecute(ExecutionContext executionContext, ThrowEvent event) {
+		
+		
+		
 	}
 
 } //EventDefinitionImpl

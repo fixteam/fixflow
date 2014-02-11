@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V5.0//EN'  
+               '../dtd/docbook.dtd'> 
+
+<chapter>
+<title>Fixflow介绍</title>
+
+  <section xml:id="info.what">
+    <title>Fixflow是什么</title>
+    <para>
+      Fixflow是一款开源的基于BPMN2.0标准的工作流引擎,由Fixflow开源联盟组织(Fixflow OpenSource Union) 进行社区化管理,
+      引擎底层直接支持BPMN2.0国际标准, 吸纳了 jBPM3 、 Activiti5、BonitaBPM 等国际开源流程引擎的精髓, 同时提供了强大的中国式流程流转处理,引擎采用微内核+插件形式设计,提供灵活的扩展模式, 
+      建模采 用基于BPMN2.0标准的Eclipse设计器和基于Web的流程设计器,不仅仅为审批流程提供了解决方案, 同时还为复杂业务流程编排提供了强大的支持。
+      
+      FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于集成到现有系统的引擎。
+      
+      
+    </para>
+</section>
+  
+  <section xml:id="info.tx">
+    <title>产品特性</title>
+    <itemizedlist>
+      <listitem>
+        <para>基于国际业务流程标准BPMN2.0</para>
+      </listitem>
+      <listitem>
+        <para>支持复杂式的中国流程流转处理</para>
+      </listitem>
+      <listitem>
+        <para>强大的基于BPMN2.0建模的Eclipse插件设计器</para>
+      </listitem>
+      <listitem>
+        <para>基于Web的流程设计器</para>
+      </listitem>
+      <listitem>
+        <para>强大灵活的扩展模式</para>
+      </listitem>
+      <listitem>
+        <para>基于图形化设计的外部系统调用连接器</para>
+      </listitem>
+      <listitem>
+        <para>基于Web的流程管控中心</para>
+      </listitem>
+    </itemizedlist>
+</section>
+<!-- 
+  <section xml:id="info.support">
+    <title>功能支持列表</title>
+    <table xml:id="info.support.table">
+      <title>数据库支持列表</title>
+      <tgroup cols='4'>
+        <colspec colnum="1" colname="c1" colwidth="1*"/>
+        <colspec colnum="2" colname="c2" colwidth="4*"/>
+        <colspec colnum="3" colname="c3" colwidth="1.5*"/>
+        <colspec colnum="4" colname="c4" colwidth="3*"/>
+        <thead>
+          <row>
+            <entry>类型</entry>
+            <entry>功能</entry>
+            <entry>支持</entry>
+            <entry>备注</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry morerows="4">标准架构</entry>
+            <entry>多数据库支持</entry>
+            <entry>√</entry>
+            <entry>支持Oracle、DB2、SQLServer、mySQL等数据库</entry>
+          </row>
+          <row>
+            <entry>JDK支持</entry>
+            <entry>√</entry>
+            <entry>支持所有主流的JDK版本，如SUN, Oracle，IBM，HP等JDK，保证平台的开放性</entry>
+          </row>
+          <row>
+            <entry>多服务器支持</entry>
+            <entry>√</entry>
+            <entry>能够部署和运行在任何主流J2EE兼容的服务器之上，包括IBM Websphere,，Oracle WebLogic Server, JBOSS等</entry>
+          </row>
+          <row>
+            <entry>BPMN2.0国际标准支持</entry>
+            <entry>√</entry>
+            <entry>支持国际业务流程建模标准BPMN2.0</entry>
+          </row>
+          <row>
+            <entry>自动化预集成</entry>
+            <entry>√</entry>
+            <entry >可以和应用集成软件通过SOA方式进行高度自动化预集成</entry>
+          </row>
+          
+          <row>
+            <entry morerows="20">核心引擎</entry>
+            <entry>流程模型定义</entry>
+            <entry>√</entry>
+            <entry>支持Oracle、DB2、SQLServer、mySQL等数据库</entry>
+          </row>
+          <row>
+            <entry>多种流程模式</entry>
+            <entry>√</entry>
+            <entry>支持串行、并行、分支、合并、子流程（同步／异步）、子流程嵌套、循环、事件通知、事件等待、动态多路分支等常用的流程模式</entry>
+          </row>
+          <row>
+            <entry>动态子流程</entry>
+            <entry>√</entry>
+            <entry>能根据业务信息和业务规则，动态创建一个或多个子流程实例</entry>
+          </row>
+          <row>
+            <entry>混合流程</entry>
+            <entry>√</entry>
+            <entry>业务流程引擎完全支持人工参与流程和自动处理流程。支持混合流程创建与执行，即在单一的模型中囊括系统集成与有人员参与的工作流流程，并可以在同一个引擎中进行设计与执行</entry>
+          </row>
+          <row>
+            <entry>版本控制</entry>
+            <entry>√</entry>
+            <entry>支持流程的版本控制，能让新旧版本流程同时运行</entry>
+          </row>
+          <row>
+            <entry>回退和跳转模式</entry>
+            <entry>√</entry>
+            <entry>支持灵活的流程回退和跳转模式。可以在运行时根据人工或自动自动判断，在流程中任意节点之间动态跳转和回退</entry>
+          </row>
+          <row>
+            <entry>追回和催办</entry>
+            <entry>√</entry>
+            <entry>可通过设定指定哪些人哪些节点可以将任务追回,或者给任务处理发送信息催办</entry>
+          </row>
+          <row>
+            <entry>BPMN2.0活动</entry>
+            <entry>√</entry>
+            <entry>通用任务、线下任务、人工任务、脚本任务、服务任务、业务规则任务、发送任务、接收任务</entry>
+          </row>
+          <row>
+            <entry>BPMN2.0网关</entry>
+            <entry>√</entry>
+            <entry>排他网关、包容网关、事件网关、并行网关、复杂网关</entry>
+          </row>
+          <row>
+            <entry>BPMN2.0子流程</entry>
+            <entry>√</entry>
+            <entry>外部子流程、内部子流程、自由子流程、事务子流程、事件子流程</entry>
+          </row>
+          <row>
+            <entry>BPMN2.0事件</entry>
+            <entry>√</entry>
+            <entry>启动事件、结束事件、触发事件、捕获事件、边界事件</entry>
+          </row>
+          <row>
+            <entry>BPMN2.0事件定义</entry>
+            <entry>√</entry>
+            <entry>终止、消息、信号、异常、补偿、规则、定时器、取消</entry>
+          </row>
+          
+          <row>
+            <entry>定时启动、激活</entry>
+            <entry>√</entry>
+            <entry>指定时间点、周期性定时启动流程,或者暂停流程执行在一定时间之后重新触发</entry>
+          </row>
+          <row>
+            <entry>超时处理</entry>
+            <entry>√</entry>
+            <entry>基于工作时间行事历,支持周期性超时处理</entry>
+          </row>
+          <row>
+            <entry>业务规则脚本语言</entry>
+            <entry>√</entry>
+            <entry>支持复杂的业务规则脚本语言。复杂的脚本语言支持完整Java的语法</entry>
+          </row>
+          
+          <row>
+            <entry>SLA事件处理机制</entry>
+            <entry>√</entry>
+            <entry>支持基于SLA事件处理机制。包括超时处理流程、超时异常处理或异常补偿流程</entry>
+          </row>
+          <row>
+            <entry>消息通信</entry>
+            <entry>√</entry>
+            <entry>支持流程实例之间进行通信的机制，包括同步通信和异步通信</entry>
+          </row>
+          <row>
+            <entry>定义组织结构</entry>
+            <entry>√</entry>
+            <entry>支持定义组织结构，分组、角色和工作日历，并可支持动态角色、动态参与者</entry>
+          </row>
+          <row>
+            <entry>LDAP支持</entry>
+            <entry>√</entry>
+            <entry>可以和外部LDAP产品进行集成，以统一使用组织结构和用户信息</entry>
+          </row>
+          <row>
+            <entry>错误日志</entry>
+            <entry>√</entry>
+            <entry>在流程运行过程中，要求能够记录详细的错误报告日志</entry>
+          </row>
+          <row>
+            <entry>集群容错</entry>
+            <entry>√</entry>
+            <entry>提供可靠、可扩展的流程运行平台，支持集群部署和多机容错运行模式</entry>
+          </row>
+        
+        
+          <row>
+            <entry morerows="3">开放性和集成能力</entry>
+            <entry>Java API接口</entry>
+            <entry>√</entry>
+            <entry>支持Java API开发接口，外部系统可以通过Java API接口与业务流程平台进行交互</entry>
+          </row>
+          
+          <row>
+            <entry>JSON、REST</entry>
+            <entry>√</entry>
+            <entry>符合REST标准操作并查询流程数据</entry>
+          </row>
+          <row>
+            <entry>Web Service接口</entry>
+            <entry>√</entry>
+            <entry>支持Web Service开发接口，外部系统可以通过Web Service接口与业务流程平台进行交互</entry>
+          </row>
+          <row>
+            <entry>内核扩展性</entry>
+            <entry>√</entry>
+            <entry>可通过继承重载方式重新实现流程运转逻辑</entry>
+          </row>
+          
+          <row>
+            <entry morerows="8">流程设计和开发</entry>
+            <entry>泳道图</entry>
+            <entry>√</entry>
+            <entry>支持基于角色泳道方式的流程设计建模过程，在流程图中，能直观的表达出活动执行过程中依赖的角色，参与者可以是系统或人</entry>
+          </row>
+          <row>
+            <entry>模版管理</entry>
+            <entry>√</entry>
+            <entry>支持流程的模版管理，包括模版的创建和维护</entry>
+          </row>
+          <row>
+            <entry>建模设计</entry>
+            <entry>√</entry>
+            <entry>提供针对业务专家和IT人员不同角色用户不同视图的统一建模设计和流程开发工具</entry>
+          </row>
+          <row>
+            <entry>图形化工具</entry>
+            <entry>√</entry>
+            <entry>支持图形化工具(Web、Eclipse)定制业务流程在各个环节和流转规则，支持时间触发自动跳转，支持条件跳转</entry>
+          </row>
+          <row>
+            <entry>国际化</entry>
+            <entry>√</entry>
+            <entry>全面的多语言环境支持，包括流程名称、活动名称、参与者、流程变量名等流程元素支持中文命名</entry>
+          </row>
+          <row>
+            <entry>图形化拖拽集成</entry>
+            <entry>√</entry>
+            <entry>支持图形化拖拽方式或向导方式实现对外部系统或组件进行集成，而不是通过复杂的开发过程来实现</entry>
+          </row>
+          <row>
+            <entry>Java、Groovy</entry>
+            <entry>√</entry>
+            <entry>复杂的脚本语言支持完整Java语法。包括代码编辑、代码调试、代码编译等IDE常用功能</entry>
+          </row>
+          <row>
+            <entry>流程图样式主题</entry>
+            <entry>√</entry>
+            <entry>可以自由订制流程设计器和Web流程图的颜色、节点样式</entry>
+          </row>
+          <row>
+            <entry>测试调试</entry>
+            <entry>√</entry>
+            <entry>流程设计开发工具，支持单元测试、断点调试</entry>
+          </row>
+          
+          
+          <row>
+            <entry morerows="5">流程交互</entry>
+            <entry>AJAX</entry>
+            <entry>√</entry>
+            <entry>支持AJAX技术的Web化流程操作交互过程，为用户操作流程提供可定制的界面</entry>
+          </row>
+          <row>
+            <entry>流程监控图</entry>
+            <entry>√</entry>
+            <entry>要求提供流程运行情况的追踪及审计，提供直观的流程监控图，并用直观的图形方式表现流程运行的路径，流程当前所处环节等信息</entry>
+          </row>
+          
+          <row>
+            <entry>查询过滤</entry>
+            <entry>√</entry>
+            <entry>提供流程实例的查询过滤功能，能按照流程名称、时间、参与方等查找流程实例</entry>
+          </row>
+          <row>
+            <entry>批量操作</entry>
+            <entry>√</entry>
+            <entry>支持对多个流程实例进行一次性的批量操作</entry>
+          </row>
+          <row>
+            <entry>日历规则</entry>
+            <entry>√</entry>
+            <entry>支持业务日历规则。支持使用不同的日历规则来计算不同参与人的工作时间。</entry>
+          </row>
+          <row>
+            <entry>任务重新分配</entry>
+            <entry>√</entry>
+            <entry>能够对任务进行重新分配，支持任务指派与委托，将其分配给其他人处理</entry>
+          </row>
+          
+          <row>
+            <entry morerows="5">业务规则引擎Drools</entry>
+            <entry>条件动静态化编译</entry>
+            <entry>√</entry>
+            <entry>对规则进行预编译，提高速度，也可支持动态加载刷新规则</entry>
+          </row>
+          <row>
+            <entry>嵌入式设计器</entry>
+            <entry>√</entry>
+            <entry>流程引擎中专有的规则设计器</entry>
+          </row>
+          <row>
+            <entry>业务规则标准支持</entry>
+            <entry>√</entry>
+            <entry>支持JSR-94规范</entry>
+          </row>
+          <row>
+            <entry>Web表格规则设计</entry>
+            <entry>√</entry>
+            <entry>简单规则设计界面，支持以在线方式编辑业务规则，从而能够快速响应业务规则变更需求</entry>
+          </row>
+          <row>
+            <entry>Web关联决策表设计</entry>
+            <entry>√</entry>
+            <entry>可以实现多对多的关系，支持以在线方式编辑业务规则，从而能够快速响应业务规则变更需求</entry>
+          </row>
+          <row>
+            <entry>业务规则版本管理</entry>
+            <entry>√</entry>
+            <entry>支持业务规则版本管理</entry>
+          </row>
+          
+          <row>
+            <entry morerows="4">web任务中心</entry>
+            <entry>流程发起中心</entry>
+            <entry>√</entry>
+            <entry>所有流程发起集中界面</entry>
+          </row>
+          <row>
+            <entry>待办任务管理</entry>
+            <entry>√</entry>
+            <entry>与登录者相关的任务处理操作</entry>
+          </row>
+          <row>
+            <entry>流程查询</entry>
+            <entry>√</entry>
+            <entry>流程综合查询界面</entry>
+          </row>
+          <row>
+            <entry>归档任务管理</entry>
+            <entry>√</entry>
+            <entry>对已经归档流程进行操作</entry>
+          </row>
+          <row>
+            <entry>委托代理</entry>
+            <entry>√</entry>
+            <entry>将自己的任务分配给其他人处理</entry>
+          </row>
+          
+          <row>
+            <entry morerows="4">web流程管理</entry>
+            <entry>实例管理</entry>
+            <entry>√</entry>
+            <entry>对流程提供多种控制手段，能进行创建、激活、终止、挂起等操作，还能删除流程一个实例和删除流程定义的所有运行实例</entry>
+          </row>
+          <row>
+            <entry>任务管理</entry>
+            <entry>√</entry>
+            <entry>管理员对任务进行领取、完成、退回、转发、暂停等等干预操作</entry>
+          </row>
+          <row>
+            <entry>Job管理</entry>
+            <entry>√</entry>
+            <entry>对定时任务进行统一管理</entry>
+          </row>
+          <row>
+            <entry>流程梳理库</entry>
+            <entry>√</entry>
+            <entry>在线管理流程文档的知识库，可以通过其链接到web流程设计器，并对流程定义发布或更新</entry>
+          </row>
+          <row>
+            <entry>Web流程设计器</entry>
+            <entry>√</entry>
+            <entry>可以在web上新建、修改、发布流程</entry>
+          </row>
+
+          
+         
+        </tbody>
+      </tgroup>
+    </table>
+</section>
+   -->
+  
+  <section xml:id="info.gn">
+    <title>FixFlow功能图</title>
+    <para>
+      <emphasis role="bold">橙色</emphasis>:可接入扩展
+    </para>
+    <para>
+      <emphasis role="bold">绿色</emphasis>:内置完整功能
+    </para>
+    <para>
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="700" fileref="images/info.gnt.png"/>
+      </imageobject></mediaobject>
+    </para>
+  </section>
+  <section xml:id="info.gj">
+    <title>FixFlow构架图</title>
+    <para>
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="900" fileref="images/info.gjt.png"/>
+      </imageobject></mediaobject>
+    </para>
+  </section>  
+  <section xml:id="info.sjq">
+    <title>FixFlow Eclipse流程设计器</title>
+    <para>
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="900" fileref="images/info.sjq.png"/>
+      </imageobject></mediaobject>
+    </para>
+  </section>  
+  <section xml:id="info.web.sjq">
+    <title>FixFlow Web流程设计器</title>
+    <para>
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="900" fileref="images/info.web.sjq.png"/>
+      </imageobject></mediaobject>
+    </para>
+  </section>  
+  
+  <section xml:id="info.TaskCenter">
+    <title>FixFlow 任务中心</title>
+    <para>
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="900" fileref="images/info.TaskCenter.png"/>
+      </imageobject></mediaobject>
+    </para>
+  </section>
+ 
+  <section xml:id="info.managercenter">
+    <title>FixFlow 管控中心</title>
+    <para>
+      <mediaobject><imageobject>
+        <imagedata align="center" contentwidth="900" fileref="images/info.managercenter.png"/>
+      </imageobject></mediaobject>
+    </para>
+  </section>
+
+  <section xml:id="license">
+    <title>授权</title>
+    <para>FixFlow Engine 使用了 <link xlink:href="../../license.txt">Apache V2 license 授权协议</link></para>
+  </section>
+  
+  <section xml:id="download">
+    <title>下载</title>
+    <para><link xlink:href="https://github.com/fixteam/fixflow">https://github.com/fixteam/fixflow</link></para>
+  </section>
+  
+  <section xml:id="sources">
+    <title>源码</title>
+    <para>FixFlow引擎代码托管在GitHub平台中,采用git来管理源代码,可以通过Git工具拉取源代码
+      <link xlink:href="https://github.com/fixteam/fixflow">GtiHub-FixFlow</link> 
+    </para>
+  </section>
+  
+  <section xml:id="required.software">
+    <title>所需要的软件</title>
+    <section>
+      <title>JDK 6+</title>
+      <para>FixFlow引擎支持 jdk1.5 1.6 1.7  jdk下载地址为   <link xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle Java SE downloads</link>
+      </para>
+    </section>
+    <section>
+      <title>Eclipse Juno</title>
+      <para>
+        FixFlow设计器插件能够在 Eclipse Juno SR2 版本中运行. <link xlink:href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2">Eclipse Juno SR2</link>
+      </para>
+    </section>
+    <section>
+      <title>Graphiti 0.8+</title>
+      <para>
+        在安装Fixflow设计器插件之前先要安装 Graphiti 框架 <link xlink:href="http://download.eclipse.org/graphiti/updates/0.9.2">Graphiti框架安装连接</link>
+      </para>
+    </section>
+    <section>
+      <title>Groovy Eclipse Plugin 4.2 and 3.8 (Juno)</title>
+      <para>
+        在安装Fixflow设计器插件之前先要安装 Groovy Eclipse Plugin<link xlink:href="http://dist.springsource.org/release/GRECLIPSE/e4.2/">Groovy Eclipse Plugin安装连接</link>
+      </para>
+    </section>
+    <section>
+      <title>FixFlow Eclipse Plugin (Juno)</title>
+      <para>
+        满足上面两个设计器要求之后就可以安装 FixFlow的 Eclipse 插件了<link xlink:href="https://github.com/fixflow/">Eclipse Eclipse Plugin 下载地址</link>
+      </para>
+    </section>
+  </section>
+  
+  <section xml:id="reporting.problems">
+    <title>报告问题</title>
+    <para>可以通过GitHub平台提供的issues功能来提交问题和bug。
+      <link xlink:href="https://github.com/fixteam/fixflow/issues">GtiHub issues</link>.
+    </para>
+  </section>
+
+</chapter>
+  
