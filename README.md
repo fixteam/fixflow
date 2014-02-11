@@ -134,6 +134,7 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 
 #引擎构架图
+Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设计,并基于BPMN2.0的执行语义设计。
 ![引擎构架图](http://images.cnitblog.com/blog/20120/201401/231607436798.png)
 
 #功能模块图
