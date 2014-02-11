@@ -27,6 +27,7 @@ import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
 import com.founder.fix.fixflow.explorer.impl.FlowExplorerServiceImpl;
 import com.founder.fix.fixflow.explorer.service.FlowExplorerService;
 import com.founder.fix.fixflow.explorer.util.FileAndDirectoryUtils;
+import com.founder.fix.fixflow.explorer.util.FileHandle;
 import com.founder.fix.fixflow.service.FlowCenterService;
  
 /**
@@ -92,6 +93,19 @@ public class FileAndDirectoryServlet extends BaseServlet {
 			success("创建成功!","string");
 		} catch (Exception e) {
 			error("创建失败："+e.getMessage());
+		}
+    }
+    
+    /**
+	 * 任务：将流文件写入到指定的目录下的指定文件
+	 */
+    public void writeFile2Address(){
+    	try {
+    		String msg =  FileHandle.updload(requestParm, responseParm, buildPath(), requestAttribute("fileName"));
+    		success(msg, "string");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+			error("文件写入到指定的目录下出错!");
 		}
     }
     
@@ -183,7 +197,10 @@ public class FileAndDirectoryServlet extends BaseServlet {
     
     public String buildPath(){
     	String loginId = session(FlowCenterService.LOGIN_USER_ID);
-		String path = request("path");	
+		String path = request("path");
+		if(path == null){
+			path = requestAttribute("path");
+		}
 		String [] pathArr = path.split(",");
 		String type = pathArr[0];
 		
