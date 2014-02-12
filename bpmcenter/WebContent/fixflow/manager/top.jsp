@@ -45,6 +45,7 @@
     	<ul tg="tg7" style="display:none;">
 	        <li><a id="doBPMAnalysis" href="#" onclick="bpa(this);">全量流程分析</a></li>
 	        <li><a id="doBPMAnalysisIncrement" href="#" onclick="bpa(this);">增量流程分析</a></li>
+	        <li><a id="doBPMAnalysisPush" href="#" onclick="bpa(this);">BPA数据发布</a></li>
         </ul>
     </div>
 </div>
