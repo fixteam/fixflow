@@ -17,7 +17,11 @@
  */
 package com.founder.fix.fixflow.config.to.bpaconf.datafeed;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 
@@ -29,6 +33,22 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
  */
 public class FixConfigDataFeeds extends FixConfigUnit {
 	private List<FixConfigDataFeed> dataFeed;
+	
+	private Map<String,FixConfigDataFeed> mapDataFeed = new HashMap<String,FixConfigDataFeed>();
+	
+	@XmlTransient
+	public Map<String, FixConfigDataFeed> getMapDataFeed() {
+		return mapDataFeed;
+	}
+
+	public void setMapDataFeed(Map<String, FixConfigDataFeed> mapItem) {
+		this.mapDataFeed = mapItem;
+	}
+	
+	@XmlTransient
+	public FixConfigDataFeed getDataFeed(String key){
+		return mapDataFeed.get(key);
+	}
 
 	public List<FixConfigDataFeed> getDataFeed() {
 		return dataFeed;
@@ -36,5 +56,8 @@ public class FixConfigDataFeeds extends FixConfigUnit {
 
 	public void setDataFeed(List<FixConfigDataFeed> dataFeed) {
 		this.dataFeed = dataFeed;
+		for(FixConfigDataFeed tmp:dataFeed){
+			mapDataFeed.put(tmp.getId(), tmp);
+		}
 	}
 }

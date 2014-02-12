@@ -33,24 +33,31 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
  *
  */
 public class FixConfigBPAConf extends FixConfigUnit{
-	private List<FixConfigBPAAnlysisEngine> analysisEngine;
-	
-	private Map<String,FixConfigBPAAnlysisEngine> mapAnalysisEngine = new HashMap<String,FixConfigBPAAnlysisEngine>();
+	private FixConfigBPAAnlysisEngine analysisEngine;
 
-
-	@XmlElements(value = { @XmlElement (name="analysisEngine",type=FixConfigBPAAnlysisEngine.class)})
-	public List<FixConfigBPAAnlysisEngine> getAnalysisEngine() {
+	public FixConfigBPAAnlysisEngine getAnalysisEngine() {
 		return analysisEngine;
 	}
 
-	public void setAnalysisEngine(List<FixConfigBPAAnlysisEngine> analysisEngine) {
+	public void setAnalysisEngine(FixConfigBPAAnlysisEngine analysisEngine) {
 		this.analysisEngine = analysisEngine;
-		for(FixConfigBPAAnlysisEngine tmp:analysisEngine){
-			mapAnalysisEngine.put(tmp.getId(), tmp);
-		}
 	}
+
+
 	
-	public FixConfigBPAAnlysisEngine getEngine(String key){
-		return mapAnalysisEngine.get(key);
-	}
+//	@XmlElements(value = { @XmlElement (name="analysisEngine",type=FixConfigBPAAnlysisEngine.class)})
+//	public List<FixConfigBPAAnlysisEngine> getAnalysisEngine() {
+//		return analysisEngine;
+//	}
+//
+//	public void setAnalysisEngine(List<FixConfigBPAAnlysisEngine> analysisEngine) {
+//		this.analysisEngine = analysisEngine;
+//		for(FixConfigBPAAnlysisEngine tmp:analysisEngine){
+//			mapAnalysisEngine.put(tmp.getId(), tmp);
+//		}
+//	}
+//	
+//	public FixConfigBPAAnlysisEngine getEngine(String key){
+//		return mapAnalysisEngine.get(key);
+//	}
 }

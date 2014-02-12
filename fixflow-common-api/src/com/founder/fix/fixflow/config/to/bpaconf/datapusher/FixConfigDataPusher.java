@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigProcessor;
 
 /**
@@ -33,7 +35,7 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigProcessor;
 public class FixConfigDataPusher extends FixConfigProcessor {
 	private List<FixConfigBPAMDX> mdx = new ArrayList<FixConfigBPAMDX>();
 	
-	private Map<String,FixConfigBPAMDX> mapItem = new HashMap<String,FixConfigBPAMDX>();
+	private Map<String,FixConfigBPAMDX> mapDataPusher = new HashMap<String,FixConfigBPAMDX>();
 	
 	private List<FixConfigBPAMDX> mdxTree = new ArrayList<FixConfigBPAMDX>();
 	
@@ -52,20 +54,22 @@ public class FixConfigDataPusher extends FixConfigProcessor {
 	public void setMdx(List<FixConfigBPAMDX> mdx) {
 		this.mdx = mdx;
 		for(FixConfigBPAMDX tmp:mdx){
-			mapItem.put(tmp.getId(), tmp);
+			mapDataPusher.put(tmp.getId(), tmp);
 		}
 	}
 
-	public Map<String, FixConfigBPAMDX> getMapItem() {
-		return mapItem;
+	@XmlTransient
+	public Map<String, FixConfigBPAMDX> getMapDataPusher() {
+		return mapDataPusher;
 	}
 
-	public void setMapItem(Map<String, FixConfigBPAMDX> mapItem) {
-		this.mapItem = mapItem;
+	public void setMapDataPusher(Map<String, FixConfigBPAMDX> mapItem) {
+		this.mapDataPusher = mapItem;
 	}
 	
+	@XmlTransient
 	public FixConfigBPAMDX getMdx(String id){
-		return mapItem.get(id);
+		return mapDataPusher.get(id);
 	}
 	
 }

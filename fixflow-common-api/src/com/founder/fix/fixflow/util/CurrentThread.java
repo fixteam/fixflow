@@ -91,7 +91,7 @@ public class CurrentThread {
 			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
 				DBConnection td = tmp.getValue();
 				if(td!=null){
-					td.closeAndRockBack();
+					td.closeAndRollBack();
 				}
 			}
 			getThreadDBPool().set(null);

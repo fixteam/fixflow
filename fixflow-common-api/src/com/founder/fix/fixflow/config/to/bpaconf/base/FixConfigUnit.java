@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @ClassName: Item
@@ -39,6 +40,15 @@ public class FixConfigUnit {
 	private List<FixConfigItem> item = new ArrayList<FixConfigItem>();
 	
 	private Map<String,FixConfigItem> mapItem = new HashMap<String,FixConfigItem>();
+
+	@XmlTransient
+	public Map<String, FixConfigItem> getMapItem() {
+		return mapItem;
+	}
+
+	public void setMapItem(Map<String, FixConfigItem> mapItem) {
+		this.mapItem = mapItem;
+	}
 
 	public List<FixConfigItem> getItem() {
 		return item;

@@ -42,7 +42,23 @@ public class DBConnection {
 		}
 	}
 	
-	public void closeAndRockBack() throws SQLException{
+	public void commit() throws SQLException{
+		if (connection != null && connection.isClosed()==false){
+			if(connection.getAutoCommit()==false){
+				connection.commit();
+			}
+		}
+	}
+	
+	public void rollBack() throws SQLException{
+		if (connection != null && connection.isClosed()==false){
+			if(connection.getAutoCommit()==false){
+				connection.rollback();
+			}
+		}
+	}
+	
+	public void closeAndRollBack() throws SQLException{
 		if (connection != null && connection.isClosed()==false){
 			if(connection.getAutoCommit()==false){
 				connection.rollback();

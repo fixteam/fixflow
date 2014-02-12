@@ -20,6 +20,8 @@ package com.founder.fix.fixflow.config.to.bpaconf;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigBPATigger;
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 import com.founder.fix.fixflow.config.to.bpaconf.datafeed.FixConfigDataFeeds;
@@ -78,7 +80,8 @@ public class FixConfigBPAAnlysisEngine extends FixConfigUnit {
 		}
 	}
 	
-	public void processMDXTree(FixConfigBPAMDX node,List<FixConfigBPAMDX> list){
+	@XmlTransient
+	private void processMDXTree(FixConfigBPAMDX node,List<FixConfigBPAMDX> list){
 		for(int i=list.size()-1;i>=0;i--){
 			FixConfigBPAMDX tmp = list.get(i);
 			if(node.getId().equals(tmp.getParentId())){
