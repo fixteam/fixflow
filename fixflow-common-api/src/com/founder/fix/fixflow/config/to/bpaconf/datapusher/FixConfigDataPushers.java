@@ -17,9 +17,14 @@
  */
 package com.founder.fix.fixflow.config.to.bpaconf.datapusher;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
+import com.founder.fix.fixflow.config.to.bpaconf.datafeed.FixConfigDataFeed;
 
 /**
  * @ClassName: FixConfigDataFeed
@@ -29,6 +34,8 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
  */
 public class FixConfigDataPushers extends FixConfigUnit {
 	private List<FixConfigDataPusher> dataPusher;
+	
+	private Map<String,FixConfigDataPusher> mapDataPush = new HashMap<String,FixConfigDataPusher>();
 
 	public List<FixConfigDataPusher> getDataPusher() {
 		return dataPusher;
@@ -36,5 +43,22 @@ public class FixConfigDataPushers extends FixConfigUnit {
 
 	public void setDataPusher(List<FixConfigDataPusher> dataPusher) {
 		this.dataPusher = dataPusher;
+		for(FixConfigDataPusher tmp:dataPusher){
+			mapDataPush.put(tmp.getId(), tmp);
+		}
+	}
+	
+	@XmlTransient
+	public Map<String, FixConfigDataPusher> getMapDataPush() {
+		return mapDataPush;
+	}
+
+	public void setMapDataPush(Map<String, FixConfigDataPusher> mapItem) {
+		this.mapDataPush = mapItem;
+	}
+	
+	@XmlTransient
+	public FixConfigDataPusher getDataPusher(String key){
+		return mapDataPush.get(key);
 	}
 }
