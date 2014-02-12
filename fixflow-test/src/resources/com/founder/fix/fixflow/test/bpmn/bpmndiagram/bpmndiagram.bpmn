@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_SVFsoM7PEeCP2qZt0MbnYg" name="bpmndiagram">
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="_SVFsoM7PEeCP2qZt0MbnYg" name="bpmndiagram">
   <collaboration id="_SVFsoc7PEeCP2qZt0MbnYg">
     <participant id="_SVFsos7PEeCP2qZt0MbnYg" name="Internal" processRef="_SVNocM7PEeCP2qZt0MbnYg"/>
   </collaboration>
-  <process id="bpmndiagramTest" name="流程图形定义测试">
+  <process id="bpmndiagramTest" fixflow:verification="false" name="流程图形定义测试">
     <startEvent id="StartEvent1" name="开始">
       <outgoing>SequenceFlow1</outgoing>
     </startEvent>
     <sequenceFlow id="SequenceFlow1" name="测试线条" sourceRef="StartEvent1" targetRef="EndEvent1">
-      <documentation id="_b6zpsM7PEeCP2qZt0MbnYg"></documentation>
+      <documentation id="_b6zpsM7PEeCP2qZt0MbnYg"/>
     </sequenceFlow>
     <endEvent id="EndEvent1" name="结束">
       <incoming>SequenceFlow1</incoming>

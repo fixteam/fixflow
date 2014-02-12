@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  <bpmn2:process id="SubProcessTest" fixflow:verification="true" fixflow:dbid="SubProcessTest:1:fd939fb9-a377-4878-8e66-da7056e72c16" name="内部子流程测试流程">
+  <bpmn2:process id="SubProcessTest" fixflow:verification="false" fixflow:dbid="SubProcessTest:1:fd939fb9-a377-4878-8e66-da7056e72c16" name="内部子流程测试流程">
     <bpmn2:extensionElements>
       <fixflow:taskSubject id="TaskSubject_1">
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;内部子流程测试流程&quot;">&quot;内部子流程测试流程&quot;</fixflow:expression>
@@ -97,6 +97,9 @@
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default 流程定义">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SubProcessTest">
+      <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds height="260.0" width="378.0" x="88.0" y="151.0"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1">
         <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
       </bpmndi:BPMNShape>
@@ -109,27 +112,6 @@
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="548.0" y="363.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
-        <di:waypoint xsi:type="dc:Point" x="98.0" y="75.0"/>
-        <di:waypoint xsi:type="dc:Point" x="153.0" y="75.0"/>
-        <di:waypoint xsi:type="dc:Point" x="153.0" y="75.0"/>
-        <di:waypoint xsi:type="dc:Point" x="222.0" y="75.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
-        <dc:Bounds height="260.0" width="378.0" x="88.0" y="151.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_SubProcess_1">
-        <di:waypoint xsi:type="dc:Point" x="277.0" y="100.0"/>
-        <di:waypoint xsi:type="dc:Point" x="277.0" y="122.0"/>
-        <di:waypoint xsi:type="dc:Point" x="277.0" y="122.0"/>
-        <di:waypoint xsi:type="dc:Point" x="277.0" y="151.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_SubProcess_1" targetElement="BPMNShape_UserTask_4">
-        <di:waypoint xsi:type="dc:Point" x="466.0" y="281.0"/>
-        <di:waypoint xsi:type="dc:Point" x="486.0" y="281.0"/>
-        <di:waypoint xsi:type="dc:Point" x="486.0" y="281.0"/>
-        <di:waypoint xsi:type="dc:Point" x="511.0" y="281.0"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_2">
         <dc:Bounds height="36.0" width="36.0" x="110.0" y="203.0"/>
       </bpmndi:BPMNShape>
@@ -142,6 +124,27 @@
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
         <dc:Bounds height="36.0" width="36.0" x="370.0" y="284.0"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_4" bpmnElement="UserTask_4">
+        <dc:Bounds height="50.0" width="110.0" x="511.0" y="256.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
+        <di:waypoint xsi:type="dc:Point" x="98.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="153.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="153.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="222.0" y="75.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_SubProcess_1">
+        <di:waypoint xsi:type="dc:Point" x="277.0" y="100.0"/>
+        <di:waypoint xsi:type="dc:Point" x="277.0" y="122.0"/>
+        <di:waypoint xsi:type="dc:Point" x="277.0" y="122.0"/>
+        <di:waypoint xsi:type="dc:Point" x="277.0" y="151.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_SubProcess_1" targetElement="BPMNShape_UserTask_4">
+        <di:waypoint xsi:type="dc:Point" x="466.0" y="281.0"/>
+        <di:waypoint xsi:type="dc:Point" x="486.0" y="281.0"/>
+        <di:waypoint xsi:type="dc:Point" x="486.0" y="281.0"/>
+        <di:waypoint xsi:type="dc:Point" x="511.0" y="281.0"/>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_UserTask_2">
         <di:waypoint xsi:type="dc:Point" x="146.0" y="221.0"/>
         <di:waypoint xsi:type="dc:Point" x="174.0" y="221.0"/>
@@ -160,9 +163,6 @@
         <di:waypoint xsi:type="dc:Point" x="342.0" y="302.0"/>
         <di:waypoint xsi:type="dc:Point" x="370.0" y="302.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_4" bpmnElement="UserTask_4">
-        <dc:Bounds height="50.0" width="110.0" x="511.0" y="256.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_UserTask_4" targetElement="BPMNShape_EndEvent_1">
         <di:waypoint xsi:type="dc:Point" x="566.0" y="306.0"/>
         <di:waypoint xsi:type="dc:Point" x="566.0" y="331.0"/>
