@@ -67,7 +67,6 @@ public class FixConfigDataPusher extends FixConfigProcessor {
 		this.mapDataPusher = mapItem;
 	}
 	
-	@XmlTransient
 	public FixConfigBPAMDX getMdx(String id){
 		return mapDataPusher.get(id);
 	}

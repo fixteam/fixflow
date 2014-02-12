@@ -56,8 +56,7 @@ public class FixConfigDataPushers extends FixConfigUnit {
 	public void setMapDataPush(Map<String, FixConfigDataPusher> mapItem) {
 		this.mapDataPush = mapItem;
 	}
-	
-	@XmlTransient
+
 	public FixConfigDataPusher getDataPusher(String key){
 		return mapDataPush.get(key);
 	}

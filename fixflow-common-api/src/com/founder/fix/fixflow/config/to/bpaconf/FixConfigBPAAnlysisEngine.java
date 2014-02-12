@@ -80,7 +80,6 @@ public class FixConfigBPAAnlysisEngine extends FixConfigUnit {
 		}
 	}
 	
-	@XmlTransient
 	private void processMDXTree(FixConfigBPAMDX node,List<FixConfigBPAMDX> list){
 		for(int i=list.size()-1;i>=0;i--){
 			FixConfigBPAMDX tmp = list.get(i);

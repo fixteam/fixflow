@@ -45,7 +45,6 @@ public class FixConfigDataFeeds extends FixConfigUnit {
 		this.mapDataFeed = mapItem;
 	}
 	
-	@XmlTransient
 	public FixConfigDataFeed getDataFeed(String key){
 		return mapDataFeed.get(key);
 	}
