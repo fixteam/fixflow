@@ -25018,7 +25018,7 @@ ORYX.Plugins.Save = Clazz.extend({
 			method			: "POST",
 			timeout			: 1800000,
 			disableCaching	: true,
-			headers			: {'Accept':"application/json", 'Content-Type':'charset=UTF-8'},
+			headers			: {'Accept':"application/json", 'Content-Type':'text/html;charset=UTF-8'},
 			params			: params,
 			success			: success,
 			failure			: failure
