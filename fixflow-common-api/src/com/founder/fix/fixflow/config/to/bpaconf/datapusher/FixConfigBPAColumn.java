@@ -28,14 +28,16 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
  *
  */
 public class FixConfigBPAColumn extends FixConfigUnit {
-	private String name;
-
+	private String targetId;
+	
 	@XmlAttribute
-	public String getName() {
-		return name;
+	public String getTargetId() {
+		return targetId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTargetId(String targetId) {
+		this.targetId = targetId;
 	}
+
+
 }
