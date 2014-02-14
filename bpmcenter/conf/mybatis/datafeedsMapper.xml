@@ -499,7 +499,11 @@
     </select>
     
 	<select id="flowInstances" resultType="java.util.Map">
-		select PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME,USER_NAME,END_TIME,INSTANCE_STATUS 
+		select
+	    <if test="orderColumn != null and orderColumn!=''">  
+      		top 10000000 
+      	</if> 
+		 PROCESSINSTANCE_ID,BIZ_KEY,PROCESSDEFINITION_KEY,PROCESS_NAME,SUBJECT,START_TIME,WORK_TIME,USER_NAME,END_TIME,INSTANCE_STATUS 
 
 		from FIXBPA_FLOW_PROCESSINSTANCE
 		where 1=1
