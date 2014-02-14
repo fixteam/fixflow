@@ -136,29 +136,19 @@
 			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datafeeds/src</locationURI>
 		</link>
 		<link>
-			<name>bpadatafeedslib</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datafeeds/lib</locationURI>
-		</link>
-		<link>
-			<name>bpadatafeedsconf</name>
-			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datafeeds/conf</locationURI>
-		</link>
-		<link>
 			<name>bpadatapushersrc</name>
 			<type>2</type>
 			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datapusher/src</locationURI>
 		</link>
 		<link>
-			<name>bpadatapusherpage</name>
+			<name>bpapage</name>
 			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datapusher/page</locationURI>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-dataanalysis/page</locationURI>
 		</link>
 		<link>
-			<name>bpadatapusherlib</name>
+			<name>bpalib</name>
 			<type>2</type>
-			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-datapusher/lib</locationURI>
+			<locationURI>GIT_FIXFLOW_ADV_HOME/fixflow-bpa-dataanalysis/lib</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

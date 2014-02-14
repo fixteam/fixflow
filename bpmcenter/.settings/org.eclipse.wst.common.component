@@ -16,18 +16,19 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowcoreconf"/>
         <wb-resource deploy-path="/" source-path="/fixflowbpawebcontent"/>
         <wb-resource deploy-path="/" source-path="/fixflowexplorerwebcontent"/>
-        <wb-resource deploy-path="/" source-path="/bpadatapusherpage"/>
-       <wb-resource deploy-path="/WEB-INF/lib" source-path="/bpadatapusherlib"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapusherlib"/>
-        <wb-resource deploy-path="/WEB-INF/lib" source-path="/bpadatafeedslib"/>
+       <wb-resource deploy-path="/WEB-INF/lib" source-path="/bpalib"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatafeedsconf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowbpasrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowbpawebcontent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysissrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpaanalysisconf"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatafeedssrc"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapushersrc"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bpadatapusherpage"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowconvertersrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorsrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixfloweditorwebcontent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorersrc"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/fixflowexplorerwebcontent"/>
+        <wb-resource deploy-path="/" source-path="/bpapage"/>
         
         <property name="context-root" value="bpmcenter"/>
         <property name="java-output-path" value="/bpmcenter/build/classes"/>
