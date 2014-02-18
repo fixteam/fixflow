@@ -1555,7 +1555,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
      * @generated
      */
     public SendTask createSendTask() {
-        SendTaskImpl sendTask = BpmnElement.getInstance(BpmnElement.SendTask);
+        SendTaskImpl sendTask = new SendTaskImpl();//BpmnElement.getInstance(BpmnElement.SendTask);
         return sendTask;
     }
 
