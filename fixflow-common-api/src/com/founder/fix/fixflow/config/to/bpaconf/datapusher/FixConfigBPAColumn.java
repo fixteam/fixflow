@@ -30,6 +30,8 @@ import com.founder.fix.fixflow.config.to.bpaconf.base.FixConfigUnit;
 public class FixConfigBPAColumn extends FixConfigUnit {
 	private String targetId;
 	
+	private String type;
+	
 	@XmlAttribute
 	public String getTargetId() {
 		return targetId;
@@ -39,5 +41,15 @@ public class FixConfigBPAColumn extends FixConfigUnit {
 		this.targetId = targetId;
 	}
 
+	@XmlAttribute
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	
 }
