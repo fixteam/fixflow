@@ -22,7 +22,7 @@
 				<dataPusher id="analysisDataPusherExcel" engine="analysisDataPusherExcel">
 					<tigger value="234"/>
 					<workspace>
-						<source key="bpmDB" value="DB_BPA_BASE"/>
+						<source key="bpmDB" value="BPA_OLAP_DS"/>
 					</workspace>
 					<outPutDB value="D:/test.xls"/>
 					
