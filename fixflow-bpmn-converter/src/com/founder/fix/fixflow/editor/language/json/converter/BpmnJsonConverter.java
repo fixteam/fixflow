@@ -18,6 +18,7 @@
  */
 package com.founder.fix.fixflow.editor.language.json.converter;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,8 +55,10 @@ import com.founder.fix.fixflow.editor.language.json.converter.StartEventJsonConv
 import com.founder.fix.fixflow.editor.language.json.converter.SubProcessJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.ThrowEventJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.UserTaskJsonConverter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -83,6 +86,7 @@ import org.eclipse.dd.di.DiagramElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
@@ -99,6 +103,7 @@ import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.editor.constants.EditorJsonConstants;
 import com.founder.fix.fixflow.editor.constants.StencilConstants;
+import com.founder.fix.fixflow.editor.language.json.converter.elements.ConnectorInstanceElm;
 import com.founder.fix.fixflow.editor.language.json.converter.util.JsonConverterUtil;
 
 
@@ -202,8 +207,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
    * 将模型转换成json数据
    * @param model
    * @return
+ * @throws IllegalAccessException 
+ * @throws InstantiationException 
    */
-  public ObjectNode convertToJson(Definitions model) {
+  public ObjectNode convertToJson(Definitions model) throws InstantiationException, IllegalAccessException {
     ObjectNode modelNode = objectMapper.createObjectNode();
     modelNode.put("bounds", BpmnJsonConverterUtil.createBoundsNode(1485, 1050, 0, 0));
     modelNode.put("resourceId", "canvas");
@@ -275,6 +282,9 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     	datavariableNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
         propertiesNode.put(PROPERTY_PROCESS_DATAVARIABLE, datavariableNode);
     }
+    
+    ConnectorInstanceElm cie = new ConnectorInstanceElm();
+    propertiesNode.put(PROPERTY_CONNECTORINSTANCE, cie.convertElementToJson(mainProcess));
     
     propertiesNode.put(PROPERTY_PROCESS_NAMESPACE, model.getTargetNamespace());
     
@@ -398,8 +408,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
    * 将json数据转换为definitions
    * @param modelNode
    * @return
+ * @throws IOException 
+ * @throws JsonProcessingException 
    */
-  public Definitions convertToBpmnModel(JsonNode modelNode) {
+  public Definitions convertToBpmnModel(JsonNode modelNode) throws JsonProcessingException, IOException {
 	  //加载一个空的definitions
 	  
 	  InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("com/founder/fix/fixflow/editor/language/node_template.bpmn");
@@ -501,6 +513,13 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	    	  bpmnModel.setTargetNamespace(processTargetNamespace.asText());
 	      }
 	     
+	      ConnectorInstanceElm cie = new ConnectorInstanceElm();
+	      List<ConnectorInstance> list_ci = cie.convertJsonToElement(modelNode);
+	      for (int i = 0; i < list_ci.size(); i++) {
+	    	  BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
+	      }
+
+	      
 	      processJsonElements(shapesArrayNode, modelNode, process, shapeMap,sourceAndTargetMap,bpmnModel);
 	  }
     

@@ -18,9 +18,11 @@
  */
 package com.founder.fix.fixflow.editor.language;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.Definitions;
@@ -36,7 +38,7 @@ public abstract class AbstractConverterTest {
     return bpmnModel;
   }
   
-  protected Definitions convertToJsonAndBack(Definitions bpmnModel) {
+  protected Definitions convertToJsonAndBack(Definitions bpmnModel) throws InstantiationException, IllegalAccessException, JsonProcessingException, IOException {
     ObjectNode modelNode = new BpmnJsonConverter().convertToJson(bpmnModel);
     bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
     return bpmnModel;

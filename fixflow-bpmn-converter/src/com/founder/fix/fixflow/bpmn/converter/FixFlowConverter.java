@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.node.ObjectNode;
 import org.dom4j.Document;
 import org.eclipse.bpmn2.Bpmn2Package;
@@ -64,8 +65,10 @@ public class FixFlowConverter {
 	 * @param processKey
 	 * @param input
 	 * @return
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public ObjectNode convertBpmn2Json(String processKey,InputStream input){
+	public ObjectNode convertBpmn2Json(String processKey,InputStream input) throws InstantiationException, IllegalAccessException{
 		Definitions model = getDefinitions(processKey,input);
 		BpmnJsonConverter converter = new BpmnJsonConverter();
 		ObjectNode jsonNode = converter.convertToJson(model);
@@ -77,8 +80,10 @@ public class FixFlowConverter {
 	 * @param processKey
 	 * @param input
 	 * @return
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public ObjectNode convertDefinitions2Json(Definitions definitions){
+	public ObjectNode convertDefinitions2Json(Definitions definitions) throws InstantiationException, IllegalAccessException{
 		BpmnJsonConverter converter = new BpmnJsonConverter();
 		ObjectNode jsonNode = converter.convertToJson(definitions);
 		return jsonNode;
@@ -154,8 +159,10 @@ public class FixFlowConverter {
 	 * 将jsonNode转换并保存成bpmn文件
 	 * @param modelNode
 	 * @param uri
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
 	 */
-	public void save(JsonNode modelNode,URI uri){
+	public void save(JsonNode modelNode,URI uri) throws JsonProcessingException, IOException{
 		Definitions defintion = new BpmnJsonConverter().convertToBpmnModel(modelNode);
 		save(defintion,uri);
 	}
