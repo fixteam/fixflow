@@ -3,7 +3,7 @@
 	<bpaConf>
 		<analysisEngine id="flowProcessAnalysis">
 			<dataFeeds id="flowProcessAnalysis">
-				<!-- 抽取时间维度 
+				<!-- 抽取时间维度  -->
 				<dataFeed id="dimDateDataFeed" engine="dimDateDataFeed">
 					<tigger value="234"/>
 					<workspace>
@@ -45,7 +45,7 @@
 		       	 			SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE ASSIGNEE IS NOT NULL
 		    			</value>
 					</item>
-				</dataFeed>-->
+				</dataFeed>
 				<dataFeed id="dimOrg" engine="dimOrgDataFeed">
 					<tigger value="234"/>
 					<workspace>
