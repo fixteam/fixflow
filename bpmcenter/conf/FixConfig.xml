@@ -11,8 +11,7 @@
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
 				</dataFeed>
-				
-				
+
 				<dataFeed id="processDef" engine="processDefDataFeed">
 					<tigger value="234"/>
 					<workspace>
@@ -27,6 +26,12 @@
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
+					<item>
+					    <key>FIXFLOW_RUN_PROCESSINSTANECE</key>
+					    <value>
+					        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM FIXFLOW_RUN_PROCESSINSTANECE FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
+					    </value>
+					</item>
 				</dataFeed>
 				<dataFeed id="taskInstance" engine="taskInstanceDataFeed">
 					<tigger value="234"/>
@@ -34,6 +39,12 @@
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
+					<item>
+		    			<key>FIXFLOW_RUN_TASKINSTANCE</key>
+		    			<value>
+		       	 			SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE ASSIGNEE IS NOT NULL
+		    			</value>
+					</item>
 				</dataFeed>-->
 				<dataFeed id="dimOrg" engine="dimOrgDataFeed">
 					<tigger value="234"/>
@@ -57,88 +68,90 @@
 					<!-- 人员信息和组织的直属关系 -->
 					<item>
 						<key>noLevelGroup</key>
-						<value>select APP_USER.ID as USERID,APP_USER.NAME as USERNAME, APP_GROUP.ID as GROUPID,APP_GROUP.NAME as GROUPNAME
-,APP_GROUP.FATHERID as PARENTGROUPID,APP_GROUP.GROUPTYPE as GROUPTYPE
-from APP_USER left join APP_GROUPUSER on APP_USER.ID = APP_GROUPUSER.USERID left join APP_GROUP
-on APP_GROUP.ID = APP_GROUPUSER.GROUPID</value>
+						<value>
+							select APP_USER.ID as USERID,APP_USER.NAME as USERNAME, APP_GROUP.ID as GROUPID,APP_GROUP.NAME as GROUPNAME
+							,APP_GROUP.FATHERID as PARENTGROUPID,APP_GROUP.GROUPTYPE as GROUPTYPE
+							from APP_USER left join APP_GROUPUSER on APP_USER.ID = APP_GROUPUSER.USERID left join APP_GROUP
+							on APP_GROUP.ID = APP_GROUPUSER.GROUPID
+						</value>
 					</item>
 				</dataFeed>
 			</dataFeeds>
-			<dataPushers id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
-				<dataPusher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+			<dataPushers>
+				<dataPusher id="analysisDataPusherExcel" engine="analysisDataPusherExcel">
 					<tigger value="234"/>
 					<workspace>
-						<source key="bpmDB" value="DB_BPA_BASE"/>
+						<source key="bpmDB" value="BPA_OLAP_DS"/>
 					</workspace>
-					<outPutDB value="DB_BPA_BASE2"/>
-				</dataPusher>
-				<dataPusher id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
-					<tigger value="234"/>
-					<workspace>
-						<source key="bpmDB" value="DB_BPA_BASE"/>
-					</workspace>
-					<outPutDB value="DB_BPA_BASE2"/>
-					<mdx id="123" parentId="312" target="54">
+					<outPutDB value="D:/test.xls"/>
+					
+					<mdx id="1.1" target="olap1">
 						<columns>
-							<column id="54" name="45"/>
-							<column id="45" name="45"/>
+							<column id="PROCESS_NAME" targetId="process_name" type="varchar(50)"/>
+							<column id="ALL_COUNT" targetId="all_count" type="Double"/>						
 						</columns>
 						<content>
-							23fsdfasdfasdfsadfadsfasdf
+							select {Measures.[ALL_COUNT]} ON COLUMNS, 
+							{[PROCESSDEFINITION_DEFKEY].MEMBERS} ON ROWS 
+							from PROCESSINSTANCE_CUBE  							
 						</content>
 					</mdx>
-					<mdx id="12333" parentId="312" target="54">
+		 		
+					<mdx id="1.2"  target="olap2">
 						<columns>
-							<column id="54" name="45"/>
-							<column id="45" name="45"/>
+							<column id="PROCESSDEFINITION_ID" targetId="processdefinition_id" type="varchar(500)"/>
+							<column id="PROCESS_NAME" targetId="process_name" type="varchar(50)"/>
+							<column id="ALL_COUNT" targetId="all_count" type="numeric(18,0)"/>						
 						</columns>
 						<content>
-							23fsdfasdfasdfsadfadsfasdf
+							select {Measures.[ALL_COUNT]} ON COLUMNS, 
+							{[PROCESSDEFINITION_DEFKEY].[ApplyBusinessCard].CHILDREN} ON ROWS 
+							from PROCESSINSTANCE_CUBE  							
 						</content>
 					</mdx>
-					<mdx id="1233333" parentId="12333" target="54">
+		<!--	-->								
+					<mdx id="2.1" parentId = "1.2" target="olap3">
 						<columns>
-							<column id="54" name="45"/>
-							<column id="45" name="45"/>
+							<column id="NODE_ID" targetId="node_id" type="varchar(50)"/>
+							<column id="NODE_NAME" targetId="node_name" type="varchar(50)"/>
+							<column id="ALL_COUNT" targetId="all_count" type="numeric(18,0)"/>						
 						</columns>
 						<content>
-							23fsdfasdfasdfsadfadsfasdf
+							select {Measures.[ALL_COUNT], Measures.[DONE_COUNT]} ON COLUMNS, 
+							{PROCESS_DEF.[PROCESSDEFINITION_ID].[{$parentMDX.PROCESSDEFINITION_ID}].CHILDREN} ON ROWS 
+							from task_instance_cube  							
 						</content>
-					</mdx>
-					<mdx id="312" parentId="" target="54">
-						<columns>
-							<column id="54" name="45"/>
-							<column id="45" name="45"/>
+					</mdx>	
+					
+					<mdx id="3.1" parentId = "2.1" target="olap4">
+						<columns>							
+							<column id="NODE_ID" targetId="node_id" type="varchar(50)"/>	
+							<column id="USER_NAME" targetId="user_name" type="varchar(50)"/>						
+							<column id="ALL_COUNT" targetId="all_count" type="numeric(18,0)"/>						
 						</columns>
 						<content>
-							23fsdfasdfasdfsadfadsfasdf
+							select {Measures.[ALL_COUNT],Measures.[DONE_COUNT]} ON COLUMNS,
+							Filter([USER_ID].MEMBERS,Measures.[ALL_COUNT] >0) ON ROWS 
+							from task_instance_cube  
+							where ([PROCESSDEFINITION_ID].[ApplyBusinessCard:1:3ce5ad1c-cb9e-4169-a720-3287f2669e05].[{$parentMDX.NODE_ID}])							
 						</content>
-					</mdx>
-					<mdx id="3123" parentId="" target="54">
+					</mdx>	
+					
+					<mdx id="3.2" parentId = "2.1" target="olap2">
 						<columns>
-							<column id="54" name="45"/>
-							<column id="45" name="45"/>
+							<column id="PROCESSDEFINITION_ID" targetId="processdefinition_id" type="varchar(500)"/>
+							<column id="PROCESS_NAME" targetId="process_name" type="varchar(50)" />
+							<column id="ALL_COUNT" targetId="all_count" type="numeric(18,0)"/>						
 						</columns>
 						<content>
-							23fsdfasdfasdfsadfadsfasdf
+							select {Measures.[ALL_COUNT]} ON COLUMNS, 
+							{[PROCESSDEFINITION_DEFKEY].[applycar].CHILDREN} ON ROWS 
+							from PROCESSINSTANCE_CUBE  							
 						</content>
 					</mdx>
+			
 				</dataPusher>
 			</dataPushers>
 		</analysisEngine>
 	</bpaConf>
-		<item>
-		    <!-- 从流程实例中抽取数据 -->
-		    <key>FIXFLOW_RUN_PROCESSINSTANCE</key>
-		    <value>
-		        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM FIXFLOW_RUN_PROCESSINSTANCE FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
-		    </value>
-		</item>
-		<item>
-		    <!-- 从任务实例中抽取数据 -->
-		    <key>FIXFLOW_RUN_TASKINSTANCE</key>
-		    <value>
-		        SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE ASSIGNEE IS NOT NULL
-		    </value>
-		</item>
 </fixConfig>

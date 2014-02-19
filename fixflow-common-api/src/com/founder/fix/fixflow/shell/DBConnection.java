@@ -33,6 +33,15 @@ public class DBConnection {
 	
 	private Pagination pageination;
 	
+	public boolean isEnable() throws SQLException{
+		boolean result = false;
+		if (connection != null && connection.isClosed()==false){
+			result=true;
+		}
+		
+		return result;
+	}
+	
 	public void close() throws SQLException{
 		if (connection != null && connection.isClosed()==false){
 			if(connection.getAutoCommit()==false){
