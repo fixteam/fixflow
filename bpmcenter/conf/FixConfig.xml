@@ -78,17 +78,17 @@
 				</dataFeed>
 			</dataFeeds>
 			<dataPushers>
-				<dataPusher id="analysisDataPusherExcel" engine="analysisDataPusherExcel">
+				<dataPusher id="analysisDataPusherDB" engine="analysisDataPusherDB">
 					<tigger value="234"/>
 					<workspace>
 						<source key="bpmDB" value="BPA_OLAP_DS"/>
 					</workspace>
-					<outPutDB value="D:/test.xls"/>
+					<outPutDB value="DB_BPA_BASE2"/>
 					
 					<mdx id="1.1" target="olap1">
 						<columns>
 							<column id="PROCESS_NAME" targetId="process_name" type="varchar(50)"/>
-							<column id="ALL_COUNT" targetId="all_count" type="Double"/>						
+							<column id="ALL_COUNT" targetId="all_count" type="varchar(50)"/>						
 						</columns>
 						<content>
 							select {Measures.[ALL_COUNT]} ON COLUMNS, 
