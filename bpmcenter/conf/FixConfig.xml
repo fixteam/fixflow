@@ -19,7 +19,7 @@
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
 				</dataFeed>
-				 
+				
 				<dataFeed id="processInstance" engine="processInstanceDataFeed">
 					<tigger value="234"/>
 					<workspace>
@@ -29,7 +29,7 @@
 					<item>
 					    <key>FIXFLOW_RUN_PROCESSINSTANECE</key>
 					    <value>
-					        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM FIXFLOW_RUN_PROCESSINSTANECE FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
+					        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM FIXFLOW_RUN_PROCESSINSTANCE FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
 					    </value>
 					</item>
 				</dataFeed>
@@ -42,7 +42,7 @@
 					<item>
 		    			<key>FIXFLOW_RUN_TASKINSTANCE</key>
 		    			<value>
-		       	 			SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE ASSIGNEE IS NOT NULL
+		       	 			SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ASSIGNEE IS NOT NULL
 		    			</value>
 					</item>
 				</dataFeed>
@@ -55,9 +55,11 @@
 					<!-- 已经有层次的组织结构，人员信息具有从最顶层组织到它直属组织的信息都已经存在 -->
 					<!-- 例子: select a as USERID,b as USERNAME, c as GROUPID , d as GROUPNAME, e as PARENTGROUPID, f as GROUPTYPE, g as ISPROPERTY from xxxx  -->
 					<!-- ISPROPERTY 标识当前用户和组织是否是直属的关系，1表示直属，0表示非直属 -->
+					
 					<item>
 						<key>hasLevelGroup</key>
-						<value></value>
+						<!-- true 标识有层次结构的数据，false标识无层次结构的数据，如果不填写默认为true -->
+						<value>true</value>
 					</item>
 					<!-- 只存在人员信息和它直属组织的关系，并且组织之间具有父子关系 -->
 					<!-- 组织之间的父子关系 -->
@@ -67,7 +69,7 @@
 					</item>
 					<!-- 人员信息和组织的直属关系 -->
 					<item>
-						<key>noLevelGroup</key>
+						<key>groupInfo</key>
 						<value>
 							select APP_USER.ID as USERID,APP_USER.NAME as USERNAME, APP_GROUP.ID as GROUPID,APP_GROUP.NAME as GROUPNAME
 							,APP_GROUP.FATHERID as PARENTGROUPID,APP_GROUP.GROUPTYPE as GROUPTYPE
