@@ -53,7 +53,6 @@
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
-
 					<!-- 人员信息和组织的直属关系 -->
 					<item>
 						<key>groupInfo</key>
@@ -70,6 +69,10 @@
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
+					<item>
+						<key>deleteCondition</key>
+						<value>GROUPTYPE = 'org'</value>
+					</item>
 					<!-- 已经有层次的组织结构，人员信息具有从最顶层组织到它直属组织的信息都已经存在 -->
 					<!-- 例子: select a as USERID,b as USERNAME, c as GROUPID , d as GROUPNAME, e as PARENTGROUPID, f as GROUPTYPE, g as ISPROPERTY from xxxx  -->
 					<!-- ISPROPERTY 标识当前用户和组织是否是直属的关系，1表示直属，0表示非直属 -->
@@ -111,6 +114,11 @@
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
+					<!-- 删除时候的条件 -->
+					<item>
+						<key>deleteCondition</key>
+						<value>GROUPTYPE = 'role'</value>
+					</item>
 					<!-- 已经有层次的组织结构，人员信息具有从最顶层组织到它直属组织的信息都已经存在 -->
 					<!-- 例子: select a as USERID,b as USERNAME, c as GROUPID , d as GROUPNAME, e as PARENTGROUPID, f as GROUPTYPE, g as ISPROPERTY from xxxx  -->
 					<!-- ISPROPERTY 标识当前用户和组织是否是直属的关系，1表示直属，0表示非直属 -->
@@ -150,17 +158,17 @@
 				
 			</dataFeeds>
 			<dataPushers>
-				<dataPusher id="analysisDataPusherExcel" engine="analysisDataPusherExcel">
+				<dataPusher id="analysisDataPusherDB" engine="analysisDataPusherDB">
 					<tigger value="234"/>
 					<workspace>
 						<source key="bpmDB" value="BPA_OLAP_DS"/>
 					</workspace>
-					<outPutDB value="D:/test.xls"/>
+					<outPutDB value="DB_BPA_BASE2"/>
 					
 					<mdx id="1.1" target="olap1">
 						<columns>
 							<column id="PROCESS_NAME" targetId="process_name" type="varchar(50)"/>
-							<column id="ALL_COUNT" targetId="all_count" type="Double"/>						
+							<column id="ALL_COUNT" targetId="all_count" type="varchar(50)"/>						
 						</columns>
 						<content>
 							select {Measures.[ALL_COUNT]} ON COLUMNS, 
