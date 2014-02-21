@@ -41,9 +41,20 @@
 					<outPutDB value="DB_BPA_BASE2"/>
 					<item>
 		    			<key>FIXFLOW_RUN_TASKINSTANCE</key>
+		    			<!-- 此处必须要根据 PROCESSINSTANCE_ID 使数据块的PROCESSINSTANCE_ID连续-->
 		    			<value>
-		       	 			SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ASSIGNEE IS NOT NULL
+		       	 			SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ASSIGNEE IS NOT NULL ORDER BY PROCESSINSTANCE_ID
 		    			</value>
+					</item>
+					<item>
+						<key>updateProcessInstanceSql</key>
+						<!-- 要更新的字段在代码里面自动组装 -->
+						<value>UPDATE FIXBPA_FLOW_PROCESSINSTANCE SET</value>
+					</item>
+					<item>
+						<!-- 流程中命令类型的ID，多个以,(逗号)分隔 -->
+						<key>commandType</key>
+						<value>rollBack,rollBackTaskPreviousStep,rollBackTaskByTaskId,rollBackTaskByExpression</value>
 					</item>
 				</dataFeed>
 				<dataFeed id="dimUser" engine="dimOrgDataFeed">
