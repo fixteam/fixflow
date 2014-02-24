@@ -29,7 +29,7 @@
 					<item>
 					    <key>FIXFLOW_RUN_PROCESSINSTANECE</key>
 					    <value>
-					        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM FIXFLOW_RUN_PROCESSINSTANCE FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
+					        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM fixflow_run_processinstanece FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
 					    </value>
 					</item>
 				</dataFeed>
@@ -43,7 +43,7 @@
 		    			<key>FIXFLOW_RUN_TASKINSTANCE</key>
 		    			<!-- 此处必须要根据 PROCESSINSTANCE_ID 使数据块的PROCESSINSTANCE_ID连续-->
 		    			<value>
-		       	 			SELECT * FROM FIXFLOW_RUN_TASKINSTANCE WHERE ASSIGNEE IS NOT NULL ORDER BY PROCESSINSTANCE_ID
+		       	 			SELECT * FROM fixflow_run_taksinstanece WHERE ASSIGNEE IS NOT NULL ORDER BY PROCESSINSTANCE_ID
 		    			</value>
 					</item>
 					<item>
@@ -57,7 +57,6 @@
 						<value>rollBack,rollBackTaskPreviousStep,rollBackTaskByTaskId,rollBackTaskByExpression</value>
 					</item>
 				</dataFeed>
-
 				<dataFeed id="dimUser" engine="dimUserDataFeed">
 					<tigger value="234"/>
 					<workspace>
@@ -74,16 +73,13 @@
 						</value>
 					</item>
 				</dataFeed>
+				
 				<dataFeed id="dimOrg" engine="dimOrgDataFeed">
 					<tigger value="234"/>
 					<workspace>
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
-					<item>
-						<key>deleteCondition</key>
-						<value>GROUPTYPE = 'org'</value>
-					</item>
 					<!-- 已经有层次的组织结构，人员信息具有从最顶层组织到它直属组织的信息都已经存在 -->
 					<!-- 例子: select a as USERID,b as USERNAME, c as GROUPID , d as GROUPNAME, e as PARENTGROUPID, f as GROUPTYPE, g as ISPROPERTY from xxxx  -->
 					<!-- ISPROPERTY 标识当前用户和组织是否是直属的关系，1表示直属，0表示非直属 -->
@@ -125,15 +121,9 @@
 						<source key="bpmDB" value="DB_BPA_BASE"/>
 					</workspace>
 					<outPutDB value="DB_BPA_BASE2"/>
-					<!-- 删除时候的条件 -->
-					<item>
-						<key>deleteCondition</key>
-						<value>GROUPTYPE = 'role'</value>
-					</item>
 					<!-- 已经有层次的组织结构，人员信息具有从最顶层组织到它直属组织的信息都已经存在 -->
 					<!-- 例子: select a as USERID,b as USERNAME, c as GROUPID , d as GROUPNAME, e as PARENTGROUPID, f as GROUPTYPE, g as ISPROPERTY from xxxx  -->
 					<!-- ISPROPERTY 标识当前用户和组织是否是直属的关系，1表示直属，0表示非直属 -->
-					
 					<item>
 						<key>hasLevelGroup</key>
 						<!-- true 标识有层次结构的数据，false标识无层次结构的数据，如果不填写默认为true -->
@@ -160,6 +150,7 @@
 				                     t2.NAME as GROUPNAME,
 				                     '' as PARENTGROUPID,
 				                     'role' as GROUPTYPE
+				                     
 				                from AU_ROLEMEMBER t1, AU_ROLEINFO t2, AU_USERINFO t3
 				               where t1.ROLEID = t2.ROLEID
 				                 and t1.USERID = t3.userid
