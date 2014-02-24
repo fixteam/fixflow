@@ -161,16 +161,30 @@
 				</dataFeed>
 			</dataFeeds>
 			<dataPushers>
-				<dataPusher id="analysisDataPusherDB" engine="analysisDataPusherDB">
+				<dataPusher id="analysisDataPusher" engine="analysisDataPusherDB">
+				<!-- 发布成Excel engine = "analysisDataPusherExcel" 
+				 	   发布成数据库 engine = "analysisDataPusherDB"-->
+				 	   
 					<tigger value="234"/>
 					<workspace>
 						<source key="bpmDB" value="BPA_OLAP_DS"/>
 					</workspace>
+					
 					<outPutDB value="DB_BPA_BASE2"/>
+					<!-- 发布成Excel value设置为Excel文件目录 
+				 	   发布成数据库 value设置为数据库源-->
 					
 					<mdx id="1.1" target="olap1">
+					<!-- 发布成Excel target为sheet页的名字
+				 	   发布成数据库 target为表名
+				 	   添加parentId属性，设置成其他mdx的id可以添加父关系-->
+				 	   
 						<columns>
 							<column id="PROCESS_NAME" targetId="process_name" type="varchar(50)"/>
+							<!-- id是所要取值的列的名字，对应<content>里的mdx语句
+								 targetId是对应数据库表的列名，或者是Excel的列名
+								 type为数据的标准数据类型，如果发布成Excel，设置为“Double”则为数字类型，其他都为默认字符串类型-->
+							
 							<column id="ALL_COUNT" targetId="all_count" type="varchar(50)"/>						
 						</columns>
 						<content>
