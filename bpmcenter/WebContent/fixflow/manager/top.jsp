@@ -40,6 +40,8 @@
         </ul>
     	<ul tg="tg6" style="display:none;">
 	        <li><a id="getBPA" href="FixFlowBPACenter?action=getBPA">流程总列表</a></li>
+	        <li><a id="getUserBPA" href="FixFlowBPACenter?action=getUserBPA">用户流程总列表</a></li>
+	        <li><a id="getGroupBPA" href="FixFlowBPACenter?action=getGroupBPA">组织机构流程总列表</a></li>
 	        <li><a id="getFlowDetail" href="FixFlowBPACenter?action=getFlowDetail">流程详细</a></li>
 	        <li><a id="userWorkLoad" href="FixFlowBPACenter?action=userWorkLoad">用户工作负荷量报表</a></li>
         </ul>
