@@ -43,7 +43,6 @@
 	        <li><a id="getUserBPA" href="FixFlowBPACenter?action=getUserBPA">用户流程总列表</a></li>
 	        <li><a id="getGroupBPA" href="FixFlowBPACenter?action=getGroupBPA">组织机构流程总列表</a></li>
 	        <li><a id="getFlowDetail" href="FixFlowBPACenter?action=getFlowDetail">流程详细</a></li>
-	        <li><a id="userWorkLoad" href="FixFlowBPACenter?action=userWorkLoad">用户工作负荷量报表</a></li>
 	        <li><a id="getFlowExceptionDetail" href="FixFlowBPACenter?action=getFlowExceptionDetail">流程异常详细</a></li>
         </ul>
     	<ul tg="tg7" style="display:none;">
