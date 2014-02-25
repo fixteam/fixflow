@@ -529,6 +529,12 @@
 		<if test="instanceStatus != null">  
 			and INSTANCE_STATUS = #{instanceStatus}
 		</if>
+		<if test="outTimeStatus != null">  
+			and OUT_TIME_STATUS = #{outTimeStatus}
+		</if>
+		<if test="repetitionStatus != null">  
+			and REPETITION_STATUS = #{repetitionStatus}
+		</if>
 	    <if test="orderColumn != null and orderColumn!=''">  
       		order by ${orderColumn} ${orderType}
       	</if> 
@@ -559,6 +565,12 @@
 		<if test="instanceStatus != null">  
 			and INSTANCE_STATUS = #{instanceStatus}
 		</if> 
+		<if test="outTimeStatus != null">  
+			and OUT_TIME_STATUS = #{outTimeStatus}
+		</if>
+		<if test="repetitionStatus != null">  
+			and REPETITION_STATUS = #{repetitionStatus}
+		</if>
 	</select>
 	
 	<select id="flowInstances_nodeList" resultType="java.util.Map" parameterType="java.util.Map">      	
