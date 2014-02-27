@@ -40,7 +40,7 @@ xmlns:context="http://www.springframework.org/schema/context"
 		<property name="ormDataSource" ref="DB_BPA_BASE_OrmDataSource" />
 	</bean>
 
-	<bean id="BPA_OLAP_DS" class="com.founder.fix.fixflow.bpa.olap.OlapDataSource" >  
+	<bean id="BPA_OLAP_DS" scope="prototype" class="com.founder.fix.fixflow.bpa.olap.OlapDataSource" >  
 	    <property name="url" value="${idbase2.url}" />        
 	    <property name="username" value="${idbase2.username}" />        
 	    <property name="password" value="${idbase2.password}" />
