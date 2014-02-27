@@ -45,5 +45,7 @@ xmlns:context="http://www.springframework.org/schema/context"
 	    <property name="username" value="${idbase2.username}" />        
 	    <property name="password" value="${idbase2.password}" />
 	    <property name="cubeFile" value="flow.xml" />
+	    <property name="maxThread" value="25" />
+	    
 	</bean>
 </beans>
