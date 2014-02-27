@@ -106,6 +106,7 @@ public class CurrentThread {
 				carr.close();
 				carr=null;
 			}
+			carriers.clear();
 		}
 	}
 	
@@ -130,7 +131,9 @@ public class CurrentThread {
 			for(Entry<String,IThreadCarrier> tmp:carriers.entrySet()){
 				IThreadCarrier carr = tmp.getValue();
 				carr.close();
+				carr=null;
 			}
+			carriers.clear();
 		}
 	}
 	
