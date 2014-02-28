@@ -62,7 +62,7 @@
 		    			<key>FIXFLOW_RUN_TASKINSTANCE</key>
 		    			<!-- 此处必须要根据 PROCESSINSTANCE_ID 使数据块的PROCESSINSTANCE_ID连续-->
 		    			<value>
-		       	 			SELECT * FROM fixflow_run_taksinstanece WHERE ASSIGNEE IS NOT NULL ORDER BY PROCESSINSTANCE_ID
+		       	 			SELECT * FROM fixflow_run_taksinstanece WHERE ASSIGNEE IS NOT NULL 
 		    			</value>
 					</item>
 					<!-- 更新流程实例状态-->
