@@ -112,9 +112,12 @@ public class LoginServlet extends HttpServlet {
 				if(loginType !=null && loginType.equals("on")){
 					request.setAttribute("action", "processDefinitionList");
 					response.sendRedirect(context+"/FlowManager?action=processDefinitionList");
+//				}else{
+//					request.setAttribute("action", "getMyTask");
+//					response.sendRedirect(context+"/FlowCenter?action=getMyTask");
 				}else{
-					request.setAttribute("action", "getMyTask");
-					response.sendRedirect(context+"/FlowCenter?action=getMyTask");
+					request.setAttribute("action", "getBPA");
+					response.sendRedirect(context+"/FixFlowBPACenter?action=getBPA");
 				}
 				
 			}else{
