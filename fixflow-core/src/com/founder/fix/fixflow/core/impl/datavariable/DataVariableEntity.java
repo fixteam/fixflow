@@ -260,6 +260,7 @@ public class DataVariableEntity extends AbstractPersistentObject<DataVariableEnt
 
 			Map<String, Object> returnMap = Context.getCommandContext().getVariableManager().queryVariable(queryVariablesCommand);
 			if (returnMap != null && returnMap.containsKey(variableName)) {
+				this.setAdd(false);
 				ExpressionMgmt.setVariable(getId(), returnMap.get(variableName));
 
 			} else {
