@@ -45,6 +45,10 @@
 					        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM fixflow_run_processinstanece FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
 					    </value>
 					</item>
+					<item>
+					    <key>FIXFLOW_RUN_PROCESSINSTANECE_PK</key>
+					    <value>PROCESS_ID</value>
+					</item>
 				</dataFeed>
 				
 				<!-- 流程定义抽取，全量抽取会全删全插，增量抽取会删除所有执行中的任务实例，然后重新抽取。同时获取上次抽取最后的时间，抽取自那一时间点以后已完成的数据-->
