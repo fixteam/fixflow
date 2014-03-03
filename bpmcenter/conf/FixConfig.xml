@@ -47,7 +47,7 @@
 					</item>
 					<item>
 					    <key>FIXFLOW_RUN_PROCESSINSTANECE_PK</key>
-					    <value>PROCESS_ID</value>
+					    <value>PROCESSINSTANCE_ID</value>
 					</item>
 				</dataFeed>
 				
