@@ -57,6 +57,10 @@
 					</workspace>
 					<!-- 发布目标数据源-->
 					<outPutDB value="DB_BPA_BASE2"/>
+					<item>
+						<key>primaryKey</key>
+						<value>TASKINSTANCE_ID</value>
+					</item>
 					<!-- 任务实例抽取语句-->
 					<item>
 		    			<key>FIXFLOW_RUN_TASKINSTANCE</key>
