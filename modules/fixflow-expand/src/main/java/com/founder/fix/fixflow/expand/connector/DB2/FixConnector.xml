@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="DB2" icon="db2.png" className="DB2" packageName="com.founder.fix.fixflow.expand.connector.DB2" connectorName="DB2" connectorNote="在DB2数据库中执行语句" category="DataBase">
+  <outputs/>
+  <Pages/>
+</connector:Connector>

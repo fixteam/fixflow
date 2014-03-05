@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="AutoSendMail" name="自动发送" note="自动发送邮件给当前处理人" categoryId="8cd83844-8779-4781-bff2-3f0c5b236117" icon="AutoSendMail.jpg">
+  <input id="mailTitle" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <input id="mailContent" type="java.lang.String" mandatory="是" defaultValue=""/>
+  <page id="page1" name="邮件参数" note="标题和内容不填写则使用默认标题和内容">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="邮件标题" inputId="mailTitle">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_1" name="邮件内容" inputId="mailContent">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="AutoSendMail" packageName="com.founder.fix.fixflow.expand.flowconnector.AutoSendMail"/>
+</flowconnector:FlowConnectorDefinition>

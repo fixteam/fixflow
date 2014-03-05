@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+/*菜单配色*/
+.menu li a,.menu li a.select{ background-color:#10a7d9;}
+.menu li a:hover{ background-color:#10a7d9;}
+.menu li a.select { background-color:#10a7d9;}
+
+/*分隔条配色*/
+.left-nav-box .left-nav-orange-line { border-bottom:4px solid #10a7d9;}
+
+/*按钮配色*/
+.btn-normal a { background-color:#10a7d9;  border:2px solid #10a7d9;}
+.btn-normal a:hover { border:2px solid #10a7d9; color:#10a7d9;}
+
+/*表格配色*/
+.fix-table th{ background-color:#cfedf7;}
+.fix-table tbody tr.selected { background-color: #c3ebf8;}
+.fix-table tbody tr:HOVER { background-color: #e7f5fa;}
+
+/*分页配色*/
+.page li a:hover { color:#10a7d9; border:1px solid #10a7d9;}
+.page li a.select { background-color:#10a7d9; border:1px solid #10a7d9;}
+.page li a.select:hover { background-color:#fff;}
+.page li.show a { border:1px solid #fff;}
+.page li.show a.select { border:1px solid #10a7d9; color:#10a7d9;}
+.page li.show a:hover { border:1px solid #10a7d9; color:#10a7d9;}
+.page li .orange { color:#10a7d9;}
+
+/*分类配色*/
+.type-box .type a { color:#10a7d9;}
+.type-box .type a:hover {  border:3px solid #10a7d9;}
+
+.second-nav li a.select { background:#10a7d9;}

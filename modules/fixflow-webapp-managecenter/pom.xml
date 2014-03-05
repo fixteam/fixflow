@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.founder.fix.fixflow</groupId>
+    <artifactId>fixflow-root</artifactId>
+    <version>${project.version}</version>
+	<relativePath>../..</relativePath>
+  </parent>
+  <artifactId>fixflow-webapp-managecenter</artifactId>
+  <packaging>war</packaging>
+  <name>fixflow-webapp-managecenter Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+    	<groupId>com.founder.fix.fixflow</groupId>
+    	<artifactId>fixflow-manage-servlet</artifactId>
+    	<version>${project.version}</version>
+    </dependency>
+  </dependencies>
+  <build>  
+        <plugins>  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-war-plugin</artifactId>  
+                <configuration>  
+                    <failOnMissingWebXml>false</failOnMissingWebXml>  
+                </configuration>  
+            </plugin>  
+        </plugins>  
+    </build>  
+</project>

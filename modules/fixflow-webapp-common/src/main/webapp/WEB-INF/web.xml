@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+  <display-name>bpmcenter</display-name>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:applicationContext*.xml</param-value>
+  </context-param>
+  <servlet>
+    <description></description>
+    <display-name>LoginServlet</display-name>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.LoginServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+ 
+  <welcome-file-list>
+    <welcome-file>/fixflow/login.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+    <description></description>
+    <display-name>DemoServlet</display-name>
+    <servlet-name>DemoServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.DemoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DemoServlet</servlet-name>
+    <url-pattern>/DemoServlet</url-pattern>
+  </servlet-mapping>
+  
+  <!--   任务中心servlet-->
+  <servlet>
+    <description></description>
+    <display-name>FlowCenter</display-name>
+    <servlet-name>FlowCenter</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.FlowCenter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlowCenter</servlet-name>
+    <url-pattern>/FlowCenter</url-pattern>
+  </servlet-mapping>
+   
+  <!--   管控中心servlet-->
+  <servlet>
+    <description></description>
+    <display-name>FlowManager</display-name>
+    <servlet-name>FlowManager</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.FlowManager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlowManager</servlet-name>
+    <url-pattern>/FlowManager</url-pattern>
+  </servlet-mapping>
+    <!-- fixflow-editor Servlet开始 -->
+   <servlet>
+    <description></description>
+    <display-name>FlowEditor</display-name>
+    <servlet-name>FlowEditor</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.editor.FlowEditorServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FlowEditor</servlet-name>
+    <url-pattern>/FlowEditor</url-pattern>
+  </servlet-mapping>
+
+  <!-- fixflow-editor Servlet结束 -->
+ 
+ <!-- fixflow-explorer Servlet开始 -->
+   <servlet>
+    <description></description>
+    <display-name>FileAndDirectoryServlet</display-name>
+    <servlet-name>FileAndDirectoryServlet</servlet-name>
+    <servlet-class>com.founder.fix.fixflow.explorer.FileAndDirectoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileAndDirectoryServlet</servlet-name>
+    <url-pattern>/FileAndDirectoryServlet</url-pattern>
+  </servlet-mapping>
+   <!-- fixflow-explorer Servlet结束 -->
+  
+</web-app>

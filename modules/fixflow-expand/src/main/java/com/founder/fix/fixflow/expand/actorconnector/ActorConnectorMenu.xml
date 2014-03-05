@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connectormenu:Menu xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connectormenu="http://www.founderfix.com/connectormenu">
+  <node id="71e8d50f-5d55-4b03-88b0-dbe37bc8fedf" name="流程处理者" ico="group_16.png">
+    <menuConnector id="InitiatorActorConnector" name="发起人" note="流程第一步提交数据的人"/>
+    <menuConnector id="AllUserActorConnector" name="所有人" note="系统里的全部用户"/>
+    <menuConnector id="StartAuthorActorConnector" name="启动人" note="流程的启动人(默认情况下启动人和发起人是同一个)"/>
+    <menuConnector id="LastStepActorConnector" name="上一步骤处理者" note="上一个步骤的处理者"/>
+    <menuConnector id="UserIdActorConnector" name="系统登陆人" note="当前系统的登陆用户"/>
+    <menuConnector id="SelectUserActorConnector" name="选择用户" note="输入用户编号来指定处理者"/>
+    <menuConnector id="SelectDeptActorConnector" name="选择部门" note="选择一个或者多个部门"/>
+  </node>
+</connectormenu:Menu>

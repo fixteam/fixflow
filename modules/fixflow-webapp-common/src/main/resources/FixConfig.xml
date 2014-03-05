@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fixConfig>
+	<bpaConf>
+		<analysisEngine id="flowProcessAnalysis" engine="flowProcessAnalysisImpl">
+			<tigger value="234"/>
+			<workspace>
+				<source key="bpmDB" value="DB_BPA_BASE"/>
+			</workspace>
+			<outPutDB value="DB_BPA_BASE2"/>
+		</analysisEngine>
+	</bpaConf>
+	<items>
+		<item>
+			<key>FIXBPA_FLOW_PROCESSINSTANCE</key>
+			<value>
+				CREATE TABLE FIXBPA_FLOW_PROCESSINSTANCE
+				(
+				  PROCESSINSTANCE_ID       VARCHAR2(64) NOT NULL PRIMARY KEY,
+				  PROCESSDEFINITION_ID     VARCHAR2(512),
+				  PROCESS_NAME             VARCHAR2(255),
+				  VERSION                  INTEGER,
+				  SUBJECT                  VARCHAR2(4000),
+				  START_TIME               TIMESTAMP(6),
+				  END_TIME                 TIMESTAMP(6),
+				  DEFINITION_ID            VARCHAR2(64),
+				  ROOTTOKEN_ID             VARCHAR2(64),
+				  BIZ_KEY                  VARCHAR2(64),
+				  INITIATOR                VARCHAR2(64),
+				  ISSUSPENDED              VARCHAR2(20),
+				  PROCESSDEFINITION_KEY    VARCHAR2(512),
+				  PARENT_INSTANCE_ID       VARCHAR2(64),
+				  PARENT_INSTANCE_TOKEN_ID VARCHAR2(64),
+				  UPDATE_TIME              TIMESTAMP(6),
+				  START_AUTHOR             VARCHAR2(64),
+				  PROCESSLOCATION          VARCHAR2(2048),
+				  ISPIGEONHOLE             VARCHAR2(1),
+				  INSTANCE_STATUS          VARCHAR2(45),
+				  ARCHIVE_TIME             TIMESTAMP(6),
+				  WORK_TIME                NUMBER
+				)
+			 </value>
+		</item>
+		<item>
+			<key>FIXBAP_FLOW_TASKINSTANCE</key>
+			<value>
+			    CREATE TABLE FIXBPA_FLOW_TASKINSTANCE
+				(
+				  TASKINSTANCE_ID          VARCHAR2(64) NOT NULL,
+				  PROCESSINSTANCE_ID       VARCHAR2(64),
+				  PROCESSDEFINITION_ID     VARCHAR2(512),
+				  VERSION                  INTEGER,
+				  TOKEN_ID                 VARCHAR2(64),
+				  NODE_ID                  VARCHAR2(64),
+				  DESCRIPTION              VARCHAR2(4000),
+				  PARENTTASK_ID            VARCHAR2(64),
+				  ASSIGNEE                 VARCHAR2(64),
+				  CLAIM_TIME               TIMESTAMP(6),
+				  NAME                     VARCHAR2(255),
+				  CREATE_TIME              TIMESTAMP(6),
+				  START_TIME               TIMESTAMP(6),
+				  ISBLOCKING               VARCHAR2(20),
+				  END_TIME                 TIMESTAMP(6),
+				  DUEDATE                  TIMESTAMP(6),
+				  PRIORITY                 NUMBER(6),
+				  CATEGORY                 VARCHAR2(64),
+				  OWNER                    VARCHAR2(64),
+				  DELEGATIONSTATESTRING    VARCHAR2(64),
+				  BIZKEY                   VARCHAR2(64),
+				  COMMAND_TYPE             VARCHAR2(256),
+				  COMMAND_MESSAGE          VARCHAR2(256),
+				  TASK_COMMENT             VARCHAR2(4000),
+				  NODE_NAME                VARCHAR2(512),
+				  PROCESSDEFINITION_KEY    VARCHAR2(512),
+				  FORMURI                  VARCHAR2(256),
+				  TASKGROUP                VARCHAR2(64),
+				  TASKTYPE                 VARCHAR2(64),
+				  PROCESSDEFINITION_NAME   VARCHAR2(512),
+				  ISCANCELLED              VARCHAR2(64),
+				  ISSUSPENDED              VARCHAR2(64),
+				  ISOPEN                   VARCHAR2(64),
+				  ISDRAFT                  VARCHAR2(64),
+				  EXPECTED_EXECUTIONTIME   NUMBER(12),
+				  AGENT                    VARCHAR2(64),
+				  ADMIN                    VARCHAR2(64),
+				  FORMURIVIEW              VARCHAR2(512),
+				  CALLACTIVITY_INSTANCE_ID VARCHAR2(256),
+				  COMMAND_ID               VARCHAR2(64),
+				  PENDINGTASKID            VARCHAR2(64),
+				  ARCHIVE_TIME             TIMESTAMP(6),
+				  USER_NAME                VARCHAR2(64),
+				  WORK_TIME                NUMBER
+				)
+			</value>
+		</item>
+		<item>
+		    <key>FIXBPA_FLOW_NODE</key>
+		    <value>
+		        CREATE TABLE FIXBPA_FLOW_NODE
+		        (
+		          PROCESSDEFINITION_KEY       VARCHAR2(64),
+		          PROCESSDEFINITION_ID     VARCHAR2(512),
+		          PROCESS_NAME             VARCHAR2(255),
+		          VERSION                  INTEGER,
+		          NODE_ID            VARCHAR2(64),
+		          NODE_NAME             VARCHAR2(64)
+				)
+		    </value>
+		</item>
+		<item>
+		    <!-- 从流程实例中抽取数据 -->
+		    <key>FIXFLOW_RUN_PROCESSINSTANECE</key>
+		    <value>
+		        SELECT FRP.*,FDP.PROCESS_NAME,FDP.VERSION  FROM FIXFLOW_RUN_PROCESSINSTANECE FRP LEFT JOIN FIXFLOW_DEF_PROCESSDEFINITION FDP ON FDP.PROCESS_ID = FRP.PROCESSDEFINITION_ID
+		    </value>
+		</item>
+		<item>
+		    <!-- 从任务实例中抽取数据 -->
+		    <key>FIXFLOW_RUN_TASKINSTANCE</key>
+		    <value>
+		        SELECT * FROM FIXFLOW_RUN_TAKSINSTANECE WHERE ASSIGNEE IS NOT NULL
+		    </value>
+		</item>
+	</items>
+</fixConfig>

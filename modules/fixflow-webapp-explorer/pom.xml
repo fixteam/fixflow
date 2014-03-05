@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.founder.fix.fixflow</groupId>
+    <artifactId>fixflow-root</artifactId>
+    <version>${project.version}</version>
+	<relativePath>../..</relativePath>
+  </parent>
+  <artifactId>fixflow-webapp-explorer</artifactId>
+  <packaging>war</packaging>
+  <name>fixflow-webapp-explorer Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+   <dependency>
+      <groupId>com.founder.fix.fixflow</groupId>
+      <artifactId>fixflow-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-core-asl</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+      </dependency>
+       <dependency>
+        <groupId>com.founder.fix.fixflow</groupId>
+        <artifactId>fixflow-common-servlet</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.founder.fix.fixflow</groupId>
+        <artifactId>fixflow-converter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+  </dependencies>
+  <build>
+    <finalName>fixflow-webapp-explorer</finalName>
+  </build>
+</project>

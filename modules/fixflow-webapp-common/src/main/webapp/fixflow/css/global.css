@@ -1,0 +1,431 @@
+@CHARSET "UTF-8";
+/*
+ * @name: 导航
+ * @overview: 一般导航
+ * @require: null
+ */                                                                   
+.ui-nav {}
+.ui-nav-item {}
+.ui-nav-item-current {}
+.ui-nav-item-child{}
+.ui-nav-item-active-child{}
+
+
+/* ui-menu */
+.ui-menu{
+	float:right;
+	display:inline;
+	*margin-top:-18px;
+}
+.ui-menu-item{
+	float:left;
+	display:inline;margin-left:10px;
+}
+
+/*
+ * @name: 标题
+ * @overview: 有其他内容包含在内的标题
+ * @require: null;
+ */
+.ui-title{}
+.ui-title-cnt{}
+.ui-title-subcnt{}
+.ui-title-form {
+	margin:5px 0;
+	font:bold 10pt/1.4 tahoma,arial,"微软雅黑";
+	color:#333;
+	height:auto;
+	overflow:hidden;
+}
+/*
+ * @name: 步骤
+ * @overview: 用户操作步骤
+ * @require: null
+ */
+.ui-step{}
+.ui-step-item{}
+.ui-step-current{}
+
+/* 可能还会需要 */
+.ui-step-item-first{}
+.ui-step-item-last{}
+
+/*
+ * @name: 列表
+ * @overview: 一般列表样式
+ * @require: null;
+ */
+.ui-list{
+	margin-bottom:23px;
+}
+.ui-list-item{
+	margin-bottom:5px;
+}
+.ui-list-item-hover{}
+
+/*
+ * @name: 重复元素
+ * @overview: 重复出现的元素，我们通常用这种方法来写，这样也会方便JS操作
+ * @require: null
+ */
+.ui-repeater{
+	margin-left:-12px;
+	position:relative;
+	margin-bottom:15px;
+	*margin-bottom:20px;
+	_margin-bottom:10px;
+}
+.ui-repeater-item{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	float:left;
+	margin:0 10px 12px 0px;
+	padding-top:8px;
+	width:138px;
+	border:1px solid #eee;
+	text-align:center;
+}
+.ui-repeater-current{}
+
+/* 
+ * @name: ui-dropdown 
+ * @overview: 通用下拉框
+ * @require: null
+ */
+.ui-dropdown {}
+.ui-dropdown-header {}
+.ui-dropdown-container {}
+
+/* status */
+.ui-dropdown-active .ui-dropdown-header  {}
+.ui-dropdown-active .ui-dropdown-container {}
+
+/*
+ * @name: 分页
+ * @overview: 页面分页
+ * @require: null
+ */
+.ui-page{
+	display: inline;
+}
+.ui-page-item{}
+.ui-page-item-current{}
+
+/* 可能还会用到的 */
+.ui-page-item-info{}
+.ui-page-item-first{}
+.ui-page-item-last{}
+.ui-page-item-prev{}
+.ui-page-item-next{}
+
+/* 
+ * @name: ui-tip 
+ * @overview: 通用对话框, 通常是 position:absolute 的
+ * @require: null
+ */
+.ui-tip {}
+.ui-tip-cnt {}
+
+/* 
+ * @name: ui-message 
+ * @overview: 通用提示,通用对话框, 通常是 position: relative 的
+ * @require: null
+ */
+.ui-message {}
+.ui-message-cnt {}
+
+/* status */
+.ui-message-error {}
+.ui-message-warn {}
+.ui-message-success {}
+
+/* 
+ * @name: ui-button
+ * @overview: 通用按钮
+ * @require: null
+ */
+.ui-button {
+	border: 1px solid #DDDDDD;
+	color: #555555;
+	display: inline-block;
+	height: 26px;
+	line-height: 26px;
+	margin-right: 5px;
+	padding: 0 12px;
+}
+.ui-button-text {}
+.ui-button .ui-icon {}
+
+.ui-button-icon-left {}
+.ui-button-icon-left .ui-icon-rarr {}
+.ui-button-icon-left .ui-button-text {}
+
+.ui-button-icon-right {}
+.ui-button-icon-right .ui-icon-rarr {}
+.ui-button-icon-right .ui-button-text {}
+
+/* status */
+.ui-button-hover {
+	border: 1px solid #BBBBBB;
+	text-decoration: none;
+}
+.ui-button-disabled {}
+.ui-state-selected {}
+
+
+/* 
+ * @name: 表单项 
+ * @overview: 通用文本输入框
+ * @require: null
+ */
+.ui-input {}
+/* status */
+.ui-input-hover {}
+.ui-input-focus {}
+.ui-input-disabled {}
+
+.ui-label {}
+/* status */
+.ui-label-hover {}
+.ui-label-focus {}
+
+.ui-textarea {}
+/* status */
+.ui-textarea-hover {}
+.ui-textarea-disabled {}
+
+/* 
+ * @name: ui-form 
+ * @overview: 通用表单
+ * @require: ui-input,ui-button
+ */
+
+.ui-form {
+	margin:0 auto;
+	padding:10px;
+}
+
+.ui-form legend {}
+
+.ui-form-item{}
+.ui-form-required {}
+.ui-form-explain {}
+
+/* status */
+.ui-form-hover {}
+.ui-form-focus {}
+.ui-form-error {}
+.ui-form-success {}
+.ui-form-warn {}
+.ui-form-loading {}
+
+/* 
+ * @name: ui-tab 
+ * @overview: 通用tab
+ * @require: null
+ */
+.ui-tab {
+	float: left;
+	list-style: none outside none;
+	margin: 0 10px;
+}
+.ui-tab-trigger {}
+.ui-tab-trigger-item {}
+.ui-tab-trigger-item-current{}
+
+.ui-tab-cnt {}
+.ui-tab-cnt-item {
+	display: none;
+}
+.ui-tab-cnt-item-current {
+	display: block;
+	position: relative;
+}
+
+/*
+ * @name: 表格
+ * @overview: 通用列表
+ * @require: null;
+*/
+.ui-table {
+	margin-bottom: 15px;
+	width: 100%;
+}
+.ui-table td, .ui-table th {
+	border: 1px solid #EEE;
+	padding: 10px 20px;
+}
+.ui-table th {
+	-ms-filter:"none";
+}
+.ui-table tr:nth-child(odd) {
+	background:#FBFBFB;
+}
+
+.ui-table-default { border:1px solid #EEE; background:#FFF;}
+.ui-table-default td {
+	border-bottom:1px dashed #EEE;
+	padding:10px 10px;
+	color:#666;
+}
+.ui-table-default tr:nth-child(even) {
+	background:#FBFBFB;
+}
+.ui-table-clear { border:none;}
+.ui-table-clear td {
+	border:none;
+	padding:0;
+	margin:0;
+}
+.ui-table-clear tr:nth-child(even) {
+	background:none;
+}
+
+/*
+* 强制设置extjs中文字体
+*/
+.x-panel-header-text-default {
+	font-size: 12px;
+}
+
+
+.x-grid-row .x-grid-cell {
+	font: normal 12px tahoma, arial, verdana, sans-serif !important;
+}
+
+
+.x-column-header {
+    font: normal 12px tahoma, arial, verdana, sans-serif !important;
+}
+
+.x-column-header-inner {
+	zoom: 1;
+	position: relative;
+	white-space: nowrap;
+	line-height: 22px;
+	padding: 0px 6px;
+	text-align: center;
+}
+
+.x-tab button {
+	font-size: 12px;
+}
+
+.x-tab-inner{
+	padding:0px !important;
+}
+
+.x-grid-record-pointer{
+	cursor: pointer;
+}
+
+.x-btn-default-toolbar-small .x-btn-inner {
+	font-size: 12px !important;
+}
+
+.x-menu-item-text{
+	font: 12px tahoma,arial,verdana,sans-serif!important;
+}
+
+.x-form-item-label{
+	font: 12px tahoma,arial,verdana,sans-serif!important;
+}
+
+a:link
+{
+	font-size: 9pt;
+	color: #336699;
+	font-family: tahoma , Arial;
+	text-decoration: underline;
+	text-decoration: none; 
+	
+}
+a:visited
+{
+	font-size: 9pt;
+	color:  #336699;
+	font-family: tahoma , Arial;
+	text-decoration: none; 
+}
+a:hover
+{
+	color:  #336699;
+	text-decoration: underline;
+	font-family: tahoma , Arial;
+	font-size: 9pt;
+	text-decoration: underline
+}
+
+td{
+	font-size: 9pt;
+}
+
+/*修正ie8下菜单栏在拖拽后在展开会多一个header(IE Hack)*/
+.x-panel .x-grid-header-ct-hidden{
+	display: none\9;
+}
+
+.x-panel x-box-item x-panel-default{
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
+	-o-text-overflow:ellipsis; 
+	-moz-binding:url('ellipsis.xml#ellipsis'); 
+	overflow:hidden	
+}
+/*修正GridPanel如果不设宽度，在IE下会变得很宽*/
+/*
+.x-grid-table {
+	width:auto !important;
+}
+*/
+.sl-shadow{
+
+	/* modern web browsers */ 
+	-moz-box-shadow:1px 3px 12px #bbb;
+	-webkit-box-shadow:1px 3px 12px #bbb;
+	box-shadow:1px 3px 12px #bbb;
+	
+	/* 一定要设置background, 不然 ie 会显示在字体上 */
+	background: #fff;
+	
+	/* gte=ie8 */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Glow(color=#aaaaaa,strength=3) progid:DXImageTransform.Microsoft.Shadow(color=#eeeeee,direction=0,strength=6) progid:DXImageTransform.Microsoft.Shadow(color=#dddddd,direction=90,strength=10) progid:DXImageTransform.Microsoft.Shadow(color=#dddddd,direction=180,strength=6) progid:DXImageTransform.Microsoft.Shadow(color=#eeeeee,direction=270,strength=6)";
+	
+	/* lte=ie7 */
+	*filter: 
+    progid:DXImageTransform.Microsoft.Shadow(color=#eeeeee,direction=0,strength=7)
+    progid:DXImageTransform.Microsoft.Shadow(color=#dddddd,direction=90,strength=10)
+    progid:DXImageTransform.Microsoft.Shadow(color=#dddddd,direction=180,strength=10)
+    progid:DXImageTransform.Microsoft.Shadow(color=#eeeeee,direction=270,strength=7);
+}
+
+/* base */
+.sl-rc{
+  display:inline-block;vertical-align: middle;
+  border-left:1px solid #ddd;border-right:1px solid #ddd;  /* 可重设 */
+}
+
+/* 
+  不要直接给 BOTTON | INPUT[type=submit[button]] 添加边框
+  这会引发 IE 的 1px 的黑边 bug
+  Note: 一般不要把 input 作为.sl-rc-cnt 层 
+ */
+.sl-rc-cnt{
+  float:left;position: relative;
+  border-top: 1px solid #ddd;border-bottom:1px solid #ddd; /* 可重设 */
+  margin:-1px 0;
+}
+
+/* HACK for ie6 7 */
+div.sl-rc, p.sl-rc, h2.sl-rc, h3.sl-rc, h4.sl-rc, h5.sl-rc, h6.sl-rc, ul.sl-rc, ol.sl-rc{
+  *display: inline;
+}
+
+/* 鼠标经过 */
+.sl-rc-hover, .sl-rc-hover .sl-rc-cnt, .sl-rc:hover, .sl-rc:hover .sl-rc-cnt{
+  border-color: #aaa; /* 可重设 */
+  text-decoration: none;
+}
+
+

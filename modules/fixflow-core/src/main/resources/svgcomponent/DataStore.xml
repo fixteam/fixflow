@@ -1,0 +1,61 @@
+<g id="{svg_id}">
+	<g class="stencils" transform="translate({x}, {y})">
+		<g class="me">
+			<g id="sid-{svg_id}" title="{text}">
+				<defs
+					id="sid-{svg_id}_sid-{svg_id}_9">
+					<radialGradient
+						id="sid-{svg_id}background" cx="30%"
+						cy="30%" r="50%" fx="0%" fy="0%">
+						<stop offset="0%" stop-color="#ffffff" stop-opacity="1"
+							id="sid-{svg_id}_sid-{svg_id}_10" />
+						<stop offset="100%" stop-color="#ffffcc" stop-opacity="1"
+							id="sid-{svg_id}fill_el" />
+					</radialGradient>
+				</defs>
+				<path
+					fill="url(#sid-{svg_id}background) #ffffcc"
+					stroke="#000000"
+					d=" M30.708999999999985 0 c20.013 0 31.292 3.05 31.292 5.729 c0 2.678 0 45.096 0 48.244 c0 3.148 -16.42 6.2 -31.388 6.2 c-14.968 0 -30.613 -2.955 -30.613 -6.298 c0 -3.342 0 -45.728 0 -48.05 C-1.4210854715202004e-14 3.503 10.696999999999985 0 30.708999999999985 0 z"
+					id="sid-{svg_id}_sid-{svg_id}_11" />
+				<path id="sid-{svg_id}bg_frame2"
+					fill="none" stroke="#000000"
+					d=" M62.00099999999999 15.027999999999999 c0 1.986 -3.62 6.551 -31.267 6.551 c-27.646 0 -30.734 -4.686 -30.734 -6.454 M-1.4210854715202004e-14 10.475000000000001 c0 1.769 3.088 6.455 30.734 6.455 c27.647 0 31.267 -4.565 31.267 -6.551 M-1.4210854715202004e-14 5.825000000000001 c0 2.35 3.088 6.455 30.734 6.455 c27.647 0 31.267 -3.912 31.267 -6.552 M62.00099999999999 5.729000000000001 v4.844 M0.0239999999999857 5.729000000000001 v4.844 M62.00099999999999 10.379000000000001 v4.844 M0.0239999999999857 10.379000000000001 v4.844 " />
+				<text font-size="12"
+					id="sid-{svg_id}text_name" x="30" y="65"
+					oryx:align="center top" xmlns:oryx="http://oryx-editor.org" stroke="black"
+					stroke-width="0pt" letter-spacing="-0.01px" transform="rotate(0, 30, 65)"
+					oryx:fontSize="12" text-anchor="middle" >
+					<tspan dy="11" x="30" y="65" id="ext-gen349">{text}</tspan>
+				</text>
+			</g>
+		</g>
+		<g class="children" style="overflow:hidden" />
+		<g class="edge" />
+	</g>
+	<g class="controls">
+		<g class="dockers" />
+		<g class="magnets" transform="translate(506, 180)">
+			<g pointer-events="all" display="none" transform="translate(-8.925, 21.9245)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(22.5755, 52.511)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(54.076, 21.9245)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(22.5755, -8.662)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+			<g pointer-events="all" display="none" transform="translate(22.5755, 21.9245)">
+				<circle cx="8" cy="8" r="4" stroke="none" fill="red"
+					fill-opacity="0.3" />
+			</g>
+		</g>
+	</g>
+</g>

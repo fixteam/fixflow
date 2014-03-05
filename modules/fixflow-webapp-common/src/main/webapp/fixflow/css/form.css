@@ -1,0 +1,43 @@
+
+/* 边框 */
+.tpl-form-border{padding:8px}
+
+/* 表单 */
+.table-form { margin:0; color:#444; background:#fff; width:100%;border: 1px solid #DDD;}
+.table-form td { padding:2px 5px; font-family:"微软雅黑"; text-align:left;border: 1px solid #DDD;}
+.table-form td.title-r { text-align:right; color:#666; padding-right:20px;background-color: #FFFAED;width:100px}
+.table-form input[inputType=text], .table-form input[type=text], .table-form select { width:100%;padding:2px; font-size:12px; line-height:12px; color:#333;}
+.table-form textarea { padding:4px 5px; width:100%; box-sizing:border-box;  font-size:12px; line-height:18px; color:#888;}
+
+
+/* 列表 */
+/* .table-list {margin: 15px 0 15px 0; color:#444; background:#fff; width:100%;border: 1px solid #DDD;} */
+/* .table-list thead tr {background-color: #E7E7E7;border-bottom: 1px solid #FF0000;} */
+/* .table-list th { padding:5px; background:#f8ddd5; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border: 1px solid #fff; text-align:center;} */
+/* .table-list td { padding:6px; border:1px solid #fff;} */
+/* .table-list tr.gray { background:#f7f7f7;} */
+/* .table-list td.left { text-align:left; color:#666; padding-left:10px;} */
+/* .table-list td.num { text-align:center; color:#666; width:24px; font-family:Verdana, Geneva, sans-serif;} */
+/* .table-list td.checkbox { text-align:center; width:30px;} */
+/* .table-list td.center { text-align:center;} */
+
+
+.table-list { margin:15px 0 15px 0;width:100%;border:1px solid #DDD;}
+/* .table-list thead tr{ background-color:#E7E7E7;border-bottom:1px solid #FFBA00 } */
+.table-list th { padding:3px; background:#E7E7E7; font-family:"微软雅黑"; font-size:12px; font-weight:bold; color:#666; border: 1px solid #DDD;border-bottom:1px solid #dc562e; text-align:center;} 
+.table-list tbody tr:hover {background-color:#FFFAED;}
+.table-list thead td {border-left:1px solid #DDD;border-right:1px solid #DDD;text-align:center;}
+.table-list tfoot td {border-left:1px solid #DDD;border-right:1px solid #DDD;}
+.table-list tbody td {border-left:1px solid #DDD;border-right:1px solid #DDD;border-bottom:1px solid #DDD;text-align:center;}
+.table-list td { padding:3px 3px;}
+.table-list td.title-r { text-align:right; color:#666; padding-right:20px; width:100px;}
+
+/* 按钮 */
+.btn-normal { display:inline-block; margin:8px 8px;}
+.btn-normal a { display:inline-block; padding:2px 8px 3px 8px; border:2px solid #dc562e; background:#dc562e; font-size:12px; line-height:12px; font-family:"微软雅黑"; color:#fff; text-decoration:none;}
+.btn-normal a:hover { border:2px solid #dc562e; color:#dc562e; background:#fff;}
+.btn-normal a .arrow-small { display:block; float:right; margin-left:8px; width:4px; height:12px; background:url(../images/arrow-small.png) no-repeat 0 0;}
+.btn-normal a:hover .arrow-small { background-position:0 -12px;}
+
+/* 工具条容器 */
+.toolbar { text-align: center;}
