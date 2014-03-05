@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="CalendarDeleteEvents" icon="google.png" className="CalendarDeleteEvents" packageName="com.founder.fix.fixflow.expand.connector.CalendarDeleteEvents" connectorName="日历 - 删除事件" connectorNote="在标题中删除所有包含搜索内容的关键字" category="Google">
-  <outputs/>
-  <Pages/>
-</connector:Connector>

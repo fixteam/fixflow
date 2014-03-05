@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="UpdateProcessInstanceId" name="更新业务数据流程实例号" note="更新业务数据流程实例号" categoryId="a5dedc5f-a22d-4429-a161-705eb26b6938" icon="UpdateProcessInstanceId.jpg">
-  <definitionImpl className="UpdateProcessInstanceId" packageName="com.founder.fix.fixflow.expand.flowconnector.UpdateProcessInstanceId"/>
-</flowconnector:FlowConnectorDefinition>

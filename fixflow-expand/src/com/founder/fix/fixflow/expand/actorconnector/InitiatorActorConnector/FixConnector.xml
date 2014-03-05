@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="InitiatorActorConnector" name="发起人" note="流程第一步提交数据的人" categoryId="71e8d50f-5d55-4b03-88b0-dbe37bc8fedf" icon="InitiatorActorConnector.png">
-  <definitionImpl className="InitiatorActorConnector" packageName="com.founder.fix.fixflow.expand.actorconnector.InitiatorActorConnector"/>
-</flowconnector:FlowConnectorDefinition>

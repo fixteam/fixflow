@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="Sybase" icon="sybase.png" className="Sybase" packageName="com.founder.fix.fixflow.expand.connector.Sybase" connectorName="Sybase" connectorNote="在Sybase数据库中执行语句" category="DataBase">
-  <outputs/>
-  <Pages/>
-</connector:Connector>

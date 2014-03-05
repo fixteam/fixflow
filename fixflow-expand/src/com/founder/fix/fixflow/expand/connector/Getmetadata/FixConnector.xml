@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="Getmetadata" icon="xwiki.png" className="Getmetadata" packageName="com.founder.fix.fixflow.expand.connector.Getmetadata" connectorName="取得元数据" connectorNote="从wiki页面中取得元数据" category="XWiKi">
-  <outputs/>
-  <Pages/>
-</connector:Connector>

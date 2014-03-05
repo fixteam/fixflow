@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="LastStepActorConnector" name="上一步骤处理者" note="上一个步骤的处理者" categoryId="71e8d50f-5d55-4b03-88b0-dbe37bc8fedf" icon="LastStepActorConnector.png">
-  <definitionImpl className="LastStepActorConnector" packageName="com.founder.fix.fixflow.expand.actorconnector.LastStepActorConnector"/>
-</flowconnector:FlowConnectorDefinition>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="UpdateProcessStatus" icon="founderico.jpg" className="UpdateProcessStatus" packageName="com.founder.fix.fixflow.expand.connector.UpdateProcessStatus" connectorName="更新流程状态" connectorNote="更新流程状态" category="FixFlow">
-  <outputs/>
-  <Pages>
-    <page pageId="page1" pageTitle="输入参数" pageNote="配置连接器需要的参数">
-      <inputParameter id="statusValue" name="状态值" dataType="java.lang.String" controlType="text" isRequired="true"/>
-    </page>
-  </Pages>
-</connector:Connector>

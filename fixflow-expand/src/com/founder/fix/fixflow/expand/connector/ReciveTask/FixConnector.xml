@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="ReciveTask" icon="eclipse.png" className="ReciveTask" packageName="com.founder.fix.fixflow.expand.connector.ReciveTask" connectorName="市级任务接收" connectorNote="省厅数据下发到市级系统" category="水利系统">
-  <outputs/>
-  <Pages>
-    <page pageId="page1" pageTitle="上级下发数据保存配置" pageNote="上级下发数据保存配置">
-      <inputParameter id="field0" name="保存数据" dataType="java.lang.Object" controlType="text" isRequired="true"/>
-    </page>
-  </Pages>
-</connector:Connector>

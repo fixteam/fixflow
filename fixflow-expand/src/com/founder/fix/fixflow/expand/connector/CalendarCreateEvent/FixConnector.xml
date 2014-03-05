@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="CalendarCreateEvent" icon="google.png" className="CalendarCreateEvent" packageName="com.founder.fix.fixflow.expand.connector.CalendarCreateEvent" connectorName="日历 - 创建事件" connectorNote="从指定的谷歌日历中创建一个新的事件" category="Google">
-  <outputs/>
-  <Pages/>
-</connector:Connector>

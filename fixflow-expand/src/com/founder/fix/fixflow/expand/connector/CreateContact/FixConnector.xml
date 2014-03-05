@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="CreateContact" icon="exchange.png" className="CreateContact" packageName="com.founder.fix.fixflow.expand.connector.CreateContact" connectorName="CreateContact" connectorNote="创建一个新的联系人" category="Exchange">
-  <outputs/>
-  <Pages/>
-</connector:Connector>

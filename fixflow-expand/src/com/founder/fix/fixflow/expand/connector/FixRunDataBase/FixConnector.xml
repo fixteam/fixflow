@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<connector:Connector xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:connector="http://www.founderfix.com/connector" connectorId="FixRunDataBase" icon="founderico.jpg" className="FixRunDataBase" packageName="com.founder.fix.fixflow.expand.connector.FixRunDataBase" connectorName="执行数据库语句" connectorNote="通过FixFlow自带数据库链接执行数据库语句。" category="FixFlow">
-  <outputs/>
-  <Pages>
-    <page pageId="FixRunDataBasePage" pageTitle="数据库执行语句" pageNote="输入一个数据库执行语句">
-      <inputParameter id="sqlText" name="数据库语句" dataType="java.lang.String" controlType="text" isRequired="true"/>
-    </page>
-  </Pages>
-</connector:Connector>
