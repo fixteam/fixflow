@@ -16,7 +16,6 @@
     <dependency>
     	<groupId>com.founder.fix.fixflow</groupId>
     	<artifactId>fixflow-manage-servlet</artifactId>
-    	<version>${project.version}</version>
     </dependency>
   </dependencies>
   <build>  

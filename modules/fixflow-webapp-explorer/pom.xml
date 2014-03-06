@@ -13,11 +13,6 @@
   <name>fixflow-webapp-explorer Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-   <dependency>
-      <groupId>com.founder.fix.fixflow</groupId>
-      <artifactId>fixflow-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
     <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-core-asl</artifactId>
@@ -33,12 +28,10 @@
        <dependency>
         <groupId>com.founder.fix.fixflow</groupId>
         <artifactId>fixflow-common-servlet</artifactId>
-        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.founder.fix.fixflow</groupId>
         <artifactId>fixflow-converter</artifactId>
-        <version>${project.version}</version>
       </dependency>
   </dependencies>
   <build>

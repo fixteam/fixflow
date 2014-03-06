@@ -27,7 +27,6 @@
   	<dependency>
   		<groupId>com.founder.fix.fixflow</groupId>
   		<artifactId>fixflow-core</artifactId>
-  		<version>${project.version}</version>
   	</dependency>
   	</dependencies>
 </project>
