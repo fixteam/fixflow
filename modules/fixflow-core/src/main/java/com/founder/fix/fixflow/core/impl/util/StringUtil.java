@@ -21,7 +21,7 @@ package com.founder.fix.fixflow.core.impl.util;
 
 import java.util.Date;
 
-import org.apache.regexp.ex.RE;
+import org.apache.regexp.RE;
 
 
 

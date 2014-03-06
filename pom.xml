@@ -80,14 +80,9 @@
   <dependencyManagement>
     <dependencies>
      <dependency>
-       <groupId>maven</groupId>
-       <artifactId>dom4j</artifactId>
-       <version>1.7-20060614</version>
-     </dependency>
-     <dependency>
-		<groupId>oracle</groupId>
-		<artifactId>ojdbc</artifactId>
-		<version>1.0</version>
+		<groupId>com.oracle.jdbc</groupId>
+		<artifactId>ojdbc5</artifactId>
+		<version>11.2.0.1.0</version>
   	 </dependency>
 	<dependency>
 		<groupId>com.google.code.gson</groupId>

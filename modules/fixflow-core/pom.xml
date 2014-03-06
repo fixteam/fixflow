@@ -31,9 +31,9 @@
 		<version>2.7.0-v20110606-0949</version>
 	</dependency>
 	<dependency>
-		<groupId>com.founder.fix</groupId>
+		<groupId>com.founder.fix.fixflow</groupId>
 		<artifactId>com.founder.fix.fixflow.bpmn2.extensions</artifactId>
-		<version>1.0</version>
+		<version>5.2.0</version>
 	</dependency>
 	<dependency>
 		<groupId>org.quartz-scheduler</groupId>
@@ -52,9 +52,9 @@
 	</dependency>
 
 	<dependency>
-		<groupId>com.javax.jms</groupId>
+		<groupId>javax.jms</groupId>
 		<artifactId>jms</artifactId>
-		<version>1.0</version>
+		<version>1.1</version>
 	</dependency>
 	<dependency>
 		<groupId>org.apache.activemq</groupId>
@@ -62,14 +62,14 @@
 		<version>5.9.0</version>
 	</dependency>
 	<dependency>
-		<groupId>org.apache</groupId>
-		<artifactId>mail</artifactId>
-		<version>1.0</version>
-	</dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>1.4.1</version>
+     </dependency>
 	<dependency>
-		<groupId>org.apache</groupId>
-		<artifactId>jakarta</artifactId>
-		<version>1.0</version>
+		<groupId>jakarta-regexp</groupId>
+		<artifactId>jakarta-regexp</artifactId>
+		<version>1.4</version>
 	</dependency>
 	<dependency>
       <groupId>dom4j</groupId>
@@ -77,8 +77,8 @@
       <version>1.6.1</version>
     </dependency>
 	<dependency>
-		<groupId>oracle</groupId>
-		<artifactId>ojdbc</artifactId>
+		<groupId>com.oracle.jdbc</groupId>
+		<artifactId>ojdbc5</artifactId>
 	</dependency>	
 		
   </dependencies>
