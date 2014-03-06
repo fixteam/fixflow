@@ -42,6 +42,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.founder.fix.fixflow.I18N.PropertiesUtil;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.FlowIdentityService;
 import com.founder.fix.fixflow.shell.FixFlowShellProxy;
@@ -97,6 +99,7 @@ public class FlowCenter extends HttpServlet {
 			action = "getMyTask";
 		}
 		RequestDispatcher rd = null;
+		System.out.println(ResourcesUtil.getResourcesValue(FixFlowResources.FlowNameResource, "ERApprovalProcess"));
 		try {
 			Map<String, Object> filter = new HashMap<String, Object>();
 

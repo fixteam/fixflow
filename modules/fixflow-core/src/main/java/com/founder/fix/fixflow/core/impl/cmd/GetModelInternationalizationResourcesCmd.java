@@ -21,6 +21,7 @@ import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 
 public class GetModelInternationalizationResourcesCmd implements Command<String> {
 
@@ -43,7 +44,7 @@ public class GetModelInternationalizationResourcesCmd implements Command<String>
     		
         	String nameTemp=null;
         	
-        	nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(resourcesType, resourceKey);
+        	nameTemp=ResourcesUtil.getResourcesValue(resourcesType, resourceKey);
             	
 
 

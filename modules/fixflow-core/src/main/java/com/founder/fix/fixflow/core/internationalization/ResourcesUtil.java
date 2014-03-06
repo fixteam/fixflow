@@ -17,44 +17,26 @@
  */
 package com.founder.fix.fixflow.core.internationalization;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 
-import com.founder.fix.fixflow.core.impl.Context;
-
+/**
+ * 国际化资源工具类
+ * 用来获取对应资源文件中，对应key的国际化值
+ * @author ych
+ *
+ */
 public class ResourcesUtil {
 	
-	
-	private static  String __REGEX_SIGNS = "\\$\\{[^}{]+\\}";
-
-	public static  String getExpressionAll(String groupName,String inexp) {
-		String str = null;
-		String regex = __REGEX_SIGNS;
-		Pattern regexExpType = Pattern.compile(regex);
-		Matcher mType = regexExpType.matcher(inexp);
-		String expType = inexp;
-		StringBuffer sb = new StringBuffer();
-		while (mType.find()) {
-			expType = mType.group();
-			String dist = expType.substring(2, expType.length() - 1); 
-			
-			dist=getResourcesValue(groupName,dist);
-			// StringUtil.getString(getExpressionValue(dataView,expType));
-			mType.appendReplacement(sb, dist);
-		}
-		mType.appendTail(sb);
-		str = sb.toString();
-		return str;
+	public static String getResourcesValue(String propertiesName,String key){
+		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
+    	String nameTemp=fixFlowResources.getResourceValue(propertiesName, key);
+    	return nameTemp;
 	}
 	
-	public static String getResourcesValue(String groupName,String key){
-	
-    		FixFlowResources fixFlowResources=Context.getProcessEngineConfiguration().getFixFlowResources();
-
-        	String nameTemp=fixFlowResources.getResourceName(groupName, key);
-            	
-        	return nameTemp;
- 
+	public static String getResourcesValue(String propertiesName,String key,String languageType){
+		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
+    	String nameTemp=fixFlowResources.getResourceValue(propertiesName, key,languageType);
+    	return nameTemp;
 	}
 
 }

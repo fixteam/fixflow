@@ -19,111 +19,66 @@ package com.founder.fix.fixflow.expand.internationalization;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public class FixResourceCore{
+	
+	private static Logger log = LoggerFactory.getLogger(FixResourceCore.class);
 	private static final ThreadLocal<String> currentLanguage = new ThreadLocal<String>();
-	
 	public static final String defaultLocal = "defauld";
-	
 	public static final String DOT_PROPERTIES = ".properties";
-	
-	public static final String GLOBAL = "_global";
-	
-	public static final String LOCALLANGUAGE="localLanguage";
-	
 	private static String RESOURCE_PATH="";
-	
-	private static String __REGEX_SIGNS = "\\{[^}{]+\\}";
-
-	private static final Map<String,String> fixResourcePath = new HashMap<String,String>();
-	
 	private static final Map<String,Map<String,Properties>> fixResource = new HashMap<String,Map<String,Properties>>();
-	
-    private static String getString(Object obj){
-    	if(obj!=null){
-    		return obj.toString();
-    	}else{
-    		return "";
-    	}
-    }
-    
-    private static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
-    }
-
-    private static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
-    
-    private static int convertToInt(String str) {
-        int result = -1;
-        
-        str = str.trim();
-        result = Integer.parseInt(str);
-
-        return result;
-    }
-    
-    ////////////////////////////////////
-	
-	public static String getInfoKey(String... domain){
-		StringBuffer sb = new StringBuffer();
-		for(int i =0;i<domain.length;i++){
-			if(i!=0)
-				sb.append(".");
-			sb.append(domain[i]);
-		}
-		return sb.toString();
-	}
 	
 	public static void setNowLanguage(String local){
 		currentLanguage.set(local);
 	}
 	
 	public static String getNowLanguage(){
-		String str = currentLanguage.get();
-		if(isEmpty(str))
-			str = defaultLocal;
-		return str;
+		String nowLanguage = currentLanguage.get();
+		if(StringUtil.isEmpty(nowLanguage))
+			nowLanguage = defaultLocal;
+		return nowLanguage;
 	}
 	
-	public static String getResource(String domain,String key){
-		return getResourceByArray(domain,key,null);
+	public static String getResource(String propertiesName,String key){
+		return getResourceByArray(propertiesName,key,null);
 	}
 	
-	public static String getResource(String domain,String key,Object... args){
-		return getResourceByArray(domain,key,args);
+	public static String getResource(String propertiesName,String key,Object... args){
+		return getResourceByArray(propertiesName,key,args);
 	}
 	
-	public static String getResourceByArray(String domain,String key,Object[] args){
-		String str = getString(key);
-		String result = str;
-		if(fixResource!=null && isNotEmpty(str)){
-			Properties props = getProperties(domain);
+	public static String getResourceByArray(String propertiesName,String key,Object[] args){
+		String result = "";
+		if(fixResource!=null && StringUtil.isNotEmpty(key)){
+			Properties props = getProperties(propertiesName);
 			if(props!=null){
-				str = props.getProperty(str);
-				if(isNotEmpty(str)){
+				result = props.getProperty(key);
+				if(StringUtil.isNotEmpty(result)){
 					try {
-						str = new String(str.getBytes("ISO8859-1"), "UTF-8");
-						str = processInfo(str,args);
-						if(isEmpty(str))
+						result = new String(result.getBytes("ISO8859-1"), "UTF-8");
+						MessageFormat.format(result, args);
+						if(StringUtil.isEmpty(result))
 							result = key;
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+						log.error("国际化:"+key+"取值时转码失败!", e);
 					}
 				}
 			}
@@ -137,93 +92,52 @@ public class FixResourceCore{
 		Map<String,Properties> map = fixResource.get(getNowLanguage());
 		if(map!=null)
 			props = map.get(domain);
-		
 		return props;
 	}
 	
 	public static String processLocalFromInfo(String local){
-        if(isEmpty(local) || !fixResource.containsKey(local)){
+        if(StringUtil.isEmpty(local) || !fixResource.containsKey(local)){
         	local = defaultLocal;
         }
         setNowLanguage(local);
-        
         return local;
 	}
 	
-    public static String processInfo(String info,Object[] str){
-    	String result= info;
-    	if(hasSigns(info) && str!=null){
-    		String regex = __REGEX_SIGNS;
-    		Pattern regexExpType = Pattern.compile(regex);
-    		Matcher mType = regexExpType.matcher(info);
-    		String expType = null;
-    		StringBuffer sb = new StringBuffer();
-    		while(mType.find()){
-    			expType = mType.group();
-    			expType = expType.replaceAll("[{}]", "");
-    			int stat = convertToInt(expType);
-    			if(stat>-1 && stat<str.length){
-    				mType.appendReplacement(sb, getString(str[stat]));
-    			}
-    		}
-    		mType.appendTail(sb);
-    		result = sb.toString();
-    	}
-    	return result;
-    }
-    
-	public static boolean hasSigns(String str){
-		String regex = __REGEX_SIGNS;
-		Pattern regexExpType = Pattern.compile(regex);
-		Matcher mType = regexExpType.matcher(str);
-		return mType.find();
-	}
-	
-	public static void putfixResourcePath(String key,String path){
-		fixResourcePath.put(key, path);
-	}
-	
-	public static Properties load(String path) throws IOException{
-		Properties props = new Properties();
-		InputStream is = null;
-	    try{
-            is = getInputStreamForFullPath(path);
-            props.load(is);
-            is.close();
-	    }catch(Exception e){
-//	    	e.printStackTrace();
-	    }finally{
-	    	if(is!=null)
-	    		is.close();
-	    }
-	    return props;
-	}
-	public static InputStream getInputStreamForFullPath(String url) throws FileNotFoundException{
-		InputStream in;
-		File file = new File(url);
-		try {
-			in = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			throw e;
+	public static void loadResource(File file,Map<String,Properties> value){
+		if(file.isDirectory()){
+			for(File resourceFile : file.listFiles()){
+				loadResource(resourceFile,value);
+			}
 		}
-
-		return in;
-	}
-	
-	public static void loadAllLanguage(String path,String domain) throws IOException{
-		loadAllLanguageResource(path,domain);
-	}
-	
-	public static void loadAllLanguageResource(String path,String domain) throws IOException{
-		for(Entry<String,Map<String,Properties>> tmp:fixResource.entrySet()){
-			String local = tmp.getKey();
-			Map<String,Properties> pros = tmp.getValue();
-			String tPath = RESOURCE_PATH+local+path;
-			Properties pro = null;
-			pro = load(tPath);
-			pros.put(domain, pro);
+		else if(file.isFile() && file.getName().endsWith(DOT_PROPERTIES)){
+			InputStream is = null;
+			try{
+				Properties props = new Properties();
+	            is = new FileInputStream(file);
+	            props.load(is);
+	            is.close();
+	            
+	            String propertiesKey = file.getName().substring(0,file.getName().lastIndexOf("."));
+	            value.put(propertiesKey, props);
+		    }catch(Exception e){
+		    	log.error("国际化资源文件"+file.getName()+"加载失败",e);
+		    }finally{
+		    	if(is!=null){
+		    		try {
+						is.close();
+					} catch (IOException e) {
+						log.error("国际化资源文件"+file.getName()+"关闭失败",e);
+					}
+		    	}
+		    }
 		}
 		
+	}
+	
+	public static void loadLanguageResource(String languageType,Map<String,Properties> value){
+		String realPath = RESOURCE_PATH + File.separator + languageType;
+		File resourceDir = new File(realPath);
+		loadResource(resourceDir,value);
 	}
 	
 	public static void write(Properties props,String path,String symbio) throws IOException{
@@ -231,7 +145,7 @@ public class FixResourceCore{
 		props.store(fos, symbio);
 	}
 	
-	private static List<String> getLanguages() throws IOException{
+	private static List<String> getLanguages(){
 		List<String> result = new ArrayList<String>();
 		File file = new File(RESOURCE_PATH);
 		File[] files = file.listFiles();
@@ -240,33 +154,19 @@ public class FixResourceCore{
 				result.add(tmp.getName());
 			}
 		}
-		
 		return result;
 	}
 
-	public static void systemInit(String absPath) throws Exception {
-		RESOURCE_PATH = absPath;
-//		List<String> language = getLanguages();
-//		
-//		for(String path:language){
-//			fixResource.put(path, new HashMap<String,Properties>());
-//		}
-		systemInitSpecial(null);
-	}
-
-	public static void systemInitSpecial(String args) throws Exception {
-		List<String> language = getLanguages();
-		
-		for(String path:language){
-			fixResource.put(path, new HashMap<String,Properties>());
+	public static void systemInit(String resourcePath){
+		RESOURCE_PATH = resourcePath;
+		List<String> languages = getLanguages();
+		for(String language:languages){
+			fixResource.put(language, new HashMap<String,Properties>());
 		}
-//		systemInitSpecial(null);
-		
 		synchronized(fixResource){
-			for(Entry<String,String> key:fixResourcePath.entrySet()){
-				loadAllLanguageResource(key.getValue(),key.getKey());
+			for(Entry<String,Map<String,Properties>> languageEntry:fixResource.entrySet()){
+				loadLanguageResource(languageEntry.getKey(),languageEntry.getValue());
 			}
 		}
 	}
-	
 }

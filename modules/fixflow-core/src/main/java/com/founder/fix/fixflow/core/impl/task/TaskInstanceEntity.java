@@ -46,6 +46,7 @@ import com.founder.fix.fixflow.core.impl.util.ClockUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.Assignable;
 import com.founder.fix.fixflow.core.task.DelegationState;
@@ -553,11 +554,11 @@ public class TaskInstanceEntity extends AbstractPersistentObject<TaskInstanceEnt
 			String cType = processEngineConfiguration.getTaskCommandDefMap().get(this.getCommandType()).getType();
 			String nameTemp = null;
 			if (cType.equals("system")) {
-				nameTemp = processEngineConfiguration.getFixFlowResources().getResourceName(FixFlowResources.TaskComandResource,
+				nameTemp = ResourcesUtil.getResourcesValue(FixFlowResources.TaskComandResource,
 						"System_" + commandId);
 
 			} else {
-				nameTemp = processEngineConfiguration.getFixFlowResources().getResourceName(processId, this.nodeId + "_" + commandId);
+				nameTemp = ResourcesUtil.getResourcesValue(processId, this.nodeId + "_" + commandId);
 
 			}
 

@@ -30,6 +30,7 @@ import oracle.sql.TIMESTAMP;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 
 /**
  * 时间操作Util类
@@ -772,25 +773,16 @@ public class DateUtil {
 
 		// 用户名称国际化处理
 		if (booleanTemp) {
-
-			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
-
-			String dayString = fixFlowResources.getResourceName(FixFlowResources.SystemResource, "FixFlow_Date_day_Name");
-			
-			String hourString = fixFlowResources.getResourceName(FixFlowResources.SystemResource, "FixFlow_Date_hour_Name");
-			
-			String minuteString = fixFlowResources.getResourceName(FixFlowResources.SystemResource, "FixFlow_Date_minute_Name");
-			
-			String secondString = fixFlowResources.getResourceName(FixFlowResources.SystemResource, "FixFlow_Date_second_Name");
-			
+			String dayString = ResourcesUtil.getResourcesValue(FixFlowResources.SystemResource, "FixFlow_Date_day_Name");
+			String hourString = ResourcesUtil.getResourcesValue(FixFlowResources.SystemResource, "FixFlow_Date_hour_Name");
+			String minuteString = ResourcesUtil.getResourcesValue(FixFlowResources.SystemResource, "FixFlow_Date_minute_Name");
+			String secondString = ResourcesUtil.getResourcesValue(FixFlowResources.SystemResource, "FixFlow_Date_second_Name");
 			dayString=StringUtil.decodeNull(dayString, "天");
 			hourString=StringUtil.decodeNull(hourString, "小时");
 			minuteString=StringUtil.decodeNull(minuteString, "分");
 			secondString=StringUtil.decodeNull(secondString, "秒");
-			
 			 return days + dayString+" " + hours + hourString+" " + minutes + minuteString+" "  
 	            + seconds + secondString;  
-			
 		}
 	    
 	    return days + "天 " + hours + "小时 " + minutes + "分 "  

@@ -25,9 +25,9 @@ import org.eclipse.bpmn2.UserTask;
 import com.founder.fix.bpmn2extensions.coreconfig.TaskCommandDef;
 import com.founder.fix.bpmn2extensions.fixflow.TaskCommand;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 import com.founder.fix.fixflow.core.task.UserCommandQueryTo;
 
@@ -209,8 +209,7 @@ public class TaskCommandInst implements UserCommandQueryTo{
 		if(booleanInternationalization){
     		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) userTask.eResource().getContents().get(0).eContents().get(0);
         	String processId=definitionsBehavior.getProcessId();
-        	
-        	String nameTemp=Context.getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, userTask.getId()+"_"+id);
+        	String nameTemp=ResourcesUtil.getResourcesValue(processId, userTask.getId()+"_"+id);
         	if(nameTemp==null){
         		
         	}

@@ -22,6 +22,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 
 /**
  * 组,用于组的数据传递
@@ -39,10 +40,6 @@ public class GroupTo {
 	 * 组的名称
 	 */
 	protected String groupName;
-	
-	
-
-	
 
 	/**
 	 * 扩展属性集合
@@ -110,13 +107,9 @@ public class GroupTo {
 		
 		try {
 			boolean booleanTemp = StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-
 			//用户名称国际化处理
 			if (booleanTemp) {
-
-				FixFlowResources fixFlowResources = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
-
-				String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_"+groupType+"_Name_Key");
+				String nameTemp = ResourcesUtil.getResourcesValue(FixFlowResources.OrganizationResource, "FixFlow_"+groupType+"_Name_Key");
 				if (nameTemp == null || nameTemp.equals("")) {
 					return groupName;
 				} else {

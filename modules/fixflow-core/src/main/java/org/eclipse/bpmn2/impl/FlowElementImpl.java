@@ -30,11 +30,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
-
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 
 
 /**
@@ -242,13 +242,11 @@ public abstract class FlowElementImpl extends BaseElementImpl implements FlowEle
      * @generated
      */
     public String getName() {
-    	
     	Boolean booleanTemp=StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
     	if(booleanTemp){
     		DefinitionsBehavior definitionsBehavior=(DefinitionsBehavior) this.eResource().getContents().get(0).eContents().get(0);
         	String processId=definitionsBehavior.getProcessId();
-        	
-        	String nameTemp=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources().getResourceName(processId, id);
+        	String nameTemp=ResourcesUtil.getResourcesValue(processId, id);
         	if(nameTemp==null){
         		return name;
         	}
@@ -257,10 +255,6 @@ public abstract class FlowElementImpl extends BaseElementImpl implements FlowEle
     	else{
     		return name;
     	}
-    	
-    	
-    	
-        
     }
 
     /**

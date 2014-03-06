@@ -31,6 +31,7 @@ import com.founder.fix.fixflow.core.impl.interceptor.Command;
 import com.founder.fix.fixflow.core.impl.interceptor.CommandContext;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
 public class GetProcessCommand implements Command<List<Map<String, Object>>>{
@@ -41,24 +42,13 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 		this.processInstanceId=processInstanceId;
 	}
 	
-	
 	public List<Map<String, Object>> execute(CommandContext commandContext) {
-
-
-		
 		TaskService taskService = ProcessEngineManagement.getDefaultProcessEngine().getTaskService();
 		String userId=Authentication.getAuthenticatedUserId();
 		List<TaskInstance> taskInstances=taskService.createTaskQuery().processInstanceId(processInstanceId).taskAssignee(userId).taskIsEnd().list();
-
-		
 		List<Map<String, Object>> listMap=new ArrayList<Map<String,Object>>();
-		
-		
-		
 		List<TaskInstance> taskInstancesNotEndA=taskService.createTaskQuery().processInstanceId(processInstanceId).taskAssignee(userId).taskNotEnd().list();
-		
 		List<TaskInstance> taskInstancesNotEndC=taskService.createTaskQuery().processInstanceId(processInstanceId).taskCandidateUser(userId).taskNotEnd().list();
-		
 		Map<String, String> notEndTask=new HashMap<String, String>();
 		//独占未完成
 		for (TaskInstance taskInstance : taskInstancesNotEndA) {
@@ -71,7 +61,6 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 					notEndTask.put( taskInstance.getNodeId(), taskInstance.getNodeId());
 						listMap.add(mapTemp);
 				}
-
 			}
 		}
 		
@@ -86,8 +75,6 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 					notEndTask.put( taskInstance.getNodeId(), taskInstance.getNodeId());
 						listMap.add(mapTemp);
 				}
-				
-
 			}
 		}
 		
@@ -108,11 +95,9 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 				Map<String, Object> mapTemp=taskCommandInst.getPersistentState();
 				if( mapTemp.get("type").equals("reminders")||mapTemp.get("type").equals("recover")||mapTemp.get("type").equals("processStatus")){
 					mapTemp.put("taskId", taskInstance.getId());
-					
 						listMap.add(mapTemp);
 				}
 			}
-			
 		}
 		
 		int x=0;
@@ -121,26 +106,14 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 				x=1;
 				break;
 			}
-			
 		}
-		
-		
-		
-		
-		
 		if(x==0){
 			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("id", "processStatus");
-			
-			
 			boolean booleanTemp = StringUtil.getBoolean(Context.getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
-
 			//用户名称国际化处理
 			if (booleanTemp) {
-
-				FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
-
-				String nameTemp = fixFlowResources.getResourceName(FixFlowResources.TaskComandResource, "System_processStatus");
+				String nameTemp = ResourcesUtil.getResourcesValue(FixFlowResources.TaskComandResource, "System_processStatus");
 				if (nameTemp == null || nameTemp.equals("")) {
 					map.put("name", "流程状态");
 				} else {
@@ -150,16 +123,9 @@ public class GetProcessCommand implements Command<List<Map<String, Object>>>{
 			} else {
 				map.put("name", "流程状态");
 			}
-			
-			
-			
 			map.put("type", "processStatus");
 			listMap.add(map);
 		}
-
 		return listMap;
-		
-		
 	}
-
 }

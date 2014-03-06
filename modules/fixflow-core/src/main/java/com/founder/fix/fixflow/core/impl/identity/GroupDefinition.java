@@ -29,6 +29,7 @@ import com.founder.fix.fixflow.core.impl.Page;
 import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
+import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 
 public abstract class GroupDefinition {
 
@@ -59,8 +60,7 @@ public abstract class GroupDefinition {
 		Boolean booleanTemp=StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getInternationalizationConfig().getIsEnable());
 		// 用户名称国际化处理
 		if (booleanTemp) {
-			FixFlowResources fixFlowResources = Context.getProcessEngineConfiguration().getFixFlowResources();
-			String nameTemp = fixFlowResources.getResourceName(FixFlowResources.OrganizationResource, "FixFlow_"+id+"_Name");
+			String nameTemp = ResourcesUtil.getResourcesValue(FixFlowResources.OrganizationResource, "FixFlow_"+id+"_Name");
 			if (nameTemp == null || nameTemp.equals("")) {
 				return name;
 			} else {

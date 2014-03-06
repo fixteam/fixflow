@@ -37,11 +37,16 @@
                         <overlay>  
                             <groupId>com.founder.fix.fixflow</groupId>  
                             <artifactId>fixflow-webapp-editor</artifactId>  
-                        </overlay>   
+                        </overlay> 
                     </overlays>  
                 </configuration>  
             </plugin>  
-        </plugins>  
+        </plugins> 
+        <resources>
+        	<resource>
+        		<directory>../fixflow-expand/src/main/resources</directory>
+        	</resource>
+        </resources> 
     </build>  
   
   

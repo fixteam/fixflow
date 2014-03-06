@@ -667,7 +667,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		try {
 
-			fixFlowResources.systemInit(connection);
+			fixFlowResources.systemInit("internationalization");
 
 		} catch (Exception e) {
 
