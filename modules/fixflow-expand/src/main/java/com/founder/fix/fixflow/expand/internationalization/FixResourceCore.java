@@ -19,10 +19,8 @@ package com.founder.fix.fixflow.expand.internationalization;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -31,12 +29,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
+/**
+ * fixflow默认的国际化功能核心文件
+ * @author ych 2014.3.7 -- 重构
+ *
+ */
 public class FixResourceCore{
 	
 	private static Logger log = LoggerFactory.getLogger(FixResourceCore.class);
@@ -46,10 +47,18 @@ public class FixResourceCore{
 	private static String RESOURCE_PATH="";
 	private static final Map<String,Map<String,Properties>> fixResource = new HashMap<String,Map<String,Properties>>();
 	
+	/**
+	 * 设置当前线程副本中流程引擎所使用的国际化语言
+	 * @param local
+	 */
 	public static void setNowLanguage(String local){
 		currentLanguage.set(local);
 	}
 	
+	/**
+	 * 获取当前线程副本中的国际化语言
+	 * @return
+	 */
 	public static String getNowLanguage(){
 		String nowLanguage = currentLanguage.get();
 		if(StringUtil.isEmpty(nowLanguage))
@@ -57,15 +66,35 @@ public class FixResourceCore{
 		return nowLanguage;
 	}
 	
+	/**
+	 * 获取指定资源文件中指定key的国际化值
+	 * @param propertiesName 资源文件名（不带文件后缀名）
+	 * @param key 
+	 * @return
+	 */
 	public static String getResource(String propertiesName,String key){
 		return getResourceByArray(propertiesName,key,null);
 	}
 	
+	/**
+	 * 获取指定资源文件中指定key带占位符的国际化值
+	 * @param propertiesName 资源文件名（不带文件后缀名）
+	 * @param key
+	 * @param args 占位符的替换值
+	 * @return
+	 */
 	public static String getResource(String propertiesName,String key,Object... args){
 		return getResourceByArray(propertiesName,key,args);
 	}
 	
-	public static String getResourceByArray(String propertiesName,String key,Object[] args){
+	/**
+	 * 获取国际化值
+	 * @param propertiesName 资源文件名（不带文件后缀名）
+	 * @param key
+	 * @param args 占位符的替换值
+	 * @return
+	 */
+	private static String getResourceByArray(String propertiesName,String key,Object[] args){
 		String result = "";
 		if(fixResource!=null && StringUtil.isNotEmpty(key)){
 			Properties props = getProperties(propertiesName);
@@ -83,27 +112,23 @@ public class FixResourceCore{
 				}
 			}
 		}
-
 		return result;
 	}
 	
-	public static Properties getProperties(String domain){
+	private static Properties getProperties(String propertiesName){
 		Properties props = null;
 		Map<String,Properties> map = fixResource.get(getNowLanguage());
 		if(map!=null)
-			props = map.get(domain);
+			props = map.get(propertiesName);
 		return props;
 	}
 	
-	public static String processLocalFromInfo(String local){
-        if(StringUtil.isEmpty(local) || !fixResource.containsKey(local)){
-        	local = defaultLocal;
-        }
-        setNowLanguage(local);
-        return local;
-	}
-	
-	public static void loadResource(File file,Map<String,Properties> value){
+	/**
+	 * 加载指定的国际化资源文件。properties(递归)
+	 * @param file 资源文件名或文件夹名
+	 * @param value 国际化信息map
+	 */
+	private static void loadResource(File file,Map<String,Properties> value){
 		if(file.isDirectory()){
 			for(File resourceFile : file.listFiles()){
 				loadResource(resourceFile,value);
@@ -116,9 +141,9 @@ public class FixResourceCore{
 	            is = new FileInputStream(file);
 	            props.load(is);
 	            is.close();
-	            
 	            String propertiesKey = file.getName().substring(0,file.getName().lastIndexOf("."));
 	            value.put(propertiesKey, props);
+	            log.debug("加载国际化资源文件成功：文件名{}，国际化值个数：{}",file.getName(),props.size());
 		    }catch(Exception e){
 		    	log.error("国际化资源文件"+file.getName()+"加载失败",e);
 		    }finally{
@@ -131,20 +156,23 @@ public class FixResourceCore{
 		    	}
 		    }
 		}
-		
 	}
 	
-	public static void loadLanguageResource(String languageType,Map<String,Properties> value){
+	/**
+	 * 加载指定语言的所有资源文件
+	 * @param languageType 语言名（文件夹名）
+	 * @param value 保存国际化信息的map
+	 */
+	private static void loadLanguageResource(String languageType,Map<String,Properties> value){
 		String realPath = RESOURCE_PATH + File.separator + languageType;
 		File resourceDir = new File(realPath);
 		loadResource(resourceDir,value);
 	}
 	
-	public static void write(Properties props,String path,String symbio) throws IOException{
-		OutputStream fos = new FileOutputStream(path);
-		props.store(fos, symbio);
-	}
-	
+	/**
+	 * 获取资源文件夹下所有的语言 （遍历一级文件夹名）
+	 * @return
+	 */
 	private static List<String> getLanguages(){
 		List<String> result = new ArrayList<String>();
 		File file = new File(RESOURCE_PATH);
@@ -157,6 +185,10 @@ public class FixResourceCore{
 		return result;
 	}
 
+	/**
+	 * 系统初始化，加载所有的资源文件（递归）
+	 * @param resourcePath
+	 */
 	public static void systemInit(String resourcePath){
 		RESOURCE_PATH = resourcePath;
 		List<String> languages = getLanguages();

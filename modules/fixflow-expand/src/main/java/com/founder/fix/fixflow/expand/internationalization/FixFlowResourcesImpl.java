@@ -32,9 +32,22 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 		String resourceName=FixResourceCore.getResource(propertiesName, resourceKey);
 		return resourceName;
 	}
+	
+	public String getResourceValue(String propertiesName, String resourceKey,
+			Object ... args) {
+		String resourceName=FixResourceCore.getResource(propertiesName, resourceKey,args);
+		return resourceName;
+	}
 
 	public String getResourceValue(String propertiesName, String resourceKey,
 			String languageType) {
+		setNowLanguage(languageType);
+		String resourceName=FixResourceCore.getResource(propertiesName, resourceKey);
+		return resourceName;
+	}
+	
+	public String getResourceValue(String propertiesName, String resourceKey,
+			String languageType,Object... args) {
 		setNowLanguage(languageType);
 		String resourceName=FixResourceCore.getResource(propertiesName, resourceKey);
 		return resourceName;

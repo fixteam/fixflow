@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -264,8 +263,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	private void initRulesConfig() {
-		// TODO Auto-generated method stub
-
 		// this.rulesConfigs=new ArrayList<RulesConfig>();
 		ruleMap.clear();
 
@@ -279,7 +276,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				InputStream in = ReflectUtil.getResourceAsStream(classPath);
 				document = XmlUtil.read(in);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new FixFlowException("读取fixflow配置出错", e);
 			}
@@ -386,13 +382,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 			for (Object ele : document.getRootElement().elements("update")) {
 				Element element = (Element) ele;
-
 				Update updateObj = SqlmappingconfigFactory.eINSTANCE.createUpdate();
 				updateObj.setId(element.attributeValue("id"));
 				updateObj.setParameterType(element.attributeValue("parameterType"));
 				updateObj.setRemark(element.attributeValue("remark"));
 				updateObj.setSqlValue(element.getText());
-				
 				String classPathString=element.attributeValue("classPath");
 
 				if(StringUtil.isNotEmpty(classPathString)){
@@ -402,23 +396,18 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
-
 				ruleMap.put(updateObj.getId(), updateObj);
-
 			}
 
 			for (Object ele : document.getRootElement().elements("select")) {
 				Element element = (Element) ele;
-
 				Select selectObj = SqlmappingconfigFactory.eINSTANCE.createSelect();
 				selectObj.setId(element.attributeValue("id"));
 				selectObj.setParameterType(element.attributeValue("parameterType"));
 				selectObj.setRemark(element.attributeValue("remark"));
 				selectObj.setSqlValue(element.getText());
 				selectObj.setResultMap(element.attributeValue("resultMap"));
-				
 				String classPathString=element.attributeValue("classPath");
-
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
@@ -426,23 +415,18 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
-
 				ruleMap.put(selectObj.getId(), selectObj);
-
 			}
 
 			for (Object ele : document.getRootElement().elements("businessRules")) {
 				Element element = (Element) ele;
-
 				BusinessRules businessRules = SqlmappingconfigFactory.eINSTANCE.createBusinessRules();
 				businessRules.setId(element.attributeValue("id"));
 				businessRules.setParameterType(element.attributeValue("parameterType"));
 				businessRules.setRemark(element.attributeValue("remark"));
 				businessRules.setSqlValue(element.getText());
 				businessRules.setResultType(element.attributeValue("resultType"));
-				
 				String classPathString=element.attributeValue("classPath");
-
 				if(StringUtil.isNotEmpty(classPathString)){
 					Class<?> classObj=ReflectUtil.loadClass(classPathString);
 					if(classObj!=null){
@@ -450,36 +434,26 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 						ruleClassMap.put(element.attributeValue("id"), classObj);
 					}
 				}
-				
 				ruleMap.put(businessRules.getId(), businessRules);
-
 			}
-
-
 		}
-
 	}
 
 	protected ResourcePathConfig resourcePathConfig;
 
 	private void initResourcePathConfig() {
-		// TODO Auto-generated method stub
 		this.resourcePathConfig = getFixFlowConfig().getResourcePathConfig();
 	}
 
 	private void initDataVariableConfig() {
-		// TODO Auto-generated method stub
 		ResourceSet resourceSet = new ResourceSetImpl();
-
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
-
 		InputStream inputStream = null;
-		String classPath = "com/founder/fix/fixflow/expand/config/datavariableconfig.xml";
+		String classPath = "config/datavariableconfig.xml";
 		inputStream = ReflectUtil.getResourceAsStream("datavariableconfig.xml");
 		if (inputStream != null) {
 			classPath = "datavariableconfig.xml";
 		}
-
 		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
 		try {
@@ -494,18 +468,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			e2.printStackTrace();
 			throw new FixFlowException("流程配置文件加载失败！", e2);
 		}
-
-		// register package in local resource registry
 		resourceSet.getPackageRegistry().put(VariableconfigPackage.eINSTANCE.getNsURI(), VariableconfigPackage.eINSTANCE);
-		// load resource
 		try {
 			resource.load(null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new FixFlowException("流程配置文件加载失败", e);
 		}
-
 		dataVariableConfig = (DataVariableConfig) resource.getContents().get(0);
 	}
 
@@ -517,8 +486,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	protected Map<String, ConnectionManagement> connectionManagementMap;
 
 	private void initConnectionManagementConfig() {
-		// TODO 自动生成的方法存根
-
+		
 		connectionManagementMap = new HashMap<String, ConnectionManagement>();
 		connectionManagementInstanceConfigs = this.fixFlowConfig.getConnectionManagementConfig().getConnectionManagementInstanceConfig();
 		String selectId = this.fixFlowConfig.getConnectionManagementConfig().getSelected();
@@ -531,14 +499,12 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 					throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
 				}
 				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementDefault);
-
 			} else {
 				ConnectionManagement connectionManagementOther = (ConnectionManagement) ReflectUtil
 						.instantiate(connectionManagementInstanceConfigTemp.getClassImpl());
 				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementOther);
 			}
 		}
-
 	}
 
 	protected void initEmfFile() {
@@ -546,7 +512,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
 		InputStream inputStream = null;
-		String classPath = "com/founder/fix/fixflow/expand/config/fixflowconfig.xml";
+		String classPath = "config/fixflowconfig.xml";
 		inputStream = ReflectUtil.getResourceAsStream("fixflowconfig.xml");
 		if (inputStream != null) {
 			classPath = "fixflowconfig.xml";
@@ -573,7 +539,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		try {
 			resource.load(null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new FixFlowException("流程配置文件加载失败", e);
 		}
@@ -597,13 +562,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 	// 加载任务分配策略配置
 	protected void initAssignPolicyConfig() {
-
 		assignPolicyConfig = fixFlowConfig.getAssignPolicyConfig();
-
 	}
 
 	protected void initPriorityConfig() {
-		// TODO 自动生成的方法存根
 		priorityConfig = fixFlowConfig.getPriorityConfig();
 	}
 
@@ -617,7 +579,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				break;
 			}
 		}
-
 	}
 
 	protected void initAbstractCommandFilter() {
@@ -629,72 +590,43 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				AbstractCommandFilter abstractCommandFilter = (AbstractCommandFilter) ReflectUtil.instantiate(taskCommandDef.getFilter());
 				abstractCommandFilterMap.put(taskCommandDef.getId(), abstractCommandFilter);
 			}
-
 		}
-
 	}
 
 	protected void initExpandCmdConfig() {
-
 		this.expandCmdConfig = fixFlowConfig.getExpandCmdConfig();
 	}
 
 	protected void initPigeonholeConfig() {
-		// TODO 自动生成的方法存根
 		pigeonholeConfig = fixFlowConfig.getPigeonholeConfig();
 	}
 
 	protected void intiFixFlowResources() {
-
 		if (!StringUtil.getBoolean(internationalizationConfig.getIsEnable())) {
 			return;
 		}
-
 		List<ExpandClass> expandClasses = expandClassConfig.getExpandClass();
 		for (ExpandClass expandClass : expandClasses) {
 			if (expandClass.getClassId().equals("FixFlowResources")) {
-
 				fixFlowResources = (FixFlowResources) ReflectUtil.instantiate(expandClass.getClassImpl());
-
 				break;
 			}
 		}
 		if (fixFlowResources == null) {
 			throw new FixFlowException("流程国际化处理文件加载失败!");
 		}
-
-		Connection connection = createConnection();
-
 		try {
-
 			fixFlowResources.systemInit("internationalization");
-
 		} catch (Exception e) {
-
 			throw new FixFlowException("流程国际化处理文件加载失败!", e);
-
-		} finally {
-			try {
-				connection.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new FixFlowException("流程国际化处理文件加载失败!", e);
-			}
-
-		}
-
+		} 
 	}
 
 	protected void initInternationalizationConfig() {
-		// TODO 自动生成的方法存根
-
 		internationalizationConfig = fixFlowConfig.getInternationalizationConfig();
-
 	}
 
 	protected void initScriptLanguageConfig() {
-
 		this.scriptLanguageConfig = fixFlowConfig.getScriptLanguageConfig();
 	}
 
@@ -749,7 +681,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initEventSubscriptionConfig() {
-		// TODO Auto-generated method stub
 		this.eventSubscriptionConfig = fixFlowConfig.getEventSubscriptionConfig();
 	}
 
@@ -940,27 +871,18 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 			System.out.println("定时框架启动成功");
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new FixFlowException("定时任务框架启动失败！", e);
 		}
 	}
 
 	protected void initTaskCommandConfig() {
-
 		this.taskCommandConfig = fixFlowConfig.getTaskCommandConfig();
-
-		// TODO Auto-generated method stub
 		taskCommandDefMap = new HashMap<String, TaskCommandDef>();
-
 		for (TaskCommandDef taskCommandDef : taskCommandConfig.getTaskCommandDef()) {
-
 			String id = taskCommandDef.getId();
-
 			taskCommandDefMap.put(id, taskCommandDef);
-
 		}
-
 	}
 
 	protected void initDbConfig() {
