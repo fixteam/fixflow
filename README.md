@@ -197,7 +197,7 @@ Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设�
 ### 6.0.0（2014-？）
 功能方向：
  
-设立开源组织 Fixflow Org管理,全新版本,BPMN2.0规范全方位支持,同时引入  Dubbo、MuleEsb、ActiveMQ 支持
+全新版本,BPMN2.0规范全方位支持,同时引入  Dubbo、MuleEsb、ActiveMQ 支持
 
 1.可扩展的实现事件支持(Message、Error、Signal、Link、Compensation、Escalation、Conditional)
 
@@ -209,7 +209,22 @@ Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设�
 
 5.功能更加完善的web流程设计器
 
-6.引入Maven方式构建
+
+
+### 5.2.0（2014-3）即将发布
+
+1.引入Maven方式构建,重新调整项目结构。
+
+2.调整配置文件位置,流程系统文件位置可自由配置。
+
+3.重构了异常体系,引入异常国际化支持,更加合理的异常管理。
+
+4.重新设计了日志体系引入slf4j,流程的流转过程通过日志框架输出。
+
+5.修复5.2里程碑中的Issues
+
+
+
 
 
 #历史的脚印
