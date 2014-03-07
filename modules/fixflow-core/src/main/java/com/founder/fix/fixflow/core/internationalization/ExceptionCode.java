@@ -22,7 +22,11 @@ package com.founder.fix.fixflow.core.internationalization;
  * @author ych
  *
  */
-public class ExceptionCode {
+public interface ExceptionCode {
 	public static String FIXFLOW_EXCEPTION_DEFAULT = "fixflow_exception_default";
+	public static String FIXFLOW_CLASSLOADINGEXCEPTION_DEFAULT = "fixflow_classloadingexception_default";
+	public static String FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND = "fixflow_classloadingexception_filenotfound";
+	public static String FIXFLOW_CLASSLOADINGEXCEPTION_ENCODING = "fixflow_classloadingexception_encoding";
+	public static String FIXFLOW_CLASSLOADINGEXCEPTION = "fixflow_classloadingexception";
 	
 }

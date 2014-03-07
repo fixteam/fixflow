@@ -57,6 +57,11 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 		resourcePath = this.getClass().getClassLoader().getResource("/").getPath() + resourcePath + File.separator +"resource";
 		FixResourceCore.systemInit(resourcePath);
 	}
+	
+	public void reload(){
+		String resourcePath = FixResourceCore.getResourcePath();
+		FixResourceCore.systemInit(resourcePath);
+	}
 
 	public String getNowLanguage() {
 		return FixResourceCore.getNowLanguage(); 

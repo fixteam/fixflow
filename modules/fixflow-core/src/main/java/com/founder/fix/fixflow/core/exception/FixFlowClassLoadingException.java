@@ -17,6 +17,8 @@
  */
 package com.founder.fix.fixflow.core.exception;
 
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
+
 /**
  *运行时异常，表明所请求的类没有被发现或发生错误
  * 
@@ -27,24 +29,52 @@ public class FixFlowClassLoadingException extends FixFlowException {
   private static final long serialVersionUID = 1L;
   protected String className;
   
+  
+  /**
+   * @param className 未找到的类名或文件名
+   * @param cause
+   */
+  public FixFlowClassLoadingException(String className) {
+	  super(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_DEFAULT,new Object[]{className});
+	  this.className = className;
+  }
+  
+  /**
+   * 
+   * @param exceptionCode 异常key
+   * @param className
+   */
+  public FixFlowClassLoadingException(String exceptionCode,String className) {
+	  super(exceptionCode,new Object[]{className});
+	  this.className = className;
+  }
+  
+  
+  
+  /**
+   * @param className 未找到的类名或文件名
+   * @param cause
+   */
   public FixFlowClassLoadingException(String className, Throwable cause) {
-    super(getExceptionMessageMessage(className, cause), cause);
+	  super(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_DEFAULT,new Object[]{className}, cause);
+	  this.className = className;
+  }
+  
+  /**
+   * @param exceptionCode 相应的国际化资源key
+   * @param className 未找到的类名或文件名
+   * @param cause
+   */
+  public FixFlowClassLoadingException(String exceptionCode ,String className, Throwable cause) {
+    super(exceptionCode,new Object[]{className}, cause);
     this.className = className;
   }
- 
+  
   /**
    * 返回这个异常涉及到的类的名称。
    */
   public String getClassName() {
     return className;
-  }
-  
-  private static String getExceptionMessageMessage(String className, Throwable cause) {
-    if(cause instanceof ClassNotFoundException) {
-      return "Class not found: " + className;
-    } else {
-      return "Could not load class: " + className;
-    }
   }
 
 }

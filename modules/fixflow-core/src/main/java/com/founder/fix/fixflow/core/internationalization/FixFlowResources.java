@@ -30,11 +30,6 @@ public interface FixFlowResources {
 	public static String TaskComandResource="FixFlow_SystemTaskComandResource";
 	
 	/**
-	 * 异常国际化配置文件名
-	 */
-	public static String ExceptionResource="FixFlowExceptionResource";
-
-	/**
 	 * 组织机构国际化配置文件名
 	 */
 	public static String OrganizationResource="FixFlow_OrganizationResource";
@@ -89,6 +84,11 @@ public interface FixFlowResources {
 	 * 初始化国际化资源配置文件
 	 */
 	public void systemInit(String resourcePath);
+	
+	/**
+	 * 重新加载国际化资源文件
+	 */
+	public void reload();
 	
 	/**
 	 * 获取当前线程副本中的语言

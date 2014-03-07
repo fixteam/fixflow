@@ -29,8 +29,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 /**
@@ -41,7 +44,6 @@ import com.founder.fix.fixflow.core.impl.util.StringUtil;
 public class FixResourceCore{
 	
 	private static Logger log = LoggerFactory.getLogger(FixResourceCore.class);
-	private static final ThreadLocal<String> currentLanguage = new ThreadLocal<String>();
 	public static final String defaultLocal = "zh_CN";
 	public static final String DOT_PROPERTIES = ".properties";
 	private static String RESOURCE_PATH="";
@@ -52,7 +54,7 @@ public class FixResourceCore{
 	 * @param local
 	 */
 	public static void setNowLanguage(String local){
-		currentLanguage.set(local);
+		Context.setLanguageType(local);
 	}
 	
 	/**
@@ -60,10 +62,7 @@ public class FixResourceCore{
 	 * @return
 	 */
 	public static String getNowLanguage(){
-		String nowLanguage = currentLanguage.get();
-		if(StringUtil.isEmpty(nowLanguage))
-			nowLanguage = defaultLocal;
-		return nowLanguage;
+		return Context.getLanguageType();
 	}
 	
 	/**
@@ -104,14 +103,14 @@ public class FixResourceCore{
 					try {
 						result = new String(result.getBytes("ISO8859-1"), "UTF-8");
 						result = MessageFormat.format(result, args);
-						if(StringUtil.isEmpty(result))
-							result = key;
 					} catch (UnsupportedEncodingException e) {
 						log.error("国际化:"+key+"取值时转码失败!", e);
 					}
 				}
 			}
 		}
+		if(StringUtil.isEmpty(result))
+			result = key;
 		return result;
 	}
 	
@@ -190,6 +189,7 @@ public class FixResourceCore{
 	 * @param resourcePath
 	 */
 	public static void systemInit(String resourcePath){
+		fixResource.clear();
 		RESOURCE_PATH = resourcePath;
 		List<String> languages = getLanguages();
 		for(String language:languages){
@@ -200,5 +200,9 @@ public class FixResourceCore{
 				loadLanguageResource(languageEntry.getKey(),languageEntry.getValue());
 			}
 		}
+	}
+	
+	public static String getResourcePath(){
+		return RESOURCE_PATH;
 	}
 }

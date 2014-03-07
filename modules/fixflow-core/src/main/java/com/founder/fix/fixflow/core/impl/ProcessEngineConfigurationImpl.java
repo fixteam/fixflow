@@ -20,6 +20,7 @@ package com.founder.fix.fixflow.core.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.coreconfig.AllUserInfo;
 import com.founder.fix.bpmn2extensions.coreconfig.AssignPolicyConfig;
@@ -98,6 +101,8 @@ import com.founder.fix.fixflow.core.TaskService;
 import com.founder.fix.fixflow.core.cache.CacheHandler;
 import com.founder.fix.fixflow.core.database.DataBaseTableEnum;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
+import com.founder.fix.fixflow.core.exception.ExceptionResourceCore;
+import com.founder.fix.fixflow.core.exception.FixFlowClassLoadingException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.cache.CacheImpl;
 import com.founder.fix.fixflow.core.impl.db.DbConfig;
@@ -121,11 +126,13 @@ import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.impl.util.XmlUtil;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 import com.founder.fix.fixflow.core.variable.BizData;
 
 public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
+	private static Logger log = LoggerFactory.getLogger(ProcessEngineConfigurationImpl.class);
 	protected CommandExecutor commandExecutor;
 	protected CommandContextFactory commandContextFactory;
 	protected CacheHandler cacheHandler;
@@ -208,7 +215,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	protected Map<String, Class<?>> ruleClassMap=new HashMap<String, Class<?>>();
 
-	
 
 
 	/**
@@ -223,6 +229,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void init() {
+		initExceptionResource();
 		initEmfFile();
 		initRulesConfig();
 		// initSqlMappingFile();
@@ -261,6 +268,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initThreadPool();
 
 	}
+	
+	public void initExceptionResource(){
+		ExceptionResourceCore.system_init("config/exceptionresource");
+	}
 
 	private void initRulesConfig() {
 		// this.rulesConfigs=new ArrayList<RulesConfig>();
@@ -276,8 +287,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				InputStream in = ReflectUtil.getResourceAsStream(classPath);
 				document = XmlUtil.read(in);
 			} catch (Exception e) {
-				e.printStackTrace();
-				throw new FixFlowException("读取fixflow配置出错", e);
+				log.error("持久化配置文件:"+classPath+"加载出错",e);
+				throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND,classPath,e);
 			}
 
 			for (Object ele : document.getRootElement().elements("dataBaseTable")) {
@@ -508,7 +519,6 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 
 	protected void initEmfFile() {
-
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
 		InputStream inputStream = null;
@@ -516,9 +526,15 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		inputStream = ReflectUtil.getResourceAsStream("fixflowconfig.xml");
 		if (inputStream != null) {
 			classPath = "fixflowconfig.xml";
+			log.info("开始从classes根目录加载fixflowconfig.xml文件");
+		}else{
+			log.info("开始从classes/config/fixflowconfig.xml目录加载fixflowconfig.xml文件");
 		}
-
-		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
+		URL url = this.getClass().getClassLoader().getResource(classPath);
+		if(url == null){
+			throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND ,"fixflowconfig.xml");
+		}
+		String filePath = url.toString();
 		Resource resource = null;
 		try {
 			if (!filePath.startsWith("jar")) {
@@ -527,26 +543,19 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			} else {
 				resource = resourceSet.createResource(URI.createURI(filePath));
 			}
-
 		} catch (UnsupportedEncodingException e2) {
-			e2.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败！", e2);
+			log.error("fixflowconfig.xml文件编码失败", e2);
+			throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_ENCODING,"fixflowconfig.xml", e2);
 		}
-
-		// register package in local resource registry
 		resourceSet.getPackageRegistry().put(CoreconfigPackage.eINSTANCE.getNsURI(), CoreconfigPackage.eINSTANCE);
-		// load resource
 		try {
 			resource.load(null);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败", e);
+			log.error("fixflowconfig.xml文件加载失败", e);
+			throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION,"fixflowconfig.xml", e);
 		}
-
 		fixFlowConfig = (FixFlowConfig) resource.getContents().get(0);
-
 		String versionString = fixFlowConfig.getVersion();
-
 		this.fixFlowVersion = new FixFlowVersion(versionString);
 	}
 
@@ -1394,6 +1403,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	public Class<?> getExpandClass(String classId) {
 		return expandClassMap.get(classId);
+	}
+	
+	public String getFixFlowFilePath(){
+		return getResourcePath("fixflowfile").getSrc();
 	}
 
 

@@ -88,17 +88,15 @@ public class Context {
 
 		Stack<String> stack = getStack(languageTypeThreadLocal);
 		if (stack.isEmpty()) {
-			return "defauld";
+			return "zh_CN";
 		}
 
 		String languageTypeTemp = stack.peek();
 		if (languageTypeTemp == null || languageTypeTemp.equals("")) {
-			return "defauld";
+			return "zh_CN";
 		} else {
 			return stack.peek();
-
 		}
-
 	}
 
 	public static void removeLanguageType() {

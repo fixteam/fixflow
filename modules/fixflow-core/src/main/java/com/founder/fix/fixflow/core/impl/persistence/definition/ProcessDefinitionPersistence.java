@@ -20,6 +20,7 @@ package com.founder.fix.fixflow.core.impl.persistence.definition;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,13 +44,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterOutputs;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
+import com.founder.fix.fixflow.core.exception.FixFlowClassLoadingException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.Page;
@@ -67,9 +72,11 @@ import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.QueryTableUtil;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 
 public class ProcessDefinitionPersistence {
 
+	private Logger log = LoggerFactory.getLogger(ProcessDefinitionPersistence.class);
 	public Connection connection;
 	protected SqlCommand sqlCommand;
 	Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
@@ -290,14 +297,18 @@ public class ProcessDefinitionPersistence {
 			if (bytesObject != null) {
 				byte[] bytes = (byte[]) bytesObject;
 				ResourceSet resourceSet = getResourceSet();
-				String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
+				String fixflowFilePath =  ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();
+				URL url = ReflectUtil.getResource(fixflowFilePath);
+				if(url == null){
+					throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND,fixflowFilePath);
+				}
+				String filePath = url.toString();
 				Resource ddddResource = null;
 				if (!filePath.startsWith("jar")) {
 					try {
-						filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(),
-								"utf-8");
+						filePath = java.net.URLDecoder.decode(url.getFile(),"utf-8");
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+						
 						throw new FixFlowException("流程定义文件加载失败！", e);
 					}
 					ddddResource = resourceSet.createResource(URI.createFileURI(filePath));

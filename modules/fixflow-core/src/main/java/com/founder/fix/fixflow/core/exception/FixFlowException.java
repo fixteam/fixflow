@@ -17,9 +17,6 @@
  */
 package com.founder.fix.fixflow.core.exception;
 
-import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
-import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
-
 /**
  * 运行时异常，这是所有FixFlow异常的基类
  * 
@@ -30,19 +27,19 @@ public class FixFlowException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public FixFlowException(String exceptionCode) {
-		super(ResourcesUtil.getResourcesValue(FixFlowResources.ExceptionResource, exceptionCode));
+		super(ExceptionResourceCore.getResourceValue(exceptionCode));
 	}
 	
 	public FixFlowException(String exceptionCode,Object[] args) {
-		super(ResourcesUtil.getResourcesValue(FixFlowResources.ExceptionResource, exceptionCode,args));
+		super(ExceptionResourceCore.getResourceValue(exceptionCode,args));
 	}
 	
 	public FixFlowException(String exceptionCode,Throwable cause){
-		super(ResourcesUtil.getResourcesValue(FixFlowResources.ExceptionResource, exceptionCode),cause);
+		super(ExceptionResourceCore.getResourceValue(exceptionCode),cause);
 	}
 	
 	public FixFlowException(String exceptionCode,Object[] args,Throwable cause){
-		super(ResourcesUtil.getResourcesValue(FixFlowResources.ExceptionResource, exceptionCode,args),cause);
+		super(ExceptionResourceCore.getResourceValue(exceptionCode,args),cause);
 	}
 	
 }
