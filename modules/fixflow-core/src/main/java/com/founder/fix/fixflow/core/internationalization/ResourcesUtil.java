@@ -29,14 +29,18 @@ public class ResourcesUtil {
 	
 	public static String getResourcesValue(String propertiesName,String key){
 		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
-    	String nameTemp=fixFlowResources.getResourceValue(propertiesName, key);
-    	return nameTemp;
+    	if(fixFlowResources == null){
+    		return key;
+    	}
+    	return fixFlowResources.getResourceValue(propertiesName, key);
 	}
 	
 	public static String getResourcesValue(String propertiesName,String key,String languageType){
 		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
-    	String nameTemp=fixFlowResources.getResourceValue(propertiesName, key,languageType);
-    	return nameTemp;
+    	if(fixFlowResources == null){
+    		return key;
+    	}
+    	return fixFlowResources.getResourceValue(propertiesName, key,languageType);
 	}
 
 }
