@@ -51,7 +51,7 @@ public class CompleteConverterTest extends AbstractConverterTest {
 //  }
   
   protected String getResource() {
-    return "org/activiti/editor/language/test.completemodel.json";
+    return "test.completemodel.json";
   }
   
   private void validateModel(Definitions model) {

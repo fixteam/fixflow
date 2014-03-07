@@ -38,6 +38,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.JobService;
@@ -118,11 +119,16 @@ public class FlowManager extends HttpServlet {
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if ("processDefinitionList".equals(action)) {
-				Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
-				filter.putAll(result);
-				request.setAttribute("result", filter);
-				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/fixflow/manager/processDefinitionList.jsp");
+				try{
+					Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
+					filter.putAll(result);
+					request.setAttribute("result", filter);
+					request.setAttribute("pageInfo", filter.get("pageInfo"));
+					rd = request.getRequestDispatcher("/fixflow/manager/processDefinitionList.jsp");
+				}catch(FixFlowException e){
+					e.printStackTrace();
+				}
+				
 			}else if(action.equals("processManageList")){
 //				String processAction = StringUtil.getString(filter.get("processAction"));
 //				request.setAttribute("nowProcessAction", action);

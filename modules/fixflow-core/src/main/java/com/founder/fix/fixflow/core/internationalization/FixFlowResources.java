@@ -32,7 +32,7 @@ public interface FixFlowResources {
 	/**
 	 * 异常国际化配置文件名
 	 */
-	public static String ExceptionResource="FixFlow_ExceptionResource";
+	public static String ExceptionResource="FixFlowExceptionResource";
 
 	/**
 	 * 组织机构国际化配置文件名

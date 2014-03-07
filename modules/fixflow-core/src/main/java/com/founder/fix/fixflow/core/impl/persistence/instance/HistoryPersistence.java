@@ -159,7 +159,7 @@ public class HistoryPersistence {
 			flag = true;
 		}
 		if(!flag){
-			throw new FixFlowException("归档参数异常，请检查",null);
+			throw new FixFlowException("归档参数异常，请检查");
 		}
 		whereSql += " and end_time is not null";
 		return whereSql;

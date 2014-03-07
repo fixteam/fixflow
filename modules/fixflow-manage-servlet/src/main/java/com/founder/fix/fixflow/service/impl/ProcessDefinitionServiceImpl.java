@@ -17,7 +17,6 @@
  */
 package com.founder.fix.fixflow.service.impl;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +32,6 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.persistence.definition.DeploymentEntity;
 import com.founder.fix.fixflow.core.impl.persistence.definition.ResourceEntity;
-import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.model.ProcessDefinitionQuery;
 import com.founder.fix.fixflow.service.ProcessDefinitionService;

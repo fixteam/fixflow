@@ -62,7 +62,7 @@ public class ArchiveCmd implements Command<Boolean> {
 		}
 		
 		if(paraMap.keySet().size() == 0){
-			throw new FixFlowException("归档参数异常，请检查", null);
+			throw new FixFlowException("归档参数异常，请检查");
 		}
 		return commandContext.getHistoryManager().archiveByProcessInstanceId(paraMap);
 	}

@@ -42,7 +42,7 @@ public class FixResourceCore{
 	
 	private static Logger log = LoggerFactory.getLogger(FixResourceCore.class);
 	private static final ThreadLocal<String> currentLanguage = new ThreadLocal<String>();
-	public static final String defaultLocal = "defauld";
+	public static final String defaultLocal = "zh_CN";
 	public static final String DOT_PROPERTIES = ".properties";
 	private static String RESOURCE_PATH="";
 	private static final Map<String,Map<String,Properties>> fixResource = new HashMap<String,Map<String,Properties>>();
@@ -103,7 +103,7 @@ public class FixResourceCore{
 				if(StringUtil.isNotEmpty(result)){
 					try {
 						result = new String(result.getBytes("ISO8859-1"), "UTF-8");
-						MessageFormat.format(result, args);
+						result = MessageFormat.format(result, args);
 						if(StringUtil.isEmpty(result))
 							result = key;
 					} catch (UnsupportedEncodingException e) {

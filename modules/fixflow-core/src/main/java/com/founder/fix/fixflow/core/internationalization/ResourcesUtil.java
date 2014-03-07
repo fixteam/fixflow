@@ -35,12 +35,28 @@ public class ResourcesUtil {
     	return fixFlowResources.getResourceValue(propertiesName, key);
 	}
 	
+	public static String getResourcesValue(String propertiesName,String key,Object... args){
+		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
+    	if(fixFlowResources == null){
+    		return key;
+    	}
+    	return fixFlowResources.getResourceValue(propertiesName, key,args);
+	}
+	
 	public static String getResourcesValue(String propertiesName,String key,String languageType){
 		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
     	if(fixFlowResources == null){
     		return key;
     	}
     	return fixFlowResources.getResourceValue(propertiesName, key,languageType);
+	}
+	
+	public static String getResourcesValue(String propertiesName,String key,String languageType,Object... args){
+		FixFlowResources fixFlowResources=ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowResources();
+    	if(fixFlowResources == null){
+    		return key;
+    	}
+    	return fixFlowResources.getResourceValue(propertiesName, key,languageType,args);
 	}
 
 }
