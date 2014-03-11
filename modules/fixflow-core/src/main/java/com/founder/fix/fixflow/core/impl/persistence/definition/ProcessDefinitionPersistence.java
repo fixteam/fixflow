@@ -300,7 +300,7 @@ public class ProcessDefinitionPersistence {
 				String fixflowFilePath =  ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();
 				URL url = ReflectUtil.getResource(fixflowFilePath);
 				if(url == null){
-					throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND,fixflowFilePath);
+					throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_FILENOTFOUND,fixflowFilePath);
 				}
 				String filePath = url.toString();
 				Resource ddddResource = null;

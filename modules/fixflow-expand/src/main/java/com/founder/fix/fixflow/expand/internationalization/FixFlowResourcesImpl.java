@@ -17,8 +17,6 @@
  */
 package com.founder.fix.fixflow.expand.internationalization;
 
-import java.io.File;
-
 import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
 
 /**
@@ -54,7 +52,7 @@ public class FixFlowResourcesImpl implements FixFlowResources {
 	}
 
 	public void systemInit(String resourcePath) {
-		resourcePath = this.getClass().getClassLoader().getResource("/").getPath() + resourcePath + File.separator +"resource";
+		resourcePath = this.getClass().getClassLoader().getResource("/").getPath() + resourcePath;
 		FixResourceCore.systemInit(resourcePath);
 	}
 	

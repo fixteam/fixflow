@@ -47,19 +47,7 @@ if(message!=''){
 				</tr>
 			</table>
 			<div class="toolbar">
-				<input type="hidden" name="action" value="demoCompleteTask" />
-				<c:forEach items="${result.commandList}" var="row"
-					varStatus="status">
-					<div class="btn-normal" id="btn_${status.index+1}"
-						commandId="${row.id}" commandName="${row.name}"
-						commandType="${row.type}" isAdmin="${row.isAdmin}"
-						isVerification="${row.isVerification}"
-						isSaveData="${row.isSaveData}"
-						isSimulationRun="${row.isSimulationRun}" nodeId="${row.nodeId}"
-						nodeName="${row.nodeName}">
-						<a href="#">${row.name}</a>
-					</div>
-				</c:forEach>
+				
 			</div>
 		</form>
 	</div>

@@ -72,7 +72,7 @@
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:userTask id="UserTask_2" name="2.财务核对">
+    <bpmn2:userTask id="UserTask_2" fixflow:taskType="FIXFLOWTASK" name="2.财务核对">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
         <fixflow:assignPolicyType id="potentialOwner_One"/>
@@ -85,6 +85,7 @@
         <fixflow:skipStrategy/>
         <fixflow:taskCommand id="HandleCommand_4" name="不符合财务制度" commandType="rollBackTaskByTaskId" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:taskCommand id="HandleCommand_5" name="接收任务" commandType="claim" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:expectedExecutionTime/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
@@ -112,7 +113,7 @@
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="同意" sourceRef="ExclusiveGateway_2" targetRef="UserTask_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1">y==1</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1_1">y==1</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:userTask id="UserTask_3" fixflow:taskType="FIXFLOWTASK" name="3.主管审批">
       <bpmn2:extensionElements>
@@ -150,7 +151,7 @@ return null;</bpmn2:formalExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="作废" sourceRef="ExclusiveGateway_2" targetRef="EndEvent_1">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2">y==2</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2_1">y==2</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_3" targetRef="ExclusiveGateway_3"/>
     <bpmn2:endEvent id="EndEvent_1" name="结束">
@@ -202,9 +203,9 @@ return null;</bpmn2:formalExpression>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
-      <bpmn2:potentialOwner id="PotentialOwner_5" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="提交人">
-        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_5">
-          <bpmn2:formalExpression id="processInfo.getInitiator()">processInfo.getInitiator()</bpmn2:formalExpression>
+      <bpmn2:potentialOwner id="PotentialOwner_5_1" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="提交人">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_5_1">
+          <bpmn2:formalExpression id="processInfo.getInitiator()_1">processInfo.getInitiator()</bpmn2:formalExpression>
         </bpmn2:resourceAssignmentExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
@@ -216,35 +217,17 @@ return null;</bpmn2:formalExpression>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_13" name="金额>1000" sourceRef="ExclusiveGateway_3" targetRef="UserTask_4">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1">y==1</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==1_2">y==1</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_15" name="作废" sourceRef="ExclusiveGateway_3" targetRef="EndEvent_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==3">y==3</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="金额&lt;=1000" sourceRef="ExclusiveGateway_3" targetRef="UserTask_5">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2">y==2</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="y==2_2">y==2</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default 流程定义">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TheTaxiReimbursement">
-      <bpmndi:BPMNShape id="BPMNShape_1">
-        <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="76.0" y="48.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
-        <dc:Bounds height="50.0" width="110.0" x="136.0" y="41.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="720.0" y="640.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
-        <di:waypoint xsi:type="dc:Point" x="112.0" y="66.0"/>
-        <di:waypoint xsi:type="dc:Point" x="122.0" y="66.0"/>
-        <di:waypoint xsi:type="dc:Point" x="122.0" y="66.0"/>
-        <di:waypoint xsi:type="dc:Point" x="136.0" y="66.0"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_Lane_1" bpmnElement="Lane_1" isHorizontal="true">
         <dc:Bounds height="699.0" width="761.0" x="16.0" y="15.0"/>
       </bpmndi:BPMNShape>
@@ -263,6 +246,21 @@ return null;</bpmn2:formalExpression>
       <bpmndi:BPMNShape id="BPMNShape_Lane_6" bpmnElement="Lane_6" isHorizontal="true">
         <dc:Bounds height="100.0" width="731.0" x="46.0" y="515.0"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Lane_7" bpmnElement="Lane_7" isHorizontal="true">
+        <dc:Bounds height="100.0" width="731.0" x="46.0" y="614.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1">
+        <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="76.0" y="48.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
+        <dc:Bounds height="50.0" width="110.0" x="136.0" y="41.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="720.0" y="640.0"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2">
         <dc:Bounds height="50.0" width="110.0" x="246.0" y="140.0"/>
       </bpmndi:BPMNShape>
@@ -275,6 +273,24 @@ return null;</bpmn2:formalExpression>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="276.0" y="41.0"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="387.0" y="140.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="490.0" y="239.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_5" bpmnElement="UserTask_5">
+        <dc:Bounds height="50.0" width="110.0" x="560.0" y="530.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_7" bpmnElement="UserTask_7">
+        <dc:Bounds height="50.0" width="110.0" x="560.0" y="633.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_1">
+        <di:waypoint xsi:type="dc:Point" x="112.0" y="66.0"/>
+        <di:waypoint xsi:type="dc:Point" x="122.0" y="66.0"/>
+        <di:waypoint xsi:type="dc:Point" x="122.0" y="66.0"/>
+        <di:waypoint xsi:type="dc:Point" x="136.0" y="66.0"/>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_ExclusiveGateway_1">
         <di:waypoint xsi:type="dc:Point" x="246.0" y="66.0"/>
         <di:waypoint xsi:type="dc:Point" x="259.0" y="66.0"/>
@@ -292,9 +308,6 @@ return null;</bpmn2:formalExpression>
         <di:waypoint xsi:type="dc:Point" x="301.0" y="113.0"/>
         <di:waypoint xsi:type="dc:Point" x="301.0" y="140.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="387.0" y="140.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="BPMNShape_UserTask_2" targetElement="BPMNShape_ExclusiveGateway_2">
         <di:waypoint xsi:type="dc:Point" x="356.0" y="165.0"/>
         <di:waypoint xsi:type="dc:Point" x="369.0" y="165.0"/>
@@ -312,9 +325,6 @@ return null;</bpmn2:formalExpression>
         <di:waypoint xsi:type="dc:Point" x="738.0" y="165.0"/>
         <di:waypoint xsi:type="dc:Point" x="738.0" y="640.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="490.0" y="239.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="BPMNShape_UserTask_3" targetElement="BPMNShape_ExclusiveGateway_3">
         <di:waypoint xsi:type="dc:Point" x="467.0" y="264.0"/>
         <di:waypoint xsi:type="dc:Point" x="477.0" y="264.0"/>
@@ -327,9 +337,6 @@ return null;</bpmn2:formalExpression>
         <di:waypoint xsi:type="dc:Point" x="515.0" y="330.0"/>
         <di:waypoint xsi:type="dc:Point" x="515.0" y="380.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_5" bpmnElement="UserTask_5">
-        <dc:Bounds height="50.0" width="110.0" x="560.0" y="530.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_14" sourceElement="BPMNShape_UserTask_4" targetElement="BPMNShape_UserTask_5">
         <di:waypoint xsi:type="dc:Point" x="515.0" y="430.0"/>
         <di:waypoint xsi:type="dc:Point" x="515.0" y="555.0"/>
@@ -340,9 +347,6 @@ return null;</bpmn2:formalExpression>
         <di:waypoint xsi:type="dc:Point" x="738.0" y="264.0"/>
         <di:waypoint xsi:type="dc:Point" x="738.0" y="640.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_7" bpmnElement="UserTask_7">
-        <dc:Bounds height="50.0" width="110.0" x="560.0" y="633.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_18" sourceElement="BPMNShape_UserTask_5" targetElement="BPMNShape_UserTask_7">
         <di:waypoint xsi:type="dc:Point" x="615.0" y="580.0"/>
         <di:waypoint xsi:type="dc:Point" x="615.0" y="603.0"/>
@@ -355,9 +359,6 @@ return null;</bpmn2:formalExpression>
         <di:waypoint xsi:type="dc:Point" x="692.0" y="658.0"/>
         <di:waypoint xsi:type="dc:Point" x="720.0" y="658.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_Lane_7" bpmnElement="Lane_7" isHorizontal="true">
-        <dc:Bounds height="100.0" width="731.0" x="46.0" y="614.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_UserTask_5">
         <di:waypoint xsi:type="dc:Point" x="515.0" y="290.0"/>
         <di:waypoint xsi:type="dc:Point" x="515.0" y="338.0"/>

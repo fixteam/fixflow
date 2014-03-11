@@ -34,6 +34,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
@@ -280,6 +282,9 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 
 	// Function　方法
 	// //////////////////////////////////////////////////////
+	
+	
+	private static Logger LOG = LoggerFactory.getLogger(FlowElementImpl.class);
 
 	/**
 	 * 
@@ -334,6 +339,9 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 	}
 
 	public void leave(ExecutionContext executionContext) {
+		
+		
+		
 		defaultLeave(executionContext);
 
 	}

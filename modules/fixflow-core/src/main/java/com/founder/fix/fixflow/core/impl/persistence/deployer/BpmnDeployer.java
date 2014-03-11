@@ -89,11 +89,11 @@ public class BpmnDeployer implements Deployer {
 		byte[] bytes = resourceBpmn.getBytes();
 		ResourceSet resourceSet = getResourceSet();
 
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
+		String filePath = this.getClass().getClassLoader().getResource("config/fixflowfile.bpmn").toString();
 		Resource ddddResource = null;
 		if (!filePath.startsWith("jar")) {
 			try {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(), "utf-8");
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("config/fixflowfile.bpmn").getFile(), "utf-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();

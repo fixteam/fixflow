@@ -117,6 +117,7 @@ public class FileAndDirectoryServlet extends BaseServlet {
         		flowExplorerService.deploy(fileInputSteamMap, deploymentId, userId);
         		success("发布成功", "string");
 			}catch(Exception ex){
+				ex.printStackTrace();
 				error("发布失败：" + ex.getMessage());
 			}
     	}
