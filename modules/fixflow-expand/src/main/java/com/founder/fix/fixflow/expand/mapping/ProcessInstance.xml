@@ -157,6 +157,8 @@
 		<![CDATA[ 
 		import com.founder.fix.fixflow.core.impl.db.SqlQuery;
 		import com.founder.fix.fixflow.expand.database.TableUtil;
+		import com.founder.fix.fixflow.core.impl.util.StringUtil;
+		
 		SqlQuery sqlQuery=new SqlQuery();
 		
 		
