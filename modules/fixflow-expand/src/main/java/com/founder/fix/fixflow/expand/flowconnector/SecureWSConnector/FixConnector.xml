@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flowconnector:FlowConnectorDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowconnector="http://www.founderfix.com/flowconnector" id="SecureWSConnector" name="执行一个Web服务" note="执行一个Web服务" categoryId="9fbd9145-9e87-4138-aa8e-b10e2e36d159" icon="SecureWSConnector.png">
+  <input id="serviceNS" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <input id="serviceName" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <input id="portName" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <input id="request" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <input id="endPointAddress" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <input id="binding" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <input id="SOAPAction" type="java.lang.String" mandatory="Mandatory" defaultValue="" isExecute="true"/>
+  <page id="page1" name="连接参数" note="连接参数">
+    <widget xsi:type="flowconnector:Text" id="Widget_0" name="服务NS" inputId="serviceNS">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_1" name="服务名" inputId="serviceName">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_2" name="端口" inputId="portName">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_3" name="请求内容" inputId="request">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_4" name="终端地址" inputId="endPointAddress">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_5" name="绑定" inputId="binding">
+      <widgetExpression expressionValue=""/>
+    </widget>
+    <widget xsi:type="flowconnector:Text" id="Widget_6" name="SOAP Action" inputId="SOAPAction">
+      <widgetExpression expressionValue=""/>
+    </widget>
+  </page>
+  <definitionImpl className="SecureWSConnector" packageName="com.founder.fix.fixflow.expand.flowconnector.SecureWSConnector"/>
+</flowconnector:FlowConnectorDefinition>
