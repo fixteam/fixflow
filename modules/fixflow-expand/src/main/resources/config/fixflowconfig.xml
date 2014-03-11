@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.2.0.20140316">
-  <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="true">
+  <dataBaseConfig selected="mysql" mode="internal" isEnableDesCon="false">
     <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="fixflow" password="fixflow" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
-    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
+    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
     <dataBase id="sqlserver" name="sqlserver" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
   </dataBaseConfig>
   <taskCommandConfig commandType="manualclaim">
@@ -106,7 +106,7 @@
     <scriptLanguage id="BeanShell" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.BeanShellScriptLanguageMgmtImpl"/>
     <scriptLanguage id="Groovy" classImpl="com.founder.fix.fixflow.expand.scriptlanguage.GroovyScriptLanguageMgmtImpl"/>
   </scriptLanguageConfig>
-  <internationalizationConfig isEnable="true" folderPath="/fixflow-expand/internationalization/"/>
+  <internationalizationConfig isEnable="true" folderPath="/fixflow-expand/src/main/resources/internationalization/"/>
   <pigeonholeConfig serverPath="http://&lt;127.0.0.1>:&lt;8080>/&lt;xxweb>" pdfPath="&lt;C:>/&lt;xxfolder>/&lt;xxfolder>" isEnable="false"/>
   <expandCmdConfig>
     <expandCmd id="MyTestCmd" name="测试执行器" cmd="com.founder.fix.fixflow.expand.cmd.MyTestCmd"/>
@@ -140,34 +140,22 @@
     <importDataVariable id="GeneralDB" name="通用数据库变量" expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);"/>
   </importDataVariableConfig>
   <resourcePathConfig>
-    <!-- projectName 表示文件存放的项目名称供设计器使用  src 表示web在classLoad的时候需要的地址   virtualPath 表示文件项目项目位置的相对地址  physicalPath 表示实际路径 -->
-    
-    <!-- 模板配置 -->
     <resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-expand" virtualPath="src/main/resources/template"/>
     <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/flow-template/"/>
     <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/node-template/"/>
     <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" src="template/system-template/" virtualPath="src/main/resources/template/system-template"/>
-    <!-- 连接器配置 -->
-    <resourcePath id="flowConnector-path" name="流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/flowconnector/FlowConnectorMenu.xml" virtualPath="src/com/founder/fix/fixflow/expand/flowconnector/"/>
-    <resourcePath id="actorConnector-path" name="处理者选择器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/actorconnector/ActorConnectorMenu.xml" virtualPath="src/com/founder/fix/fixflow/expand/actorconnector/"/>
-    <!-- web流程设计器生成文件配置 -->
+    <resourcePath id="flowConnector-path" name="流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/flowconnector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/flowconnector/"/>
+    <resourcePath id="actorConnector-path" name="处理者选择器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/actorconnector/ActorConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/actorconnector/"/>
+    <resourcePath id="oldConnector-path" name="老流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/connector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
     <resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
     <resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>
-  	<!-- 变量配置 -->
-  	<resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml"/>
-  	<!-- 流程定义空文件 -->
-  	<resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/fixflowfile.bpmn"/>
-  	<!-- Groovy空文件 -->
-  	<resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/GroovyFile.groovy" src=""/>  	
-  	<!-- quartz定时任务框架配置 -->
-  	<resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/quartz.properties" src=""/> 	
-  	<!-- 流程图形主题配置 -->
-  	<resourcePath id="style" name="style.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/style.xml" src=""/>
-  	<!-- 国际化文件目录配置 -->
-  	<resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/internationalization/" src="internationalization"/>
-  	<!-- 流程图目录配置 -->
-  	<resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/fixflowdiagram/" src="fixflowdiagram"/>
-  	
+    <resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml"/>
+    <resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" src="config/fixflowfile.bpmn" virtualPath="src/main/resources/config/fixflowfile.bpmn"/>
+    <resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" src="config/GroovyFile.groovy" virtualPath="src/main/resources/config/GroovyFile.groovy"/>
+    <resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" src="config/quartz.properties" virtualPath="src/main/resources/config/quartz.properties"/>
+    <resourcePath id="style" name="style.xml路径" projectName="fixflow-expand" src="config/style.xml" virtualPath="src/main/resources/config/style.xml"/>
+    <resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" src="internationalization" virtualPath="src/main/resources/internationalization/"/>
+    <resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" src="fixflowdiagram" virtualPath="src/main/resources/fixflowdiagram/"/>
   </resourcePathConfig>
   <rulesResourceConfig>
     <rulesResource src="com/founder/fix/fixflow/expand/mapping/ProcessInstance.xml"/>
