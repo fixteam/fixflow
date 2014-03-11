@@ -150,13 +150,7 @@
     <resourcePath id="oldConnector-path" name="老流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/connector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
     <resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
     <resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>
-    <resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml"/>
-    <resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" src="config/fixflowfile.bpmn" virtualPath="src/main/resources/config/fixflowfile.bpmn"/>
-    <resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" src="config/GroovyFile.groovy" virtualPath="src/main/resources/config/GroovyFile.groovy"/>
-    <resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" src="config/quartz.properties" virtualPath="src/main/resources/config/quartz.properties"/>
-    <resourcePath id="style" name="style.xml路径" projectName="fixflow-expand" src="config/style.xml" virtualPath="src/main/resources/config/style.xml"/>
-    <resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" src="internationalization" virtualPath="src/main/resources/internationalization/"/>
-    <resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" src="fixflowdiagram" virtualPath="src/main/resources/fixflowdiagram/"/>
+
   	<!-- 变量配置 -->
   	<resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml" src="config/datavariableconfig.xml"/>
   	<!-- 流程定义空文件 -->
@@ -171,8 +165,7 @@
   	<resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/internationalization/" src="internationalization"/>
   	<!-- 流程图目录配置 -->
   	<resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/fixflowdiagram/" src="fixflowdiagram"/>
-  	
->>>>>>> refs/remotes/origin/develop-maven
+
   </resourcePathConfig>
   <rulesResourceConfig>
     <rulesResource src="com/founder/fix/fixflow/expand/mapping/ProcessInstance.xml"/>
