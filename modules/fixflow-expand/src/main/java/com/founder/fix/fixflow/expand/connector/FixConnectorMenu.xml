@@ -63,7 +63,8 @@
   <node id="b3077f2f-242d-4482-aa23-c894bb448fdf" name="LDAP" ico="database.png">
     <menuConnector id="LDAPConnector" name="LDAP" note="LDAP"/>
   </node>
-  <!-- <node id="44cc7e59-d627-40a2-bcde-6a80268ad2a6" name="WebServices" ico="apache.png">
+  <!-- -->
+  <node id="44cc7e59-d627-40a2-bcde-6a80268ad2a6" name="WebServices" ico="apache.png">
     <menuConnector id="SecureWSConnector" name="Secure WS Connector" note="执行一个Web服务"/>
-  </node> -->
+  </node> 
 </connectormenu:Menu>

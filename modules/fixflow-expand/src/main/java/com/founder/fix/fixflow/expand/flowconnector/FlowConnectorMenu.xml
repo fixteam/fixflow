@@ -18,7 +18,7 @@
     <menuConnector id="SendMail" name="发送邮件" note="根据引擎的邮件配置发送邮件"/>
     <menuConnector id="AutoSendMail" name="自动发送" note="自动发送邮件给当前处理人"/>
   </node>
-  <!-- <node id="44cc7e59-d627-40a2-bcde-6a80268ad2a6" name="WebServices" ico="apache.png">
+  <node id="9fbd9145-9e87-4138-aa8e-b10e2e36d159" name="WebServices" ico="category.png">
     <menuConnector id="SecureWSConnector" name="执行一个Web服务" note="执行一个Web服务"/>
-  </node> -->
+  </node>
 </connectormenu:Menu>
