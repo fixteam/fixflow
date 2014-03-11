@@ -23,10 +23,12 @@ package com.founder.fix.fixflow.core.internationalization;
  *
  */
 public interface ExceptionCode {
-	public static String FIXFLOW_EXCEPTION_DEFAULT = "fixflow_exception_default";
-	public static String FIXFLOW_CLASSLOADINGEXCEPTION_DEFAULT = "fixflow_classloadingexception_default";
-	public static String FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND = "fixflow_classloadingexception_filenotfound";
-	public static String FIXFLOW_CLASSLOADINGEXCEPTION_ENCODING = "fixflow_classloadingexception_encoding";
-	public static String FIXFLOW_CLASSLOADINGEXCEPTION = "fixflow_classloadingexception";
+	public static String EXCEPTION_DEFAULT = "exception_default";
+	public static String CLASSLOAD_EXCEPTION_DEFAULT = "classloadException_default";
+	public static String CLASSLOAD_EXCEPTION_FILENOTFOUND = "classloadException_filenotfound";
+	public static String CLASSLOAD_EXCEPTION_ENCODING = "classloadException_encoding";
+	public static String CLASSLOAD_EXCEPTION = "classloadException";
+	public static String CLASSLOAD_EXCEPTION_DCUMENT = "classloadException_document";
+	public static String JOB_EXCEPTION_DEFAULT = "jobException_default";
 	
 }

@@ -35,7 +35,7 @@ public class FixFlowClassLoadingException extends FixFlowException {
    * @param cause
    */
   public FixFlowClassLoadingException(String className) {
-	  super(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_DEFAULT,new Object[]{className});
+	  super(ExceptionCode.CLASSLOAD_EXCEPTION_DEFAULT,new Object[]{className});
 	  this.className = className;
   }
   
@@ -56,7 +56,7 @@ public class FixFlowClassLoadingException extends FixFlowException {
    * @param cause
    */
   public FixFlowClassLoadingException(String className, Throwable cause) {
-	  super(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_DEFAULT,new Object[]{className}, cause);
+	  super(ExceptionCode.CLASSLOAD_EXCEPTION_DEFAULT,new Object[]{className}, cause);
 	  this.className = className;
   }
   

@@ -19,7 +19,6 @@ package com.founder.fix.fixflow.core.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -233,9 +233,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initEmfFile();
 		initRulesConfig();
 		// initSqlMappingFile();
+		initResourcePathConfig();
 		initDataVariableConfig();
 		initCommandContextFactory();
-		initResourcePathConfig();
 		initCommandExecutors();
 		initConnectionManagementConfig();
 		initServices();
@@ -258,7 +258,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		initMessageSubscription();
 		initScriptLanguageConfig();
 		initInternationalizationConfig();
-		intiFixFlowResources();
+		initFixFlowResources();
 		initPigeonholeConfig();
 		initExpandCmdConfig();
 		initAbstractCommandFilter();
@@ -270,7 +270,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	}
 	
 	public void initExceptionResource(){
-		ExceptionResourceCore.system_init("config/exceptionresource");
+		ExceptionResourceCore.system_init("internationalization/exceptionresource");
 	}
 
 	private void initRulesConfig() {
@@ -286,9 +286,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			try {
 				InputStream in = ReflectUtil.getResourceAsStream(classPath);
 				document = XmlUtil.read(in);
-			} catch (Exception e) {
+			} catch (DocumentException e) {
 				log.error("持久化配置文件:"+classPath+"加载出错",e);
-				throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND,classPath,e);
+				throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_DCUMENT,classPath,e);
 			}
 
 			for (Object ele : document.getRootElement().elements("dataBaseTable")) {
@@ -459,13 +459,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	private void initDataVariableConfig() {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
-		InputStream inputStream = null;
-		String classPath = "config/datavariableconfig.xml";
-		inputStream = ReflectUtil.getResourceAsStream("datavariableconfig.xml");
-		if (inputStream != null) {
-			classPath = "datavariableconfig.xml";
+		String classPath = getDataVariableConfigPath();
+		URL url = this.getClass().getClassLoader().getResource(classPath);
+		if(url == null){
+			log.error("未能从{}目录下加载到datavariableconfig文件",classPath);
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_FILENOTFOUND, classPath);
 		}
-		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
+		String filePath = url.toString();
 		Resource resource = null;
 		try {
 			if (!filePath.startsWith("jar")) {
@@ -474,17 +474,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			} else {
 				resource = resourceSet.createResource(URI.createURI(filePath));
 			}
-
-		} catch (UnsupportedEncodingException e2) {
-			e2.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败！", e2);
-		}
-		resourceSet.getPackageRegistry().put(VariableconfigPackage.eINSTANCE.getNsURI(), VariableconfigPackage.eINSTANCE);
-		try {
+			resourceSet.getPackageRegistry().put(VariableconfigPackage.eINSTANCE.getNsURI(), VariableconfigPackage.eINSTANCE);
 			resource.load(null);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new FixFlowException("流程配置文件加载失败", e);
+		} catch (Exception e) {
+			log.error("datavariableconfig.xml文件加载失败");
+			throw new FixFlowException("datavariableconfig.xml文件加载失败", e);
 		}
 		dataVariableConfig = (DataVariableConfig) resource.getContents().get(0);
 	}
@@ -507,7 +501,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				connectionManagementDefault = (ConnectionManagement) ReflectUtil.instantiate(this.connectionManagementInstanceConfigDefault
 						.getClassImpl());
 				if (this.connectionManagementDefault == null) {
-					throw new FixFlowException("加载 ConnectionManagementInstanceConfig 失败");
+					log.error("数据库管理器{}加载失败",connectionManagementInstanceConfigTemp.getId());
+					throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_DEFAULT,connectionManagementInstanceConfigTemp.getClassImpl());
 				}
 				connectionManagementMap.put(connectionManagementInstanceConfigTemp.getId(), connectionManagementDefault);
 			} else {
@@ -532,7 +527,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		}
 		URL url = this.getClass().getClassLoader().getResource(classPath);
 		if(url == null){
-			throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_FILENOTFOUND ,"fixflowconfig.xml");
+			log.error("未能从{}目录下找到fixflowconfig.xml文件",classPath);
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_FILENOTFOUND ,"fixflowconfig.xml");
 		}
 		String filePath = url.toString();
 		Resource resource = null;
@@ -543,16 +539,11 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			} else {
 				resource = resourceSet.createResource(URI.createURI(filePath));
 			}
-		} catch (UnsupportedEncodingException e2) {
-			log.error("fixflowconfig.xml文件编码失败", e2);
-			throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION_ENCODING,"fixflowconfig.xml", e2);
-		}
-		resourceSet.getPackageRegistry().put(CoreconfigPackage.eINSTANCE.getNsURI(), CoreconfigPackage.eINSTANCE);
-		try {
+			resourceSet.getPackageRegistry().put(CoreconfigPackage.eINSTANCE.getNsURI(), CoreconfigPackage.eINSTANCE);
 			resource.load(null);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error("fixflowconfig.xml文件加载失败", e);
-			throw new FixFlowClassLoadingException(ExceptionCode.FIXFLOW_CLASSLOADINGEXCEPTION,"fixflowconfig.xml", e);
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION,"fixflowconfig.xml", e);
 		}
 		fixFlowConfig = (FixFlowConfig) resource.getContents().get(0);
 		String versionString = fixFlowConfig.getVersion();
@@ -610,7 +601,7 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		pigeonholeConfig = fixFlowConfig.getPigeonholeConfig();
 	}
 
-	protected void intiFixFlowResources() {
+	protected void initFixFlowResources() {
 		if (!StringUtil.getBoolean(internationalizationConfig.getIsEnable())) {
 			return;
 		}
@@ -622,12 +613,13 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			}
 		}
 		if (fixFlowResources == null) {
-			throw new FixFlowException("流程国际化处理文件加载失败!");
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_DEFAULT,"FixFlowResources");
 		}
 		try {
-			fixFlowResources.systemInit("internationalization");
+			String path = getInternationPath();
+			fixFlowResources.systemInit(path);
 		} catch (Exception e) {
-			throw new FixFlowException("流程国际化处理文件加载失败!", e);
+			log.error("国际化功能初始化失败！",e);
 		} 
 	}
 
@@ -643,50 +635,18 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		if (StringUtil.getBoolean(this.eventSubscriptionConfig.getIsEnable())) {
 			String serverAddress = this.eventSubscriptionConfig.getServerAddress();
-
 			String ServerPort = this.eventSubscriptionConfig.getServerPort();
-
 			String messageInfo = this.eventSubscriptionConfig.getMessageInfo();
-
 			MessageReceiver reciver = null;
 			try {
 				reciver = new MessageReceiver("tcp://" + serverAddress + ":" + ServerPort + "");
 				FlowMessageListener listener = new FlowMessageListener();
 				reciver.addTopicListener(messageInfo, listener);
-				System.out.print("Message监听启动成功!\n");
+				log.info("Message监听启动成功!\n");
 			} catch (JMSException e) {
-
-				System.out.print("Message监听启动失败!\n");
-				e.printStackTrace();
-
+				log.error("Message监听启动失败!\n",e);
 			}
-
 		}
-
-	}
-
-	public Connection createConnection() {
-		DataBase dataBase = this.selectedDatabase;
-		Connection connection = null;
-		String driver = dataBase.getDriverClassName();
-		String url = dataBase.getUrl();
-		String user = dataBase.getUsername();
-		String password = dataBase.getPassword();
-
-		try {
-			Class.forName(driver);
-		} catch (Exception e) {
-			throw new FixFlowException("数据库链接创建失败!", e);
-		}// com.mysql.jdbc.Driver
-
-		try {
-			connection = DriverManager.getConnection(url, user, password);
-		} catch (Exception e) {
-
-		}
-
-		return connection;
-
 	}
 
 	protected void initEventSubscriptionConfig() {
@@ -836,9 +796,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
 		Properties prop = new Properties();
 		InputStream inputStream = null;
-
+		String quartzConfigPath = "";
 		try {
-			inputStream = ReflectUtil.getResourceAsStream("quartz.properties");
+			quartzConfigPath = getQuartzConfigPath();
+			inputStream = ReflectUtil.getResourceAsStream(quartzConfigPath);
 			if (inputStream != null) {
 				prop.load(inputStream);
 				inputStream.close();
@@ -846,42 +807,20 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 				for (Object object : objects) {
 					props.put(StringUtil.getString(object), prop.getProperty(StringUtil.getString(object)));
 				}
-
 			}
-
 		} catch (IOException e) {
-			System.out.println("Scr根目录未找到quartz.properties文件");
+			log.info("未能从{}加载到quartzconfig.xml文件，自动加载默认配置！",quartzConfigPath);
 		}
-
-		if (inputStream == null) {
-			try {
-				inputStream = ReflectUtil.getResourceAsStream("com/founder/fix/fixflow/expand/config/quartz.properties");
-				if (inputStream != null) {
-					prop.load(inputStream);
-					inputStream.close();
-					Set<Object> objects = prop.keySet();
-					for (Object object : objects) {
-						props.put(StringUtil.getString(object), prop.getProperty(StringUtil.getString(object)));
-					}
-
-				}
-			} catch (IOException e) {
-				System.out.println("com/founder/fix/fixflow/expand/config/根目录未找到quartz.properties文件");
-			}
-		}
-
 		props.putAll(prop);
-
 		schedulerFactory = null;
 		schedulerFactory = QuartzUtil.createSchedulerFactory(props);
 		try {
 			scheduler = schedulerFactory.getScheduler();
 			scheduler.start();
-
-			System.out.println("定时框架启动成功");
+			log.info("定时框架启动成功");
 		} catch (SchedulerException e) {
-			e.printStackTrace();
-			throw new FixFlowException("定时任务框架启动失败！", e);
+			log.error("定时框架启动失败",e);
+			throw new FixFlowException(ExceptionCode.JOB_EXCEPTION_DEFAULT, e);
 		}
 	}
 
@@ -892,6 +831,30 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 			String id = taskCommandDef.getId();
 			taskCommandDefMap.put(id, taskCommandDef);
 		}
+	}
+	
+	public Connection createConnection() {
+		DataBase dataBase = this.selectedDatabase;
+		Connection connection = null;
+		String driver = dataBase.getDriverClassName();
+		String url = dataBase.getUrl();
+		String user = dataBase.getUsername();
+		String password = dataBase.getPassword();
+
+		try {
+			Class.forName(driver);
+		} catch (Exception e) {
+			throw new FixFlowException("数据库链接创建失败!", e);
+		}// com.mysql.jdbc.Driver
+
+		try {
+			connection = DriverManager.getConnection(url, user, password);
+		} catch (Exception e) {
+
+		}
+
+		return connection;
+
 	}
 
 	protected void initDbConfig() {
@@ -1408,7 +1371,17 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public String getFixFlowFilePath(){
 		return getResourcePath("fixflowfile").getSrc();
 	}
+	
+	public String getDataVariableConfigPath(){
+		return getResourcePath("dataVariableConfig").getSrc();
+	}
 
-
+	public String getQuartzConfigPath(){
+		return getResourcePath("quartz").getSrc();
+	}
+	
+	public String getInternationPath(){
+		return getResourcePath("internationalization").getSrc();
+	}
 
 }
