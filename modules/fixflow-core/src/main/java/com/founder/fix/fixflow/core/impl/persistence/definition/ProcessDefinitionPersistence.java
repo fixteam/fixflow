@@ -18,8 +18,6 @@
 package com.founder.fix.fixflow.core.impl.persistence.definition;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -44,8 +42,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
@@ -76,7 +72,6 @@ import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 
 public class ProcessDefinitionPersistence {
 
-	private Logger log = LoggerFactory.getLogger(ProcessDefinitionPersistence.class);
 	public Connection connection;
 	protected SqlCommand sqlCommand;
 	Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
@@ -304,23 +299,16 @@ public class ProcessDefinitionPersistence {
 				}
 				String filePath = url.toString();
 				Resource ddddResource = null;
-				if (!filePath.startsWith("jar")) {
-					try {
-						filePath = java.net.URLDecoder.decode(url.getFile(),"utf-8");
-					} catch (UnsupportedEncodingException e) {
-						
-						throw new FixFlowException("流程定义文件加载失败！", e);
-					}
-					ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
-				} else {
-					ddddResource = resourceSet.createResource(URI.createURI(filePath));
-				}
 				try {
+					if (!filePath.startsWith("jar")) {
+						filePath = java.net.URLDecoder.decode(url.getFile(),"utf-8");
+						ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+					} else {
+						ddddResource = resourceSet.createResource(URI.createURI(filePath));
+					}
 					ddddResource.load(new ByteArrayInputStream(bytes), null);
-				} catch (UnsupportedEncodingException e) {
-					throw new FixFlowException("定义文件加载失败!", e);
-				} catch (IOException e) {
-					throw new FixFlowException("定义文件加载失败!", e);
+				} catch (Exception e) {
+					throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION, e);
 				}
 				DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
 				definitions.setProcessId(processId);

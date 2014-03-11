@@ -54,6 +54,7 @@ import com.founder.fix.fixflow.editor.language.json.converter.StartEventJsonConv
 import com.founder.fix.fixflow.editor.language.json.converter.SubProcessJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.ThrowEventJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.UserTaskJsonConverter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -90,6 +91,7 @@ import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
 import com.founder.fix.bpmn2extensions.fixflow.FormUri;
 import com.founder.fix.bpmn2extensions.fixflow.TaskSubject;
 import com.founder.fix.fixflow.bpmn.converter.FixFlowConverter;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.SequenceFlowBehavior;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.SubProcessBehavior;
@@ -383,7 +385,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 			  }
 		  }
 	  }
-
   }
   
   /**
@@ -394,7 +395,8 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
   public Definitions convertToBpmnModel(JsonNode modelNode) {
 	  //加载一个空的definitions
 	  
-	  InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("com/founder/fix/fixflow/editor/language/node_template.bpmn");
+	  String nodeTempPath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();
+	  InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(nodeTempPath);
 	  Definitions bpmnModel = new FixFlowConverter().getDefinitions("temp", inputStream);
 	  BPMNDiagram bpmnDiagram=bpmnModel.getDiagrams().get(0);
 	  BPMNPlane bpmnPlane = bpmnDiagram.getPlane();
