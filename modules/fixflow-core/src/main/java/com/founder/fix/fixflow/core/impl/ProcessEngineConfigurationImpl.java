@@ -17,6 +17,7 @@
  */
 package com.founder.fix.fixflow.core.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -1382,6 +1383,10 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	
 	public String getInternationPath(){
 		return getResourcePath("internationalization").getSrc();
+	}
+	
+	public String getDefaultTemplatePath(){
+		return getResourcePath("fixflow-repository-flow-template").getSrc() + "default_process"+File.separator+"default_process.bpmn";
 	}
 
 }

@@ -24,7 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.net.URL;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -44,9 +44,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
+import com.founder.fix.fixflow.core.exception.FixFlowClassLoadingException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 import com.founder.fix.fixflow.editor.language.json.converter.BpmnJsonConverter;
 
 public class FixFlowConverter {
@@ -105,11 +108,11 @@ public class FixFlowConverter {
 	public void createBPMNFile(String path,String processId,String processName){
 		File newFile = new File(path);
 		InputStream inputStream = null;
-		String filePath = "com/founder/fix/fixflow/editor/language/default_process.bpmn";
+		String filePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDefaultTemplatePath();
 		try {
 			inputStream = ReflectUtil.getResourceAsStream(filePath);
 		}catch(Exception ex){
-			throw new FixFlowException("读取default_process.bpmn出错："+ex.getMessage());
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION,ex);
 		}
 		FileOutputStream outputStream = null;
 		BufferedOutputStream buffOS = null;
@@ -126,7 +129,7 @@ public class FixFlowConverter {
 			buffOS.flush();
 			inputStreamNewFile = new FileInputStream(newFile);
 		}catch(Exception ex){
-			ex.printStackTrace();
+			throw new FixFlowException(ExceptionCode.EXCEPTION_DEFAULT,ex);
 		}finally{
 			try {
 				if(outputStream !=null)
@@ -135,7 +138,7 @@ public class FixFlowConverter {
 					buffOS.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new FixFlowException(ExceptionCode.EXCEPTION_DEFAULT,e);
 			}
 		}
 		URI uri = URI.createFileURI(path);
@@ -169,7 +172,7 @@ public class FixFlowConverter {
 		try {
 			resource.save(null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new FixFlowException(ExceptionCode.EXCEPTION_DEFAULT,e);
 		}
 	}
 	
@@ -179,14 +182,14 @@ public class FixFlowConverter {
 	 */
 	public Definitions getNoneDefinitions(){
 		Definitions definitions = null;
-		String filePath = "com/founder/fix/fixflow/editor/language/node_template.bpmn";
+		String filePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();;
 		try {
 			InputStream in = null;
 			in = ReflectUtil.getResourceAsStream(filePath);
 			definitions = getDefinitions("node-tempplate",in);
 			return definitions;
 		}catch(Exception ex){
-			throw new FixFlowException("读取node_template.bpmnc出错，请检查com/founder/fix/fixflow/editor/language/node_template.bpmn是否存在");
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION,ex);
 		}
 		
 	}
@@ -200,25 +203,24 @@ public class FixFlowConverter {
 	 */
 	public Definitions getDefinitions(String processKey,InputStream input){
 		ResourceSet resourceSet = getResourceSet();
-		String filePath = this.getClass().getClassLoader().getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").toString();
-		Resource ddddResource = null;
-		if (!filePath.startsWith("jar")) {
-			try {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("com/founder/fix/fixflow/expand/config/fixflowfile.bpmn").getFile(),
-						"utf-8");
-			} catch (UnsupportedEncodingException e) {
-				throw new FixFlowException("流程定义文件加载失败！", e);
-			}
-			ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
-		} else {
-			ddddResource = resourceSet.createResource(URI.createURI(filePath));
+		String fixflowFilePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();
+		URL url = ReflectUtil.getResource(fixflowFilePath);
+		if(url == null){
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_FILENOTFOUND,fixflowFilePath);
 		}
+		String filePath = url.toString();
+		Resource ddddResource = null;
 		try {
+			if (!filePath.startsWith("jar")) {
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(filePath).getFile(),
+							"utf-8");
+				ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+			} else {
+				ddddResource = resourceSet.createResource(URI.createURI(filePath));
+			}
 			ddddResource.load(input, null);
-		} catch (UnsupportedEncodingException e) {
-			throw new FixFlowException("定义文件加载失败!", e);
-		} catch (IOException e) {
-			throw new FixFlowException("定义文件加载失败!", e);
+		} catch (Exception e) {
+			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION,e);
 		}
 		DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
 		definitions.setProcessId(processKey);
