@@ -141,14 +141,19 @@
     <importDataVariable id="GeneralDB" name="通用数据库变量" expression="bizData.getDataValue(&quot;#{DataBaseId}&quot;,processInfo.getBizKey(),&quot;#{FieldName}&quot;,processInfo);"/>
   </importDataVariableConfig>
   <resourcePathConfig>
+    <!-- projectName 表示文件存放的项目名称供设计器使用  src 表示web在classLoad的时候需要的地址   virtualPath 表示文件项目项目位置的相对地址  physicalPath 表示实际路径 -->
+    
+    <!-- 模板配置 -->
     <resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-expand" virtualPath="src/main/resources/template"/>
    <!-- 系统默认流程模板-  目录下必须有default_process/default_process.bpmn文件-->
     <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/flow-template/" src="resources/template/flow-template/"/>
     <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/node-template/"/>
     <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" src="template/system-template/" virtualPath="src/main/resources/template/system-template"/>
+    <!-- 连接器配置 -->
     <resourcePath id="flowConnector-path" name="流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/flowconnector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/flowconnector/"/>
     <resourcePath id="actorConnector-path" name="处理者选择器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/actorconnector/ActorConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/actorconnector/"/>
-    <resourcePath id="oldConnector-path" name="老流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/connector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
+    <resourcePath id="connector-path" name="老流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/connector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
+    <!-- web流程设计器生成文件配置 -->
     <resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
     <resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>
 
