@@ -292,27 +292,24 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 	 * @throws Exception
 	 */
 	public void enter(ExecutionContext executionContext) {
-
+		//获取令牌
 		TokenEntity token = executionContext.getToken();
+		
+		LOG.debug("进入节点: {}({}),令牌号: {}({}).", this.getName(),this.getId(),token.getName(),token.getId());
 
 		// 把令牌的所在节点设置为当前节点
 		token.setFlowNode(this);
+		
+		// 设置令牌进入节点的时间
+		token.setNodeEnterTime(new Date());
 
 		// 触发节点进入事件
 		fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
-		// 设置令牌进入节点的时间
-		token.setNodeEnterTime(new Date());
-
-		// 移除执行内容对象的线条关联
-		
+		// 移除临时执行内容对象
 		executionContext.clearExecutionContextData();
-		//executionContext.setSequenceFlow(null);
-
-		//executionContext.setSequenceFlowSource(null);
-
-		//executionContext.setGroupID(null);
-
+		
+		//触发节点执行方法
 		execute(executionContext);
 
 	}

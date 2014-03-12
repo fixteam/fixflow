@@ -19,12 +19,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import java.util.List;
 
 import org.eclipse.bpmn2.Activity;
 import org.eclipse.bpmn2.BoundaryEvent;
-
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.DataInput;
@@ -35,10 +33,8 @@ import org.eclipse.bpmn2.ExtensionAttributeValue;
 import org.eclipse.bpmn2.FormalExpression;
 import org.eclipse.bpmn2.MultiInstanceLoopCharacteristics;
 import org.eclipse.bpmn2.StandardLoopCharacteristics;
-
 import org.eclipse.bpmn2.InputOutputSpecification;
 import org.eclipse.bpmn2.LoopCharacteristics;
-
 import org.eclipse.bpmn2.Property;
 import org.eclipse.bpmn2.ResourceRole;
 import org.eclipse.bpmn2.SequenceFlow;
@@ -56,6 +52,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
@@ -64,6 +62,7 @@ import com.founder.fix.bpmn2extensions.fixflow.LoopDataOutputCollection;
 import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.exception.FixFlowExpressionException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -71,6 +70,7 @@ import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
 import com.founder.fix.fixflow.core.impl.util.EMFUtil;
 import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
 /**
@@ -753,7 +753,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 	// 非BPMN2.0
 	
-	
+	private static Logger LOG = LoggerFactory.getLogger(ActivityImpl.class);
 	
 	
 	protected SkipStrategy skipStrategy;
@@ -778,53 +778,67 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	}
 
 	/**
-	 * 
-	 * @param executionContext
-	 * @throws Exception
+	 * 重载的节点进去事件
+	 * @param executionContext 流程上下文
 	 */
 	public void enter(ExecutionContext executionContext) {
 		
 		//事件顺序如下,先判断跳过策略,再判断边界事件,
 		//再执行多实例,最后执行节点进入事件
 		TokenEntity token = executionContext.getToken();
+		
+		LOG.debug("进入节点: {}({}),令牌号: {}({}).", this.getName(),this.getId(),token.getName(),token.getId());
 
 		// 把令牌的所在节点设置为当前节点
 		token.setFlowNode(this);
 
-		// 触发节点进入事件
+		// 这里先不触发事件,在每个多实例进入的时候再触发。
 		// fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
 		// 设置令牌进入节点的时间
 		token.setNodeEnterTime(new Date());
 
-		// 移除执行内容对象的线条关联
-		executionContext.setSequenceFlow(null);
+		// 移除临时执行内容对象
+		executionContext.clearExecutionContextData();
 
-		executionContext.setGroupID(null);
 
-		executionContext.setSequenceFlowSource(null);
-
+		//获取跳过策略设置
 		SkipStrategy skipStrategy = getSkipStrategy();
 
-		// entryList.get(0);
+
 		if (skipStrategy != null) {
 
 			boolean isEnable = skipStrategy.isIsEnable();
 
 			// 判断是否启用
 			if (isEnable) {
-
+				//启用跳过策略处理的情况
+				
+				LOG.debug("节点: {}({}) 启用跳过策略.", this.getName(),this.getId());
+				
 				boolean valueObj = false;
-
+				
+				//处理跳过策略表达式
 				if (skipStrategy.getExpression() != null) {
+					
 					String expressionValue = skipStrategy.getExpression().getValue();
+					
 					if (expressionValue != null && !expressionValue.equals("")) {
 						try {
+							
+							LOG.debug("节点: {}({}) 跳过策略开始直接,跳过策略表达式内容为:\n {}", this.getName(),this.getId(),expressionValue);
+							
+							//执行验证表达式
 							valueObj = StringUtil.getBoolean(ExpressionMgmt.execute(expressionValue, executionContext));
-
+							
+							LOG.debug("节点: {}({}) 跳过策略直接结束,结果为 '{}'.", this.getName(),this.getId(),valueObj);
+							
 						} catch (Exception e) {
-
-							throw new FixFlowException("节点 " + this.getId() + " " + this.getName() + " 的跳过策略出错请检查流程配置！", e);
+							
+							LOG.error("节点: "+this.getName()+"("+this.getId()+") 跳过策略执行出错,错误信息: 【"+e.getMessage()+"】.", e);
+							
+							throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_SKIPSTRATEGY,this.getId(),this.getName(),expressionValue,e);
+							
 						}
 					}
 				}
@@ -835,23 +849,28 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 					boolean isCreateSkipProcess = skipStrategy.isIsCreateSkipProcess();
 
 					if (isCreateSkipProcess) {
-						
-						
+							
 						executionContext.setSkipStrategy(skipStrategy);
+						
 						skipExecute(executionContext);
-					} else {
-
+						
 					}
-
+					
+					LOG.debug("跳过策略生效,跳过节点: {}({}).", this.getName(),this.getId());
+					//节点离开
 					super.leave(executionContext);
+					
 					return;
+				}
+				else{
+					LOG.debug("节点: {}({}),跳过策略未生效.", this.getName(),this.getId());
 				}
 
 			}
 
 		}
 		
-		
+		//跳过策略未生效,继续执行节点进入
 		eventExecute(executionContext);
 		
 		
@@ -859,34 +878,11 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	}
 	
 	private void tokenEnter(ExecutionContext executionContext) {
-		//TokenEntity token = executionContext.getToken();
-
-		// 把令牌的所在节点设置为当前节点
-		//token.setFlowNode(this);
 
 		fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
-		// 设置令牌进入节点的时间
-		//token.setNodeEnterTime(new Date());
-
-		// 移除执行内容对象的线条关联
-		//executionContext.setSequenceFlow(null);
-
-		//executionContext.setSequenceFlowSource(null);
-
-
 		execute(executionContext);
 
-		
-		/*
-		if (this instanceof Activity && ((Activity) this).getLoopCharacteristics() != null) {
-
-			loopExecute(executionContext);
-
-		} else {
-
-			
-		}*/
 	}
 	
 
@@ -896,6 +892,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		// 把令牌的所在节点设置为当前节点
 		token.setFlowNode(this);
 
+		//这里先不触发事件,在每个多实例进入的时候再触发
 		//fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
 		// 设置令牌进入节点的时间
@@ -923,40 +920,49 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 
 	protected void eventExecute(ExecutionContext executionContext) {
 
-		// 触发节点进入事件
-		//fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
-
+		//验证是否含有边界事件
 		if (this.getBoundaryEventRefs().size() > 0) {
-			List<BoundaryEvent> boundaryEvents = this.getBoundaryEventRefs();
+			
+			/*
+		    边界事件的处理逻辑是这样的,
+			如果有边界事件,主令牌创建一个儿子,进入到当前节点,
+			主令牌自己去执行边界事件的执行方法,
+			当定时到的时候如果是中断边界,则直接杀掉主令牌所有的儿子,将主令牌推下去
+			如果是非中断,则主令牌再生成个儿子给边界事件继续向下走,最后需要并行合并网关将他们收回。
+			*/
+			
 			TokenEntity tokenEntity = executionContext.getToken();
+
+			
+			
+			
+			List<BoundaryEvent> boundaryEvents = this.getBoundaryEventRefs();
+			
+			LOG.debug("节点: {}({}) 含有 {} 个边界事件,令牌号: {}({}).", this.getName(),this.getId(),boundaryEvents.size(),tokenEntity.getName(),tokenEntity.getId());
 
 			String nodeTokenId = this.getId();
 			// 创建分支令牌并添加到集合中
 			TokenEntity nodeToken = this.createForkedToken(tokenEntity, nodeTokenId).token;
+			
+			LOG.debug("主令牌创建子令牌,子令牌: {}({}).",tokenEntity.getName(),tokenEntity.getId());
+			//创建一个子令牌
 			ExecutionContext nodeChildExecutionContext = ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(nodeToken);
 
+			LOG.debug("子令牌: {}({}),进入节点.",tokenEntity.getName(),tokenEntity.getId());
+			//将子流程放入节点
 			this.forkedTokenEnter(nodeChildExecutionContext);
 
 			// 遍历边界事件
 			for (BoundaryEvent boundaryEvent : boundaryEvents) {
-				// 获取边界事件名称
-				// String tokenId = boundaryEvent.getId();
 
-				// TokenEntity childToken =this.createForkedToken(tokenEntity,
-				// tokenId).token;
-
-				// 创建执行内容对象并将里边的令牌赋值为新的分支令牌
-
-				// ExecutionContext childExecutionContext =
-				// ProcessObjectFactory.FACTORYINSTANCE.createExecutionContext(childToken);
-
-				// 这里的逻辑是这样的，当token进入节点发现有 BoundaryEvent 则 创建一个子令牌
+				LOG.debug("主令牌: {}({}),触发边界事件: {} 执行.",tokenEntity.getName(),tokenEntity.getId(),boundaryEvent.getId());
+				//主令牌执行边界事件里的事件定义
 				boundaryEvent.execute(executionContext);
+				
 			}
 
-			// execute(executionContext);
-
 		} else {
+			//没有边界事件,则执行多实例执行
 			loopExecute(executionContext);
 		}
 
@@ -966,65 +972,116 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		// debugLog.debug("节点 "+getId()+" 执行跳过处理!");
 	}
 
-	@SuppressWarnings("rawtypes")
 	protected void loopExecute(ExecutionContext executionContext) {
+		
 		Activity activity = (Activity) this;
+		
+		TokenEntity token=executionContext.getToken();
+		
+		//获取 Activity 的多实例信息
 		LoopCharacteristics loopCharacteristics = activity.getLoopCharacteristics();
-
+		
+		//判断事都是并行多实例
 		if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics) {
+			
 			// 并行多实例处理
+			LOG.debug("节点: {}({}) 含有并行多实例,将进入多实例处理阶段,令牌号: {}({}).",activity.getName(),activity.getId(),token.getName(),token.getId());
+			
+			// 输出数据集
+			String loopDataOutputCollectionExpressionValue = getLoopDataOutputCollectionExpression();
+			
+			// 多实例输入数据集
+			String loopDataInputCollectionExpressionValue = getLoopDataInputCollectionExpression();
+			
+			// 多实例输入项
+			String inputDataItemExpressionValue = getInputDataItemExpression();
+			
+			// 多实例输出项
+			String outputDataItemExpressionValue = getOutputDataItemExpression();
+			
+			//打印日志信息
+			
+			LOG.debug("\n多实例配置信息: \n 【输入数据集】: \n{}",loopDataInputCollectionExpressionValue);
+			
+			LOG.debug("\n【输入项编号】: \n{}",inputDataItemExpressionValue);
+			
+			LOG.debug("\n【输出项编号】: \n{}",outputDataItemExpressionValue);	
+			
+			LOG.debug("\n【输出数据集】: \n{}",outputDataItemExpressionValue);	
 			
 			
-			
-
 			// 解决多实例处理退回BUG
-			
-				String dataOutputexpressionValue = getLoopDataOutputCollectionExpression();
+			// 在进入多实例的第一次先清空多实例输出集合,以防历史数据影响。
+			if (loopDataOutputCollectionExpressionValue != null && !loopDataOutputCollectionExpressionValue.equals("")) {
 
-				if (dataOutputexpressionValue != null && !dataOutputexpressionValue.equals("")) {
+				Object valueObj = ExpressionMgmt.execute(loopDataOutputCollectionExpressionValue, executionContext);
 
-					Object valueObj = ExpressionMgmt.execute(dataOutputexpressionValue, executionContext);
+				if (valueObj != null) {
 
-					if (valueObj != null) {
+					if (valueObj instanceof Collection) {
+						
+						LOG.debug("清空多实例输出集合");
+						
+						// 如果计算结果为集合时清空数据
+						((Collection<?>) valueObj).clear();
 
-						if (valueObj instanceof Collection) {
+					} else {
+						
+						LOG.error("多实例输出集合不是一个集合");
+						
+						throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK,this.getId(),this.getName(),loopDataOutputCollectionExpressionValue);
 
-							// 如果计算结果为集合时清空数据
-							((Collection) valueObj).clear();
-
-						} else {
-							throw new FixFlowException("表达式计算结果错误，结果不是一个集合。");
-						}
 					}
 				}
+			}
 			
 
 			
-			String expressionValue =getLoopDataInputCollectionExpression();
+			//开始触发多实例循环
 
-			if (expressionValue != null && !expressionValue.equals("")) {
-
+			if (loopDataInputCollectionExpressionValue != null && !loopDataInputCollectionExpressionValue.equals("")) {
+				
+				//生成一个唯一组号,用户多实例任务组的标识
 				String groupID = GuidUtil.CreateGuid();
-
+				
+				//给流程上下文设置唯一组号,好在多实例每次进入节点的时候将唯一组号传递给每个任务创建方法。
 				executionContext.setGroupID(groupID);
+				
+				LOG.debug("为多实例生成唯一组号: '{}'", groupID);
+				
+				//执行多实例 输入数据集 解释
+				Object valueObj =null;
+				try {
+					
+					valueObj = ExpressionMgmt.execute(loopDataInputCollectionExpressionValue, executionContext);
 
-				Object valueObj = ExpressionMgmt.execute(expressionValue, executionContext);
+				} catch (Exception e) {
+					
+					LOG.error("多实例输入数据集解释出错,错误信息: "+e.getMessage(), e);
+					
+					throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK,this.getId(),this.getName(),loopDataInputCollectionExpressionValue,e);
 
+				}
+				
+				
 				if (valueObj != null) {
 
 					if (valueObj instanceof Collection) {
 						Collection<?> valueObjCollection = (Collection<?>) valueObj;
 
 						if (valueObjCollection.size() == 0) {
-							throw new FixFlowException("多实例输入集合为0,请重新检查输入。");
+							
+							LOG.error("多实例输入集合的个数为 0,请重新检查多实例输入集合配置.");
+							
+							throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAINPUTCOLLECTIONEMPTY,this.getId(),this.getName(),loopDataInputCollectionExpressionValue);
+							
 						}
 
 						for (Object object : valueObjCollection) {
 
-						
-							String expressionValueTemp = getInputDataItemExpression();
+							
 
-							ExpressionMgmt.setVariable(expressionValueTemp, object, executionContext);
+							ExpressionMgmt.setVariable(inputDataItemExpressionValue, object, executionContext);
 
 							this.tokenEnter(executionContext);
 						}
@@ -1033,11 +1090,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 							String[] valueObjString = (String[]) valueObj;
 							for (int i = 0; i < valueObjString.length; i++) {
 
-								
-
-								String expressionValueTemp =  getInputDataItemExpression();
-
-								ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
+							
+								ExpressionMgmt.setVariable(inputDataItemExpressionValue, valueObjString[i], executionContext);
 
 								this.tokenEnter(executionContext);
 
@@ -1049,10 +1103,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 								if (valueObjString.length > 0) {
 									for (int i = 0; i < valueObjString.length; i++) {
 
-
-										String expressionValueTemp =  getInputDataItemExpression();
-
-										ExpressionMgmt.setVariable(expressionValueTemp, valueObjString[i], executionContext);
+										ExpressionMgmt.setVariable(inputDataItemExpressionValue, valueObjString[i],
+												executionContext);
 
 										this.tokenEnter(executionContext);
 
@@ -1076,13 +1128,13 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			}
 
 		} else {
-			//当发现不是多实例的情况下继续节点的执行,以后添加了串行多实例要在这里加判断
-			if(loopCharacteristics instanceof StandardLoopCharacteristics){
-					//串行多实例执行
+			// 当发现不是多实例的情况下继续节点的执行,以后添加了串行多实例要在这里加判断
+			if (loopCharacteristics instanceof StandardLoopCharacteristics) {
+				// 串行多实例执行
 				tokenEnter(executionContext);
-			}else{
+			} else {
 				tokenEnter(executionContext);
-				
+
 			}
 
 		}

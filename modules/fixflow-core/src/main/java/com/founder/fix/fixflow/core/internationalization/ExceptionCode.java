@@ -31,4 +31,27 @@ public interface ExceptionCode {
 	public static String CLASSLOAD_EXCEPTION_DCUMENT = "classloadException_document";
 	public static String JOB_EXCEPTION_DEFAULT = "jobException_default";
 	
+	
+	/* 表达式执行异常 */
+	
+	/**
+	 * 跳过策略表达式异常编码
+	 */
+	public static String EXPRESSION_EXCEPTION_SKIPSTRATEGY = "expressionException_skipStrategy";
+	
+	/**
+	 * 输出结果集表达式集合验证
+	 */
+	public static String EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK = "expressionException_loopDataOutputCollection_collectionCheck";
+	
+	/**
+	 * 多实例输入数据集异常编码
+	 */
+	public static String EXPRESSION_EXCEPTION_LOOPDATAINPUTCOLLECTIONEXPRESSION = "expressionException_loopDataInputCollectionExpression";
+	
+	/**
+	 * 多实例输入数据集集合数量为0
+	 */
+	public static String EXPRESSION_EXCEPTION_LOOPDATAINPUTCOLLECTIONEMPTY = "expressionException_loopDataInputCollectionEmpty";
+	
 }

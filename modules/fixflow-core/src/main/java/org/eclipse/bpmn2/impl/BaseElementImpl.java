@@ -40,6 +40,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
@@ -55,6 +57,7 @@ import com.founder.fix.fixflow.core.impl.util.GuidUtil;
 import com.founder.fix.fixflow.core.impl.util.QuartzUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
+import com.founder.fix.fixflow.core.runtime.Token;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 
 /**
@@ -373,6 +376,16 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 		return result.toString();
 	}
 
+	
+	
+	
+	/* 自定义内容 */
+	
+	/**
+	 * 日志
+	 */
+	private static Logger LOG = LoggerFactory.getLogger(BaseElementImpl.class);
+	
 	protected Map<String, BaseElementEvent> events = null;
 
 	/* 节点事件 */
@@ -407,13 +420,15 @@ public class BaseElementImpl extends EObjectImpl implements BaseElement {
 	}
 
 	public void fireEvent(String eventType, ExecutionContext executionContext) {
-		// Token token = executionContext.getToken();
 
-		// log.debug( "event '"+eventType+"' on '"+this+"' for '"+token+"'" );
-
+		Token token = executionContext.getToken();
 		try {
+			
+			
 			executionContext.setEventSource(this);
+			LOG.debug("事件'{}'触发,在'{}'节点,令牌号:'{}'.",eventType,token.getNodeId(),token.getId());
 			fireAndPropagateEvent(eventType, executionContext);
+			LOG.debug("事件'{}'完成,在'{}'节点,令牌号:'{}'.",eventType,token.getNodeId(),token.getId());
 		} finally {
 			executionContext.setEventSource(null);
 		}
