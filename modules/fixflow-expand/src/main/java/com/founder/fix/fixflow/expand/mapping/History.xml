@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmappingconfig:RulesConfig id="taskIdentityLink" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
+	<businessRules id="archiveByPara" 
+	parameterType="java.util.Map" 
+	resultType="java.util.Map" 
+	classPath="com.founder.fix.fixflow.expand.rulescript.entity.Archive"
+	remark="返回Task对象需要保存到数据的字段Map"/>
+
+</sqlmappingconfig:RulesConfig>

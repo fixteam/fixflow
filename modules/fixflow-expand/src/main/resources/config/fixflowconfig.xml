@@ -4,7 +4,7 @@
     <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.16.40.89:1521:orcl" username="fixflow" password="fixflow" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
-    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
+    <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://172.16.40.87:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
     <dataBase id="sqlserver" name="sqlserver" driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.29.128.91:1433/MobileCRM" username="sa" password="fixsystem" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.SqlServerPaginationImpl" dbtype="sqlserver"/>
   </dataBaseConfig>
   <taskCommandConfig commandType="manualclaim">
@@ -108,7 +108,7 @@
   </scriptLanguageConfig>
   <internationalizationConfig isEnable="true" folderPath="/fixflow-expand/src/main/resources/internationalization/"/>
 
-  <pigeonholeConfig serverPath="http://&lt;127.0.0.1>:&lt;8080>/&lt;xxweb>" pdfPath="&lt;C:>/&lt;xxfolder>/&lt;xxfolder>" isEnable="false"/>
+  <pigeonholeConfig serverPath="http://&lt;127.0.0.1>:&lt;8080>/&lt;xxweb>" pdfPath="&lt;C:>/&lt;xxfolder>/&lt;xxfolder>" isEnable="true"/>
   <expandCmdConfig>
     <expandCmd id="MyTestCmd" name="测试执行器" cmd="com.founder.fix.fixflow.expand.cmd.MyTestCmd"/>
     <expandCmd id="PerformanceInterfaceTask" name="流程绩效部门任务处理时长" cmd="com.founder.fix.fixflow.expand.cmd.PerformanceInterfaceTaskCmd"/>
@@ -181,5 +181,6 @@
     <rulesResource src="com/founder/fix/fixflow/expand/mapping/TaskInstance.xml"/>
     <rulesResource src="com/founder/fix/fixflow/expand/mapping/Token.xml"/>
     <rulesResource src="com/founder/fix/fixflow/expand/mapping/Variable.xml"/>
+    <rulesResource src="com/founder/fix/fixflow/expand/mapping/History.xml"/>
   </rulesResourceConfig>
 </coreconfig:FixFlowConfig>

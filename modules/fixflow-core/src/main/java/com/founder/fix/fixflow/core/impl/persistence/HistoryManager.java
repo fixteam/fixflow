@@ -26,8 +26,8 @@ import java.util.Map;
  */
 public class HistoryManager extends AbstractManager {
 
-	public boolean archiveByProcessInstanceId(Map<String,Object> paraMap){
-		getDbSqlSession().execute("archive", paraMap);
+	public boolean archiveByPara(Map<String,Object> paraMap){
+		getMappingSqlSession().selectOne("archiveByPara", paraMap);
 		return true;
 	}
 }

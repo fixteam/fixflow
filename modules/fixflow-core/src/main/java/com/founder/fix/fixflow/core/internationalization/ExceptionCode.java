@@ -24,6 +24,10 @@ package com.founder.fix.fixflow.core.internationalization;
  */
 public interface ExceptionCode {
 	public static String EXCEPTION_DEFAULT = "exception_default";
+	
+	/**
+	 * 文件加载类异常
+	 */
 	public static String CLASSLOAD_EXCEPTION_DEFAULT = "classloadException_default";
 	public static String CLASSLOAD_EXCEPTION_FILENOTFOUND = "classloadException_filenotfound";
 	public static String CLASSLOAD_EXCEPTION_ENCODING = "classloadException_encoding";
@@ -32,7 +36,13 @@ public interface ExceptionCode {
 	public static String JOB_EXCEPTION_DEFAULT = "jobException_default";
 	
 	
+	/**
+	 * 归档异常
+	 */
 	/* 表达式执行异常 */
+	
+	public static String EXCEPTION_ARCHIVE = "archive";
+	public static String EXCEPTION_ARCHIVE_PARAMS = "archive_params";
 	
 	/**
 	 * 跳过策略表达式异常编码

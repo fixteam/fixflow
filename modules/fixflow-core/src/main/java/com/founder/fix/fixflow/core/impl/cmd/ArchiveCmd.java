@@ -45,11 +45,11 @@ public class ArchiveCmd implements Command<Boolean> {
 		Map<String,Object> paraMap = new HashMap<String,Object>();
 		if(this.isAll){
 			paraMap.put("ALL", true);
-			return commandContext.getHistoryManager().archiveByProcessInstanceId(paraMap);
+			return commandContext.getHistoryManager().archiveByPara(paraMap);
 		}
 		if(processInstanceIds != null){
 			paraMap.put("PROCESSINSTANCE_ID", processInstanceIds);
-			return commandContext.getHistoryManager().archiveByProcessInstanceId(paraMap);
+			return commandContext.getHistoryManager().archiveByPara(paraMap);
 		}
 		if(processDefinitionKey != null){
 			paraMap.put("PROCESSDEFINITION_KEY", processDefinitionKey);
@@ -64,7 +64,7 @@ public class ArchiveCmd implements Command<Boolean> {
 		if(paraMap.keySet().size() == 0){
 			throw new FixFlowException("归档参数异常，请检查");
 		}
-		return commandContext.getHistoryManager().archiveByProcessInstanceId(paraMap);
+		return commandContext.getHistoryManager().archiveByPara(paraMap);
 	}
 
 }

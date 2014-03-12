@@ -97,6 +97,11 @@
 		<artifactId>ojdbc5</artifactId>
 		<version>11.2.0.1.0</version>
   	 </dependency>
+  	 <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.0.5</version>
+	</dependency>
 	<!-- xml工具 -->
 	<dependency>
 		<groupId>javax.xml.bind</groupId>

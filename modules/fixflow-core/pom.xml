@@ -79,6 +79,11 @@
 		<groupId>com.oracle.jdbc</groupId>
 		<artifactId>ojdbc5</artifactId>
 	</dependency>	
+	
+	<dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+	</dependency>
 		
   </dependencies>
 </project>
