@@ -20,7 +20,14 @@
 
 <script type="text/javascript">
 	function sub(){
-		$("#subForm").submit();
+		var fileName = $("#ProcessFile").val();
+		var d=/\.[^\.]+$/.exec(fileName);
+		if(d == ".zip" || d == ".ZIP"){
+			$("#subForm").submit();
+		}else{
+			alert("请选择正确的文件类型");
+			return false;
+		}
 	}
 	
 	function bodyOnLoad(){
@@ -37,8 +44,8 @@
 <div class="tpl-form-border">
 			<table class="table-form">
 				<tr>
-					<td class="title-r">请选择文件：</td>
-					<td><input type="file" name="ProcessFile" /></td>
+					<td class="title-r" style="width:300px"><p>请选择文件：</p>(<span style="color:red">注：只能选择设计器或者web下载的zip格式文件</span>)：</td>
+					<td><input type="file" name="ProcessFile" id="ProcessFile"/></td>
 				</tr>
 				<tr id="trDeploy">
 					<td class="title-r">发布号：</td>

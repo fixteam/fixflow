@@ -257,10 +257,11 @@ public class FlowManager extends HttpServlet {
 			if("deploy".equals(action)){
 				String message = "操作成功！";
 				try{
-					getProcessDefinitionService().deployByZip(filter);
 					response.setContentType("text/html;charset=utf-8");
+					getProcessDefinitionService().deployByZip(filter);
 				}catch(Exception ex){
-					message +="操作失败："+ex.getMessage();
+					ex.printStackTrace();
+					message +="操作失败，请检查上传文件是否符合要求！";
 				}
 				finally{
 					response.getWriter().print("<script>alert('"+message+"');window.close();</script>");
