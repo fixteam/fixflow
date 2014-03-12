@@ -31,7 +31,6 @@ import com.founder.fix.fixflow.core.ProcessEngine;
 import com.founder.fix.fixflow.core.RuntimeService;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ProcessDefinitionBehavior;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
-import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.runtime.ProcessInstanceQuery;
@@ -274,7 +273,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		String userId = StringUtil.getString(params.get("userId"));
 		String processInstanceId = StringUtil.getString(params.get("operProcessInstanceId"));
 		String[] pids = processInstanceId.split(",");
-		ProcessEngine engine = getProcessEngine(userId);
+		ProcessEngine engine = getTransactionProcessEngine(userId);
 		try{
 			HistoryService historyService = engine.getHistoryService();
 			List<String> processInstanceIds = new ArrayList<String>();

@@ -154,7 +154,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 	}
 	
 	public void suspendTask(Map<String,Object> filter) throws Exception{
-		ProcessEngine engine = getProcessEngine(filter
+		ProcessEngine engine = getTransactionProcessEngine(filter
 				.get("userId"));
 		ManagementService mservice = engine.getManagementService();
 		String taskId = StringUtil.getString(filter.get("taskId"));
@@ -166,7 +166,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 	}
 	
 	public void resumeTask(Map<String,Object> filter) throws Exception{
-		ProcessEngine engine = getProcessEngine(filter
+		ProcessEngine engine = getTransactionProcessEngine(filter
 				.get("userId"));
 		ManagementService mservice = engine.getManagementService();
 		String taskId = StringUtil.getString(filter.get("taskId"));
@@ -178,7 +178,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 	}
 	
 	public void transferTask(Map<String,Object> filter) throws Exception{
-		ProcessEngine engine = getProcessEngine(filter
+		ProcessEngine engine = getTransactionProcessEngine(filter
 				.get("userId"));
 		String transferUserId = StringUtil.getString(filter.get("transferUserId"));
 		String taskId = StringUtil.getString(filter.get("taskId"));
@@ -192,7 +192,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 	}
 	
 	public void rollBackNode(Map<String,Object> filter) throws Exception{
-		ProcessEngine engine = getProcessEngine(filter
+		ProcessEngine engine = getTransactionProcessEngine(filter
 				.get("userId"));
 		String rollBackNodeId = StringUtil.getString(filter.get("rollBackNodeId"));
 		String taskId = StringUtil.getString(filter.get("taskId"));
@@ -206,7 +206,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 	}
 	
 	public void rollBackStep(Map<String,Object> filter) throws Exception{
-		ProcessEngine engine = getProcessEngine(filter
+		ProcessEngine engine = getTransactionProcessEngine(filter
 				.get("userId"));
 		String rollBackTaskId = StringUtil.getString(filter.get("rollBackTaskId"));
 		String taskId = StringUtil.getString(filter.get("taskId"));
