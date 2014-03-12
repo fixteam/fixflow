@@ -1388,5 +1388,9 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 	public String getDefaultTemplatePath(){
 		return getResourcePath("fixflow-repository-flow-template").getSrc() + "default_process"+File.separator+"default_process.bpmn";
 	}
+	
+	public String getNoneTemplatePath(){
+		return getResourcePath("nodeTemplate").getSrc();
+	}
 
 }

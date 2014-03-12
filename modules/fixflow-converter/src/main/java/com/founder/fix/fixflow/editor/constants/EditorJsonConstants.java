@@ -37,6 +37,6 @@ public interface EditorJsonConstants {
   final String SHAPE_ID_PREFIX = "BPMNShape_";
   final String EDGE_ID_PREFIX = "BPMNEdge_";
   
-  final double REVERSION_X = 6;
-  final double REVERSION_Y = 6;
+  final double REVERSION_X = 0;
+  final double REVERSION_Y = 0;
 }

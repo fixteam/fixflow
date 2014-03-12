@@ -172,6 +172,7 @@ public class FixFlowConverter {
 		try {
 			resource.save(null);
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new FixFlowException(ExceptionCode.EXCEPTION_DEFAULT,e);
 		}
 	}
@@ -212,15 +213,13 @@ public class FixFlowConverter {
 		Resource ddddResource = null;
 		try {
 			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(filePath).getFile(),
-							"utf-8");
-				ddddResource = resourceSet.createResource(URI.createFileURI(filePath));
+				ddddResource = resourceSet.createResource(URI.createFileURI(fixflowFilePath));
 			} else {
 				ddddResource = resourceSet.createResource(URI.createURI(filePath));
 			}
 			ddddResource.load(input, null);
 		} catch (Exception e) {
-			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION,e);
+			throw new FixFlowException(ExceptionCode.EXCEPTION_DEFAULT,e);
 		}
 		DefinitionsBehavior definitions = (DefinitionsBehavior) ddddResource.getContents().get(0).eContents().get(0);
 		definitions.setProcessId(processKey);
