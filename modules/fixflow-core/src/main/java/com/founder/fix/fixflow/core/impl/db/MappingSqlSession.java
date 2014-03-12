@@ -127,7 +127,7 @@ public class MappingSqlSession {
 					UpdateRulesScript updateRulesScript = (UpdateRulesScript) classObj.newInstance();
 					updateRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException("Class : " + classPath + "未找到!");
+					throw new FixFlowException(e.getMessage(),e);
 				}
 			} else {
 				throw new FixFlowException("Class : " + classPath + "未找到!");
@@ -155,7 +155,7 @@ public class MappingSqlSession {
 					DeleteRulesScript deleteRulesScript = (DeleteRulesScript) classObj.newInstance();
 					deleteRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException("Class : " + classPath + "未找到!");
+					throw new FixFlowException(e.getMessage(),e);
 				}
 			} else {
 				throw new FixFlowException("Class : " + classPath + "未找到!");
@@ -180,7 +180,7 @@ public class MappingSqlSession {
 					DeleteRulesScript deleteRulesScript = (DeleteRulesScript) classObj.newInstance();
 					deleteRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException("Class : " + classPath + "未找到!");
+					throw new FixFlowException(e.getMessage(),e);
 				}
 			} else {
 				throw new FixFlowException("Class : " + classPath + "未找到!");
@@ -230,7 +230,7 @@ public class MappingSqlSession {
 					returnObjList = (List) selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
 
 				} catch (Exception e) {
-					throw new FixFlowException("Class : " + classPath + "未找到!");
+					throw new FixFlowException(e.getMessage(),e);
 				}
 			} else {
 				throw new FixFlowException("Class : " + classPath + "未找到!");
