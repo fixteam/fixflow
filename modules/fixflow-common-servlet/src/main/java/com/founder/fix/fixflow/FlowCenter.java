@@ -19,8 +19,6 @@ package com.founder.fix.fixflow;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -39,14 +37,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.founder.fix.fixflow.I18N.PropertiesUtil;
-import com.founder.fix.fixflow.core.impl.db.SqlCommand;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
-import com.founder.fix.fixflow.core.internationalization.FixFlowResources;
-import com.founder.fix.fixflow.core.internationalization.ResourcesUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.FlowIdentityService;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.util.CurrentThread;
 import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.SpringConfigLoadHelper;
@@ -99,7 +92,6 @@ public class FlowCenter extends HttpServlet {
 			action = "getMyTask";
 		}
 		RequestDispatcher rd = null;
-		System.out.println(ResourcesUtil.getResourcesValue(FixFlowResources.FlowNameResource, "ERApprovalProcess"));
 		try {
 			Map<String, Object> filter = new HashMap<String, Object>();
 
@@ -146,7 +138,7 @@ public class FlowCenter extends HttpServlet {
 				try{
 					List<Map<String, String>> result = getFlowCenter()
 							.queryStartProcess(userId);
-//					List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
+					List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
 					Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
 					for(Map<String,String> tmp:result){
 						String category = tmp.get("category");
@@ -161,7 +153,7 @@ public class FlowCenter extends HttpServlet {
 						newResult.put(category, tlist);
 					}
 					request.setAttribute("result", newResult);
-//					request.setAttribute("lastest", lastestProcess);
+					request.setAttribute("lastest", lastestProcess);
 					request.setAttribute("userId", userId); // 返回userId add Rex
 				}catch(Exception e){
 					request.setAttribute("errorMsg", e.getMessage());
