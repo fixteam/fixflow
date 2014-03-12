@@ -37,10 +37,10 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 					params['transferUserId'] = d[0].USERID;
 				};
 				var d = FixSelect(obj,fn,params);
-				/*params={
+				params={
 						//被转发的UserId，这里设定了就是管理员
 						transferUserId:d[0].USERID
-				};*/
+				};
 			}else if(type=="pending"){//转办
 				var obj = {type:"user"};
 				var fn = function(params,d){
@@ -51,14 +51,14 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 				  	}
 				};
 			  	var d = FixSelect(obj,fn,params);
-			  	/*if(d&&d.length>0){
+			  	if(d&&d.length>0){
 					params={
 							//转办的任务编号
 						pendingUserId:d[0].USERID
 					};
 			  	}else{
 			  		return;
-			  	}*/
+			  	}
 			}else if(type=="recover"){
 				var obj = {
 						  type:"node",
@@ -68,10 +68,10 @@ function regFlowCommand(formId,processInstanceId,processDefinitionKey,taskId){
 					params['recoverNodeId'] = d[0].nodeId;
 				};
 				var d = FixSelect(obj,fn,params);
-				/*params={
+				params={
 						//追回的任务编号
 					recoverNodeId:d[0].nodeId
-				};*/
+				};
 			}else if(type=="reminders"){
 				params={
 						//提醒某一个用户
