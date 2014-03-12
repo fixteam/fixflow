@@ -37,6 +37,7 @@ import javax.jms.JMSException;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -275,9 +276,16 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		for (RulesResource rulesResource : rulesResources) {
 			String classPath = rulesResource.getSrc();
 			Document document = null;
+			String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 			try {
-				InputStream in = ReflectUtil.getResourceAsStream(classPath);
-				document = XmlUtil.read(in);
+				//用于处理osgi项目文件加载
+				if(filePath.startsWith("bundleresource")){
+					InputStream in = new FileInputStream(FileLocator.toFileURL(this.getClass().getClassLoader().getResource(classPath)).toString().substring(6));
+					document = XmlUtil.read(in);
+				}else{
+					InputStream in = ReflectUtil.getResourceAsStream(classPath);
+				        document = XmlUtil.read(in);
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -483,16 +491,24 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
 		try {
-			if (!filePath.startsWith("jar")) {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
-				resource = resourceSet.createResource(URI.createFileURI(filePath));
-			} else {
-				resource = resourceSet.createResource(URI.createURI(filePath));
+			//用于处理osgi项目文件加载
+			if(filePath.startsWith("bundleresource")){
+			    resource = resourceSet.createResource(URI.createURI(FileLocator.toFileURL(this.getClass().getClassLoader().getResource(classPath)).toString()));
+			}
+			else if(filePath.startsWith("jar")) {
+			    resource = resourceSet.createResource(URI.createURI(filePath));
+			}
+			else{
+			    filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
+			    resource = resourceSet.createResource(URI.createFileURI(filePath));
 			}
 
 		} catch (UnsupportedEncodingException e2) {
 			e2.printStackTrace();
 			throw new FixFlowException("流程配置文件加载失败！", e2);
+		}catch (IOException e) {
+			e.printStackTrace();
+			throw new FixFlowException("bundle项目文件路径获取失败！", e);
 		}
 
 		// register package in local resource registry
@@ -557,16 +573,24 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		String filePath = this.getClass().getClassLoader().getResource(classPath).toString();
 		Resource resource = null;
 		try {
-			if (!filePath.startsWith("jar")) {
+			//用于处理osgi项目文件加载
+			if(filePath.startsWith("bundleresource")){
+				resource = resourceSet.createResource(URI.createURI(FileLocator.toFileURL(this.getClass().getClassLoader().getResource(classPath)).toString()));
+			}
+			else if(filePath.startsWith("jar")) {
+				resource = resourceSet.createResource(URI.createURI(filePath));
+			}
+			else{
 				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(classPath).getFile(), "utf-8");
 				resource = resourceSet.createResource(URI.createFileURI(filePath));
-			} else {
-				resource = resourceSet.createResource(URI.createURI(filePath));
 			}
 
 		} catch (UnsupportedEncodingException e2) {
 			e2.printStackTrace();
 			throw new FixFlowException("流程配置文件加载失败！", e2);
+		}catch (IOException e) {
+			e.printStackTrace();
+			throw new FixFlowException("bundle项目文件路径获取失败！", e);
 		}
 
 		// register package in local resource registry
