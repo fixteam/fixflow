@@ -265,7 +265,7 @@
 		      <td>${dataList.processInstanceId}</td>
 		      <td>${dataList.processDefinitionName}</td>
 		      <td>${dataList.subject}</td>
-		      <td>${dataList.BIZ_KEY}</td>
+		      <td>${dataList.bizKey}</td>
 		      <td class="time"><fmt:formatDate value="${dataList.startTime}" type="both"/></td>
 				<td class="time"><fmt:formatDate value="${dataList.updateTime}" type="both"/></td>
 				 <td>${dataList.startAuthorName}</td>
