@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <coreconfig:FixFlowConfig xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:coreconfig="http://www.founderfix.com/coreconfig" version="5.2.0.20140316">
-  <dataBaseConfig selected="mysql" mode="internal" isEnableDesCon="false">
-    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="fixflow" password="fixflow" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
+  <dataBaseConfig selected="DB_FIX_BIZ_BASE" mode="internal" isEnableDesCon="false">
+    <dataBase id="DB_FIX_BIZ_BASE" name="DB_FIX_BIZ_BASE" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.16.40.89:1521:orcl" username="fixflow" password="fixflow" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="oracle" name="oracle" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.29.165.250:1521:orcl" username="idbase2" password="idbase2" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.OraclePaginationImpl" dbtype="oracle"/>
     <dataBase id="db2" name="db2" driverClassName="com.ibm.db2.jdbc.app.DB2Driver" url="jdbc:db2://localhost:5000/sample" username="username" password="password" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.core.impl.db.pagination.DB2PaginationImpl" dbtype="db2"/>
     <dataBase id="mysql" name="mysql" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1:3306/idbase?characterEncoding=UTF-8" username="root" password="jianxin333" maxActive="20" maxIdle="30" maxWait="10000" paginationImpl="com.founder.fix.fixflow.expand.database.pagination.MySqlPaginationImpl" dbtype="mysql"/>
@@ -146,7 +146,7 @@
     <!-- 模板配置 -->
     <resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-expand" virtualPath="src/main/resources/template"/>
    <!-- 系统默认流程模板-  目录下必须有default_process/default_process.bpmn文件-->
-    <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/flow-template/" src="resources/template/flow-template/"/>
+    <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/flow-template/" src="template/flow-template/"/>
     <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/node-template/"/>
     <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" src="template/system-template/" virtualPath="src/main/resources/template/system-template"/>
     <!-- 连接器配置 -->
@@ -161,6 +161,8 @@
   	<resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml" src="config/datavariableconfig.xml"/>
   	<!-- 流程定义空文件 -->
   	<resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/fixflowfile.bpmn"/>
+  	<!-- 流程定义空文件 -->
+  	<resourcePath id="nodeTemplate" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/node_template.bpmn"/>
   	<!-- Groovy空文件 -->
   	<resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/GroovyFile.groovy" src=""/>  	
   	<!-- quartz定时任务框架配置 -->
