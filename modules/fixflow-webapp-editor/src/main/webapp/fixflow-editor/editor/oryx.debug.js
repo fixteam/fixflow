@@ -11025,8 +11025,8 @@ ORYX.Core.Canvas = ORYX.Core.AbstractShape.extend({
 		} else {
 			width = x2 - x1;
 			height = y2 - y1;
-			tx = -x1+margin/2;
-			ty = -y1+margin/2;
+			tx = 0;
+			ty = 0;
 		}
 		 
 		
