@@ -64,4 +64,23 @@ public interface ExceptionCode {
 	 */
 	public static String EXPRESSION_EXCEPTION_LOOPDATAINPUTCOLLECTIONEMPTY = "expressionException_loopDataInputCollectionEmpty";
 	
+	/**
+	 * 多实例输入数据集集合循环插入输入项目
+	 */
+	public static String EXPRESSIONEXCEPTION_COLLECTIONININPUTDATAITEM = "expressionException_collectionInInputDataItem";
+	
+	
+	/**
+	 * 完成条件表达式为空
+	 */
+	public static String EXPRESSIONEXCEPTION_CONDITIONEXPRESSIONEMPTY = "expressionException_conditionExpressionEmpty";
+	
+	/**
+	 * 完成条件表达式执行出错
+	 */
+	public static String EXPRESSIONEXCEPTION_CONDITIONEXPRESSIONERROR = "expressionException_conditionExpressionError";
+	
+	
+	
+	
 }

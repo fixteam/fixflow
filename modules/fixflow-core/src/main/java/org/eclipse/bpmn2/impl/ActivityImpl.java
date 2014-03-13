@@ -878,7 +878,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	}
 	
 	private void tokenEnter(ExecutionContext executionContext) {
+		
 
+		
 		fireEvent(BaseElementEvent.EVENTTYPE_NODE_ENTER, executionContext);
 
 		execute(executionContext);
@@ -985,7 +987,7 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics) {
 			
 			// 并行多实例处理
-			LOG.debug("节点: {}({}) 含有并行多实例,将进入多实例处理阶段,令牌号: {}({}).",activity.getName(),activity.getId(),token.getName(),token.getId());
+			LOG.debug("节点: {}({}) 含有并行多实例,将进入多实例'进入'阶段处理,令牌号: {}({}).",activity.getName(),activity.getId(),token.getName(),token.getId());
 			
 			// 输出数据集
 			String loopDataOutputCollectionExpressionValue = getLoopDataOutputCollectionExpression();
@@ -999,8 +1001,11 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			// 多实例输出项
 			String outputDataItemExpressionValue = getOutputDataItemExpression();
 			
-			//打印日志信息
+			//完成条件
+			String completionConditionExpressionValue=getCompletionConditionExpression();
 			
+			
+			//打印日志信息
 			LOG.debug("\n多实例配置信息: \n 【输入数据集】: \n{}",loopDataInputCollectionExpressionValue);
 			
 			LOG.debug("\n【输入项编号】: \n{}",inputDataItemExpressionValue);
@@ -1009,6 +1014,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			
 			LOG.debug("\n【输出数据集】: \n{}",outputDataItemExpressionValue);	
 			
+			LOG.debug("\n【完成条件】: \n{}",completionConditionExpressionValue);	
+			
+		
 			
 			// 解决多实例处理退回BUG
 			// 在进入多实例的第一次先清空多实例输出集合,以防历史数据影响。
@@ -1065,8 +1073,11 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 				
 				
 				if (valueObj != null) {
-
+					
+					//如果会签输入数据集是一个集合
+					
 					if (valueObj instanceof Collection) {
+						
 						Collection<?> valueObjCollection = (Collection<?>) valueObj;
 
 						if (valueObjCollection.size() == 0) {
@@ -1076,55 +1087,135 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 							throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAINPUTCOLLECTIONEMPTY,this.getId(),this.getName(),loopDataInputCollectionExpressionValue);
 							
 						}
-
+						//定义计数器
+						int i=1;
+						//循环执行 将令牌多次放入节点
 						for (Object object : valueObjCollection) {
-
 							
+							
+							
+							LOG.debug("多实例循环第 '{}' 次开始执行,循环值为: '{}'",i,StringUtil.getString(object));
 
-							ExpressionMgmt.setVariable(inputDataItemExpressionValue, object, executionContext);
-
+							try {
+								//将循环的每个变量赋值给输入数据项
+								ExpressionMgmt.setVariable(inputDataItemExpressionValue, object, executionContext);
+								
+							} catch (Exception e) {
+								
+								LOG.error("多实例循环第 '"+i+"' 次执行出错,错误信息: "+e.getMessage(),e);
+								
+								throw new FixFlowExpressionException(ExceptionCode.EXPRESSIONEXCEPTION_COLLECTIONININPUTDATAITEM,this.getId(),this.getName(),inputDataItemExpressionValue,e);
+								
+								
+							}
+							
+							
+							//执行令牌进入节点方法
 							this.tokenEnter(executionContext);
-						}
-					} else {
-						if (valueObj instanceof String[]) {
-							String[] valueObjString = (String[]) valueObj;
-							for (int i = 0; i < valueObjString.length; i++) {
-
 							
-								ExpressionMgmt.setVariable(inputDataItemExpressionValue, valueObjString[i], executionContext);
+							//循环计数器自加1
+							i=i+1;
+							
+						}
+						
+					//如果会签输入数据集不是集合
+					} else {
+						
+						if (valueObj instanceof String[]) {
+							
+							//如果是个字符串数组
+							String[] valueObjString = (String[]) valueObj;
+							
+							//循环执行 将令牌多次放入节点
+							for (int i = 0; i < valueObjString.length; i++) {
+								
+								LOG.debug("多实例循环第 '{}' 次开始执行,循环值为: '{}'",i,valueObjString[i]);
 
+								try {
+									//将循环的每个变量赋值给输入数据项
+									ExpressionMgmt.setVariable(inputDataItemExpressionValue, valueObjString[i],executionContext);
+									
+								} catch (Exception e) {
+									
+									LOG.error("多实例循环第 '"+i+"' 次执行出错,错误信息: "+e.getMessage(),e);
+									
+									throw new FixFlowExpressionException(ExceptionCode.EXPRESSIONEXCEPTION_COLLECTIONININPUTDATAITEM,this.getId(),this.getName(),inputDataItemExpressionValue,e);
+									
+									
+								}
+								
+								//执行令牌进入节点方法
 								this.tokenEnter(executionContext);
 
 							}
+							
+							
+							
 						} else {
+							
+							//如果是一个逗号分割的字符串
+							
 							if (valueObj != null && !valueObj.equals("")) {
+								
+								//将字符串转换为字符串数组
+								
 								String[] valueObjString = valueObj.toString().split(",");
-
+								
+								//如果大于0再处理
 								if (valueObjString.length > 0) {
 									for (int i = 0; i < valueObjString.length; i++) {
+										
+										LOG.debug("多实例循环第 '{}' 次开始执行,循环值为: '{}'", i, valueObjString[i]);
+										try {
+											// 将循环的每个变量赋值给输入数据项
+											ExpressionMgmt.setVariable(inputDataItemExpressionValue, valueObjString[i],executionContext);
+										} catch (Exception e) {
 
-										ExpressionMgmt.setVariable(inputDataItemExpressionValue, valueObjString[i],
-												executionContext);
+											LOG.error("多实例循环第 '" + i + "' 次执行出错,错误信息: " + e.getMessage(), e);
 
+											throw new FixFlowExpressionException(
+													ExceptionCode.EXPRESSIONEXCEPTION_COLLECTIONININPUTDATAITEM,
+													this.getId(), this.getName(), inputDataItemExpressionValue, e);
+
+										}
+										
+										//执行节点进入
 										this.tokenEnter(executionContext);
 
 									}
 								} else {
-									throw new FixFlowException("输入数据集格式不满足.");
+									//不认识的格式
+									LOG.error("多实例输出集合不是一个集合");
+									
+									throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK,this.getId(),this.getName(),loopDataOutputCollectionExpressionValue);
+
 								}
 
 							} else {
-								throw new FixFlowException("输入数据集格式不满足.");
+								//不认识的格式
+								
+								LOG.error("多实例输出集合不是一个集合");
+								
+								throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK,this.getId(),this.getName(),loopDataOutputCollectionExpressionValue);
+
 							}
 						}
 					}
 
 				} else {
-					throw new FixFlowException("表达式返回值不是数据集合!");
+					
+					LOG.error("多实例输出集合不是一个集合");
+					
+					throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK,this.getId(),this.getName(),loopDataOutputCollectionExpressionValue);
+
 				}
 
 			} else {
-				throw new FixFlowException("并行多实例的输入数据集不能为空!");
+				
+				LOG.error("多实例输出集合不是一个集合");
+				
+				throw new FixFlowExpressionException(ExceptionCode.EXPRESSION_EXCEPTION_LOOPDATAOUTPUTCOLLECTION_COLLECTIONCHECK,this.getId(),this.getName(),loopDataOutputCollectionExpressionValue);
+
 			}
 
 		} else {
@@ -1145,60 +1236,90 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	public void leave(ExecutionContext executionContext) {
 
 		// 用于并行、串行会签的处理.
-
+		
+		//在离开节点的时候判断多实例
 		if (this instanceof Activity && ((Activity) this).getLoopCharacteristics() != null) {
+			
 			Activity activity = (Activity) this;
+			
 			LoopCharacteristics loopCharacteristics = activity.getLoopCharacteristics();
-
+			
+			// 如果是并行多实例
 			if (loopCharacteristics instanceof MultiInstanceLoopCharacteristics) {
 				// 并行多实例处理
 				
+				//MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
 
+				
+				TokenEntity token=executionContext.getToken();
+				
+				LOG.debug("节点: {}({}) 含有并行多实例,将进入多实例'离开'阶段处理,令牌号: {}({}).",activity.getName(),activity.getId(),token.getName(),token.getId());
 				
 				
 				
+				// 输出数据集
+				String loopDataOutputCollectionExpressionValue = getLoopDataOutputCollectionExpression();
 				
-					
-					String expressionValue = getLoopDataOutputCollectionExpression();
-					
+				// 多实例输入数据集
+				String loopDataInputCollectionExpressionValue = getLoopDataInputCollectionExpression();
+				
+				// 多实例输入项
+				String inputDataItemExpressionValue = getInputDataItemExpression();
+				
+				// 多实例输出项
+				String outputDataItemExpressionValue = getOutputDataItemExpression();
+				
+				//完成条件
+				String completionConditionExpressionValue=getCompletionConditionExpression();
+				
+				//打印日志信息
+				LOG.debug("\n多实例配置信息: \n 【输入数据集】: \n{}",loopDataInputCollectionExpressionValue);
+				
+				LOG.debug("\n【输入项编号】: \n{}",inputDataItemExpressionValue);
+				
+				LOG.debug("\n【输出项编号】: \n{}",outputDataItemExpressionValue);	
+				
+				LOG.debug("\n【输出数据集】: \n{}",outputDataItemExpressionValue);	
+				
+				LOG.debug("\n【完成条件】: \n{}",completionConditionExpressionValue);	
+				
 
-					if (expressionValue != null && !expressionValue.equals("")) {
+				if (loopDataOutputCollectionExpressionValue != null && !loopDataOutputCollectionExpressionValue.equals("")) {
 
-						Object valueObj = ExpressionMgmt.execute(expressionValue, executionContext);
+					Object valueObj = ExpressionMgmt.execute(loopDataOutputCollectionExpressionValue, executionContext);
 
-						if (valueObj != null) {
+					if (valueObj != null) {
 
-							if (valueObj instanceof Collection) {
-							
-								
-								
+						if (valueObj instanceof Collection) {
 
-								String expressionValueTemp =getOutputDataItemExpression();
+							String expressionValueTemp = getOutputDataItemExpression();
 
-								@SuppressWarnings("rawtypes")
-								Collection collection = (Collection) valueObj;
-								collection.add(ExpressionMgmt.execute(expressionValueTemp, executionContext));
+							@SuppressWarnings("rawtypes")
+							Collection collection = (Collection) valueObj;
+							collection.add(ExpressionMgmt.execute(expressionValueTemp, executionContext));
 
-							}else{
-								
-							}
+						} else {
+
 						}
-						else{
-							
-						}
+					} else {
+
 					}
+				}
+
 				
+				
+				if (completionConditionExpressionValue == null || completionConditionExpressionValue.equals("")) {
 
-				MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
-
-				FormalExpression formalExpression = (FormalExpression) multiInstanceLoopCharacteristics.getCompletionCondition();
-				if (formalExpression == null || formalExpression.getBody() == null || formalExpression.getBody().equals("")) {
-
-					throw new FixFlowException("多实例完成表达式不能为空.");
+					LOG.error("节点: "+activity.getName()+"("+activity.getId()+") 多实例完成条件为空.");
+					
+					throw new FixFlowExpressionException(ExceptionCode.EXPRESSIONEXCEPTION_CONDITIONEXPRESSIONEMPTY,this.getId(),this.getName(),"");
+					
 				} else {
-					String evalue = formalExpression.getBody();
-					if (StringUtil.getBoolean(ExpressionMgmt.execute(evalue, executionContext))) {
+					boolean isCompletion=StringUtil.getBoolean(ExpressionMgmt.execute(completionConditionExpressionValue, executionContext));
+					if (isCompletion){
 						super.leave(executionContext);
+					}else{
+						//不做处理
 					}
 				}
 
@@ -1266,6 +1387,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 			throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);
 		}
 		
+		
+		super.leaveClearData(executionContext);
+		
 	
 	}
 
@@ -1282,6 +1406,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 	public String loopDataOutputCollectionExpression;
 	
 	public String outputDataItemExpression;
+	
+	public String completionConditionExpression;
 	
 	
 	public String getLoopDataInputCollectionExpression() {
@@ -1352,8 +1478,24 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		return outputDataItemExpression;
 	
 	}
-	
-	
+
+	public String getCompletionConditionExpression() {
+
+		if (this.completionConditionExpression == null) {
+			MultiInstanceLoopCharacteristics multiInstanceLoopCharacteristics = (MultiInstanceLoopCharacteristics) loopCharacteristics;
+
+			FormalExpression completionConditionExpression = (FormalExpression) multiInstanceLoopCharacteristics
+					.getCompletionCondition();
+			if (completionConditionExpression != null) {
+				String evalue = completionConditionExpression.getBody();
+				this.completionConditionExpression = evalue;
+			}
+
+		}
+
+		return this.completionConditionExpression;
+	}
+
 	private Expression getExtensionExpression(BaseElement baseElement) {
 
 		if (baseElement.getExtensionValues().size() > 0) {

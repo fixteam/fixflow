@@ -345,6 +345,9 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 
 	private void defaultLeave(ExecutionContext executionContext) {
 		TokenEntity token = executionContext.getToken();
+		
+		LOG.debug("离开节点: {}({}),令牌号: {}({}).", this.getName(),this.getId(),token.getName(),token.getId());
+
 
 		// 发生节点离开事件
 		fireEvent(BaseElementEvent.EVENTTYPE_NODE_LEAVE, executionContext);
