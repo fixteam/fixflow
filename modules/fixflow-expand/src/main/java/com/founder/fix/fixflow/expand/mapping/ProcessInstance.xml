@@ -141,8 +141,8 @@
 		sqlText = "SELECT * FROM "+TableUtil.getProcessInstanceRunTableName()+" WHERE PARENT_INSTANCE_ID  = ? AND END_TIME IS NULL AND PARENT_INSTANCE_TOKEN_ID =?";
 		
 		objectParamWhere = new ArrayList<Object>();
-		objectParamWhere.add(parameter.get("processInstanceId"));
-		objectParamWhere.add(parameter.get("tokenId"));
+		objectParamWhere.add(parameter.getParameter().get("processInstanceId"));
+		objectParamWhere.add(parameter.getParameter().get("tokenId"));
 
 		sqlQuery.queryList(sqlText,objectParamWhere);
 

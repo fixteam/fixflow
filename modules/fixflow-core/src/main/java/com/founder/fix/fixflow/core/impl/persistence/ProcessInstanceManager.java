@@ -209,13 +209,13 @@ public class ProcessInstanceManager extends AbstractManager {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("processInstanceId", processInstanceId);
 		parameters.put("tokenId", tokenId);
-		List<ProcessInstanceEntity> processInstanceEntities=(List<ProcessInstanceEntity>) getMappingSqlSession().selectOne("findSubProcessInstanceByIdAndToken", parameters);
+		List<ProcessInstanceEntity> processInstanceEntities=(List<ProcessInstanceEntity>) getMappingSqlSession().selectList("findSubProcessInstanceByIdAndToken", parameters);
 		
-		
-		for (ProcessInstanceEntity processInstanceEntity : processInstanceEntities) {
-			initProcessInstance(processInstanceEntity);
+		if(processInstanceEntities != null){
+			for (ProcessInstanceEntity processInstanceEntity : processInstanceEntities) {
+				initProcessInstance(processInstanceEntity);
+			}
 		}
-		
 		return processInstanceEntities;
 
 	}
