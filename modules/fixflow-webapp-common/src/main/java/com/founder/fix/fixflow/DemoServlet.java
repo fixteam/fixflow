@@ -121,7 +121,7 @@ public class DemoServlet extends HttpServlet {
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if (action.equals("startOneTask")) { // 仅实现获取按钮功能 add by Rex
-				rd = request.getRequestDispatcher("/fixflow/demo/doTask.jsp");
+				rd = request.getRequestDispatcher("/fixflow/demo/startOneTask.jsp");
 				
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
@@ -132,17 +132,18 @@ public class DemoServlet extends HttpServlet {
 				Connection connection = null;
 				try {
 					if(key!=null){
-							connection = FixFlowShellProxy
-									.getConnection(ConnectionManagement.defaultDataBaseId);
-						
-							SqlCommand sc = new SqlCommand(connection);
-							List params = new ArrayList();
-							params.add(key);
-							List<Map<String, Object>> res = sc.queryForList(
-									"select * from DEMOTABLE where COL1=?", params);
-							if(res!=null && res.size()>0)
-								filter.put("demoObject", res.get(0));
-							request.setAttribute("result", filter);
+						rd = request.getRequestDispatcher("/fixflow/demo/doTask.jsp");
+						connection = FixFlowShellProxy
+								.getConnection(ConnectionManagement.defaultDataBaseId);
+					
+						SqlCommand sc = new SqlCommand(connection);
+						List params = new ArrayList();
+						params.add(key);
+						List<Map<String, Object>> res = sc.queryForList(
+								"select * from DEMOTABLE where COL1=?", params);
+						if(res!=null && res.size()>0)
+							filter.put("demoObject", res.get(0));
+						request.setAttribute("result", filter);
 					}
 					filter.putAll(list);
 					request.setAttribute("result", filter);
@@ -230,9 +231,9 @@ public class DemoServlet extends HttpServlet {
 					rd = request
 							.getRequestDispatcher("/fixflow/common/result.jsp");
 				}
-			}
-			if (rd != null)
-				rd.forward(request, response);
+		}
+		if (rd != null)
+			rd.forward(request, response);
 		} catch (Exception e) {
 			try {
 				CurrentThread.rollBack();
