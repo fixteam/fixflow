@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns="http://www.founderfix.com" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://www.founderfix.com">
+  <bpmn2:import importType="http://www.omg.org/spec/BPMN/20100524/MODEL" location="platform:/resource/fixflow-webapp-common/src/main/webapp/demoflow/process_1oo.bpmn" namespace="http://www.founderfix.com"/>
+  <bpmn2:process id="default" fixflow:verification="true" name="默认人工任务">
+    <bpmn2:userTask id="UserTask_2" name="人工任务">
+      <bpmn2:extensionElements>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:assignPolicyType id="potentialOwner"/>
+        <fixflow:skipStrategy/>
+      </bpmn2:extensionElements>
+      <bpmn2:potentialOwner id="_PotentialOwner_2" fixflow:resourceType="user" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="所有人">
+        <bpmn2:resourceAssignmentExpression id="_ResourceAssignmentExpression_2">
+          <bpmn2:formalExpression id="_FormalExpression_2" fixflow:name="所有人">&quot;fixflow_allusers&quot;</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="节点模板">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="node_template">
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2">
+        <dc:Bounds height="50.0" width="110.0" x="485.0" y="175.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
