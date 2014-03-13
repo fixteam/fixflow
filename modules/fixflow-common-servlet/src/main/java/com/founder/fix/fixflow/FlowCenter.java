@@ -135,81 +135,63 @@ public class FlowCenter extends HttpServlet {
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if (action.equals("getMyProcess")) {
-				try{
-					List<Map<String, String>> result = getFlowCenter()
-							.queryStartProcess(userId);
-					List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
-					Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
-					for(Map<String,String> tmp:result){
-						String category = tmp.get("category");
-						if(StringUtil.isEmpty(category))
-							category = "默认分类";
-						
-						List<Map<String, String>> tlist = newResult.get(category);
-						if(tlist==null){
-							tlist= new ArrayList<Map<String, String>>();
-						}
-						tlist.add(tmp);
-						newResult.put(category, tlist);
+				rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
+				List<Map<String, String>> result = getFlowCenter()
+						.queryStartProcess(userId);
+				List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
+				Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
+				for(Map<String,String> tmp:result){
+					String category = tmp.get("category");
+					if(StringUtil.isEmpty(category))
+						category = "默认分类";
+					
+					List<Map<String, String>> tlist = newResult.get(category);
+					if(tlist==null){
+						tlist= new ArrayList<Map<String, String>>();
 					}
-					request.setAttribute("result", newResult);
-					request.setAttribute("lastest", lastestProcess);
-					request.setAttribute("userId", userId); // 返回userId add Rex
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
+					tlist.add(tmp);
+					newResult.put(category, tlist);
 				}
+				request.setAttribute("result", newResult);
+				request.setAttribute("lastest", lastestProcess);
+				request.setAttribute("userId", userId); // 返回userId add Rex
 			} else if (action.equals("getMyTask")) {
-				try{
-					filter.put("path", request.getSession().getServletContext()
-							.getRealPath("/"));
-					Map<String, Object> pageResult = getFlowCenter()
-							.queryMyTaskNotEnd(filter);
-					filter.putAll(pageResult);
-					request.setAttribute("result", filter);
-					request.setAttribute("pageInfo", filter.get("pageInfo"));
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
-				}
+				rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				Map<String, Object> pageResult = getFlowCenter()
+						.queryMyTaskNotEnd(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 			} else if (action.equals("getProcessImage")) {
 				response.getOutputStream();
 			} else if (action.equals("getAllProcess")) {
-				try{
-					Map<String, Object> pageResult = getFlowCenter()
-							.queryTaskInitiator(filter);
-					filter.putAll(pageResult);
-					request.setAttribute("result", filter);
-					request.setAttribute("pageInfo", filter.get("pageInfo"));
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
-				}
+				rd = request.getRequestDispatcher("/fixflow/center/queryprocess.jsp");
+				Map<String, Object> pageResult = getFlowCenter()
+						.queryTaskInitiator(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 			} else if (action.equals("getPlaceOnFile")) {
+				rd = request.getRequestDispatcher("/fixflow/center/placeOnFile.jsp");
 				Map<String, Object> pageResult = getFlowCenter()
 						.queryPlaceOnFile(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/fixflow/center/placeOnFile.jsp");
 			}else if (action.equals("getTaskDetailInfo")) {
+				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
 				Map<String, Object> pageResult = getFlowCenter()
 						.getTaskDetailInfo(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
 			}else if (action.equals("getTaskDetailInfoSVG")) {
+				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
 				Map<String, Object> pageResult = getFlowCenter()
 						.getTaskDetailInfoSVG(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/center/flowGraphic.jsp");
 			} else if (action.equals("getFlowGraph")) {
 				InputStream is = getFlowCenter().getFlowGraph(filter);
 				out = response.getOutputStream();
@@ -220,53 +202,52 @@ public class FlowCenter extends HttpServlet {
 					out.write(buff, 0, size);
 				}
 			} else if (action.equals("getUserInfo")) {
-				filter.put("path", request.getSession().getServletContext()
-						.getRealPath("/"));
-				Map<String, Object> pageResult = getFlowCenter().getUserInfo(
-						filter);
-				filter.putAll(pageResult);
-				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/common/userInfo.jsp");
-			}else if (action.equals("getUserIcon")) {
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
 				Map<String, Object> pageResult = getFlowCenter().getUserInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
+			}else if (action.equals("getUserIcon")) {
 				rd = request.getRequestDispatcher("/fixflow/common/userOperation.jsp");
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				Map<String, Object> pageResult = getFlowCenter().getUserInfo(
+						filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
 			} else if (action.equals("updateUserIcon")) {
+				rd = request.getRequestDispatcher("/FlowCenter?action=getUserInfo");
 				filter.put("path", request.getSession().getServletContext()
 						.getRealPath("/"));
 				getFlowCenter().saveUserIcon(filter);
-				rd = request.getRequestDispatcher("/FlowCenter?action=getUserInfo");
-			//以下内容都是demo部分	
-
+				
 			} else if(action.equals("selectUserList")){	//选择用户列表
+				String isMulti = request.getParameter("isMulti");
+				rd = request.getRequestDispatcher("/fixflow/common/selectUserList.jsp?isMulti="+isMulti);
 				Map<String, Object> pageResult = getFlowCenter().getAllUsers(filter);
 				filter.putAll(pageResult);
-				String isMulti = request.getParameter("isMulti");
+				
 				request.setAttribute("result", filter);
 				request.setAttribute("isMulti", isMulti);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/fixflow/common/selectUserList.jsp?isMulti="+isMulti);
 			} else if(action.equals("selectNodeList")){	//选择节点列表
+				rd = request.getRequestDispatcher("/fixflow/common/selectNodeList.jsp");
 				Map<String, Object> pageResult = getFlowCenter().getRollbackNode(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/common/selectNodeList.jsp");
 			} else if(action.equals("selectStepList")){	//选择步骤列表
+				rd = request.getRequestDispatcher("/fixflow/common/selectStepList.jsp");
 				Map<String, Object> pageResult = getFlowCenter().getRollbackTask(filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/common/selectStepList.jsp");
 			} else if(action.equals("viewDelegation")){	//选择步骤列表
+				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
 				Map<String, Object> pageResult = new HashMap<String, Object>();
-				
 				pageResult = this.getFlowIdentityService().getUserDelegationInfo(userId);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/common/setDelegation.jsp");
 			}
 			else if(action.equals("saveDelegation")){	//选择步骤列表
 				
@@ -280,10 +261,12 @@ public class FlowCenter extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("errorMsg", e.getMessage());
 			try {
 				CurrentThread.rollBack();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				request.setAttribute("errorMsg", e.getMessage());
 			}
 		} finally {
 			if (out != null) {
@@ -293,6 +276,7 @@ public class FlowCenter extends HttpServlet {
 			try {
 				CurrentThread.clear();
 			} catch (SQLException e) {
+				request.setAttribute("errorMsg", e.getMessage());
 				e.printStackTrace();
 			}
 		}

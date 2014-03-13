@@ -38,7 +38,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
-import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.service.JobService;
@@ -119,65 +118,35 @@ public class FlowManager extends HttpServlet {
 			filter.put("userId", userId);
 			request.setAttribute("nowAction", action);
 			if ("processDefinitionList".equals(action)) {
-				try{
-					Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
-					filter.putAll(result);
-					request.setAttribute("result", filter);
-					request.setAttribute("pageInfo", filter.get("pageInfo"));
-					rd = request.getRequestDispatcher("/fixflow/manager/processDefinitionList.jsp");
-				}catch(FixFlowException e){
-					e.printStackTrace();
-				}
-				
+				rd = request.getRequestDispatcher("/fixflow/manager/processDefinitionList.jsp");
+				Map<String, Object> result = getProcessDefinitionService().getProcessDefitionList(filter);
+				filter.putAll(result);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 			}else if(action.equals("processManageList")){
-//				String processAction = StringUtil.getString(filter.get("processAction"));
-//				request.setAttribute("nowProcessAction", action);
+				rd = request.getRequestDispatcher("/fixflow/manager/processInstanceList.jsp");
 				Map<String,Object> result = getFlowManager().getProcessInstances(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/fixflow/manager/processInstanceList.jsp");
 			}else if(action.equals("suspendProcessInstance")){
-				try{
-					getFlowManager().suspendProcessInstance(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+				getFlowManager().suspendProcessInstance(filter);
 			}else if(action.equals("continueProcessInstance")){
-				try{
-					getFlowManager().continueProcessInstance(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+				getFlowManager().continueProcessInstance(filter);
+					
 			}else if(action.equals("terminatProcessInstance")){
-				try{
-					getFlowManager().terminatProcessInstance(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+				getFlowManager().terminatProcessInstance(filter);
 			}else if(action.equals("deleteProcessInstance")){
-				try{
-					getFlowManager().deleteProcessInstance(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+				getFlowManager().deleteProcessInstance(filter);
 			}else if(action.equals("toProcessVariable")){
+				rd = request.getRequestDispatcher("/fixflow/manager/processVariableList.jsp");
 				Map<String, Object> result = getFlowManager().getProcessVariables(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/processVariableList.jsp");
 			}else if(action.equals("saveProcessVariables")){
 				String tmp = (String)filter.get("insertAndUpdate");
 				if(StringUtil.isNotEmpty(tmp)){
@@ -192,86 +161,42 @@ public class FlowManager extends HttpServlet {
 				request.setAttribute("result", filter);
 				rd = request.getRequestDispatcher("/fixflow/manager/processTokenList.jsp");
 			}else if(action.equals("taskInstanceList")){
-				try{
-					filter.put("path", request.getSession().getServletContext()
-							.getRealPath("/"));
-					Map<String, Object> pageResult = getTaskManager().getTaskList(filter);
-					filter.putAll(pageResult);
-					request.setAttribute("result", filter);
-					request.setAttribute("pageInfo", filter.get("pageInfo"));
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/fixflow/manager/taskInstanceList.jsp");
-				}
+				rd = request.getRequestDispatcher("/fixflow/manager/taskInstanceList.jsp");
+				filter.put("path", request.getSession().getServletContext()
+						.getRealPath("/"));
+				Map<String, Object> pageResult = getTaskManager().getTaskList(filter);
+				filter.putAll(pageResult);
+				request.setAttribute("result", filter);
+				request.setAttribute("pageInfo", filter.get("pageInfo"));
 			}else if(action.equals("doTaskSuspend")){
-				try{
-					getTaskManager().suspendTask(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				getTaskManager().suspendTask(filter);
 			}else if(action.equals("doTaskResume")){
-				try{
-					getTaskManager().resumeTask(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				getTaskManager().resumeTask(filter);
 			}else if(action.equals("doTaskTransfer")){
-				try{
-					getTaskManager().transferTask(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				getTaskManager().transferTask(filter);
 			}else if(action.equals("doTaskRollBackNode")){
-				try{
-					getTaskManager().rollBackNode(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				getTaskManager().rollBackNode(filter);
 			}else if(action.equals("doTaskRollBackTask")){
-				try{
-					getTaskManager().rollBackStep(filter);
-				}catch(Exception e){
-					request.setAttribute("errorMsg", e.getMessage());
-					throw e;
-				}finally{
-					rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
-				}
+				rd = request.getRequestDispatcher("/FlowManager?action=taskInstanceList");
+				getTaskManager().rollBackStep(filter);
 			}else if(action.equals("flowLibrary")){
 				rd = request.getRequestDispatcher("/fixflow-explorer/flowLibrary.jsp");
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
 				String message = "操作成功！";
-				try{
-					response.setContentType("text/html;charset=utf-8");
-					getProcessDefinitionService().deployByZip(filter);
-				}catch(Exception ex){
-					ex.printStackTrace();
-					message +="操作失败，请检查上传文件是否符合要求！";
-				}
-				finally{
-					response.getWriter().print("<script>alert('"+message+"');window.close();</script>");
-				}
+				response.setContentType("text/html;charset=utf-8");
+				getProcessDefinitionService().deployByZip(filter);
+				response.getWriter().print("<script>alert('"+message+"');window.close();</script>");
 			}else
 			if("deleteDeploy".equals(action)){
-				getProcessDefinitionService().deleteDeploy(filter);
 				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
-			}else
-			if("download".equals(action)){
+				getProcessDefinitionService().deleteDeploy(filter);
+			}else if("download".equals(action)){
 				String processDefinitionId = StringUtil.getString(filter.get("processDefinitionId"));
 				response.reset();
 				request.setCharacterEncoding("gbk");
@@ -295,9 +220,8 @@ public class FlowManager extends HttpServlet {
 				outZip.close();
 				outZip.flush();
 				outZip.close();
-			}else
-			
-			if("getUserList".equals(action)){
+			}else if("getUserList".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/userList.jsp");
 				request.setAttribute("nowAction", "UserGroup");
 				Map<String, Object> result = getUserGroupService().getAllUsers(filter);
 				filter.putAll(result);
@@ -306,9 +230,8 @@ public class FlowManager extends HttpServlet {
 				List<Map<String,Object>> groupList = getUserGroupService().getAllGroupDefinition(filter);
 				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/fixflow/manager/userList.jsp");
-			}else
-			if("getGroupList".equals(action)){
+			}else if("getGroupList".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/groupList.jsp");
 				request.setAttribute("nowAction", "UserGroup");
 				Map<String, Object> result = getUserGroupService().getAllGroup(filter);
 				filter.putAll(result);
@@ -316,71 +239,61 @@ public class FlowManager extends HttpServlet {
 				List<Map<String,Object>> groupList = getUserGroupService().getAllGroupDefinition(filter);
 				request.setAttribute("groupList", groupList);
 				request.setAttribute("pageInfo", filter.get("pageInfo"));
-				rd = request.getRequestDispatcher("/fixflow/manager/groupList.jsp");
-			}else
-			if("getUserInfo".equals(action)){
+			}else if("getUserInfo".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/userInfo.jsp");
 				Map<String, Object> pageResult = getUserGroupService().getUserInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/userInfo.jsp");
-			}else
-			if("getGroupInfo".equals(action)){
+			}else if("getGroupInfo".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/groupInfo.jsp");
 				Map<String, Object> pageResult = getUserGroupService().getGroupInfo(
 						filter);
 				filter.putAll(pageResult);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/groupInfo.jsp");
-			}else
-			if("getJobList".equals(action)){
+			}else if("getJobList".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
-			}else
-			if("viewJobInfo".equals(action)){
+			}else if("viewJobInfo".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
-			}else
-			if("suspendJob".equals(action)){
+			}else if("suspendJob".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
 				request.setAttribute("nowAction", "jobManager");
 				getJobService().suspendJob(filter);
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
+			}else if("continueJob".equals(action)){
 				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
-			}else
-			if("continueJob".equals(action)){
 				getJobService().continueJob(filter);
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobList(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/jobList.jsp");
-			}else
-			if("suspendTrigger".equals(action)){
+			}else if("suspendTrigger".equals(action)){
+				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
 				getJobService().suspendTrigger(filter);
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
+			}else if("continueTrigger".equals(action)){
 				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
-			}else
-			if("continueTrigger".equals(action)){
 				getJobService().continueTrigger(filter);
 				request.setAttribute("nowAction", "jobManager");
 				Map<String, Object> result = getJobService().getJobTrigger(filter);
 				filter.putAll(result);
 				request.setAttribute("result", filter);
-				rd = request.getRequestDispatcher("/fixflow/manager/jobInfo.jsp");
-			}else
-			if("setHis".equals(action)){
-				getFlowManager().setHistory(filter);
+			}else if("setHis".equals(action)){
 				rd = request.getRequestDispatcher("/FlowManager?action=processManageList");
+				getFlowManager().setHistory(filter);
 			}else
 			if("updateCache".equals(action)){
 				ProcessEngineManagement.getDefaultProcessEngine().cleanCache(true, true);
@@ -388,10 +301,12 @@ public class FlowManager extends HttpServlet {
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("errorMsg", e.getMessage());
 			try {
 				CurrentThread.rollBack();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				request.setAttribute("errorMsg", e.getMessage());
 			}
 		} finally {
 			if (out != null) {
@@ -402,6 +317,7 @@ public class FlowManager extends HttpServlet {
 				CurrentThread.clear();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				request.setAttribute("errorMsg", e.getMessage());
 			}
 		}
 		if (rd != null)

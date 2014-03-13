@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sqlmappingconfig:RulesConfig id="taskIdentityLink" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
+<sqlmappingconfig:RulesConfig id="history" xmlns:sqlmappingconfig="http://www.founderfix.com/sqlmappingconfig">
 	<businessRules id="archiveByPara" 
 	parameterType="java.util.Map" 
 	resultType="java.util.Map" 
