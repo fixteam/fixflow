@@ -102,6 +102,12 @@
         <artifactId>mysql-connector-java</artifactId>
         <version>5.0.5</version>
 	</dependency>
+	
+	<dependency> 
+		<groupId>net.sourceforge.jtds</groupId> 
+		<artifactId>jtds</artifactId> 
+		<version>1.2.4</version> 
+	</dependency>
 	<!-- xml工具 -->
 	<dependency>
 		<groupId>javax.xml.bind</groupId>

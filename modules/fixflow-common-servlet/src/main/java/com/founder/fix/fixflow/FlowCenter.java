@@ -138,7 +138,8 @@ public class FlowCenter extends HttpServlet {
 				rd = request.getRequestDispatcher("/fixflow/center/startTask.jsp");
 				List<Map<String, String>> result = getFlowCenter()
 						.queryStartProcess(userId);
-				List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
+				
+				
 				Map<String,List<Map<String, String>>> newResult = new HashMap<String,List<Map<String, String>>>();
 				for(Map<String,String> tmp:result){
 					String category = tmp.get("category");
@@ -153,8 +154,14 @@ public class FlowCenter extends HttpServlet {
 					newResult.put(category, tlist);
 				}
 				request.setAttribute("result", newResult);
-				request.setAttribute("lastest", lastestProcess);
+				//获取最近使用流程在sqlserver下有已知语法bug，所以捕捉掉不影响功能使用
 				request.setAttribute("userId", userId); // 返回userId add Rex
+				try{
+					List<Map<String,String>> lastestProcess = getFlowCenter().queryLastestProcess(userId);
+					request.setAttribute("lastest", lastestProcess);
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
 			} else if (action.equals("getMyTask")) {
 				rd = request.getRequestDispatcher("/fixflow/center/todoTask.jsp");
 				filter.put("path", request.getSession().getServletContext()
