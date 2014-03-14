@@ -1,5 +1,5 @@
 /**
- * Copyright 1996-2013 Founder International Co.,Ltd.
+ * Copyright 1995-2014 Wisedu Co.,Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @author kenshin
+ * @author ych
  */
 package com.founder.fix.fixflow.core.internationalization;
 
@@ -80,6 +80,23 @@ public interface ExceptionCode {
 	 */
 	public static String EXPRESSIONEXCEPTION_CONDITIONEXPRESSIONERROR = "expressionException_conditionExpressionError";
 	
+	
+	/**
+	 * 节点离开的时候清理quartz出错
+	 */
+	public static String QUARZTEXCEPTION_NODELEAVECLEANQUARTZ = "quarztException_nodeLeaveCleanQuartz";
+	
+	
+	/**
+	 * 节点后面没有配置线条
+	 */
+	public static String SEQUENCEFLOWEXCEPTION_NODENOSEQUENCEFLOW = "sequenceFlowException_nodeNoSequenceFlow";
+	
+
+	/**
+	 * 节点后面没有验证通过的线条
+	 */
+	public static String SEQUENCEFLOWEXCEPTION_NODENOVERIFIEDSEQUENCEFLOW = "sequenceFlowException_nodeNoVerifiedSequenceFlow";
 	
 	
 	

@@ -29,8 +29,8 @@ public class FixFlowException extends RuntimeException {
 	public FixFlowException(String exceptionCode) {
 		super(ExceptionResourceCore.getResourceValue(exceptionCode));
 	}
-	
-	public FixFlowException(String exceptionCode,Object[] args) {
+
+	public FixFlowException(String exceptionCode,Object... args) {
 		super(ExceptionResourceCore.getResourceValue(exceptionCode,args));
 	}
 	

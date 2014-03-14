@@ -63,6 +63,7 @@ import com.founder.fix.bpmn2extensions.fixflow.SkipStrategy;
 import com.founder.fix.fixflow.core.event.BaseElementEvent;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.exception.FixFlowExpressionException;
+import com.founder.fix.fixflow.core.exception.FixFlowScheduleException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.expression.ExpressionMgmt;
@@ -1315,15 +1316,35 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 					throw new FixFlowExpressionException(ExceptionCode.EXPRESSIONEXCEPTION_CONDITIONEXPRESSIONEMPTY,this.getId(),this.getName(),"");
 					
 				} else {
-					boolean isCompletion=StringUtil.getBoolean(ExpressionMgmt.execute(completionConditionExpressionValue, executionContext));
+					
+					boolean isCompletion=false;
+					try {
+						
+						isCompletion=StringUtil.getBoolean(ExpressionMgmt.execute(completionConditionExpressionValue, executionContext));
+						
+					} catch (Exception e) {
+						
+						LOG.error("节点: "+activity.getName()+"("+activity.getId()+") 多实例完成条件计算出错.",e);
+						throw new FixFlowExpressionException(ExceptionCode.EXPRESSIONEXCEPTION_CONDITIONEXPRESSIONERROR,this.getId(),this.getName(),"");
+						
+					}
+					
 					if (isCompletion){
+						
+						LOG.debug("节点: {}({}) 多实例完成条件验证通过,令牌号: {}({}).",activity.getName(),activity.getId(),token.getName(),token.getId());
+						
+						
 						super.leave(executionContext);
+						
 					}else{
 						//不做处理
+						LOG.debug("节点: {}({}) 多实例完成条件验证不通过,令牌将继续停留在当前借点,令牌号: {}({}).",activity.getName(),activity.getId(),token.getName(),token.getId());
 					}
 				}
 
 			} else {
+				//这里还没实现。。。。囧
+				//异常方式也暂时不改了
 				throw new FixFlowException("串行处理没有实现！");
 			}
 
@@ -1362,8 +1383,11 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 				
 
 			} catch (Exception e) {
-				e.printStackTrace();
-				throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);
+				
+				LOG.error("节点: "+this.getName()+"("+this.getId()+") 在离开时,清理定时任务数据出错,错误信息: "+e.getMessage(),e);
+				
+				throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_NODELEAVECLEANQUARTZ,this.getId(),this.getName(),e);
+				
 			}
 
 		}
@@ -1371,20 +1395,24 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
 		
 		try {
 			
-			if(StringUtil.getBoolean(Context.getProcessEngineConfiguration().getQuartzConfig().getIsEnable())){
-			Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
-			Set<JobKey> jobKeys=new HashSet<JobKey>();
-			jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(tokenEntity.getId()));
-			if(jobKeys.size()>0){
-				List<JobKey> jobKeysList=new ArrayList<JobKey>();
-				jobKeysList.addAll(jobKeys);
-				scheduler.deleteJobs(jobKeysList);
-			}}
+			if (StringUtil.getBoolean(Context.getProcessEngineConfiguration().getQuartzConfig().getIsEnable())) {
+				Scheduler scheduler = Context.getProcessEngineConfiguration().getSchedulerFactory().getScheduler();
+				Set<JobKey> jobKeys = new HashSet<JobKey>();
+				jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupContains(tokenEntity.getId()));
+				if (jobKeys.size() > 0) {
+					List<JobKey> jobKeysList = new ArrayList<JobKey>();
+					jobKeysList.addAll(jobKeys);
+					scheduler.deleteJobs(jobKeysList);
+				}
+			}
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new FixFlowException("流程在离开节点 " + this.getId() + " 的时候发生错误! 错误信息: " + e.toString(), e);
+			
+			LOG.error("节点: "+this.getName()+"("+this.getId()+") 在离开时,清理定时任务数据出错,错误信息: "+e.getMessage(),e);
+			
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_NODELEAVECLEANQUARTZ,this.getId(),this.getName(),e);
+			
+			
 		}
 		
 		
