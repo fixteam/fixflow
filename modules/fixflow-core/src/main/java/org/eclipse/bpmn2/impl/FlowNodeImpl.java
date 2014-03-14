@@ -42,6 +42,7 @@ import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.factory.ProcessObjectFactory;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.ComparatorSequence;
 import com.founder.fix.fixflow.core.impl.runtime.TokenEntity;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 import com.founder.fix.fixflow.core.runtime.ExecutionContext;
 
 /**
@@ -344,16 +345,17 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 	}
 
 	private void defaultLeave(ExecutionContext executionContext) {
+		
 		TokenEntity token = executionContext.getToken();
 		
-		LOG.debug("离开节点: {}({}),令牌号: {}({}).", this.getName(),this.getId(),token.getName(),token.getId());
-
+		
 
 		// 发生节点离开事件
 		fireEvent(BaseElementEvent.EVENTTYPE_NODE_LEAVE, executionContext);
 		
 		
 		//离开时数据清理。
+		
 		leaveClearData(executionContext);
 		
 		// kenshin  2013.1.2
@@ -361,17 +363,27 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 	
 		
 		if(executionContext.getToFlowNode()!=null){
+			
+			//发现上下文中有直接跳转节点,则流程引擎不走正常处理直接跳转到指定借点。
+			
+			
+			//获取跳转节点
 			FlowNode toFlowNode=executionContext.getToFlowNode();
+			
+			LOG.debug("＝＝执行跳转机制,跳转目标: {}({}),离开节点: {}({}),令牌号: {}({}).",toFlowNode.getName(),toFlowNode.getId(), this.getName(),this.getId(),token.getName(),token.getId());
+			
+			
 			toFlowNode.enter(executionContext);
 			return;
 		}
 		
 		
-
+		//定义可通过线条集合
 		List<SequenceFlow> sequenceFlowList = new ArrayList<SequenceFlow>();
 
+		//获取正常离开的所有线条
 		for (SequenceFlow sequenceFlow : getOutgoing()) {
-
+			//验证线条上的条件
 			if (sequenceFlow.isContinue(executionContext)) {
 				sequenceFlowList.add(sequenceFlow);
 			}
@@ -381,9 +393,16 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 		// 节点后面没有线的处理
 		if (sequenceFlowList.size() == 0) {
 			if (getOutgoing().size() == 0) {
-				throw new FixFlowException(this.getName() + "(" + this.getId() + ") 节点后面没有处理线条！");
+				
+				LOG.error("节点: {}({}) 后面没有配置处理线条！",this.getName(),this.getId());
+				
+				throw new FixFlowException(ExceptionCode.SEQUENCEFLOWEXCEPTION_NODENOSEQUENCEFLOW,this.getName(),this.getId());
+				
 			} else {
-				throw new FixFlowException(this.getName() + "(" + this.getId() + ") 节点后面的条件都不满足导致节点后面没有处理线条,请检查后续线条条件！");
+				
+				LOG.error("节点: {}({}) 后面的条件都不满足导致节点后面没有处理线条,请检查后续线条条件！",this.getName(),this.getId());
+				
+				throw new FixFlowException(ExceptionCode.SEQUENCEFLOWEXCEPTION_NODENOVERIFIEDSEQUENCEFLOW,this.getName(),this.getId());
 			}
 		}
 
@@ -458,10 +477,13 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 	 */
 	public void leave(ExecutionContext executionContext, SequenceFlow sequenceFlow) {
 
-		
-		
 		// 从执行内容对象中获取令牌
 		TokenEntity token = executionContext.getToken();
+		
+		LOG.debug("离开节点: {}({}),令牌号: {}({}),目标线条: {} .", this.getName(),this.getId(),token.getName(),token.getId(),sequenceFlow.getId());
+
+		
+		
 		// 将令牌的当前节点设置为当前节点
 		token.setFlowNode(this);
 		// 将执行内容对象中的线条指定为将要离开的线条
