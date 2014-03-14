@@ -480,9 +480,10 @@
       </para>
     </section>
     <section>
-      <title>Eclipse Juno</title>
+      <title>Eclipse</title>
       <para>
-        FixFlow设计器插件能够在 Eclipse Juno SR2 版本中运行. <link xlink:href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2">Eclipse Juno SR2</link>
+        FixFlow设计器插件能够在 Eclipse Juno SR2 、KEPLER版本中运行. <link xlink:href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2">Eclipse Juno SR2</link>
+        <link xlink:href="http://www.eclipse.org/downloads/packages/eclipse-standard-432/keplersr2">Eclipse Kepler</link>
       </para>
     </section>
     <section>

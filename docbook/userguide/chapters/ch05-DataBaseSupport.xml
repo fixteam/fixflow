@@ -1568,27 +1568,27 @@
               <row>
                 <entry>MAIL_ID</entry>
                 <entry>VARCHAR2(128)</entry>
-                <entry></entry>
+                <entry>邮件编号</entry>
               </row>
               <row>
                 <entry>MAIL_NAME</entry>
                 <entry>VARCHAR2(4000)</entry>
-                <entry></entry>
+                <entry>邮件名称</entry>
               </row>
               <row>
                 <entry>MAIL_TO</entry>
                 <entry>VARCHAR2(4000)</entry>
-                <entry></entry>
+                <entry>收件地址</entry>
               </row>
               <row>
                 <entry>MAIL_SUBJECT</entry>
                 <entry>VARCHAR2(4000)</entry>
-                <entry></entry>
+                <entry>邮件主题</entry>
               </row>
               <row>
                 <entry>MAIL_BODY</entry>
                 <entry>BLOB</entry>
-                <entry></entry>
+                <entry>邮件正文</entry>
               </row>
               <row>
                 <entry>BIZ_TYPE</entry>
@@ -1603,32 +1603,32 @@
               <row>
                 <entry>MAIL_STATUS</entry>
                 <entry>VARCHAR2(64)</entry>
-                <entry></entry>
+                <entry>邮件状态(NOSEND,FAILURE,COMPLETE)</entry>
               </row>
               <row>
                 <entry>CREATE_TIME</entry>
                 <entry>TIMESTAMP(6)</entry>
-                <entry></entry>
+                <entry>创建时间</entry>
               </row>
               <row>
                 <entry>SEND_TIME</entry>
                 <entry>TIMESTAMP(6)</entry>
-                <entry></entry>
+                <entry>发送时间</entry>
               </row>
               <row>
                 <entry>MAIL_CC</entry>
                 <entry>VARCHAR2(4000)</entry>
-                <entry></entry>
+                <entry>抄送</entry>
               </row>
               <row>
                 <entry>CREATE_USER</entry>
                 <entry>VARCHAR2(64)</entry>
-                <entry></entry>
+                <entry>创建人</entry>
               </row>
               <row>
                 <entry>FAILURE_REASON</entry>
                 <entry>VARCHAR2(4000)</entry>
-                <entry></entry>
+                <entry>错误原因</entry>
               </row>
             </tbody>
           </tgroup>
@@ -1944,22 +1944,22 @@
             <row>
               <entry>GUID</entry>
               <entry>VARCHAR2(50)</entry>
-              <entry></entry>
+              <entry>唯一编号</entry>
             </row>
             <row>
               <entry>USER_ID</entry>
               <entry>VARCHAR2(50)</entry>
-              <entry></entry>
+              <entry>用户编号</entry>
             </row>
             <row>
               <entry>GROUP_ID</entry>
               <entry>VARCHAR2(50)</entry>
-              <entry></entry>
+              <entry>组编号</entry>
             </row>
             <row>
               <entry>GROUP_TYPE</entry>
               <entry>VARCHAR2(50)</entry>
-              <entry></entry>
+              <entry>组类型</entry>
             </row>
             <row>
               <entry>IS_PRIDUTY</entry>

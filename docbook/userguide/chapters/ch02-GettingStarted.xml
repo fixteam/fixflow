@@ -7,8 +7,8 @@
   
   <section xml:id="gs.prerequisites">
     <title>先决条件</title>
-    <para> 本章建立在用户已经下载Eclipse Juno SR2工具，安装了JDK 6+运行环境，以及Tomcat
-      V6.0服务器，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，在github.com注册了账号。</para>
+    <para> 本章建立在用户已经下载Eclipse Juno SR2或Kepler版本开发工具，安装了JDK 6+运行环境，安装了git插件(初学者可下载完整版设计器)，以及Tomcat
+      V6.0服务器，安装了maven，并配置相应的环境变量，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，在github.com注册了账号。</para>
   </section>
   <section xml:id="gs.goal">
     <title>目标</title>
@@ -17,10 +17,11 @@
   <section xml:id="gs.getFixFlow">
     <title>获取FixFlow</title>
     <orderedlist>
-      <listitem> <para> 打开eclispse工具，先设置下workspace的编码方式，fixflow使用UTF-8的编码方式，点击window->preferences->General->workspace->Text file encoding 把编码方式改为UTF-8即可</para>
+      <listitem> <para>设置下workspace的编码方式，fixflow使用UTF-8的编码方式。 打开eclispse工具，点击window->preferences->General->workspace->Text file encoding 把编码方式改为UTF-8即可。</para></listitem>
+       <listitem> <para> 设置maven本地资源库。如：设置MAVEN_HOME\conf\setting.xml中设置localRepository节点值：E:\mavenRepository。点击window->preferences->Maven->User setting 选择MAVEN_HOME\conf\setting.xml，保存。</para>
       </listitem>
       <listitem>       
-        <para>然后在工程空白区域，右键选择import->import->Git->Projects from git ，点击“Next”</para>
+        <para>然后在工程空白区域，右键选择import->import->Git->Projects from git ，点击“Next”。</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.1.png"/>
         </imageobject></mediaobject>
@@ -38,13 +39,13 @@
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-         <para>搜索到FixFlow相关项目，点击fixteam/fixflow进入</para>
+         <para>搜索到FixFlow相关项目，点击fixteam/fixflow进入。</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.7.png"/>
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-       <para>点击右边https clone url的copy按钮，复制fixflow的git地址</para>
+       <para>点击右边https clone url的copy按钮，复制fixflow的git地址。</para>
        <mediaobject><imageobject>
          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.4.png"/>
        </imageobject></mediaobject>
@@ -56,58 +57,54 @@
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>输入注册的git账号密码信息，选择store in Secure store(记住密码)，点击“Next”，此时会出现fixflow代码的分支信息，如下图。全部选择，点击“Next”</para>
+        <para>输入注册的git账号密码信息，选择store in Secure store(记住密码)，点击“Next”，此时会出现fixflow代码的分支信息，如下图。全部选择，点击“Next”。</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.6.png"/>
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-         <para>选择GIT的工作目录，假设在E:\GIT\fixflow（此目录后面会用到）点击“Next”</para>
+         <para>选择GIT的工作目录，假设在E:\GIT_DEMO\fixflow（此目录后面会用到）,选择master分支，点击“Next”。</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.9.png"/>
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>此时会从github下载代码，需要等待几分钟，完成后如图，直接点击“Next”</para>
+        <para>此时会从github下载代码，需要等待几分钟，完成后如图，直接点击“Next”。</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.10.png"/>
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>此时会列出fixflow项目的信息，直接点击“finish”</para>
+        <para>此时会列出fixflow项目的信息，点击“取消”，我们只是把代码下载下来</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.8.png"/>
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>至此，fixflow项目的代码已经下载到本地，下载后的项目结构如图，因为没有配置web环境，所以会有大量错误：</para>
-        <mediaobject><imageobject>
-          <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.11.png"/>
-        </imageobject></mediaobject>
+        <para>打开fixflow Maven安装文件夹，依次执行文本中的安装代码（修改文件路径），安装ojdbc和extension包。</para>
+      </listitem>
+	  <listitem>
+        <para>然后在工程空白区域，右键选择import->import->Maven->Existing Maven	Projects ，点击“Next”</para>
+      </listitem>
+	  <listitem>
+        <para>选择上面选择的git地址，如：E:\GIT_DEMO\fixflow，此时如果maven配置的本地资源库中无文件的话，maven会自动从中央仓库下载文件，（时间因网速而异），所以要保持机器联网（下载一次，以后就很快了）。之后点击finish,等待项目构建即可。</para>
       </listitem>
     </orderedlist>
+    <para>注：此时项目中可能很多JSP的错误，看着不舒服的可以去validation里将JSP相关的验证去掉即可。</para>
   </section>
   <section xml:id="gs.webConfig">
     <title>Web环境配置</title>
     <para>
-      进行此节之前，请确保eclipse中已经有bpmcenter及项目项目代码
+      	进行此节之前，请确保eclipse中已经有fixflow各项目代码
     </para>
-    <para>此时项目中有大量错误，我们排查。</para>
     <orderedlist>
         <listitem>
-          <para>首先，因为项目的.project文件中使用了GIT_FIXFLOW_HOME全局变量，所以我们要声明下此变量：</para>
-          <para> 打开window-->preferences-->General-->workspace-->linked Resources，新增变量：GIT_FIXFLOW_HOME,路径为上面设置的GIT工作目录，如：E:\GIT\fixflow </para>
-          <mediaobject><imageobject>
-            <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.12.png"/>
-          </imageobject></mediaobject>
-        </listitem>
-        <listitem>
-        <para>其次，因为项目依赖web服务器，所以我们要部署一个服务器：</para>
+        <para>我们还是以tomcat为例来介绍如何部署fixflow的maven项目</para>
           <para>调出服务器视图 window-->show View-->Server 新建一个服务器，本例我们选择apache tomcat V6.0作为测试服务器。</para>
           <mediaobject><imageobject>
             <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.13.png"/>
           </imageobject></mediaobject>
-        <para>选择tomcat路径，选择安装的jdk 点击Next,将bpmcenter项目add进去 点击finish。</para>
+        <para>选择tomcat路径，选择安装的jdk 点击Next,将fixflow-webapp-common项目add进去 点击finish。</para>
           <mediaobject><imageobject>
             <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.14.png"/>
           </imageobject></mediaobject>
@@ -117,10 +114,7 @@
           </imageobject></mediaobject>
         </listitem>
        <listitem>
-         <para>重新构建项目，选择project-->clean。等结束后再看，项目中的错误全部都消失了。</para>
-         <mediaobject><imageobject>
-           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.16.png"/>
-         </imageobject></mediaobject>
+         <para>右键点击tomcat,点击“publish”，此时应该已经发布成功。</para>
        </listitem>
      </orderedlist>
   </section>
@@ -134,35 +128,88 @@
   
   <section xml:id="gs.jarConfig">
     <title>依赖Jar配置</title>
-    <para>
-      FixFlow依赖以下jar文件：
-     <programlisting language="xml">
-       "/fixweb/WebRoot/WEB-INF/lib/bsh-2.0b4.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.contenttype_3.4.100.v20100505-1235.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.jobs_3.5.1.R36x_v20100824.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.core.runtime_3.6.0.v20100505.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf_2.6.0.v20100914-1218.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.common_2.6.0.v20100914-1218.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore_2.6.1.v20100914-1218.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.change_2.5.1.v20100907-1643.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.ecore.xmi_2.5.0.v20100521-1846.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.emf.edit_2.6.0.v20100914-1218.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.app_1.3.1.R36x_v20100803.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.common_3.6.0.v20100503.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.preferences_3.3.0.v20100503.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.equinox.registry_3.5.0.v20100503.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.osgi_3.6.2.R36x_v20110210.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/org.eclipse.xsd_2.6.0.v20100914-1218.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/runtime_registry_compatibility.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/ojdbc5.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/c3p0-0.9.1.1.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/quartz-2.1.1.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/quartz-oracle-2.1.1.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/log4j-1.2.16.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/com.founder.fix.fixflow.bpmn2.extensions.jar"
-      "/fixweb/WebRoot/WEB-INF/lib/mail.jar"
+    <para> FixFlow依赖以下jar文件：
+      <programlisting language="xml">
+ &lt;dependency>
+			&lt;groupId>org.eclipse.emf&lt;/groupId>
+			&lt;artifactId>org.eclipse.emf.common&lt;/artifactId>
+			&lt;version>2.9.1-v20130827-0309&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>org.eclipse.emf&lt;/groupId>
+			&lt;artifactId>org.eclipse.emf.ecore&lt;/artifactId>
+			&lt;version>2.9.1-v20130827-0309&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>org.eclipse.emf&lt;/groupId>
+			&lt;artifactId>org.eclipse.emf.ecore.xmi&lt;/artifactId>
+			&lt;version>2.9.1-v20130827-0309&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>org.eclipse.xsd&lt;/groupId>
+			&lt;artifactId>org.eclipse.xsd&lt;/artifactId>
+			&lt;version>2.7.0-v20110606-0949&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>com.founder.fix.fixflow&lt;/groupId>
+			&lt;artifactId>com.founder.fix.fixflow.bpmn2.extensions&lt;/artifactId>
+			&lt;version>5.2.0&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>org.quartz-scheduler&lt;/groupId>
+			&lt;artifactId>quartz&lt;/artifactId>
+			&lt;version>2.1.7&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>org.beanshell&lt;/groupId>
+			&lt;artifactId>bsh&lt;/artifactId>
+			&lt;version>2.0b5&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>org.codehaus.groovy&lt;/groupId>
+			&lt;artifactId>groovy-all&lt;/artifactId>
+			&lt;version>2.1.9&lt;/version>
+		&lt;/dependency>
+
+		&lt;dependency>
+			&lt;groupId>javax.jms&lt;/groupId>
+			&lt;artifactId>jms-api&lt;/artifactId>
+			&lt;version>1.1-rev-1&lt;/version>
+		&lt;/dependency>
+
+
+		&lt;dependency>
+			&lt;groupId>org.apache.activemq&lt;/groupId>
+			&lt;artifactId>activemq-all&lt;/artifactId>
+			&lt;version>5.9.0&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>javax.mail&lt;/groupId>
+			&lt;artifactId>mail&lt;/artifactId>
+			&lt;version>1.4.1&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>jakarta-regexp&lt;/groupId>
+			&lt;artifactId>jakarta-regexp&lt;/artifactId>
+			&lt;version>1.4&lt;/version>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>dom4j&lt;/groupId>
+			&lt;artifactId>dom4j&lt;/artifactId>
+		&lt;/dependency>
+		&lt;dependency>
+			&lt;groupId>com.oracle.jdbc&lt;/groupId>
+			&lt;artifactId>ojdbc5&lt;/artifactId>
+		&lt;/dependency>
+
+		&lt;dependency>
+			&lt;groupId>mysql&lt;/groupId>
+			&lt;artifactId>mysql-connector-java&lt;/artifactId>
+		&lt;/dependency>
+		&lt;dependency> 
+			&lt;groupId>net.sourceforge.jtds&lt;/groupId> 
+			&lt;artifactId>jtds&lt;/artifactId> 
+		&lt;/dependency>     
      </programlisting>
     </para>
   </section>
@@ -173,7 +220,7 @@
       进行这步之前，请确保完成<link linkend="gs.webConfig">web环境配置</link>和<link  linkend="gs.dataBaseRun">数据库脚本安装</link>。
     </para>
     <para>
-      这步需要进行数据库配置，打开com\founder\fix\fixflow\expand\config\fixflowconfig.xml文件，找到dataBaseConfig节点的selected属性配置的数据库信息，修改
+      这步需要进行数据库配置，打开fixflow-expand\src\main\resources\config\fixflowconfig.xml文件，找到dataBaseConfig节点的selected属性配置的数据库信息，修改
       对应的数据库配置的驱动、用户名、密码等信息。
     </para>
     <mediaobject><imageobject>
@@ -191,7 +238,7 @@
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.20.png"/>
     </imageobject></mediaobject>
-    <para>输入账号：admin 密码：1，并勾选管控中心登录，点击登录，可进入流程管控中心界面</para>
+    <para>输入账号：admin 初始密码：888888（演示地址中密码为1），并勾选管控中心登录，点击登录，可进入流程管控中心界面</para>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.21.png"/>
     </imageobject></mediaobject>

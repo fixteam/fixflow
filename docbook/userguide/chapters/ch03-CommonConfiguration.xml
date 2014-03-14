@@ -519,11 +519,8 @@
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 数据库
+      设计器上 --> FixFlow--> 引擎配置
     </para>
-    <mediaobject><imageobject>
-      <imagedata align="center"  contentwidth="400" fileref="images/config.dataBaseConfig.1.png"/>
-    </imageobject></mediaobject>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="800"  fileref="images/config.dataBaseConfig.2.png"/>
     </imageobject></mediaobject>
@@ -688,7 +685,7 @@
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 -->组织结构
+      设计器上 --> FixFlow-->引擎配置-->组织结构
     </para>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="800" fileref="images/config.orgConfig.1.png"/>
@@ -762,7 +759,7 @@
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 邮件配置
+      设计器上 --> FixFlow-->引擎配置 --> 邮件配置
     </para>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="800"  fileref="images/config.mailConfig.1.png"/>
@@ -808,7 +805,7 @@
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 定时任务
+      设计器上 --> FixFlow-->引擎配置 --> 定时任务
     </para>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="800"  fileref="images/config.quartzConfig.1.png"/>
@@ -853,7 +850,7 @@
       设计器上如何配置
     </para>
     <para>
-      设计器上 --> 菜单 --> 流程设置 --> 流程引擎配置 --> 脚本语言
+      设计器上 --> FixFlow-->引擎配置 --> 脚本语言
     </para>
     <mediaobject><imageobject>
       <imagedata align="center" contentwidth="800"  fileref="images/config.scriptConfig.1.png"/>

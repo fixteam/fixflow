@@ -14,7 +14,7 @@
     </para>
     <para> <emphasis role="bold">目标:</emphasis></para>
     <para>
-     BPMN的目标是，通过提供一套既符合业务人员直观又能表现复杂流程语义的标记法，同时为技术人员和业务人员从事业务流程管理提供支持。
+      BPMN的目标是，通过提供一套既符合业务人员直观又能表现复杂流程语义的标记法，同时为技术人员和业务人员从事业务流程管理提供支持。
       BPMN的首要目的是提供全体业务相关者易于理解的标准标记法。业务相关者包括创造与梳理流程的业务分析师、负责实施流程的技术开发者、以及管理和监督流程的经理人。BPMN旨在充当公共语言，跨越业务流程设计和实施之间常见的鸿沟。
       当前有多种竞争的业务流程建模语言标准供建模过程和工具选用。广泛采用BPMN将有助于统一基本的业务流程概念的表达（例如：公共或私有的流程、编排），就像一些高级的业务概念一样（例如：例外处理、事务补偿）。
     </para>
@@ -1691,38 +1691,40 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
     <section xml:id="bpmn.ExtensionElements.connector">
       <title>连接器</title>
       <para>
-        连接器的使用主要在于封装一些在流程中常用操作，用可视化界面代替原有静态方法，并提供在流程各种事件中扩展。本例以发送短信为例子介绍连接器的使用。
+        连接器的使用主要在于封装一些在流程中常用操作，用可视化界面代替原有静态方法，并提供在流程各种事件中扩展。
+      </para>
+      <para>
+        注：为了更好的适应后期的连接器扩展，FixFlow在5.1版本添加了新版本的连接器，原有旧版本连接器兼容，但是只能编辑，不能新增。
+      </para>
+      <para>
+        本例以发送短信为例子介绍连接器的使用。
       </para>
       <para>按照项目经验，这部分工作会分为“封装”连接器和“调用”连接器。</para>
       <section xml:id="bpmn.ExtensionElements.connector.create">
         <title>创建连接器</title>
         <orderedlist>
           <listitem>
-            <para>打开设计器，点击流程设置->创建连接器</para>
+            <para>打开设计器，点击FixFlow->连接器->创建连接器</para>
             <mediaobject ><imageobject>
               <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.1.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
             <para>填写连接器ID，名称，描述等信息，分类可选择新建或者原有分类。</para>
+           
+          </listitem>
+          <listitem>
+            <para>这里和老版连接器不同，这里要先定义参数，然后创建页面，并选择参数。</para>
+           
+          </listitem>
+          <listitem>
+            <para>配置输出参数，这里可以将发送短信之后的结果返回给FixFlow在流程中使用,当然，实际使用中我们可能会返回更复杂的数据结构，如List、Map等，最终效果如：</para>
             <mediaobject ><imageobject>
               <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.2.png"/>
             </imageobject></mediaobject>
           </listitem>
           <listitem>
-            <para>发送短信需要配置收件人号码和信息内容，所以创建一个页面，填写页面ID，标题，描述等，并创建两个参数：收件人号码和信息内容。</para>
-            <mediaobject ><imageobject>
-              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.3.png"/>
-            </imageobject></mediaobject>
-          </listitem>
-          <listitem>
-            <para>配置输出参数，这里可以将发送短信之后的结果返回给FixFlow在流程中使用,当然，实际使用中我们可能会返回更复杂的数据结构，如List、Map等，如：</para>
-            <mediaobject ><imageobject>
-              <imagedata align="center" contentwidth="600" fileref="images/bpmn.ExtensionElements.connector.create.6.png"/>
-            </imageobject></mediaobject>
-          </listitem>
-          <listitem>
-            <para>点击确定->完成，连接器创建成功，下面需要写发送短信的业务逻辑，设计器已经为我们创建好了相关的java类和xml配置文件（flow-expand\src\com\founder\fix\fixflow\expand\connector\TestSendMessage包下）。</para>
+            <para>点击确定->完成，连接器创建成功，下面需要写发送短信的业务逻辑，设计器已经为我们创建好了相关的java类和xml配置文件（flow-expand\src\main\java\com\founder\fix\fixflow\expand\fixflowconnector\TestSendMessage包下）。</para>
           </listitem>
           <listitem>
             <para>实现发送短信的具体逻辑</para>
@@ -1737,7 +1739,7 @@ processInstance.getTokenMap().get("tokenId").signal();]]></programlisting>
           </listitem>
         </orderedlist>
         <para>连接器定义的源文件介绍：</para>
-        <para>FixFlow的连接器定义文件在fixflow-expand\src\com\founder\fix\fixflow\expand\connector包下，其中FixConnectorMenu.xml是连接器的总览文件
+        <para>FixFlow的连接器定义文件在fixflow-expand\src\main\java\com\founder\fix\fixflow\expand\fixflowconnector包下，其中FixConnectorMenu.xml是连接器的总览文件
           一个包代表一个连接器的定义，其中包括**.java和FixConnector.xml两个文件。
         </para>
         <para>FixConnectorMenu.xml中一个连接的定义如下：</para>
@@ -2253,12 +2255,12 @@ String taskSubject = processInstance.getSubject();             </programlisting>
         </imageobject></mediaobject>
       </para>
       <para><emphasis role="bold">XML描述</emphasis></para>
-      <programlisting language="xml"> &lt;fixflow:taskCommand id="HandleCommand_2" name="提交" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false">
-     &lt;fixflow:parameterExpression xsi:type="fixflow:Expression" name="System.out.println("启动命令执行啦。");">System.out.println("启动命令执行啦。");&lt;/fixflow:parameterExpression>
- &lt;/fixflow:taskCommand>             </programlisting>
+      <programlisting language="xml"> &lt;fixflow:taskCommand id="HandleCommand_5" name="通用" commandType="general" isVerification="true" isSaveData="true" isSimulationRun="false">
+          &lt;fixflow:expression xsi:type="fixflow:Expression" name="System.out.println(&amp;quot;启动命令执行啦。&amp;quot;);">System.out.println(&amp;quot;启动命令执行啦。&amp;quot;);&lt;/fixflow:expression>
+  &lt;/fixflow:taskCommand>          </programlisting>
       <itemizedlist>
         <listitem><para>fixflow:taskCommand：任务命令定义</para></listitem>
-        <listitem><para> fixflow:parameterExpression：任务命令执行时需要执行的表达式或代码。</para></listitem>
+        <listitem><para> fixflow:expression：任务命令执行时需要执行的表达式或代码。</para></listitem>
       </itemizedlist>
       
       <para><emphasis role="bold">Java代码使用</emphasis></para>
