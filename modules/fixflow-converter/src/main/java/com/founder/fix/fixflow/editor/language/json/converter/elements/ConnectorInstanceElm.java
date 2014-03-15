@@ -14,6 +14,8 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.impl.ActivityImpl;
 import org.eclipse.bpmn2.impl.BaseElementImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.ConnectorParameterInputs;
@@ -32,6 +34,8 @@ import com.founder.fix.fixflow.editor.constants.StencilConstants;
 import com.founder.fix.fixflow.editor.language.json.converter.util.JsonConverterUtil;
 
 public class ConnectorInstanceElm implements EditorJsonConstants, StencilConstants{
+	
+	private static Logger LOG = LoggerFactory.getLogger(ActivityImpl.class);
 	
 	public ConnectorInstanceElm(){
 		
@@ -165,9 +169,11 @@ public class ConnectorInstanceElm implements EditorJsonConstants, StencilConstan
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.debug("ConnectorInstance节点JSON转BPMN模型失败，JsonProcessingException:{}", e.getMessage());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.debug("ConnectorInstance节点JSON转BPMN模型失败，IOException:{}", e.getMessage());
 			}
 			
 	    	JsonNode itemsNode = objectConnectorNode.get("items");
