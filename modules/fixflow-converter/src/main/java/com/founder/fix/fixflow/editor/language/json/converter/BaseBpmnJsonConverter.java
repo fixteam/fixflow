@@ -25,6 +25,7 @@ import java.util.Map;
 import com.founder.fix.fixflow.editor.language.json.converter.ActivityProcessor;
 import com.founder.fix.fixflow.editor.language.json.converter.BaseBpmnJsonConverter;
 import com.founder.fix.fixflow.editor.language.json.converter.BpmnJsonConverterUtil;
+
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -59,6 +60,7 @@ import org.eclipse.dd.dc.Bounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
@@ -71,6 +73,7 @@ import com.founder.fix.fixflow.core.impl.util.BpmnModelUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.editor.constants.EditorJsonConstants;
 import com.founder.fix.fixflow.editor.constants.StencilConstants;
+import com.founder.fix.fixflow.editor.language.json.converter.elements.ConnectorInstanceElm;
 import com.founder.fix.fixflow.editor.language.json.converter.util.JsonConverterUtil;
 
 
@@ -221,6 +224,9 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       		setPropertyValue(PROPERTY_ACTIVITY_SKIPEXPRESSION, skipExpression.getValue(), propertiesNode);
       	}
       } 
+      
+      ConnectorInstanceElm cie = new ConnectorInstanceElm();
+      propertiesNode.put(PROPERTY_CONNECTORINSTANCE, cie.convertElementToJson(activity));
     }
     
     flowElementNode.put("outgoing", outgoingArrayNode);
@@ -331,6 +337,12 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     	  skipStrategy.setSkipComment(skipComment);
     	  
     	  BpmnModelUtil.addExtensionElement(activity, FixFlowPackage.Literals.DOCUMENT_ROOT__SKIP_STRATEGY, skipStrategy);
+      }
+      
+      ConnectorInstanceElm cie = new ConnectorInstanceElm();
+      List<ConnectorInstance> list_ci = cie.convertJsonToElement(elementNode);
+      for (int i = 0; i < list_ci.size(); i++) {
+    	  BpmnModelUtil.addExtensionElement(activity, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
       }
     }
     if (parentElement instanceof Process) {

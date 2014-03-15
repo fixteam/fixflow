@@ -84,6 +84,7 @@ import org.eclipse.dd.di.DiagramElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.founder.fix.bpmn2extensions.fixflow.ConnectorInstance;
 import com.founder.fix.bpmn2extensions.fixflow.DataVariable;
 import com.founder.fix.bpmn2extensions.fixflow.Expression;
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowFactory;
@@ -101,6 +102,7 @@ import com.founder.fix.fixflow.core.impl.util.EMFExtensionUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
 import com.founder.fix.fixflow.editor.constants.EditorJsonConstants;
 import com.founder.fix.fixflow.editor.constants.StencilConstants;
+import com.founder.fix.fixflow.editor.language.json.converter.elements.ConnectorInstanceElm;
 import com.founder.fix.fixflow.editor.language.json.converter.util.JsonConverterUtil;
 
 
@@ -269,6 +271,9 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     	datavariableNode.put(EDITOR_PROPERTIES_GENERAL_ITEMS, itemsNode);
         propertiesNode.put(PROPERTY_PROCESS_DATAVARIABLE, datavariableNode);
     }
+    
+    ConnectorInstanceElm cie = new ConnectorInstanceElm();
+    propertiesNode.put(PROPERTY_CONNECTORINSTANCE, cie.convertElementToJson(mainProcess));
     
     propertiesNode.put(PROPERTY_PROCESS_NAMESPACE, model.getTargetNamespace());
     
@@ -489,6 +494,12 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	    	  bpmnModel.setTargetNamespace(processTargetNamespace.asText());
 	      }
 	     
+	      ConnectorInstanceElm cie = new ConnectorInstanceElm();
+	      List<ConnectorInstance> list_ci = cie.convertJsonToElement(modelNode);
+	      for (int i = 0; i < list_ci.size(); i++) {
+	    	  BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
+	      }
+	      
 	      processJsonElements(shapesArrayNode, modelNode, process, shapeMap,sourceAndTargetMap,bpmnModel);
 	  }
     
