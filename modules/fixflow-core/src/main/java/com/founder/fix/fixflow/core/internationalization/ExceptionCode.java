@@ -35,7 +35,11 @@ public interface ExceptionCode {
 	public static String CLASSLOAD_EXCEPTION_DCUMENT = "classloadException_document";
 	public static String JOB_EXCEPTION_DEFAULT = "jobException_default";
 	
-	
+	/* 规则类 异常 */
+	/**
+	 * 规则解释类没有找到
+	 */
+	public static String CLASSLOADEXCEPTION_RULECLASS = "classloadException_ruleClass";
 	/**
 	 * 归档异常
 	 */
@@ -100,4 +104,21 @@ public interface ExceptionCode {
 	
 	
 	
+	/**
+	 * 规则类执行异常
+	 */
+	public static String RULEEXCEPTION_CLASSEXEC = "ruleException_classExec";
+	
+	/**
+	 * 规则脚本执行异常
+	 */
+	public static String RULEEXCEPTION_RULESCRIPTEXEC = "ruleException_ruleScriptExec";
+	
+	/**
+	 * 规则执行类、脚本都为空
+	 */
+	public static String RULEEXCEPTION_CLASSANDSCRIPTEMPTY = "ruleException_classAndScriptEmpty";
+	
+	
+
 }

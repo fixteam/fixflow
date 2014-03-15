@@ -22,9 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.ResultMap;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Rule;
 import com.founder.fix.bpmn2extensions.sqlmappingconfig.Select;
+import com.founder.fix.fixflow.core.exception.FixFlowClassLoadingException;
 import com.founder.fix.fixflow.core.exception.FixFlowDbException;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -33,6 +37,7 @@ import com.founder.fix.fixflow.core.impl.ProcessEngineConfigurationImpl;
 import com.founder.fix.fixflow.core.impl.cache.CacheObject;
 import com.founder.fix.fixflow.core.impl.util.ReflectUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 import com.founder.fix.fixflow.core.scriptlanguage.AbstractScriptLanguageMgmt;
 import com.founder.fix.fixflow.core.scriptlanguage.BusinessRulesScript;
 import com.founder.fix.fixflow.core.scriptlanguage.DeleteRulesScript;
@@ -41,6 +46,8 @@ import com.founder.fix.fixflow.core.scriptlanguage.SelectRulesScript;
 import com.founder.fix.fixflow.core.scriptlanguage.UpdateRulesScript;
 
 public class MappingSqlSession {
+
+	private static Logger LOG = LoggerFactory.getLogger(MappingSqlSession.class);
 
 	protected Connection connection;
 
@@ -64,34 +71,73 @@ public class MappingSqlSession {
 	// ///////////////////////////////////////////////////////////////////
 
 	public void insert(String statement, PersistentObject persistentObject) {
-		
-		AbstractPersistentObject<?> abstractPersistentObject=(AbstractPersistentObject<?>)persistentObject;
+		// 转换需要执行数据插入操作的实体对象
+		AbstractPersistentObject<?> abstractPersistentObject = (AbstractPersistentObject<?>) persistentObject;
 
-		
-		
+		// 将对象设置成非新增模板,再次操作就是更新模式
 		abstractPersistentObject.setAdd(false);
 
+		// 记住之前的 parameter 变量对象,操作完成后还原回去
 		Object parameterOld = scriptLanguageMgmt.getVariable("parameter");
 
+		// 设置新的 parameter 对象
 		scriptLanguageMgmt.setVariable("parameter", persistentObject);
+		// 设置数据库操作对象
 		scriptLanguageMgmt.setVariable("sqlCommand", sqlCommand);
+
+		// 获取指定的规则
 		Rule rule = processEngineConfiguration.getRule(statement);
+		// 获取规则执行的执行类,如果有执行类则优先执行执行类,没有的话执行脚本。
 		String classPath = rule.getClassPath();
+
 		if (StringUtil.isNotEmpty(classPath)) {
+
+			LOG.debug("规则: {} 开始执行,规则执行类为: {}", statement, classPath);
+
 			Class<?> classObj = processEngineConfiguration.getRuleClass(rule.getId());
 			if (classObj != null) {
 				try {
 					InsertRulesScript insertRulesScript = (InsertRulesScript) classObj.newInstance();
 					insertRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException(e.getMessage(),e);
+
+					LOG.error("规则: " + statement + " 执行出错,规则执行类为: " + classPath + ",错误信息: " + e.getMessage(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSEXEC, e, statement, classPath, e.getMessage());
+
 				}
 			} else {
-				throw new FixFlowException("Class : " + classPath + "未找到!");
+
+				LOG.error("规则解释类：" + classPath + " 未找到.");
+
+				throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOADEXCEPTION_RULECLASS, classPath);
+
 			}
 		} else {
-			scriptLanguageMgmt.execute(rule.getSqlValue());
+			String ruleText = rule.getSqlValue();
+			if (StringUtil.isNotEmpty(ruleText)) {
+				try {
+
+					scriptLanguageMgmt.execute(rule.getSqlValue());
+
+				} catch (Exception e) {
+
+					LOG.error("规则: " + statement + " 执行出错,错误信息: " + e.getMessage() + "\n 规则内容: \n" + rule.getSqlValue(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_RULESCRIPTEXEC, e, statement, e.getMessage());
+
+				}
+
+			} else {
+
+				LOG.error("规则: " + statement + " 执行类、规则内容都为空.");
+
+				throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSANDSCRIPTEMPTY, statement);
+
+			}
+
 		}
+
 		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 	}
 
@@ -99,20 +145,10 @@ public class MappingSqlSession {
 	// ///////////////////////////////////////////////////////////////////
 
 	public void update(String statement, PersistentObject persistentObject) {
-		
-		AbstractPersistentObject<?> abstractPersistentObject=(AbstractPersistentObject<?>)persistentObject;
-		
-		
-		
-		abstractPersistentObject.setAdd(false);
 
-		
-		
-		
-		
-		
-		
-		
+		AbstractPersistentObject<?> abstractPersistentObject = (AbstractPersistentObject<?>) persistentObject;
+
+		abstractPersistentObject.setAdd(false);
 
 		Object parameterOld = scriptLanguageMgmt.getVariable("parameter");
 
@@ -127,13 +163,40 @@ public class MappingSqlSession {
 					UpdateRulesScript updateRulesScript = (UpdateRulesScript) classObj.newInstance();
 					updateRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException(e.getMessage(),e);
+
+					LOG.error("规则: " + statement + " 执行出错,规则执行类为: " + classPath + ",错误信息: " + e.getMessage(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSEXEC, e, statement, classPath, e.getMessage());
 				}
 			} else {
-				throw new FixFlowException("Class : " + classPath + "未找到!");
+				LOG.error("规则解释类：" + classPath + " 未找到.");
+
+				throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOADEXCEPTION_RULECLASS, classPath);
 			}
 		} else {
-			scriptLanguageMgmt.execute(rule.getSqlValue());
+
+			String ruleText = rule.getSqlValue();
+			if (StringUtil.isNotEmpty(ruleText)) {
+				try {
+
+					scriptLanguageMgmt.execute(rule.getSqlValue());
+
+				} catch (Exception e) {
+
+					LOG.error("规则: " + statement + " 执行出错,错误信息: " + e.getMessage() + "\n 规则内容: \n" + rule.getSqlValue(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_RULESCRIPTEXEC, e, statement, e.getMessage());
+
+				}
+
+			} else {
+
+				LOG.error("规则: " + statement + " 执行类、规则内容都为空.");
+
+				throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSANDSCRIPTEMPTY, statement);
+
+			}
+
 		}
 		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 
@@ -152,16 +215,44 @@ public class MappingSqlSession {
 			Class<?> classObj = processEngineConfiguration.getRuleClass(rule.getId());
 			if (classObj != null) {
 				try {
+
 					DeleteRulesScript deleteRulesScript = (DeleteRulesScript) classObj.newInstance();
 					deleteRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
+
 				} catch (Exception e) {
-					throw new FixFlowException(e.getMessage(),e);
+
+					LOG.error("规则: " + statement + " 执行出错,规则执行类为: " + classPath + ",错误信息: " + e.getMessage(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSEXEC, e, statement, classPath, e.getMessage());
 				}
 			} else {
-				throw new FixFlowException("Class : " + classPath + "未找到!");
+				LOG.error("规则解释类：" + classPath + " 未找到.");
+
+				throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOADEXCEPTION_RULECLASS, classPath);
 			}
 		} else {
-			scriptLanguageMgmt.execute(rule.getSqlValue());
+
+			String ruleText = rule.getSqlValue();
+			if (StringUtil.isNotEmpty(ruleText)) {
+				try {
+
+					scriptLanguageMgmt.execute(rule.getSqlValue());
+
+				} catch (Exception e) {
+
+					LOG.error("规则: " + statement + " 执行出错,错误信息: " + e.getMessage() + "\n 规则内容: \n" + rule.getSqlValue(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_RULESCRIPTEXEC, e, statement, e.getMessage());
+
+				}
+
+			} else {
+
+				LOG.error("规则: " + statement + " 执行类、规则内容都为空.");
+
+				throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSANDSCRIPTEMPTY, statement);
+
+			}
 		}
 		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 	}
@@ -180,13 +271,37 @@ public class MappingSqlSession {
 					DeleteRulesScript deleteRulesScript = (DeleteRulesScript) classObj.newInstance();
 					deleteRulesScript.execute(persistentObject, sqlCommand, processEngineConfiguration);
 				} catch (Exception e) {
-					throw new FixFlowException(e.getMessage(),e);
+					LOG.error("规则: " + statement + " 执行出错,规则执行类为: " + classPath + ",错误信息: " + e.getMessage(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSEXEC, e, statement, classPath, e.getMessage());
 				}
 			} else {
-				throw new FixFlowException("Class : " + classPath + "未找到!");
+				LOG.error("规则解释类：" + classPath + " 未找到.");
+
+				throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOADEXCEPTION_RULECLASS, classPath);
 			}
 		} else {
-			scriptLanguageMgmt.execute(rule.getSqlValue());
+			String ruleText = rule.getSqlValue();
+			if (StringUtil.isNotEmpty(ruleText)) {
+				try {
+
+					scriptLanguageMgmt.execute(rule.getSqlValue());
+
+				} catch (Exception e) {
+
+					LOG.error("规则: " + statement + " 执行出错,错误信息: " + e.getMessage() + "\n 规则内容: \n" + rule.getSqlValue(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_RULESCRIPTEXEC, e, statement, e.getMessage());
+
+				}
+
+			} else {
+
+				LOG.error("规则: " + statement + " 执行类、规则内容都为空.");
+
+				throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSANDSCRIPTEMPTY, statement);
+
+			}
 		}
 		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 		// scriptLanguageMgmt.execute(rule.getSqlValue());
@@ -230,36 +345,49 @@ public class MappingSqlSession {
 					returnObjList = (List) selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
 
 				} catch (Exception e) {
-					throw new FixFlowException(e.getMessage(),e);
+					LOG.error("规则: " + statement + " 执行出错,规则执行类为: " + classPath + ",错误信息: " + e.getMessage(), e);
+
+					throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSEXEC, e, statement, classPath, e.getMessage());
 				}
 			} else {
-				throw new FixFlowException("Class : " + classPath + "未找到!");
+				LOG.error("规则解释类：" + classPath + " 未找到.");
+
+				throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOADEXCEPTION_RULECLASS, classPath);
 			}
 		} else {
 
 			if (StringUtil.isEmpty(rule.getSqlValue())) {
-				throw new FixFlowException("rule : " + rule.getId() + " 值不能为空!");
+				LOG.error("规则: " + statement + " 执行类、规则内容都为空.");
+
+				throw new FixFlowException(ExceptionCode.RULEEXCEPTION_CLASSANDSCRIPTEMPTY, statement);
 			}
-			
-			Object returnObj=scriptLanguageMgmt.execute(rule.getSqlValue());
-			if(returnObj instanceof SqlQuery){
-				
-				SqlQuery sqlQuery=(SqlQuery)returnObj;
-				QueryList queryList=sqlQuery.getQueryList();
-				if(queryList!=null){
-					if(queryList.getData()==null){
-						returnObjList=sqlCommand.queryForList(queryList.getSqlText());
-					}
-					else{
-						returnObjList=sqlCommand.queryForList(queryList.getSqlText(), queryList.getData());
+
+			Object returnObj = scriptLanguageMgmt.execute(rule.getSqlValue());
+			if (returnObj instanceof SqlQuery) {
+
+				SqlQuery sqlQuery = (SqlQuery) returnObj;
+				QueryList queryList = sqlQuery.getQueryList();
+				if (queryList != null) {
+					try {
+						if (queryList.getData() == null) {
+							returnObjList = sqlCommand.queryForList(queryList.getSqlText());
+						} else {
+							returnObjList = sqlCommand.queryForList(queryList.getSqlText(), queryList.getData());
+						}
+
+					} catch (Exception e) {
+
+						LOG.error("规则: " + statement + " 执行出错,错误信息: " + e.getMessage() + "\n 规则内容: \n" + rule.getSqlValue(), e);
+
+						throw new FixFlowException(ExceptionCode.RULEEXCEPTION_RULESCRIPTEXEC, e, statement, e.getMessage());
+
 					}
 				}
-				
-			}else{
-				returnObjList = (List)returnObj ;
+
+			} else {
+				returnObjList = (List) returnObj;
 			}
-			
-			
+
 		}
 
 		if (rule instanceof Select) {
@@ -310,18 +438,16 @@ public class MappingSqlSession {
 		if (StringUtil.isNotEmpty(classPath)) {
 			Class<?> classObj = processEngineConfiguration.getRuleClass(rule.getId());
 			if (classObj != null) {
-				
-				
-				
+
 				try {
 
-					Object classObjInstance=classObj.newInstance();
-					
-					if(classObjInstance instanceof SelectRulesScript){
+					Object classObjInstance = classObj.newInstance();
+
+					if (classObjInstance instanceof SelectRulesScript) {
 						SelectRulesScript selectRulesScript = (SelectRulesScript) classObjInstance;
 						returnObjList = (Object) selectRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
 					}
-					if(classObjInstance instanceof BusinessRulesScript){
+					if (classObjInstance instanceof BusinessRulesScript) {
 						BusinessRulesScript businessRulesScript = (BusinessRulesScript) classObjInstance;
 						returnObjList = (Object) businessRulesScript.execute(parameter, sqlCommand, processEngineConfiguration);
 					}
@@ -333,47 +459,42 @@ public class MappingSqlSession {
 				throw new FixFlowException("Class : " + classPath + "未找到!");
 			}
 		} else {
-			
-			
+
 			returnObjList = (Object) scriptLanguageMgmt.execute(rule.getSqlValue());
-			
-			if(returnObjList instanceof SqlQuery){
-				
-				SqlQuery sqlQuery=(SqlQuery)returnObjList;
-				QueryList queryList=sqlQuery.getQueryList();
-				if(queryList!=null){
-					if(queryList.getData()==null){
-						returnObjList=sqlCommand.queryForList(queryList.getSqlText());
-					}
-					else{
-						returnObjList=sqlCommand.queryForList(queryList.getSqlText(), queryList.getData());
+
+			if (returnObjList instanceof SqlQuery) {
+
+				SqlQuery sqlQuery = (SqlQuery) returnObjList;
+				QueryList queryList = sqlQuery.getQueryList();
+				if (queryList != null) {
+					if (queryList.getData() == null) {
+						returnObjList = sqlCommand.queryForList(queryList.getSqlText());
+					} else {
+						returnObjList = sqlCommand.queryForList(queryList.getSqlText(), queryList.getData());
 					}
 
-					
 				}
-				
-				QueryMap queryMap=sqlQuery.getQueryMap();
-				if(queryMap!=null){
-					if(queryMap.getData()==null){
-						returnObjList=sqlCommand.queryForList(queryMap.getSqlText());
-					}
-					else{
-						returnObjList=sqlCommand.queryForList(queryMap.getSqlText(), queryMap.getData());
+
+				QueryMap queryMap = sqlQuery.getQueryMap();
+				if (queryMap != null) {
+					if (queryMap.getData() == null) {
+						returnObjList = sqlCommand.queryForList(queryMap.getSqlText());
+					} else {
+						returnObjList = sqlCommand.queryForList(queryMap.getSqlText(), queryMap.getData());
 					}
 				}
-				
-				QueryForValue queryForValue=sqlQuery.getQueryForValue();
-				if(queryForValue!=null){
-					if(queryForValue.getData()==null){
-						returnObjList=sqlCommand.queryForList(queryForValue.getSqlText());
-					}
-					else{
-						returnObjList=sqlCommand.queryForList(queryForValue.getSqlText(), queryForValue.getData());
+
+				QueryForValue queryForValue = sqlQuery.getQueryForValue();
+				if (queryForValue != null) {
+					if (queryForValue.getData() == null) {
+						returnObjList = sqlCommand.queryForList(queryForValue.getSqlText());
+					} else {
+						returnObjList = sqlCommand.queryForList(queryForValue.getSqlText(), queryForValue.getData());
 					}
 				}
-				
+
 			}
-			
+
 		}
 
 		if (returnObjList == null) {
@@ -431,7 +552,5 @@ public class MappingSqlSession {
 		scriptLanguageMgmt.setVariable("parameter", parameterOld);
 		return returnObjList;
 	}
-	
-
 
 }

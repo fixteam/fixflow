@@ -33,6 +33,9 @@ public class FixFlowException extends RuntimeException {
 	public FixFlowException(String exceptionCode,Object... args) {
 		super(ExceptionResourceCore.getResourceValue(exceptionCode,args));
 	}
+	public FixFlowException(String exceptionCode,Throwable cause,Object... args) {
+		super(ExceptionResourceCore.getResourceValue(exceptionCode,args),cause);
+	}
 	
 	public FixFlowException(String exceptionCode,Throwable cause){
 		super(ExceptionResourceCore.getResourceValue(exceptionCode),cause);
