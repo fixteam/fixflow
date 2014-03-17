@@ -341,8 +341,10 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
       
       ConnectorInstanceElm cie = new ConnectorInstanceElm();
       List<ConnectorInstance> list_ci = cie.convertJsonToElement(elementNode);
-      for (int i = 0; i < list_ci.size(); i++) {
-    	  BpmnModelUtil.addExtensionElement(activity, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
+      if(list_ci != null){
+    	  for (int i = 0; i < list_ci.size(); i++) {
+        	  BpmnModelUtil.addExtensionElement(activity, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
+          }
       }
     }
     if (parentElement instanceof Process) {

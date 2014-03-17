@@ -496,10 +496,11 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	     
 	      ConnectorInstanceElm cie = new ConnectorInstanceElm();
 	      List<ConnectorInstance> list_ci = cie.convertJsonToElement(modelNode);
-	      for (int i = 0; i < list_ci.size(); i++) {
-	    	  BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
+	      if(list_ci != null){
+	    	  for (int i = 0; i < list_ci.size(); i++) {
+		    	  BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__CONNECTOR_INSTANCE, list_ci.get(i));
+		      }
 	      }
-	      
 	      processJsonElements(shapesArrayNode, modelNode, process, shapeMap,sourceAndTargetMap,bpmnModel);
 	  }
     
