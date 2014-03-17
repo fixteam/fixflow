@@ -188,10 +188,9 @@ public class FlowManager extends HttpServlet {
 			}
 			//流程定义新增和更新，取决于参数中有没有deploymentId
 			if("deploy".equals(action)){
-				String message = "操作成功！";
+				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
 				response.setContentType("text/html;charset=utf-8");
 				getProcessDefinitionService().deployByZip(filter);
-				response.getWriter().print("<script>alert('"+message+"');window.close();</script>");
 			}else
 			if("deleteDeploy".equals(action)){
 				rd = request.getRequestDispatcher("/FlowManager?action=processDefinitionList");
