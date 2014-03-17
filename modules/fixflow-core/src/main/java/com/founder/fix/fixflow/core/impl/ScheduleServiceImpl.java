@@ -37,18 +37,24 @@ import org.quartz.impl.matchers.GroupMatcher;
 import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.ScheduleService;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
+import com.founder.fix.fixflow.core.exception.FixFlowScheduleException;
 import com.founder.fix.fixflow.core.impl.cmd.ExecuteConnectorTimeJobCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetSchedulerFactoryCmd;
 import com.founder.fix.fixflow.core.impl.cmd.GetThreadPoolExecutorCmd;
 import com.founder.fix.fixflow.core.impl.cmd.SaveJobCmd;
 import com.founder.fix.fixflow.core.impl.job.JobEntity;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
+import com.founder.fix.fixflow.core.internationalization.ExceptionCode;
 import com.founder.fix.fixflow.core.job.Job;
 
 public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService {
-
+	
 	public SchedulerFactory getSchedulerFactory() {
 		return commandExecutor.execute(new GetSchedulerFactoryCmd());
+	}
+	
+	public boolean getIsEnabled(){
+		return StringUtil.getBoolean(ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getQuartzConfig().getIsEnable());
 	}
 	
 	public Scheduler getScheduler() {
@@ -56,6 +62,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public void schedulerRestart() {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler;
 		try {
 			scheduler = getScheduler();
@@ -71,6 +80,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 
 	public void schedulerStart() {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler;
 		try {
 			scheduler = getScheduler();
@@ -83,6 +95,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 
 	public void schedulerShutdown() {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler;
 		try {
 			scheduler = getScheduler();
@@ -120,6 +135,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public List<JobDetail> getJobList(String queryId){
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler = getScheduler();
 		List<JobDetail> jobList = new ArrayList<JobDetail>();
 		Set<JobKey> set = new HashSet<JobKey>();
@@ -144,6 +162,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public void suspendJob(String name, String group) {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler = getScheduler();
 		try {
 			scheduler.pauseJob(new JobKey(name,group));
@@ -153,6 +174,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public void continueJob(String name, String group) {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler = getScheduler();
 		try {
 			scheduler.resumeJob(new JobKey(name,group));
@@ -162,6 +186,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public List<Trigger> getTriggerList(String jobName, String jobGroup) {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler = getScheduler();
 		try{
 			@SuppressWarnings("unchecked")
@@ -173,6 +200,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public void suspendTrigger(String triggerName, String triggerGroup) {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler = getScheduler();
 		TriggerKey tKey = new TriggerKey(triggerName,triggerGroup);
 		try {
@@ -183,6 +213,9 @@ public class ScheduleServiceImpl extends ServiceImpl implements ScheduleService 
 	}
 	
 	public void continueTrigger(String triggerName, String triggerGroup) {
+		if(!getIsEnabled()){
+			throw new FixFlowScheduleException(ExceptionCode.QUARZTEXCEPTION_ISENABLE);
+		}
 		Scheduler scheduler = getScheduler();
 		TriggerKey tKey = new TriggerKey(triggerName,triggerGroup);
 		try {

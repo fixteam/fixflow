@@ -34,6 +34,7 @@ public interface ExceptionCode {
 	public static String CLASSLOAD_EXCEPTION = "classloadException";
 	public static String CLASSLOAD_EXCEPTION_DCUMENT = "classloadException_document";
 	public static String JOB_EXCEPTION_DEFAULT = "jobException_default";
+	public static String QUARZTEXCEPTION_ISENABLE = "quarztException_isEnable";
 	
 	/* 规则类 异常 */
 	/**
