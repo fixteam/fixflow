@@ -731,8 +731,8 @@ primary key (sched_name,lock_name)
 -- Create table
 create table DEMOTABLE
 (
-  col1 VARCHAR(50),
-  col2 VARCHAR(50)
+  COL1 VARCHAR(50),
+  COL2 VARCHAR(50)
 );
 
 

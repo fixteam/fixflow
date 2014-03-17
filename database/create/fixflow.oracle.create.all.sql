@@ -1227,8 +1227,8 @@ CREATE TABLE qrtz_locks
 -- Create table
 create table DEMOTABLE
 (
-  col1 VARCHAR2(50),
-  col2 VARCHAR2(50)
+  COL1 VARCHAR2(50),
+  COL2 VARCHAR2(50)
 );
 
 create index idx_qrtz_j_req_recovery on qrtz_job_details(SCHED_NAME,REQUESTS_RECOVERY)
