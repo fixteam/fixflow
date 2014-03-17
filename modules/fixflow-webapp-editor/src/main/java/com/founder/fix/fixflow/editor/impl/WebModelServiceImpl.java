@@ -29,7 +29,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -67,7 +66,7 @@ public class WebModelServiceImpl implements WebModelService {
 	/**
 	 * 加载模型JSON
 	 */
-	public void loadBPMNJson() throws ServletException, IOException{
+	public void loadBPMNJson(){
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
@@ -75,7 +74,7 @@ public class WebModelServiceImpl implements WebModelService {
     		ObjectNode on = new FixFlowConverter().convertBpmn2Json("process_testych", input);
     		out.print(on);
 		} catch (Exception e) {
-			error(e.getMessage());
+			throw new RuntimeException(e);
 		}finally{
         	out.flush();
         	out.close();
@@ -86,20 +85,19 @@ public class WebModelServiceImpl implements WebModelService {
 	/**
 	 * 保存模型文件
 	 */
-	@SuppressWarnings("deprecation")
-	public void modelSave() throws ServletException, IOException{
-		String body = getBody(this.request);
-		
-		String json_xml = getParameterFromPayload(body,"json_xml");
-		String svg_xml = getParameterFromPayload(body,"svg_xml");
-		String fileName = getParameterFromPayload(body,"fileName");
-	    ObjectMapper objectMapper = new ObjectMapper();
-    	JsonNode objectNode = objectMapper.readTree(json_xml);
-    	String resFilePath = getBasePath(this.request)+"temp"+File.separator+"node_template.bpmn";;
-    	String newFilePath = buildPath(body)+File.separator+fileName;
-    	String staticFilePath = getBasePath(this.request)+"template"+File.separator+"node_template.bpmn";
-    	FileOutputStream outputStream = null;
-    	try{
+	public void modelSave(){
+		FileOutputStream outputStream = null;
+		try{
+			String body = getBody(this.request);
+			
+			String json_xml = getParameterFromPayload(body,"json_xml");
+			String svg_xml = getParameterFromPayload(body,"svg_xml");
+			String fileName = getParameterFromPayload(body,"fileName");
+		    ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode objectNode = objectMapper.readTree(json_xml);
+			String resFilePath = getBasePath(this.request)+"temp"+File.separator+"node_template.bpmn";;
+			String newFilePath = buildPath(body)+File.separator+fileName;
+			String staticFilePath = getBasePath(this.request)+"template"+File.separator+"node_template.bpmn";
     		//保存思想：因为save方法不一定保存成功，并且保存失败后会导致原有文件丢失，所以做了个临时保存，没问题再复制过去
     		FileUtil.copyFile(staticFilePath, resFilePath);
     		new FixFlowConverter().save(objectNode,URI.createFileURI(resFilePath));
@@ -118,10 +116,14 @@ public class WebModelServiceImpl implements WebModelService {
 			outputStream.flush();
 			
     	}catch(Exception e){
-    		error(e.getMessage());
+    		throw new RuntimeException(e);
     	}finally{
 			if(outputStream !=null){
-				outputStream.close();	
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}	
 			}
 		}
 	}
@@ -129,7 +131,7 @@ public class WebModelServiceImpl implements WebModelService {
 	/**
 	 * 二次请求模型信息
 	 */
-	public void reTryModelInfo() throws ServletException, IOException {
+	public void reTryModelInfo(){
 		PrintWriter out = null;
 		try {
 			FixFlowConverter fixFlowConverter = new FixFlowConverter();
@@ -147,7 +149,7 @@ public class WebModelServiceImpl implements WebModelService {
     		out = response.getWriter();
     		out.print(rootNode);
 		} catch (Exception e) {
-			error("加载web流程图，返回json格式对象出错!");
+			throw new RuntimeException(e);
 		}
 		
 	}

@@ -33,20 +33,20 @@ public interface WebModelService {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void loadBPMNJson() throws ServletException, IOException;
+	public void loadBPMNJson();
 	
 	/**
 	 * 保存模型
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void modelSave() throws ServletException, IOException;
+	public void modelSave();
 	
 	/**
 	 * 二次请求模型信息，用户前台保存前组合JSON
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void reTryModelInfo() throws ServletException, IOException;
+	public void reTryModelInfo();
 	
 }

@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
+
 import com.founder.fix.fixflow.editor.impl.PluginServiceImpl;
 import com.founder.fix.fixflow.editor.impl.StencilsetServiceImpl;
 import com.founder.fix.fixflow.editor.impl.WebModelServiceImpl;
@@ -50,21 +53,31 @@ public class FlowEditorServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = req.getParameter("action");
-		if("getPlugin".equals(action)){
-			PluginService pluginService = new PluginServiceImpl();
-			pluginService.getPluginXml(req, resp);
-		}else if("getStencilset".equals(action)){
-			StencilsetService stencilsetService = new StencilsetServiceImpl();
-			stencilsetService.getStencilsetJson(req, resp);
-		}else if("loadBPMNWeb".equals(action)){
-			WebModelService webModelService = new WebModelServiceImpl(req, resp);
-			webModelService.loadBPMNJson();
-		}else if("modelSave".equals(action)){
-			WebModelService webModelService = new WebModelServiceImpl(req, resp);
-			webModelService.modelSave();
-		}else if("reTryModelInfo".equals(action)){
-			WebModelService webModelService = new WebModelServiceImpl(req, resp);
-			webModelService.reTryModelInfo();
+		try{
+			if("getPlugin".equals(action)){
+				PluginService pluginService = new PluginServiceImpl();
+				pluginService.getPluginXml(req, resp);
+			}else if("getStencilset".equals(action)){
+				StencilsetService stencilsetService = new StencilsetServiceImpl();
+				stencilsetService.getStencilsetJson(req, resp);
+			}else if("loadBPMNWeb".equals(action)){
+				WebModelService webModelService = new WebModelServiceImpl(req, resp);
+				webModelService.loadBPMNJson();
+			}else if("modelSave".equals(action)){
+				WebModelService webModelService = new WebModelServiceImpl(req, resp);
+				webModelService.modelSave();
+			}else if("reTryModelInfo".equals(action)){
+				WebModelService webModelService = new WebModelServiceImpl(req, resp);
+				webModelService.reTryModelInfo();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+			ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+			jsonNode.put("state", "error");
+			jsonNode.put("result", "系统内部错误，请联系管理员");
+			resp.getWriter().print(jsonNode);
+			resp.getWriter().flush();
 		}
+		
 	}
 }

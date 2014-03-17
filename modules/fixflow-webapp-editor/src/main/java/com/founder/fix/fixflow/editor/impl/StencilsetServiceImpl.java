@@ -63,7 +63,7 @@ public class StencilsetServiceImpl implements StencilsetService {
             initDataVaribaleType(rootNode);
             out.print(rootNode);
         }catch(Exception ex){
-        	ex.printStackTrace();
+        	throw new RuntimeException(ex);
         }finally{
         	out.flush();
         	out.close();
