@@ -141,22 +141,24 @@
   </importDataVariableConfig>
   <resourcePathConfig>
     <resourcePath id="fixflow-repository-root" name="fixflow-repository-root" projectName="fixflow-expand" virtualPath="src/main/resources/template"/>
-    <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" src="template/flow-template/" virtualPath="src/main/resources/template/flow-template/"/>
+    <resourcePath id="fixflow-repository-flow-template" name="fixflow-repository-flow-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/flow-template/" src="template/flow-template/" />
     <resourcePath id="fixflow-repository-node-template" name="fixflow-repository-node-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/node-template/"/>
-    <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" src="template/system-template/" virtualPath="src/main/resources/template/system-template"/>
-    <resourcePath id="flowConnector-path" name="流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/flowconnector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/flowconnector/"/>
-    <resourcePath id="actorConnector-path" name="处理者选择器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/actorconnector/ActorConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/actorconnector/"/>
-    <resourcePath id="connector-path" name="老流程连接器路径" projectName="fixflow-expand" src="com/founder/fix/fixflow/expand/connector/FlowConnectorMenu.xml" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
-    <resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
+    <resourcePath id="system-template" name="system-template" projectName="fixflow-expand" virtualPath="src/main/resources/template/system-template" src="template/system-template/" />
+    <resourcePath id="flowConnector-path" name="流程连接器路径" projectName="fixflow-expand" virtualPath="src/main/java/com/founder/fix/fixflow/expand/flowconnector/"/>
+    <resourcePath id="actorConnector-path" name="处理者选择器路径" projectName="fixflow-expand" virtualPath="src/main/java/com/founder/fix/fixflow/expand/actorconnector/"/>
+    <resourcePath id="connector-path" name="老流程连接器路径" projectName="fixflow-expand" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
+   
+    <resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml" src="config/datavariableconfig.xml" />
+    <resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/fixflowfile.bpmn" />
+    <resourcePath id="nodeTemplate" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/node_template.bpmn" />
+    <resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/GroovyFile.groovy" src="" />
+    <resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/quartz.properties" src="" />
+    <resourcePath id="style" name="style.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/style.xml" src="" />
+    <resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/internationalization/" src="internationalization" />
+    <resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/fixflowdiagram/" src="fixflowdiagram" />
+    
+     <resourcePath id="fixflow-editor-public-repository" name="web流程设计器公共资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\shared"/>
     <resourcePath id="fixflow-editor-private-repository" name="web流程设计器私有资源路径" physicalPath="D:\GIT\fixflow\fixflow-explorer\WebContent\fixflow-repository\private"/>
-    <resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" src="config/datavariableconfig.xml" virtualPath="src/main/resources/config/datavariableconfig.xml"/>
-    <resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" src="config/fixflowfile.bpmn" virtualPath="src/main/resources/config/fixflowfile.bpmn"/>
-    <resourcePath id="nodeTemplate" name="fixflowfile.bpmn路径" projectName="fixflow-expand" src="config/node_template.bpmn" virtualPath="src/main/resources/config/fixflowfile.bpmn"/>
-    <resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" src="" virtualPath="src/main/resources/config/GroovyFile.groovy"/>
-    <resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" src="" virtualPath="src/main/resources/config/quartz.properties"/>
-    <resourcePath id="style" name="style.xml路径" projectName="fixflow-expand" src="" virtualPath="src/main/resources/config/style.xml"/>
-    <resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" src="internationalization" virtualPath="src/main/resources/internationalization/"/>
-    <resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" src="fixflowdiagram" virtualPath="src/main/resources/fixflowdiagram/"/>
   </resourcePathConfig>
   <rulesResourceConfig>
     <rulesResource src="com/founder/fix/fixflow/expand/mapping/ProcessInstance.xml"/>
