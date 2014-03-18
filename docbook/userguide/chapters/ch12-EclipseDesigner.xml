@@ -11,7 +11,7 @@
         <listitem>
           <para>打开Eclipse的官网，进入下载页面。地址：<link xlink:href="http://eclipse.org/downloads/"
               >http://eclipse.org/downloads/</link></para>
-          <para>点击如图右方所示红框部分，进入Juno版本的下载界面。</para>
+          <para>点击如图右方所示红框部分，进入Juno或Kepler版本的下载界面(下面以juno为例)。</para>
           <mediaobject>
             <imageobject>
               <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.1.png"/>
@@ -174,7 +174,7 @@ Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
           </mediaobject>
         </listitem>
         <listitem>
-          <para>如图所示选择飞鸿流程目录下的“新建飞鸿流程”。</para>
+          <para>如图所示选择FixFlow目录下的“New FixFlow BPMN”。</para>
           <mediaobject>
             <imageobject>
               <imagedata align="center" contentwidth="600" fileref="images/eclipseDesigner.8.png" />
@@ -198,7 +198,7 @@ Groovy http://dist.springsource.org/release/GRECLIPSE/e4.2/
     <para>
       <orderedlist>
         <listitem>
-          <para>流程自定义模板包含三个文件：bpmn文件，png模板图片文件和properties属性文件，放在fixflow-expand的template目录下。</para>
+          <para>流程自定义模板包含三个文件：bpmn文件，png模板图片文件和properties属性文件，放在fixflow-expand\src\main\resources\template\flow-template目录下。</para>
           <mediaobject>
             <imageobject>
               <imagedata align="center" contentwidth="300" fileref="images/customTemplate.1.png" />

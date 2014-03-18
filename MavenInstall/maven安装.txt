@@ -1,0 +1,4 @@
+mvn install:install-file -DgroupId=com.founder.fix.fixflow -DartifactId=com.founder.fix.fixflow.bpmn2.extensions -Dversion=5.2.0 -Dpackaging=jar -Dfile=/Users/kenshin/Downloads/com.founder.fix.fixflow.bpmn2.extensions.jar
+
+
+mvn install:install-file -DgroupId=com.oracle.jdbc -DartifactId=ojdbc5 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=/Users/kenshin/Downloads/ojdbc5.jar

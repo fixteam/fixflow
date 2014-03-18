@@ -81,7 +81,7 @@
         </imageobject></mediaobject>
       </listitem>
       <listitem>
-        <para>打开fixflow Maven安装文件夹，依次执行文本中的安装代码（修改文件路径），安装ojdbc和extension包。</para>
+        <para>打开E:\GIT_DEMO\fixflow\MavenInstall文件夹，依次执行文本中的安装代码（修改文件路径），安装ojdbc和extension包。</para>
       </listitem>
 	  <listitem>
         <para>然后在工程空白区域，右键选择import->import->Maven->Existing Maven	Projects ，点击“Next”</para>
@@ -197,6 +197,7 @@
 			&lt;groupId>dom4j&lt;/groupId>
 			&lt;artifactId>dom4j&lt;/artifactId>
 		&lt;/dependency>
+      &lt;!--数据库驱动  -->
 		&lt;dependency>
 			&lt;groupId>com.oracle.jdbc&lt;/groupId>
 			&lt;artifactId>ojdbc5&lt;/artifactId>
