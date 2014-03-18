@@ -17,7 +17,7 @@ pageContext.setAttribute("basePath",basePath);
 <link id="color" rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/color_red.css">
 <!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fixflow/css/popup.css"> -->
 <script type="text/javascript">
-var message = '${errorMsg}';
+var message = "${errorMsg}";
 if(message!=''){
 	alert(message);
 }
