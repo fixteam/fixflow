@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.founder.fix.bpmn2extensions.fixflow.FixFlowPackage;
+import com.founder.fix.fixflow.core.ProcessEngineManagement;
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
 import com.founder.fix.fixflow.core.impl.bpmn.behavior.DefinitionsBehavior;
@@ -88,12 +89,12 @@ public class BpmnDeployer implements Deployer {
 
 		byte[] bytes = resourceBpmn.getBytes();
 		ResourceSet resourceSet = getResourceSet();
-
-		String filePath = this.getClass().getClassLoader().getResource("config/fixflowfile.bpmn").toString();
+		String tmp = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getDefaultTemplatePath();
+		String filePath = this.getClass().getClassLoader().getResource(tmp).toString();
 		Resource ddddResource = null;
 		if (!filePath.startsWith("jar")) {
 			try {
-				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource("config/fixflowfile.bpmn").getFile(), "utf-8");
+				filePath = java.net.URLDecoder.decode(ReflectUtil.getResource(tmp).getFile(), "utf-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();
