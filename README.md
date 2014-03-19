@@ -47,7 +47,7 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 #资源打包下载
 包含数据库脚本、jar包、用户向导、设计器插件、war包、内核源码，全部源码。
-* [Fixflow Release 5.2(百度网盘)](http://pan.baidu.com/s/1AbtfC)
+* [Fixflow Release 5.2(百度网盘)](http://pan.baidu.com/s/1i3miaPJ)
 
 #流程设计器
 (国内最强大的BPMN设计器)
@@ -91,9 +91,19 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 #项目介绍
 
-* FixFlow引擎核心项目: **fixflow-core、fixflow-expand、fixflow-test**
+* fixflow-root  根项目，用来聚合各个模块
 
-* 任务、管控中心项目: **bpmcenter、fixflow-common-*、fixflow-manage-***
+* fixflow-core、fixflow-expand  引擎内核模块
+
+* fixflow-webapp-common 、fixflow-common-api、fixflow-common-servlet bpmcenter项目公用代码
+
+* fixflow-webapp-taskcenter  任务中心模块
+
+* fixflow-webapp-managecenter 、fixflow-manage-serlvet 管控中心模块
+
+* fixflow-webapp-explorer 资源管理器模块
+
+* fixflow-webapp-editor、fixflow-converter web设计器模块
 
 * 数据库脚本项目: **database**
 
