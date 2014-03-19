@@ -86,9 +86,9 @@ public class TaskQueryScript implements SelectRulesScript {
 					+ pagination.getCurrentDateSql() + " AND ag1.AUSER='" + agentOldAssignee + "' AND ag1.AGENT_ID='" + taskQuery.getAgentId()
 					+ "') ag)" + "))";
 		}
-		if (taskQuery.getOrderBy() != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString();
-		}
+		//if (taskQuery.getOrderBy() != null) {
+		//	selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString();
+		//}
 
 		String orderByString = "";
 
@@ -116,9 +116,9 @@ public class TaskQueryScript implements SelectRulesScript {
 					"*", orderByString);
 		}
 
-		if (taskQuery.getOrderBy() != null && page != null) {
-			selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + orderByString;
-		}
+		//if (taskQuery.getOrderBy() != null && page != null) {
+			//selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + orderByString;
+		//}
 		
 
 		if (taskQuery.getIsAgent()) {

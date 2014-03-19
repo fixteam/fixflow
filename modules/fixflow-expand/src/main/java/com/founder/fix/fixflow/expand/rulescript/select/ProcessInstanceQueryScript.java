@@ -60,9 +60,9 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 		}
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		sqlString = selectProcessInstanceByQueryCriteriaSql(sqlString, processInstanceQuery, objectParamWhere,sqlCommand);
-		if (processInstanceQuery.getOrderBy() != null) {
-			sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString();
-		}
+		//if (processInstanceQuery.getOrderBy() != null) {
+		//	sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString();
+		//}
 		
 		
 		String orderByString="";
@@ -92,6 +92,7 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 			sqlString = pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
 		}
+		/*
 		if (processInstanceQuery.getOrderBy() != null&&page != null) {
 			String orderBySql=processInstanceQuery.getOrderBy();
 			String orderBySqlFin="";
@@ -108,7 +109,7 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 			}else{
 				sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString().substring(2);
 			}
-		}
+		}*/
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
 		
 		

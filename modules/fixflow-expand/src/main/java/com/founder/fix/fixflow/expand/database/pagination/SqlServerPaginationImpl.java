@@ -19,6 +19,7 @@ package com.founder.fix.fixflow.expand.database.pagination;
 
 
 import com.founder.fix.fixflow.core.db.pagination.Pagination;
+import com.founder.fix.fixflow.core.impl.util.StringUtil;
 
 public class SqlServerPaginationImpl implements Pagination {
 
@@ -40,6 +41,9 @@ public class SqlServerPaginationImpl implements Pagination {
 	        if (firstResult >= 0) {
 	           sb.append(firstResult);
 	        } 
+	        if(StringUtil.isNotEmpty(orderBy)){
+	        	sb.append( orderBy);
+	        }
 		}else{
 			sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROW_NUMBER() OVER( " + orderBy + " ) as RN_ FROM (");
 	        sb.append(sql);
@@ -49,6 +53,9 @@ public class SqlServerPaginationImpl implements Pagination {
 	        if (firstResult >= 0) {
 	           sb.append(firstResult);
 	        } 
+	        if(StringUtil.isNotEmpty(orderBy)){
+	        	sb.append( orderBy);
+	        }
 		}
        
         return sb.toString();

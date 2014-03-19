@@ -208,10 +208,10 @@ public class ProcessDefinitionPersistence {
 		}
 		selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteria(selectProcessDefinitionsByQueryCriteriaSql,
 				processDefinitionQuery, objectParamWhere);
-		if (processDefinitionQuery.getOrderBy() != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " order by "
-					+ processDefinitionQuery.getOrderBy().toString();
-		}
+		//if (processDefinitionQuery.getOrderBy() != null) {
+		//	selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + " order by "
+		//			+ processDefinitionQuery.getOrderBy().toString();
+		//}
 		String orderByString = "";
 		if (processDefinitionQuery.getOrderBy() != null && page != null) {
 			String orderBySql = processDefinitionQuery.getOrderBy();
@@ -234,9 +234,9 @@ public class ProcessDefinitionPersistence {
 			selectProcessDefinitionsByQueryCriteriaSql = pagination.getPaginationSql(selectProcessDefinitionsByQueryCriteriaSql, page.getFirstResult(),
 					page.getMaxResults(), "*", orderByString);
 		}
-		if (processDefinitionQuery.getOrderBy() != null && page != null) {
-			selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + orderByString;
-		}
+		//if (processDefinitionQuery.getOrderBy() != null && page != null) {
+		//	selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + orderByString;
+		//}
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(selectProcessDefinitionsByQueryCriteriaSql, objectParamWhere);
 		List<ProcessDefinitionBehavior> processDefinitionList = new ArrayList<ProcessDefinitionBehavior>();
 		for (Map<String, Object> dataMap : dataObj) {

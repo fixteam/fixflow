@@ -53,7 +53,11 @@ public class OraclePaginationImpl implements Pagination {
         sb.append(" and b.RN_ >=");
         if (firstResult >= 0) {
            sb.append(firstResult);
-        } 
+        }
+        if(StringUtil.isNotEmpty(orderBy)){
+        	sb.append( orderBy);
+        }
+        
         return sb.toString();
 	}
 

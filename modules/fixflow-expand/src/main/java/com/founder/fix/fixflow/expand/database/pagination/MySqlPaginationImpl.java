@@ -33,6 +33,9 @@ public class MySqlPaginationImpl implements Pagination {
     	sb.append("(");
         sb.append("SELECT "+fields+" FROM (select A.* from(");
         sb.append(sql);
+        if(StringUtil.isNotEmpty(orderBy)){
+        	sb.append( orderBy);
+        }
         sb.append(" )A");
         sb.append(" )c LIMIT ");
         sb.append(firstResult-1);

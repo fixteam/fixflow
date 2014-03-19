@@ -43,6 +43,10 @@ public class DB2PaginationImpl implements Pagination{
          } 
         sb.append(")");
         
+        if(StringUtil.isNotEmpty(orderBy)){
+        	sb.append( orderBy);
+        }
+        
         return sb.toString();
 	}
 

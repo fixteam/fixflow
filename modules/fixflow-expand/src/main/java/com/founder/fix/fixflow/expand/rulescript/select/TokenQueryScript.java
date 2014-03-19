@@ -55,9 +55,9 @@ public class TokenQueryScript implements SelectRulesScript {
 		String sqlString="select "+Context.getProcessEngineConfiguration().getDbConfig().getDbSqlMap().get("topOrderBy")+" tokentable.* ";
 		List<Object> objectParamWhere = new ArrayList<Object>();
 		sqlString=selectTokenByQueryCriteriaSql(sqlString,tokenQuery,page,objectParamWhere);
-		if (tokenQuery.getOrderBy() != null) {
-			sqlString = sqlString + " order by "+tokenQuery.getOrderBy().toString();
-		}
+		//if (tokenQuery.getOrderBy() != null) {
+		//	sqlString = sqlString + " order by "+tokenQuery.getOrderBy().toString();
+		//}
 		
 		
 		
