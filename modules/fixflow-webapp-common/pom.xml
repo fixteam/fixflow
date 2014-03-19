@@ -45,6 +45,9 @@
         <resources>
         	<resource>
         		<directory>../fixflow-expand/src/main/resources</directory>
+        		 <excludes>    
+                    <exclude>config/**</exclude>    
+                </excludes>    
         	</resource>
         	<resource>
         		<directory>src/main/resources</directory>
