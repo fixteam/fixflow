@@ -251,7 +251,7 @@ public class ProcessInstanceManager extends AbstractManager {
 		return (ProcessInstanceEntity) getMappingSqlSession().selectOne("findProcessInstanceByDefKeyAndBusinessKey", parameters);
 	}
 
-	public void saveProcessInstance(ProcessInstanceEntity processInstance) throws Exception {
+	public void saveProcessInstance(ProcessInstanceEntity processInstance){
 		String processLocation = "";
 
 		List<TaskInstanceEntity> taskInstanceEntities = processInstance.getTaskMgmtInstance().getTaskInstancesNoDB();
