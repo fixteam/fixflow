@@ -45,15 +45,15 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 • 支持Groovy、BeanShell等多种动态
 
 
-#代码打包下载
-内核版本不带web环境,用户需要自己开发web展现界面,内置Web版本自带任务、管控中心。
-* [Fixflow内置任务、管控中心版本 5.1(百度网盘)](http://pan.baidu.com/s/1AbtfC)
+#资源打包下载
+包含数据库脚本、jar包、用户向导、设计器插件、war包、内核源码，全部源码。
+* [Fixflow Release 5.2(百度网盘)](http://pan.baidu.com/s/1AbtfC)
 
 #流程设计器
 (国内最强大的BPMN设计器)
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
-* [完整版设计器下载 5.1(百度网盘)](http://pan.baidu.com/s/1kTiEAzH)
-* [插件下载 5.1(百度网盘)](http://pan.baidu.com/s/1sjHEqkd)
+* [完整版设计器下载 5.2(百度网盘)](http://pan.baidu.com/s/1hqkOik0)
+* [插件下载 5.2(百度网盘)](http://pan.baidu.com/s/1dDkopLR)
 
 
 
@@ -65,7 +65,7 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 **用户向导**: [http://fixteam.github.io/fixflow/userguide/out/html/index.html](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
 
-**用户向导离线版本 5.1**: [http://pan.baidu.com/s/1tGkiM](http://pan.baidu.com/s/1dD5RYnv)
+**用户向导离线版本 5.2**: [http://pan.baidu.com/s/1eQIIj1C](http://pan.baidu.com/s/1eQIIj1C)
 
 **学习怎样使用和集成FixFlow**: [https://github.com/fixteam/fixflow/wiki](https://github.com/fixteam/fixflow/wiki)
 
