@@ -400,7 +400,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
   public Definitions convertToBpmnModel(JsonNode modelNode) {
 	  //加载一个空的definitions
 	  
-	  String nodeTempPath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getNoneTemplatePath();
+	  String nodeTempPath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getCopyTemplatePath();
 	  InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(nodeTempPath);
 	  Definitions bpmnModel = new FixFlowConverter().getDefinitions("temp", inputStream);
 	  BPMNDiagram bpmnDiagram=bpmnModel.getDiagrams().get(0);

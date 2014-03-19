@@ -292,7 +292,7 @@ public class ProcessDefinitionPersistence {
 			if (bytesObject != null) {
 				byte[] bytes = (byte[]) bytesObject;
 				ResourceSet resourceSet = getResourceSet();
-				String fixflowFilePath =  ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();
+				String fixflowFilePath =  ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getNoneTemplateFilePath();
 				URL url = ReflectUtil.getResource(fixflowFilePath);
 				if(url == null){
 					throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_FILENOTFOUND,fixflowFilePath);

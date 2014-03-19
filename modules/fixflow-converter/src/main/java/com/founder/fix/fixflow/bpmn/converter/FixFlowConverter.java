@@ -183,7 +183,7 @@ public class FixFlowConverter {
 	 */
 	public Definitions getNoneDefinitions(){
 		Definitions definitions = null;
-		String filePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();;
+		String filePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getNoneTemplateFilePath();;
 		try {
 			InputStream in = null;
 			in = ReflectUtil.getResourceAsStream(filePath);
@@ -204,7 +204,7 @@ public class FixFlowConverter {
 	 */
 	public Definitions getDefinitions(String processKey,InputStream input){
 		ResourceSet resourceSet = getResourceSet();
-		String fixflowFilePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getFixFlowFilePath();
+		String fixflowFilePath = ProcessEngineManagement.getDefaultProcessEngine().getProcessEngineConfiguration().getNoneTemplateFilePath();
 		URL url = ReflectUtil.getResource(fixflowFilePath);
 		if(url == null){
 			throw new FixFlowClassLoadingException(ExceptionCode.CLASSLOAD_EXCEPTION_FILENOTFOUND,fixflowFilePath);

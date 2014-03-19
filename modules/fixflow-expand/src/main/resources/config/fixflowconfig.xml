@@ -149,10 +149,10 @@
     <resourcePath id="connector-path" name="老流程连接器路径" projectName="fixflow-expand" virtualPath="src/main/java/com/founder/fix/fixflow/expand/connector/"/>
    
     <resourcePath id="dataVariableConfig" name="dataVariableConfig.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/datavariableconfig.xml" src="config/datavariableconfig.xml" />
-    <resourcePath id="fixflowfile" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/fixflowfile.bpmn" />
-    <resourcePath id="nodeTemplate" name="fixflowfile.bpmn路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/node_template.bpmn" />
+    <resourcePath id="none_template" name="空的定义文件" projectName="fixflow-expand" virtualPath="src/main/resources/config/fixflowfile.bpmn" src="config/fixflowfile.bpmn" />
+    <resourcePath id="copy_template" name="带process的空定义文件" projectName="fixflow-expand" virtualPath="src/main/resources/config/node_template.bpmn" src="config/node_template.bpmn" />
     <resourcePath id="groovyFile" name="GroovyFile.groovy路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/GroovyFile.groovy" src="" />
-    <resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/quartz.properties" src="" />
+    <resourcePath id="quartz" name="quartz.properties路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/quartz.properties" src="config/quartz.properties" />
     <resourcePath id="style" name="style.xml路径" projectName="fixflow-expand" virtualPath="src/main/resources/config/style.xml" src="" />
     <resourcePath id="internationalization" name="国际化文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/internationalization/" src="internationalization" />
     <resourcePath id="fixflowdiagram" name="流程图文件路径" projectName="fixflow-expand" virtualPath="src/main/resources/fixflowdiagram/" src="fixflowdiagram" />

@@ -1369,8 +1369,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return expandClassMap.get(classId);
 	}
 	
-	public String getFixFlowFilePath(){
-		return getResourcePath("fixflowfile").getSrc();
+	public String getNoneTemplateFilePath(){
+		return getResourcePath("none_template").getSrc();
 	}
 	
 	public String getDataVariableConfigPath(){
@@ -1389,8 +1389,8 @@ public class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 		return getResourcePath("fixflow-repository-flow-template").getSrc() + "default_process"+File.separator+"default_process.bpmn";
 	}
 	
-	public String getNoneTemplatePath(){
-		return getResourcePath("nodeTemplate").getSrc();
+	public String getCopyTemplatePath(){
+		return getResourcePath("copy_template").getSrc();
 	}
 
 }
