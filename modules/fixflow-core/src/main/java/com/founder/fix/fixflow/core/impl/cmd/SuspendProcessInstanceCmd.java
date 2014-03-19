@@ -48,6 +48,10 @@ public class SuspendProcessInstanceCmd  implements Command<Void>{
 			throw new FixFlowException("流程实例已经暂停,不能再次暂停");
 		}
 		
+		if(processInstanceImpl.hasEnded()){
+			throw new FixFlowException("流程实例已经结束,不能暂停");
+		}
+		
 		//暂停流程实例
 		processInstanceImpl.suspend();
 	
