@@ -1,35 +1,59 @@
 #简介
 
+Fixflow是一款开源的基于BPMN2.0标准的工作流引擎,引擎底层直接支持BPMN2.0国际标准,
+吸纳了 jBPM3 、 Activiti5、BonitaBPM 等国际开源流程引擎的精髓,
+同时提供了强大的中国式流程流转处理,引擎采用微内核+插件形式设计,提供灵活的扩展模式, 建模采 用基于BPMN2.0标准的Eclipse设计器和基于Web的流程设计器,不仅仅为审批流程提供了解决方案, 同时还为复杂业务流程编排提供了强大的支持。
 
-FixFlow 是来自2000年 研发的Founder Fix 开发平台的工作流内核。
-4.0 版本设计之初就参考了最为新颖的BPMN2.0标准草案，在新标准正式发布后，我们就积极参与到标准实现的工作中去。
-我们吸纳了 jBPM3 、 Activiti5、BonitaBPM 等国际开源流程引擎的精髓，
-在Founder Fix BPMCS开发平台发布后，经历了数个大型企业项目的历练，流程引擎的扩展体系逐渐完善。
-到今天，我们认为是时候了，它已经可以做为独立的产品，它要从幕后走到台前了！
+FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于集成到现有系统的引擎。
 
-FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于集成到现有系统的BPM引擎。
+
+
+#其他Git仓库
+国内访问速度比较慢的朋友可以考虑从国内的Git仓库拉取代码:
+
+**开源中国社区-中国**:(https://git.oschina.net/kenshinnet/fixflow)
+
+**GitHub-美国**:(https://github.com/fixteam/fixflow)
+
+**csdn_code -中国**:(https://code.csdn.net/fixflow/fixflow)  
+
+#贡献企业
+
+Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,我们欢迎更多的企业来使用Fixflow,并为社区做出贡献。
 
 
 
 #为什么选择FixFlow？
-* 1.开源以及强大的社区支持
-* 2.基于国际标准 BPMN 2.0
-* 3.支持Groovy、BeanShell等多种动态
-* 4.专门用于集成的BPM产品
-* 5.符合中国式的流程功能
-* 6.强大灵活的扩展模式
+• 开源以及强大的社区支持
+
+• 基于国际业务流程标准BPMN2.0
+
+• 支持复杂式的中国流程流转处理
+
+• 强大的基于BPMN2.0建模的Eclipse插件设计器
+
+• 基于Web的流程设计器
+
+• 强大灵活的扩展模式
+
+• 基于图形化设计的外部系统调用连接器
+
+• 基于Web的流程管控中心
+
+• 专门用于集成的BPM产品
+
+• 支持Groovy、BeanShell等多种动态
 
 
 #代码打包下载
 内核版本不带web环境,用户需要自己开发web展现界面,内置Web版本自带任务、管控中心。
-* [Fixflow内置任务、管控中心版本(百度网盘)](http://pan.baidu.com/s/1881zx)
-* [Fixflow内核版本(百度网盘)](http://pan.baidu.com/s/1BWpgv)
+* [Fixflow内置任务、管控中心版本 5.1(百度网盘)](http://pan.baidu.com/s/1AbtfC)
 
 #流程设计器
 (国内最强大的BPMN设计器)
 设计器提供两种版本,完整Eclipse版本、单一插件版本。
-* [完整版设计器下载(百度网盘)](http://pan.baidu.com/s/13OKHM)
-* [插件下载(百度网盘)](http://pan.baidu.com/s/1sZx6J)
+* [完整版设计器下载 5.1(百度网盘)](http://pan.baidu.com/s/1kTiEAzH)
+* [插件下载 5.1(百度网盘)](http://pan.baidu.com/s/1sjHEqkd)
 
 
 
@@ -37,13 +61,17 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 **开发者交流社区QQ群**: 152654373
 
+**演示系统地址**: [http://218.107.242.90:9633/bpmcenter/ 用户名:admin 密码:1](http://218.107.242.90:9633/bpmcenter/) 
+
 **用户向导**: [http://fixteam.github.io/fixflow/userguide/out/html/index.html](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
+
+**用户向导离线版本 5.1**: [http://pan.baidu.com/s/1tGkiM](http://pan.baidu.com/s/1dD5RYnv)
 
 **学习怎样使用和集成FixFlow**: [https://github.com/fixteam/fixflow/wiki](https://github.com/fixteam/fixflow/wiki)
 
 **团队Blog地址**: [http://fixteam.github.io/fixflow/blog/](http://fixteam.github.io/fixflow/blog/)
 
-**更多产品请登录 FIXBPMCS 中间件平台官网**: [www.founderfix.com](http://www.founderfix.com)
+**Fixflow开放日活动视频**: [开放日视频](http://pan.baidu.com/s/1pbS4u)
 
 
 #教学视频
@@ -57,7 +85,6 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * v4.7 FixCS平台集成版本
 * 5.0.0-Final-master  5.0正式版本
 * *-cs CS开发平台专用版本
-* 
 * release-*  发布分支为准备新的产品版本发布做支持
 * hotfix-*   当产品版本的重大bug需要立即解决的时候，我们从对应版本的标签创建出一个热补丁分支。
 * feature-*  特性分支是用来为下一发布版本开发新特性
@@ -109,8 +136,22 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * [FAQ](#)
 
 
-
+#登录界面
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20130916_1.png)
+
+
+#引擎构架图
+Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设计,并基于BPMN2.0的执行语义设计。
+![引擎构架图](http://images.cnitblog.com/blog/20120/201401/231607436798.png)
+
+#功能模块图
+![功能模块图](http://images.cnitblog.com/blog/20120/201401/231629069445.png)
+
+#Eclipse设计器界面
+![Eclipse设计器界面](http://images.cnitblog.com/blog/20120/201401/231630266632.png)
+
+#Web设计器界面
+![Web设计器界面](http://images.cnitblog.com/blog/20120/201401/231631074447.png)
 
 
 #如何提交bug或者问题
@@ -118,32 +159,130 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 ![系统截图](https://github.com/fixteam/fixflow/wiki/images/Bug20130917093746.png)
 
 
-#Changelog
 
-### 5.0.0（2013-07-?）
+
+#5.1版本新功能介绍
+
+### Web流程设计器(预览版)
+
+1. 新增流程资源管理器
+
+2. 新增web流程编辑器,支持流程加载、保存、发布,暂不支持连接器
+
+
+### Eclipse设计器新增功能
+
+1. 设计器插件新增支持支持kepler版本的eclipse.插件将支持主流的 Indigo (3.7) Juno (4.2)kepler(4.3).
+
+2. 新的表达式编写方式,支持手写表达式不需要弹出编辑框.
+
+3. 流程创建模板功能,选中一个节点创建模板,可以在任何流程中来使用创建的模板.
+
+4. 全新连接器,支持更多控件模型,兼容老连接器可以继续使用.
+
+
+### 流程引擎新增功能
+
+1. 引擎支持子流程终止退回主流程指定节点.
+
+2. 新增全局操作表单、全局浏览表单.
+
+3. 数据库语句外置,开发人员可自行修改.
+
+4. 新增执行Rule配置
+
+
+
+#未来的版本
+### 6.0.0（2014-？）
+功能方向：
+ 
+全新版本,BPMN2.0规范全方位支持,同时引入  Dubbo、MuleEsb、ActiveMQ 支持
+
+1.可扩展的实现事件支持(Message、Error、Signal、Link、Compensation、Escalation、Conditional)
+
+2.事务节点、事件子流程、事件网关
+
+3.可扩展的规则引擎引入(Drools)
+
+4.全新的处理人选择器,方便开发人员选择处理者,积累处理者选择规则。
+
+5.功能更加完善的web流程设计器
+
+
+
+### 5.2.0（2014-3）即将发布
+
+1.引入Maven方式构建,重新调整项目结构。
+
+2.调整配置文件位置,流程系统文件位置可自由配置。
+
+3.重构了异常体系,引入异常国际化支持,更加合理的异常管理。
+
+4.重新设计了日志体系引入slf4j,流程的流转过程通过日志框架输出。
+
+5.修复5.2里程碑中的Issues
+
+
+
+
+
+#历史的脚印
+
+### 5.1.0（2014-1）
+
+#### Web流程设计器(预览版)
+
+1. 新增流程资源管理器
+
+2. 新增web流程编辑器,支持流程加载、保存、发布,暂不支持连接器
+
+
+#### Eclipse设计器新增功能
+
+1. 设计器插件新增支持支持kepler版本的eclipse.插件将支持主流的 Indigo (3.7) Juno (4.2)kepler(4.3).
+
+2. 新的表达式编写方式,支持手写表达式不需要弹出编辑框.
+
+3. 流程创建模板功能,选中一个节点创建模板,可以在任何流程中来使用创建的模板.
+
+4. 全新连接器,支持更多控件模型,兼容老连接器可以继续使用.
+
+
+#### 流程引擎新增功能
+
+1. 引擎支持子流程终止退回主流程指定节点.
+
+2. 新增全局操作表单、全局浏览表单.
+
+3. 数据库语句外置,开发人员可自行修改.
+
+4. 新增执行Rule配置。
+
+### 5.0.0（2013-10）
 1. FixFlow引擎成为独立项目,从CS SOA中间件中剥离,贡献给开源社区。
 
 
-### 4.7.0（2013-1-02）
+### 4.7.0（2013-6）
 1. CS SOA中间件 4.7版本发布.内置fixflow4.7版本流程引擎。
 
 
-### 4.0.0（2011-6-02）
+### 4.0.0（2012-3）
 1. CS SOA中间件 4.0版本发布.内置fixflow4.0版本流程引擎
 2. 开始支持BPMN标准,设计器改为基于Eclipse插件方式。
 
-### 3.5.0（2010-5-15）
+### 3.5.0（2010-5）
 1. CS SOA中间件 3.5版本发布.内置fixflow3.5版本流程引擎。
 
 
-### 3.0.0（2009-11-03）
+### 3.0.0（2009-11）
 1. CS SOA中间件 3.0版本发布.内置fixflow3.0版本流程引擎。
 
 
 
-### 2.5.0（2007-06-01）
+### 2.5.0（2007-06）
 1. ES平 2.5版本发布.内置fixflow2.5版本流程引擎,分.net、java两个版本。
 
 
-### 1.0.0（2000-05-10）
+### 1.0.0（2000-05）
 1. ES平台 1.0版本发布.内置fixflow1.0版本流程引擎
