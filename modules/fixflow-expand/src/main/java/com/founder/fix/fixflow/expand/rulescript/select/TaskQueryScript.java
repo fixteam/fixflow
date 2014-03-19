@@ -92,7 +92,7 @@ public class TaskQueryScript implements SelectRulesScript {
 
 		String orderByString = "";
 
-		if (taskQuery.getOrderBy() != null && page != null) {
+		if (taskQuery.getOrderBy() != null) {
 			String orderBySql = taskQuery.getOrderBy();
 			String orderBySqlFin = "";
 			if (orderBySql.indexOf(",") >= 0) {
@@ -114,11 +114,13 @@ public class TaskQueryScript implements SelectRulesScript {
 		if (page != null) {
 			selectTaskByQueryCriteriaSql = pagination.getPaginationSql(selectTaskByQueryCriteriaSql, page.getFirstResult(), page.getMaxResults(),
 					"*", orderByString);
+		}else{
+			if (taskQuery.getOrderBy() != null) {
+			   selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + orderByString;
+			}
 		}
 
-		//if (taskQuery.getOrderBy() != null && page != null) {
-			//selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + orderByString;
-		//}
+		
 		
 
 		if (taskQuery.getIsAgent()) {

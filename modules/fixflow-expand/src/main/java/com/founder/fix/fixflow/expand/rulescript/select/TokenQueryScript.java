@@ -63,7 +63,7 @@ public class TokenQueryScript implements SelectRulesScript {
 		
 		String orderByString="";
 		
-		if (tokenQuery.getOrderBy() != null && page != null) {
+		if (tokenQuery.getOrderBy() != null ) {
 			String orderBySql=tokenQuery.getOrderBy();
 			String orderBySqlFin="";
 			if(orderBySql.indexOf(",")>=0){
@@ -86,6 +86,10 @@ public class TokenQueryScript implements SelectRulesScript {
 		if(page!=null){
 			Pagination pagination=Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
+		}else{
+			if (tokenQuery.getOrderBy() != null) {
+				sqlString = sqlString + orderByString;
+				}
 		}
 		List<Map<String, Object>> dataObj = sqlCommand.queryForList(sqlString, objectParamWhere);
 		

@@ -55,7 +55,7 @@ public class EventSubscriptionPersistence {
 		
 		String orderByString="";
 		
-		if (eventSubscriptionQuery.getOrderBy() != null && page != null) {
+		if (eventSubscriptionQuery.getOrderBy() != null) {
 			String orderBySql=eventSubscriptionQuery.getOrderBy();
 			String orderBySqlFin="";
 			if(orderBySql.indexOf(",")>=0){
@@ -79,6 +79,10 @@ public class EventSubscriptionPersistence {
 		{
 			Pagination pagination=Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
+		}else{
+			if (eventSubscriptionQuery.getOrderBy() != null) {
+				sqlString = sqlString + orderByString;
+				}
 		}
 	
 		

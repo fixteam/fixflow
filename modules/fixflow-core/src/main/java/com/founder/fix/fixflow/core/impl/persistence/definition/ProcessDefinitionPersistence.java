@@ -213,7 +213,7 @@ public class ProcessDefinitionPersistence {
 		//			+ processDefinitionQuery.getOrderBy().toString();
 		//}
 		String orderByString = "";
-		if (processDefinitionQuery.getOrderBy() != null && page != null) {
+		if (processDefinitionQuery.getOrderBy() != null) {
 			String orderBySql = processDefinitionQuery.getOrderBy();
 			String orderBySqlFin = "";
 			if (orderBySql.indexOf(",") >= 0) {
@@ -233,7 +233,12 @@ public class ProcessDefinitionPersistence {
 		if (page != null) {
 			selectProcessDefinitionsByQueryCriteriaSql = pagination.getPaginationSql(selectProcessDefinitionsByQueryCriteriaSql, page.getFirstResult(),
 					page.getMaxResults(), "*", orderByString);
+		}else{
+			if (processDefinitionQuery.getOrderBy() != null) {
+				selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + orderByString;
+				}
 		}
+		
 		//if (processDefinitionQuery.getOrderBy() != null && page != null) {
 		//	selectProcessDefinitionsByQueryCriteriaSql = selectProcessDefinitionsByQueryCriteriaSql + orderByString;
 		//}

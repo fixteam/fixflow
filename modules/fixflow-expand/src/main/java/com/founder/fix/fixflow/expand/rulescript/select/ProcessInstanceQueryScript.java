@@ -92,6 +92,11 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 			Pagination pagination = Context.getProcessEngineConfiguration().getDbConfig().getPagination();
 			sqlString = pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
 		}
+		else{
+			if (processInstanceQuery.getOrderBy() != null) {
+				sqlString = sqlString + orderByString;
+				}
+		}
 		/*
 		if (processInstanceQuery.getOrderBy() != null&&page != null) {
 			String orderBySql=processInstanceQuery.getOrderBy();
