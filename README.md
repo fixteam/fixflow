@@ -65,7 +65,7 @@ Fixflow 项目是由社区驱动的,它的快速发展离不开企业的支持,�
 
 **用户向导**: [http://fixteam.github.io/fixflow/userguide/out/html/index.html](http://fixteam.github.io/fixflow/userguide/out/html/index.html)
 
-**用户向导离线版本 5.2**: [http://pan.baidu.com/s/1eQIIj1C](http://pan.baidu.com/s/1eQIIj1C)
+**用户向导离线版本 5.2**: [http://pan.baidu.com/s/1pJk9QHX](http://pan.baidu.com/s/1pJk9QHX)
 
 **学习怎样使用和集成FixFlow**: [https://github.com/fixteam/fixflow/wiki](https://github.com/fixteam/fixflow/wiki)
 
