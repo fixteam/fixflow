@@ -94,7 +94,7 @@ public class ProcessInstanceQueryScript implements SelectRulesScript {
 		}
 		else{
 			if (processInstanceQuery.getOrderBy() != null) {
-				sqlString = sqlString + orderByString;
+				sqlString = sqlString + " order by " + processInstanceQuery.getOrderBy().toString();
 				}
 		}
 		/*

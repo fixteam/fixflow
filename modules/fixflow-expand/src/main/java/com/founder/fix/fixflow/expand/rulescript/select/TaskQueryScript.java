@@ -92,7 +92,7 @@ public class TaskQueryScript implements SelectRulesScript {
 
 		String orderByString = "";
 
-		if (taskQuery.getOrderBy() != null) {
+		if (taskQuery.getOrderBy() != null && page != null) {
 			String orderBySql = taskQuery.getOrderBy();
 			String orderBySqlFin = "";
 			if (orderBySql.indexOf(",") >= 0) {
@@ -116,7 +116,7 @@ public class TaskQueryScript implements SelectRulesScript {
 					"*", orderByString);
 		}else{
 			if (taskQuery.getOrderBy() != null) {
-			   selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + orderByString;
+				selectTaskByQueryCriteriaSql = selectTaskByQueryCriteriaSql + " order by " + taskQuery.getOrderBy().toString();
 			}
 		}
 

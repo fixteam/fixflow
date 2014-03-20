@@ -48,14 +48,14 @@ public class EventSubscriptionPersistence {
 		sqlString=findEventSubscriptionByQueryCriteriaSql(sqlString,eventSubscriptionQuery,page,objectParamWhere);
 		
 		
-		if (eventSubscriptionQuery.getOrderBy() != null) {
+		//if (eventSubscriptionQuery.getOrderBy() != null) {
 
-			sqlString = sqlString + " order by "+eventSubscriptionQuery.getOrderBy().toString();
-		}
+			
+		//}
 		
 		String orderByString="";
 		
-		if (eventSubscriptionQuery.getOrderBy() != null) {
+		if (eventSubscriptionQuery.getOrderBy() != null && page != null) {
 			String orderBySql=eventSubscriptionQuery.getOrderBy();
 			String orderBySqlFin="";
 			if(orderBySql.indexOf(",")>=0){
@@ -81,8 +81,8 @@ public class EventSubscriptionPersistence {
 			sqlString=pagination.getPaginationSql(sqlString, page.getFirstResult(), page.getMaxResults(), "*",orderByString);
 		}else{
 			if (eventSubscriptionQuery.getOrderBy() != null) {
-				sqlString = sqlString + orderByString;
-				}
+				sqlString = sqlString + " order by " + eventSubscriptionQuery.getOrderBy().toString();
+			}
 		}
 	
 		

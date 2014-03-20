@@ -48,15 +48,16 @@ public class OraclePaginationImpl implements Pagination {
         StringBuffer sb = new StringBuffer(sql.length() + 20);
         sb.append("SELECT "+fields+" FROM (SELECT "+inFiled+", ROWNUM as RN_ FROM (");
         sb.append(sql);
+        if(StringUtil.isNotEmpty(orderBy)){
+        	sb.append( orderBy);
+        }
         sb.append(" )A )b WHERE b.RN_ <=");
         sb.append(maxResults);
         sb.append(" and b.RN_ >=");
         if (firstResult >= 0) {
            sb.append(firstResult);
         }
-        if(StringUtil.isNotEmpty(orderBy)){
-        	sb.append( orderBy);
-        }
+        
         
         return sb.toString();
 	}
