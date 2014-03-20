@@ -7,8 +7,8 @@
   
   <section xml:id="gs.prerequisites">
     <title>先决条件</title>
-    <para> 本章建立在用户已经下载Eclipse Juno SR2或Kepler版本开发工具，安装了JDK 6+运行环境，安装了git插件(初学者可下载完整版设计器)，以及Tomcat
-      V6.0服务器，安装了maven，并配置相应的环境变量，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，在github.com注册了账号。</para>
+    <para> 本章建立在用户已经下载Eclipse Juno SR2或Kepler版本开发工具，安装了JDK 6+运行环境，以及Tomcat
+      V6.0服务器，有FixFlow支持的数据库服务器中的一种，本例拿oracle为例，安装了git插件(初学者可下载完整版设计器)，在github.com注册了账号（不使用GIT用户可直接下载release包）。</para>
   </section>
   <section xml:id="gs.goal">
     <title>目标</title>
@@ -16,12 +16,12 @@
   </section>
   <section xml:id="gs.getFixFlow">
     <title>获取FixFlow</title>
+    <para>不使用git的用户可以直接下载FixFlow5.2 release包，里面包含所有项目源码。可以省过此步骤，直接到maven环境配置小节。</para>
     <orderedlist>
-      <listitem> <para>设置下workspace的编码方式，fixflow使用UTF-8的编码方式。 打开eclispse工具，点击window->preferences->General->workspace->Text file encoding 把编码方式改为UTF-8即可。</para></listitem>
-       <listitem> <para> 设置maven本地资源库。如：设置MAVEN_HOME\conf\setting.xml中设置localRepository节点值：E:\mavenRepository。点击window->preferences->Maven->User setting 选择MAVEN_HOME\conf\setting.xml，保存。</para>
-      </listitem>
+     
+      
       <listitem>       
-        <para>然后在工程空白区域，右键选择import->import->Git->Projects from git ，点击“Next”。</para>
+        <para>打开eclipse,然后在工程空白区域，右键选择import->import->Git->Projects from git ，点击“Next”。</para>
         <mediaobject><imageobject>
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.1.png"/>
         </imageobject></mediaobject>
@@ -80,14 +80,66 @@
           <imagedata align="center" contentwidth="600" fileref="images/gettingStarted.8.png"/>
         </imageobject></mediaobject>
       </listitem>
+      
+     </orderedlist>
+  </section>
+  <section xml:id="gs.mavenConfig">
+    <title>Maven环境配置</title>
+    <orderedlist>
       <listitem>
-        <para>打开E:\GIT_DEMO\fixflow\MavenInstall文件夹，依次执行文本中的安装代码（修改文件路径），安装ojdbc和extension包。</para>
+        <para>
+          下载maven,下载地址： <link xlink:href="http://maven.apache.org/download.html">http://maven.apache.org/download.html</link>
+        </para>
       </listitem>
-	  <listitem>
+      <listitem>
+        <para>
+          解压缩maven-2.0.7-bin.zip 到你想安装的位置，如D:/software/。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          设置Maven系统环境变量，M2_HOME=D:/software/maven-2.0.7。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          添加Maven bin目录至系统环境变量PATH中， %M2_HOME%\bin。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          确认Maven的安装：cmd > mvn -version。
+        </para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gs.mavenConfig.1.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem> <para>设置下workspace的编码方式，fixflow使用UTF-8的编码方式。 打开eclispse工具，点击window->preferences->General->workspace->Text file encoding 把编码方式改为UTF-8即可。</para></listitem>
+      <listitem> 
+        <para> 设置maven本地资源库。如：设置M2_HOME\conf\setting.xml中设置localRepository节点值：E:\mavenRepository。</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gs.mavenConfig.2.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>点击window->preferences->Maven->User setting 选择MAVEN_HOME\conf\setting.xml，保存。</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gs.mavenConfig.3.png"/>
+        </imageobject></mediaobject>
+      </listitem>
+      <listitem>
+        <para>打开E:\GIT_DEMO\fixflow\MavenInstall文件夹，在命令行依次执行文本中的安装代码（修改文件路径），安装ojdbc和extension包。</para>
+        <programlisting>mvn install:install-file -DgroupId=com.founder.fix.fixflow -DartifactId=com.founder.fix.fixflow.bpmn2.extensions -Dversion=5.2.0 -Dpackaging=jar -Dfile=D:\fixflow\MavenInstall\com.founder.fix.fixflow.bpmn2.extensions.jar
+mvn install:install-file -DgroupId=com.oracle.jdbc -DartifactId=ojdbc5 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=D:\fixflow\MavenInstall\ojdbc5.jar       </programlisting>
+      </listitem>
+      <listitem>
         <para>然后在工程空白区域，右键选择import->import->Maven->Existing Maven	Projects ，点击“Next”</para>
       </listitem>
-	  <listitem>
+      <listitem>
         <para>选择上面选择的git地址，如：E:\GIT_DEMO\fixflow，此时如果maven配置的本地资源库中无文件的话，maven会自动从中央仓库下载文件，（时间因网速而异），所以要保持机器联网（下载一次，以后就很快了）。之后点击finish,等待项目构建即可。</para>
+        <mediaobject><imageobject>
+          <imagedata align="center" contentwidth="600" fileref="images/gs.mavenConfig.4.png"/>
+        </imageobject></mediaobject>
       </listitem>
     </orderedlist>
     <para>注：此时项目中可能很多JSP的错误，看着不舒服的可以去validation里将JSP相关的验证去掉即可。</para>
