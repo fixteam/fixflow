@@ -234,6 +234,11 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       propertiesNode.put(PROPERTY_NAME, mainProcess.getName());
     }
     
+    String dbid = StringUtil.getString(mainProcess.eGet(FixFlowPackage.Literals.DOCUMENT_ROOT__DBID));
+    if(dbid != null){
+		propertiesNode.put(PROPERTY_PROCESS_DBID, dbid);
+	}
+    
     //fixflow扩展流程属性
     String category = mainProcess.getCategory();
 	if(category != null){
@@ -437,6 +442,12 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
 	          taskSubject.setExpression(subjectExpression);
 	          taskSubject.setId("TaskSubject_1");
 	          BpmnModelUtil.addExtensionElement(process, FixFlowPackage.Literals.DOCUMENT_ROOT__TASK_SUBJECT, taskSubject);
+	      }
+	      
+	    //流程分类
+	      JsonNode process_dbid = JsonConverterUtil.getProperty(PROPERTY_PROCESS_DBID, modelNode);
+	      if(process_dbid != null &&!"null".equals(process_dbid.asText()) && StringUtil.isNotEmpty(process_dbid.asText())){
+	    	  BpmnModelUtil.addExtensionAttribute(process, FixFlowPackage.Literals.DOCUMENT_ROOT__DBID, process_dbid.asText());
 	      }
 	      
 	      //流程分类
