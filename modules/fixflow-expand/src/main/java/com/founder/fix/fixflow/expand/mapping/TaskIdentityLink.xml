@@ -92,25 +92,8 @@
 
 	
 	
-	<businessRules id="getIdentityLinkPersistentState" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
-	<![CDATA[ 
-		objectParam = new HashMap<String, Object>();
-		objectParam.put("id", parameter.getId());
-		objectParam.put("type", parameter.getType().toString());
-		objectParam.put("userId", parameter.getUserId());
-		objectParam.put("groupId", parameter.getGroupId());
-		objectParam.put("groupType", parameter.getGroupType());
-		objectParam.put("includeExclusion", parameter.getIncludeExclusion().toString());
-		objectParam.put("taskId", parameter.getTaskId());
-		objectParam.put("archiveTime", parameter.getArchiveTime());
-		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
-		for (String key : persistenceExtensionFields.keySet()) {
-			objectParam.put(key, persistenceExtensionFields.get(key));	
-		}
-		return objectParam;
-	]]>
-	</businessRules>
-	
+	<businessRules id="getIdentityLinkPersistentState" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" classPath="com.founder.fix.fixflow.expand.rulescript.entity.IdentityLinkStateMap"  resultType="java.util.Map"  remark="将Token对象转换成Map用来数据传递" />
+
 	<businessRules id="identityLinkClone" parameterType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" resultType="com.founder.fix.fixflow.core.task.IdentityLinkEntity" remark="令牌实例拷贝">
 	<![CDATA[ 
 	

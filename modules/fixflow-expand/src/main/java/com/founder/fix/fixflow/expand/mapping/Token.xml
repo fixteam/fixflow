@@ -147,32 +147,7 @@
 	
 	
 	
-	<businessRules id="getTokenPersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
-	<![CDATA[ 
-		objectParam = new HashMap<String, Object>();
-		objectParam.put("tokenId", parameter.getId());
-		objectParam.put("name", parameter.getName());
-		objectParam.put("startTime", parameter.getStartTime());
-		objectParam.put("endTime", parameter.getEndTime());
-		objectParam.put("nodeEnterTime", parameter.getNodeEnterTime());
-		objectParam.put("isAbleToReactivateParent", String.valueOf(parameter.isAbleToReactivateParent()));
-		objectParam.put("isSubProcessRootToken", String.valueOf(parameter.isSubProcessRootToken()));
-		objectParam.put("isSuspended", String.valueOf(parameter.isSuspended()));
-		objectParam.put("isLocked", String.valueOf(parameter.getlock()));
-		objectParam.put("nodeId", parameter.getNodeId());
-		objectParam.put("processInstanceId", parameter.getProcessInstanceId());
-		objectParam.put("parentTokenId", parameter.getParentTokenId());
-		objectParam.put("archiveTime", parameter.getArchiveTime());
-		objectParam.put("freeToken", String.valueOf(parameter.isFreeToken()));
-		objectParam.put("parentFreeTokenId", parameter.getParentFreeTokenId());
-		
-		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
-		for (String key : persistenceExtensionFields.keySet()) {
-			objectParam.put(key, persistenceExtensionFields.get(key));	
-		}
-		return objectParam;
-	]]>
-	</businessRules>
+	<businessRules id="getTokenPersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" classPath="com.founder.fix.fixflow.expand.rulescript.entity.TokenStateMap" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递" />
 	
 	<businessRules id="tokenClone" parameterType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" resultType="com.founder.fix.fixflow.core.impl.runtime.TokenEntity" remark="令牌实例拷贝">
 	<![CDATA[ 

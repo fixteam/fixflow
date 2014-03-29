@@ -215,38 +215,10 @@
 	resultType="java.util.Map" 
 	classPath="com.founder.fix.fixflow.expand.rulescript.entity.ProcessInstancePersistentDbMap"
 	remark="返回Task对象需要保存到数据的字段Map"/>
-
-
 	
 	
-	<businessRules id="getProcessInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递">
-	<![CDATA[ 
-		mapPersistentState = new HashMap<String, Object>();
-		mapPersistentState.put("processInstanceId", parameter.id);
-		mapPersistentState.put("subject", parameter.subject);
-		mapPersistentState.put("processDefinitionKey", parameter.processDefinitionKey);
-		mapPersistentState.put("processDefinitionId", parameter.processDefinitionId);
-		mapPersistentState.put("rootTokenId", parameter.rootTokenId);
-		mapPersistentState.put("definitionId", parameter.definitionId);
-		mapPersistentState.put("parentProcessInstanceId", parameter.parentProcessInstanceId);
-		mapPersistentState.put("parentProcessInstanceTokenId", parameter.parentProcessInstanceTokenId);
-		mapPersistentState.put("initiator", parameter.initiator);
-		mapPersistentState.put("startAuthor", parameter.startAuthor);
-		mapPersistentState.put("bizKey", parameter.bizKey);
-		mapPersistentState.put("startTime", parameter.startTime);
-		mapPersistentState.put("endTime", parameter.endTime);
-		mapPersistentState.put("updateTime", parameter.updateTime);
-		mapPersistentState.put("archiveTime", parameter.archiveTime);
-		mapPersistentState.put("isSuspended", parameter.isSuspended);
-		mapPersistentState.put("processLocation", parameter.processLocation);
-		mapPersistentState.put("instanceStatus", parameter.instanceType);
-		persistenceExtensionFields=parameter.getPersistenceExtensionFields();	
-		for (String key : persistenceExtensionFields.keySet()) {
-			mapPersistentState.put(key, persistenceExtensionFields.get(key));	
-		}
-		return mapPersistentState;
-	]]>
-	</businessRules>
+	<businessRules id="getProcessInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="java.util.Map" remark="将Token对象转换成Map用来数据传递" classPath="com.founder.fix.fixflow.expand.rulescript.entity.ProcessPersistentStateMap" />
+
 	
 	<businessRules id="processInstanceClone" parameterType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" resultType="com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity" remark="流程实例拷贝">
 	<![CDATA[ 

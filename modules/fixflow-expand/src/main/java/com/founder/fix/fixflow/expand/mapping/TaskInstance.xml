@@ -279,63 +279,8 @@
 
 	
 	
-	<businessRules id="getTaskInstancePersistentState" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递">
-	<![CDATA[ 
-		import com.founder.fix.fixflow.core.impl.util.StringUtil;
-		
-		persistentState = new HashMap<String, Object>();
-		persistentState.put("taskInstanceId", parameter.getId());		
-		persistentState.put("name", parameter.getName());		
-		persistentState.put("description", parameter.getDescription());
-		persistentState.put("processInstanceId", parameter.getProcessInstanceId());
-		persistentState.put("processDefinitionId", parameter.getProcessDefinitionId());
-		persistentState.put("processDefinitionKey", parameter.getProcessDefinitionKey());		
-		persistentState.put("processDefinitionName", parameter.getProcessDefinitionName());	
-		persistentState.put("version", parameter.getVersion());
-		persistentState.put("tokenId", parameter.getTokenId());
-		persistentState.put("nodeId", parameter.getNodeId());
-		persistentState.put("nodeName", parameter.getNodeName());		
-		persistentState.put("parentTaskInstanceId", parameter.getParentTaskInstanceId());		
-		persistentState.put("assignee", parameter.getAssignee());
-		persistentState.put("claimTime", parameter.getClaimTime());		
-		persistentState.put("createTime", parameter.getCreateTime());
-		persistentState.put("startTime", parameter.getStartTime());		
-		persistentState.put("endTime", parameter.getEndTime());		
-		persistentState.put("dueDate", parameter.getDueDate());		
-		persistentState.put("priority", String.valueOf(parameter.getPriority()));		
-		persistentState.put("category", String.valueOf(parameter.category));		
-		persistentState.put("owner", parameter.getOwner());		
-		persistentState.put("delegationState", StringUtil.getString(parameter.getDelegationState()));		
-		persistentState.put("bizKey", parameter.getBizKey());		
-		persistentState.put("taskComment", parameter.getTaskComment());		
-		persistentState.put("formUri", parameter.getFormUri());
-		persistentState.put("formUriView", parameter.getFormUriView());		
-		persistentState.put("taskGroup", parameter.getTaskGroup());		
-		persistentState.put("taskInstanceType", StringUtil.getString(parameter.getTaskInstanceType()));		
-		persistentState.put("isBlocking", String.valueOf(parameter.isBlocking()));
-		persistentState.put("isCancelled", String.valueOf(parameter.isCancelled()));		
-		persistentState.put("isSuspended", String.valueOf(parameter.isSuspended()));		
-		persistentState.put("isOpen", String.valueOf(parameter.isOpen()));
-		persistentState.put("isDraft", String.valueOf(parameter.isDraft()));
-		persistentState.put("expectedExecutionTime", String.valueOf(parameter.expectedExecutionTime));
-		persistentState.put("agent", parameter.agent);		
-		persistentState.put("admin", parameter.admin);		
-		persistentState.put("callActivityInstanceId", parameter.callActivityInstanceId);		
-		persistentState.put("pendingTaskId", parameter.pendingTaskId);		
-		persistentState.put("archiveTime", parameter.archiveTime);		
-		persistentState.put("commandId", parameter.getCommandId());
-		persistentState.put("commandType", parameter.getCommandType());		
-		persistentState.put("commandMessage", parameter.getCommandMessage());
-		
-		extensionFields=parameter.getExtensionFields();	
-			
-		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));
-		}
-		return persistentState;
-		
-	]]>
-	</businessRules>
+	<businessRules id="getTaskInstancePersistentState" classPath="com.founder.fix.fixflow.expand.rulescript.entity.TaskPersistentStateMap" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递" />
+	
 	
 	<businessRules id="taskInstanceClone" parameterType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" resultType="com.founder.fix.fixflow.core.impl.task.TaskInstanceEntity" remark="任务实例拷贝">
 	<![CDATA[ 

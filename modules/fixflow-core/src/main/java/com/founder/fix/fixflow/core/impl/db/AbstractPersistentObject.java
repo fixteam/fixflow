@@ -276,14 +276,8 @@ public abstract class AbstractPersistentObject <T> implements PersistentObject {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getPersistentState() {
 
-		
 		Map<String, Object> persistentState =null;
-		
-		AbstractScriptLanguageMgmt scriptLanguageMgmt=Context.getAbstractScriptLanguageMgmt();
-		
-		persistentState=(Map<String, Object>)scriptLanguageMgmt.executeBusinessRules(getPersistentStateRuleId(), this);
-
-		
+		persistentState=(Map<String, Object> )Context.getCommandContext().getMappingSqlSession().selectOne(getPersistentStateRuleId(), this);
 		return persistentState;
 	}
 	

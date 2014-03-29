@@ -222,30 +222,7 @@
 
 
 
-	<businessRules id="getVariablePersistentState" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递">
-	<![CDATA[ 
-	
-		persistentState = new HashMap<String, Object>();
-		persistentState.put("processInstanceId", parameter.getProcessInstanceId());		
-		persistentState.put("variableKey", parameter.getVariableKey());		
-		persistentState.put("variableValue", parameter.getVariableValue());
-		persistentState.put("variableClassName", parameter.getVariableClassName());
-		persistentState.put("taskInstanceId", parameter.getTaskInstanceId());
-		persistentState.put("tokenId", parameter.getTokenId());	
-		persistentState.put("nodeId", parameter.getNodeId());		
-		persistentState.put("variableType", parameter.getVariableType());
-		persistentState.put("bizData", parameter.getBizData());
-		persistentState.put("archive_time", parameter.getArchiveTime());
-		
-		extensionFields=parameter.getExtensionFields();	
-			
-		for (String key : extensionFields.keySet()) {
-			persistentState.put(key, extensionFields.get(key));
-		}
-		return persistentState;
-		
-	]]>
-	</businessRules>
+	<businessRules id="getVariablePersistentState" classPath="com.founder.fix.fixflow.expand.rulescript.entity.VariableStateMap" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="java.util.Map" remark="将Task对象转换成Map用来数据传递" />
 
 	<businessRules id="variableClone" parameterType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity" resultType="com.founder.fix.fixflow.core.impl.datavariable.DataVariableEntity"
 		remark="变量实例拷贝">
