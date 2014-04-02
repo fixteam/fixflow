@@ -1,9 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.founder.fix.fixflow</groupId>
+	<parent>
+		<groupId>com.founder.fix.fixflow</groupId>
+		<artifactId>fixflow-root</artifactId>
+		<version>${project.version}</version>
+		<relativePath>../..</relativePath>
+	</parent>
 	<artifactId>fixflow-core</artifactId>
-	<version>5.2.0</version>
 	<name>fixflow-core</name>
 
 	<dependencies>
@@ -73,23 +77,19 @@
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.6</version>
+			<groupId>com.oracle.jdbc</groupId>
+			<artifactId>ojdbc5</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.6</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency> 
+			<groupId>net.sourceforge.jtds</groupId> 
+			<artifactId>jtds</artifactId> 
 		</dependency>
 	</dependencies>
-	<distributionManagement>
-		<repository>
-			<id>dee</id>
-			<url>http://172.29.165.250:8081/nexus/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
 </project>
