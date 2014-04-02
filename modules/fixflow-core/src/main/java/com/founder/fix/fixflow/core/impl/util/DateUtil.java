@@ -18,14 +18,13 @@
 package com.founder.fix.fixflow.core.impl.util;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import oracle.sql.TIMESTAMP;
 
 import com.founder.fix.fixflow.core.exception.FixFlowException;
 import com.founder.fix.fixflow.core.impl.Context;
@@ -806,15 +805,10 @@ public class DateUtil {
 	public static String convertDate(Object date) {
 		String result = null;
 		if (date!=null) {
-			if (date instanceof TIMESTAMP){
-				try {
-					 TIMESTAMP ts = (TIMESTAMP)date;
-					 Date dateTemp = 	new Date(ts.timestampValue().getTime());
-					 result = dfyyyyMMddHHMMSS.format(dateTemp);
-					   
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			if (date instanceof Timestamp){
+				Timestamp ts = (Timestamp)date;
+				 Date dateTemp = 	new Date(ts.getTime());
+				 result = dfyyyyMMddHHMMSS.format(dateTemp);
 			}
 			else {
 				
