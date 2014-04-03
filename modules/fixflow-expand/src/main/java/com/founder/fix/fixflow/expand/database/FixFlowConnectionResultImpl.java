@@ -79,7 +79,9 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 
 	public void commitConnection() {
 		try {
-			this.connection.commit();
+			if (!this.connection.isClosed()) {
+				this.connection.commit();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new FixFlowDbException(e.getMessage(), e);
@@ -88,7 +90,9 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 
 	public void rollBackConnection() {
 		try {
-			this.connection.rollback();
+			if (!this.connection.isClosed()) {
+				this.connection.rollback();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new FixFlowDbException(e.getMessage(), e);

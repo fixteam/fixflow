@@ -33,6 +33,15 @@ public class DBConnection {
 	
 	private Pagination pageination;
 	
+	public boolean isEnable() throws SQLException{
+		boolean result = false;
+		if (connection != null && connection.isClosed()==false){
+			result=true;
+		}
+		
+		return result;
+	}
+	
 	public void close() throws SQLException{
 		if (connection != null && connection.isClosed()==false){
 			if(connection.getAutoCommit()==false){
@@ -42,7 +51,23 @@ public class DBConnection {
 		}
 	}
 	
-	public void closeAndRockBack() throws SQLException{
+	public void commit() throws SQLException{
+		if (connection != null && connection.isClosed()==false){
+			if(connection.getAutoCommit()==false){
+				connection.commit();
+			}
+		}
+	}
+	
+	public void rollBack() throws SQLException{
+		if (connection != null && connection.isClosed()==false){
+			if(connection.getAutoCommit()==false){
+				connection.rollback();
+			}
+		}
+	}
+	
+	public void closeAndRollBack() throws SQLException{
 		if (connection != null && connection.isClosed()==false){
 			if(connection.getAutoCommit()==false){
 				connection.rollback();

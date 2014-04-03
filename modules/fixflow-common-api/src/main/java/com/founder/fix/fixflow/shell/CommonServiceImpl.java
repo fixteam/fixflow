@@ -63,6 +63,12 @@ public abstract class CommonServiceImpl {
 	}
 	
 	
+	protected void rollbackProcessEngine(){
+		if(processEngine!=null){
+			FixFlowShellProxy.rollbackProcessEngine(processEngine);
+		}
+	}
+	
 	protected void closeProcessEngine(){
 		if(processEngine!=null){
 			boolean closeConnection = true;

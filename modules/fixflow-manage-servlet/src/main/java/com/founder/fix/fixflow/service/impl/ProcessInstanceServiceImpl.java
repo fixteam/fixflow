@@ -202,6 +202,9 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			if(infos!=null){
 				runtimeService.setProcessInstanceVariables(processInstanceId, infos);
 			}
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -218,6 +221,9 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			for(String tmp:pids){
 				runtimeService.suspendProcessInstance(tmp);
 			}
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -234,6 +240,10 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			for(String tmp:pids){
 				runtimeService.continueProcessInstance(tmp);
 			}
+		
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -249,6 +259,9 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			for(String tmp:pids){
 				runtimeService.terminatProcessInstance(tmp);
 			}
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -264,6 +277,9 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 			for(String tmp:pids){
 				runtimeService.deleteProcessInstance(tmp,true);
 			}
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -281,6 +297,9 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 				processInstanceIds.add(tmp);
 			}
 			historyService.archiveByProcessInstanceIds(processInstanceIds);
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}

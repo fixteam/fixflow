@@ -179,7 +179,16 @@ public class FixFlowShellProxy {
 	  * @param closeConnection
 	  */
 	public static void closeProcessEngine(ProcessEngine engine,boolean closeConnection){
+		if(!isPoolConn())
+			engine.contextClose(true, closeConnection);
+	}
+	
+	public static void forceCloseProcessEngine(ProcessEngine engine,boolean closeConnection){
 		engine.contextClose(true, closeConnection);
+	}
+	
+	public static void rollbackProcessEngine(ProcessEngine engine){
+		engine.rollBackConnection();
 	}
 	
 	private static DBConnection getDBConn(String key){
@@ -198,6 +207,6 @@ public class FixFlowShellProxy {
 	  * @return
 	  */
 	public static boolean isPoolConn(){
-		return CurrentThread.getThreadDBPool().get()!=null;
+		return CurrentThread.isThreadWorks();
 	}
 }

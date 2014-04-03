@@ -160,6 +160,9 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		String taskId = StringUtil.getString(filter.get("taskId"));
 		try{
 			mservice.suspendTask(taskId);
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -172,6 +175,9 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		String taskId = StringUtil.getString(filter.get("taskId"));
 		try{
 			mservice.resumeTask(taskId);
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -186,6 +192,9 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		ManagementService mservice = engine.getManagementService();
 		try{
 			mservice.transfer(taskId, transferUserId,"管理员干预", null);
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -200,6 +209,9 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		ManagementService mservice = engine.getManagementService();
 		try{
 			mservice.rollBack(taskId, rollBackNodeId,"管理员干预", null);
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}
@@ -214,6 +226,9 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		ManagementService mservice = engine.getManagementService();
 		try{
 			mservice.rollBackByTaskId(taskId, rollBackTaskId,"管理员干预", null);
+		}catch(RuntimeException e){
+			rollbackProcessEngine();
+			throw e;
 		}finally{
 			closeProcessEngine();
 		}

@@ -91,10 +91,9 @@ public class CurrentThread {
 			for(Entry<String,DBConnection> tmp:dbconns.entrySet()){
 				DBConnection td = tmp.getValue();
 				if(td!=null){
-					td.closeAndRockBack();
+					td.rollBack();
 				}
 			}
-			getThreadDBPool().set(null);
 		}
 	}
 	
@@ -113,13 +112,15 @@ public class CurrentThread {
 			getThreadDBPool().set(null);
 		}
 		ProcessEngine processEngine = ProcessEngineManagement.getDefaultProcessEngine();
-		FixFlowShellProxy.closeProcessEngine(processEngine, false);
+		FixFlowShellProxy.forceCloseProcessEngine(processEngine, true);
 		LinkedHashMap<String,IThreadCarrier> carriers = ThreadCarriers.get();
 		if(carriers!=null){
 			for(Entry<String,IThreadCarrier> tmp:carriers.entrySet()){
 				IThreadCarrier carr = tmp.getValue();
 				carr.close();
+				carr=null;
 			}
+			carriers.clear();
 		}
 	}
 	
