@@ -79,7 +79,7 @@ public class CurrentThread {
 	
 	public static boolean isThreadWorks(){
 		boolean result = true;
-		if(getThreadDBPool()==null || getThreadCarrier()==null){
+		if(getThreadDBPool()==null || getThreadDBPool().get()==null  || getThreadCarrier()==null){
 			result = false;
 		}
 		return result;
