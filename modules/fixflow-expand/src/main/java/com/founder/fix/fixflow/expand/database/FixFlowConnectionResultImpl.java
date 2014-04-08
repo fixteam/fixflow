@@ -64,7 +64,7 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 
 	public void colseConnection() {
 		try {
-			if (!this.connection.isClosed()) {
+			if (this.connection != null && !this.connection.isClosed()) {
 				if(this.connection.getAutoCommit()==false){
 					commitConnection();
 				}
@@ -79,7 +79,7 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 
 	public void commitConnection() {
 		try {
-			if (!this.connection.isClosed()) {
+			if (this.connection != null &&!this.connection.isClosed()) {
 				this.connection.commit();
 			}
 		} catch (SQLException e) {
@@ -90,7 +90,7 @@ public class FixFlowConnectionResultImpl implements FixConnectionResult {
 
 	public void rollBackConnection() {
 		try {
-			if (!this.connection.isClosed()) {
+			if (this.connection != null && !this.connection.isClosed()) {
 				this.connection.rollback();
 			}
 		} catch (SQLException e) {
