@@ -101,7 +101,7 @@ public class VerificationUtil {
 				sb.append("流程定义上默认表单不能为空;" + "");
 			}
 			if (!taskSubjectYZ) {
-				sb.append("流程定义上必默认任务主题不能为空;" + "");
+				sb.append("流程定义上默认任务主题不能为空;" + "");
 			}
 		}
 		return;
