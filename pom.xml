@@ -28,6 +28,7 @@
 	  	<module>modules/fixflow-webapp-explorer</module>
 	  	<module>modules/fixflow-converter</module>
 	  	<module>modules/fixflow-webapp-editor</module>
+		<module>modules/fixflow-test</module>
 	</modules>
 	
 	   <build>  
