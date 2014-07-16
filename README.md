@@ -19,22 +19,6 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 
 **csdn_code -中国**:(https://code.csdn.net/fixflow/fixflow)  
 
-#贡献企业
-
-Fixflow 项目是由公司和社区驱动的,它的快速发展离不开企业的支持,我们欢迎更多的企业来使用Fixflow,并为社区做出贡献。
-
-1.方正国际软件有限公司(社区创始公司)
-
-产品：方正飞鸿Fix系列中间件平台
-
-介绍：FixFlow 是来自2000年 研发的Founder Fix 开发平台的工作流内核,2013.5月正式开源。
-
-地址：www.founderfix.com
-
-
-
-
-
 
 #为什么选择FixFlow？
 • 开源以及强大的社区支持
