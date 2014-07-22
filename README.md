@@ -143,10 +143,6 @@ FixFLow本身并不具备完整的开发平台功能,它的定位是专门用于
 * [FAQ](#)
 
 
-#登录界面
-![系统截图](https://github.com/fixteam/fixflow/wiki/images/Snip20130916_1.png)
-
-
 #引擎构架图
 Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设计,并基于BPMN2.0的执行语义设计。
 ![引擎构架图](http://images.cnitblog.com/blog/20120/201401/231607436798.png)
