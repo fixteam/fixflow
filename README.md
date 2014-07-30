@@ -170,7 +170,7 @@ Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设�
 ### 6.0.0（2014-12）
 6.0版本采用全新的名称和架构
 
-[项目地址：](https://github.com/FoxBPM/FoxBPM)
+[FoxBPM 项目地址](https://github.com/FoxBPM/FoxBPM)
 
 
 
