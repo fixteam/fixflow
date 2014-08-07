@@ -166,11 +166,38 @@ Fixflow内核采用的Token驱动驱动机制,Api则层借鉴了Activiti的设�
 
 
 
+
 #未来的版本
 ### 6.0.0（2014-12）
-6.0版本采用全新的名称和架构
+功能方向：
+ 
+全新版本,重写引擎内核和设计器,BPMN2.0规范全方位支持,同时引入  Dubbo、MuleEsb、ActiveMQ 支持
 
-[FoxBPM 项目地址](https://github.com/FoxBPM/FoxBPM)
+1.全新的流程微内核构架,kernel项目支持多流程定义。
+
+2.引入mybatis完成引擎持久化层工作。
+
+3.引入运行轨迹，可用于监控和前端运行轨迹回放。
+
+4.引入全局事件注入机制。
+
+5.提供多种更加简单的事务整合方式。
+
+6.全新的处理人选择器,方便开发人员选择处理者,积累处理者选择规则。
+
+7.全新的eclipse流程设计器,基于webserver请求数据，并可以离线运行。
+
+8.可扩展的实现事件支持(Message、Error、Signal、Link、Compensation、Escalation、Conditional)
+
+9.事务节点、事件子流程、事件网关
+
+10.可扩展的规则引擎引入(Drools)
+
+11.功能更加完善的web流程设计器
+
+12.rest服务接口
+
+13.这次文档一定很详细：）
 
 
 
