@@ -124,15 +124,10 @@ public class ProcessDefinitionBehavior extends ProcessImpl implements Persistent
 		for (FlowElement flowElement : this.getFlowElements()) {
 			if (flowElement instanceof StartEventBehavior) {
 				startElement = (FlowNode) flowElement;
-				StartEventBehavior startEventBehavior = (StartEventBehavior) flowElement;
-				List<EventDefinition> eventDefinitions = startEventBehavior.getEventDefinitions();
-				if (eventDefinitions.size() == 0) {
-					return startElement;
-				}
+				return startElement;
 			}
 		}
 		return null;
-
 	}
 
 	/**
