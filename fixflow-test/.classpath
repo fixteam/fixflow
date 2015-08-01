@@ -7,5 +7,14 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/fixflow-expand"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container/bpmcenter"/>
+	<classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.1.7/quartz-2.1.7.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.1.7/quartz-2.1.7-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/G:/m2/org/quartz-scheduler/quartz/2.1.7/quartz-2.1.7-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/founder/fix/fixflow/com.founder.fix.fixflow.bpmn2.extensions/5.2.0/com.founder.fix.fixflow.bpmn2.extensions-5.2.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/oracle/jdbc/ojdbc5/11.2.0.1.0/ojdbc5-11.2.0.1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/p-unit/p-unit/0.15.319/p-unit-0.15.319.jar"/>
+	<classpathentry kind="var" path="M2_REPO/p-unit/p-unit-extension/0.15.319/p-unit-extension-0.15.319.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
